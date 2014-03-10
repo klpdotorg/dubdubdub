@@ -1,5 +1,11 @@
 *.py[cod]
 
+#secret key
+secret.txt
+
+#local settings
+local_settings.py
+
 # C extensions
 *.so
 

@@ -1,0 +1,4 @@
+-r base.txt
+
+ipdb==0.8
+ipython==0.13.2
