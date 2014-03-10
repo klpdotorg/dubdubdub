@@ -5,7 +5,7 @@ Home of KLP. Houses *most* of the data and APIs that powers the features on the 
 
 ### Development Setup
 
-Get Vagrant box.
+Get Vagrant box - following instructions are for box with sha1sum: dc2a362f2f7f1339570abfc23549ecb1fbdbe070
 
 $vagrant init klp package.box
 $vagrant up
