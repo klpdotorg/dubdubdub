@@ -24,6 +24,9 @@ DATABASES = {
     }
 }
 
+
+DATABASE_ROUTERS = ['dubdubdub.router.KLPRouter']
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.klp.org.in']
@@ -147,10 +150,14 @@ INSTALLED_APPS = (
 
     # third party
     'south',
+    'django_extensions',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
 
     # in-project
+    'klp',
+    'coords',
+    'electrep',
 )
 
 #DATADUMP_ROOT = os.path.join(PROJECT_ROOT, 'data')

@@ -1,4 +1,6 @@
 *.py[cod]
+*.sw*
+*~
 
 #secret key
 secret.txt
