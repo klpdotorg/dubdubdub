@@ -314,16 +314,13 @@ class TbSchool(models.Model):
             'name': self.name
         }
 
-    def get_geometry(self):
-        try:
-            inst = InstCoord.objects.get(instid=self.id)
-            return json.loads(inst.coord.geojson)
-        except:
-            return {}
+    def get_geometry(self, inst_coord):
+        return json.loads(inst_coord.coord.geojson)
 
-    def get_geojson(self):
+
+    def get_geojson(self, inst_coord):
         return {
-            'geometry': self.get_geometry(),
+            'geometry': self.get_geometry(inst_coord),
             'properties': self.get_properties()
         }
 
