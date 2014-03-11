@@ -9,3 +9,4 @@ psycopg2==2.5.1
 raven==3.5.0
 sqlparse==0.1.10
 wsgiref==0.1.2
+django_extensions

@@ -10,6 +10,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.gis.db import models
+import json
+from coords.models import InstCoord
 
 class Assembly(models.Model):
     ogc_fid = models.IntegerField(primary_key=True)
@@ -305,6 +307,26 @@ class TbSchool(models.Model):
     status = models.IntegerField()
     assembly_id = models.IntegerField(blank=True, null=True)
     assembly_name = models.CharField(max_length=35, blank=True)
+
+    def get_properties(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+    def get_geometry(self):
+        try:
+            inst = InstCoord.objects.get(instid=self.id)
+            return json.loads(inst.coord.geojson)
+        except:
+            return {}
+
+    def get_geojson(self):
+        return {
+            'geometry': self.get_geometry(),
+            'properties': self.get_properties()
+        }
+
     class Meta:
         managed = False
         db_table = 'tb_school'
