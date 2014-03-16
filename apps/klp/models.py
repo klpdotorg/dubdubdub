@@ -307,6 +307,7 @@ class TbSchool(models.Model):
     status = models.IntegerField()
     assembly_id = models.IntegerField(blank=True, null=True)
     assembly_name = models.CharField(max_length=35, blank=True)
+    objects = models.GeoManager()
 
     def get_properties(self):
         return {
@@ -314,13 +315,16 @@ class TbSchool(models.Model):
             'name': self.name
         }
 
-    def get_geometry(self, inst_coord):
-        return json.loads(inst_coord.coord.geojson)
+    def get_geometry(self):
+        if self.viewinstcoord is not None:
+            return json.loads(self.viewinstcoord.coord.geojson)
+        else:
+            return {}
 
 
-    def get_geojson(self, inst_coord):
+    def get_geojson(self):
         return {
-            'geometry': self.get_geometry(inst_coord),
+            'geometry': self.get_geometry(),
             'properties': self.get_properties()
         }
 
@@ -465,6 +469,16 @@ class TbTeacherQual(models.Model):
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'
+
+
+class ViewInstCoord(models.Model):
+    instid = models.OneToOneField("TbSchool", primary_key=True, db_column='instid')
+    coord = models.GeometryField()
+    objects = models.GeoManager()
+
+    class Meta:
+        managed = False
+        db_table = 'vw_inst_coord'
 
 class Temp(models.Model):
     klpid = models.IntegerField(blank=True, null=True)
