@@ -25,14 +25,14 @@ class Assembly(models.Model):
         managed = False
         db_table = 'assembly'
 
-class TbAcademicYear(models.Model):
+class AcademicYear(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True)
     class Meta:
         managed = False
         db_table = 'tb_academic_year'
 
-class TbAddress(models.Model):
+class Address(models.Model):
     id = models.IntegerField(primary_key=True)
     address = models.CharField(max_length=1000, blank=True)
     area = models.CharField(max_length=1000, blank=True)
@@ -45,88 +45,90 @@ class TbAddress(models.Model):
         managed = False
         db_table = 'tb_address'
 
-class TbAngpre2011Agg(models.Model):
-    sid = models.IntegerField(blank=True, null=True)
-    gender = models.CharField(max_length=8, blank=True)
-    stucount = models.IntegerField(blank=True, null=True)
-    min_score = models.IntegerField(blank=True, null=True)
-    max_score = models.IntegerField(blank=True, null=True)
-    median_score = models.IntegerField(blank=True, null=True)
-    avg_score = models.IntegerField(blank=True, null=True)
-    class Meta:
-        managed = False
-        db_table = 'tb_angpre_2011_agg'
+# This table is not used - commenting out from models
+# class TbAngpre2011Agg(models.Model):
+#     sid = models.IntegerField(blank=True, null=True)
+#     gender = models.CharField(max_length=8, blank=True)
+#     stucount = models.IntegerField(blank=True, null=True)
+#     min_score = models.IntegerField(blank=True, null=True)
+#     max_score = models.IntegerField(blank=True, null=True)
+#     median_score = models.IntegerField(blank=True, null=True)
+#     avg_score = models.IntegerField(blank=True, null=True)
+#     class Meta:
+#         managed = False
+#         db_table = 'tb_angpre_2011_agg'
 
-class TbAssessment(models.Model):
+class Assessment(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
-    pid = models.ForeignKey('TbProgramme', db_column='pid', blank=True, null=True)
+    programme = models.ForeignKey('Programme', db_column='pid', blank=True, null=True)
     start = models.DateField(blank=True, null=True)
     end = models.DateField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_assessment'
 
-class TbBhierarchy(models.Model):
+class BoundaryHierarchy(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     class Meta:
         managed = False
         db_table = 'tb_bhierarchy'
 
-class TbBoundary(models.Model):
+class Boundary(models.Model):
     id = models.IntegerField(primary_key=True)
-    parent = models.IntegerField(blank=True, null=True)
+    parent = models.ForeignKey("Boundary", blank=True, null=True)
     name = models.CharField(max_length=300)
-    hid = models.ForeignKey(TbBhierarchy, db_column='hid')
-    type = models.ForeignKey('TbBoundaryType', db_column='type')
+    hierarchy = models.ForeignKey(BoundaryHierarchy, db_column='hid')
+    type = models.ForeignKey('BoundaryType', db_column='type')
     class Meta:
         managed = False
         db_table = 'tb_boundary'
 
-class TbBoundaryType(models.Model):
+class BoundaryType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     class Meta:
         managed = False
         db_table = 'tb_boundary_type'
 
-class TbChild(models.Model):
+
+class Child(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     dob = models.DateField(blank=True, null=True)
-    sex = models.TextField() # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.TextField() # This field type is a guess FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess FIXME: enum
     class Meta:
         managed = False
         db_table = 'tb_child'
 
-class TbClass(models.Model):
+class Class(models.Model):
     id = models.IntegerField(primary_key=True)
-    sid = models.IntegerField(blank=True, null=True)
+    school = models.ForeignKey("School", blank=True, null=True, db_column="sid")
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
     class Meta:
         managed = False
         db_table = 'tb_class'
 
-class TbInstitutionAgg(models.Model):
-    school_id = models.ForeignKey('TbSchool', db_column='id', blank=True, null=True)
+class InstitutionAgg(models.Model):
+    school = models.ForeignKey('School', db_column='id', blank=True, null=True)
     name = models.CharField(max_length=300, blank=True)
-    bid = models.ForeignKey(TbBoundary, db_column='bid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True)
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_institution_agg'
 
-class TbInstitutionAssessmentAgg(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class InstitutionAssessmentAgg(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     domain = models.CharField(max_length=100, blank=True)
     domain_order = models.IntegerField(blank=True, null=True)
     aggtext = models.CharField(max_length=100)
@@ -136,12 +138,12 @@ class TbInstitutionAssessmentAgg(models.Model):
         managed = False
         db_table = 'tb_institution_assessment_agg'
 
-class TbInstitutionAssessmentAggCohorts(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class InstitutionAssessmentAggCohorts(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     domain = models.CharField(max_length=100, blank=True)
     domain_order = models.IntegerField(blank=True, null=True)
     aggtext = models.CharField(max_length=100)
@@ -151,27 +153,27 @@ class TbInstitutionAssessmentAggCohorts(models.Model):
         managed = False
         db_table = 'tb_institution_assessment_agg_cohorts'
 
-class TbInstitutionAssessmentGenderSinglescore(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
-    sex = models.TextField() # This field type is a guess.
+class InstitutionAssessmentGenderSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    sex = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_gender_singlescore'
 
-class TbInstitutionAssessmentMtSinglescore(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class InstitutionAssessmentMtSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     mt = models.TextField() # This field type is a guess.
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_mt_singlescore'
 
-class TbInstitutionAssessmentReadingAggCohorts(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class InstitutionAssessmentReadingAggCohorts(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.TextField(blank=True) # This field type is a guess.
     mt = models.TextField(blank=True) # This field type is a guess.
@@ -184,9 +186,9 @@ class TbInstitutionAssessmentReadingAggCohorts(models.Model):
         managed = False
         db_table = 'tb_institution_assessment_reading_agg_cohorts'
 
-class TbInstitutionAssessmentSinglescore(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid')
-    pid = models.ForeignKey('TbProgramme', db_column='pid')
+class InstitutionAssessmentSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    programme = models.ForeignKey('Programme', db_column='pid')
     asstext = models.CharField(max_length=50)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
@@ -194,9 +196,9 @@ class TbInstitutionAssessmentSinglescore(models.Model):
         managed = False
         db_table = 'tb_institution_assessment_singlescore'
 
-class TbInstitutionAssessmentSinglescoreGender(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid')
-    pid = models.ForeignKey('TbProgramme', db_column='pid')
+class InstitutionAssessmentSinglescoreGender(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    programme = models.ForeignKey('Programme', db_column='pid')
     asstext = models.CharField(max_length=50)
     sex = models.TextField() # This field type is a guess.
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
@@ -205,20 +207,20 @@ class TbInstitutionAssessmentSinglescoreGender(models.Model):
         managed = False
         db_table = 'tb_institution_assessment_singlescore_gender'
 
-class TbInstitutionAssessmentSinglescoreMt(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid')
-    pid = models.ForeignKey('TbProgramme', db_column='pid')
+class InstitutionAssessmentSinglescoreMt(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    programme = models.ForeignKey('Programme', db_column='pid')
     asstext = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess.
+    mt = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
 
-class TbInstitutionBasicAssessmentInfo(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class InstitutionBasicAssessmentInfo(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.TextField(blank=True) # This field type is a guess.
     mt = models.TextField(blank=True) # This field type is a guess.
@@ -227,9 +229,9 @@ class TbInstitutionBasicAssessmentInfo(models.Model):
         managed = False
         db_table = 'tb_institution_basic_assessment_info'
 
-class TbInstitutionBasicAssessmentInfoCohorts(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class InstitutionBasicAssessmentInfoCohorts(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.TextField(blank=True) # This field type is a guess.
     mt = models.TextField(blank=True) # This field type is a guess.
@@ -238,7 +240,7 @@ class TbInstitutionBasicAssessmentInfoCohorts(models.Model):
         managed = False
         db_table = 'tb_institution_basic_assessment_info_cohorts'
 
-class TbPartner(models.Model):
+class Partner(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     status = models.IntegerField()
@@ -247,9 +249,9 @@ class TbPartner(models.Model):
         managed = False
         db_table = 'tb_partner'
 
-class TbPreschoolAssessmentAgg(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class PreschoolAssessmentAgg(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     agegroup = models.CharField(max_length=50, blank=True)
     sex = models.TextField(blank=True) # This field type is a guess.
     mt = models.TextField(blank=True) # This field type is a guess.
@@ -259,9 +261,9 @@ class TbPreschoolAssessmentAgg(models.Model):
         managed = False
         db_table = 'tb_preschool_assessment_agg'
 
-class TbPreschoolBasicAssessmentInfo(models.Model):
-    sid = models.ForeignKey('TbSchool', db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+class PreschoolBasicAssessmentInfo(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     agegroup = models.CharField(max_length=50, blank=True)
     sex = models.TextField(blank=True) # This field type is a guess.
     mt = models.TextField(blank=True) # This field type is a guess.
@@ -270,21 +272,21 @@ class TbPreschoolBasicAssessmentInfo(models.Model):
         managed = False
         db_table = 'tb_preschool_basic_assessment_info'
 
-class TbProgramme(models.Model):
+class Programme(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     start = models.DateField(blank=True, null=True)
     end = models.DateField(blank=True, null=True)
-    type = models.ForeignKey(TbBoundaryType, db_column='type')
-    ayid = models.ForeignKey(TbAcademicYear, db_column='ayid', blank=True, null=True)
-    partnerid = models.ForeignKey(TbPartner, db_column='partnerid', blank=True, null=True)
+    boundary_type = models.ForeignKey('BoundaryType', db_column='type')
+    academic_year = models.ForeignKey('AcademicYear', db_column='ayid', blank=True, null=True)
+    partner = models.ForeignKey('Partner', db_column='partnerid', blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_programme'
 
-class TbQuestion(models.Model):
+class Question(models.Model):
     id = models.IntegerField(primary_key=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     desc = models.CharField(max_length=100)
     qtype = models.IntegerField(blank=True, null=True)
     maxmarks = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
@@ -294,18 +296,21 @@ class TbQuestion(models.Model):
         managed = False
         db_table = 'tb_question'
 
-class TbSchool(models.Model):
+class School(models.Model):
     id = models.IntegerField(primary_key=True)
-    bid = models.ForeignKey(TbBoundary, db_column='bid')
-    aid = models.ForeignKey(TbAddress, db_column='aid', blank=True, null=True)
+    boundary = models.ForeignKey('Boundary', db_column='bid')
+    #TODO: check if address should be ForeignKey or OneToOneField
+    address = models.ForeignKey('Address', db_column='aid', blank=True, null=True)
     dise_code = models.CharField(max_length=14, blank=True)
     name = models.CharField(max_length=300)
-    cat = models.TextField(blank=True) # This field type is a guess.
-    sex = models.TextField(blank=True) # This field type is a guess.
-    moi = models.TextField(blank=True) # This field type is a guess.
-    mgmt = models.TextField(blank=True) # This field type is a guess.
+    cat = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    moi = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mgmt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     status = models.IntegerField()
-    assembly_id = models.IntegerField(blank=True, null=True)
+    #QUESTIONS: is assembly really a foreign key to Assembly?
+    #Why is assembly_name a field here?
+    assembly = models.ForeignKey('Assembly', blank=True, null=True, db_column='assembly_id')
     assembly_name = models.CharField(max_length=35, blank=True)
     objects = models.GeoManager()
 
@@ -316,8 +321,8 @@ class TbSchool(models.Model):
         }
 
     def get_geometry(self):
-        if self.viewinstcoord is not None:
-            return json.loads(self.viewinstcoord.coord.geojson)
+        if self.instcoord is not None:
+            return json.loads(self.instcoord.coord.geojson)
         else:
             return {}
 
@@ -332,117 +337,117 @@ class TbSchool(models.Model):
         managed = False
         db_table = 'tb_school'
 
-class TbSchoolAgg(models.Model):
-    school_id = models.IntegerField(db_column='id', blank=True, null=True)
+class SchoolAgg(models.Model):
+    school = models.ForeignKey('School', db_column='id', blank=True, null=True)
     name = models.CharField(max_length=300, blank=True)
-    bid = models.IntegerField(blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    boundary = models.ForeignKey('Boundary', blank=True, null=True)
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_school_agg'
 
-class TbSchoolAssessmentAgg(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
-    clid = models.ForeignKey(TbClass, db_column='clid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+class SchoolAssessmentAgg(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
+    klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     aggtext = models.CharField(max_length=100)
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_school_assessment_agg'
 
-class TbSchoolBasicAssessmentInfo(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid', blank=True, null=True)
-    assid = models.ForeignKey(TbAssessment, db_column='assid', blank=True, null=True)
-    clid = models.ForeignKey(TbClass, db_column='clid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+class SchoolBasicAssessmentInfo(models.Model):
+    school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
+    klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
+    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_school_basic_assessment_info'
 
-class TbStudent(models.Model):
+class Student(models.Model):
     id = models.IntegerField(primary_key=True)
-    cid = models.ForeignKey(TbChild, db_column='cid')
+    child = models.ForeignKey('Child', db_column='cid')
     otherstudentid = models.CharField(max_length=100, blank=True)
     status = models.IntegerField()
     class Meta:
         managed = False
         db_table = 'tb_student'
 
-class TbStudentClass(models.Model):
-    stuid = models.ForeignKey(TbStudent, db_column='stuid')
-    clid = models.ForeignKey(TbClass, db_column='clid')
-    ayid = models.ForeignKey(TbAcademicYear, db_column='ayid')
+class StudentClass(models.Model):
+    student = models.ForeignKey('Student', db_column='stuid')
+    klass = models.ForeignKey('Class', db_column='clid')
+    academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField()
     class Meta:
         managed = False
         db_table = 'tb_student_class'
 
-class TbStudentEval(models.Model):
-    qid = models.ForeignKey(TbQuestion, db_column='qid')
-    stuid = models.ForeignKey(TbStudent, db_column='stuid')
+class StudentEval(models.Model):
+    question = models.ForeignKey('Question', db_column='qid')
+    student = models.ForeignKey('Student', db_column='stuid')
     mark = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     grade = models.CharField(max_length=30, blank=True)
     class Meta:
         managed = False
         db_table = 'tb_student_eval'
 
-class TbStudentgroupAssessmentGenderSinglescore(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class StudentgroupAssessmentGenderSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    sex = models.TextField() # This field type is a guess.
+    sex = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_studentgroup_assessment_gender_singlescore'
 
-class TbStudentgroupAssessmentMtSinglescore(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class StudentgroupAssessmentMtSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess.
+    mt = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_studentgroup_assessment_mt_singlescore'
 
-class TbStudentgroupAssessmentSinglescore(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class StudentgroupAssessmentSinglescore(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_studentgroup_assessment_singlescore'
 
-class TbStudentgroupAssessmentSinglescoreGender(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class StudentgroupAssessmentSinglescoreGender(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    sex = models.TextField() # This field type is a guess.
+    sex = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_studentgroup_assessment_singlescore_gender'
 
-class TbStudentgroupAssessmentSinglescoreMt(models.Model):
-    sid = models.ForeignKey(TbSchool, db_column='sid')
-    assid = models.ForeignKey(TbAssessment, db_column='assid')
+class StudentgroupAssessmentSinglescoreMt(models.Model):
+    school = models.ForeignKey('School', db_column='sid')
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess.
+    mt = models.TextField() # This field type is a guess. FIXME: enum
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_studentgroup_assessment_singlescore_mt'
 
-class TbTeacher(models.Model):
+class Teacher(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     sex = models.TextField() # This field type is a guess.
@@ -454,25 +459,25 @@ class TbTeacher(models.Model):
         managed = False
         db_table = 'tb_teacher'
 
-class TbTeacherClass(models.Model):
-    teacherid = models.ForeignKey(TbTeacher, db_column='teacherid', blank=True, null=True)
-    clid = models.ForeignKey(TbClass, db_column='clid')
-    ayid = models.ForeignKey(TbAcademicYear, db_column='ayid')
+class TeacherClass(models.Model):
+    teacher = models.ForeignKey('Teacher', db_column='teacherid', blank=True, null=True)
+    klass = models.ForeignKey('Class', db_column='clid')
+    academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'tb_teacher_class'
 
-class TbTeacherQual(models.Model):
-    tid = models.ForeignKey(TbTeacher, db_column='tid')
+class TeacherQualification(models.Model):
+    teacher = models.ForeignKey('Teacher', db_column='tid')
     qualification = models.CharField(max_length=100)
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'
 
 
-class ViewInstCoord(models.Model):
-    instid = models.OneToOneField("TbSchool", primary_key=True, db_column='instid')
+class InstCoord(models.Model):
+    school = models.OneToOneField("School", primary_key=True, db_column='instid')
     coord = models.GeometryField()
     objects = models.GeoManager()
 

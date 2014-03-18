@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.contrib.gis.geos import Polygon
 #from coords.models import InstCoord
-from klp.models import TbSchool, ViewInstCoord
+from klp.models import School, InstCoord
 import json
 from django.http import HttpResponse
 
 def schools(request):
     bbox_string = request.GET.get("bounds")
     bbox = Polygon.from_bbox([float(b) for b in bbox_string.split(",")])
-    schools = TbSchool.objects.filter(viewinstcoord__coord__within=bbox).select_related('viewinstcoord')
+    schools = School.objects.filter(instcoord__coord__within=bbox).select_related('instcoord')
     count = schools.count()
     d = {
         'type': 'FeatureCollection',
