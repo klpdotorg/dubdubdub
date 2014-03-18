@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{% block head %}
+	<!-- META -->
+	<title>{% block page_title %}KLP{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<meta name="description" content="" />
+	<link type="text/css" rel="stylesheet" href="/static/css/style.css" media="all"/>
+	<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/static/js/libs.combined.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/js/lib/iCheck/skins/minimal/minimal.css" media="all"/>
+	<script type="text/javascript" src="/static/js/lib/iCheck/jquery.icheck.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="/static/js/html5shiv.js"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<script src="/static/js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	  DD_belatedPNG.fix('.nav, a ,img, .png24');
+	</script>
+	<![endif]-->
+	{% endblock %}
+</head>
+
+<body>
+
+	{% if not homepage %}
+
+	<header class="main-header">
+		<div class="header-content">
+			<a href="index.php" class="header_mobile_logo"></a>
+			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
+			<nav class="top-nav" role="navigation">
+				{% include "_top_navigation.html" %}
+			</nav>
+			<div class="clr"></div>
+		</div>
+
+		<div class="subheader-wrapper">
+			<div class="subheader-content">
+				<div class="breadcrumb">
+			    	<a href="index.php">Home</a><span></span>
+			    	<a href="">{{ page_title }}</a>
+			    </div>
+			</div>
+		</div>
+	</header>
+
+	{% else %}
+
+	<header class="home-header" role="banner">
+		<div class="mobile_header">
+			<a href="index.php" class="header_mobile_logo"></a>
+			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
+		</div>
+		<div class="blackboard_wrapper">
+			<div class="content png24">
+				<h1 class="disable-text-select png24">Karnataka Learning Partnership</h1>
+				<div class="headline-text disable-text-select png24">Come Engage With Us And Help Us Make Our Schools Better For Our Children.</div>
+				<div class="headline-text-mobile"><img src="images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
+				<div class="info">
+					<p>The Karnataka Learning Partnership is a public platform where all the stakeholders involved in primary education can participate and contribute to the cause of ensuring better schools and education for all children in Karnataka.</p>
+					<p><a href="about.php">Read more</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="main-header full_width">
+			<nav class="top-nav home" role="navigation">
+				{% include "_top_navigation.html" %}
+			</nav>
+		</div>
+	</header>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// Adds easing scrolling to # targets
+			$('a[href*=#]:not([href=#])').click(function() {
+			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+			        || location.hostname == this.hostname) {
+
+			      var target = $(this.hash);
+			      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+			      if (target.length) {
+			        $('html,body').animate({
+			          scrollTop: target.offset().top-100
+			        }, 300);
+			        return false;
+			      }
+			    }
+			});
+
+			// Re-display top navigation if it gets hidden.
+			$(window).resize(function() {
+				if($(window).width() >=980){
+					$("#navigation").show();
+				} else {
+					$("#navigation").hide();
+				}
+			});
+
+			// Top navigation show dropdown on hover
+			$(".top-nav ul li" ).hover(
+			  function() {
+			  	$( this ).find('ul').show();
+			  }, function() {
+			    $( this ).find('ul').hide();
+			  }
+			);
+
+			$("#page_sticky_nav").stickOnScroll({
+		        topOffset: 0,
+		        setParentOnStick:   true,
+		        setWidthOnStick:    true
+		    });
+
+		});
+
+	</script>
+
+	{% endif %}
+
+	{% block content %} {% endblock %}
+
+	<footer class="main-footer">
+		<div class="footer-wrapper">
+			<nav class="nav">
+				<ul>
+					<li><a href="about.php" title="">About</a></li>
+					<li><a href="contact.php" title="">Contact</a></li>
+					<li class="hidden-desktop"><a href="disclaimer.php" title="">Disclaimer</a></li>
+					<li class="hidden-phone hidden-tablet"><a href="map.html" title="">School Map</a></li>
+					<li class="hidden-phone hidden-tablet"><a href="programmes.php" title="">Programmes</a></li>
+					<li class="hidden-phone hidden-tablet"><a href="status_1.php" title="">Database</a></li>
+					<li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li>
+					<div class="clr"></div>
+				</ul>
+			</nav>
+			<div class="copyright">Copyright 2013. All Rights Reserved.</div>
+		</div>
+	</footer>
+
+
+	<script type="text/javascript"> 
+    $(document).ready(function(){ 
+        //$(document).pngFix(); 
+    }); 
+</script> 
+
+</body>
+</html>

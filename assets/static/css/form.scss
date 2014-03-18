@@ -1,0 +1,61 @@
+.form{
+	input, textarea {
+		border: 1px solid $primary-border-color;
+		padding: 10px; margin:0;
+		color: $base-text-color; 
+		font-size: 14px; line-height: 14px;
+		min-width: 250px;
+		@include border-radius(3px);
+
+		&.submit,{
+			border:none; padding:0 18px;
+			min-width:0;
+		}
+	}
+	textarea {
+		line-height: 20px;
+	}
+	input:focus, textarea:focus {
+		outline: none;
+		border-color: #3fa5e7;
+		color: #2E7BAF;
+		-webkit-box-shadow: 0 0 6px #3fa5e7;
+		-moz-box-shadow: 0 0 6px #3fa5e7;
+		box-shadow: 0 0 6px #3fa5e7;
+	}
+
+	.button{
+		margin-top:0; font-size:12px;
+	}
+
+	label{
+		font-size: 16px; line-height: 38px; color: #36393c; margin-right:50px;
+		float:left;
+		&.textarea{
+			line-height: 24px;
+		}
+	}
+
+	.form-item{
+		margin-bottom:25px;
+
+		.item-label{
+			font-size: 16px; line-height: 38px; color: #36393c;
+			float:left; width:40%;
+		}
+		.item-field{
+			float:left; width:60%;
+		}
+
+		@include if-device(phone-tablet) {
+			.item-label{
+				font-size: 13px; line-height: 18px;
+				float:none; width:auto; margin-bottom:10px;
+			}
+			.item-field{
+				float:none; width:auto;
+			}
+		}
+	}
+
+}

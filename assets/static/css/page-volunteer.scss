@@ -1,0 +1,348 @@
+.page-volunteer{
+
+	.volunteer-header{
+		width:100%; height:600px; overflow:hidden;
+		background:#000 url("../images/bg_blackboard_big.jpg") repeat;
+		background-size: cover;
+
+		@include if-device(phone-tablet) {
+			height:auto; padding-bottom: 25px;
+		}
+
+		.content{
+			width:960px; margin: 0 auto; padding-top:75px;
+
+			@include if-device(phone-tablet) {
+				width:auto; padding: 25px 3% 0;
+			}
+
+			.headline_text{
+				background-position: top center; background-repeat: no-repeat;
+				@include bg-image-2x("../images/volunteer_header_text", png, 528px, 164px);
+				width:100%; height:164px;
+				margin:0 auto 50px;
+				text-indent: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+
+				*background-position-x: 30%;
+				_background-position-x: 52%;
+
+				@include if-device(phone-tablet) {
+					display:none;
+				}
+			}
+
+			.headline_text_mobile{
+				display:none; margin: 25px 0; text-align: center; width: 100%;
+				img{
+					width: 80%; max-width: 530px;
+				}
+				@include if-device(phone-tablet) {
+					display:block;
+				}
+			}
+
+			.child_1,.child_2{
+				height:180px; background-repeat: no-repeat; 
+				background-position: top center;
+
+				@include if-device(phone-tablet) {
+					background-size:auto 130px;margin-top:25px;
+				}
+
+				@media screen and (max-width: 850px)and (min-width: 768px){
+					background-size:auto 110px; margin-top:25px;
+				}
+
+				@media screen and (max-width: 768px){
+					display:none;
+				}
+			}
+			.child_1{
+				width:182px;
+				@include bg-image-2x("../images/volunteer_child_1_left", png, 182px, 180px);
+			}
+			.child_2{
+				width:155px;
+				@include bg-image-2x("../images/volunteer_child_2_right", png, 155px, 180px);
+			}
+
+			.question_box{
+				width:350px; padding: 25px; text-align: center;
+				background:#fff; margin:0 auto;
+				@include border-radius(3px);
+
+				h1{
+					font-size: 12px; line-height: 20px; color:$color_school_map; margin: 0 0 25px;
+					span{
+						background: $color_programmes;
+					}
+				}
+				p{
+					color: #393939; font-size: 24px; line-height: 24px;
+				}
+				.radio_option_wrapper{
+					width:55%; margin: 0 auto; overflow: hidden;
+					font-size: 13px; line-height: 18px;
+					.item{
+						width:40%; text-align: center; padding-right:10%;
+						&:last-of-type{
+							padding-left:10%; padding-right:0%;
+						}
+						.item-checkbox{
+							padding-top:1px; float:left;
+						}
+					}
+					input{
+						margin-right: 5px;
+					}
+				}
+
+				@include if-device(phone-tablet) {
+					margin:50px auto 25px;
+				}
+
+				@media screen and (max-width: 400px){
+					width:90%; padding:25px 3%; margin:25px auto;
+					p{
+						font-size: 18px; line-height: 18px;
+					}
+				}
+			}
+
+
+			h1{
+				color: #fff;
+				span{
+					background: #fff;
+				}
+			}
+			p{
+				font-weight: $light; text-align: center; color: #fff; 
+				@include text-shadow(0px 1px 1px, rgba(255,254,254,0.30));
+			}
+			p.text_1{
+				width:500px; margin: 120px auto 0;
+			}
+			p.text_2{
+				width:100%; margin-top:130px; vertical-align: bottom; line-height: 34px;
+				span.bigger{
+					vertical-align: bottom; line-height: 34px;
+					font-size: 34px; margin-right: 5px;
+				}
+			}
+		}
+	}
+
+	.volunteer-section{
+		width:100%; padding: 50px 0;
+
+		.circular{
+			width:190px; height:190px; background:#fff; margin: 0 auto 50px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			@include border-radius(50%);
+		}
+	}
+
+	.how-volunteering-works{
+		background: #c3dfe7;
+		h2{
+			color: #393939;
+			span{
+				background: #393939;
+			}
+		}
+
+		@media screen and (min-width: 980px) {
+			.container{
+				background:url(../images/volunteer_flow_dots.png) no-repeat 105px 190px;
+			}
+		}
+
+		.step-number{
+			position:absolute; z-index:1; left:50%; margin-left: -16px; margin-top: -16px;
+			display: inline-block; 
+			width: 30px; height: 30px; padding: 0; text-align: center;
+			font-size: 14px; font-weight: $bold; line-height: 14px;
+			@include border-radius(50%);
+
+			span{
+				display: inline-block; background: #fff;
+				width: 28px; height: 14px; padding: 7px 0;margin-top: 0px; text-align: center;
+				font-size: 14px; font-weight: $bold; line-height: 14px;
+				@include border-radius(50%);
+			}
+
+			@include if-device(phone) {
+				width: 24px; height: 24px; margin-left: -12px; margin-top: -12px;
+				span{
+					width: 20px; height: 12px; padding: 4px 0;
+					font-size: 12px; line-height: 12px;
+				}
+			}
+		}
+
+		.grid_item{
+			p{
+				font-size: $p-font-size; line-height: 26px; color: #393939; font-weight: $regular; text-align: center;
+				padding: 0 10px;
+			}
+			h3{  margin-bottom: 25px; font-size: 22px; }
+		}
+
+		.col_locate_nearby_schools{
+			.step-number span{
+				border: 1px solid #26b262; color: #26b262;
+			}
+			.circular{
+				background: #e17e5b url("../images/volunteer_locate.png") no-repeat center center;
+			}
+			h3{	color: #e17e5b; }
+		}
+
+		.col_teach_kids{
+			.step-number span{
+				border: 1px solid #090909; color: #090909;
+			}
+			.circular{
+				background: $color_volunteer url("../images/volunteer_teach.png") no-repeat center center;
+			}
+			h3{	color: $color_volunteer; }
+		}
+		.col_share_your_experience{
+			.step-number span{
+				border: 1px solid #006e70; color: #006e70;
+			}
+			.circular{
+				background: $color_database url("../images/volunteer_share.png") no-repeat center center;
+			}
+			h3{	color: $color_database; }
+		}
+
+		@include if-device(phone) {
+			.grid_item{
+				display:block; width: auto!important;
+				float: none;
+				position: relative;
+				margin-left: 0%;
+				margin-right: 0%;
+
+				h3{  margin-bottom: 0px; }
+				p{
+					margin: 0px 0 25px;
+				}
+
+				.circular{
+					width:110px; height:110px;
+					background-size: auto 50%; margin-bottom: 25px;
+				}
+			}
+		}
+	}
+
+	.donate-items{
+		background: #fff;
+		h2{
+			color: $color_volunteer; margin-bottom: 25px;
+			span{
+				background: $color_volunteer;
+			}
+		}
+
+		p{
+			margin:50px 0;
+		}
+
+		.column_item{
+			text-align: center; width:16.6667%;
+			display:inline; float: left; position: relative;
+
+			a.donate_option{
+				display: block;
+				text-align: center; font-size: 16px; line-height: 24px;
+				img{
+					margin-bottom: 25px;
+				}
+			}
+		}
+
+		@media screen and (max-width: 959px){
+			p{
+				margin:25px 0 0;
+			}
+			.column_item{
+				width:33.33%; margin: 25px 0 0;
+				
+				a.donate_option{
+					display: inline-block!important;
+					img{
+						margin-bottom: 0px;
+					}
+				}
+			}
+		}
+
+		@media screen and (max-width: 400px){
+			p{
+				width: 70%; margin-left:auto; margin-right:auto;
+			}
+			.column_item{
+				a.donate_option{
+					font-size: 14px; line-height: 20px;
+					img{
+						max-width: 70px;
+					}
+				}
+			}
+		}
+	}
+
+	.recently_shared_stories{
+		background: #f6f6f6;
+		h2{
+			color: #393939; margin-bottom: 25px;
+			span{
+				background: #393939;
+			}
+		}
+
+		.column_item{
+			width:420px; padding: 25px 0;
+			border-bottom: 1px solid $primary-border-color;
+			float:left;
+			margin-right:60px;
+			&:nth-of-type(odd){
+				margin-right:60px;
+			}
+			&:nth-of-type(even){
+				margin-left:60px;
+				margin-right:0;
+			}
+		}
+
+		h3{
+			color: $color_database; text-align: left; text-transform:none ; margin: 0;
+			font-size: 20px; line-height: 26px; font-weight: $regular; letter-spacing: normal;
+		}
+
+		.date{
+			color: #adadad;
+		}
+
+		p.text{
+			margin:15px 0; line-height: 24px;
+		}
+
+		a{
+			color: $base-text-color; font-weight: $bold; font-size: 14px;
+		}
+
+		@include if-device(phone-tablet) {
+			.column_item{
+				width: 100%; float: none; margin: 0 !important; padding: 15px 0;
+			}
+		}
+	}
+}

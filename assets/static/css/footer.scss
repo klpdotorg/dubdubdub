@@ -1,0 +1,43 @@
+.main-footer{
+	background: #4D4D4D;
+	border-top: 10px solid #3D3D3D;
+	padding: 20px;
+
+	.footer-wrapper{
+		width:960px; margin: 0 auto;
+
+		.nav{
+			width:auto; padding-right: 65px; line-height: 32px;
+			background: url("../images/KLP_logo_footer.png") no-repeat right center;
+			ul{
+				list-style: none; width:100%; margin: 0; padding: 0;
+				li{
+					display:block; float: left; margin: 0 20px 0 0; padding: 0;
+					a{
+						line-height: 12px; font-size: 12px; letter-spacing: 1px; 
+						font-weight: $light; color: #fff; text-transform: uppercase;
+						&:hover{
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+
+		.copyright{
+			color: #adadad; font-size: 11px; line-height: 11px; text-align: right;
+			margin-top: 10px;
+		}
+	}
+
+	@include if-device(phone-tablet) {
+		padding: 10px 5%; border-top: 5px solid #3D3D3D;
+
+		.footer-wrapper{
+			width:auto;
+			.nav{
+				margin-top: 10px;
+			}
+		}
+	}
+}

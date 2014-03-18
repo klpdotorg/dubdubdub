@@ -1,0 +1,83 @@
+
+.guide-item-bordered{
+	border-bottom: 1px solid $primary-border-color; margin: 30px 0;
+}
+.guide{
+	margin-bottom: 50px;
+	.guide-heading{
+		font-weight: $bold; color: $base-text-color; text-align: left; margin: 30px 0 10px;
+	}
+	.guide-subheading{
+		color: #8d8d8d; font-size: 16px; font-weight: $bold; margin-bottom:10px;
+	}
+
+	.margin_auto{
+		margin-left:auto; margin-right:auto;
+	}
+
+		.example{
+			color: #8d8d8d; font-size: 16px; font-weight: $bold; margin-bottom:10px;
+		}
+		h1{
+			margin: 10px 0;
+		}
+		h2{
+			margin: 10px 0;
+			@include heading_color(#393939);
+		}
+		h3{
+			margin: 10px 0;
+		}
+		h4 {
+			font-weight: $regular; text-transform: none;
+			margin: 10px 0;
+		}
+
+		.codeblock {
+			border: 1px solid #eee; padding: 5px; margin-bottom: 50px;
+			@include border-radius(3px);
+			background: #f8f8f8;
+		}
+
+		.body-text-klp{
+			  color: #6d6d6d;
+			  font-size: 16px;
+			  line-height: 28px;
+			  font-weight: 400;
+		}
+		.horizontal-list{
+			margin: 10px 0;
+		}
+		.palette-item{
+			text-align: center; margin:0 45px 20px 0; float: left;
+
+			.palette-item-circle{
+				height: 60px;  width: 60px; margin: 0 auto 20px;
+				@include border-radius(50%);
+
+				&.orange {
+					background-color:$color_school_map;
+				}
+				&.green{
+					background-color:$color_programmes;
+				}
+				&.blue{
+					background-color:$color_volunteer;
+				}
+				&.turquoise{
+					background-color:$color_database;
+				}
+				&.purple{
+					background-color:$color_reports;
+				}
+				&.red{
+					background-color:$color_about;
+				}
+			}
+			.color-text{
+				color: $base-text-color; font-size: 16px; line-height: 26px;
+				font-weight: $light;
+			}
+			
+		}
+}

@@ -1,0 +1,39 @@
+DEBUG = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'dubdubdub',
+        'USER': 'vagrant',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+    'klp-www': {
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'klpwww_ver4',
+        'USER': 'vagrant',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+
+    'klp-coord': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'klp-coord',
+        'USER': 'vagrant',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+    'electrep': {
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'electrep_new',
+        'USER': 'vagrant',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    },
+}
