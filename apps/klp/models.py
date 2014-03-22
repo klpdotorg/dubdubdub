@@ -113,7 +113,7 @@ class Class(models.Model):
         db_table = 'tb_class'
 
 class InstitutionAgg(models.Model):
-    school = models.ForeignKey('School', db_column='id', blank=True, null=True)
+    school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True)
     sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
@@ -338,7 +338,7 @@ class School(models.Model):
         db_table = 'tb_school'
 
 class SchoolAgg(models.Model):
-    school = models.ForeignKey('School', db_column='id', blank=True, null=True)
+    school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     boundary = models.ForeignKey('Boundary', blank=True, null=True)
     sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
