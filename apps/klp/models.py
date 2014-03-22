@@ -477,13 +477,64 @@ class TeacherQualification(models.Model):
 
 
 class InstCoord(models.Model):
+    '''
+        View table:
+        vw_inst_coord - This is a cooridnate for a school/preschool and 
+        can join with tb_school on school id. View is from klp_coord
+    '''
     school = models.OneToOneField("School", primary_key=True, db_column='instid')
     coord = models.GeometryField()
     objects = models.GeoManager()
-
     class Meta:
         managed = False
         db_table = 'vw_inst_coord'
+
+class BoundaryCoord(models.Model):
+    '''
+        View table:
+        This is a cooridnate for a boundary (district,block/project,cluster/circle)
+        and can join with tb_boundary on boundary id. View is from klp_coord
+    '''
+    boundary = models.OneToOneField("Boundary", primary_key=True, db_column='id_bndry')
+    typ = models.CharField(max_length=20, db_column='type')
+    coord = models.GeometryField()
+    objects = models.GeoManager()
+    class Meta:
+        managed = False
+        db_table = 'vw_boundary_coord'
+
+class AngInfraAgg(models.Model):
+    '''
+        Akshara does a 70 question anganwadi infrastructure assessment every year.
+        This is an aggregation table that groups the responses per school
+        into 17 ai_metrics and 5 groups - the logic is here - 
+        https://github.com/klpdotorg/importers/blob/master/ang_infra/db_scripts/agg_infra.sql.
+        The view is from ang_infra 
+    '''
+    school = models.ForeignKey('School', primary_key=True, db_column='sid')
+    ai_metric = models.CharField(max_length=30)
+    perc = models.IntegerField()
+    ai_group = models.CharField(max_length=30)
+    class Meta:
+        managed = False
+        db_table = 'vw_anginfra_agg'
+
+
+class AngDisplayMaster(models.Model):
+    '''
+        This is a table to map the key values of anginfra_agg
+        into readable text on the Webpage
+        QUESTION: Should 'key' be a ForeignKey? To what?
+    '''
+    key = models.CharField(max_length=30, primary_key=True)
+    value = models.CharField(max_length=200)
+    class Meta:
+        managed = False
+        db_table = 'vw_ang_display_master'
+
+
+
+
 
 class Temp(models.Model):
     klpid = models.IntegerField(blank=True, null=True)
