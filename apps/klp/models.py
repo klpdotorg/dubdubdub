@@ -13,6 +13,50 @@ from django.contrib.gis.db import models
 import json
 from coords.models import InstCoord
 
+CAT_CHOICES = (
+    ('Model Primary', 'Model Primary'),
+    ('Anganwadi', 'Anganwadi'),
+    ('Lower Primary', 'Lower Primary'),
+    ('Secondary', 'Secondary'),
+    ('Akshara Balwadi', 'Akshara Balwadi'),
+    ('Independent Balwadi', 'Independent Balwadi'),
+    ('Upper Primary', 'Upper Primary'),
+)
+
+#FIXME: Add mgmt choices from DISE list, @BibhasC
+#FIXME: change verbose names to something nicer
+MGMT_CHOICES = (
+    ('p-a', 'p-a'),
+    ('ed', 'ed'),
+    ('p-ua', 'p-ua'),
+)
+
+MT_CHOICES = (
+    ('bengali', 'Bengali'),
+    ('english', 'English'),
+    ('gujarathi', 'Gujarathi'),
+    ('hindi', 'Hindi'),
+    ('kannada', 'Kannada'),
+    ('konkani', 'Konkani'),
+    ('malayalam', 'Malayalam'),
+    ('marathi', 'Marathi'),
+    ('nepali', 'Nepali'),
+    ('oriya', 'Oriya'),
+    ('sanskrit', 'Sanskrit'),
+    ('sindhi', 'Sindhi'),
+    ('tamil', 'Tamil'),
+    ('telugu', 'Telugu'),
+    ('urdu', 'Urdu'),
+    ('multi lng', 'Multi Lingual'),
+    ('other', 'Other'),
+    ('not known', 'Not known'),
+)
+
+SEX_CHOICES = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+)
+
 class Assembly(models.Model):
     ogc_fid = models.IntegerField(primary_key=True)
     wkb_geometry = models.PolygonField(blank=True, null=True)
@@ -97,8 +141,8 @@ class Child(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     dob = models.DateField(blank=True, null=True)
-    sex = models.TextField() # This field type is a guess FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     class Meta:
         managed = False
         db_table = 'tb_child'
@@ -116,8 +160,8 @@ class InstitutionAgg(models.Model):
     school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -127,8 +171,8 @@ class InstitutionAssessmentAgg(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     domain = models.CharField(max_length=100, blank=True)
     domain_order = models.IntegerField(blank=True, null=True)
     aggtext = models.CharField(max_length=100)
@@ -142,8 +186,8 @@ class InstitutionAssessmentAggCohorts(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     domain = models.CharField(max_length=100, blank=True)
     domain_order = models.IntegerField(blank=True, null=True)
     aggtext = models.CharField(max_length=100)
@@ -156,7 +200,7 @@ class InstitutionAssessmentAggCohorts(models.Model):
 class InstitutionAssessmentGenderSinglescore(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
-    sex = models.TextField() # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -165,7 +209,7 @@ class InstitutionAssessmentGenderSinglescore(models.Model):
 class InstitutionAssessmentMtSinglescore(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
-    mt = models.TextField() # This field type is a guess.
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -175,8 +219,8 @@ class InstitutionAssessmentReadingAggCohorts(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     domain = models.CharField(max_length=100, blank=True)
     domain_order = models.IntegerField(blank=True, null=True)
     aggtext = models.CharField(max_length=100)
@@ -200,7 +244,7 @@ class InstitutionAssessmentSinglescoreGender(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     programme = models.ForeignKey('Programme', db_column='pid')
     asstext = models.CharField(max_length=50)
-    sex = models.TextField() # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     class Meta:
@@ -211,7 +255,7 @@ class InstitutionAssessmentSinglescoreMt(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     programme = models.ForeignKey('Programme', db_column='pid')
     asstext = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess. FIXME: enum
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
     class Meta:
@@ -222,8 +266,8 @@ class InstitutionBasicAssessmentInfo(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -233,8 +277,8 @@ class InstitutionBasicAssessmentInfoCohorts(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     cohortsnum = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -253,8 +297,8 @@ class PreschoolAssessmentAgg(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     agegroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     aggtext = models.CharField(max_length=100)
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
@@ -265,8 +309,8 @@ class PreschoolBasicAssessmentInfo(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     agegroup = models.CharField(max_length=50, blank=True)
-    sex = models.TextField(blank=True) # This field type is a guess.
-    mt = models.TextField(blank=True) # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -303,10 +347,10 @@ class School(models.Model):
     address = models.ForeignKey('Address', db_column='aid', blank=True, null=True)
     dise_code = models.CharField(max_length=14, blank=True)
     name = models.CharField(max_length=300)
-    cat = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    moi = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mgmt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    cat = models.CharField(max_length=128, choices=CAT_CHOICES)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    moi = models.CharField(max_length=128, choices=MT_CHOICES)
+    mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
     #QUESTIONS: is assembly really a foreign key to Assembly?
     #Why is assembly_name a field here?
@@ -341,8 +385,8 @@ class SchoolAgg(models.Model):
     school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     boundary = models.ForeignKey('Boundary', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -352,8 +396,8 @@ class SchoolAssessmentAgg(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     aggtext = models.CharField(max_length=100)
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
@@ -364,8 +408,8 @@ class SchoolBasicAssessmentInfo(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
-    sex = models.TextField(blank=True) # This field type is a guess. FIXME: enum
-    mt = models.TextField(blank=True) # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
     class Meta:
         managed = False
@@ -402,7 +446,7 @@ class StudentgroupAssessmentGenderSinglescore(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    sex = models.TextField() # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -412,7 +456,7 @@ class StudentgroupAssessmentMtSinglescore(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess. FIXME: enum
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -431,7 +475,7 @@ class StudentgroupAssessmentSinglescoreGender(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    sex = models.TextField() # This field type is a guess. FIXME: enum
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -441,7 +485,7 @@ class StudentgroupAssessmentSinglescoreMt(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50)
-    mt = models.TextField() # This field type is a guess. FIXME: enum
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
@@ -450,9 +494,9 @@ class StudentgroupAssessmentSinglescoreMt(models.Model):
 class Teacher(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300, blank=True)
-    sex = models.TextField() # This field type is a guess.
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     status = models.IntegerField(blank=True, null=True)
-    mt = models.TextField(blank=True) # This field type is a guess.
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
     dateofjoining = models.DateField(blank=True, null=True)
     type = models.CharField(max_length=50, blank=True)
     class Meta:
