@@ -65,6 +65,10 @@ class Assembly(models.Model):
     ac_name = models.CharField(max_length=35, blank=True)
     state_ut = models.CharField(max_length=35, blank=True)
     objects = models.GeoManager()
+
+    def __unicode__(self):
+        return self.ac_name
+
     class Meta:
         managed = False
         db_table = 'assembly'
@@ -72,6 +76,10 @@ class Assembly(models.Model):
 class AcademicYear(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_academic_year'
@@ -85,6 +93,10 @@ class Address(models.Model):
     instidentification = models.CharField(max_length=1000, blank=True)
     bus = models.CharField(max_length=1000, blank=True)
     instidentification2 = models.CharField(max_length=1000, blank=True)
+
+    def __unicode__(self):
+        return self.address
+
     class Meta:
         managed = False
         db_table = 'tb_address'
@@ -108,6 +120,10 @@ class Assessment(models.Model):
     programme = models.ForeignKey('Programme', db_column='pid', blank=True, null=True)
     start = models.DateField(blank=True, null=True)
     end = models.DateField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_assessment'
@@ -115,16 +131,24 @@ class Assessment(models.Model):
 class BoundaryHierarchy(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_bhierarchy'
 
 class Boundary(models.Model):
     id = models.IntegerField(primary_key=True)
-    parent = models.ForeignKey("Boundary", blank=True, null=True)
+    parent = models.ForeignKey("Boundary", blank=True, null=True, db_column='parent')
     name = models.CharField(max_length=300)
     hierarchy = models.ForeignKey(BoundaryHierarchy, db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_boundary'
@@ -132,6 +156,10 @@ class Boundary(models.Model):
 class BoundaryType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_boundary_type'
@@ -143,6 +171,7 @@ class Child(models.Model):
     dob = models.DateField(blank=True, null=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
+
     class Meta:
         managed = False
         db_table = 'tb_child'
@@ -152,6 +181,10 @@ class Class(models.Model):
     school = models.ForeignKey("School", blank=True, null=True, db_column="sid")
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
+
+    def __unicode__(self):
+        return self.id
+
     class Meta:
         managed = False
         db_table = 'tb_class'
@@ -163,6 +196,10 @@ class InstitutionAgg(models.Model):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_institution_agg'
@@ -178,6 +215,10 @@ class InstitutionAssessmentAgg(models.Model):
     aggtext = models.CharField(max_length=100)
     aggtext_order = models.IntegerField()
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" % (self.school, self.sex, self.mt,)
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_agg'
@@ -193,6 +234,10 @@ class InstitutionAssessmentAggCohorts(models.Model):
     aggtext = models.CharField(max_length=100)
     aggtext_order = models.IntegerField()
     cohortsval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" % (self.school, self.sex, self.mt,)
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_agg_cohorts'
@@ -202,18 +247,28 @@ class InstitutionAssessmentGenderSinglescore(models.Model):
     assessment = models.ForeignKey('Assessment', db_column='assid')
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.sex,)
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_gender_singlescore'
+
 
 class InstitutionAssessmentMtSinglescore(models.Model):
     school = models.ForeignKey('School', db_column='sid')
     assessment = models.ForeignKey('Assessment', db_column='assid')
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_mt_singlescore'
+
 
 class InstitutionAssessmentReadingAggCohorts(models.Model):
     school = models.ForeignKey('School', db_column='sid', blank=True, null=True)
@@ -289,6 +344,10 @@ class Partner(models.Model):
     name = models.CharField(max_length=300)
     status = models.IntegerField()
     info = models.CharField(max_length=500, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_partner'
@@ -324,9 +383,14 @@ class Programme(models.Model):
     boundary_type = models.ForeignKey('BoundaryType', db_column='type')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid', blank=True, null=True)
     partner = models.ForeignKey('Partner', db_column='partnerid', blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.academic_year, self.name,)
+
     class Meta:
         managed = False
         db_table = 'tb_programme'
+
 
 class Question(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -336,6 +400,10 @@ class Question(models.Model):
     maxmarks = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
     minmarks = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
     grade = models.CharField(max_length=100, blank=True)
+
+    def __unicode__(self):
+        return self.desc
+
     class Meta:
         managed = False
         db_table = 'tb_question'
@@ -357,6 +425,9 @@ class School(models.Model):
     assembly = models.ForeignKey('Assembly', blank=True, null=True, db_column='assembly_id')
     assembly_name = models.CharField(max_length=35, blank=True)
     objects = models.GeoManager()
+
+    def __unicode__(self):
+        return self.name
 
     def get_properties(self):
         return {
@@ -420,6 +491,10 @@ class Student(models.Model):
     child = models.ForeignKey('Child', db_column='cid')
     otherstudentid = models.CharField(max_length=100, blank=True)
     status = models.IntegerField()
+
+    def __unicode__(self):
+        return self.id
+
     class Meta:
         managed = False
         db_table = 'tb_student'
@@ -499,6 +574,10 @@ class Teacher(models.Model):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     dateofjoining = models.DateField(blank=True, null=True)
     type = models.CharField(max_length=50, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_teacher'
