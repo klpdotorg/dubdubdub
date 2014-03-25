@@ -5,40 +5,27 @@ Home of KLP. Houses *most* of the data and APIs that powers the features on the 
 
 ### Development Setup
 
-Get Vagrant box - following instructions are for box with sha1sum: `dc2a362f2f7f1339570abfc23549ecb1fbdbe070`
+We use Vagrant for development. Here's everything you need to know about setting up dubdubdub for development.
 
-    $ vagrant init klp package.box
-    $ vagrant up
-    $ vagrant ssh
+#### Install Vagrant
+1. [Download for Ubuntu](https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.1_x86_64.deb)
+2. [Download for OS X](https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.1.dmg)
 
-Install some additional dependencies:
+#### Install Virtualbox
+1. Ubuntu
 
-    $ sudo apt-get install python2.7-dev
+  `wget http://download.virtualbox.org/virtualbox/4.3.4/virtualbox-4.3_4.3.4-91027~Ubuntu~raring_amd64.deb`
+  `sudo dpkg -i virtualbox-4.3_4.3.4-91027~Ubuntu~raring_amd64.deb`
+2. [Download for OS X](http://download.virtualbox.org/virtualbox/4.3.8/VirtualBox-4.3.8-92456-OSX.dmg)
 
-Setup environment:
+#### Clone the code
+`git clone git@github.com:klpdotorg/dubdubdub.git`
 
-    $ cd /vagrant/dubdubdub
-    $ virtualenv .
-    $ source bin/activate
-    $ pip install -r requirements/local.txt
+#### Setup Vagrant
+`vagrant up`
+`vagrant ssh`
 
-Setup database:
+#### Run Dev-Server:
 
-Follow instructions from http://codeinthehole.com/writing/how-to-install-postgis-and-geodjango-on-ubuntu/ to setup postgis template
-
-Then:
-
-    $ createuser vagrant
-    # (make this user a superuser)
-    $createdb -T template_postgis -O vagrant dubdubdub
-
-Lastly, copy `local_settings.py.sample` to `local_settings.py` in the `dubdubdub/` folder.
-
-Sync database:
-
-    python manage.py syncdb
-
-Run Dev-Server:
-
-    python manage.py runserver 0.0.0.0:8000
+`python manage.py runserver 0.0.0.0:8000`
 
