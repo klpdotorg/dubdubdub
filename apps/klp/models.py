@@ -422,8 +422,8 @@ class School(models.Model):
     status = models.IntegerField()
     #QUESTIONS: is assembly really a foreign key to Assembly?
     #Why is assembly_name a field here?
-    assembly = models.ForeignKey('Assembly', blank=True, null=True, db_column='assembly_id')
-    assembly_name = models.CharField(max_length=35, blank=True)
+    #assembly = models.ForeignKey('Assembly', blank=True, null=True, db_column='assembly_id')
+    #assembly_name = models.CharField(max_length=35, blank=True)
     objects = models.GeoManager()
 
     def __unicode__(self):
