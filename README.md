@@ -23,9 +23,9 @@ We use Vagrant for development. Here's everything you need to know about setting
 
 #### Setup Vagrant
 `vagrant up`
+
 `vagrant ssh`
 
-#### Run Dev-Server:
+#### Run:
 
-`python manage.py runserver 0.0.0.0:8000`
-
+`runserver` and go to http://localhost:8001
