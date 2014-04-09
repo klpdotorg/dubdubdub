@@ -28,12 +28,9 @@ We use Vagrant for development. Here's everything you need to know about setting
     $ vagrant up
     $ vagrant ssh
 
-#### Copy Local config file
+#### Copy Local settings file
 
     $ cp dubdubdub/local_settings.py{.sample,}
-
-#### Create local settings file
-cd into dubdubdub/ folder in code folder and copy local_settings.py.sample to local_settings.py
 
 #### Run:
 
