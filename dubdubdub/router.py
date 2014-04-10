@@ -6,7 +6,7 @@ class KLPRouter(object):
         app_label = model._meta.app_label
         if app_label == 'coords':
             return 'klp-coord'
-        elif app_label == 'klp':
+        elif app_label == 'schools':
             return 'klp-www'
         elif app_label == 'electrep':
             return 'electrep'

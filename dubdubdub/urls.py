@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-from klp.views import Schools
+from schools.views import Schools
 from common.views import HomeView
 
 urlpatterns = patterns('',
