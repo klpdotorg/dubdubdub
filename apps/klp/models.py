@@ -205,7 +205,7 @@ class InstitutionAgg(models.Model):
         db_table = 'tb_institution_agg'
 
 class InstitutionAssessmentAgg(models.Model):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True, blank=True, null=True)
+    school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
@@ -224,7 +224,7 @@ class InstitutionAssessmentAgg(models.Model):
         db_table = 'tb_institution_assessment_agg'
 
 class InstitutionAssessmentAggCohorts(models.Model):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True, blank=True, null=True)
+    school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
@@ -602,7 +602,7 @@ class TeacherQualification(models.Model):
 class InstCoord(models.Model):
     '''
         View table:
-        vw_inst_coord - This is a cooridnate for a school/preschool and 
+        vw_inst_coord - This is a cooridnate for a school/preschool and
         can join with tb_school on school id. View is from klp_coord
     '''
     school = models.OneToOneField("School", primary_key=True, db_column='instid')
@@ -631,9 +631,9 @@ class AngInfraAgg(models.Model):
         View table:
         Akshara does a 70 question anganwadi infrastructure assessment every year.
         This is an aggregation table that groups the responses per school
-        into 17 ai_metrics and 5 groups - the logic is here - 
+        into 17 ai_metrics and 5 groups - the logic is here -
         https://github.com/klpdotorg/importers/blob/master/ang_infra/db_scripts/agg_infra.sql.
-        The view is from ang_infra 
+        The view is from ang_infra
     '''
     school = models.ForeignKey('School', primary_key=True, db_column='sid')
     ai_metric = models.CharField(max_length=30)
@@ -661,7 +661,7 @@ class AngDisplayMaster(models.Model):
 class DiseDisplayMaster(models.Model):
     '''
     View table:
-    This is a table to map the key values of 
+    This is a table to map the key values of
     dise_facility_agg into readable text on the Webpage
     '''
     key = models.CharField(max_length=36, primary_key=True)
@@ -675,7 +675,7 @@ class DiseDisplayMaster(models.Model):
 class DiseFacilityAgg(models.Model):
     '''
     View table:
-    The Dise facilities data source also has many fields. 
+    The Dise facilities data source also has many fields.
     This is an aggregation per school into 15 metrics and 4 groups.
     The view is from dise_all.
     '''
@@ -694,7 +694,7 @@ class DiseInfo(models.Model):
     View table:
     This is a view of enrollment, finances, teacher & classroom count, etc
     from dise_all that help compare demographics in klp with dise and
-    is the basis for everything on the Finance tab of the school page - 
+    is the basis for everything on the Finance tab of the school page -
     http://www.klp.org.in/schoolpage/school/33166?tab=finances
     '''
     dise_code = models.CharField(max_length=32, primary_key=True)
@@ -721,7 +721,7 @@ class DiseInfo(models.Model):
 class PaisaData(models.Model):
     '''
     This is a view from electrep_new and has the formulae that determine
-    the financial allocation to each school. 
+    the financial allocation to each school.
     It's used along with vw_dise_info to build up the above finance page.
     '''
     grant_type = models.CharField(max_length=32, primary_key=True)
@@ -739,9 +739,9 @@ class PaisaData(models.Model):
 class DiseRteAgg(models.Model):
     '''
     View table:
-    This is a view, also from dise_all of mid day meal availability 
+    This is a view, also from dise_all of mid day meal availability
     and source, and SDMC (school development monitoring committee)
-    being available and functional in the school.  
+    being available and functional in the school.
     '''
     dise_info = models.ForeignKey('DiseInfo', db_column='dise_code', primary_key=True)
     rte_metric = models.CharField(max_length=36, blank=True)
@@ -757,7 +757,7 @@ class ElectedrepMaster(models.Model):
     '''
     View table:
     This is a complete listing of elected reps for mla, mp constituencies
-    and ward with const_ward_ids. 
+    and ward with const_ward_ids.
     The view is from the db electrep_new
     '''
     id = models.IntegerField(primary_key=True)
@@ -789,7 +789,7 @@ class LibBorrow(models.Model):
     school_name = models.CharField(max_length=50, blank=True)
     '''
     Child ID sometimes has ids like TMP00045 . What does this mean?
-    How to handle this problem of the ForeignKey sometimes being an arbitrary string?    
+    How to handle this problem of the ForeignKey sometimes being an arbitrary string?
     It's possibly okay / we write it in to some sort of exception handler.
     '''
     child = models.ForeignKey('Child', blank=True, db_column='klp_child_id')
@@ -800,7 +800,7 @@ class LibBorrow(models.Model):
 
 class LibLangAgg(models.Model):
     '''
-    View table: 
+    View table:
     View from library that a school level aggregates
     how many children borrowed books in a given month
     in a given language in an Akshara library
@@ -866,8 +866,8 @@ class Libinfra(models.Model):
 
 class MdmAgg(models.Model):
     '''
-    This is a view from the db apmdm that aggregates the daily entry of 
-    indent and attendance to a weekly view per school. The logic is here - 
+    This is a view from the db apmdm that aggregates the daily entry of
+    indent and attendance to a weekly view per school. The logic is here -
     https://github.com/klpdotorg/importers/blob/master/apmdm/agg_apmdm.sql
     '''
     #we set primary_key=True to make django happy, though school is not unique
@@ -885,8 +885,8 @@ class MdmAgg(models.Model):
 
 class SchoolElectedrep(models.Model):
     '''
-    The constituency/ward id- const_ward_id is linked 
-    to a klp school/preschool id in this view. 
+    The constituency/ward id- const_ward_id is linked
+    to a klp school/preschool id in this view.
     The view is from the db electrep_new
     '''
     #Is this a OneToOne mapping?
