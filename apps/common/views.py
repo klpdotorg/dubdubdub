@@ -4,6 +4,8 @@ try:
 except:
     import simplejson as json
 
+from django.views.generic.base import TemplateView
+
 class JSONResponseMixin(object):
     def render_to_response(self, context):
         "Returns a JSON response containing 'context' as payload"
@@ -22,3 +24,12 @@ class JSONResponseMixin(object):
         # objects -- such as Django model instances or querysets
         # -- can be serialized as JSON.
         return json.dumps(context)
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['foo'] = 'bar'
+        return context
