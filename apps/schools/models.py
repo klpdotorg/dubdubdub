@@ -57,22 +57,6 @@ SEX_CHOICES = (
     ('female', 'Female'),
 )
 
-class Assembly(models.Model):
-    ogc_fid = models.IntegerField(primary_key=True)
-    wkb_geometry = models.PolygonField(blank=True, null=True)
-    ac_id = models.IntegerField(blank=True, null=True)
-    ac_no = models.FloatField(blank=True, null=True)
-    ac_name = models.CharField(max_length=35, blank=True)
-    state_ut = models.CharField(max_length=35, blank=True)
-    objects = models.GeoManager()
-
-    def __unicode__(self):
-        return self.ac_name
-
-    class Meta:
-        managed = False
-        db_table = 'assembly'
-
 class AcademicYear(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True)
