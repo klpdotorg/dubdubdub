@@ -92,6 +92,8 @@ class Class(BaseModel):
     school = models.ForeignKey("School", blank=True, null=True, db_column="sid")
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
+    students = models.ManyToManyField("Student", through="StudentClass")
+    teachers = models.ManyToManyField("Teacher", through="TeacherClass")
 
     def __unicode__(self):
         return self.id
