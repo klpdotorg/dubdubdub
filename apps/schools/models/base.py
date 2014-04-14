@@ -1,6 +1,4 @@
 from __future__ import unicode_literals
-from django.contrib.gis.db import models
-
 
 ### Start common choices definitions
 
@@ -47,23 +45,3 @@ SEX_CHOICES = (
     ('male', 'Male'),
     ('female', 'Female'),
 )
-
-### End common choices definitions
-
-
-class BaseModel(models.Model):
-    '''
-    Base model class for all models
-    '''
-
-    class Meta:
-        abstract = True
-
-
-class BaseGeoModel(BaseModel):
-    '''
-    Base model class for all 'geo' models
-    '''
-
-    class Meta:
-        abstract = True

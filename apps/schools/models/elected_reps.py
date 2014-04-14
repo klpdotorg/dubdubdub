@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from .base import BaseModel, BaseGeoModel
+from common.models import BaseModel
 from django.contrib.gis.db import models
 
 

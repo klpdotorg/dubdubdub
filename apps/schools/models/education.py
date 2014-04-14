@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from .base import BaseModel, BaseGeoModel
+from common.models import BaseModel, GeoBaseModel
 from .base import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
@@ -103,7 +103,7 @@ class Class(BaseModel):
         db_table = 'tb_class'
 
 
-class School(BaseGeoModel):
+class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
     boundary = models.ForeignKey('Boundary', db_column='bid')
     #TODO: check if address should be ForeignKey or OneToOneField

@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
-from .base import BaseModel, BaseGeoModel
+from common.models import GeoBaseModel
 from django.contrib.gis.db import models
 
-class InstCoord(BaseGeoModel):
+class InstCoord(GeoBaseModel):
     '''
         View table:
         vw_inst_coord - This is a cooridnate for a school/preschool and
@@ -16,7 +16,7 @@ class InstCoord(BaseGeoModel):
         db_table = 'vw_inst_coord'
 
 
-class BoundaryCoord(BaseGeoModel):
+class BoundaryCoord(GeoBaseModel):
     '''
         View table:
         This is a cooridnate for a boundary (district,block/project,cluster/circle)

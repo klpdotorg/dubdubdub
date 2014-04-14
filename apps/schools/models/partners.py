@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from .base import BaseModel, BaseGeoModel
+from common.models import BaseModel
 from .base import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
