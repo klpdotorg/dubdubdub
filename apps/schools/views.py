@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.contrib.gis.geos import Polygon
 #from coords.models import InstCoord
-from klp.models import School, InstCoord
+from .models import School, InstCoord
 from common.views import JSONResponseMixin
 
 

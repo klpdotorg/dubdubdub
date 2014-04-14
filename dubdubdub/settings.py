@@ -155,7 +155,7 @@ INSTALLED_APPS = (
     #'raven.contrib.django.raven_compat',
 
     # in-project
-    'klp',
+    'schools',
     'coords',
     'electrep',
 )
