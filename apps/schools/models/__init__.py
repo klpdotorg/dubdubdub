@@ -1,5 +1,5 @@
 from .education import AcademicYear, Address, BoundaryHierarchy, Boundary, BoundaryType, \
-    Child, Class, School, Student, StudentClass, Teacher, TeacherClass, TeacherQualification
+    Child, StudentGroup, School, Student, StudentStudentGroup, Teacher, TeacherStudentGroup, TeacherQualification
 
 from .assessments import Assessment, InstitutionAgg, InstitutionAssessmentAgg, \
     InstitutionAssessmentAggCohorts, InstitutionAssessmentGenderSinglescore, \

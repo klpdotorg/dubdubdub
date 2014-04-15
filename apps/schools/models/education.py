@@ -87,13 +87,13 @@ class Child(BaseModel):
         db_table = 'tb_child'
 
 
-class Class(BaseModel):
+class StudentGroup(BaseModel):
     id = models.IntegerField(primary_key=True)
     school = models.ForeignKey("School", blank=True, null=True, db_column="sid")
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
-    students = models.ManyToManyField("Student", through="StudentClass")
-    teachers = models.ManyToManyField("Teacher", through="TeacherClass")
+    students = models.ManyToManyField("Student", through="StudentStudentGroup")
+    teachers = models.ManyToManyField("Teacher", through="TeacherStudentGroup")
 
     def __unicode__(self):
         return self.id
@@ -158,9 +158,9 @@ class Student(BaseModel):
         db_table = 'tb_student'
 
 
-class StudentClass(BaseModel):
+class StudentStudentGroup(BaseModel):
     student = models.ForeignKey('Student', db_column='stuid', primary_key=True)
-    klass = models.ForeignKey('Class', db_column='clid')
+    student_group = models.ForeignKey('StudentGroup', db_column='clid')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField()
     class Meta:
@@ -185,9 +185,9 @@ class Teacher(BaseModel):
         db_table = 'tb_teacher'
 
 
-class TeacherClass(BaseModel):
+class TeacherStudentGroup(BaseModel):
     teacher = models.ForeignKey('Teacher', db_column='teacherid', primary_key=True)
-    klass = models.ForeignKey('Class', db_column='clid')
+    student_group = models.ForeignKey('StudentGroup', db_column='clid')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField(blank=True, null=True)
     class Meta:

@@ -274,7 +274,7 @@ class SchoolAgg(BaseModel):
 class SchoolAssessmentAgg(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
-    klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
+    student_group = models.ForeignKey('StudentGroup', db_column='clid', blank=True, null=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     aggtext = models.CharField(max_length=100)
@@ -288,7 +288,7 @@ class SchoolAssessmentAgg(BaseModel):
 class SchoolBasicAssessmentInfo(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid', blank=True, null=True)
-    klass = models.ForeignKey('Class', db_column='clid', blank=True, null=True)
+    student_group = models.ForeignKey('StudentGroup', db_column='clid', blank=True, null=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
