@@ -19,6 +19,9 @@ class ElectedrepMaster(BaseModel):
     current_elected_rep = models.CharField(max_length=300, blank=True)
     current_elected_party = models.CharField(max_length=300, blank=True)
 
+    def __unicode__(self):
+        return "%d: %s" % (self.elec_comm_code, self.const_ward_name,)
+
     class Meta:
         managed = False
         db_table = 'vw_electedrep_master'
@@ -36,6 +39,9 @@ class SchoolElectedrep(BaseModel):
     mla_const_id = models.ForeignKey('ElectedrepMaster', related_name='school_mla_const', db_column='mla_const_id', blank=True, null=True)
     mp_const_id = models.ForeignKey('ElectedrepMaster', related_name='school_mp_const', db_column='mp_const_id', blank=True, null=True)
     heirarchy = models.ForeignKey('BoundaryType', db_column='hierarchy', blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.ward_id,)
 
     class Meta:
         managed = False

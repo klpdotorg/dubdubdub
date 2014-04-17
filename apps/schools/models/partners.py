@@ -12,6 +12,9 @@ class DiseDisplayMaster(BaseModel):
     key = models.CharField(max_length=36, primary_key=True)
     value = models.CharField(max_length=200, blank=True)
 
+    def __unicode__(self):
+        return "%s" % self.key
+
     class Meta:
         managed = False
         db_table = 'vw_dise_display_master'
@@ -28,6 +31,9 @@ class DiseFacilityAgg(BaseModel):
     df_metric = models.CharField(max_length=30, blank=True)
     score = models.DecimalField(max_digits=5, decimal_places=0, blank=True, null=True)
     df_group = models.CharField(max_length=30, blank=True)
+
+    def __unicode__(self):
+        return "%s" % (self.dise_info,)
 
     class Meta:
         managed = False
@@ -58,6 +64,9 @@ class DiseInfo(BaseModel):
     ffs_expnd = models.IntegerField(blank=True, null=True)
     books_in_library = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return self.dise_code
+
     class Meta:
         managed = False
         db_table = 'vw_dise_info'
@@ -75,6 +84,9 @@ class PaisaData(BaseModel):
     operator = models.CharField(max_length=3, blank=True)
     factor = models.CharField(max_length=32, blank=True)
 
+    def __unicode__(self):
+        return self.grant_type
+
     class Meta:
         managed = False
         db_table = 'vw_paisa_data'
@@ -91,6 +103,9 @@ class DiseRteAgg(BaseModel):
     rte_metric = models.CharField(max_length=36, blank=True)
     status = models.CharField(max_length=30, blank=True)
     rte_group = models.CharField(max_length=32, blank=True)
+
+    def __unicode__(self):
+        return "%s" % self.dise_info
 
     class Meta:
         managed = False
@@ -116,6 +131,10 @@ class LibBorrow(BaseModel):
     It's possibly okay / we write it in to some sort of exception handler.
     '''
     child = models.ForeignKey('Child', blank=True, db_column='klp_child_id')
+
+    def __unicode__(self):
+        return "%s: %s" % (self.trans_year, self.school,)
+
     class Meta:
         managed = False
         db_table = 'vw_lib_borrow'
@@ -137,6 +156,9 @@ class LibLangAgg(BaseModel):
     book_lang = models.CharField(max_length=50, blank=True)
     child_count = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %d" % (self.school, self.class_name,)
+
     class Meta:
         managed = False
         db_table = 'vw_lib_lang_agg'
@@ -156,6 +178,9 @@ class LibLevelAgg(BaseModel):
     #FIXME: this should be defined as choices somewhere?
     book_level = models.CharField(max_length=50, blank=True)
     child_count = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %d" % (self.school, self.class_name,)
 
     class Meta:
         managed = False
@@ -180,6 +205,9 @@ class Libinfra(BaseModel):
     numcomputers = models.IntegerField(blank=True, null=True)
     numups = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.libstatus,)
+
     class Meta:
         managed = False
         db_table = 'vw_libinfra'
@@ -197,6 +225,9 @@ class MdmAgg(BaseModel):
     wk = models.IntegerField(blank=True, null=True)
     indent = models.IntegerField(blank=True, null=True)
     attend = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %d" % (self.school, self.mon, self.wk,)
 
     class Meta:
         managed = False

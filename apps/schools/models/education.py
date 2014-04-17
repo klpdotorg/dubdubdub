@@ -82,6 +82,9 @@ class Child(BaseModel):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'tb_child'
@@ -96,7 +99,7 @@ class StudentGroup(BaseModel):
     teachers = models.ManyToManyField("Teacher", through="TeacherStudentGroup")
 
     def __unicode__(self):
-        return self.id
+        return self.name
 
     class Meta:
         managed = False
@@ -151,7 +154,7 @@ class Student(BaseModel):
     status = models.IntegerField()
 
     def __unicode__(self):
-        return self.id
+        return "%s" % self.child
 
     class Meta:
         managed = False
@@ -163,6 +166,9 @@ class StudentStudentGroup(BaseModel):
     student_group = models.ForeignKey('StudentGroup', db_column='clid')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField()
+
+    def __unicode__(self):
+        return "%s: %s in %s" % (self.student, self.student_group, self.academic_year,)
     class Meta:
         managed = False
         db_table = 'tb_student_class'
@@ -190,6 +196,10 @@ class TeacherStudentGroup(BaseModel):
     student_group = models.ForeignKey('StudentGroup', db_column='clid')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s in %s" % (self.teacher, self.student_group, self.academic_year,)
+
     class Meta:
         managed = False
         db_table = 'tb_teacher_class'
@@ -198,6 +208,10 @@ class TeacherStudentGroup(BaseModel):
 class TeacherQualification(BaseModel):
     teacher = models.ForeignKey('Teacher', db_column='tid', primary_key=True)
     qualification = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.teacher, self.qualification,)
+
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'

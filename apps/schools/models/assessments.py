@@ -114,6 +114,9 @@ class InstitutionAssessmentReadingAggCohorts(BaseModel):
     aggtext_order = models.IntegerField()
     cohortsval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_reading_agg_cohorts'
@@ -125,6 +128,9 @@ class InstitutionAssessmentSinglescore(BaseModel):
     asstext = models.CharField(max_length=50)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s" (self.school, self.programme,) #FIXME: add singlescore?
 
     class Meta:
         managed = False
@@ -139,6 +145,9 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s" (self.school, self.programme,) #FIXME: add singlescore?        
+
     class Meta:
         managed = False
         db_table = 'tb_institution_assessment_singlescore_gender'
@@ -151,6 +160,9 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.programme, self.mt,)        
 
     class Meta:
         managed = False
@@ -165,6 +177,9 @@ class InstitutionBasicAssessmentInfo(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
+
     class Meta:
         managed = False
         db_table = 'tb_institution_basic_assessment_info'
@@ -177,6 +192,9 @@ class InstitutionBasicAssessmentInfoCohorts(BaseModel):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     cohortsnum = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
 
     class Meta:
         managed = False
@@ -206,6 +224,9 @@ class PreschoolAssessmentAgg(BaseModel):
     aggtext = models.CharField(max_length=100)
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
+
     class Meta:
         managed = False
         db_table = 'tb_preschool_assessment_agg'
@@ -218,6 +239,9 @@ class PreschoolBasicAssessmentInfo(BaseModel):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
 
     class Meta:
         managed = False
@@ -266,6 +290,9 @@ class SchoolAgg(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.name,)
+
     class Meta:
         managed = False
         db_table = 'tb_school_agg'
@@ -280,6 +307,9 @@ class SchoolAssessmentAgg(BaseModel):
     aggtext = models.CharField(max_length=100)
     aggval = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.assessment)
+
     class Meta:
         managed = False
         db_table = 'tb_school_assessment_agg'
@@ -293,6 +323,9 @@ class SchoolBasicAssessmentInfo(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.assessment)
+
     class Meta:
         managed = False
         db_table = 'tb_school_basic_assessment_info'
@@ -303,6 +336,9 @@ class StudentEval(BaseModel):
     student = models.ForeignKey('Student', db_column='stuid')
     mark = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     grade = models.CharField(max_length=30, blank=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.assessment)
 
     class Meta:
         managed = False
@@ -318,6 +354,9 @@ class SchoolEval(BaseModel):
     domain = models.CharField(max_length=100, blank=True)
     question = models.ForeignKey('Question', db_column='qid', blank=True, null=True)
     value = models.CharField(max_length=50, blank=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" (self.school, self.question, self.value,)
 
     class Meta:
         managed = False
@@ -338,6 +377,9 @@ class AngInfraAgg(BaseModel):
     perc = models.IntegerField()
     ai_group = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return "%s: %s: %d" % (self.school, self.ai_metric, self.perc,)
+
     class Meta:
         managed = False
         db_table = 'vw_anginfra_agg'
@@ -352,6 +394,9 @@ class AngDisplayMaster(BaseModel):
     '''
     key = models.CharField(max_length=30, primary_key=True)
     value = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.key, self.value,)
 
     class Meta:
         managed = False

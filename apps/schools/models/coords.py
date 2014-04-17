@@ -11,6 +11,10 @@ class InstCoord(GeoBaseModel):
     school = models.OneToOneField("School", primary_key=True, db_column='instid')
     coord = models.GeometryField()
     objects = models.GeoManager()
+
+    def __unicode__(self):
+        return "%s" % self.school
+
     class Meta:
         managed = False
         db_table = 'vw_inst_coord'
@@ -26,6 +30,10 @@ class BoundaryCoord(GeoBaseModel):
     typ = models.CharField(max_length=20, db_column='type')
     coord = models.GeometryField()
     objects = models.GeoManager()
+
+    def __unicode__(self):
+        return "%s" % self.boundary
+
     class Meta:
         managed = False
         db_table = 'vw_boundary_coord'
