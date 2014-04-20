@@ -31,5 +31,5 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['foo'] = 'bar'
+        context['homepage'] = True #this is needed for the template to render a different structure for homepage
         return context
