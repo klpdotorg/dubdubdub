@@ -62,7 +62,7 @@
 				<div class="headline-text-mobile"><img src="images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
 				<div class="info">
 					<p>The Karnataka Learning Partnership is a public platform where all the stakeholders involved in primary education can participate and contribute to the cause of ensuring better schools and education for all children in Karnataka.</p>
-					<p><a href="about.php">Read more</a></p>
+					<p><a href="{% url 'aboutus' %}">Read more</a></p>
 				</div>
 			</div>
 		</div>
@@ -77,7 +77,7 @@
 		$(document).ready(function(){
 			// Adds easing scrolling to # targets
 			$('a[href*=#]:not([href=#])').click(function() {
-			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+			    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
 			        || location.hostname == this.hostname) {
 
 			      var target = $(this.hash);
@@ -127,7 +127,7 @@
 		<div class="footer-wrapper">
 			<nav class="nav">
 				<ul>
-					<li><a href="/text/aboutus" title="">About</a></li>
+					<li><a href="{% url 'aboutus' %}" title="">About</a></li>
 					<li><a href="contact.php" title="">Contact</a></li>
 					<li class="hidden-desktop"><a href="disclaimer.php" title="">Disclaimer</a></li>
 					<li class="hidden-phone hidden-tablet"><a href="map.html" title="">School Map</a></li>
@@ -142,11 +142,11 @@
 	</footer>
 
 
-	<script type="text/javascript"> 
-    $(document).ready(function(){ 
-        //$(document).pngFix(); 
-    }); 
-</script> 
+	<script type="text/javascript">
+    $(document).ready(function(){
+        //$(document).pngFix();
+    });
+</script>
 
 </body>
 </html>
