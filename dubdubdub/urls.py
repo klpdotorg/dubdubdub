@@ -15,6 +15,18 @@ urlpatterns = patterns('',
             }
         ), name='home'),
 
+    url(r'^text/aboutus$', StaticPageView.as_view(
+            template_name='aboutus.html'
+        ), name='aboutus'),
+
+    url(r'^text/partners$', StaticPageView.as_view(
+            template_name='partners.html'
+        ), name='partners'),
+
+    url(r'^text/disclaimer$', StaticPageView.as_view(
+            template_name='disclaimer.html'
+        ), name='disclaimer'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/v1/schools', Schools.as_view(), name='api_schools'),
