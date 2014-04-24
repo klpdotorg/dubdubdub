@@ -4,10 +4,16 @@ from django.contrib import admin
 admin.autodiscover()
 
 from schools.views import Schools
-from common.views import HomeView
+from common.views import StaticPageView
 
 urlpatterns = patterns('',
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', StaticPageView.as_view(
+            template_name='home.html',
+            extra_context={
+                # anything put into this dict will be availabe in template
+                'homepage': True
+            }
+        ), name='home'),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
