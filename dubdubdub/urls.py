@@ -47,6 +47,10 @@ urlpatterns = patterns('',
             template_name='preschool_programme.html'
         ), name='preschool_programme'),
 
+   url(r'^text/sikshana$', StaticPageView.as_view(
+            template_name='sikshana_programme.html'
+        ), name='sikshana_programme'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/v1/schools', Schools.as_view(), name='api_schools'),

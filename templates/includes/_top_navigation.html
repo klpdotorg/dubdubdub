@@ -11,7 +11,7 @@
     <a href="{% url 'reading_programme' %}" title="">Programmes</a>
     <ul>
       <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
-      <li><a href="/text/sikshana" title=""><span></span>Sikshana</a></li>
+      <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
     </ul>
   </li>
   <li class="volunteer"><a href="/text/volunteer" title="">Volunteer</a></li>
@@ -33,7 +33,7 @@
     </ul>
   </li>
   <li class="about">
-    <a href="/text/aboutus" title="">About</a>
+    <a href="{% url 'aboutus' %}" title="">About</a>
 	<ul>
 	  <li><a href="{% url 'aboutus' %}" title=""><span></span>About</a></li>
 	  <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
