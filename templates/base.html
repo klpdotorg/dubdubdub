@@ -123,24 +123,26 @@
 
 	{% block content %} {% endblock %}
 
-	<footer class="main-footer">
-		<div class="footer-wrapper">
-			<nav class="nav">
-				<ul>
-					<li><a href="{% url 'aboutus' %}" title="">About</a></li>
-					<li><a href="contact.php" title="">Contact</a></li>
-					<li class="hidden-desktop"><a href="disclaimer.php" title="">Disclaimer</a></li>
-					<li class="hidden-phone hidden-tablet"><a href="map.html" title="">School Map</a></li>
-					<li class="hidden-phone hidden-tablet"><a href="programmes.php" title="">Programmes</a></li>
-					<li class="hidden-phone hidden-tablet"><a href="status_1.php" title="">Database</a></li>
-					<li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li>
-					<div class="clr"></div>
-				</ul>
-			</nav>
-			<div class="copyright">Copyright 2013. All Rights Reserved.</div>
-		</div>
-	</footer>
-
+  <footer class="main-footer">
+    <div class="footer-wrapper">
+      <nav class="nav">
+        <ul>
+          <li><a href="{% url 'aboutus' %}" title="">About</a></li>
+          <li><a href="mailto:team@klp.org.in" title="">Contact</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="http://www.facebook.com/klpdotorg" target="_blank">Facebook</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>  
+          <li class="hidden-phone hidden-tablet"><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank">RSS Feed</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="http://www.youtube.com/user/klpdotorg" target="_blank">You Tube</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="/map" title="">School Map</a></li>
+          <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
+          <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
+          <div class="clr"></div>
+        </ul>
+      </nav>
+      <div class="copyright">Copyright 2013. All Rights Reserved.</div>
+    </div>
+  </footer>
 
 	<script type="text/javascript">
     $(document).ready(function(){
