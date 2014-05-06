@@ -8,13 +8,14 @@ from django.views.generic.base import View, TemplateView
 from django.core.exceptions import PermissionDenied
 
 class JSONResponseMixin(object):
-    def render_to_response(self, context):
+    def render_to_response(self, context, status=200):
         "Returns a JSON response containing 'context' as payload"
-        return self.get_json_response(self.convert_context_to_json(context))
+        return self.get_json_response(self.convert_context_to_json(context), status)
 
-    def get_json_response(self, content, **httpresponse_kwargs):
+    def get_json_response(self, content, status=200, **httpresponse_kwargs):
         "Construct an `HttpResponse` object."
         return http.HttpResponse(content,
+                                 status=status,
                                  content_type='application/json',
                                  **httpresponse_kwargs)
 
