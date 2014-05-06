@@ -34,17 +34,17 @@ urlpatterns = patterns('',
     url(r'^text/reports$', StaticPageView.as_view(
             template_name='reports.html'
         ), name='reports'),
-    
+
 
     #programme pages
     url(r'^text/reading$', StaticPageView.as_view(
             template_name='reading_programme.html'
         ), name='reading_programme'),
-    
+
    url(r'^text/maths$', StaticPageView.as_view(
             template_name='maths_programme.html'
         ), name='maths_programme'),
- 
+
    url(r'^text/library$', StaticPageView.as_view(
             template_name='library_programme.html'
         ), name='library_programme'),
@@ -60,4 +60,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/v1/schools', Schools.as_view(), name='api_schools'),
+
+    url(r'^api/v1/', include('dubdubdub.api_urls')),
 )

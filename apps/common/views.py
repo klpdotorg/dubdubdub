@@ -4,7 +4,8 @@ try:
 except:
     import simplejson as json
 
-from django.views.generic.base import TemplateView
+from django.views.generic.base import View, TemplateView
+from django.core.exceptions import PermissionDenied
 
 class JSONResponseMixin(object):
     def render_to_response(self, context):
@@ -33,3 +34,11 @@ class StaticPageView(TemplateView):
         context = super(StaticPageView, self).get_context_data(**kwargs)
         context.update(self.extra_context)
         return context
+
+
+class APIView(View, JSONResponseMixin):
+    def get(self, *args, **kwargs):
+        raise PermissionDenied('Not Permitted')
+
+    def post(self, *args, **kwargs):
+        raise PermissionDenied('Not Permitted')

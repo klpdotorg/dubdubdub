@@ -2,10 +2,10 @@ from django.views.generic import View
 from django.contrib.gis.geos import Polygon
 #from coords.models import InstCoord
 from .models import School, InstCoord
-from common.views import JSONResponseMixin
+from common.views import APIView
 
 
-class Schools(View, JSONResponseMixin):
+class Schools(APIView):
 
     def get(self, *args, **kwargs):
         bbox_string = self.request.GET.get("bounds")

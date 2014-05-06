@@ -84,3 +84,14 @@ class GeoBaseModel(BaseModel):
     class Meta:
         # This isn't a real model
         abstract = True
+
+
+def queryset_to_geojson(geofield_or_relation=None):
+    """turns a queryset to geojson
+
+    Keyword arguments:
+    geofield_or_relation -- provide a relation like this related_fieldname.column_name
+                            and this method will take that field from the related model
+                            and put that value as geometry of the geojson
+    """
+    pass
