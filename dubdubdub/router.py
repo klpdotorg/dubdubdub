@@ -4,12 +4,8 @@ class KLPRouter(object):
     
     def db_for_read(self, model, **hints):
         app_label = model._meta.app_label
-        if app_label == 'coords':
-            return 'klp-coord'
-        elif app_label == 'schools':
+        if app_label == 'schools':
             return 'klp-www'
-        elif app_label == 'electrep':
-            return 'electrep'
         else:
             return 'default'
 

@@ -156,8 +156,6 @@ INSTALLED_APPS = (
 
     # in-project
     'schools',
-    'coords',
-    'electrep',
 )
 
 #DATADUMP_ROOT = os.path.join(PROJECT_ROOT, 'data')
