@@ -9,30 +9,30 @@
 # into your database.
 from __future__ import unicode_literals
 
-from django.contrib.gis.db import models
+from common.models import GeoBaseModel
 
-class BoundaryCoord(models.Model):
+class BoundaryCoord(GeoBaseModel):
     id_bndry = models.IntegerField(primary_key=True)
     type = models.CharField(max_length=20)
-    coord = models.PointField(blank=True, null=True)
-    objects = models.GeoManager()
+    coord = models.PointField(blank=True, null=True, db_column='coord')
+
     class Meta:
         managed = False
         db_table = 'boundary_coord'
 
-class ElectoralCoord(models.Model):
+class ElectoralCoord(GeoBaseModel):
     const_ward_id = models.IntegerField(primary_key=True)
     const_ward_type = models.CharField(max_length=20)
-    coord = models.PointField(srid=-1, blank=True, null=True)
-    objects = models.GeoManager()
+    coord = models.PointField(srid=-1, blank=True, null=True, db_column='coord')
+
     class Meta:
         managed = False
         db_table = 'electoral_coord'
 
-class InstCoord(models.Model):
+class InstCoord(GeoBaseModel):
     instid = models.IntegerField(primary_key=True)
-    coord = models.PointField(blank=True, null=True)
-    objects = models.GeoManager()
+    coord = models.PointField(blank=True, null=True, db_column='coord')
+
     class Meta:
         managed = False
         db_table = 'inst_coord'
