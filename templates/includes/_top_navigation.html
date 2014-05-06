@@ -1,43 +1,45 @@
 <ul id="navigation">
-  {% if not homepage %}
-  <li class="home">
-    <a href="/"><h1>Karnataka Learning Partnership</h1></a>
-  </li>
-  {% endif %}
-  <li class="school_map">
-    <a href="/map" title="">School Map</a>
-  </li>
-  <li class="programmes">
-    <a href="{% url 'reading_programme' %}" title="">Programmes</a>
-    <ul>
-      <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
-      <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
-    </ul>
-  </li>
-  <li class="volunteer"><a href="/text/volunteer" title="">Volunteer</a></li>
-  <li class="database">
-    <a href="/listFiles/2" title="">Data</a>
-    <ul>
-      <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
-      <li><a href="/listFiles/2" target="_blank" title=""><span></span>Raw Data</a></li>
-      <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
-    </ul>
-  </li>
-  <li class="reports">
-    <a href="/text/reports" title="">Reports</a>
-    <ul>
-      <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
-      <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
-      <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
-      <li><a href="/text/reports" title=""><span></span>Other Reports</a></li>
-    </ul>
-  </li>
-  <li class="about">
-    <a href="{% url 'aboutus' %}" title="">About</a>
-	<ul>
-	  <li><a href="{% url 'aboutus' %}" title=""><span></span>About</a></li>
-	  <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
-	  <li><a href="{% url 'disclaimer' %}" title=""><span></span>Disclaimer</a></li>
-	</ul>
-  </li>
+    {% if not homepage %}
+    <li class="home">
+        <a href="/">
+            <h1>Karnataka Learning Partnership</h1>
+        </a>
+    </li>
+    {% endif %}
+    <li class="school_map">
+        <a href="/map" title="">School Map</a>
+    </li>
+    <li class="programmes">
+        <a href="{% url 'reading_programme' %}" title="">Programmes</a>
+        <ul>
+            <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
+            <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
+        </ul>
+    </li>
+    <li class="volunteer"><a href="/text/volunteer" title="">Volunteer</a></li>
+    <li class="database">
+        <a href="/listFiles/2" title="">Data</a>
+        <ul>
+            <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
+            <li><a href="/listFiles/2" target="_blank" title=""><span></span>Raw Data</a></li>
+            <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
+        </ul>
+    </li>
+    <li class="reports">
+        <a href="/text/reports" title="">Reports</a>
+        <ul>
+            <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
+            <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
+            <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
+            <li><a href="/text/reports" title=""><span></span>Other Reports</a></li>
+        </ul>
+    </li>
+    <li class="about">
+        <a href="{% url 'aboutus' %}" title="">About</a>
+        <ul>
+            <li><a href="{% url 'aboutus' %}" title=""><span></span>About</a></li>
+            <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
+            <li><a href="{% url 'disclaimer' %}" title=""><span></span>Disclaimer</a></li>
+        </ul>
+    </li>
 </ul>

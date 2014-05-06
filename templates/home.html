@@ -6,127 +6,127 @@
 
 {% block content %}
 
-    <section class="home-section how-you-can-help">
-        <div class="container">
-            <h2>How you can help<span></span></h2>
+<section class="home-section how-you-can-help">
+    <div class="container">
+        <h2>How you can help<span></span></h2>
 
-            <div class="grid_item grid_4 alpha col_pay_a_visit">
-                <h3>Pay a visit</h3>
-                <p>
-                    Got some free time?<br/>
-                    Visit a school in your local area.<br/>
-                    Look around and observe. Help keep a check on things.
-                </p>
-            </div>
-            <div class="grid_item grid_4 col_volunteer">
-                <h3>Volunteer</h3>
-                <p>
-                    Show your Volunteer Spirit.<br/>
-                    Spend some of your free time teaching and helping children in nearby schools and make a diffrence in someone's life.
-                </p>
-            </div>
-            <div class="grid_item grid_4 omega col_donate">
-                <h3>Donate</h3>
-                <p>
-                    Donate books, computers, chairs, tables, sports equipment, etc.
-                    Your donations help the school provide better education environment to the childhren.
-                </p>
-            </div>
-            <div class="clr"></div>
-        </div>
-    </section>
-
-    <section class="home-section recent-activities">
-        <div class="container">
-            <div class="grid_item grid_4 alpha col_schools_around_you">
-                <h2>Schools Nearby<span></span></h2>
-                <h3>Updates from GKHPS</h3>
-                <h4>Homaravu</h4>
-                <p>
-                    Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
-                </p>
-            </div>
-            <div class="grid_item grid_4 col_volunteer_stories">
-                <h2>Volunteer Stories<span></span></h2>
-                <h3>The New Maps Portal</h3>
-                <h4>Behind the Scenes</h4>
-                <p>
-                    I recently re-wrote the maps portal for the KLP. The map is an important part of our project, action and process because it serves as the pivot point of navigation.
-                </p>
-            </div>
-            <div class="grid_item grid_4 omega col_updates">
-                <h2>Updates<span></span></h2>
-                <h3>The New Maps Portal</h3>
-                <h4>Behind the Scenes</h4>
-                <p>
-                    Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
-                </p>
-            </div>
-            <div class="clr"></div>
-        </div>
-    </section>
-
-    <section class="home-section come-volunteer">
-        <div class="container">
-            <h2>Come Volunteer Now!<span></span></h2>
-            <p class="png24">
-                Help your local communtiy by teaching and mentoring children at schools nearby you.<br/>
-                Your little efforts can make a difference in someone's life.
+        <div class="grid_item grid_4 alpha col_pay_a_visit">
+            <h3>Pay a visit</h3>
+            <p>
+                Got some free time?<br/>
+                Visit a school in your local area.<br/>
+                Look around and observe. Help keep a check on things.
             </p>
-            <div class="ta_c"><a href="" class="button">Volunteer now</a></div>
         </div>
-    </section>
+        <div class="grid_item grid_4 col_volunteer">
+            <h3>Volunteer</h3>
+            <p>
+                Show your Volunteer Spirit.<br/>
+                Spend some of your free time teaching and helping children in nearby schools and make a diffrence in someone's life.
+            </p>
+        </div>
+        <div class="grid_item grid_4 omega col_donate">
+            <h3>Donate</h3>
+            <p>
+                Donate books, computers, chairs, tables, sports equipment, etc.
+                Your donations help the school provide better education environment to the childhren.
+            </p>
+        </div>
+        <div class="clr"></div>
+    </div>
+</section>
 
-    <script type="text/javascript">
+<section class="home-section recent-activities">
+    <div class="container">
+        <div class="grid_item grid_4 alpha col_schools_around_you">
+            <h2>Schools Nearby<span></span></h2>
+            <h3>Updates from GKHPS</h3>
+            <h4>Homaravu</h4>
+            <p>
+                Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
+            </p>
+        </div>
+        <div class="grid_item grid_4 col_volunteer_stories">
+            <h2>Volunteer Stories<span></span></h2>
+            <h3>The New Maps Portal</h3>
+            <h4>Behind the Scenes</h4>
+            <p>
+                I recently re-wrote the maps portal for the KLP. The map is an important part of our project, action and process because it serves as the pivot point of navigation.
+            </p>
+        </div>
+        <div class="grid_item grid_4 omega col_updates">
+            <h2>Updates<span></span></h2>
+            <h3>The New Maps Portal</h3>
+            <h4>Behind the Scenes</h4>
+            <p>
+                Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
+            </p>
+        </div>
+        <div class="clr"></div>
+    </div>
+</section>
 
-        $(document).ready(function(){
+<section class="home-section come-volunteer">
+    <div class="container">
+        <h2>Come Volunteer Now!<span></span></h2>
+        <p class="png24">
+            Help your local communtiy by teaching and mentoring children at schools nearby you.<br/>
+            Your little efforts can make a difference in someone's life.
+        </p>
+        <div class="ta_c"><a href="" class="button">Volunteer now</a></div>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        resizeHomeHeader();
+        $(window).resize(function() {
             resizeHomeHeader();
-            $(window).resize(function() {
-                resizeHomeHeader();
-            });
         });
+    });
 
-        function resizeHomeHeader(){
+    function resizeHomeHeader(){
 
-            if($(window).width() >=980){
-                // Its a desktop device
-                if($(window).height() <750){
-                    // Resize only if height less than 750px (700px header + 50px navigation)
-                    var header_height = $(window).height() - (50+30);   // 50px navigation + 30px padding in content
+        if($(window).width() >=980){
+            // Its a desktop device
+            if($(window).height() <750){
+                // Resize only if height less than 750px (700px header + 50px navigation)
+                var header_height = $(window).height() - (50+30);   // 50px navigation + 30px padding in content
 
-                    $(".home-header .content").css({
-                        'min-height': header_height + 'px',
-                        'height': header_height + 'px',
-                        'background-size': 'auto '+header_height + 'px'
-                    });
-
-                    // Setting headline text height as 130px
-                    $(".home-header .content .headline-text").css({
-                        'height': 130 + 'px',
-                        'background-size': 'auto 130px',
-                        'margin-top': '30px'
-                    });
-
-                    if(header_height>450){
-                        $(".home-header .content .info").css({
-                            'margin-top': '30px',
-                            'display' : 'block'
-                        });
-                    } else {
-                        $(".home-header .content .info").hide();
-                    }
-
-                    console.log(header_height);
-                }
-            } else {
-                // Its a mobile or tablet. Reverting to original css.
                 $(".home-header .content").css({
-                    'height': 'auto',
-                    'min-height': 'inherit'
+                    'min-height': header_height + 'px',
+                    'height': header_height + 'px',
+                    'background-size': 'auto '+header_height + 'px'
                 });
-            }
-        }
 
-    </script>
-    
+                // Setting headline text height as 130px
+                $(".home-header .content .headline-text").css({
+                    'height': 130 + 'px',
+                    'background-size': 'auto 130px',
+                    'margin-top': '30px'
+                });
+
+                if(header_height>450){
+                    $(".home-header .content .info").css({
+                        'margin-top': '30px',
+                        'display' : 'block'
+                    });
+                } else {
+                    $(".home-header .content .info").hide();
+                }
+
+                console.log(header_height);
+            }
+        } else {
+            // Its a mobile or tablet. Reverting to original css.
+            $(".home-header .content").css({
+                'height': 'auto',
+                'min-height': 'inherit'
+            });
+        }
+    }
+
+</script>
+
 {% endblock %}
