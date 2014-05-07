@@ -124,11 +124,14 @@ class School(GeoBaseModel):
     def __unicode__(self):
         return self.name
 
-    def get_properties(self):
+    def get_list_properties(self):
         return {
             'id': self.id,
             'name': self.name
         }
+
+    def get_info_properties(self):
+        return self.get_list_properties() #FIXME, get info properties
 
     def get_geometry(self):
         if self.instcoord is not None:
@@ -136,11 +139,16 @@ class School(GeoBaseModel):
         else:
             return {}
 
-
-    def get_geojson(self):
+    def get_list_geojson(self):
         return {
             'geometry': self.get_geometry(),
-            'properties': self.get_properties()
+            'properties': self.get_list_properties()
+        }
+
+    def get_info_geojson(self):
+        return {
+            'geometry': self.get_geometry(),
+            'properties': self.get_info_properties()
         }
 
     class Meta:
