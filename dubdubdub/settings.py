@@ -24,6 +24,7 @@ DATABASES = {
     }
 }
 
+TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 
 DATABASE_ROUTERS = ['dubdubdub.router.KLPRouter']
 
