@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # third party
-    'south',
+    #'south',
     'django_extensions',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
