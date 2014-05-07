@@ -131,12 +131,26 @@ class School(GeoBaseModel):
         }
 
     def get_info_properties(self):
-        return self.get_list_properties() #FIXME, get info properties
+        data = self.get_list_properties()
+        try:
+            data['dise_code'] = self.dise_info.dise_code
+        except:
+            data['dise_code'] = None
+        #FIXME: add data['type'] #QUESTION: how to get 'type'?
+        data['management'] = self.mgmt
+        data['category'] = self.cat
+        #FIXME: this should probably be a method of address to get formatted address
+        if self.address:
+            data['address'] = self.address.address
+        else:
+            data['address'] = ''
+        #FIXME: add data['photos'] - where does this come from?
+        return data
 
     def get_geometry(self):
-        if self.instcoord is not None:
+        try:
             return json.loads(self.instcoord.coord.geojson)
-        else:
+        except:
             return {}
 
     def get_list_geojson(self):

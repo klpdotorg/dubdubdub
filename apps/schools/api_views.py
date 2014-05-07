@@ -13,8 +13,11 @@ class SchoolsList(APIView):
         bbox_string = self.request.GET.get("bounds")
         page = int(self.request.GET.get("page", 1))
         #TODO: refactor to accept CSV as param
-        
-        schools = School.objects.within_bbox(bbox_string)
+        if bbox_string:
+            schools = School.objects.within_bbox(bbox_string)
+        else:
+            schools = School.objects.all()
+        schools = schools.select_related('instcoord', 'address', 'dise_code')
         p = Paginator(schools, ITEMS_PER_PAGE)
         page = p.page(page)
 
@@ -27,16 +30,27 @@ class SchoolsList(APIView):
         # we can return custom HTTP Status code like this
         return self.render_to_response(context, status=200)
 
-# def schools(request):
-#     bbox_string = request.GET.get("bounds")
-#     bbox = Polygon.from_bbox([float(b) for b in bbox_string.split(",")])
-#     schools = School.objects.filter(instcoord__coord__within=bbox).select_related('instcoord')
-#     count = schools.count()
-#     d = {
-#         'type': 'FeatureCollection',
-#         'count': count,
-#         'features': [s.get_geojson() for s in schools]
-#     }
-#     return HttpResponse(json.dumps(d))
 
-# # Create your views here.
+class SchoolsInfo(APIView):
+
+    def get(self, *args, **kwargs):
+        bbox_string = self.request.GET.get("bounds")
+        page = int(self.request.GET.get("page", 1))
+        #TODO: refactor to accept CSV as param
+        
+        schools = School.objects.all()
+        if bbox_string:
+            schools = School.objects.within_bbox(bbox_string)
+        else:
+            schools = School.objects.all()
+        p = Paginator(schools, ITEMS_PER_PAGE)
+        page = p.page(page)
+
+        context = {
+            'type': 'FeatureCollection',
+            'count': p.count,
+            'features': [s.get_info_geojson() for s in page.object_list]
+        }
+
+        # we can return custom HTTP Status code like this
+        return self.render_to_response(context, status=200)
