@@ -9,8 +9,7 @@ class SchoolsList(APIView):
 
     def get(self, *args, **kwargs):
         bbox_string = self.request.GET.get("bounds")
-        bbox = Polygon.from_bbox([float(b) for b in bbox_string.split(",")])
-        schools = School.objects.filter(instcoord__coord__within=bbox).select_related('instcoord')
+        schools = School.objects.within_bbox(bbox_string)
         count = schools.count()
         context = {
             'type': 'FeatureCollection',

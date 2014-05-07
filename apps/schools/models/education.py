@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
+from schools.managers import SchoolsManager
 
 import json
 
@@ -118,7 +119,7 @@ class School(GeoBaseModel):
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
-    objects = models.GeoManager()
+    objects = SchoolsManager()
 
     def __unicode__(self):
         return self.name
