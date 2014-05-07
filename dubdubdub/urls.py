@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
-from schools.views import Schools
 from common.views import StaticPageView
 
 urlpatterns = patterns('',
@@ -59,7 +58,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^api/v1/schools', Schools.as_view(), name='api_schools'),
-
     url(r'^api/v1/', include('dubdubdub.api_urls')),
 )

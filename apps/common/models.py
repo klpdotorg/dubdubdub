@@ -2,11 +2,10 @@ import json
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.forms.models import model_to_dict
-
+from .managers import BaseManager, BaseGeoManager
 
 class BaseModel(models.Model):
     # things that *all* models will have in common
-
     def get_dict(self, fields=None, exclude=None):
         """returns JSON serializable dict of the properties
 
@@ -16,6 +15,8 @@ class BaseModel(models.Model):
         """
         return model_to_dict(self, fields, exclude)
 
+    objects = BaseManager()
+
     class Meta:
         # This isn't a real model
         abstract = True
@@ -23,7 +24,6 @@ class BaseModel(models.Model):
 
 class GeoBaseModel(BaseModel):
     # things that only geo enabled models will have in common
-
     def get_dict(self, fields=None, exclude=None):
         """returns JSON serializable dict of the properties
         This needs to be overridden to parse Geo fields
@@ -79,7 +79,7 @@ class GeoBaseModel(BaseModel):
         return json.dumps(self.get_geojson_dict(fields, exclude))
 
     # overriding the default manager
-    objects = models.GeoManager()
+    objects = BaseGeoManager()
 
     class Meta:
         # This isn't a real model
