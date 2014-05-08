@@ -132,18 +132,24 @@ class School(GeoBaseModel):
 
     def get_info_properties(self):
         data = self.get_list_properties()
+
         try:
-            data['dise_code'] = self.dise_info.dise_code
+            # dise_info field itself has the dise_code,
+            # calling related field makes unnecessary queries
+            data['dise_code'] = self.dise_info_id
         except:
             data['dise_code'] = None
+
         #FIXME: add data['type'] #QUESTION: how to get 'type'?
         data['management'] = self.mgmt
         data['category'] = self.cat
+
         #FIXME: this should probably be a method of address to get formatted address
         if self.address:
             data['address'] = self.address.address
         else:
             data['address'] = ''
+
         #FIXME: add data['photos'] - where does this come from?
         return data
 

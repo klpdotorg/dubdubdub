@@ -17,7 +17,7 @@ class SchoolsList(APIView):
             schools = School.objects.within_bbox(bbox_string)
         else:
             schools = School.objects.all()
-        schools = schools.select_related('instcoord', 'address', 'dise_code')
+        schools = schools.select_related('instcoord', 'address')
         p = Paginator(schools, ITEMS_PER_PAGE)
         page = p.page(page)
 
@@ -37,12 +37,15 @@ class SchoolsInfo(APIView):
         bbox_string = self.request.GET.get("bounds")
         page = int(self.request.GET.get("page", 1))
         #TODO: refactor to accept CSV as param
-        
+
         schools = School.objects.all()
         if bbox_string:
             schools = School.objects.within_bbox(bbox_string)
         else:
             schools = School.objects.all()
+
+        schools = schools.select_related('instcoord', 'address')
+
         p = Paginator(schools, ITEMS_PER_PAGE)
         page = p.page(page)
 
