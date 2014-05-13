@@ -26,9 +26,7 @@ class SchoolsList(APIView):
             'count': p.count,
             'features': [s.get_list_geojson() for s in page.object_list]
         }
-
-        # we can return custom HTTP Status code like this
-        return self.render_to_response(context, status=200)
+        return self.render_to_response(context)
 
 
 class SchoolsInfo(APIView):
@@ -54,6 +52,5 @@ class SchoolsInfo(APIView):
             'count': p.count,
             'features': [s.get_info_geojson() for s in page.object_list]
         }
-
-        # we can return custom HTTP Status code like this
-        return self.render_to_response(context, status=200)
+        
+        return self.render_to_response(context)
