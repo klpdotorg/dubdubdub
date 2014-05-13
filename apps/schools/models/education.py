@@ -151,13 +151,10 @@ class School(GeoBaseModel):
     def get_info_properties(self):
         data = self.get_list_properties()
 
-        try:
-            # dise_info field itself has the dise_code,
-            # calling related field makes unnecessary queries
-            data['dise_code'] = self.dise_info_id
-        except:
-            data['dise_code'] = None
-
+        # dise_info field itself has the dise_code,
+        # calling related field makes unnecessary queries
+        data['dise_code'] = self.dise_info_id
+        
         #FIXME: add data['type'] #QUESTION: how to get 'type'?
         data['management'] = self.mgmt
         data['category'] = self.cat
