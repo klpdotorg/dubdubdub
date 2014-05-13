@@ -4,6 +4,7 @@ from django.contrib.gis.geos import Polygon
 from .models import School, InstCoord
 from common.views import APIView
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
 
 ITEMS_PER_PAGE = 50 #move this to settings if it is a constant?
 
@@ -52,5 +53,13 @@ class SchoolsInfo(APIView):
             'count': p.count,
             'features': [s.get_info_geojson() for s in page.object_list]
         }
-        
+
         return self.render_to_response(context)
+
+
+class SchoolInfo(APIView):
+
+    def get(self, *args, **kwargs):
+        id = kwargs['id']
+        school = get_object_or_404(School, pk=id)
+        return self.render_to_response(school.get_info_geojson())

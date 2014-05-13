@@ -39,3 +39,10 @@ class ApiTestCase(unittest.TestCase):
         school1id = sample_school['properties']['id']
         school2id = sample_school_2['properties']['id']
         self.assertFalse(school1id == school2id, "page 2 differs from page 1")
+
+    def test_api_school_info(self):
+        response = self.c.get("/api/v1/schools/school/33312")
+        self.assertEqual(response.status_code, 200, "school info status code is 200")
+        data = json.loads(response.content)
+        school_id = data['properties']['id']
+        self.assertEqual(school_id, 33312, "school id is 33312")
