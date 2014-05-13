@@ -3,7 +3,6 @@ from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 from schools.managers import SchoolsManager
-
 import json
 
 
@@ -173,9 +172,9 @@ class School(GeoBaseModel):
         return data
 
     def get_geometry(self):
-        try:
+        if hasattr(self, 'instcoord'):
             return json.loads(self.instcoord.coord.geojson)
-        except:
+        else:
             return {}
 
     def get_list_geojson(self):
