@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.contrib.gis.geos import Polygon
 #from coords.models import InstCoord
-from .models import School, InstCoord
+from .models import School, InstCoord, Boundary, BoundaryHierarchy
 from common.views import APIView
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
@@ -63,3 +63,14 @@ class SchoolInfo(APIView):
         id = kwargs['id']
         school = get_object_or_404(School, pk=id)
         return self.render_to_response(school.get_info_geojson())
+
+
+class Districts(APIView):
+
+    def get(self, *args, **kwargs):
+        districts = Boundary.objects.filter(hierarchy__name='district').select_related('boundarycoord', 'type')
+        context = {
+            'type': 'FeatureCollection',
+            'features': [d.get_geojson() for d in districts]
+        }
+        return self.render_to_response(context)

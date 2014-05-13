@@ -46,3 +46,14 @@ class ApiTestCase(unittest.TestCase):
         data = json.loads(response.content)
         school_id = data['properties']['id']
         self.assertEqual(school_id, 33312, "school id is 33312")
+
+    def test_api_districts(self):
+        response = self.c.get("/api/v1/boundary/districts")
+        self.assertEqual(response.status_code, 200, "districts api status code is 200")
+        data = json.loads(response.content)
+        self.assertTrue(len(data['features']) > 10, "at least 10 districts returned")
+        sample_district = data['features'][0]
+        self.assertTrue(sample_district.has_key('geometry'), "has geometry key")
+        self.assertTrue(sample_district['properties'].has_key('id'), "has a property called id")
+        self.assertTrue(sample_district['properties'].has_key('name'), "has a property called name")
+        self.assertTrue(sample_district['properties'].has_key('type'), "has a property called type")
