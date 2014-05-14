@@ -2,6 +2,7 @@ from django.utils import unittest
 from django.test import TestCase
 from django.test.client import Client
 import json
+import csv
 
 class ApiTestCase(unittest.TestCase):
    
@@ -21,6 +22,13 @@ class ApiTestCase(unittest.TestCase):
         self.assertTrue(sample_school['properties'].has_key('id'), "has a property called id")
         self.assertTrue(sample_school['properties'].has_key('name'), "has a property called name")
 
+    def test_api_schools_list_csv(self):
+        response = self.c.get("/api/v1/schools/list?fmt=csv")
+        self.assertEqual(response.status_code, 200, "schools list csv status code is 200")
+        content_disposition = response['content-disposition']
+        self.assertTrue(content_disposition.startswith("attachment"), "response sets content disposition correctly")
+        #TODO: actually test the csv
+
     def test_api_schools_info(self):
         response = self.c.get("/api/v1/schools/info")
         self.assertEqual(response.status_code, 200, "schools info status code is 200")
@@ -39,6 +47,13 @@ class ApiTestCase(unittest.TestCase):
         school1id = sample_school['properties']['id']
         school2id = sample_school_2['properties']['id']
         self.assertFalse(school1id == school2id, "page 2 differs from page 1")
+
+    def test_api_schools_info_csv(self):
+        response = self.c.get("/api/v1/schools/info?fmt=csv")
+        self.assertEqual(response.status_code, 200, "schools list csv status code is 200")
+        content_disposition = response['content-disposition']
+        self.assertTrue(content_disposition.startswith("attachment"), "response sets content disposition correctly")
+        #TODO: actually test the csv
 
     def test_api_school_info(self):
         response = self.c.get("/api/v1/schools/school/33312")

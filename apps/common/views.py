@@ -30,14 +30,18 @@ class JSONResponseMixin(object):
 
 class CSVResponseMixin(object):
 
+    def render_json_to_csv(self, json, status=200):
+        header_row, csv_data = self._convert_json_csv(json)
+        return self.render_to_csv_response(header_row, csv_data, status=status)
+
     def render_geojson_to_csv(self, geojson, status=200):
         "converts a geojson object to csv"
         header_row, csv_data = self._convert_geojson_to_csv(geojson)
-        return self.render_to_csv_response(header_row, csv_data)
+        return self.render_to_csv_response(header_row, csv_data, status=status)
 
     def render_to_csv_response(self, csv_header_row, csv_data, filename="csv_data.csv", extra_http_headers=[], status=200):
         "render csv response"
-        response = http.HttpResponse(content_type="text/csv")
+        response = http.HttpResponse(content_type="text/csv", status=status)
         response['Content-Disposition'] = 'attachment; filename="%s"' % filename
         writer = csv.writer(response)
         writer.writerow(csv_header_row)
@@ -51,6 +55,7 @@ class CSVResponseMixin(object):
         header_row = []
         data_arr = []
         features = geojson['features']
+        #FIXME: if len(features) == 0, raise error
         property_keys = features[0]['properties'].keys()
         header_row = property_keys + ['geometry']
         for f in features:
@@ -61,7 +66,15 @@ class CSVResponseMixin(object):
 
 
     def _convert_json_to_csv(self, json):
-        "convert regular json array to csv"
+        '''
+        convert regular json array to csv
+        QUESTION: this seems a bit awkward, its not json really, its a list of dicts.
+        '''
+        #FIXME: if not a list, raise error
+        obj = json[0]
+        header_row = obj.keys()
+        data_arr = [d.values() for d in json]
+        return (header_row, data_arr,)
 
 
 class StaticPageView(TemplateView):

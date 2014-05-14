@@ -34,12 +34,12 @@ class SchoolsList(APIView, CSVResponseMixin):
             return self.render_to_response(context)
 
 
-class SchoolsInfo(APIView):
+class SchoolsInfo(APIView, CSVResponseMixin):
 
     def get(self, *args, **kwargs):
         bbox_string = self.request.GET.get("bounds")
         page = int(self.request.GET.get("page", 1))
-        #TODO: refactor to accept CSV as param
+        fmt = self.request.GET.get("fmt", "json")
 
         schools = School.objects.all()
         if bbox_string:
@@ -58,7 +58,10 @@ class SchoolsInfo(APIView):
             'features': [s.get_info_geojson() for s in page.object_list]
         }
 
-        return self.render_to_response(context)
+        if fmt == 'csv':
+            return self.render_geojson_to_csv(context)
+        else:
+            return self.render_to_response(context)
 
 
 class SchoolInfo(APIView):
