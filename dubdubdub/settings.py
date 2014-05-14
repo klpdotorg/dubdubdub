@@ -1,6 +1,7 @@
 import os
 
 DEBUG = False
+API_DEBUG = DEBUG #whether to return API errors as json or full stack trace
 
 PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -124,6 +125,7 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'common.middleware.errors.APIExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'dubdubdub.urls'
