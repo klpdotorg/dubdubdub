@@ -3,7 +3,7 @@ try:
     import json
 except:
     import simplejson as json
-
+import csv
 from django.views.generic.base import View, TemplateView
 from django.core.exceptions import PermissionDenied
 
@@ -26,6 +26,42 @@ class JSONResponseMixin(object):
         # objects -- such as Django model instances or querysets
         # -- can be serialized as JSON.
         return json.dumps(context)
+
+
+class CSVResponseMixin(object):
+
+    def render_geojson_to_csv(self, geojson, status=200):
+        "converts a geojson object to csv"
+        header_row, csv_data = self._convert_geojson_to_csv(geojson)
+        return self.render_to_csv_response(header_row, csv_data)
+
+    def render_to_csv_response(self, csv_header_row, csv_data, filename="csv_data.csv", extra_http_headers=[], status=200):
+        "render csv response"
+        response = http.HttpResponse(content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        writer = csv.writer(response)
+        writer.writerow(csv_header_row)
+        for row in csv_data:
+            writer.writerow(row)
+        return response
+
+
+    def _convert_geojson_to_csv(self, geojson):
+        "convert geojson obj to csv"
+        header_row = []
+        data_arr = []
+        features = geojson['features']
+        property_keys = features[0]['properties'].keys()
+        header_row = property_keys + ['geometry']
+        for f in features:
+            row = f['properties'].values()
+            row = row + [json.dumps(f['geometry'])]
+            data_arr.append(row)
+        return (header_row, data_arr,)
+
+
+    def _convert_json_to_csv(self, json):
+        "convert regular json array to csv"
 
 
 class StaticPageView(TemplateView):

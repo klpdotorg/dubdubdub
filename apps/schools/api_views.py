@@ -2,17 +2,18 @@ from django.views.generic import View
 from django.contrib.gis.geos import Polygon
 #from coords.models import InstCoord
 from .models import School, InstCoord, Boundary, BoundaryHierarchy
-from common.views import APIView
+from common.views import APIView, CSVResponseMixin
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 
 ITEMS_PER_PAGE = 50 #move this to settings if it is a constant?
 
-class SchoolsList(APIView):
+class SchoolsList(APIView, CSVResponseMixin):
 
     def get(self, *args, **kwargs):
         bbox_string = self.request.GET.get("bounds")
         page = int(self.request.GET.get("page", 1))
+        fmt = self.request.GET.get("fmt", "json")
         #TODO: refactor to accept CSV as param
         if bbox_string:
             schools = School.objects.within_bbox(bbox_string)
@@ -27,7 +28,10 @@ class SchoolsList(APIView):
             'count': p.count,
             'features': [s.get_list_geojson() for s in page.object_list]
         }
-        return self.render_to_response(context)
+        if fmt == 'csv':
+            return self.render_geojson_to_csv(context)
+        else:
+            return self.render_to_response(context)
 
 
 class SchoolsInfo(APIView):
