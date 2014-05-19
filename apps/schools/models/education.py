@@ -161,7 +161,9 @@ class School(GeoBaseModel):
         # calling related field makes unnecessary queries
         data['dise_code'] = self.dise_info_id
 
-        #FIXME: add data['type'] #QUESTION: how to get 'type'?
+        #QUESTION: how to get 'type'? #ANSWER School > Boundary > BoundaryType
+        data['type'] = self.boundary.type_id
+
         data['management'] = self.get_mgmt_display()
         data['category'] = self.get_cat_display()
         data['medium_of_instruction'] = self.get_moi_display()

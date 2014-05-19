@@ -45,7 +45,7 @@ class SchoolsInfo(APIView, CSVResponseMixin):
         else:
             schools = School.objects.all()
 
-        schools = schools.select_related('instcoord', 'address')
+        schools = schools.select_related('instcoord', 'address', 'boundary')
 
         p = Paginator(schools, ITEMS_PER_PAGE)
         page = p.page(page)
