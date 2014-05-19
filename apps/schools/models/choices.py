@@ -12,12 +12,10 @@ CAT_CHOICES = (
     ('Upper Primary', 'Upper Primary'),
 )
 
-#FIXME: Add mgmt choices from DISE list, @BibhasC
-#FIXME: change verbose names to something nicer
 MGMT_CHOICES = (
-    ('p-a', 'p-a'),
-    ('ed', 'ed'),
-    ('p-ua', 'p-ua'),
+    ('p-a', 'Private Aided'),
+    ('ed', 'Department of Education'),
+    ('p-ua', 'Private Unaided'),
 )
 
 MT_CHOICES = (
