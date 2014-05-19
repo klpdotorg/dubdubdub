@@ -31,6 +31,12 @@ class Address(BaseModel):
     def __unicode__(self):
         return self.address
 
+    @property
+    def full(self):
+        return ', '.join(filter(None, [
+            self.address, self.area, self.pincode
+        ]))
+
     class Meta:
         managed = False
         db_table = 'tb_address'
@@ -154,16 +160,13 @@ class School(GeoBaseModel):
         # dise_info field itself has the dise_code,
         # calling related field makes unnecessary queries
         data['dise_code'] = self.dise_info_id
-        
-        #FIXME: add data['type'] #QUESTION: how to get 'type'?
-        data['management'] = self.mgmt
-        data['category'] = self.cat
 
-        #FIXME: this should probably be a method of address to get formatted address
-        if self.address:
-            data['address'] = self.address.address
-        else:
-            data['address'] = ''
+        #FIXME: add data['type'] #QUESTION: how to get 'type'?
+        data['management'] = self.get_mgmt_display()
+        data['category'] = self.get_cat_display()
+        data['medium_of_instruction'] = self.get_moi_display()
+
+        data['address'] = self.address.full if self.address else ''
 
         #FIXME: add data['photos'] - where does this come from?
         return data
