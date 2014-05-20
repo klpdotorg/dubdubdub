@@ -204,6 +204,13 @@ LOGGING = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/dubdubdub_cache',
+    }
+}
+
 try:
     from local_settings import *
 except ImportError:
