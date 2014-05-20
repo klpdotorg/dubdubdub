@@ -11,6 +11,8 @@ def get_exception_error_message(exception):
     '''
         Check for classes of exceptions and return custom error message, or else return default exception error message
     '''
+    if hasattr(exception, 'message'):
+        return exception.message
     return unicode(exception)
 
 class APIExceptionMiddleware(object):

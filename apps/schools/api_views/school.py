@@ -27,7 +27,7 @@ class SchoolsList(APIView, CSVResponseMixin):
             'features': [s.get_list_geojson() for s in page.object_list]
         }
         if fmt == 'csv':
-            return self.render_geojson_to_csv(context)
+            return self.render_geojson_to_csv(context, geo_format='wkt')
         else:
             return self.render_to_response(context)
 
@@ -57,7 +57,7 @@ class SchoolsInfo(APIView, CSVResponseMixin):
         }
 
         if fmt == 'csv':
-            return self.render_geojson_to_csv(context)
+            return self.render_geojson_to_csv(context, geo_format='wkt')
         else:
             return self.render_to_response(context)
 
