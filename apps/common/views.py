@@ -6,6 +6,8 @@ except:
 import csv
 from django.views.generic.base import View, TemplateView
 from django.core.exceptions import PermissionDenied
+from common.exceptions import APIError
+
 
 class JSONResponseMixin(object):
     def render_to_response(self, context, status=200):
@@ -34,9 +36,13 @@ class CSVResponseMixin(object):
         header_row, csv_data = self._convert_json_csv(json)
         return self.render_to_csv_response(header_row, csv_data, status=status)
 
-    def render_geojson_to_csv(self, geojson, status=200):
-        "converts a geojson object to csv"
-        header_row, csv_data = self._convert_geojson_to_csv(geojson)
+    def render_geojson_to_csv(self, geojson, geo_format='json', status=200):
+        '''
+            converts a geojson object to csv
+            geo_format can be either 'json' or 'wkt'.
+            If geo_format is wkt, geodata should only contain Points, else an error will be raised.
+        '''
+        header_row, csv_data = self._convert_geojson_to_csv(geojson, geo_format)
         return self.render_to_csv_response(header_row, csv_data, status=status)
 
     def render_to_csv_response(self, csv_header_row, csv_data, filename="csv_data.csv", extra_http_headers=[], status=200):
@@ -49,21 +55,32 @@ class CSVResponseMixin(object):
             writer.writerow(row)
         return response
 
-
-    def _convert_geojson_to_csv(self, geojson):
+    def _convert_geojson_to_csv(self, geojson, geo_format):
         "convert geojson obj to csv"
         header_row = []
         data_arr = []
         features = geojson['features']
         #FIXME: if len(features) == 0, raise error
         property_keys = features[0]['properties'].keys()
-        header_row = property_keys + ['geometry']
+        if geo_format == 'json':
+            header_row = property_keys + ['geometry']
+        elif geo_format == 'wkt':
+            header_row = property_keys + ['lat', 'lng']
+        else:
+            raise APIError("Invalid geo format")
         for f in features:
             row = f['properties'].values()
-            row = row + [json.dumps(f['geometry'])]
+            if geo_format == 'json':
+                row = row + [json.dumps(f['geometry'])]
+            elif geo_format == 'wkt':
+                typ = f['geometry']['type']
+                if typ != 'Point':
+                    raise APIError("Cannot serialize non-Point geometries to WKT")
+                lat = f['geometry']['coordinates'][1]
+                lng = f['geometry']['coordinates'][0]
+                row = row + [lat, lng]
             data_arr.append(row)
         return (header_row, data_arr,)
-
 
     def _convert_json_to_csv(self, json):
         '''
