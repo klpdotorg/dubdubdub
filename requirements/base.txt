@@ -11,3 +11,12 @@ raven==3.5.0
 sqlparse==0.1.10
 wsgiref==0.1.2
 django_extensions
+
+#pygments, markdown and django-filter are optional dependencies for djangorestfamework
+djangorestframework
+pygments
+markdown
+django-filter
+
+#https://pypi.python.org/pypi/drf-compound-fields/0.2.0
+drf-compound-fields

@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     # third party
     #'south',
     'django_extensions',
+    'rest_framework',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
 

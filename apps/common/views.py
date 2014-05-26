@@ -7,6 +7,7 @@ import csv
 from django.views.generic.base import View, TemplateView
 from django.core.exceptions import PermissionDenied
 from common.exceptions import APIError
+from rest_framework import generics
 
 
 class JSONResponseMixin(object):
@@ -103,9 +104,14 @@ class StaticPageView(TemplateView):
         return context
 
 
+class KLPListAPIView(generics.ListAPIView):
+    pass
+
+
 class APIView(View, JSONResponseMixin):
     def get(self, *args, **kwargs):
         raise PermissionDenied('Not Permitted')
 
     def post(self, *args, **kwargs):
         raise PermissionDenied('Not Permitted')
+
