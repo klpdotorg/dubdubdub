@@ -105,7 +105,16 @@ class StaticPageView(TemplateView):
 
 
 class KLPListAPIView(generics.ListAPIView):
-    pass
+
+    pagination_results_field = 'features'
+    
+    def get_paginate_by(self, *args, **kwargs):
+        if self.request.accepted_renderer.format == 'csv':
+            return None
+        per_page = int(self.request.GET.get('per_page', 50)) #FIXME: Number should come from settings
+        if per_page == 0:
+            return None
+        return per_page
 
 
 class APIView(View, JSONResponseMixin):

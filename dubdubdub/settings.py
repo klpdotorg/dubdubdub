@@ -205,6 +205,16 @@ LOGGING = {
     }
 }
 
+#REST Framework config options:
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'common.renderers.KLPJSONRenderer',
+        #'common.renderers.KLPCSVRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
+
+
 try:
     from local_settings import *
 except ImportError:
