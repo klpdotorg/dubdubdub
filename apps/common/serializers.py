@@ -5,8 +5,6 @@ from drf_compound_fields.fields import DictField
 
 class KLPGeoSerializer(serializers.ModelSerializer):
 
-    renderer_classes = (JSONRenderer,)
-
     #this will get geometry as a dict from a get_geometry method on the model being serialized
     geometry = DictField(source='get_geometry')
 
