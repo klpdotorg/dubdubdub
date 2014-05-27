@@ -8,3 +8,4 @@ class SchoolsListSerializer(KLPGeoSerializer):
 
     class Meta:
         model = School
+        fields = ('id', 'name', 'geometry',)
