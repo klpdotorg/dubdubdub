@@ -7,7 +7,9 @@ import csv
 from django.views.generic.base import View, TemplateView
 from django.core.exceptions import PermissionDenied
 from common.exceptions import APIError
+from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
+
 
 
 class JSONResponseMixin(object):
@@ -106,7 +108,7 @@ class StaticPageView(TemplateView):
 
 class KLPListAPIView(generics.ListAPIView):
 
-    pagination_results_field = 'features'
+    pagination_serializer_class = KLPPaginationSerializer
     
     def get_paginate_by(self, *args, **kwargs):
         if self.request.accepted_renderer.format == 'csv':

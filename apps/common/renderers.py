@@ -16,20 +16,14 @@ class KLPJSONRenderer(JSONRenderer):
             self.render_geometry = False
 
         #if geometry=yes and results are a list, convert to geojson
-        if self.render_geometry and data.has_key('results') and isinstance(data['results'], list):
+        if self.render_geometry and data.has_key('features') and isinstance(data['features'], list):
             data['type'] = 'FeatureCollection'
-            features = data.pop('results')
+            features = data.pop('features')
             data['features'] = [self.get_feature(elem) for elem in features]
  
         #if geometry=yes and is a single feature, convert data to geojson
         elif self.render_geometry:
             data = self.get_feature(data)
-
-        #FIXME: we should not need this - change pagination results list to be called 'features'
-        #convert 'results' key to 'features', to be fixed with custom paginator class
-        elif isinstance(data['results'], list):
-            features = data.pop('results')
-            data['features'] = features
 
         #err, bad code
         else:
