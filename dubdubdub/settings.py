@@ -209,7 +209,7 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'common.renderers.KLPJSONRenderer',
-        #'common.renderers.KLPCSVRenderer',
+        'common.renderers.KLPCSVRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     )
 }

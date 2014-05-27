@@ -20,3 +20,6 @@ django-filter
 
 #https://pypi.python.org/pypi/drf-compound-fields/0.2.0
 drf-compound-fields
+
+#https://github.com/mjumbewu/django-rest-framework-csv
+djangorestframework-csv
