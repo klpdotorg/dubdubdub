@@ -25,9 +25,9 @@ class KLPJSONRenderer(JSONRenderer):
         elif self.render_geometry:
             data = self.get_feature(data)
 
-        #err, bad code
+        #if geometry=no, just convert data as is to JSON
         else:
-            data = data #FIXME: haha, if we dont need to do anything here, just make previous elif an else.
+            pass
 
         return super(KLPJSONRenderer, self).render(data, media_type, renderer_context)
 
