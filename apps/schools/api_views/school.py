@@ -9,37 +9,10 @@ ITEMS_PER_PAGE = 50 #move this to settings if it is a constant?
 
 
 class SchoolsList(KLPListAPIView):
-    serializer_class = SchoolsListSerializer
+    serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
     queryset = School.objects.all().select_related('instcoord')
 
-
-'''
-class SchoolsList(APIView, CSVResponseMixin):
-
-    def get(self, *args, **kwargs):
-        bbox_string = self.request.GET.get("bounds")
-        page = int(self.request.GET.get("page", 1))
-        fmt = self.request.GET.get("fmt", "json")
-        #TODO: refactor to accept CSV as param
-        if bbox_string:
-            schools = School.objects.within_bbox(bbox_string)
-        else:
-            schools = School.objects.all()
-        schools = schools.select_related('instcoord', 'address')
-        p = Paginator(schools, ITEMS_PER_PAGE)
-        page = p.page(page)
-
-        context = {
-            'type': 'FeatureCollection',
-            'count': p.count,
-            'features': [s.get_list_geojson() for s in page.object_list]
-        }
-        if fmt == 'csv':
-            return self.render_geojson_to_csv(context, geo_format='wkt')
-        else:
-            return self.render_to_response(context)
-'''
 
 class SchoolsInfo(APIView, CSVResponseMixin):
 
