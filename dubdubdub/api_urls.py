@@ -7,7 +7,6 @@ from common.views import StaticPageView
 urlpatterns = patterns('',
     url(r'^schools/list', SchoolsList.as_view(), name='api_schools_list'),
     url(r'^schools/info', SchoolsInfo.as_view(), name='api_schools_info'),
-    url(r'^schools/school/(?P<id>[0-9]*)', SchoolInfo.as_view(), name='api_school_info'),
-
+    url(r'^schools/school/(?P<pk>[0-9]*)', SchoolInfo.as_view(), name='api_school_info'),
     url(r'^boundary/districts', Districts.as_view(), name="api_districts")
 )

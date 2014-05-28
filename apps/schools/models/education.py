@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
-from schools.managers import SchoolsManager
 import json
 
 
@@ -64,24 +63,14 @@ class Boundary(BaseModel):
     def __unicode__(self):
         return self.name
 
+    def get_type(self):
+        return self.type.name
+
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
             return json.loads(self.boundarycoord.coord.geojson)
         else:
             return {}
-
-    def get_properties(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'type': self.type.name
-        }
-
-    def get_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_properties()
-        }
 
     class Meta:
         managed = False
@@ -143,17 +132,14 @@ class School(GeoBaseModel):
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
-    objects = SchoolsManager()
 
     def __unicode__(self):
         return self.name
 
-    def get_list_properties(self):
-        return {
-            'id': self.id,
-            'name': self.name
-        }
+    def get_dise_code(self):
+        return self.dise_info_id
 
+    '''
     def get_info_properties(self):
         data = self.get_list_properties()
 
@@ -172,24 +158,13 @@ class School(GeoBaseModel):
 
         #FIXME: add data['photos'] - where does this come from?
         return data
+    '''
 
     def get_geometry(self):
         if hasattr(self, 'instcoord'):
             return json.loads(self.instcoord.coord.geojson)
         else:
             return {}
-
-    def get_list_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_list_properties()
-        }
-
-    def get_info_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_info_properties()
-        }
 
     class Meta:
         managed = False

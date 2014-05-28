@@ -1,11 +1,6 @@
 from schools.models import School
-from common.views import KLPListAPIView, APIView, CSVResponseMixin
-from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
-from schools.serializers import SchoolsListSerializer
-
-
-ITEMS_PER_PAGE = 50 #move this to settings if it is a constant?
+from common.views import KLPListAPIView, KLPDetailAPIView
+from schools.serializers import SchoolListSerializer, SchoolInfoSerializer
 
 
 class SchoolsList(KLPListAPIView):
@@ -14,39 +9,10 @@ class SchoolsList(KLPListAPIView):
     queryset = School.objects.all().select_related('instcoord')
 
 
-class SchoolsInfo(APIView, CSVResponseMixin):
+class SchoolsInfo(SchoolsList):
+    serializer_class = SchoolInfoSerializer
+    
 
-    def get(self, *args, **kwargs):
-        bbox_string = self.request.GET.get("bounds")
-        page = int(self.request.GET.get("page", 1))
-        fmt = self.request.GET.get("fmt", "json")
-
-        schools = School.objects.all()
-        if bbox_string:
-            schools = School.objects.within_bbox(bbox_string)
-        else:
-            schools = School.objects.all()
-
-        schools = schools.select_related('instcoord', 'address', 'boundary')
-
-        p = Paginator(schools, ITEMS_PER_PAGE)
-        page = p.page(page)
-
-        context = {
-            'type': 'FeatureCollection',
-            'count': p.count,
-            'features': [s.get_info_geojson() for s in page.object_list]
-        }
-
-        if fmt == 'csv':
-            return self.render_geojson_to_csv(context, geo_format='wkt')
-        else:
-            return self.render_to_response(context)
-
-
-class SchoolInfo(APIView):
-
-    def get(self, *args, **kwargs):
-        id = kwargs['id']
-        school = get_object_or_404(School, pk=id)
-        return self.render_to_response(school.get_info_geojson())
+class SchoolInfo(KLPDetailAPIView):
+    serializer_class = SchoolInfoSerializer
+    model = School
