@@ -23,3 +23,6 @@ drf-compound-fields
 
 #https://github.com/mjumbewu/django-rest-framework-csv
 djangorestframework-csv
+
+#https://github.com/djangonauts/django-rest-framework-gis
+djangorestframework-gis

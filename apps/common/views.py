@@ -9,7 +9,7 @@ from django.core.exceptions import PermissionDenied
 from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
-
+from rest_framework_gis.filters import InBBOXFilter
 
 
 class JSONResponseMixin(object):
@@ -109,7 +109,8 @@ class StaticPageView(TemplateView):
 class KLPListAPIView(generics.ListAPIView):
 
     pagination_serializer_class = KLPPaginationSerializer
-    
+    filter_backends = (InBBOXFilter,)
+
     def get_paginate_by(self, *args, **kwargs):
         if self.request.accepted_renderer.format == 'csv':
             return None
