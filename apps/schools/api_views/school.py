@@ -1,6 +1,6 @@
 from schools.models import School
 from common.views import KLPListAPIView, KLPDetailAPIView
-from schools.serializers import SchoolListSerializer, SchoolInfoSerializer
+from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer
 
 
 class SchoolsList(KLPListAPIView):
@@ -11,7 +11,12 @@ class SchoolsList(KLPListAPIView):
 
 class SchoolsInfo(SchoolsList):
     serializer_class = SchoolInfoSerializer
-    
+
+
+class SchoolsDiseInfo(KLPListAPIView):
+    serializer_class = SchoolDiseSerializer
+    queryset = School.objects.all().select_related('dise_info')
+
 
 class SchoolInfo(KLPDetailAPIView):
     serializer_class = SchoolInfoSerializer
