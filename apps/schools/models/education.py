@@ -95,6 +95,11 @@ class BoundaryType(BaseModel):
 
 
 class BoundaryPrimarySchool(BaseModel):
+    # Note: Because these have reference to Boundary,
+    # we can get the schools belonging to these using that.
+    # so, self.cluster.schools_set.all() sould return all schools belonging
+    # to that cluster. Needs more testing.
+
     cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
     block = models.ForeignKey("Boundary", db_column="block_id", related_name="boundary_ps_block")
     district = models.ForeignKey("Boundary", db_column="district_id", related_name="boundary_ps_district")
