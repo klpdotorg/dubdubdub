@@ -10,11 +10,14 @@ class SchoolListSerializer(KLPGeoSerializer):
 
 
 class SchoolInfoSerializer(KLPGeoSerializer):
-    dise_code = serializers.IntegerField(source='get_dise_code')
+    dise_code = serializers.IntegerField(source='dise_info_id')
+    type_id = serializers.CharField(source='boundary.type_id')
+    address_full = serializers.CharField(source='address.full')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'dise_code', 'geometry')
+        fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full',
+            'dise_code', 'type_id', 'geometry')
 
 
 class DistrictSerializer(KLPGeoSerializer):
