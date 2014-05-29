@@ -69,7 +69,7 @@ class DiseInfo(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_dise_info'
+        db_table = 'mvw_dise_info'
 
 
 class PaisaData(BaseModel):
