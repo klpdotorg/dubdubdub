@@ -36,6 +36,11 @@ class Address(BaseModel):
             self.address, self.area, self.pincode
         ]))
 
+    def get_identifiers(self):
+        return ', '.join(filter(None, [
+            self.instidentification, self.instidentification2
+        ]))
+
     class Meta:
         managed = False
         db_table = 'tb_address'
@@ -87,6 +92,19 @@ class BoundaryType(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_boundary_type'
+
+
+class BoundaryPrimarySchool(BaseModel):
+    cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
+    block = models.ForeignKey("Boundary", db_column="block_id", related_name="boundary_ps_block")
+    district = models.ForeignKey("Boundary", db_column="district_id", related_name="boundary_ps_district")
+
+    def __unicode__(self):
+        return self.cluster.name
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_boundary_primary'
 
 
 class Child(BaseModel):
