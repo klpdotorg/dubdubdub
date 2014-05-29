@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from common.models import BaseModel, GeoBaseModel
+from common.models import BaseModel, GeoBaseModel, BaseGeoManager
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 import json
@@ -97,7 +97,7 @@ class BoundaryType(BaseModel):
 class BoundaryPrimarySchool(BaseModel):
     # Note: Because these have reference to Boundary,
     # we can get the schools belonging to these using that.
-    # so, self.cluster.schools_set.all() sould return all schools belonging
+    # so, self.cluster.school_set.all() sould return all schools belonging
     # to that cluster. Needs more testing.
 
     cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
@@ -110,6 +110,9 @@ class BoundaryPrimarySchool(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_boundary_primary'
+
+    def get_schools_in_cluster(self):
+        return self.cluster.school_set.all()
 
 
 class Child(BaseModel):
@@ -143,6 +146,23 @@ class StudentGroup(BaseModel):
         db_table = 'tb_class'
 
 
+
+class SchoolManager(BaseGeoManager):
+    # TBD: send preschool/primary param to below 3 when BoundaryPreschool is created
+    def get_in_cluster(self, cluster_name):
+        return self.filter(boundary_cluster__name__iexact=cluster_name)
+
+    def get_in_block(self, block_name):
+        return self.filter(
+            boundary_cluster_id__in=BoundaryPrimarySchool.objects.filter(block__name__iexact=block_name
+        ).values_list('cluster_id', flat=True))
+
+    def get_in_district(self, district_name):
+        return self.filter(
+            boundary_cluster_id__in=BoundaryPrimarySchool.objects.filter(district__name__iexact=district_name
+        ).values_list('cluster_id', flat=True))
+
+
 class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
 
@@ -157,6 +177,8 @@ class School(GeoBaseModel):
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
+
+    objects = SchoolManager()
 
     def __unicode__(self):
         return self.name
