@@ -20,7 +20,7 @@ class SchoolInfoSerializer(KLPGeoSerializer):
             'dise_code', 'type_id', 'geometry')
 
 
-class DistrictSerializer(KLPGeoSerializer):
+class BoundarySerializer(KLPGeoSerializer):
     type = serializers.CharField(source='get_type')
 
     class Meta:
