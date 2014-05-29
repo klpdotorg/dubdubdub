@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from common.models import BaseModel, GeoBaseModel, BaseGeoManager
+from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 import json
@@ -146,23 +146,6 @@ class StudentGroup(BaseModel):
         db_table = 'tb_class'
 
 
-
-class SchoolManager(BaseGeoManager):
-    # TBD: send preschool/primary param to below 3 when BoundaryPreschool is created
-    def get_in_cluster(self, cluster_name):
-        return self.filter(boundary_cluster__name__iexact=cluster_name)
-
-    def get_in_block(self, block_name):
-        return self.filter(
-            boundary_cluster_id__in=BoundaryPrimarySchool.objects.filter(block__name__iexact=block_name
-        ).values_list('cluster_id', flat=True))
-
-    def get_in_district(self, district_name):
-        return self.filter(
-            boundary_cluster_id__in=BoundaryPrimarySchool.objects.filter(district__name__iexact=district_name
-        ).values_list('cluster_id', flat=True))
-
-
 class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
 
@@ -177,8 +160,6 @@ class School(GeoBaseModel):
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
-
-    objects = SchoolManager()
 
     def __unicode__(self):
         return self.name
@@ -223,6 +204,21 @@ class School(GeoBaseModel):
     class Meta:
         managed = False
         db_table = 'tb_school'
+
+
+class SchoolDetails(BaseModel):
+    school = models.OneToOneField('School', db_column='id', primary_key=True)
+    cluster_or_circle = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_cluster")
+    block_or_project = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_block")
+    district = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_district")
+    type = models.ForeignKey('BoundaryType', db_column='type')
+
+    def __unicode__(self):
+        return str(self.pk)
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_details'
 
 
 class Student(BaseModel):
