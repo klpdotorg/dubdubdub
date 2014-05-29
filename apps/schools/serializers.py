@@ -11,7 +11,11 @@ class SchoolListSerializer(KLPGeoSerializer):
 
 class SchoolInfoSerializer(KLPGeoSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
-    type_id = serializers.CharField(source='boundary.type_id')
+    cluster = serializers.CharField(source='schooldetails.cluster_or_circle.name')
+    block = serializers.CharField(source='schooldetails.block_or_project.name')
+    district = serializers.CharField(source='schooldetails.district.name')
+
+    type_id = serializers.CharField(source='schooldetails.type_id')
     address_full = serializers.CharField(source='address.full')
     landmark = serializers.CharField(source='address.landmark')
     identifiers = serializers.CharField(source='address.get_identifiers')
@@ -19,7 +23,7 @@ class SchoolInfoSerializer(KLPGeoSerializer):
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'dise_code', 'type_id', 'geometry')
+            'identifiers', 'cluster', 'block', 'district', 'dise_code', 'type_id', 'geometry')
 
 
 class SchoolDiseSerializer(KLPNonGeoSerializer):

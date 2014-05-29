@@ -95,6 +95,11 @@ class BoundaryType(BaseModel):
 
 
 class BoundaryPrimarySchool(BaseModel):
+    # Note: Because these have reference to Boundary,
+    # we can get the schools belonging to these using that.
+    # so, self.cluster.school_set.all() sould return all schools belonging
+    # to that cluster. Needs more testing.
+
     cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
     block = models.ForeignKey("Boundary", db_column="block_id", related_name="boundary_ps_block")
     district = models.ForeignKey("Boundary", db_column="district_id", related_name="boundary_ps_district")
@@ -105,6 +110,9 @@ class BoundaryPrimarySchool(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_boundary_primary'
+
+    def get_schools_in_cluster(self):
+        return self.cluster.school_set.all()
 
 
 class Child(BaseModel):
@@ -140,7 +148,9 @@ class StudentGroup(BaseModel):
 
 class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
-    boundary = models.ForeignKey('Boundary', db_column='bid')
+
+    boundary_cluster = models.ForeignKey('Boundary', db_column='bid')
+
     #TODO: check if address should be ForeignKey or OneToOneField
     address = models.ForeignKey('Address', db_column='aid', blank=True, null=True)
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code', blank=True, null=True)
@@ -156,6 +166,13 @@ class School(GeoBaseModel):
 
     def get_dise_code(self):
         return self.dise_info_id
+
+    def get_boundary(self):
+        if self.boundary_cluster.type_id == 1:
+            return BoundaryPrimarySchool.objects.get(cluster_id=self.boundary_cluster_id) if self.boundary_cluster_id else None
+        else:
+            # TBD: return BoundaryPreschool when ready
+            return None
 
     '''
     def get_info_properties(self):
@@ -187,6 +204,21 @@ class School(GeoBaseModel):
     class Meta:
         managed = False
         db_table = 'tb_school'
+
+
+class SchoolDetails(BaseModel):
+    school = models.OneToOneField('School', db_column='id', primary_key=True)
+    cluster_or_circle = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_cluster")
+    block_or_project = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_block")
+    district = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_district")
+    type = models.ForeignKey('BoundaryType', db_column='type')
+
+    def __unicode__(self):
+        return str(self.pk)
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_details'
 
 
 class Student(BaseModel):

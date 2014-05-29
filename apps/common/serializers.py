@@ -7,7 +7,8 @@ class KLPNonGeoSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(KLPNonGeoSerializer, self).__init__(*args, **kwargs)
         request = kwargs['context']['request']
-        year = request.GET.get('year', 2010)
+        year = request.GET.get('year', '2010-11')
+
 
 class KLPGeoSerializer(serializers.ModelSerializer):
 
