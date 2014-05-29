@@ -17,9 +17,9 @@ class SchoolsDiseInfo(KLPListAPIView):
     serializer_class = SchoolDiseSerializer
 
     def get_queryset(self):
-        year = self.kwargs.get('year', 2010)
+        year = self.kwargs.get('year', '2010-11')
         # FIXIT: year must be like 2011-12
-        return School.objects.filter(dise_info__acyear=year)
+        return School.objects.filter(dise_info__acyear=year).select_related('dise_info')
 
 
 class SchoolInfo(KLPDetailAPIView):
