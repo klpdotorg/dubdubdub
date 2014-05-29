@@ -11,7 +11,7 @@ class SchoolListSerializer(KLPGeoSerializer):
 
 class SchoolInfoSerializer(KLPGeoSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
-    type_id = serializers.CharField(source='boundary.type_id')
+    type_id = serializers.CharField(source='boundary_cluster.type_id')
     address_full = serializers.CharField(source='address.full')
     landmark = serializers.CharField(source='address.landmark')
     identifiers = serializers.CharField(source='address.get_identifiers')
