@@ -7,7 +7,13 @@ import re
 class SchoolsList(KLPListAPIView):
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
-    queryset = School.objects.all().select_related('instcoord')
+
+    def get_queryset(self):
+        qset = School.objects.all()
+        get_geom = self.request.GET.get('geometry', 'no')
+        if get_geom == 'yes':
+            qset = qset.select_related('instcoord')
+        return qset
 
 
 class SchoolsInfo(SchoolsList):
