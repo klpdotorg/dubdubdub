@@ -6,7 +6,7 @@ class SchoolListSerializer(KLPGeoSerializer):
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'geometry',)
+        fields = ('id', 'name',)
 
 
 class SchoolInfoSerializer(KLPGeoSerializer):
@@ -23,7 +23,7 @@ class SchoolInfoSerializer(KLPGeoSerializer):
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'cluster', 'block', 'district', 'dise_code', 'type_id', 'geometry')
+            'identifiers', 'cluster', 'block', 'district', 'dise_code', 'type_id',)
 
 
 class SchoolDiseSerializer(KLPNonGeoSerializer):
@@ -37,4 +37,4 @@ class BoundarySerializer(KLPGeoSerializer):
 
     class Meta:
         model = Boundary
-        fields = ('id', 'name', 'type', 'geometry',)
+        fields = ('id', 'name', 'type',)

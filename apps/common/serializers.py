@@ -10,15 +10,14 @@ class KLPNonGeoSerializer(serializers.ModelSerializer):
 
 
 class KLPGeoSerializer(serializers.ModelSerializer):
-
-    #this will get geometry as a dict from a get_geometry method on the model being serialized
-    geometry = DictField(source='get_geometry')
+    #geometry = DictField(source='get_geometry')
 
     def __init__(self, *args, **kwargs):
         super(KLPGeoSerializer, self).__init__(*args, **kwargs)
+        #import pdb;pdb.set_trace()
         request = kwargs['context']['request']
         geometry = request.GET.get('geometry', 'no')
-        #remove geometry field if geometry=yes param not set
-        if geometry != 'yes':
-            self.fields.pop('geometry')
+        #add geometry to fields if geometry=yes in query params
+        if geometry == 'yes':
+            self.fields['geometry'] = DictField(source='get_geometry')
 
