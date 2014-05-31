@@ -15,6 +15,13 @@ class KLPJSONRenderer(JSONRenderer):
         else:
             self.render_geometry = False
 
+        #if data is a list, that means pagination was turned off with per_page=0
+        #convert the list to a dict so that we return same data structure:
+        if isinstance(data, list):
+            data = {
+                'features': data
+            }
+
         #if geometry=yes and results are a list, convert to geojson
         if self.render_geometry and data.has_key('features') and isinstance(data['features'], list):
             data['type'] = 'FeatureCollection'
