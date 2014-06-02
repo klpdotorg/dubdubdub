@@ -70,6 +70,7 @@ class InstitutionAssessmentAggCohorts(BaseModel):
         return "%s: %s: %s" % (self.school, self.sex, self.mt,)
 
     class Meta:
+        verbose_name = 'InstAssAggCohorts' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_agg_cohorts'
 
@@ -84,6 +85,7 @@ class InstitutionAssessmentGenderSinglescore(BaseModel):
         return "%s: %s: %s" (self.school, self.assessment, self.sex,)
 
     class Meta:
+        verbose_name = 'InstAssGenderSingleScore' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_gender_singlescore'
 
@@ -98,6 +100,7 @@ class InstitutionAssessmentMtSinglescore(BaseModel):
         return "%s: %s: %s" (self.school, self.assessment, self.mt,)
 
     class Meta:
+        verbose_name = 'InstAssMtSingleScore' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_mt_singlescore'
 
@@ -118,6 +121,7 @@ class InstitutionAssessmentReadingAggCohorts(BaseModel):
         return "%s: %s: %s" (self.school, self.assessment, self.mt,)
 
     class Meta:
+        verbose_name = 'InstAssReadingAggCohorts' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_reading_agg_cohorts'
 
@@ -133,6 +137,7 @@ class InstitutionAssessmentSinglescore(BaseModel):
         return "%s: %s" (self.school, self.programme,) #FIXME: add singlescore?
 
     class Meta:
+        verbose_name = 'InstAssSingleScore' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_singlescore'
 
@@ -149,6 +154,7 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
         return "%s: %s" (self.school, self.programme,) #FIXME: add singlescore?        
 
     class Meta:
+        verbose_name = 'InstAssSingleScoreGender' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_singlescore_gender'
 
@@ -165,6 +171,7 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
         return "%s: %s: %s" (self.school, self.programme, self.mt,)        
 
     class Meta:
+        verbose_name = 'InstAssSingleScoreMt' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
 
@@ -181,6 +188,7 @@ class InstitutionBasicAssessmentInfo(BaseModel):
         return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
 
     class Meta:
+        verbose_name = 'InstBasicAssInfo' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_basic_assessment_info'
 
@@ -197,6 +205,7 @@ class InstitutionBasicAssessmentInfoCohorts(BaseModel):
         return "%s: %s: %s" (self.school, self.assessment, self.mt,)        
 
     class Meta:
+        verbose_name = 'InstBasicAssInfoCohorts' #workaround for https://code.djangoproject.com/ticket/8162
         managed = False
         db_table = 'tb_institution_basic_assessment_info_cohorts'
 
