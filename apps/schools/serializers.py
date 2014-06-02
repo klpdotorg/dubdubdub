@@ -1,6 +1,6 @@
 from common.serializers import KLPSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary
+from schools.models import School, Boundary, DiseInfo
 
 class SchoolListSerializer(KLPSerializer):
 
@@ -27,9 +27,12 @@ class SchoolInfoSerializer(KLPSerializer):
 
 
 class SchoolDiseSerializer(KLPSerializer):
+    id = serializers.IntegerField(source="school.id")
+    name = serializers.CharField(source="school.name")
+
     class Meta:
-        model = School
-        fields = ('id', 'name', 'dise_info')
+        model = DiseInfo
+        fields = ('id', 'name', ) + tuple([f.name for f in DiseInfo._meta.fields])
 
 
 class BoundarySerializer(KLPSerializer):

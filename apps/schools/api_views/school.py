@@ -1,4 +1,4 @@
-from schools.models import School
+from schools.models import School, DiseInfo
 from common.views import KLPListAPIView, KLPDetailAPIView
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer
 from django.contrib.gis.geos import Polygon
@@ -23,12 +23,12 @@ class SchoolsInfo(SchoolsList):
 class SchoolsDiseInfo(KLPListAPIView):
     # test url: http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
     serializer_class = SchoolDiseSerializer
-    bbox_filter_field = "instcoord__coord"
+    bbox_filter_field = "school__instcoord__coord"
 
     def get_queryset(self):
         year = self.kwargs.get('year', '2010-11')
-        schools = School.objects.filter(dise_info__acyear=year).select_related('instcoord', 'dise_info')
-        # print schools.query
+        schools = DiseInfo.objects.filter(acyear=year).select_related('instcoord', 'school')
+        print schools.query
         return schools
 
 
