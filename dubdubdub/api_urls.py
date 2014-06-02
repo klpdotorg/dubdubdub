@@ -5,6 +5,7 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, S
 from common.views import StaticPageView
 
 urlpatterns = patterns('',
+    url(r'^$', 'schools.api_views.api_root', name='api_root'),
     url(r'^schools/list', SchoolsList.as_view(), name='api_schools_list'),
     url(r'^schools/info', SchoolsInfo.as_view(), name='api_schools_info'),
     url(r'^schools/dise/(?P<year>[0-9\-]*)', SchoolsDiseInfo.as_view(), name='api_schools_dise'),

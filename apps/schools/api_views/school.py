@@ -5,6 +5,9 @@ from django.contrib.gis.geos import Polygon
 import re
 
 class SchoolsList(KLPListAPIView):
+    '''
+        Returns list of schools with id and name.  
+    '''
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
 
@@ -17,10 +20,16 @@ class SchoolsList(KLPListAPIView):
 
 
 class SchoolsInfo(SchoolsList):
+    '''
+        Returns list of schools with more info about each school
+    '''
     serializer_class = SchoolInfoSerializer
 
 
 class SchoolsDiseInfo(KLPListAPIView):
+    '''
+        Returns list of schools with DISE data
+    '''
     # test url: http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
     serializer_class = SchoolDiseSerializer
     bbox_filter_field = "instcoord__coord"
@@ -33,5 +42,8 @@ class SchoolsDiseInfo(KLPListAPIView):
 
 
 class SchoolInfo(KLPDetailAPIView):
+    '''
+        Returns info for a single school.
+    '''
     serializer_class = SchoolInfoSerializer
     model = School
