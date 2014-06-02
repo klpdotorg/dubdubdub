@@ -15,7 +15,7 @@ class ApiTestCase(unittest.TestCase):
    
     def test_api_schools_list(self):
         base_url = "/api/v1/schools/list?"
-        query_url = base_url + "bounds=77.54537736775214,12.950457093960514,77.61934126017755,13.022529216896507&geometry=yes"
+        query_url = base_url + "in_bbox=77.54537736775214,12.950457093960514,77.61934126017755,13.022529216896507&geometry=yes"
         response = self.c.get(query_url)
         self.assertEqual(response.status_code, 200, "schools list status code is 200")
         results = json.loads(response.content)
@@ -23,6 +23,11 @@ class ApiTestCase(unittest.TestCase):
         sample_school = results['features'][0]
         self.assertTrue(sample_school['properties'].has_key('id'), "has a property called id")
         self.assertTrue(sample_school['properties'].has_key('name'), "has a property called name")
+        base_response = self.c.get(base_url)
+        base_results = json.loads(base_response.content)
+        base_count = base_results['count']
+        query_count = results['count']
+        self.assertTrue(base_count > query_count, "Total results > results within bbox")
 
     '''
     def test_api_schools_list_csv(self):
