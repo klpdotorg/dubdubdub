@@ -18,12 +18,13 @@ class SchoolInfoSerializer(KLPSerializer):
     type_id = serializers.CharField(source='schooldetails.type_id')
     address_full = serializers.CharField(source='address.full')
     landmark = serializers.CharField(source='address.landmark')
+    bus = serializers.CharField(source='address.bus')
     identifiers = serializers.CharField(source='address.get_identifiers')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'cluster', 'block', 'district', 'dise_code', 'type_id',)
+            'identifiers', 'cluster', 'block', 'district', 'bus', 'dise_code', 'type_id',)
 
 
 class SchoolDiseSerializer(KLPSerializer):
