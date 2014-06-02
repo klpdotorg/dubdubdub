@@ -27,8 +27,6 @@ DATABASES = {
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 
-DATABASE_ROUTERS = ['dubdubdub.router.KLPRouter']
-
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.klp.org.in']
