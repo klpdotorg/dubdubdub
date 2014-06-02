@@ -3,6 +3,9 @@ from common.views import KLPListAPIView
 from schools.serializers import BoundarySerializer
 
 class Districts(KLPListAPIView):
+    '''
+        Returns a list of all districts (id and name)
+    '''
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
