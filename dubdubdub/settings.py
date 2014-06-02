@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     # third party
     #'south',
     'django_extensions',
+    'rest_framework',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
 
@@ -209,6 +210,15 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/dubdubdub_cache',
     }
+}
+
+#REST Framework config options:
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'common.renderers.KLPJSONRenderer',
+        'common.renderers.KLPCSVRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
 
 try:

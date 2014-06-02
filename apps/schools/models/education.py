@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
-from schools.managers import SchoolsManager
 import json
 
 
@@ -37,6 +36,11 @@ class Address(BaseModel):
             self.address, self.area, self.pincode
         ]))
 
+    def get_identifiers(self):
+        return ', '.join(filter(None, [
+            self.instidentification, self.instidentification2
+        ]))
+
     class Meta:
         managed = False
         db_table = 'tb_address'
@@ -64,24 +68,14 @@ class Boundary(BaseModel):
     def __unicode__(self):
         return self.name
 
+    def get_type(self):
+        return self.type.name
+
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
             return json.loads(self.boundarycoord.coord.geojson)
         else:
             return {}
-
-    def get_properties(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'type': self.type.name
-        }
-
-    def get_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_properties()
-        }
 
     class Meta:
         managed = False
@@ -98,6 +92,27 @@ class BoundaryType(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_boundary_type'
+
+
+class BoundaryPrimarySchool(BaseModel):
+    # Note: Because these have reference to Boundary,
+    # we can get the schools belonging to these using that.
+    # so, self.cluster.school_set.all() sould return all schools belonging
+    # to that cluster. Needs more testing.
+
+    cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
+    block = models.ForeignKey("Boundary", db_column="block_id", related_name="boundary_ps_block")
+    district = models.ForeignKey("Boundary", db_column="district_id", related_name="boundary_ps_district")
+
+    def __unicode__(self):
+        return self.cluster.name
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_boundary_primary'
+
+    def get_schools_in_cluster(self):
+        return self.cluster.school_set.all()
 
 
 class Child(BaseModel):
@@ -133,7 +148,9 @@ class StudentGroup(BaseModel):
 
 class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
-    boundary = models.ForeignKey('Boundary', db_column='bid')
+
+    boundary_cluster = models.ForeignKey('Boundary', db_column='bid')
+
     #TODO: check if address should be ForeignKey or OneToOneField
     address = models.ForeignKey('Address', db_column='aid', blank=True, null=True)
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code', blank=True, null=True)
@@ -143,17 +160,21 @@ class School(GeoBaseModel):
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()
-    objects = SchoolsManager()
 
     def __unicode__(self):
         return self.name
 
-    def get_list_properties(self):
-        return {
-            'id': self.id,
-            'name': self.name
-        }
+    def get_dise_code(self):
+        return self.dise_info_id
 
+    def get_boundary(self):
+        if self.boundary_cluster.type_id == 1:
+            return BoundaryPrimarySchool.objects.get(cluster_id=self.boundary_cluster_id) if self.boundary_cluster_id else None
+        else:
+            # TBD: return BoundaryPreschool when ready
+            return None
+
+    '''
     def get_info_properties(self):
         data = self.get_list_properties()
 
@@ -172,6 +193,7 @@ class School(GeoBaseModel):
 
         #FIXME: add data['photos'] - where does this come from?
         return data
+    '''
 
     def get_geometry(self):
         if hasattr(self, 'instcoord'):
@@ -179,21 +201,24 @@ class School(GeoBaseModel):
         else:
             return {}
 
-    def get_list_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_list_properties()
-        }
-
-    def get_info_geojson(self):
-        return {
-            'geometry': self.get_geometry(),
-            'properties': self.get_info_properties()
-        }
-
     class Meta:
         managed = False
         db_table = 'tb_school'
+
+
+class SchoolDetails(BaseModel):
+    school = models.OneToOneField('School', db_column='id', primary_key=True)
+    cluster_or_circle = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_cluster")
+    block_or_project = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_block")
+    district = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_district")
+    type = models.ForeignKey('BoundaryType', db_column='type')
+
+    def __unicode__(self):
+        return str(self.pk)
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_details'
 
 
 class Student(BaseModel):

@@ -1,70 +1,37 @@
-from schools.models import School
-from common.views import APIView, CSVResponseMixin
-from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
+from schools.models import School, DiseInfo
+from common.views import KLPListAPIView, KLPDetailAPIView
+from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer
+from django.contrib.gis.geos import Polygon
+import re
+
+class SchoolsList(KLPListAPIView):
+    serializer_class = SchoolListSerializer
+    bbox_filter_field = "instcoord__coord"
+
+    def get_queryset(self):
+        qset = School.objects.all()
+        get_geom = self.request.GET.get('geometry', 'no')
+        if get_geom == 'yes':
+            qset = qset.select_related('instcoord')
+        return qset
 
 
-ITEMS_PER_PAGE = 50 #move this to settings if it is a constant?
-
-class SchoolsList(APIView, CSVResponseMixin):
-
-    def get(self, *args, **kwargs):
-        bbox_string = self.request.GET.get("bounds")
-        page = int(self.request.GET.get("page", 1))
-        fmt = self.request.GET.get("fmt", "json")
-        #TODO: refactor to accept CSV as param
-        if bbox_string:
-            schools = School.objects.within_bbox(bbox_string)
-        else:
-            schools = School.objects.all()
-        schools = schools.select_related('instcoord', 'address')
-        p = Paginator(schools, ITEMS_PER_PAGE)
-        page = p.page(page)
-
-        context = {
-            'type': 'FeatureCollection',
-            'count': p.count,
-            'features': [s.get_list_geojson() for s in page.object_list]
-        }
-        if fmt == 'csv':
-            return self.render_geojson_to_csv(context, geo_format='wkt')
-        else:
-            return self.render_to_response(context)
+class SchoolsInfo(SchoolsList):
+    serializer_class = SchoolInfoSerializer
 
 
-class SchoolsInfo(APIView, CSVResponseMixin):
+class SchoolsDiseInfo(KLPListAPIView):
+    # test url: http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
+    serializer_class = SchoolDiseSerializer
+    bbox_filter_field = "school__instcoord__coord"
 
-    def get(self, *args, **kwargs):
-        bbox_string = self.request.GET.get("bounds")
-        page = int(self.request.GET.get("page", 1))
-        fmt = self.request.GET.get("fmt", "json")
-
-        schools = School.objects.all()
-        if bbox_string:
-            schools = School.objects.within_bbox(bbox_string)
-        else:
-            schools = School.objects.all()
-
-        schools = schools.select_related('instcoord', 'address', 'boundary')
-
-        p = Paginator(schools, ITEMS_PER_PAGE)
-        page = p.page(page)
-
-        context = {
-            'type': 'FeatureCollection',
-            'count': p.count,
-            'features': [s.get_info_geojson() for s in page.object_list]
-        }
-
-        if fmt == 'csv':
-            return self.render_geojson_to_csv(context, geo_format='wkt')
-        else:
-            return self.render_to_response(context)
+    def get_queryset(self):
+        year = self.kwargs.get('year', '2010-11')
+        schools = DiseInfo.objects.filter(acyear=year).select_related('instcoord', 'school')
+        print schools.query
+        return schools
 
 
-class SchoolInfo(APIView):
-
-    def get(self, *args, **kwargs):
-        id = kwargs['id']
-        school = get_object_or_404(School, pk=id)
-        return self.render_to_response(school.get_info_geojson())
+class SchoolInfo(KLPDetailAPIView):
+    serializer_class = SchoolInfoSerializer
+    model = School

@@ -1,12 +1,10 @@
 from schools.models import Boundary
-from common.views import APIView, CSVResponseMixin
+from common.views import KLPListAPIView
+from schools.serializers import BoundarySerializer
 
-class Districts(APIView):
+class Districts(KLPListAPIView):
+    serializer_class = BoundarySerializer
+    bbox_filter_field = 'boundarycoord__coord'
 
-    def get(self, *args, **kwargs):
-        districts = Boundary.objects.filter(hierarchy__name='district').select_related('boundarycoord', 'type')
-        context = {
-            'type': 'FeatureCollection',
-            'features': [d.get_geojson() for d in districts]
-        }
-        return self.render_to_response(context)
+    def get_queryset(self):
+        return Boundary.objects.filter(hierarchy__name='district').select_related('boundarycoord', 'type')
