@@ -1,15 +1,15 @@
-from common.serializers import KLPGeoSerializer, KLPNonGeoSerializer
+from common.serializers import KLPSerializer
 from rest_framework import serializers
 from schools.models import School, Boundary
 
-class SchoolListSerializer(KLPGeoSerializer):
+class SchoolListSerializer(KLPSerializer):
 
     class Meta:
         model = School
         fields = ('id', 'name',)
 
 
-class SchoolInfoSerializer(KLPGeoSerializer):
+class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
     cluster = serializers.CharField(source='schooldetails.cluster_or_circle.name')
     block = serializers.CharField(source='schooldetails.block_or_project.name')
@@ -26,13 +26,13 @@ class SchoolInfoSerializer(KLPGeoSerializer):
             'identifiers', 'cluster', 'block', 'district', 'dise_code', 'type_id',)
 
 
-class SchoolDiseSerializer(KLPNonGeoSerializer):
+class SchoolDiseSerializer(KLPSerializer):
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info')
 
 
-class BoundarySerializer(KLPGeoSerializer):
+class BoundarySerializer(KLPSerializer):
     type = serializers.CharField(source='get_type')
 
     class Meta:
