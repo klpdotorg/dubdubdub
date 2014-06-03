@@ -25,6 +25,10 @@ class SchoolsInfo(SchoolsList):
     '''
     serializer_class = SchoolInfoSerializer
 
+    def get_queryset(self):
+        return School.objects.all()\
+        .select_related('address', 'schooldetails__boundary', 'electedrep__electedrepmaster')
+
 
 class SchoolsDiseInfo(KLPListAPIView):
     '''

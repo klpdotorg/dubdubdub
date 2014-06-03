@@ -21,10 +21,14 @@ class SchoolInfoSerializer(KLPSerializer):
     bus = serializers.CharField(source='address.bus')
     identifiers = serializers.CharField(source='address.get_identifiers')
 
+    mp = serializers.CharField(source="get_mp")
+    mla = serializers.CharField(source="get_mla")
+    ward = serializers.CharField(source="get_ward")
+
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'cluster', 'block', 'district', 'bus', 'dise_code', 'type_id',)
+            'identifiers', 'cluster', 'block', 'district', 'bus', "mp", "mla", "ward", 'dise_code', 'type_id',)
 
 
 class SchoolDiseSerializer(KLPSerializer):

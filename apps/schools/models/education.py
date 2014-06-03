@@ -174,6 +174,24 @@ class School(GeoBaseModel):
             # TBD: return BoundaryPreschool when ready
             return None
 
+    def get_mp(self):
+        try:
+            return self.electedrep.mp_const.const_ward_name
+        except:
+            return None
+
+    def get_mla(self):
+        try:
+            return self.electedrep.mla_const.const_ward_name
+        except:
+            return None
+
+    def get_ward(self):
+        try:
+            return self.electedrep.ward.const_ward_name
+        except:
+            return None
+
     '''
     def get_info_properties(self):
         data = self.get_list_properties()

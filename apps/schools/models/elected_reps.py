@@ -33,12 +33,15 @@ class SchoolElectedrep(BaseModel):
     to a klp school/preschool id in this view.
     The view is from the db electrep_new
     '''
-    #Is this a OneToOne mapping?
-    school = models.ForeignKey('School', primary_key=True, db_column='sid')
-    ward_id = models.ForeignKey('ElectedrepMaster', related_name='school_ward', db_column='ward_id', blank=True, null=True)
-    mla_const_id = models.ForeignKey('ElectedrepMaster', related_name='school_mla_const', db_column='mla_const_id', blank=True, null=True)
-    mp_const_id = models.ForeignKey('ElectedrepMaster', related_name='school_mp_const', db_column='mp_const_id', blank=True, null=True)
-    heirarchy = models.ForeignKey('BoundaryType', db_column='hierarchy', blank=True, null=True)
+    # Is this a OneToOne mapping?
+    # all the values of sid are distinct, so Yes I think
+    school = models.OneToOneField('School', primary_key=True, db_column='sid', related_name="electedrep")
+    ward = models.ForeignKey('ElectedrepMaster', related_name='school_ward', db_column='ward_id', blank=True, null=True)
+    mla_const = models.ForeignKey('ElectedrepMaster', related_name='school_mla_const', db_column='mla_const_id', blank=True, null=True)
+    mp_const = models.ForeignKey('ElectedrepMaster', related_name='school_mp_const', db_column='mp_const_id', blank=True, null=True)
+
+    # TYPO IN DB ---------------------------------------------vv
+    hierarchy = models.ForeignKey('BoundaryType', db_column='heirarchy', blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s" % (self.school, self.ward_id,)
