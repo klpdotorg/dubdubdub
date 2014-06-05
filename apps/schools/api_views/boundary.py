@@ -13,7 +13,7 @@ class Districts(KLPListAPIView):
         return Boundary.objects.filter(hierarchy__name='district').select_related('boundarycoord', 'type')
 
 
-class BlocksInsideDistricts(KLPListAPIView):
+class BlocksInsideDistrict(KLPListAPIView):
     '''
         Returns a list of all blocks inside given district (id and name)
     '''
@@ -25,7 +25,7 @@ class BlocksInsideDistricts(KLPListAPIView):
         return Boundary.objects.filter(hierarchy__name='block', parent_id=district_id).select_related('boundarycoord', 'type')
 
 
-class ClustersInsideDistricts(KLPListAPIView):
+class ClustersInsideDistrict(KLPListAPIView):
     '''
         Returns a list of all clusters inside given district (id and name)
     '''
@@ -48,7 +48,7 @@ class Blocks(KLPListAPIView):
         return Boundary.objects.filter(hierarchy__name='block').select_related('boundarycoord', 'type')
 
 
-class ClustersInsideBlocks(KLPListAPIView):
+class ClustersInsideBlock(KLPListAPIView):
     '''
         Returns a list of all clusters inside given block (id and name)
     '''

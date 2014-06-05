@@ -1,7 +1,8 @@
 from .school import SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,\
     SchoolDemographics, SchoolProgrammes, SchoolFinance
-from .boundary import Districts, BlocksInsideDistricts, ClustersInsideDistricts, \
-    Blocks, ClustersInsideBlocks, Clusters
+from .boundary import Districts, BlocksInsideDistrict, ClustersInsideDistrict, \
+    Blocks, ClustersInsideBlock, Clusters
+from .geo import DistrictOfSchool
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
