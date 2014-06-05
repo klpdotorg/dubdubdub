@@ -10,3 +10,21 @@ class DistrictOfSchool(KLPDetailAPIView):
     def get_object(self):
         school_id = self.kwargs.get('pk')
         return SchoolDetails.objects.get(school_id=school_id).district
+
+
+class BlockOfSchool(KLPDetailAPIView):
+    serializer_class = BoundarySerializer
+    bbox_filter_field = 'boundarycoord__coord'
+
+    def get_object(self):
+        school_id = self.kwargs.get('pk')
+        return SchoolDetails.objects.get(school_id=school_id).block_or_project
+
+
+class ClusterOfSchool(KLPDetailAPIView):
+    serializer_class = BoundarySerializer
+    bbox_filter_field = 'boundarycoord__coord'
+
+    def get_object(self):
+        school_id = self.kwargs.get('pk')
+        return SchoolDetails.objects.get(school_id=school_id).cluster_or_circle
