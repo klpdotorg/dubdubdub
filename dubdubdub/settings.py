@@ -205,10 +205,10 @@ LOGGING = {
             'propagate': True,
         },
         # Uncomment following to turn on sql logging
-        # 'django.db.backends': {
-        #     'level': 'DEBUG',
-        #     'handlers': ['console'],
-        # },
+         'django.db.backends': {
+             'level': 'DEBUG',
+             'handlers': ['console'],
+         },
     }
 }
 
