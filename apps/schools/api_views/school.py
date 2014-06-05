@@ -27,7 +27,9 @@ class SchoolsInfo(SchoolsList):
 
     def get_queryset(self):
         return School.objects.all()\
-        .select_related('address', 'schooldetails__boundary', 'electedrep__electedrepmaster')
+        .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
+         'schooldetails__district', 'electedrep__mp_const',\
+         'electedrep__mla_const', 'electedrep__ward', '')
 
 
 class SchoolsDiseInfo(KLPListAPIView):
