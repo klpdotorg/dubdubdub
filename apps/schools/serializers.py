@@ -70,3 +70,9 @@ class BoundarySerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('id', 'name', 'type',)
+
+
+class SchoolDetailsSerializer(KLPSerializer):
+    class Meta:
+        model = Boundary
+        fields = ('cluster_or_circle', 'block_or_project', 'district')

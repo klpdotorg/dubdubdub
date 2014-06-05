@@ -3,7 +3,8 @@ from django.views.decorators.cache import cache_page
 
 from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, \
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance, \
-    Blocks, Clusters, BlocksInsideDistricts, ClustersInsideDistricts, ClustersInsideBlocks
+    Blocks, Clusters, BlocksInsideDistrict, ClustersInsideDistrict, ClustersInsideBlock, \
+    DistrictOfSchool
 
 urlpatterns = patterns('',
     # Caches the results of the url for 60 seconds
@@ -19,9 +20,11 @@ urlpatterns = patterns('',
     url(r'^schools/school/(?P<pk>[0-9]+)/finance$', SchoolFinance.as_view(), name='api_school_finance'),
     
     url(r'^boundary/districts$', Districts.as_view(), name="api_districts"),
-    url(r'^boundary/districts/(?P<id>[0-9]+)/blocks$', BlocksInsideDistricts.as_view(), name="api_districts_block"),
-    url(r'^boundary/districts/(?P<id>[0-9]+)/clusters$', ClustersInsideDistricts.as_view(), name="api_districts_cluster"),
+    url(r'^boundary/districts/(?P<id>[0-9]+)/blocks$', BlocksInsideDistrict.as_view(), name="api_districts_block"),
+    url(r'^boundary/districts/(?P<id>[0-9]+)/clusters$', ClustersInsideDistrict.as_view(), name="api_districts_cluster"),
     url(r'^boundary/blocks$', Blocks.as_view(), name="api_blocks"),
-    url(r'^boundary/blocks/(?P<id>[0-9]+)/clusters$', ClustersInsideBlocks.as_view(), name="api_blocks_clusters"),
+    url(r'^boundary/blocks/(?P<id>[0-9]+)/clusters$', ClustersInsideBlock.as_view(), name="api_blocks_clusters"),
     url(r'^boundary/clusters$', Clusters.as_view(), name="api_clusters"),
+
+    url(r'^geo/district/(?P<pk>[0-9]+)$', DistrictOfSchool.as_view(), name="api_school_district"),
 )
