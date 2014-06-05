@@ -31,6 +31,30 @@ class SchoolInfoSerializer(KLPSerializer):
             'identifiers', 'cluster', 'block', 'district', 'bus', "mp", "mla", "ward", 'dise_code', 'type_id',)
 
 
+class SchoolDemographicsSerializer(KLPSerializer):
+    num_boys_dise = serializers.IntegerField(source='dise_info.boys_count')
+    num_girls_dise = serializers.IntegerField(source='dise_info.girls_count')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'sex', 'moi', 'mgmt', 'num_boys_dise', 'num_girls_dise')
+
+
+class SchoolProgrammesSerializer(KLPSerializer):
+    class Meta:
+        model = School
+        fields = ('id', 'name',)
+
+
+class SchoolFinanceSerializer(KLPSerializer):
+    id = serializers.IntegerField(source="school.id")
+    name = serializers.CharField(source="school.name")
+
+    class Meta:
+        model = DiseInfo
+        fields = ('id', 'name', 'sg_recd', 'sg_expnd')
+
+
 class SchoolDiseSerializer(KLPSerializer):
     id = serializers.IntegerField(source="school.id")
     name = serializers.CharField(source="school.name")

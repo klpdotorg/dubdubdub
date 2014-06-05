@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
-from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
+from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from django.contrib.gis.db import models
 import json
 
@@ -156,7 +156,7 @@ class School(GeoBaseModel):
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code', blank=True, null=True)
     name = models.CharField(max_length=300)
     cat = models.CharField(max_length=128, choices=CAT_CHOICES)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    sex = models.CharField(max_length=128, choices=ALLOWED_GENDER_CHOICES)
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
     status = models.IntegerField()

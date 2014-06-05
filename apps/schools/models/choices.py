@@ -43,3 +43,9 @@ SEX_CHOICES = (
     ('male', 'Male'),
     ('female', 'Female'),
 )
+
+ALLOWED_GENDER_CHOICES = (
+    ('boys', 'Boys'),
+    ('girls', 'Girls'),
+    ('co-ed', 'Co-education')
+)

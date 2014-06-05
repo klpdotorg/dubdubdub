@@ -1,6 +1,7 @@
 from schools.models import School, DiseInfo
 from common.views import KLPListAPIView, KLPDetailAPIView
-from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer
+from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer,\
+    SchoolDemographicsSerializer, SchoolProgrammesSerializer, SchoolFinanceSerializer
 from django.contrib.gis.geos import Polygon
 import re
 
@@ -52,4 +53,32 @@ class SchoolInfo(KLPDetailAPIView):
         Returns info for a single school.
     '''
     serializer_class = SchoolInfoSerializer
-    model = School
+    
+    def get_queryset(self):
+        return School.objects.all()\
+        .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
+         'schooldetails__district', 'electedrep__mp_const',\
+         'electedrep__mla_const', 'electedrep__ward', '')
+
+
+class SchoolDemographics(KLPDetailAPIView):
+    serializer_class = SchoolDemographicsSerializer
+
+    def get_queryset(self):
+        return School.objects.all()\
+        .select_related('dise_info')
+
+
+class SchoolProgrammes(KLPDetailAPIView):
+    serializer_class = SchoolProgrammesSerializer
+
+    def get_queryset(self):
+        return School.objects.all()
+
+
+class SchoolFinance(KLPDetailAPIView):
+    # DISE data is yearly. Needs year as param or send list maybe
+    serializer_class = SchoolFinanceSerializer
+
+    def get_queryset(self):
+        return DiseInfo.objects.all()
