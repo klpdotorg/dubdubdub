@@ -43,8 +43,9 @@ to_number(dg.funds_from_students_expnd,''999999''),
 to_number(df.books_in_library,''999999'')
 from tb_dise_facility df,tb_dise_enrol de,tb_dise_general dg where de.school_code=df.school_code and de.school_code=dg.school_code'::text) t1(dise_code character varying(32), classroom_count integer, teacher_count integer, boys_count integer, girls_count integer, lowest_class integer, highest_class integer, acyear character varying(15), sg_recd integer, sg_expnd integer, tlm_recd integer, tlm_expnd integer, ffs_recd integer, ffs_expnd integer, books_in_library integer);
 
-# list of cluster ids with block and districts
-# Only for primary schools
+-- list of cluster ids with block and districts
+-- Only for primary schools
+
 CREATE MATERIALIZED VIEW mvw_boundary_primary
 as select tb1.id as cluster_id,
 tb2.id as block_id,
@@ -56,8 +57,9 @@ and tb1.parent=tb2.id
 and tb3.hid=9 and tb3.type=1
 and tb2.parent=tb3.id;
 
-# details about the school(both primary and preschools)
-# putting the locations in a view to save query time
+-- details about the school(both primary and preschools)
+-- putting the locations in a view to save query time
+
 CREATE MATERIALIZED VIEW mvw_school_details as
 select tbs.id as id,
 tb1.id as cluster_or_circle_id,
