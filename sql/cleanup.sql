@@ -1,0 +1,1 @@
+UPDATE "tb_school" SET "status" = 0 WHERE UPPER("tb_school"."name"::text) LIKE UPPER('%DELETE%');
