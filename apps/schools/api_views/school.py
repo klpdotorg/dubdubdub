@@ -1,5 +1,6 @@
 from schools.models import School, DiseInfo
 from common.views import KLPListAPIView, KLPDetailAPIView
+from common.models import SumCase
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer,\
     SchoolDemographicsSerializer, SchoolProgrammesSerializer, SchoolFinanceSerializer
 from django.contrib.gis.geos import Polygon
@@ -13,7 +14,7 @@ class SchoolsList(KLPListAPIView):
     bbox_filter_field = "instcoord__coord"
 
     def get_queryset(self):
-        qset = School.objects.all()
+        qset = School.objects.filter(status=2)
         get_geom = self.request.GET.get('geometry', 'no')
         if get_geom == 'yes':
             qset = qset.select_related('instcoord')
@@ -27,7 +28,7 @@ class SchoolsInfo(SchoolsList):
     serializer_class = SchoolInfoSerializer
 
     def get_queryset(self):
-        return School.objects.all()\
+        return School.objects.filter(status=2)\
         .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
          'schooldetails__district', 'electedrep__mp_const',\
          'electedrep__mla_const', 'electedrep__ward', '')
@@ -55,7 +56,7 @@ class SchoolInfo(KLPDetailAPIView):
     serializer_class = SchoolInfoSerializer
     
     def get_queryset(self):
-        return School.objects.all()\
+        return School.objects.filter(status=2)\
         .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
          'schooldetails__district', 'electedrep__mp_const',\
          'electedrep__mla_const', 'electedrep__ward', '')
@@ -65,15 +66,20 @@ class SchoolDemographics(KLPDetailAPIView):
     serializer_class = SchoolDemographicsSerializer
 
     def get_queryset(self):
-        return School.objects.all()\
-        .select_related('dise_info')
+        return School.objects.filter(status=2).select_related('dise_info')
+        # return School.objects.filter(status=2)\
+        # .select_related('dise_info', 'institutionagg')\
+        # .annotate(
+        #     num_boys=SumCase('institutionagg__num', when='"tb_institution_agg"."sex" = \'male\''),
+        #     num_girls=SumCase('institutionagg__num', when='"tb_institution_agg"."sex" = \'female\''),
+        # )
 
 
 class SchoolProgrammes(KLPDetailAPIView):
     serializer_class = SchoolProgrammesSerializer
 
     def get_queryset(self):
-        return School.objects.all()
+        return School.objects.filter(status=2)
 
 
 class SchoolFinance(KLPDetailAPIView):

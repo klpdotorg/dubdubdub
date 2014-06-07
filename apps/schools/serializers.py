@@ -76,3 +76,11 @@ class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
+
+
+class SchoolPincodeSerializer(KLPSerializer):
+    pincode = serializers.CharField(source='address.pincode')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'pincode')
