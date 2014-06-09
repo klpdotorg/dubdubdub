@@ -158,6 +158,7 @@ INSTALLED_APPS = (
 
     # in-project
     'schools',
+    'users',
 )
 
 #DATADUMP_ROOT = os.path.join(PROJECT_ROOT, 'data')
@@ -167,7 +168,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 
-#AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'users.KLPUser'
 #AUTHENTICATION_BACKENDS = ('account.backends.ModelEmailBackend', )
 #LOGIN_URL = '/login/'
 #LOGIN_REDIRECT_URL = '/'
