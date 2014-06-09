@@ -11,9 +11,9 @@ class SchoolListSerializer(KLPSerializer):
 
 class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
-    cluster = serializers.CharField(source='schooldetails.cluster_or_circle.name')
-    block = serializers.CharField(source='schooldetails.block_or_project.name')
-    district = serializers.CharField(source='schooldetails.district.name')
+    cluster = serializers.CharField(source='schooldetails.cluster_or_circle.get_id_name')
+    block = serializers.CharField(source='schooldetails.block_or_project.get_id_name')
+    district = serializers.CharField(source='schooldetails.district.get_id_name')
 
     type_id = serializers.CharField(source='schooldetails.type_id')
     address_full = serializers.CharField(source='address.full')
@@ -21,9 +21,9 @@ class SchoolInfoSerializer(KLPSerializer):
     bus = serializers.CharField(source='address.bus')
     identifiers = serializers.CharField(source='address.get_identifiers')
 
-    mp = serializers.CharField(source="get_mp")
-    mla = serializers.CharField(source="get_mla")
-    ward = serializers.CharField(source="get_ward")
+    mp = serializers.CharField(source="get_mp.get_id_name")
+    mla = serializers.CharField(source="get_mla.get_id_name")
+    ward = serializers.CharField(source="get_ward.get_id_name")
 
     class Meta:
         model = School

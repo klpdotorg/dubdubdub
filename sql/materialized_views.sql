@@ -70,3 +70,24 @@ from tb_school tbs, tb_boundary tb1, tb_boundary tb2, tb_boundary tb3
 where tbs.bid=tb1.id
 and tb1.parent=tb2.id
 and tb2.parent=tb3.id;
+
+-- Materialized view for electedrep views
+
+CREATE MATERIALIZED VIEW mvw_electedrep_master AS
+SELECT t7.id,
+    t7.parent,
+    t7.elec_comm_code,
+    t7.const_ward_name,
+    t7.const_ward_type,
+    t7.neighbours,
+    t7.current_elected_rep,
+    t7.current_elected_party
+   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
+
+CREATE MATERIALIZED VIEW mvw_school_electedrep AS
+SELECT t8.sid,
+    t8.ward_id,
+    t8.mla_const_id,
+    t8.mp_const_id,
+    t8.heirarchy
+   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);

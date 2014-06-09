@@ -32,14 +32,14 @@ class Address(BaseModel):
 
     @property
     def full(self):
-        return ', '.join(filter(None, [
+        return ', '.join(filter(lambda x: bool(x.strip()) if x else False, [
             self.address, self.area, self.pincode
         ]))
 
     def get_identifiers(self):
         return ', '.join(filter(None, [
             self.instidentification, self.instidentification2
-        ]))
+        ])) or None
 
     class Meta:
         managed = False
@@ -76,6 +76,13 @@ class Boundary(BaseModel):
             return json.loads(self.boundarycoord.coord.geojson)
         else:
             return {}
+
+    @property
+    def get_id_name(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
 
     class Meta:
         managed = False
@@ -176,19 +183,19 @@ class School(GeoBaseModel):
 
     def get_mp(self):
         try:
-            return self.electedrep.mp_const.const_ward_name
+            return self.electedrep.mp_const
         except:
             return None
 
     def get_mla(self):
         try:
-            return self.electedrep.mla_const.const_ward_name
+            return self.electedrep.mla_const
         except:
             return None
 
     def get_ward(self):
         try:
-            return self.electedrep.ward.const_ward_name
+            return self.electedrep.ward
         except:
             return None
 

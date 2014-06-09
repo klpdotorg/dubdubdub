@@ -5,3 +5,7 @@ UPDATE "tb_school" SET "status" = 0 WHERE UPPER("tb_school"."name"::text) LIKE U
 UPDATE "tb_school" SET name=regexp_replace(name, E'\t', '', 'g') WHERE name LIKE E'%\t%';
 UPDATE "tb_school" SET name=regexp_replace(name, '\s+', ' ', 'g') WHERE name LIKE E'%  %';
 UPDATE "tb_school" SET "status" = 0 WHERE "tb_school"."name" IN ('1', '2');
+update "tb_school" set name=trim(regexp_replace(name, 'YYYY', '', 'g')) where name like '%YYYY%';
+update "tb_school" set name=trim(regexp_replace(name, 'YYY', '', 'g')) where name like '%YYY%';
+update "tb_school" set name=trim(regexp_replace(name, 'yyy', '', 'g')) where name like '%yyy%';
+update "tb_school" set name=trim(regexp_replace(name, 'XXXX', '', 'g')) where name like '%XXXX%';

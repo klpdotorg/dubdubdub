@@ -8,7 +8,7 @@ import re
 
 class SchoolsList(KLPListAPIView):
     '''
-        Returns list of schools with id and name.  
+        Returns list of schools with id and name.
     '''
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
@@ -54,7 +54,7 @@ class SchoolInfo(KLPDetailAPIView):
         Returns info for a single school.
     '''
     serializer_class = SchoolInfoSerializer
-    
+
     def get_queryset(self):
         return School.objects.filter(status=2)\
         .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
