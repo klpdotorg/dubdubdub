@@ -9,3 +9,4 @@ update "tb_school" set name=trim(regexp_replace(name, 'YYYY', '', 'g')) where na
 update "tb_school" set name=trim(regexp_replace(name, 'YYY', '', 'g')) where name like '%YYY%';
 update "tb_school" set name=trim(regexp_replace(name, 'yyy', '', 'g')) where name like '%yyy%';
 update "tb_school" set name=trim(regexp_replace(name, 'XXXX', '', 'g')) where name like '%XXXX%';
+UPDATE "tb_school" SET "status" = 0 WHERE "tb_school"."id" IN (SELECT U0."id" AS "id" FROM "tb_school" U0 INNER JOIN "tb_address" U1 ON ( U0."aid" = U1."id" ) WHERE UPPER(U1."address"::text) LIKE UPPER('%test%'));
