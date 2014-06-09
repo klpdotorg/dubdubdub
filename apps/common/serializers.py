@@ -9,9 +9,11 @@ class KLPSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(KLPSerializer, self).__init__(*args, **kwargs)
         #import pdb;pdb.set_trace()
-        request = kwargs['context']['request']
-        geometry = request.GET.get('geometry', 'no')
-        #add geometry to fields if geometry=yes in query params
-        if geometry == 'yes':
-            self.fields['geometry'] = DictField(source='get_geometry')
+
+        if 'context' in kwargs:
+            request = kwargs['context']['request']
+            geometry = request.GET.get('geometry', 'no')
+            #add geometry to fields if geometry=yes in query params
+            if geometry == 'yes':
+                self.fields['geometry'] = DictField(source='get_geometry')
 
