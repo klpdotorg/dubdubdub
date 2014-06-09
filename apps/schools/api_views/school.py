@@ -30,8 +30,8 @@ class SchoolsInfo(SchoolsList):
     def get_queryset(self):
         return School.objects.filter(status=2)\
         .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
-         'schooldetails__district', 'electedrep__mp_const',\
-         'electedrep__mla_const', 'electedrep__ward', '')
+         'schooldetails__district', 'schooldetails__type', 'electedrep__mp_const',\
+         'electedrep__mla_const', 'electedrep__ward')
 
 
 class SchoolsDiseInfo(KLPListAPIView):
@@ -58,8 +58,8 @@ class SchoolInfo(KLPDetailAPIView):
     def get_queryset(self):
         return School.objects.filter(status=2)\
         .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
-         'schooldetails__district', 'electedrep__mp_const',\
-         'electedrep__mla_const', 'electedrep__ward', '')
+         'schooldetails__district', 'schooldetails__type', 'electedrep__mp_const',\
+         'electedrep__mla_const', 'electedrep__ward')
 
 
 class SchoolDemographics(KLPDetailAPIView):
