@@ -77,13 +77,6 @@ class Boundary(BaseModel):
         else:
             return {}
 
-    @property
-    def get_id_name(self):
-        return {
-            'id': self.id,
-            'name': self.name
-        }
-
     class Meta:
         managed = False
         db_table = 'tb_boundary'

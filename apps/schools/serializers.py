@@ -1,6 +1,6 @@
 from common.serializers import KLPSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary, DiseInfo
+from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType
 
 class SchoolListSerializer(KLPSerializer):
 
@@ -9,26 +9,47 @@ class SchoolListSerializer(KLPSerializer):
         fields = ('id', 'name',)
 
 
+class BoundaryTypeSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryType
+        fields = ('id', 'name')
+
+
+class BoundarySerializer(KLPSerializer):
+    class Meta:
+        model = Boundary
+        fields = ('id', 'name', 'type',)
+
+
+class ElectedrepSerializer(KLPSerializer):
+    name = serializers.CharField(source='const_ward_name')
+    type = serializers.CharField(source='const_ward_type')
+
+    class Meta:
+        model = ElectedrepMaster
+        fields = ('id', 'name', 'type')
+
+
 class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
-    cluster = serializers.CharField(source='schooldetails.cluster_or_circle.get_id_name')
-    block = serializers.CharField(source='schooldetails.block_or_project.get_id_name')
-    district = serializers.CharField(source='schooldetails.district.get_id_name')
+    cluster = BoundarySerializer(source='schooldetails.cluster_or_circle')
+    block = BoundarySerializer(source='schooldetails.block_or_project')
+    district = BoundarySerializer(source='schooldetails.district')
 
-    type_id = serializers.CharField(source='schooldetails.type_id')
+    type = BoundaryTypeSerializer(source='schooldetails.type')
     address_full = serializers.CharField(source='address.full')
     landmark = serializers.CharField(source='address.landmark')
-    bus = serializers.CharField(source='address.bus')
+    buses = serializers.CharField(source='address.bus')
     identifiers = serializers.CharField(source='address.get_identifiers')
 
-    mp = serializers.CharField(source="get_mp.get_id_name")
-    mla = serializers.CharField(source="get_mla.get_id_name")
-    ward = serializers.CharField(source="get_ward.get_id_name")
+    mp = ElectedrepSerializer(source="get_mp")
+    mla = ElectedrepSerializer(source="get_mla")
+    ward = ElectedrepSerializer(source="get_ward")
 
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'cluster', 'block', 'district', 'bus', "mp", "mla", "ward", 'dise_code', 'type_id',)
+            'identifiers', 'cluster', 'block', 'district', 'buses', "mp", "mla", "ward", 'dise_code', 'type',)
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
@@ -62,14 +83,6 @@ class SchoolDiseSerializer(KLPSerializer):
     class Meta:
         model = DiseInfo
         fields = ('id', 'name', ) + tuple([f.name for f in DiseInfo._meta.fields])
-
-
-class BoundarySerializer(KLPSerializer):
-    type = serializers.CharField(source='get_type')
-
-    class Meta:
-        model = Boundary
-        fields = ('id', 'name', 'type',)
 
 
 class SchoolDetailsSerializer(KLPSerializer):

@@ -22,13 +22,6 @@ class ElectedrepMaster(BaseModel):
     def __unicode__(self):
         return "%d: %s" % (self.elec_comm_code, self.const_ward_name,)
 
-    @property
-    def get_id_name(self):
-        return {
-            'id': self.id,
-            'name': self.const_ward_name
-        }
-
     class Meta:
         managed = False
         db_table = 'mvw_electedrep_master'
