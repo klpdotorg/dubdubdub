@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
-from rest_framework_gis.filters import InBBOXFilter
+from common.filters import KLPInBBOXFilter
 
 
 class StaticPageView(TemplateView):
@@ -19,7 +19,7 @@ class StaticPageView(TemplateView):
 class KLPListAPIView(generics.ListAPIView):
 
     pagination_serializer_class = KLPPaginationSerializer
-    filter_backends = (InBBOXFilter,)
+    filter_backends = (KLPInBBOXFilter,)
 
 
     def finalize_response(self, *args, **kwargs):

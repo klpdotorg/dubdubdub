@@ -15,7 +15,7 @@ class ApiTestCase(unittest.TestCase):
    
     def test_api_schools_list(self):
         base_url = "/api/v1/schools/list?"
-        query_url = base_url + "in_bbox=77.54537736775214,12.950457093960514,77.61934126017755,13.022529216896507&geometry=yes"
+        query_url = base_url + "bbox=77.54537736775214,12.950457093960514,77.61934126017755,13.022529216896507&geometry=yes"
         response = self.c.get(query_url)
         self.assertEqual(response.status_code, 200, "schools list status code is 200")
         results = json.loads(response.content)
