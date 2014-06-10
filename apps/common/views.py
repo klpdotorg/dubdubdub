@@ -21,6 +21,14 @@ class KLPListAPIView(generics.ListAPIView):
     pagination_serializer_class = KLPPaginationSerializer
     filter_backends = (InBBOXFilter,)
 
+
+    def finalize_response(self, *args, **kwargs):
+        response = super(KLPListAPIView, self).finalize_response(*args, **kwargs)
+        if self.request.accepted_renderer.format == 'csv':
+            filename = self.request.path.split("/")[-1] + ".csv" #FIXME, better way to get filename?
+            response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        return response
+
     def get_paginate_by(self, *args, **kwargs):
         if self.request.accepted_renderer.format == 'csv':
             return None

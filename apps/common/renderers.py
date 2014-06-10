@@ -62,5 +62,5 @@ class KLPJSONRenderer(JSONRenderer):
 
 
 class KLPCSVRenderer(CSVRenderer):
-    pass
+    media_type = 'application/csv'
 
