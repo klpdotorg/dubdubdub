@@ -4,16 +4,15 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,\
 from schools.models import School
 
 USER_TYPE_CHOICES = (
-    (1, 'Volunteer'),
-    (2, 'Developer'),
-    (3, 'OrganizationManager'),
+    (0, 'Volunteer'),
+    (1, 'Developer'),
+    (2, 'OrganizationManager'),
 )
 
-#FIXME: correct activity types?
-ACTIVITY_TYPE_CHOICES = (
-    (1, 'Play'),
-    (2, 'Teach'),
-    (3, 'Blahblah')
+ACTIVITY_STATUS_CHOICES = (
+    (0, 'Pending'),
+    (1, 'Cancelled'),
+    (2, 'Completed')
 )
 
 class KLPUser(AbstractBaseUser, PermissionsMixin):
@@ -21,6 +20,10 @@ class KLPUser(AbstractBaseUser, PermissionsMixin):
     mobile_no = models.CharField(max_length=32) #Better field type to use?
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
+    email_verification_code = models.CharField(max_length=128)
+    sms_verification_pin = models.IntegerField(max_length=16)
+    is_email_verified = models.BooleanField(default=False)
+    is_mobile_verified = models.BooleanField(default=False)
     type = models.IntegerField(choices=USER_TYPE_CHOICES)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
@@ -40,11 +43,6 @@ class KLPUser(AbstractBaseUser, PermissionsMixin):
 
 class Volunteer(models.Model):
     user = models.OneToOneField(KLPUser)
-    #Q: should verification apply to all users or only volunteers?
-    email_verification_code = models.CharField(max_length=128)
-    sms_verification_pin = models.IntegerField(max_length=16)
-    is_email_verified = models.BooleanField(default=False)
-    is_mobile_verified = models.BooleanField(default=False)
     activities = models.ManyToManyField('VolunteerActivity', through='VolunteerVolunteerActivity')
     donations = models.ManyToManyField('DonorRequirement', through='VolunteerDonorRequirement')
 
@@ -62,22 +60,44 @@ class OrganizationManager(models.Model):
 #Q: should these models go into a separate app?
 class Organization(models.Model):
     name = models.CharField(max_length=128)
-    #Q: What other fields do we need for orgs?
+    url = models.URLField(blank=True)
+    email = models.EmailField()
+    address = models.TextField(blank=True)
+    contact_name = models.CharField(max_length=256)
+
     def __unicode__(self):
         return self.name
+
+
+class VolunteerActivityType(models.Model):
+    name = models.CharField(max_length=64)
+    image = models.ImageField(upload_to='activity_type_images')
+    text = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+
+class DonationType(models.Model):
+    name = models.CharField(max_length=64)
+    image = models.ImageField(upload_to='donation_type_images')
+    text = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name    
 
 
 class VolunteerActivity(models.Model):
     organization = models.ForeignKey('Organization')
     date = models.DateField()
-    type = models.IntegerField(choices=ACTIVITY_TYPE_CHOICES)
+    type = models.ForeignKey('VolunteerActivityType')
     school = models.ForeignKey(School)
-    text = models.TextField(blank=True) #Q: some additional text - do we need this?
+    text = models.TextField(blank=True)
 
 
 class DonorRequirement(models.Model):
     organization = models.ForeignKey('Organization')
-    #Q: Do we have DONATION_TYPES or something?
+    type = models.ForeignKey('DonationType')
     school = models.ForeignKey(School)
     text = models.TextField(blank=True)
 
@@ -85,11 +105,12 @@ class DonorRequirement(models.Model):
 class VolunteerVolunteerActivity(models.Model):
     volunteer = models.ForeignKey('Volunteer')
     activity = models.ForeignKey('VolunteerActivity')
-    #Q: What other fields do we need? is_completed?
+    status = models.IntegerField(choices=ACTIVITY_STATUS_CHOICES, default=0)
 
 
 class VolunteerDonorRequirement(models.Model):
     volunteer = models.ForeignKey('Volunteer')
     donor_requirement = models.ForeignKey('DonorRequirement')
-    date = models.DateField() #date of donation
-    #Q: what other fields? amount of donation? anything else?
+    date = models.DateField()
+    donation = models.CharField(max_length=256) #what was donated
+    #Q: Do we need a 'status' of donation to keep track of whether items were delivered, etc?
