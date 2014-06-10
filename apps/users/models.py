@@ -9,7 +9,7 @@ USER_TYPE_CHOICES = (
     (2, 'OrganizationManager'),
 )
 
-ACTIVITY_STATUS_CHOICES = (
+STATUS_CHOICES = (
     (0, 'Pending'),
     (1, 'Cancelled'),
     (2, 'Completed')
@@ -105,7 +105,7 @@ class DonorRequirement(models.Model):
 class VolunteerVolunteerActivity(models.Model):
     volunteer = models.ForeignKey('Volunteer')
     activity = models.ForeignKey('VolunteerActivity')
-    status = models.IntegerField(choices=ACTIVITY_STATUS_CHOICES, default=0)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
 
 class VolunteerDonorRequirement(models.Model):
@@ -113,4 +113,4 @@ class VolunteerDonorRequirement(models.Model):
     donor_requirement = models.ForeignKey('DonorRequirement')
     date = models.DateField()
     donation = models.CharField(max_length=256) #what was donated
-    #Q: Do we need a 'status' of donation to keep track of whether items were delivered, etc?
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
