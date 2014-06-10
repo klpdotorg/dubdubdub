@@ -23,6 +23,9 @@ class KLPListAPIView(generics.ListAPIView):
 
 
     def finalize_response(self, *args, **kwargs):
+        '''
+            For CSV requests, this sets the Content-Disposition header
+        '''
         response = super(KLPListAPIView, self).finalize_response(*args, **kwargs)
         if self.request.accepted_renderer.format == 'csv':
             filename = self.request.path.split("/")[-1] + ".csv" #FIXME, better way to get filename?
@@ -30,6 +33,10 @@ class KLPListAPIView(generics.ListAPIView):
         return response
 
     def get_paginate_by(self, *args, **kwargs):
+        '''
+            If per_page = 0, don't paginate.
+            If format == csv, don't paginate.
+        '''
         if self.request.accepted_renderer.format == 'csv':
             return None
         per_page = int(self.request.GET.get('per_page', 50)) #FIXME: Number should come from settings
