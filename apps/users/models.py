@@ -15,7 +15,7 @@ STATUS_CHOICES = (
     (2, 'Completed')
 )
 
-class KLPUser(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     mobile_no = models.CharField(max_length=32) #Better field type to use?
     first_name = models.CharField(max_length=64, blank=True)
@@ -42,18 +42,18 @@ class KLPUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Volunteer(models.Model):
-    user = models.OneToOneField(KLPUser)
+    user = models.OneToOneField(User)
     activities = models.ManyToManyField('VolunteerActivity', through='VolunteerVolunteerActivity')
     donations = models.ManyToManyField('DonorRequirement', through='VolunteerDonorRequirement')
 
 
 class Developer(models.Model):
-    user = models.OneToOneField(KLPUser)
+    user = models.OneToOneField(User)
     api_key = models.CharField(max_length=64)
 
 
 class OrganizationManager(models.Model):
-    user = models.OneToOneField(KLPUser)
+    user = models.OneToOneField(User)
     organization = models.ForeignKey('Organization')
 
 

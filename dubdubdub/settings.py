@@ -168,7 +168,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 
-AUTH_USER_MODEL = 'users.KLPUser'
+AUTH_USER_MODEL = 'users.User'
 #AUTHENTICATION_BACKENDS = ('account.backends.ModelEmailBackend', )
 #LOGIN_URL = '/login/'
 #LOGIN_REDIRECT_URL = '/'
