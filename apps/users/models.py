@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,\
     PermissionsMixin
 from schools.models import School
+import uuid
+import random
+import datetime
 
 USER_TYPE_CHOICES = (
     (0, 'Volunteer'),
@@ -15,27 +18,59 @@ STATUS_CHOICES = (
     (2, 'Completed')
 )
 
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=UserManager.normalize_email(email),
+            **extra_fields
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        user = self.create_user(email, password=password, **extra_fields)
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    mobile_no = models.CharField(max_length=32) #Better field type to use?
+    mobile_no = models.CharField(max_length=32, blank=True) #Better field type to use?
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     email_verification_code = models.CharField(max_length=128)
     sms_verification_pin = models.IntegerField(max_length=16)
     is_email_verified = models.BooleanField(default=False)
     is_mobile_verified = models.BooleanField(default=False)
-    type = models.IntegerField(choices=USER_TYPE_CHOICES)
+    type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
+    objects = UserManager()
     USERNAME_FIELD = 'email'
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.today()
+            self.generate_email_token()
+            self.generate_sms_pin()
         self.changed = datetime.datetime.today()
         if self.created == None:
             self.created = self.changed
-        super(MyUser, self).save(*args, **kwargs)
+        super(User, self).save(*args, **kwargs)
+
+    def generate_email_token(self):
+        token = uuid.uuid4().get_hex()
+        self.email_verification_code = token
+
+    def generate_sms_pin(self):
+        pin = ''.join([str(random.choice(range(1,9))) for i in range(4)])
+        self.sms_verification_pin = int(pin)
 
     def __unicode__(self):
         return self.email
@@ -50,6 +85,15 @@ class Volunteer(models.Model):
 class Developer(models.Model):
     user = models.OneToOneField(User)
     api_key = models.CharField(max_length=64)
+
+    def generate_api_key(self):
+        token = uuid.uuid4().get_hex()
+        self.api_key = token
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.generate_api_key()
+        super(Developer, self).save(*args, **kwargs)
 
 
 class OrganizationManager(models.Model):

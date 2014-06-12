@@ -33,4 +33,8 @@ urlpatterns = patterns('',
     url(r'^geo/pincode/(?P<pk>[0-9]+)$', PincodeOfSchool.as_view(), name="api_school_pincode"),
     url(r'^geo/assembly/(?P<pk>[0-9]+)$', AssemblyOfSchool.as_view(), name="api_school_assembly"),
     url(r'^geo/parliament/(?P<pk>[0-9]+)$', ParliamentOfSchool.as_view(), name="api_school_parliament"),
+
+    url('^signup$', 'users.api_views.signup', name='api_signup'),
+    url('^signin$', 'users.api_views.signin', name='api_signin'),
+    url('^signout$', 'users.api_views.signout', name='api_signout'),
 )
