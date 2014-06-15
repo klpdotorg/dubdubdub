@@ -39,3 +39,47 @@ class BoundaryCoord(GeoBaseModel):
         db_table = 'vw_boundary_coord'
 
 
+class Assembly(GeoBaseModel):
+    id = models.IntegerField(primary_key=True, db_column='ac_id')
+    gid = models.IntegerField()
+    number = models.IntegerField(db_column='ac_no')
+    name = models.CharField(max_length=35, db_column='ac_name')
+    state_ut = models.CharField(max_length=35)
+    coord = models.GeometryField(db_column='the_geom')
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_assembly'
+
+
+class Parliament(GeoBaseModel):
+    id = models.IntegerField(primary_key=True, db_column='pc_id')
+    gid = models.IntegerField()
+    number = models.IntegerField(db_column='pc_no')
+    name = models.CharField(max_length=35, db_column='pc_name')
+    state_ut = models.CharField(max_length=35)
+    coord = models.GeometryField(db_column='the_geom')
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_parliament'   
+
+
+class Postal(GeoBaseModel):
+    id = models.IntegerField(primary_key=True, db_column='pin_id')
+    gid = models.IntegerField()
+    pincode = models.CharField(max_length=35)
+    coord = models.GeometryField(db_column='the_geom')
+
+    def __unicode__(self):
+        return self.pincode
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_postal'

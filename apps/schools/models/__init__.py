@@ -12,7 +12,7 @@ from .assessments import Assessment, InstitutionAgg, InstitutionAssessmentAgg, \
     SchoolAssessmentAgg, SchoolBasicAssessmentInfo, StudentEval, SchoolEval, \
     AngInfraAgg, AngDisplayMaster
 
-from .coords import InstCoord, BoundaryCoord
+from .coords import InstCoord, BoundaryCoord, Assembly, Parliament, Postal
 
 from .partners import DiseDisplayMaster, DiseFacilityAgg, DiseInfo, PaisaData, \
     DiseRteAgg, LibBorrow, LibLangAgg, LibLevelAgg, Libinfra, MdmAgg
