@@ -59,17 +59,22 @@ and tb2.parent=tb3.id;
 
 -- details about the school(both primary and preschools)
 -- putting the locations in a view to save query time
+-- assembly and parliament IDs as well.
+DROP MATERIALIZED VIEW IF EXISTS mvw_school_details;
 
 CREATE MATERIALIZED VIEW mvw_school_details as
-select tbs.id as id,
-tb1.id as cluster_or_circle_id,
-tb2.id as block_or_project_id,
-tb3.id as district_id,
-tb1.type as type
-from tb_school tbs, tb_boundary tb1, tb_boundary tb2, tb_boundary tb3
-where tbs.bid=tb1.id
-and tb1.parent=tb2.id
-and tb2.parent=tb3.id;
+SELECT tbs.id as id, 
+    tb1.id as cluster_or_circle_id,
+    tb2.id as block_or_project_id,
+    tb3.id as district_id,
+    tb1.type as type,
+    assembly.ac_id as assembly_id, assembly.pc_id as parliament_id 
+    FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs LEFT JOIN 
+    (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom)) AS assembly 
+    ON assembly.instid=tbs.id 
+    WHERE tbs.bid=tb1.id AND 
+    tb1.parent=tb2.id AND 
+    tb2.parent=tb3.id;
 
 -- Materialized view for electedrep views
 
