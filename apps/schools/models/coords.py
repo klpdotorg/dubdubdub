@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from common.models import GeoBaseModel
 from django.contrib.gis.db import models
+import json
 
 class InstCoord(GeoBaseModel):
     '''
@@ -50,6 +51,12 @@ class Assembly(GeoBaseModel):
     def __unicode__(self):
         return self.name
 
+    def get_geometry(self):
+        if hasattr(self, 'coord'):
+            return json.loads(self.coord.geojson)
+        else:
+            return {}
+
     class Meta:
         managed = False
         db_table = 'mvw_assembly'
@@ -65,6 +72,12 @@ class Parliament(GeoBaseModel):
 
     def __unicode__(self):
         return self.name
+
+    def get_geometry(self):
+        if hasattr(self, 'coord'):
+            return json.loads(self.coord.geojson)
+        else:
+            return {}
 
     class Meta:
         managed = False

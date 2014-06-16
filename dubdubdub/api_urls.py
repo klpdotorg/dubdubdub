@@ -4,7 +4,8 @@ from django.views.decorators.cache import cache_page
 from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, \
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance, \
     Blocks, Clusters, BlocksInsideDistrict, ClustersInsideDistrict, ClustersInsideBlock, \
-    DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool
+    DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool, AssemblyOfSchool, \
+    ParliamentOfSchool
 
 urlpatterns = patterns('',
     # Caches the results of the url for 60 seconds
@@ -30,4 +31,6 @@ urlpatterns = patterns('',
     url(r'^geo/block/(?P<pk>[0-9]+)$', BlockOfSchool.as_view(), name="api_school_block"),
     url(r'^geo/cluster/(?P<pk>[0-9]+)$', ClusterOfSchool.as_view(), name="api_school_cluster"),
     url(r'^geo/pincode/(?P<pk>[0-9]+)$', PincodeOfSchool.as_view(), name="api_school_pincode"),
+    url(r'^geo/assembly/(?P<pk>[0-9]+)$', AssemblyOfSchool.as_view(), name="api_school_assembly"),
+    url(r'^geo/parliament/(?P<pk>[0-9]+)$', ParliamentOfSchool.as_view(), name="api_school_parliament"),
 )

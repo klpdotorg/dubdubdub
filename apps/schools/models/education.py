@@ -230,6 +230,8 @@ class SchoolDetails(BaseModel):
     block_or_project = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_block")
     district = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_district")
     type = models.ForeignKey('BoundaryType', db_column='type')
+    assembly = models.ForeignKey('Assembly', db_column='assembly_id')
+    parliament = models.ForeignKey('Parliament', db_column='parliament_id')
 
     def __unicode__(self):
         return str(self.pk)

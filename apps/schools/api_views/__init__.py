@@ -2,7 +2,8 @@ from .school import SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,\
     SchoolDemographics, SchoolProgrammes, SchoolFinance
 from .boundary import Districts, BlocksInsideDistrict, ClustersInsideDistrict, \
     Blocks, ClustersInsideBlock, Clusters
-from .geo import DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool
+from .geo import DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool, \
+    AssemblyOfSchool, ParliamentOfSchool
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -28,4 +29,6 @@ def api_root(request, format=None):
         'District of School': reverse('api_school_district', request=request, format=format, kwargs={'pk': 3573}),
         'Block of School': reverse('api_school_block', request=request, format=format, kwargs={'pk': 3573}),
         'Cluster of School': reverse('api_school_cluster', request=request, format=format, kwargs={'pk': 3573}),
+        'Assemby of School': reverse('api_school_assembly', request=request, format=format, kwargs={'pk': 3573}),
+        'Parliament of School': reverse('api_school_parliament', request=request, format=format, kwargs={'pk': 3573}),
     })
