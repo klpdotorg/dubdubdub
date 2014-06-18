@@ -92,20 +92,6 @@ class Volunteer(models.Model):
     donations = models.ManyToManyField('DonorRequirement', through='VolunteerDonorRequirement')
 
 
-class Developer(models.Model):
-    user = models.OneToOneField(User)
-    api_key = models.CharField(max_length=64)
-
-    def generate_api_key(self):
-        token = uuid.uuid4().get_hex()
-        self.api_key = token
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.generate_api_key()
-        super(Developer, self).save(*args, **kwargs)
-
-
 class OrganizationManager(models.Model):
     user = models.OneToOneField(User)
     organization = models.ForeignKey('Organization')

@@ -36,9 +36,7 @@ def signup(request):
     if typ == 0: #is a Volunteer
         volunteer = Volunteer(user=user)
         volunteer.save()
-    if typ == 1: #is a developer
-        developer = Developer(user=user)
-        developer.save()
+
     if typ == 2: #is an org manager
         organization_id = request.POST.get("organization", None)
         if not organization_id:
