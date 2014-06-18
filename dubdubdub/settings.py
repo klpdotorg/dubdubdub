@@ -227,7 +227,11 @@ REST_FRAMEWORK = {
         'common.renderers.KLPJSONRenderer',
         'common.renderers.KLPCSVRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 }
 
 try:
