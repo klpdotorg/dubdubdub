@@ -69,7 +69,7 @@ class Boundary(BaseModel):
         return self.name
 
     def get_type(self):
-        return self.type.name
+        return self.hierarchy.name
 
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
@@ -226,9 +226,9 @@ class School(GeoBaseModel):
 
 class SchoolDetails(BaseModel):
     school = models.OneToOneField('School', db_column='id', primary_key=True)
-    cluster_or_circle = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_cluster")
-    block_or_project = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_block")
-    district = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_district")
+    admin3 = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_admin3")
+    admin2 = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_admin2")
+    admin1 = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_admin1")
     type = models.ForeignKey('BoundaryType', db_column='type')
     assembly = models.ForeignKey('Assembly', db_column='assembly_id')
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')

@@ -1,6 +1,6 @@
 from common.serializers import KLPSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType
+from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType, Assembly, Parliament
 
 class SchoolListSerializer(KLPSerializer):
 
@@ -16,6 +16,8 @@ class BoundaryTypeSerializer(KLPSerializer):
 
 
 class BoundarySerializer(KLPSerializer):
+    type = serializers.CharField(source='get_type')
+
     class Meta:
         model = Boundary
         fields = ('id', 'name', 'type',)
@@ -30,11 +32,23 @@ class ElectedrepSerializer(KLPSerializer):
         fields = ('id', 'name', 'type')
 
 
+class AssemblySerializer(KLPSerializer):
+    class Meta:
+        model = Assembly
+        fields = ('id', 'name')
+
+
+class ParliamentSerializer(KLPSerializer):
+    class Meta:
+        model = Parliament
+        fields = ('id', 'name')
+
+
 class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
-    cluster = BoundarySerializer(source='schooldetails.cluster_or_circle')
-    block = BoundarySerializer(source='schooldetails.block_or_project')
-    district = BoundarySerializer(source='schooldetails.district')
+    admin3 = BoundarySerializer(source='schooldetails.admin3')
+    admin2 = BoundarySerializer(source='schooldetails.admin2')
+    admin1 = BoundarySerializer(source='schooldetails.admin1')
 
     type = BoundaryTypeSerializer(source='schooldetails.type')
     address_full = serializers.CharField(source='address.full')
@@ -42,14 +56,15 @@ class SchoolInfoSerializer(KLPSerializer):
     buses = serializers.CharField(source='address.bus')
     identifiers = serializers.CharField(source='address.get_identifiers')
 
-    mp = ElectedrepSerializer(source="get_mp")
-    mla = ElectedrepSerializer(source="get_mla")
+    assembly = AssemblySerializer(source="schooldetails.assembly")
+    parliament = ParliamentSerializer(source="schooldetails.parliament")
     ward = ElectedrepSerializer(source="get_ward")
 
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'cluster', 'block', 'district', 'buses', "mp", "mla", "ward", 'dise_code', 'type',)
+            'identifiers', 'admin3', 'admin2', 'admin1', 'buses', "parliament", "assembly",
+            "ward", 'dise_code', 'type',)
 
 
 class SchoolDemographicsSerializer(KLPSerializer):

@@ -29,9 +29,10 @@ class SchoolsInfo(SchoolsList):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-        .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
-         'schooldetails__district', 'schooldetails__type', 'electedrep__mp_const',\
-         'electedrep__mla_const', 'electedrep__ward')
+        .select_related('instcoord', 'address', 'schooldetails__admin3', 'schooldetails__admin2',
+         'schooldetails__admin1', 'schooldetails__type', 'schooldetails__assembly',
+         'schooldetails__parliament', 'electedrep__ward', 'schooldetails__admin1__hierarchy',
+         'schooldetails__admin2__hierarchy', 'schooldetails__admin3__hierarchy',)
 
 
 class SchoolsDiseInfo(KLPListAPIView):
@@ -57,9 +58,10 @@ class SchoolInfo(KLPDetailAPIView):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-        .select_related('instcoord', 'address', 'schooldetails__cluster_or_circle', 'schooldetails__block_or_project',\
-         'schooldetails__district', 'schooldetails__type', 'electedrep__mp_const',\
-         'electedrep__mla_const', 'electedrep__ward')
+        .select_related('instcoord', 'address', 'schooldetails__admin3', 'schooldetails__admin2',
+         'schooldetails__admin1', 'schooldetails__type', 'schooldetails__assembly',
+         'schooldetails__parliament', 'electedrep__ward', 'schooldetails__admin1__hierarchy',
+         'schooldetails__admin2__hierarchy', 'schooldetails__admin3__hierarchy',)
 
 
 class SchoolDemographics(KLPDetailAPIView):

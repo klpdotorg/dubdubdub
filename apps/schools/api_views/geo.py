@@ -9,7 +9,7 @@ class DistrictOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).district
+        return SchoolDetails.objects.get(school_id=school_id).admin1
 
 
 class BlockOfSchool(KLPDetailAPIView):
@@ -18,7 +18,7 @@ class BlockOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).block_or_project
+        return SchoolDetails.objects.get(school_id=school_id).admin2
 
 
 class ClusterOfSchool(KLPDetailAPIView):
@@ -27,7 +27,7 @@ class ClusterOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).cluster_or_circle
+        return SchoolDetails.objects.get(school_id=school_id).admin3
 
 
 class PincodeOfSchool(KLPDetailAPIView):
