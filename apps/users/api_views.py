@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from .models import User, Volunteer, OrganizationManager, Developer, Organization
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework.authtoken.models import Token
 
 @csrf_exempt #FIXME: here to make testing easier, remove.
 def signup(request):
@@ -38,7 +38,8 @@ def signup(request):
         organization_manager.save()
     user = authenticate(username=email, password=password)
     login(request, user)
-    return render_to_json_response({'success': 'User logged in', 'id': user.id})
+    token = Token.objects.get(user=user).key
+    return render_to_json_response({'success': 'User logged in', 'token': token})
 
 
 def signout(request):
@@ -53,5 +54,6 @@ def signin(request):
     user = authenticate(username=email, password=password)
     if user is not None:
         login(request, user)
-        return render_to_json_response({'success': 'User logged in', 'id': user.id})
+        token = Token.objects.get(user=user).key
+        return render_to_json_response({'success': 'User logged in', 'token': token})
     return render_to_json_response({'error': 'Username / password do not match'})

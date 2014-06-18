@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     #'south',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
 
