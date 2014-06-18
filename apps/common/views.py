@@ -19,8 +19,11 @@ class StaticPageView(TemplateView):
 class KLPListAPIView(generics.ListAPIView):
 
     pagination_serializer_class = KLPPaginationSerializer
-    filter_backends = (KLPInBBOXFilter,)
 
+    def __init__(self, *args, **kwargs):
+        super(KLPListAPIView, self).__init__(*args, **kwargs)
+        if self.bbox_filter_field:
+            self.filter_backends += (KLPInBBOXFilter,)
 
     def finalize_response(self, *args, **kwargs):
         '''
