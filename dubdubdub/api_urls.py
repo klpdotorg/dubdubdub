@@ -36,8 +36,8 @@ urlpatterns = patterns('',
     url(r'^geo/assembly/(?P<pk>[0-9]+)$', AssemblyOfSchool.as_view(), name="api_school_assembly"),
     url(r'^geo/parliament/(?P<pk>[0-9]+)$', ParliamentOfSchool.as_view(), name="api_school_parliament"),
 
-    url('^signup$', 'users.api_views.signup', name='api_signup'),
-    url('^signin$', 'users.api_views.signin', name='api_signin'),
-    url('^signout$', 'users.api_views.signout', name='api_signout'),
-    url('^test_authenticated', TestAuthenticatedView.as_view(), name='api_test_authenticated'),
+    url('^users/signup$', 'users.api_views.signup', name='api_signup'),
+    url('^users/signin$', 'users.api_views.signin', name='api_signin'),
+    url('^users/signout$', 'users.api_views.signout', name='api_signout'),
+    url('^users/test_authenticated', TestAuthenticatedView.as_view(), name='api_test_authenticated'),
 )
