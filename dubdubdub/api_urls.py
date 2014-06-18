@@ -7,6 +7,8 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, \
     DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool, AssemblyOfSchool, \
     ParliamentOfSchool
 
+from users.api_views import TestAuthenticatedView
+
 urlpatterns = patterns('',
     # Caches the results of the url for 60 seconds
     #url(r'^schools/list', cache_page(60)(SchoolsList.as_view()), name='api_schools_list'),
@@ -37,4 +39,5 @@ urlpatterns = patterns('',
     url('^signup$', 'users.api_views.signup', name='api_signup'),
     url('^signin$', 'users.api_views.signin', name='api_signin'),
     url('^signout$', 'users.api_views.signout', name='api_signout'),
+    url('^test_authenticated', TestAuthenticatedView.as_view(), name='api_test_authenticated'),
 )

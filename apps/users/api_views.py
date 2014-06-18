@@ -3,6 +3,21 @@ from .models import User, Volunteer, OrganizationManager, Developer, Organizatio
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+
+
+class TestAuthenticatedView(APIView):
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        return Response({
+            'logged_in_as': request.user.email
+        })
+
+
 
 @csrf_exempt #FIXME: here to make testing easier, remove.
 def signup(request):
