@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
-from .models import User, Volunteer, OrganizationManager, Developer, Organization
+from .models import User, Volunteer, OrganizationManager, Organization
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
