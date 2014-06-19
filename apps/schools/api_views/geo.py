@@ -1,7 +1,7 @@
 from schools.models import SchoolDetails, Boundary, School
 from common.views import KLPListAPIView, KLPDetailAPIView
 from schools.serializers import SchoolDetailsSerializer, BoundarySerializer, SchoolPincodeSerializer, \
-    BoundaryTypeSerializer
+    AssemblySerializer, ParliamentSerializer
 
 class DistrictOfSchool(KLPDetailAPIView):
     serializer_class = BoundarySerializer
@@ -40,7 +40,7 @@ class PincodeOfSchool(KLPDetailAPIView):
 
 
 class AssemblyOfSchool(KLPDetailAPIView):
-    serializer_class = BoundaryTypeSerializer
+    serializer_class = AssemblySerializer
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
@@ -48,7 +48,7 @@ class AssemblyOfSchool(KLPDetailAPIView):
 
 
 class ParliamentOfSchool(KLPDetailAPIView):
-    serializer_class = BoundaryTypeSerializer
+    serializer_class = ParliamentSerializer
 
     def get_object(self):
         school_id = self.kwargs.get('pk')

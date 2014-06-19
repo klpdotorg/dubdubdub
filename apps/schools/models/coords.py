@@ -57,6 +57,12 @@ class Assembly(GeoBaseModel):
         else:
             return {}
 
+    def get_simple_geometry(self):
+        if hasattr(self, 'coord'):
+            return json.loads(self.coord.simplify(0.01).geojson)
+        else:
+            return {}
+
     class Meta:
         managed = False
         db_table = 'mvw_assembly'
@@ -76,6 +82,12 @@ class Parliament(GeoBaseModel):
     def get_geometry(self):
         if hasattr(self, 'coord'):
             return json.loads(self.coord.geojson)
+        else:
+            return {}
+
+    def get_simple_geometry(self):
+        if hasattr(self, 'coord'):
+            return json.loads(self.coord.simplify(0.01).geojson)
         else:
             return {}
 

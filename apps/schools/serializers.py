@@ -1,4 +1,4 @@
-from common.serializers import KLPSerializer
+from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType, Assembly, Parliament
 
@@ -31,14 +31,13 @@ class ElectedrepSerializer(KLPSerializer):
         model = ElectedrepMaster
         fields = ('id', 'name', 'type')
 
-
-class AssemblySerializer(KLPSerializer):
+class AssemblySerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Assembly
         fields = ('id', 'name')
 
 
-class ParliamentSerializer(KLPSerializer):
+class ParliamentSerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Parliament
         fields = ('id', 'name')
