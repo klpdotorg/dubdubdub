@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     sms_verification_pin = models.IntegerField(max_length=16)
     is_email_verified = models.BooleanField(default=False)
     is_mobile_verified = models.BooleanField(default=False)
-    type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
+    #type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
     objects = UserManager()
@@ -83,18 +83,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
-
-
-
-class Volunteer(models.Model):
-    user = models.OneToOneField(User)
-    activities = models.ManyToManyField('VolunteerActivity', through='VolunteerVolunteerActivity')
-    donations = models.ManyToManyField('DonorRequirement', through='VolunteerDonorRequirement')
-
-
-class OrganizationManager(models.Model):
-    user = models.OneToOneField(User)
-    organization = models.ForeignKey('Organization')
 
 
 #Q: should these models go into a separate app?
@@ -133,23 +121,24 @@ class VolunteerActivity(models.Model):
     type = models.ForeignKey('VolunteerActivityType')
     school = models.ForeignKey(School)
     text = models.TextField(blank=True)
-
+    users = models.ManyToManyField('User', through='UserVolunteerActivity')
 
 class DonorRequirement(models.Model):
     organization = models.ForeignKey('Organization')
     type = models.ForeignKey('DonationType')
     school = models.ForeignKey(School)
     text = models.TextField(blank=True)
+    users = models.ManyToManyField('User', through='UserDonorRequirement')
 
 
-class VolunteerVolunteerActivity(models.Model):
-    volunteer = models.ForeignKey('Volunteer')
+class UserVolunteerActivity(models.Model):
+    user = models.ForeignKey('User')
     activity = models.ForeignKey('VolunteerActivity')
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
 
-class VolunteerDonorRequirement(models.Model):
-    volunteer = models.ForeignKey('Volunteer')
+class UserDonorRequirement(models.Model):
+    user = models.ForeignKey('User')
     donor_requirement = models.ForeignKey('DonorRequirement')
     date = models.DateField()
     donation = models.CharField(max_length=256) #what was donated
