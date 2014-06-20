@@ -92,9 +92,21 @@ class Organization(models.Model):
     email = models.EmailField()
     address = models.TextField(blank=True)
     contact_name = models.CharField(max_length=256)
+    users = models.ManyToManyField('User', through='UserOrganization')
 
     def __unicode__(self):
         return self.name
+
+USER_ROLE_CHOICES = (
+    (0, 'admin'),
+    (1, 'manager'),
+    (2, 'member')
+)
+
+class UserOrganization(models.Model):
+    user = models.ForeignKey('User')
+    organization = models.ForeignKey('Organization')
+    role = models.IntegerField(choices=USER_ROLE_CHOICES)
 
 
 class VolunteerActivityType(models.Model):
