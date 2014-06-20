@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
-from .models import User, Volunteer, OrganizationManager, Organization
+from .models import User
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -26,29 +26,12 @@ def signup(request):
     last_name = request.POST.get("last_name", "")
     mobile_no = request.POST.get("mobile_no", None)
     password = request.POST.get("password", None)
-    typ = int(request.POST.get("type", 0))
     if not email or not password or not mobile_no:
         return render_to_json_response({'error': 'Insufficient data'})
     if User.objects.filter(email=email).count() > 0:
         return render_to_json_response({'error': 'Email exists'})
     user = User.objects.create_user(email, password, first_name=first_name, last_name=last_name,\
         mobile_no=mobile_no, type=typ)
-    if typ == 0: #is a Volunteer
-        volunteer = Volunteer(user=user)
-        volunteer.save()
-
-    if typ == 2: #is an org manager
-        organization_id = request.POST.get("organization", None)
-        if not organization_id:
-            user.delete()
-            return render_to_json_response({'error': 'Organization not provided'})
-        try:
-            organization = Organization.objects.get(pk=int(organization_id))
-        except:
-            user.delete()
-            return render_to_json_response({'error': 'Organization matching ID does not exist'})
-        organization_manager = OrganizationManager(user=user, organization=organization)
-        organization_manager.save()
     user = authenticate(username=email, password=password)
     login(request, user)
     token = Token.objects.get(user=user).key
