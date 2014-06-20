@@ -1,5 +1,5 @@
 #Django==1.6.2
--e git+git://github.com/django/django.git@1.7b1#egg=django
+-e git+git://github.com/django/django.git@stable/1.7.x#egg=django
 #South==0.8.1
 argparse==1.2.1
 django-debug-toolbar==1.0.1
