@@ -67,15 +67,8 @@ class SchoolInfo(KLPDetailAPIView):
 class SchoolDemographics(KLPDetailAPIView):
     serializer_class = SchoolDemographicsSerializer
 
-    def get_queryset(self):
-        return School.objects.filter(status=2).select_related('dise_info')
-        # return School.objects.filter(status=2)\
-        # .select_related('dise_info', 'institutionagg')\
-        # .annotate(
-        #     num_boys=SumCase('institutionagg__num', when='"tb_institution_agg"."sex" = \'male\''),
-        #     num_girls=SumCase('institutionagg__num', when='"tb_institution_agg"."sex" = \'female\''),
-        # )
-
+    def get_object(self):
+        return School.objects.get(id=self.kwargs.get('pk'), status=2)
 
 class SchoolProgrammes(KLPDetailAPIView):
     serializer_class = SchoolProgrammesSerializer
