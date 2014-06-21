@@ -3,7 +3,7 @@ from common.views import KLPListAPIView, KLPDetailAPIView
 from schools.serializers import SchoolDetailsSerializer, BoundarySerializer, SchoolPincodeSerializer, \
     AssemblySerializer, ParliamentSerializer
 
-class DistrictOfSchool(KLPDetailAPIView):
+class Admin1OfSchool(KLPDetailAPIView):
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -12,7 +12,7 @@ class DistrictOfSchool(KLPDetailAPIView):
         return SchoolDetails.objects.get(school_id=school_id).admin1
 
 
-class BlockOfSchool(KLPDetailAPIView):
+class Admin2OfSchool(KLPDetailAPIView):
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -21,7 +21,7 @@ class BlockOfSchool(KLPDetailAPIView):
         return SchoolDetails.objects.get(school_id=school_id).admin2
 
 
-class ClusterOfSchool(KLPDetailAPIView):
+class Admin3OfSchool(KLPDetailAPIView):
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 

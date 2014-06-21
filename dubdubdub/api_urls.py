@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, \
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance, \
     Blocks, Clusters, BlocksInsideDistrict, ClustersInsideDistrict, ClustersInsideBlock, \
-    DistrictOfSchool, BlockOfSchool, ClusterOfSchool, PincodeOfSchool, AssemblyOfSchool, \
+    Admin1OfSchool, Admin2OfSchool, Admin3OfSchool, PincodeOfSchool, AssemblyOfSchool, \
     ParliamentOfSchool
 
 from users.api_views import TestAuthenticatedView
@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^schools/school/(?P<pk>[0-9]+)/demographics$', SchoolDemographics.as_view(), name='api_school_demo'),
     url(r'^schools/school/(?P<pk>[0-9]+)/programmes$', SchoolProgrammes.as_view(), name='api_school_prog'),
     url(r'^schools/school/(?P<pk>[0-9]+)/finance$', SchoolFinance.as_view(), name='api_school_finance'),
-    
+
     url(r'^boundary/districts$', Districts.as_view(), name="api_districts"),
     url(r'^boundary/districts/(?P<id>[0-9]+)/blocks$', BlocksInsideDistrict.as_view(), name="api_districts_block"),
     url(r'^boundary/districts/(?P<id>[0-9]+)/clusters$', ClustersInsideDistrict.as_view(), name="api_districts_cluster"),
@@ -29,9 +29,9 @@ urlpatterns = patterns('',
     url(r'^boundary/blocks/(?P<id>[0-9]+)/clusters$', ClustersInsideBlock.as_view(), name="api_blocks_clusters"),
     url(r'^boundary/clusters$', Clusters.as_view(), name="api_clusters"),
 
-    url(r'^geo/district/(?P<pk>[0-9]+)$', DistrictOfSchool.as_view(), name="api_school_district"),
-    url(r'^geo/block/(?P<pk>[0-9]+)$', BlockOfSchool.as_view(), name="api_school_block"),
-    url(r'^geo/cluster/(?P<pk>[0-9]+)$', ClusterOfSchool.as_view(), name="api_school_cluster"),
+    url(r'^geo/admin1/(?P<pk>[0-9]+)$', Admin1OfSchool.as_view(), name="api_school_admin1"),
+    url(r'^geo/admin2/(?P<pk>[0-9]+)$', Admin2OfSchool.as_view(), name="api_school_admin2"),
+    url(r'^geo/admin3/(?P<pk>[0-9]+)$', Admin3OfSchool.as_view(), name="api_school_admin3"),
     url(r'^geo/pincode/(?P<pk>[0-9]+)$', PincodeOfSchool.as_view(), name="api_school_pincode"),
     url(r'^geo/assembly/(?P<pk>[0-9]+)$', AssemblyOfSchool.as_view(), name="api_school_assembly"),
     url(r'^geo/parliament/(?P<pk>[0-9]+)$', ParliamentOfSchool.as_view(), name="api_school_parliament"),
