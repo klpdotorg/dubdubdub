@@ -7,7 +7,7 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s, \
     Admin1OfSchool, Admin2OfSchool, Admin3OfSchool, PincodeOfSchool, AssemblyOfSchool, \
     ParliamentOfSchool
 
-from users.api_views import TestAuthenticatedView
+from users.api_views import TestAuthenticatedView, UsersView, UserProfileView
 
 urlpatterns = patterns('',
     # Caches the results of the url for 60 seconds
@@ -36,8 +36,9 @@ urlpatterns = patterns('',
     url(r'^geo/assembly/(?P<pk>[0-9]+)$', AssemblyOfSchool.as_view(), name="api_school_assembly"),
     url(r'^geo/parliament/(?P<pk>[0-9]+)$', ParliamentOfSchool.as_view(), name="api_school_parliament"),
 
-    url('^user/signup$', 'users.api_views.signup', name='api_signup'),
-    url('^user/signin$', 'users.api_views.signin', name='api_signin'),
-    url('^user/signout$', 'users.api_views.signout', name='api_signout'),
+    url('^user/users$', UsersView.as_view(), name='api_user_users'),
+    url('^user/profile', UserProfileView.as_view(), name='api_user_profile'),
+    url('^user/signin$', 'users.api_views.signin', name='api_user_signin'),
+    url('^user/signout$', 'users.api_views.signout', name='api_user_signout'),
     url('^user/test_authenticated', TestAuthenticatedView.as_view(), name='api_test_authenticated'),
 )

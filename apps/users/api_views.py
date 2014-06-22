@@ -1,10 +1,13 @@
 from django.contrib.auth import login, authenticate, logout
 from .models import User
+from .serializers import UserSerializer
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.exceptions import APIException, PermissionDenied, ParseError
 from rest_framework import authentication, permissions
 
 
@@ -17,6 +20,34 @@ class TestAuthenticatedView(APIView):
             'logged_in_as': request.user.email
         })
 
+
+class UsersView(generics.ListCreateAPIView):
+    serializer_class = UserSerializer
+
+    def create(self, *args, **kwargs):
+        email = self.request.POST.get('email', None)
+        if not email:
+            raise ParseError("No email address supplied")
+        if User.objects.filter(email=email).count() > 0:
+            raise APIException("duplicate email")
+        password = self.request.POST.get('password', '')
+        if password == '':
+            raise ParseError("No password supplied")
+        super(UsersView, self).create(*args, **kwargs)
+
+    def get_queryset(self):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied()
+        return User.objects.all()
+
+
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        if not self.request.user.is_authenticated():
+            raise PermissionDenied("You need to be logged in to view / edit your profile")
+        return User.objects.get(id=self.request.user.id)
 
 
 @csrf_exempt #FIXME: here to make testing easier, remove.

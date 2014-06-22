@@ -75,6 +75,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         pin = ''.join([str(random.choice(range(1,9))) for i in range(4)])
         self.sms_verification_pin = int(pin)
 
+    def get_token(self):
+        return Token.objects.get(user=self).key
+
     def __unicode__(self):
         return self.email
 
