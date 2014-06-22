@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
-from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Districts, \
+from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s, \
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance, \
-    Blocks, Clusters, BlocksInsideDistrict, ClustersInsideDistrict, ClustersInsideBlock, \
+    Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1, Admin3sInsideAdmin2, \
     Admin1OfSchool, Admin2OfSchool, Admin3OfSchool, PincodeOfSchool, AssemblyOfSchool, \
     ParliamentOfSchool
 
@@ -22,12 +22,12 @@ urlpatterns = patterns('',
     url(r'^schools/school/(?P<pk>[0-9]+)/programmes$', SchoolProgrammes.as_view(), name='api_school_prog'),
     url(r'^schools/school/(?P<pk>[0-9]+)/finance$', SchoolFinance.as_view(), name='api_school_finance'),
 
-    url(r'^boundary/districts$', Districts.as_view(), name="api_districts"),
-    url(r'^boundary/districts/(?P<id>[0-9]+)/blocks$', BlocksInsideDistrict.as_view(), name="api_districts_block"),
-    url(r'^boundary/districts/(?P<id>[0-9]+)/clusters$', ClustersInsideDistrict.as_view(), name="api_districts_cluster"),
-    url(r'^boundary/blocks$', Blocks.as_view(), name="api_blocks"),
-    url(r'^boundary/blocks/(?P<id>[0-9]+)/clusters$', ClustersInsideBlock.as_view(), name="api_blocks_clusters"),
-    url(r'^boundary/clusters$', Clusters.as_view(), name="api_clusters"),
+    url(r'^boundary/admin1s$', Admin1s.as_view(), name="api_admin1s"),
+    url(r'^boundary/admin1/(?P<id>[0-9]+)/admin2$', Admin2sInsideAdmin1.as_view(), name="api_admin1s_admin2"),
+    url(r'^boundary/admin1/(?P<id>[0-9]+)/admin3$', Admin3sInsideAdmin1.as_view(), name="api_admin1s_admin3"),
+    url(r'^boundary/admin2s$', Admin2s.as_view(), name="api_admin2s"),
+    url(r'^boundary/admin2s/(?P<id>[0-9]+)/admin3$', Admin3sInsideAdmin2.as_view(), name="api_admin2s_admin3"),
+    url(r'^boundary/admin3s$', Admin3s.as_view(), name="api_admin3s"),
 
     url(r'^geo/admin1/(?P<pk>[0-9]+)$', Admin1OfSchool.as_view(), name="api_school_admin1"),
     url(r'^geo/admin2/(?P<pk>[0-9]+)$', Admin2OfSchool.as_view(), name="api_school_admin2"),
