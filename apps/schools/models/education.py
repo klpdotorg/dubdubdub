@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from django.contrib.gis.db import models
+from django.db.models import Sum
 import json
 
 
@@ -176,16 +177,14 @@ class School(GeoBaseModel):
             return None
 
     def get_num_boys(self):
-        n = 0
-        for agg in self.institutionagg_set.filter(sex='male'):
-            n += agg.num
-        return n
+        sum_query = self.institutionagg_set.filter(sex='male').aggregate(Sum('num'))
+        return sum_query['num__sum']
+
 
     def get_num_girls(self):
-        n = 0
-        for agg in self.institutionagg_set.filter(sex='female'):
-            n += agg.num
-        return n
+        sum_query = self.institutionagg_set.filter(sex='female').aggregate(Sum('num'))
+        return sum_query['num__sum']
+
 
     def get_ward(self):
         try:
