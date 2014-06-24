@@ -7,8 +7,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.exceptions import APIException, PermissionDenied, ParseError
+from rest_framework.exceptions import APIException, PermissionDenied, ParseError, MethodNotAllowed
 from rest_framework import authentication, permissions
+from rest_framework.decorators import api_view
 
 
 class TestAuthenticatedView(APIView):
@@ -23,11 +24,16 @@ class TestAuthenticatedView(APIView):
 
 class UsersView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
+    paginate_by = 50
 
     def create(self, *args, **kwargs):
+        #FIXME: move validation into serializer validate methods
         email = self.request.POST.get('email', None)
-        if not email:
-            raise ParseError("No email address supplied")
+        mobile_no = self.request.POST.get('mobile_no', None)
+        first_name = self.request.POST.get('first_name', None)
+        last_name = self.request.POST.get('last_name', None)
+        if not email or not mobile_no or not first_name or not last_name:
+            raise ParseError("Insufficient data: required fields are email, mobile_no, first_name and last_name")
         if User.objects.filter(email=email).count() > 0:
             raise APIException("duplicate email")
         password = self.request.POST.get('password', '')
@@ -49,32 +55,18 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
             raise PermissionDenied("You need to be logged in to view / edit your profile")
         return User.objects.get(id=self.request.user.id)
 
-
-@csrf_exempt #FIXME: here to make testing easier, remove.
-def signup(request):
-    email = request.POST.get("email", None)
-    first_name = request.POST.get("first_name", "")
-    last_name = request.POST.get("last_name", "")
-    mobile_no = request.POST.get("mobile_no", None)
-    password = request.POST.get("password", None)
-    if not email or not password or not mobile_no:
-        return render_to_json_response({'error': 'Insufficient data'})
-    if User.objects.filter(email=email).count() > 0:
-        return render_to_json_response({'error': 'Email exists'})
-    user = User.objects.create_user(email, password, first_name=first_name, last_name=last_name,\
-        mobile_no=mobile_no, type=typ)
-    user = authenticate(username=email, password=password)
-    login(request, user)
-    token = Token.objects.get(user=user).key
-    return render_to_json_response({'success': 'User logged in', 'token': token})
+    def post(self, request):
+        raise MethodNotAllowed("POST")
 
 
+@api_view(['GET'])
 def signout(request):
     logout(request)
-    return render_to_json_response({'success': 'User logged out'})
+    return Response({'success': 'User logged out'})
 
 
-@csrf_exempt #FIXME
+@api_view(['POST'])
+@csrf_exempt
 def signin(request):
     email = request.POST.get("email", "")
     password = request.POST.get("password", "")
@@ -82,5 +74,5 @@ def signin(request):
     if user is not None:
         login(request, user)
         token = Token.objects.get(user=user).key
-        return render_to_json_response({'success': 'User logged in', 'token': token})
-    return render_to_json_response({'error': 'Username / password do not match'})
+        return Response({'success': 'User logged in', 'token': token})
+    raise PermissionDenied("Username / password do not match")

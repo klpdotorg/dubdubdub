@@ -28,7 +28,8 @@ class UserSerializer(serializers.ModelSerializer):
             if request.user.id != instance.id and not request.user.is_superuser:
                 raise PermissionDenied()
             for key in extras.keys():
-                setattr(instance, key, extras[key])
+                if extras[key] is not None:
+                    setattr(instance, key, extras[key])
             if password and password != '':
                 instance.set_password(password)
             instance.save()
