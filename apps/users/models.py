@@ -133,6 +133,9 @@ class UserOrganization(models.Model):
     organization = models.ForeignKey('Organization')
     role = models.IntegerField(choices=USER_ROLE_CHOICES)
 
+    class Meta:
+        unique_together = ('user', 'organization',)
+
 
 class VolunteerActivityType(models.Model):
     name = models.CharField(max_length=64)
