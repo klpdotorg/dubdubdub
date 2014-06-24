@@ -20,7 +20,16 @@ class BoundarySerializer(KLPSerializer):
 
     class Meta:
         model = Boundary
-        fields = ('id', 'name', 'type',)
+        fields = ('id', 'name', 'type')
+
+
+class BoundaryWithParentSerializer(KLPSerializer):
+    type = serializers.CharField(source='get_type')
+    parent = BoundarySerializer(source='parent')
+
+    class Meta:
+        model = Boundary
+        fields = ('id', 'name', 'type', 'parent')
 
 
 class ElectedrepSerializer(KLPSerializer):

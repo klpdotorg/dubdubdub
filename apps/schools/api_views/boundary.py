@@ -1,6 +1,6 @@
 from schools.models import Boundary
 from common.views import KLPListAPIView
-from schools.serializers import BoundarySerializer
+from schools.serializers import BoundarySerializer, BoundaryWithParentSerializer
 from django.db.models import Q
 
 
@@ -49,7 +49,7 @@ class Admin2s(KLPListAPIView):
     '''
         Returns a list of all blocks (id and name)
     '''
-    serializer_class = BoundarySerializer
+    serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
@@ -75,7 +75,7 @@ class Admin3s(KLPListAPIView):
     '''
         Returns a list of all districts (id and name)
     '''
-    serializer_class = BoundarySerializer
+    serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
