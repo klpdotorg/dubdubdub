@@ -57,6 +57,9 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
         return User.objects.get(id=self.request.user.id)
 
     def post(self, request):
+        '''
+            PATCH requests are made to edit user profile, disallow POST.
+        '''
         raise MethodNotAllowed("POST")
 
 
