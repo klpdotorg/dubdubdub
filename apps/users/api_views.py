@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
-from .models import User
-from .serializers import UserSerializer
+from django.shortcuts import get_object_or_404
+from .models import User, Organization, UserOrganization
+from .serializers import UserSerializer, OrganizationSerializer
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -76,3 +77,72 @@ def signin(request):
         token = Token.objects.get(user=user).key
         return Response({'success': 'User logged in', 'token': token})
     raise PermissionDenied("Username / password do not match")
+
+
+class OrganizationsView(generics.ListCreateAPIView):
+    serializer_class = OrganizationSerializer
+
+    def create(self, request):
+        '''
+            Only allows superusers to create new organizations.
+        '''
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        return super(OrganizationsView, self).create(request)
+
+    def get_queryset(self):
+        '''
+            Gets list of organizations.
+            If superuser, get all orgs.
+            Else, get only the user's own orgs.
+        '''
+        user = self.request.user
+        if not user.is_authenticated():
+            raise PermissionDenied()
+        qset = Organization.objects.all()
+        if user.is_superuser:
+            return qset
+        else:
+            return Organization.objects.filter(users=user)
+
+    def post_save(self, obj, created=False):
+        '''
+            When creating an organization, make the user that created
+            the organization an admin user in the organization.
+        '''
+        if created:
+            admin_user = self.request.user
+            user_org = UserOrganization(user=admin_user, organization=obj, role=0)
+            user_org.save()
+
+
+
+
+class OrganizationView(generics.RetrieveUpdateAPIView):
+    serializer_class = OrganizationSerializer
+
+    def partial_update(self, request, pk=None):
+        organization = get_object_or_404(Organization, pk=pk)
+        if not organization.has_write_perms(request.user):
+            raise PermissionDenied()
+        return super(OrganizationView, self).update(request)
+
+    def retrieve(self, request, pk=None):
+        pk = self.kwargs['pk']
+        organization = get_object_or_404(Organization, pk=pk)
+        if not organization.has_read_perms(request.user):
+            raise PermissionDenied()
+        return super(OrganizationView, self).update(request)
+
+    def get_object(self):
+        pk = self.kwargs['pk']
+        return get_object_or_404(Organization, pk=pk)
+
+
+
+class OrganizationUsersView(generics.ListCreateAPIView):
+    pass
+
+
+class OrganizationUserView(generics.RetrieveUpdateAPIView):
+    pass

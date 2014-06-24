@@ -7,7 +7,9 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s, \
     Admin1OfSchool, Admin2OfSchool, Admin3OfSchool, PincodeOfSchool, AssemblyOfSchool, \
     ParliamentOfSchool
 
-from users.api_views import TestAuthenticatedView, UsersView, UserProfileView
+from users.api_views import TestAuthenticatedView, UsersView, UserProfileView, \
+    OrganizationsView, OrganizationView, OrganizationUsersView, \
+    OrganizationUserView
 
 urlpatterns = patterns('',
     # Caches the results of the url for 60 seconds
@@ -41,4 +43,9 @@ urlpatterns = patterns('',
     url('^user/signin$', 'users.api_views.signin', name='api_user_signin'),
     url('^user/signout$', 'users.api_views.signout', name='api_user_signout'),
     url('^user/test_authenticated', TestAuthenticatedView.as_view(), name='api_test_authenticated'),
+
+    url('^organization/organizations$', OrganizationsView.as_view(), name='api_organizations_view'),
+    url('^organization/(?P<pk>[0-9]+)$', OrganizationView.as_view(), name='api_organization_view'),
+    url('^organization/(?P<pk>[0-9]+)/users$', OrganizationUsersView.as_view(), name='api_organizationusers_view'),
+    url('^organization/(?P<pk>[0-9]+)/users/(?P<user_pk>[0-9]+)$', OrganizationUserView.as_view(), name='api_organizationuser_view'),
 )

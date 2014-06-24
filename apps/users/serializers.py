@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
-from .models import User
+from .models import User, Organization
 from django.contrib.auth import login, authenticate, logout
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,4 +42,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('email', 'mobile_no', 'first_name', 'last_name', 'password', 'token',)
         write_only_fields = ('password',)
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Organization
+
+
 

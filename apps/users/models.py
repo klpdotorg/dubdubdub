@@ -97,6 +97,28 @@ class Organization(models.Model):
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
 
+    def has_read_perms(self, user):
+        '''
+            A user has read permmissions on the org if they are admin, manager or member
+        '''
+        if user.is_superuser:
+            return True
+        if UserOrganization.objects.filter(user=user, organization=self).count() > 0:
+            return True
+        else:
+            return False
+
+    def has_write_perms(self, user):
+        '''
+            Only admin users have write perms on the organization
+        '''
+        if user.is_superuser:
+            return True
+        if UserOrganization.objects.filter(user=user, organization=self, role=0).count() > 0:
+            return True
+        else:
+            return False
+
     def __unicode__(self):
         return self.name
 
