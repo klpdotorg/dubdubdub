@@ -4,6 +4,7 @@ from common.models import SumCase
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer,\
     SchoolDemographicsSerializer, SchoolProgrammesSerializer, SchoolFinanceSerializer
 from django.contrib.gis.geos import Polygon
+from django.http import Http404
 import re
 
 class SchoolsList(KLPListAPIView):
@@ -67,19 +68,21 @@ class SchoolInfo(KLPDetailAPIView):
 class SchoolDemographics(KLPDetailAPIView):
     serializer_class = SchoolDemographicsSerializer
 
-    def get_object(self):
-        return School.objects.get(id=self.kwargs.get('pk'), status=2)
+    def get_queryset(self):
+        return School.objects.filter(status=2)\
+        .select_related('dise_info',)
 
 class SchoolProgrammes(KLPDetailAPIView):
     serializer_class = SchoolProgrammesSerializer
 
     def get_queryset(self):
-        return School.objects.filter(status=2)
+        return School.objects.filter(status=2)\
+        .select_related('dise_info',)
 
 
 class SchoolFinance(KLPDetailAPIView):
-    # DISE data is yearly. Needs year as param or send list maybe
     serializer_class = SchoolFinanceSerializer
 
     def get_queryset(self):
-        return DiseInfo.objects.all()
+        return School.objects.filter(status=2)\
+        .select_related('dise_info',)
