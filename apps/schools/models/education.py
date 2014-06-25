@@ -232,6 +232,7 @@ class SchoolDetails(BaseModel):
     type = models.ForeignKey('BoundaryType', db_column='type')
     assembly = models.ForeignKey('Assembly', db_column='assembly_id')
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')
+    postal = models.ForeignKey('Postal', db_column='pin_id')
 
     def __unicode__(self):
         return str(self.pk)

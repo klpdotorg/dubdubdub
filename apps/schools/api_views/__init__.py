@@ -35,6 +35,7 @@ def api_root(request, format=None):
             'Block of School': reverse('api_school_block', request=request, format=format, kwargs={'pk': 3573}),
             'Cluster of School': reverse('api_school_cluster', request=request, format=format, kwargs={'pk': 3573}),
             'Assemby of School': reverse('api_school_assembly', request=request, format=format, kwargs={'pk': 3573}),
-            'Parliament of School': reverse('api_school_parliament', request=request, format=format, kwargs={'pk': 3573})
+            'Parliament of School': reverse('api_school_parliament', request=request, format=format, kwargs={'pk': 3573}),
+            'Pincode of School': reverse('api_school_pincode', request=request, format=format, kwargs={'pk': 3573})
         }
     })
