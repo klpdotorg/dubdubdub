@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from django.contrib.gis.db import models
+from django.db.models import Sum
 import json
 
 
@@ -151,8 +152,9 @@ class School(GeoBaseModel):
 
     boundary_cluster = models.ForeignKey('Boundary', db_column='bid')
 
-    #TODO: check if address should be ForeignKey or OneToOneField
-    address = models.ForeignKey('Address', db_column='aid', blank=True, null=True)
+    # TODO: check if address should be ForeignKey or OneToOneField
+    # CHECK: http://hastebin.com/awotomoven aid appears once for each school
+    address = models.OneToOneField('Address', db_column='aid', blank=True, null=True)
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code', blank=True, null=True)
     name = models.CharField(max_length=300)
     cat = models.CharField(max_length=128, choices=CAT_CHOICES)
@@ -174,17 +176,15 @@ class School(GeoBaseModel):
             # TBD: return BoundaryPreschool when ready
             return None
 
-    def get_mp(self):
-        try:
-            return self.electedrep.mp_const
-        except:
-            return None
+    def get_num_boys(self):
+        sum_query = self.institutionagg_set.filter(sex='male').aggregate(Sum('num'))
+        return sum_query['num__sum']
 
-    def get_mla(self):
-        try:
-            return self.electedrep.mla_const
-        except:
-            return None
+
+    def get_num_girls(self):
+        sum_query = self.institutionagg_set.filter(sex='female').aggregate(Sum('num'))
+        return sum_query['num__sum']
+
 
     def get_ward(self):
         try:
@@ -192,26 +192,14 @@ class School(GeoBaseModel):
         except:
             return None
 
-    '''
-    def get_info_properties(self):
-        data = self.get_list_properties()
-
-        # dise_info field itself has the dise_code,
-        # calling related field makes unnecessary queries
-        data['dise_code'] = self.dise_info_id
-
-        #QUESTION: how to get 'type'? #ANSWER School > Boundary > BoundaryType
-        data['type'] = self.boundary.type_id
-
-        data['management'] = self.get_mgmt_display()
-        data['category'] = self.get_cat_display()
-        data['medium_of_instruction'] = self.get_moi_display()
-
-        data['address'] = self.address.full if self.address else ''
-
-        #FIXME: add data['photos'] - where does this come from?
-        return data
-    '''
+    def get_mt_profile(self):
+        profile = {}
+        for agg in self.institutionagg_set.all():
+            if agg.mt in profile:
+                profile[agg.mt] += agg.num
+            else:
+                profile[agg.mt] = agg.num
+        return profile
 
     def get_geometry(self):
         if hasattr(self, 'instcoord'):
