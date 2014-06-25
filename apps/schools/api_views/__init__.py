@@ -35,6 +35,7 @@ def api_root(request, format=None):
             'Admin2 of School': reverse('api_school_admin2', request=request, format=format, kwargs={'pk': 3573}),
             'Admin3 of School': reverse('api_school_admin3', request=request, format=format, kwargs={'pk': 3573}),
             'Assemby of School': reverse('api_school_assembly', request=request, format=format, kwargs={'pk': 3573}),
-            'Parliament of School': reverse('api_school_parliament', request=request, format=format, kwargs={'pk': 3573})
+            'Parliament of School': reverse('api_school_parliament', request=request, format=format, kwargs={'pk': 3573}),
+            'Pincode of School': reverse('api_school_pincode', request=request, format=format, kwargs={'pk': 3573})
         }
     })

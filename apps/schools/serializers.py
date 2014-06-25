@@ -1,6 +1,7 @@
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType, Assembly, Parliament
+from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType, Assembly, \
+    Parliament, Postal
 
 class SchoolListSerializer(KLPSerializer):
 
@@ -50,6 +51,11 @@ class ParliamentSerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Parliament
         fields = ('id', 'name')
+
+class PincodeSerializer(KLPSimpleGeoSerializer):
+    class Meta:
+        model = Postal
+        fields = ('id', 'pincode')
 
 
 class SchoolInfoSerializer(KLPSerializer):
@@ -117,7 +123,7 @@ class SchoolDetailsSerializer(KLPSerializer):
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
 
-
+# Moving to PincodeSerializer to use the new Postal model.
 class SchoolPincodeSerializer(KLPSerializer):
     pincode = serializers.CharField(source='address.pincode')
 
