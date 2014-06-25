@@ -68,9 +68,11 @@ SELECT tbs.id as id,
     tb2.id as block_or_project_id,
     tb3.id as district_id,
     tb1.type as type,
-    assembly.ac_id as assembly_id, assembly.pc_id as parliament_id 
+    assembly.ac_id as assembly_id, 
+    assembly.pc_id as parliament_id,
+    assembly.pin_id as pin_id 
     FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs LEFT JOIN 
-    (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom)) AS assembly 
+    (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly 
     ON assembly.instid=tbs.id 
     WHERE tbs.bid=tb1.id AND 
     tb1.parent=tb2.id AND 
