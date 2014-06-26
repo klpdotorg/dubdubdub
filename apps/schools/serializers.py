@@ -101,11 +101,11 @@ class SchoolProgrammesSerializer(KLPSerializer):
 
 
 class SchoolFinanceSerializer(KLPSerializer):
-    id = serializers.IntegerField(source="school.id")
-    name = serializers.CharField(source="school.name")
+    sg_recd = serializers.IntegerField(source="dise_info.sg_recd")
+    sg_expnd = serializers.CharField(source="dise_info.sg_expnd")
 
     class Meta:
-        model = DiseInfo
+        model = School
         fields = ('id', 'name', 'sg_recd', 'sg_expnd')
 
 
