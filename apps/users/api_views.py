@@ -2,6 +2,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization
 from .serializers import UserSerializer, OrganizationSerializer, OrganizationUserSerializer
+from .permissions import UserListPermission, IsAdminOrIsSelf, OrganizationsPermission, \
+    OrganizationPermission, OrganizationUsersPermission
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -26,6 +28,7 @@ class TestAuthenticatedView(APIView):
 class UsersView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     paginate_by = 50
+    permission_classes = (UserListPermission,)
 
     def create(self, *args, **kwargs):
         #FIXME: move validation into serializer validate methods
@@ -43,17 +46,14 @@ class UsersView(generics.ListCreateAPIView):
         super(UsersView, self).create(*args, **kwargs)
 
     def get_queryset(self):
-        if not self.request.user.is_superuser:
-            raise PermissionDenied()
         return User.objects.all()
 
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdminOrIsSelf,)
 
     def get_object(self):
-        if not self.request.user.is_authenticated():
-            raise PermissionDenied("You need to be logged in to view / edit your profile")
         return User.objects.get(id=self.request.user.id)
 
     def post(self, request):
@@ -85,6 +85,7 @@ def signin(request):
 class OrganizationsView(generics.ListCreateAPIView):
     serializer_class = OrganizationSerializer
     paginate_by = 50
+    permission_classes = (OrganizationsPermission,)
 
     def create(self, request):
         '''
@@ -122,28 +123,14 @@ class OrganizationsView(generics.ListCreateAPIView):
 
 class OrganizationView(generics.RetrieveUpdateAPIView):
     serializer_class = OrganizationSerializer
-
-    def partial_update(self, request, pk=None):
-        organization = get_object_or_404(Organization, pk=pk)
-        if not organization.has_write_perms(request.user):
-            raise PermissionDenied()
-        return super(OrganizationView, self).update(request)
-
-    def retrieve(self, request, pk=None):
-        pk = self.kwargs['pk']
-        organization = get_object_or_404(Organization, pk=pk)
-        if not organization.has_read_perms(request.user):
-            raise PermissionDenied()
-        return super(OrganizationView, self).update(request)
-
-    def get_object(self):
-        pk = self.kwargs['pk']
-        return get_object_or_404(Organization, pk=pk)
-
+    permission_classes = (OrganizationPermission,)
+    model = Organization
+    
 
 class OrganizationUsersView(generics.ListCreateAPIView):
     serializer_class = OrganizationUserSerializer
     paginate_by = 50
+    permission_classes = (OrganizationUsersPermission,)
 
     def create(self, request, *args, **kwargs):
         org_id = self.kwargs['org_pk']
@@ -154,13 +141,12 @@ class OrganizationUsersView(generics.ListCreateAPIView):
     def get_queryset(self):
         org_id = self.kwargs['org_pk']
         organization = get_object_or_404(Organization, pk=org_id)
-        if not organization.has_read_perms(self.request.user):
-            raise PermissionDenied()
         return organization.userorganization_set.all()
 
 
 class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrganizationUserSerializer
+    permission_classes = (OrganizationUsersPermission,)
 
     def get_object(self):
         organization_id = self.kwargs['org_pk']
