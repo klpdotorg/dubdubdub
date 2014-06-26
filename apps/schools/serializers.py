@@ -1,7 +1,8 @@
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary, DiseInfo, ElectedrepMaster, BoundaryType, Assembly, \
-    Parliament, Postal
+from schools.models import School, Boundary, DiseInfo, ElectedrepMaster,\
+    BoundaryType, Assembly, Parliament, Postal
+
 
 class SchoolListSerializer(KLPSerializer):
 
@@ -41,6 +42,7 @@ class ElectedrepSerializer(KLPSerializer):
         model = ElectedrepMaster
         fields = ('id', 'name', 'type')
 
+
 class AssemblySerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Assembly
@@ -51,6 +53,7 @@ class ParliamentSerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Parliament
         fields = ('id', 'name')
+
 
 class PincodeSerializer(KLPSimpleGeoSerializer):
     class Meta:
@@ -76,9 +79,10 @@ class SchoolInfoSerializer(KLPSerializer):
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full', 'landmark',
-            'identifiers', 'admin3', 'admin2', 'admin1', 'buses', "parliament", "assembly",
-            "ward", 'dise_code', 'type',)
+        fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full',
+                  'landmark', 'identifiers', 'admin3', 'admin2', 'admin1',
+                  'buses', 'parliament', 'assembly', 'ward',
+                  'dise_code', 'type',)
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
@@ -91,7 +95,9 @@ class SchoolDemographicsSerializer(KLPSerializer):
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'sex', 'moi', 'mgmt', 'num_boys_dise', 'num_girls_dise', 'num_boys', 'num_girls', 'mt_profile', 'acyear')
+        fields = ('id', 'name', 'sex', 'moi', 'mgmt', 'num_boys_dise',
+                  'num_girls_dise', 'num_boys', 'num_girls', 'mt_profile',
+                  'acyear')
 
 
 class SchoolProgrammesSerializer(KLPSerializer):
@@ -115,13 +121,15 @@ class SchoolDiseSerializer(KLPSerializer):
 
     class Meta:
         model = DiseInfo
-        fields = ('id', 'name', ) + tuple([f.name for f in DiseInfo._meta.fields])
+        fields = ('id', 'name', ) + \
+            tuple([f.name for f in DiseInfo._meta.fields])
 
 
 class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
+
 
 # Moving to PincodeSerializer to use the new Postal model.
 class SchoolPincodeSerializer(KLPSerializer):
