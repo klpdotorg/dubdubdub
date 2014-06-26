@@ -3,6 +3,7 @@ from rest_framework.exceptions import PermissionDenied
 from .models import User, Organization, UserOrganization
 from django.contrib.auth import login, authenticate, logout
 
+
 class UserSerializer(serializers.ModelSerializer):
 
     token = serializers.Field(source='get_token')
@@ -16,8 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name': attrs.get('last_name', None)
         }
         request = self.context['request']
-        #import pdb;pdb.set_trace()
-        if not instance: #create new user
+
+        #create new user
+        if not instance:
             user = User.objects.create_user(email, password, **extras)
             email = request.POST.get('email')
             password = request.POST.get('password')
@@ -25,7 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
             login(request, user)
             return user
         else:
-            if request.user.id != instance.id and not request.user.is_superuser:
+            if request.user.id != instance.id \
+                    and not request.user.is_superuser:
                 raise PermissionDenied()
             for key in extras.keys():
                 if extras[key] is not None:
@@ -40,7 +43,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'mobile_no', 'first_name', 'last_name', 'password', 'token',)
+        fields = ('id', 'email', 'mobile_no', 'first_name',
+                  'last_name', 'password', 'token',)
         write_only_fields = ('password',)
 
 

@@ -1,22 +1,26 @@
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization
-from .serializers import UserSerializer, OrganizationSerializer, OrganizationUserSerializer
-from .permissions import UserListPermission, IsAdminOrIsSelf, OrganizationsPermission, \
-    OrganizationPermission, OrganizationUsersPermission
+from .serializers import UserSerializer, OrganizationSerializer,\
+    OrganizationUserSerializer
+from .permissions import UserListPermission, IsAdminOrIsSelf,\
+    OrganizationsPermission, OrganizationPermission,\
+    OrganizationUsersPermission
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.exceptions import APIException, PermissionDenied, ParseError, MethodNotAllowed
+from rest_framework.exceptions import APIException, PermissionDenied,\
+    ParseError, MethodNotAllowed
 from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 
 
 class TestAuthenticatedView(APIView):
-    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication,)
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -37,7 +41,8 @@ class UsersView(generics.ListCreateAPIView):
         first_name = self.request.POST.get('first_name', None)
         last_name = self.request.POST.get('last_name', None)
         if not email or not mobile_no or not first_name or not last_name:
-            raise ParseError("Insufficient data: required fields are email, mobile_no, first_name and last_name")
+            raise ParseError("""Insufficient data: required fields are email,
+                             mobile_no, first_name and last_name""")
         if User.objects.filter(email=email).count() > 0:
             raise APIException("duplicate email")
         password = self.request.POST.get('password', '')
@@ -117,7 +122,8 @@ class OrganizationsView(generics.ListCreateAPIView):
         '''
         if created:
             admin_user = self.request.user
-            user_org = UserOrganization(user=admin_user, organization=obj, role=0)
+            user_org = UserOrganization(user=admin_user, organization=obj,
+                                        role=0)
             user_org.save()
 
 
@@ -125,7 +131,7 @@ class OrganizationView(generics.RetrieveUpdateAPIView):
     serializer_class = OrganizationSerializer
     permission_classes = (OrganizationPermission,)
     model = Organization
-    
+
 
 class OrganizationUsersView(generics.ListCreateAPIView):
     serializer_class = OrganizationUserSerializer
@@ -135,8 +141,8 @@ class OrganizationUsersView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         org_id = self.kwargs['org_pk']
         request.DATA['organization'] = org_id
-        return super(OrganizationUsersView, self).create(request, *args, **kwargs)
-
+        return super(OrganizationUsersView, self).create(request, *args,
+                                                         **kwargs)
 
     def get_queryset(self):
         org_id = self.kwargs['org_pk']
@@ -151,6 +157,7 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         organization_id = self.kwargs['org_pk']
         user_id = self.kwargs['user_pk']
-        org_user = get_object_or_404(UserOrganization, user=user_id, organization=organization_id)
+        org_user = get_object_or_404(UserOrganization, user=user_id,
+                                     organization=organization_id)
         #import pdb;pdb.set_trace()
         return org_user

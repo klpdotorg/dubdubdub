@@ -21,7 +21,9 @@ STATUS_CHOICES = (
     (2, 'Completed')
 )
 
+
 class UserManager(BaseUserManager):
+
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
@@ -44,7 +46,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    mobile_no = models.CharField(max_length=32, blank=True) #Better field type to use?
+
+    #Better field type to use?
+    mobile_no = models.CharField(max_length=32, blank=True)
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     email_verification_code = models.CharField(max_length=128)
@@ -63,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.generate_email_token()
             self.generate_sms_pin()
         self.changed = datetime.datetime.today()
-        if self.created == None:
+        if self.created is None:
             self.created = self.changed
         super(User, self).save(*args, **kwargs)
 
@@ -72,7 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.email_verification_code = token
 
     def generate_sms_pin(self):
-        pin = ''.join([str(random.choice(range(1,9))) for i in range(4)])
+        pin = ''.join([str(random.choice(range(1, 9))) for i in range(4)])
         self.sms_verification_pin = int(pin)
 
     def get_token(self):
@@ -99,11 +103,13 @@ class Organization(models.Model):
 
     def has_read_perms(self, user):
         '''
-            A user has read permmissions on the org if they are admin, manager or member
+            A user has read permmissions on the org if they are admin,
+            manager or member
         '''
         if user.is_superuser:
             return True
-        if UserOrganization.objects.filter(user=user, organization=self).count() > 0:
+        if UserOrganization.objects.filter(user=user, organization=self)\
+                .count() > 0:
             return True
         else:
             return False
@@ -114,7 +120,9 @@ class Organization(models.Model):
         '''
         if user.is_superuser:
             return True
-        if UserOrganization.objects.filter(user=user, organization=self, role=0).count() > 0:
+        if UserOrganization.objects.filter(user=user,
+                                           organization=self,
+                                           role=0).count() > 0:
             return True
         else:
             return False
@@ -127,6 +135,7 @@ USER_ROLE_CHOICES = (
     (1, 'manager'),
     (2, 'member')
 )
+
 
 class UserOrganization(models.Model):
     user = models.ForeignKey('User')
@@ -152,7 +161,7 @@ class DonationType(models.Model):
     text = models.TextField(blank=True)
 
     def __unicode__(self):
-        return self.name    
+        return self.name
 
 
 class VolunteerActivity(models.Model):
@@ -162,6 +171,7 @@ class VolunteerActivity(models.Model):
     school = models.ForeignKey(School)
     text = models.TextField(blank=True)
     users = models.ManyToManyField('User', through='UserVolunteerActivity')
+
 
 class DonorRequirement(models.Model):
     organization = models.ForeignKey('Organization')
@@ -181,5 +191,7 @@ class UserDonorRequirement(models.Model):
     user = models.ForeignKey('User')
     donor_requirement = models.ForeignKey('DonorRequirement')
     date = models.DateField()
-    donation = models.CharField(max_length=256) #what was donated
+
+    #what was donated
+    donation = models.CharField(max_length=256)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)

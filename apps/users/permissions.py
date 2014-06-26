@@ -1,9 +1,11 @@
 from rest_framework import permissions
 from .models import Organization
 
+
 class UserListPermission(permissions.BasePermission):
     '''
-        Permission class for whether user can see a list of all user and create new users
+        Permission class for whether user can see a list of
+        all user and create new users.
         Only superusers can see a list of users
         Anyone can create a new user (signup)
     '''
@@ -37,7 +39,7 @@ class OrganizationsPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.method == 'POST':
-            if request.user.is_superuser == True:
+            if request.user.is_superuser is True:
                 return True
             else:
                 return False
@@ -61,7 +63,8 @@ class OrganizationPermission(permissions.BasePermission):
 
 class OrganizationUsersPermission(permissions.BasePermission):
     '''
-        Permission class to check if user has permissions to view / edit users of an organization
+        Permission class to check if user has permissions
+        to view / edit users of an organization
     '''
     def has_permission(self, request, view):
         org_id = view.kwargs['org_pk']
