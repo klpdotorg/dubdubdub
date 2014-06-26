@@ -27,7 +27,7 @@ class ApiTestCase(unittest.TestCase):
         sample_school = results['features'][0]
         self.assertTrue('id' in sample_school['properties'],
                         "has a property called id")
-        self.assertTrue(if 'name' in sample_school['properties'],
+        self.assertTrue('name' in sample_school['properties'],
                         "has a property called name")
         base_response = self.c.get(base_url)
         base_results = json.loads(base_response.content)

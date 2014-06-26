@@ -1,7 +1,9 @@
 import os
 
 DEBUG = False
-API_DEBUG = DEBUG #whether to return API errors as json or full stack trace
+
+#whether to return API errors as json or full stack trace
+API_DEBUG = DEBUG
 
 PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -11,17 +13,14 @@ ADMINS = (
     ('Bibhas', 'bibhas@klp.org.in'),
 )
 
-#MANAGERS = ADMINS
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dubdubdub',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'dubdubdub',
         'USER': 'vagrant',
         'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -86,7 +85,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, creates random key first at first time.
@@ -99,12 +98,14 @@ except NameError:
     except IOError:
         try:
             from random import choice
-            SECRET_KEY = ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+            SECRET_KEY = ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+                                 for i in range(50)])
             secret = file(SECRET_FILE, 'w')
             secret.write(SECRET_KEY)
             secret.close()
         except IOError:
-            Exception('Please create a %s file with random characters to generate your secret key!' % SECRET_FILE)
+            Exception('''Please create a %s file with random characters
+                      to generate your secret key!''' % SECRET_FILE)
 
 
 # List of callables that know how to import templates from various sources.
@@ -133,7 +134,8 @@ WSGI_APPLICATION = 'dubdubdub.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
+    # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -207,10 +209,10 @@ LOGGING = {
             'propagate': True,
         },
         # Uncomment following to turn on sql logging
-         'django.db.backends': {
-             'level': 'DEBUG',
-             'handlers': ['console'],
-         },
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
     }
 }
 
