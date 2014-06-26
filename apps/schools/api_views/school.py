@@ -1,10 +1,12 @@
 from schools.models import School, DiseInfo
 from common.views import KLPListAPIView, KLPDetailAPIView
 from common.models import SumCase
-from schools.serializers import SchoolListSerializer, SchoolInfoSerializer, SchoolDiseSerializer,\
-    SchoolDemographicsSerializer, SchoolProgrammesSerializer, SchoolFinanceSerializer
+from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
+    SchoolDiseSerializer, SchoolDemographicsSerializer,\
+    SchoolProgrammesSerializer, SchoolFinanceSerializer
 from django.contrib.gis.geos import Polygon
 import re
+
 
 class SchoolsList(KLPListAPIView):
     '''
@@ -29,23 +31,28 @@ class SchoolsInfo(SchoolsList):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-        .select_related('instcoord', 'address', 'schooldetails__admin3', 'schooldetails__admin2',
-         'schooldetails__admin1', 'schooldetails__type', 'schooldetails__assembly',
-         'schooldetails__parliament', 'electedrep__ward', 'schooldetails__admin1__hierarchy',
-         'schooldetails__admin2__hierarchy', 'schooldetails__admin3__hierarchy',)
+            .select_related('instcoord', 'address', 'schooldetails__admin3',
+                            'schooldetails__admin2', 'schooldetails__admin1',
+                            'schooldetails__type', 'schooldetails__assembly',
+                            'schooldetails__parliament', 'electedrep__ward',
+                            'schooldetails__admin1__hierarchy',
+                            'schooldetails__admin2__hierarchy',
+                            'schooldetails__admin3__hierarchy',)
 
 
 class SchoolsDiseInfo(KLPListAPIView):
     '''
         Returns list of schools with DISE data
     '''
-    # test url: http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
+    # test url:
+    # http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
     serializer_class = SchoolDiseSerializer
     bbox_filter_field = "school__instcoord__coord"
 
     def get_queryset(self):
         year = self.kwargs.get('year', '2010-11')
-        schools = DiseInfo.objects.filter(acyear=year).select_related('instcoord', 'school')
+        schools = DiseInfo.objects.filter(acyear=year)\
+            .select_related('instcoord', 'school')
         print schools.query
         return schools
 
@@ -58,10 +65,13 @@ class SchoolInfo(KLPDetailAPIView):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-        .select_related('instcoord', 'address', 'schooldetails__admin3', 'schooldetails__admin2',
-         'schooldetails__admin1', 'schooldetails__type', 'schooldetails__assembly',
-         'schooldetails__parliament', 'electedrep__ward', 'schooldetails__admin1__hierarchy',
-         'schooldetails__admin2__hierarchy', 'schooldetails__admin3__hierarchy',)
+            .select_related('instcoord', 'address', 'schooldetails__admin3',
+                            'schooldetails__admin2', 'schooldetails__admin1',
+                            'schooldetails__type', 'schooldetails__assembly',
+                            'schooldetails__parliament', 'electedrep__ward',
+                            'schooldetails__admin1__hierarchy',
+                            'schooldetails__admin2__hierarchy',
+                            'schooldetails__admin3__hierarchy',)
 
 
 class SchoolDemographics(KLPDetailAPIView):
@@ -69,6 +79,7 @@ class SchoolDemographics(KLPDetailAPIView):
 
     def get_object(self):
         return School.objects.get(id=self.kwargs.get('pk'), status=2)
+
 
 class SchoolProgrammes(KLPDetailAPIView):
     serializer_class = SchoolProgrammesSerializer
@@ -78,6 +89,7 @@ class SchoolProgrammes(KLPDetailAPIView):
 
 
 class SchoolFinance(KLPDetailAPIView):
+
     # DISE data is yearly. Needs year as param or send list maybe
     serializer_class = SchoolFinanceSerializer
 
