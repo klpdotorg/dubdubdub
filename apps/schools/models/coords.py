@@ -3,13 +3,15 @@ from common.models import GeoBaseModel
 from django.contrib.gis.db import models
 import json
 
+
 class InstCoord(GeoBaseModel):
     '''
         View table:
         vw_inst_coord - This is a cooridnate for a school/preschool and
         can join with tb_school on school id. View is from klp_coord
     '''
-    school = models.OneToOneField("School", primary_key=True, db_column='instid')
+    school = models.OneToOneField("School", primary_key=True,
+                                  db_column='instid')
     coord = models.GeometryField()
     objects = models.GeoManager()
 
@@ -24,10 +26,12 @@ class InstCoord(GeoBaseModel):
 class BoundaryCoord(GeoBaseModel):
     '''
         View table:
-        This is a cooridnate for a boundary (district,block/project,cluster/circle)
+        This is a cooridnate for a boundary
+        (district,block/project,cluster/circle)
         and can join with tb_boundary on boundary id. View is from klp_coord
     '''
-    boundary = models.OneToOneField("Boundary", primary_key=True, db_column='id_bndry')
+    boundary = models.OneToOneField("Boundary", primary_key=True,
+                                    db_column='id_bndry')
     typ = models.CharField(max_length=20, db_column='type')
     coord = models.GeometryField()
     objects = models.GeoManager()
@@ -93,7 +97,7 @@ class Parliament(GeoBaseModel):
 
     class Meta:
         managed = False
-        db_table = 'mvw_parliament'   
+        db_table = 'mvw_parliament'
 
 
 class Postal(GeoBaseModel):

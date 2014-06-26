@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
-from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES, ALLOWED_GENDER_CHOICES
+from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
+    SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from django.contrib.gis.db import models
 from django.db.models import Sum
 import json
@@ -61,7 +62,8 @@ class BoundaryHierarchy(BaseModel):
 
 class Boundary(BaseModel):
     id = models.IntegerField(primary_key=True)
-    parent = models.ForeignKey("Boundary", blank=True, null=True, db_column='parent')
+    parent = models.ForeignKey("Boundary", blank=True, null=True,
+                               db_column='parent')
     name = models.CharField(max_length=300)
     hierarchy = models.ForeignKey(BoundaryHierarchy, db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
@@ -101,9 +103,13 @@ class BoundaryPrimarySchool(BaseModel):
     # so, self.cluster.school_set.all() sould return all schools belonging
     # to that cluster. Needs more testing.
 
-    cluster = models.ForeignKey("Boundary", primary_key=True, db_column="cluster_id", related_name="boundary_ps_cluster")
-    block = models.ForeignKey("Boundary", db_column="block_id", related_name="boundary_ps_block")
-    district = models.ForeignKey("Boundary", db_column="district_id", related_name="boundary_ps_district")
+    cluster = models.ForeignKey("Boundary", primary_key=True,
+                                db_column="cluster_id",
+                                related_name="boundary_ps_cluster")
+    block = models.ForeignKey("Boundary", db_column="block_id",
+                              related_name="boundary_ps_block")
+    district = models.ForeignKey("Boundary", db_column="district_id",
+                                 related_name="boundary_ps_district")
 
     def __unicode__(self):
         return self.cluster.name
@@ -133,7 +139,8 @@ class Child(BaseModel):
 
 class StudentGroup(BaseModel):
     id = models.IntegerField(primary_key=True)
-    school = models.ForeignKey("School", blank=True, null=True, db_column="sid")
+    school = models.ForeignKey("School", blank=True, null=True,
+                               db_column="sid")
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
     students = models.ManyToManyField("Student", through="StudentStudentGroup")
@@ -154,8 +161,10 @@ class School(GeoBaseModel):
 
     # TODO: check if address should be ForeignKey or OneToOneField
     # CHECK: http://hastebin.com/awotomoven aid appears once for each school
-    address = models.OneToOneField('Address', db_column='aid', blank=True, null=True)
-    dise_info = models.OneToOneField('DiseInfo', db_column='dise_code', blank=True, null=True)
+    address = models.OneToOneField('Address', db_column='aid',
+                                   blank=True, null=True)
+    dise_info = models.OneToOneField('DiseInfo', db_column='dise_code',
+                                     blank=True, null=True)
     name = models.CharField(max_length=300)
     cat = models.CharField(max_length=128, choices=CAT_CHOICES)
     sex = models.CharField(max_length=128, choices=ALLOWED_GENDER_CHOICES)
@@ -171,20 +180,22 @@ class School(GeoBaseModel):
 
     def get_boundary(self):
         if self.boundary_cluster.type_id == 1:
-            return BoundaryPrimarySchool.objects.get(cluster_id=self.boundary_cluster_id) if self.boundary_cluster_id else None
+            return BoundaryPrimarySchool.objects.\
+                get(cluster_id=self.boundary_cluster_id) if \
+                self.boundary_cluster_id else None
         else:
             # TBD: return BoundaryPreschool when ready
             return None
 
     def get_num_boys(self):
-        sum_query = self.institutionagg_set.filter(sex='male').aggregate(Sum('num'))
+        sum_query = self.institutionagg_set.filter(sex='male').\
+            aggregate(Sum('num'))
         return sum_query['num__sum']
-
 
     def get_num_girls(self):
-        sum_query = self.institutionagg_set.filter(sex='female').aggregate(Sum('num'))
+        sum_query = self.institutionagg_set.filter(sex='female').\
+            aggregate(Sum('num'))
         return sum_query['num__sum']
-
 
     def get_ward(self):
         try:
@@ -214,9 +225,12 @@ class School(GeoBaseModel):
 
 class SchoolDetails(BaseModel):
     school = models.OneToOneField('School', db_column='id', primary_key=True)
-    admin3 = models.ForeignKey("Boundary", db_column="cluster_or_circle_id", related_name="sd_admin3")
-    admin2 = models.ForeignKey("Boundary", db_column="block_or_project_id", related_name="sd_admin2")
-    admin1 = models.ForeignKey("Boundary", db_column="district_id", related_name="sd_admin1")
+    admin3 = models.ForeignKey("Boundary", db_column="cluster_or_circle_id",
+                               related_name="sd_admin3")
+    admin2 = models.ForeignKey("Boundary", db_column="block_or_project_id",
+                               related_name="sd_admin2")
+    admin1 = models.ForeignKey("Boundary", db_column="district_id",
+                               related_name="sd_admin1")
     type = models.ForeignKey('BoundaryType', db_column='type')
     assembly = models.ForeignKey('Assembly', db_column='assembly_id')
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')
@@ -251,7 +265,9 @@ class StudentStudentGroup(BaseModel):
     status = models.IntegerField()
 
     def __unicode__(self):
-        return "%s: %s in %s" % (self.student, self.student_group, self.academic_year,)
+        return "%s: %s in %s" % (self.student, self.student_group,
+                                 self.academic_year,)
+
     class Meta:
         managed = False
         db_table = 'tb_student_class'
@@ -275,13 +291,15 @@ class Teacher(BaseModel):
 
 
 class TeacherStudentGroup(BaseModel):
-    teacher = models.ForeignKey('Teacher', db_column='teacherid', primary_key=True)
+    teacher = models.ForeignKey('Teacher', db_column='teacherid',
+                                primary_key=True)
     student_group = models.ForeignKey('StudentGroup', db_column='clid')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid')
     status = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s in %s" % (self.teacher, self.student_group, self.academic_year,)
+        return "%s: %s in %s" % (self.teacher, self.student_group,
+                                 self.academic_year,)
 
     class Meta:
         managed = False

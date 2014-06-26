@@ -11,10 +11,13 @@ class ElectedrepMaster(BaseModel):
     The view is from the db electrep_new
     '''
     id = models.IntegerField(primary_key=True)
-    parent = models.ForeignKey('ElectedrepMaster', db_column='parent', blank=True, null=True)
+    parent = models.ForeignKey('ElectedrepMaster', db_column='parent',
+                               blank=True, null=True)
     elec_comm_code = models.IntegerField(blank=True, null=True)
     const_ward_name = models.CharField(max_length=300, blank=True)
-    const_ward_type = models.TextField(blank=True)  # This field type is a guess.
+
+    #This field type is a guess.
+    const_ward_type = models.TextField(blank=True)
     neighbours = models.CharField(max_length=100, blank=True)
     current_elected_rep = models.CharField(max_length=300, blank=True)
     current_elected_party = models.CharField(max_length=300, blank=True)
@@ -35,13 +38,22 @@ class SchoolElectedrep(BaseModel):
     '''
     # Is this a OneToOne mapping?
     # all the values of sid are distinct, so Yes I think
-    school = models.OneToOneField('School', primary_key=True, db_column='sid', related_name="electedrep")
-    ward = models.ForeignKey('ElectedrepMaster', related_name='school_ward', db_column='ward_id', blank=True, null=True)
-    mla_const = models.ForeignKey('ElectedrepMaster', related_name='school_mla_const', db_column='mla_const_id', blank=True, null=True)
-    mp_const = models.ForeignKey('ElectedrepMaster', related_name='school_mp_const', db_column='mp_const_id', blank=True, null=True)
+    school = models.OneToOneField('School', primary_key=True, db_column='sid',
+                                  related_name="electedrep")
+    ward = models.ForeignKey('ElectedrepMaster', related_name='school_ward',
+                             db_column='ward_id', blank=True, null=True)
+    mla_const = models.ForeignKey('ElectedrepMaster',
+                                  related_name='school_mla_const',
+                                  db_column='mla_const_id',
+                                  blank=True, null=True)
+    mp_const = models.ForeignKey('ElectedrepMaster',
+                                 related_name='school_mp_const',
+                                 db_column='mp_const_id',
+                                 blank=True, null=True)
 
     # TYPO IN DB ---------------------------------------------vv
-    hierarchy = models.ForeignKey('BoundaryType', db_column='heirarchy', blank=True, null=True)
+    hierarchy = models.ForeignKey('BoundaryType', db_column='heirarchy',
+                                  blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s" % (self.school, self.ward_id,)

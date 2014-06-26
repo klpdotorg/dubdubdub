@@ -3,6 +3,7 @@ from common.models import BaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
+
 class DiseDisplayMaster(BaseModel):
     '''
     View table:
@@ -27,9 +28,11 @@ class DiseFacilityAgg(BaseModel):
     This is an aggregation per school into 15 metrics and 4 groups.
     The view is from dise_all.
     '''
-    dise_info = models.ForeignKey('DiseInfo', db_column='dise_code', primary_key=True)
+    dise_info = models.ForeignKey('DiseInfo', db_column='dise_code',
+                                  primary_key=True)
     df_metric = models.CharField(max_length=30, blank=True)
-    score = models.DecimalField(max_digits=5, decimal_places=0, blank=True, null=True)
+    score = models.DecimalField(max_digits=5, decimal_places=0, blank=True,
+                                null=True)
     df_group = models.CharField(max_length=30, blank=True)
 
     def __unicode__(self):
@@ -99,7 +102,8 @@ class DiseRteAgg(BaseModel):
     and source, and SDMC (school development monitoring committee)
     being available and functional in the school.
     '''
-    dise_info = models.ForeignKey('DiseInfo', db_column='dise_code', primary_key=True)
+    dise_info = models.ForeignKey('DiseInfo', db_column='dise_code',
+                                  primary_key=True)
     rte_metric = models.CharField(max_length=36, blank=True)
     status = models.CharField(max_length=30, blank=True)
     rte_group = models.CharField(max_length=32, blank=True)
@@ -115,19 +119,27 @@ class DiseRteAgg(BaseModel):
 class LibBorrow(BaseModel):
     '''
     View table:
-    This is the base table from which the two aggregations below have been generated,
+    This is the base table from which the two aggregations
+    below have been generated,
+
     I suppose to provide some text summaries for the graphs.
     All the logic is here : https://github.com/klpdotorg/library
     '''
     trans_year = models.CharField(max_length=30, blank=True)
-    class_name = models.DecimalField(db_column='class', max_digits=3, decimal_places=0, blank=True, null=True)
+    class_name = models.DecimalField(db_column='class', max_digits=3,
+                                     decimal_places=0, blank=True,
+                                     null=True)
     issue_date = models.CharField(max_length=20, blank=True)
     #school not unique, but we set primary key to true
-    school = models.ForeignKey("School", db_column='klp_school_id', primary_key=True)
+    school = models.ForeignKey("School", db_column='klp_school_id',
+                               primary_key=True)
     school_name = models.CharField(max_length=50, blank=True)
     '''
     Child ID sometimes has ids like TMP00045 . What does this mean?
-    How to handle this problem of the ForeignKey sometimes being an arbitrary string?
+
+    How to handle this problem of the ForeignKey sometimes
+    being an arbitrary string?
+
     It's possibly okay / we write it in to some sort of exception handler.
     '''
     child = models.ForeignKey('Child', blank=True, db_column='klp_child_id')
@@ -148,8 +160,12 @@ class LibLangAgg(BaseModel):
     in a given language in an Akshara library
     '''
     #school is not unique
-    school = models.ForeignKey('School', db_column='klp_school_id', primary_key=True)
-    class_name = models.IntegerField(db_column='class', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    school = models.ForeignKey('School', db_column='klp_school_id',
+                               primary_key=True)
+
+    #Field renamed because it was a Python reserved word.
+    class_name = models.IntegerField(db_column='class',
+                                     blank=True, null=True)
     month = models.CharField(max_length=10, blank=True)
     year = models.CharField(max_length=10, blank=True)
     #Does this map to MT_CHOICES?
@@ -171,8 +187,11 @@ class LibLevelAgg(BaseModel):
     in a given difficulty level in an Akshara library
     '''
     #school is not unique, but we set primary key=True to keep django happy
-    school = models.ForeignKey('School', db_column='klp_school_id', primary_key=True)
-    class_name = models.IntegerField(db_column='class', blank=True, null=True)  # Field renamed because it was a Python reserved word.
+    school = models.ForeignKey('School', db_column='klp_school_id',
+                               primary_key=True)
+
+    # Field renamed because it was a Python reserved word.
+    class_name = models.IntegerField(db_column='class', blank=True, null=True)
     month = models.CharField(max_length=10, blank=True)
     year = models.CharField(max_length=10, blank=True)
     #FIXME: this should be defined as choices somewhere?
@@ -233,4 +252,3 @@ class MdmAgg(BaseModel):
         managed = False
         db_table = 'vw_mdm_agg'
         unique_together = ('school', 'mon', 'wk',)
-
