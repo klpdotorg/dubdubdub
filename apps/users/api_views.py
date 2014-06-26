@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization
-from .serializers import UserSerializer, OrganizationSerializer
+from .serializers import UserSerializer, OrganizationSerializer, OrganizationUserSerializer
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -84,6 +84,7 @@ def signin(request):
 
 class OrganizationsView(generics.ListCreateAPIView):
     serializer_class = OrganizationSerializer
+    paginate_by = 50
 
     def create(self, request):
         '''
@@ -119,8 +120,6 @@ class OrganizationsView(generics.ListCreateAPIView):
             user_org.save()
 
 
-
-
 class OrganizationView(generics.RetrieveUpdateAPIView):
     serializer_class = OrganizationSerializer
 
@@ -142,10 +141,30 @@ class OrganizationView(generics.RetrieveUpdateAPIView):
         return get_object_or_404(Organization, pk=pk)
 
 
-
 class OrganizationUsersView(generics.ListCreateAPIView):
-    pass
+    serializer_class = OrganizationUserSerializer
+    paginate_by = 50
+
+    def create(self, request, *args, **kwargs):
+        org_id = self.kwargs['org_pk']
+        request.DATA['organization'] = org_id
+        return super(OrganizationUsersView, self).create(request, *args, **kwargs)
 
 
-class OrganizationUserView(generics.RetrieveUpdateAPIView):
-    pass
+    def get_queryset(self):
+        org_id = self.kwargs['org_pk']
+        organization = get_object_or_404(Organization, pk=org_id)
+        if not organization.has_read_perms(self.request.user):
+            raise PermissionDenied()
+        return organization.userorganization_set.all()
+
+
+class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = OrganizationUserSerializer
+
+    def get_object(self):
+        organization_id = self.kwargs['org_pk']
+        user_id = self.kwargs['user_pk']
+        org_user = get_object_or_404(UserOrganization, user=user_id, organization=organization_id)
+        #import pdb;pdb.set_trace()
+        return org_user

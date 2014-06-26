@@ -46,6 +46,6 @@ urlpatterns = patterns('',
 
     url('^organization/organizations$', OrganizationsView.as_view(), name='api_organizations_view'),
     url('^organization/(?P<pk>[0-9]+)$', OrganizationView.as_view(), name='api_organization_view'),
-    url('^organization/(?P<pk>[0-9]+)/users$', OrganizationUsersView.as_view(), name='api_organizationusers_view'),
-    url('^organization/(?P<pk>[0-9]+)/users/(?P<user_pk>[0-9]+)$', OrganizationUserView.as_view(), name='api_organizationuser_view'),
+    url('^organization/(?P<org_pk>[0-9]+)/users$', OrganizationUsersView.as_view(), name='api_organizationusers_view'),
+    url('^organization/(?P<org_pk>[0-9]+)/users/(?P<user_pk>[0-9]+)$', OrganizationUserView.as_view(), name='api_organizationuser_view'),
 )
