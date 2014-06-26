@@ -1,6 +1,7 @@
 from rest_framework.renderers import JSONRenderer
 from rest_framework_csv.renderers import CSVRenderer
 
+
 class KLPJSONRenderer(JSONRenderer):
     '''
         Sub-classes JSONRenderer to render GeoJSON where appropriate.
@@ -20,19 +21,22 @@ class KLPJSONRenderer(JSONRenderer):
         else:
             self.render_geometry = False
 
-        #if data is a list, that means pagination was turned off with per_page=0
-        #then we first need to convert the list to a dict so that we have same data structure:
+        # if data is a list, that means pagination was turned off
+        # with per_page=0
+        # then we first need to convert the list to a dict so that
+        # we have same data structure:
         if isinstance(data, list):
             data = {
                 'features': data
             }
 
         #if geometry=yes and results are a list, convert to geojson
-        if self.render_geometry and data.has_key('features') and isinstance(data['features'], list):
+        if self.render_geometry and 'features' in data and \
+                isinstance(data['features'], list):
             data['type'] = 'FeatureCollection'
             features = data.pop('features')
             data['features'] = [self.get_feature(elem) for elem in features]
- 
+
         #if geometry=yes and is a single feature, convert data to geojson
         elif self.render_geometry:
             data = self.get_feature(data)
@@ -41,7 +45,8 @@ class KLPJSONRenderer(JSONRenderer):
         else:
             pass
 
-        return super(KLPJSONRenderer, self).render(data, media_type, renderer_context)
+        return super(KLPJSONRenderer, self).render(data, media_type,
+                                                   renderer_context)
 
     def get_feature(self, elem):
         '''
@@ -50,7 +55,7 @@ class KLPJSONRenderer(JSONRenderer):
         '''
         #this should never be called if geometry=no
         if 'geometry' not in elem:
-            raise Exception("Element does not contain a 'geometry' key even though geometry=yes was passed")
+            raise Exception("Element does not contain a 'geometry' key")
         #convert flat dict representation to geojson for the feature
         geometry = elem.pop('geometry')
         feature = {
@@ -63,4 +68,3 @@ class KLPJSONRenderer(JSONRenderer):
 
 class KLPCSVRenderer(CSVRenderer):
     media_type = 'application/csv'
-
