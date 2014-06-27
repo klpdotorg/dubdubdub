@@ -2,9 +2,6 @@ import os
 
 DEBUG = False
 
-#whether to return API errors as json or full stack trace
-API_DEBUG = DEBUG
-
 PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
 TEMPLATE_DEBUG = DEBUG
