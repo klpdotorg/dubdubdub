@@ -92,7 +92,7 @@ class ApiTestCase(unittest.TestCase):
         self.assertEqual(school_id, 33312, "school id is 33312")
 
     def test_api_districts(self):
-        response = self.c.get("/api/v1/boundary/districts?geometry=yes")
+        response = self.c.get("/api/v1/boundary/admin1s?geometry=yes")
         self.assertEqual(response.status_code, 200,
                          "districts api status code is 200")
         data = json.loads(response.content)
