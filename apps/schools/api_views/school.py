@@ -88,7 +88,13 @@ class SchoolInfra(KLPDetailAPIView):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-            .select_related('dise_info',)
+            .select_related('dise_info', 'schooldetails', 'schooldetails__admin3',
+                            'schooldetails__type',
+                            'schooldetails__admin1__hierarchy',
+                            'schooldetails__admin2__hierarchy',
+                            'schooldetails__admin3__hierarchy',
+                            'schooldetails__admin2', 'schooldetails__admin1',
+                            'dise_info__diserteagg_set__rte_metric')
 
 
 class SchoolProgrammes(KLPDetailAPIView):

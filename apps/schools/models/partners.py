@@ -30,7 +30,8 @@ class DiseFacilityAgg(BaseModel):
     '''
     dise_info = models.ForeignKey('DiseInfo', db_column='dise_code',
                                   primary_key=True)
-    df_metric = models.CharField(max_length=30, blank=True)
+    df_metric = models.ForeignKey('DiseDisplayMaster',
+                                   db_column='df_metric', blank=True)
     score = models.DecimalField(max_digits=5, decimal_places=0, blank=True,
                                 null=True)
     df_group = models.CharField(max_length=30, blank=True)
@@ -74,6 +75,22 @@ class DiseInfo(BaseModel):
         managed = False
         db_table = 'mvw_dise_info'
 
+    def get_rte_details(self):
+        dise_rte = {}
+        for rte in self.diserteagg_set.all().select_related('rte_metric'):
+            if rte.rte_group not in dise_rte:
+                dise_rte[rte.rte_group] = {}
+            dise_rte[rte.rte_group][rte.rte_metric.value] = rte.status
+        return dise_rte
+
+    def get_facility_details(self):
+        dise_facilities = {}
+        for facility in self.disefacilityagg_set.all().select_related('df_metric'):
+            if facility.df_group not in dise_facilities:
+                dise_facilities[facility.df_group] = {}
+            dise_facilities[facility.df_group][str(facility.df_metric.value).strip()] = facility.score
+        return dise_facilities
+
 
 class PaisaData(BaseModel):
     '''
@@ -104,7 +121,8 @@ class DiseRteAgg(BaseModel):
     '''
     dise_info = models.ForeignKey('DiseInfo', db_column='dise_code',
                                   primary_key=True)
-    rte_metric = models.CharField(max_length=36, blank=True)
+    rte_metric = models.ForeignKey('DiseDisplayMaster',
+                                   db_column='rte_metric', blank=True)
     status = models.CharField(max_length=30, blank=True)
     rte_group = models.CharField(max_length=32, blank=True)
 
