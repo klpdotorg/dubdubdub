@@ -1,7 +1,7 @@
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import School, Boundary, DiseInfo, ElectedrepMaster,\
-    BoundaryType, Assembly, Parliament, Postal
+    BoundaryType, Assembly, Parliament, Postal, PaisaData
 
 
 class SchoolListSerializer(KLPSerializer):
@@ -152,10 +152,56 @@ class SchoolLibrarySerializer(KLPSerializer):
 class SchoolFinanceSerializer(KLPSerializer):
     sg_recd_dise = serializers.IntegerField(source="dise_info.sg_recd")
     sg_expnd_dise = serializers.CharField(source="dise_info.sg_expnd")
+    tlm_recd_dise = serializers.IntegerField(source="dise_info.tlm_recd")
+    tlm_expnd_dise = serializers.CharField(source="dise_info.tlm_expnd")
+    classroom_count = serializers.IntegerField(source='dise_info.classroom_count')
+    teacher_count = serializers.IntegerField(source='dise_info.teacher_count')
+
+    sg_amount = serializers.SerializerMethodField('get_sg_amount')
+    smg_amount = serializers.SerializerMethodField('get_smg_amount')
+    tlm_amount = serializers.SerializerMethodField('get_tlm_amount')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'sg_recd_dise', 'sg_expnd_dise')
+        fields = ('id', 'name', 'sg_recd_dise', 'sg_expnd_dise',
+            'tlm_recd_dise', 'tlm_expnd_dise', 'classroom_count',
+            'teacher_count', 'sg_amount', 'smg_amount', 'tlm_amount')
+
+    def get_sg_amount(self, obj):
+        grant_amount = None
+        try:
+            paisa = PaisaData.objects.get(criteria='school_cat', factor=obj.cat)
+            grant_amount = paisa.grant_amount
+        except:
+            pass
+        return grant_amount
+
+    def get_smg_amount(self, obj):
+        #  grant_type  | grant_amount |    criteria     | operator |    factor
+        # -------------+--------------+-----------------+----------+---------------
+        #  maintenance |        10000 | classroom_count | gt       | 3
+        #  maintenance |         5000 | classroom_count | lt       | 3
+
+        grant_amount = None
+        try:
+            paisa_criterions = PaisaData.objects.filter(criteria='classroom_count')
+            for paisa in paisa_criterions:
+                if paisa.operator == 'gt' and obj.dise_info.classroom_count > int(paisa.factor):
+                    grant_amount = paisa.grant_amount
+                elif paisa.operator == 'lt' and obj.dise_info.classroom_count < int(paisa.factor):
+                    grant_amount = paisa.grant_amount
+        except:
+            pass
+        return grant_amount
+
+    def get_tlm_amount(self, obj):
+        grant_amount = None
+        try:
+            paisa = PaisaData.objects.get(criteria='teacher_count')
+            grant_amount = obj.dise_info.teacher_count * paisa.grant_amount
+        except Exception, e:
+            raise e
+        return grant_amount
 
 
 class SchoolDiseSerializer(KLPSerializer):
