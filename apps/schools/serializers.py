@@ -117,7 +117,7 @@ class SchoolInfraSerializer(KLPSerializer):
     lowest_class = serializers.IntegerField(source='dise_info.lowest_class')
     highest_class = serializers.IntegerField(source='dise_info.highest_class')
     teacher_count = serializers.IntegerField(source='dise_info.teacher_count')
-    books_in_library = serializers.IntegerField(source='dise_info.books_in_library')
+    dise_books = serializers.IntegerField(source='dise_info.books_in_library')
     type = BoundaryTypeSerializer(source='schooldetails.type')
 
     dise_rte = serializers.CharField(source='dise_info.get_rte_details')
@@ -129,24 +129,19 @@ class SchoolInfraSerializer(KLPSerializer):
             'admin1', 'cat', 'moi', 'mgmt', 'sex', 'num_boys_dise',
             'num_girls_dise', 'classroom_count', 'lowest_class',
             'highest_class', 'type', 'status', 'teacher_count',
-            'books_in_library', 'dise_rte', 'dise_facility')
+            'dise_books', 'dise_rte', 'dise_facility')
 
 
 class SchoolLibrarySerializer(KLPSerializer):
     acyear = serializers.CharField(source="dise_info.acyear")
-    admin3 = BoundarySerializer(source='schooldetails.admin3')
-    admin2 = BoundarySerializer(source='schooldetails.admin2')
-    admin1 = BoundarySerializer(source='schooldetails.admin1')
-    books_in_library = serializers.IntegerField(source='dise_info.books_in_library')
-    type = BoundaryTypeSerializer(source='schooldetails.type')
+    dise_books = serializers.IntegerField(source='dise_info.books_in_library')
 
     lib_infra = serializers.CharField(source='get_lib_infra')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'dise_info', 'acyear', 'admin3', 'admin2',
-            'admin1', 'cat', 'moi', 'mgmt', 'sex', 'type', 'status',
-            'books_in_library', 'lib_infra')
+        fields = ('id', 'name', 'dise_info', 'acyear',
+            'dise_books', 'lib_infra')
 
 
 class SchoolFinanceSerializer(KLPSerializer):
