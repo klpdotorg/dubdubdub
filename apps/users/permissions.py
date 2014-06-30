@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from rest_framework.exceptions import APIException
 from .models import Organization
 
 
@@ -35,6 +36,7 @@ class OrganizationsPermission(permissions.BasePermission):
     '''
         Permission class to check whether user can create new organizations
         Only superusers can create new organizations
+        Anyone can see the list of organizations
     '''
 
     def has_permission(self, request, view):
@@ -73,3 +75,30 @@ class OrganizationUsersPermission(permissions.BasePermission):
             return org.has_read_perms(request.user)
         else:
             return org.has_write_perms(request.user)
+
+
+class VolunteerActivitiesPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+
+        #Anyone can see the list of volunteer activities
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        post_data = request.POST
+        org_id = post_data.get('organization', None)
+
+        #FIXME: raise better error if org_id is invalid / missing
+        try:
+            organization = Organization.objects.get(pk=org_id)
+        except:
+            raise APIException("organization not specified or not found")
+        #If user has write perms on org, allow him / her to create
+        #a volunteer activity for that org
+        if organization.has_write_perms(request.user):
+            return True
+
+        #If none of the above conditions returned True, the user
+        #does not have permissions (for eg. non logged in user trying to POST)
+        return False
