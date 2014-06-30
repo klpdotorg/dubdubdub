@@ -212,6 +212,21 @@ class School(GeoBaseModel):
                 profile[agg.mt] = agg.num
         return profile
 
+    def get_lib_infra(self):
+        lib_infra = {}
+        try:
+            lib_infra['Status of the Library'] = self.libinfra.libstatus
+            lib_infra['Type in Hub-Spoke model'] = self.libinfra.libtype
+            lib_infra['Number of Books'] = self.libinfra.numbooks
+            lib_infra['Number of Racks'] = self.libinfra.numracks
+            lib_infra['Number of Tables'] = self.libinfra.numtables
+            lib_infra['Number of Chairs'] = self.libinfra.numchairs
+            lib_infra['Number of Computers'] = self.libinfra.numcomputers
+            lib_infra['Number of UPS(s)'] = self.libinfra.numups
+        except Exception, e:
+            pass
+        return lib_infra
+
     def get_geometry(self):
         if hasattr(self, 'instcoord'):
             return json.loads(self.instcoord.coord.geojson)

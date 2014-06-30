@@ -1,7 +1,7 @@
 from schools.models import SchoolDetails, Boundary, School
 from common.views import KLPListAPIView, KLPDetailAPIView
 from schools.serializers import SchoolDetailsSerializer, BoundarySerializer,\
-    SchoolPincodeSerializer, AssemblySerializer, ParliamentSerializer,\
+    AssemblySerializer, ParliamentSerializer,\
     BoundaryWithParentSerializer, PincodeSerializer
 
 

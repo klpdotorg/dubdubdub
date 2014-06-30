@@ -107,7 +107,8 @@ class SchoolLibrary(KLPDetailAPIView):
                             'schooldetails__admin1__hierarchy',
                             'schooldetails__admin2__hierarchy',
                             'schooldetails__admin3__hierarchy',
-                            'schooldetails__admin2', 'schooldetails__admin1')
+                            'schooldetails__admin2', 'schooldetails__admin1',
+                            'libinfra')
 
 
 class SchoolProgrammes(KLPDetailAPIView):

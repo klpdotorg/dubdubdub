@@ -140,11 +140,13 @@ class SchoolLibrarySerializer(KLPSerializer):
     books_in_library = serializers.IntegerField(source='dise_info.books_in_library')
     type = BoundaryTypeSerializer(source='schooldetails.type')
 
+    lib_infra = serializers.CharField(source='get_lib_infra')
+
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'acyear', 'admin3', 'admin2',
             'admin1', 'cat', 'moi', 'mgmt', 'sex', 'type', 'status',
-            'books_in_library')
+            'books_in_library', 'lib_infra')
 
 
 class SchoolFinanceSerializer(KLPSerializer):
@@ -170,12 +172,3 @@ class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
-
-
-# Moving to PincodeSerializer to use the new Postal model.
-class SchoolPincodeSerializer(KLPSerializer):
-    pincode = serializers.CharField(source='address.pincode')
-
-    class Meta:
-        model = School
-        fields = ('id', 'name', 'pincode')

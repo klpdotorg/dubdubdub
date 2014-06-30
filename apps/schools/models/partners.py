@@ -230,8 +230,7 @@ class Libinfra(BaseModel):
     the status of a library and the infrastructure provided
     to it as part of the Akshara Library programme
     '''
-    #QUESTION: should this be a OneToOneField?
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
+    school = models.OneToOneField('School', db_column='sid', primary_key=True)
     libstatus = models.CharField(max_length=300, blank=True)
     handoveryear = models.IntegerField(blank=True, null=True)
     libtype = models.CharField(max_length=300, blank=True)
