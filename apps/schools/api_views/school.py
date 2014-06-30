@@ -93,8 +93,7 @@ class SchoolInfra(KLPDetailAPIView):
                             'schooldetails__admin1__hierarchy',
                             'schooldetails__admin2__hierarchy',
                             'schooldetails__admin3__hierarchy',
-                            'schooldetails__admin2', 'schooldetails__admin1',
-                            'dise_info__diserteagg_set__rte_metric')
+                            'schooldetails__admin2', 'schooldetails__admin1')
 
 
 class SchoolProgrammes(KLPDetailAPIView):
