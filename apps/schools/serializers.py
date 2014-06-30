@@ -132,6 +132,21 @@ class SchoolInfraSerializer(KLPSerializer):
             'books_in_library', 'dise_rte', 'dise_facility')
 
 
+class SchoolLibrarySerializer(KLPSerializer):
+    acyear = serializers.CharField(source="dise_info.acyear")
+    admin3 = BoundarySerializer(source='schooldetails.admin3')
+    admin2 = BoundarySerializer(source='schooldetails.admin2')
+    admin1 = BoundarySerializer(source='schooldetails.admin1')
+    books_in_library = serializers.IntegerField(source='dise_info.books_in_library')
+    type = BoundaryTypeSerializer(source='schooldetails.type')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'dise_info', 'acyear', 'admin3', 'admin2',
+            'admin1', 'cat', 'moi', 'mgmt', 'sex', 'type', 'status',
+            'books_in_library')
+
+
 class SchoolFinanceSerializer(KLPSerializer):
     sg_recd_dise = serializers.IntegerField(source="dise_info.sg_recd")
     sg_expnd_dise = serializers.CharField(source="dise_info.sg_expnd")

@@ -3,7 +3,8 @@ from common.views import KLPListAPIView, KLPDetailAPIView
 from common.models import SumCase
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\
-    SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer
+    SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
+    SchoolLibrarySerializer
 from django.contrib.gis.geos import Polygon
 from django.http import Http404
 import re
@@ -85,6 +86,19 @@ class SchoolDemographics(KLPDetailAPIView):
 
 class SchoolInfra(KLPDetailAPIView):
     serializer_class = SchoolInfraSerializer
+
+    def get_queryset(self):
+        return School.objects.filter(status=2)\
+            .select_related('dise_info', 'schooldetails', 'schooldetails__admin3',
+                            'schooldetails__type',
+                            'schooldetails__admin1__hierarchy',
+                            'schooldetails__admin2__hierarchy',
+                            'schooldetails__admin3__hierarchy',
+                            'schooldetails__admin2', 'schooldetails__admin1')
+
+
+class SchoolLibrary(KLPDetailAPIView):
+    serializer_class = SchoolLibrarySerializer
 
     def get_queryset(self):
         return School.objects.filter(status=2)\

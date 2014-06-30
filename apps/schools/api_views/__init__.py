@@ -1,5 +1,6 @@
 from .school import SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,\
-    SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra
+    SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,\
+    SchoolLibrary
 from .boundary import Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1, \
     Admin2s, Admin3sInsideAdmin2, Admin3s
 from .geo import Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,\
@@ -37,6 +38,9 @@ def api_root(request, format=None):
                                       format=format, kwargs={'pk': 3573}),
 
             'School Infrastructure': reverse('api_school_infra', request=request,
+                                      format=format, kwargs={'pk': 3573}),
+
+            'School Library': reverse('api_school_library', request=request,
                                       format=format, kwargs={'pk': 3573})
         },
 
