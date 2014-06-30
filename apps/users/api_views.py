@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException, PermissionDenied,\
-    ParseError, MethodNotAllowed
+    ParseError, MethodNotAllowed, AuthenticationFailed
 from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 
@@ -84,7 +84,7 @@ def signin(request):
         login(request, user)
         token = Token.objects.get(user=user).key
         return Response({'success': 'User logged in', 'token': token})
-    raise PermissionDenied("Username / password do not match")
+    raise AuthenticationFailed("Username / password do not match")
 
 
 class OrganizationsView(generics.ListCreateAPIView):
