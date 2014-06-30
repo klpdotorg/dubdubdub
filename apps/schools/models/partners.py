@@ -41,7 +41,7 @@ class DiseFacilityAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_dise_facility_agg'
+        db_table = 'mvw_dise_facility_agg'
 
 
 class DiseInfo(BaseModel):
@@ -131,7 +131,7 @@ class DiseRteAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_dise_rte_agg'
+        db_table = 'mvw_dise_rte_agg'
 
 
 class LibBorrow(BaseModel):

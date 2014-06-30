@@ -63,19 +63,19 @@ and tb2.parent=tb3.id;
 DROP MATERIALIZED VIEW IF EXISTS mvw_school_details;
 
 CREATE MATERIALIZED VIEW mvw_school_details as
-SELECT tbs.id as id, 
+SELECT tbs.id as id,
     tb1.id as cluster_or_circle_id,
     tb2.id as block_or_project_id,
     tb3.id as district_id,
     tb1.type as type,
-    assembly.ac_id as assembly_id, 
+    assembly.ac_id as assembly_id,
     assembly.pc_id as parliament_id,
-    assembly.pin_id as pin_id 
-    FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs LEFT JOIN 
-    (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly 
-    ON assembly.instid=tbs.id 
-    WHERE tbs.bid=tb1.id AND 
-    tb1.parent=tb2.id AND 
+    assembly.pin_id as pin_id
+    FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs LEFT JOIN
+    (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly
+    ON assembly.instid=tbs.id
+    WHERE tbs.bid=tb1.id AND
+    tb1.parent=tb2.id AND
     tb2.parent=tb3.id;
 
 -- Materialized view for electedrep views
@@ -98,3 +98,17 @@ SELECT t8.sid,
     t8.mp_const_id,
     t8.heirarchy
    FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);
+
+CREATE MATERIALIZED VIEW mvw_dise_rte_agg AS
+SELECT t1.dise_code,
+    t1.rte_metric,
+    t1.status,
+    t1.rte_group
+   FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_rte_agg'::text) t1(dise_code character varying(32), rte_metric character varying(36), status character varying(30), rte_group character varying(32));
+
+CREATE MATERIALIZED VIEW mvw_dise_facility_agg AS
+SELECT t1.dise_code,
+    t1.df_metric,
+    t1.score,
+    t1.df_group
+   FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
