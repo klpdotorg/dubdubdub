@@ -182,7 +182,12 @@ class VolunteerActivitiesView(generics.ListCreateAPIView):
 class VolunteerActivityTypesView(generics.ListCreateAPIView):
     serializer_class = VolunteerActivityTypeSerializer
     paginate_by = 50
-    #FIXME: add permissions
+
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        return super(VolunteerActivityTypesView, self).create(request, *args,
+                                                              **kwargs)
 
     def get_queryset(self):
         return VolunteerActivityType.objects.all()
@@ -190,5 +195,6 @@ class VolunteerActivityTypesView(generics.ListCreateAPIView):
 
 class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VolunteerActivityTypeSerializer
+    permission_classes = (permissions.IsAdmin,)
     paginate_by = 50
     model = VolunteerActivityType
