@@ -106,13 +106,19 @@ class SchoolProgrammesSerializer(KLPSerializer):
         fields = ('id', 'name',)
 
 
+class SchoolInfraSerializer(KLPSerializer):
+    class Meta:
+        model = School
+        fields = ('id', 'name',)
+
+
 class SchoolFinanceSerializer(KLPSerializer):
-    sg_recd = serializers.IntegerField(source="dise_info.sg_recd")
-    sg_expnd = serializers.CharField(source="dise_info.sg_expnd")
+    sg_recd_dise = serializers.IntegerField(source="dise_info.sg_recd")
+    sg_expnd_dise = serializers.CharField(source="dise_info.sg_expnd")
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'sg_recd', 'sg_expnd')
+        fields = ('id', 'name', 'sg_recd_dise', 'sg_expnd_dise')
 
 
 class SchoolDiseSerializer(KLPSerializer):
