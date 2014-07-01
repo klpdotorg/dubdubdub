@@ -11,7 +11,8 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,\
 from users.api_views import TestAuthenticatedView, UsersView,\
     UserProfileView, OrganizationsView, OrganizationView,\
     OrganizationUsersView, OrganizationUserView, VolunteerActivitiesView,\
-    VolunteerActivityTypesView, VolunteerActivityTypeView
+    VolunteerActivityView, VolunteerActivityTypesView,\
+    VolunteerActivityTypeView
 
 urlpatterns = patterns('',
 
@@ -79,6 +80,9 @@ urlpatterns = patterns('',
     url('^volunteer_activity/volunteer_activities$',
         VolunteerActivitiesView.as_view(),
         name='api_volunteeractivities_view'),
+    url('^volunteer_activity/(?P<pk>[0-9]+)$',
+        VolunteerActivityView.as_view(),
+        name='api_volunteeractivity_view'),
     url('^volunteer_activity/activity_types$',
         VolunteerActivityTypesView.as_view(),
         name='api_volunteeractivitytypes_view'),

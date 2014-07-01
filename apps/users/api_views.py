@@ -179,6 +179,12 @@ class VolunteerActivitiesView(generics.ListCreateAPIView):
         return qset
 
 
+class VolunteerActivityView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = VolunteerActivitySerializer
+    permission_classes = (VolunteerActivitiesPermission,)
+    model = VolunteerActivity
+
+
 class VolunteerActivityTypesView(generics.ListCreateAPIView):
     serializer_class = VolunteerActivityTypeSerializer
     paginate_by = 50
@@ -195,6 +201,6 @@ class VolunteerActivityTypesView(generics.ListCreateAPIView):
 
 class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VolunteerActivityTypeSerializer
-    permission_classes = (permissions.IsAdmin,)
+    permission_classes = (permissions.IsAdminUser,)
     paginate_by = 50
     model = VolunteerActivityType

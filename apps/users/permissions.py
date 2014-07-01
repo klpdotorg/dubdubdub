@@ -102,3 +102,17 @@ class VolunteerActivitiesPermission(permissions.BasePermission):
         #If none of the above conditions returned True, the user
         #does not have permissions (for eg. non logged in user trying to POST)
         return False
+
+
+class VolunteerActivityPermission(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_superuser:
+            return True
+
+        #Anyone can see the list of volunteer activities
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if obj.has_write_perms(request.user):
+            return True
+        return False
