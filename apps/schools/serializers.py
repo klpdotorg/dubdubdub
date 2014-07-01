@@ -108,9 +108,6 @@ class SchoolProgrammesSerializer(KLPSerializer):
 
 class SchoolInfraSerializer(KLPSerializer):
     acyear = serializers.CharField(source="dise_info.acyear")
-    admin3 = BoundarySerializer(source='schooldetails.admin3')
-    admin2 = BoundarySerializer(source='schooldetails.admin2')
-    admin1 = BoundarySerializer(source='schooldetails.admin1')
     num_boys_dise = serializers.IntegerField(source='dise_info.boys_count')
     num_girls_dise = serializers.IntegerField(source='dise_info.girls_count')
     classroom_count = serializers.IntegerField(source='dise_info.classroom_count')
@@ -118,30 +115,34 @@ class SchoolInfraSerializer(KLPSerializer):
     highest_class = serializers.IntegerField(source='dise_info.highest_class')
     teacher_count = serializers.IntegerField(source='dise_info.teacher_count')
     dise_books = serializers.IntegerField(source='dise_info.books_in_library')
-    type = BoundaryTypeSerializer(source='schooldetails.type')
 
     dise_rte = serializers.CharField(source='dise_info.get_rte_details')
     dise_facility = serializers.CharField(source='dise_info.get_facility_details')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'dise_info', 'acyear', 'admin3', 'admin2',
-            'admin1', 'cat', 'moi', 'mgmt', 'sex', 'num_boys_dise',
+        fields = ('id', 'name', 'dise_info', 'num_boys_dise',
             'num_girls_dise', 'classroom_count', 'lowest_class',
-            'highest_class', 'type', 'status', 'teacher_count',
+            'highest_class', 'status', 'teacher_count',
             'dise_books', 'dise_rte', 'dise_facility')
 
 
 class SchoolLibrarySerializer(KLPSerializer):
     acyear = serializers.CharField(source="dise_info.acyear")
     dise_books = serializers.IntegerField(source='dise_info.books_in_library')
+    lowest_class = serializers.IntegerField(source='dise_info.lowest_class')
+    highest_class = serializers.IntegerField(source='dise_info.highest_class')
 
     lib_infra = serializers.CharField(source='get_lib_infra')
+    lib_level_agg = serializers.CharField(source='get_lib_level_agg')
+    lib_borrow_agg = serializers.CharField(source='get_lib_borrow_agg')
+    classtotal = serializers.CharField(source='get_total_students_in_class')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'acyear',
-            'dise_books', 'lib_infra')
+            'dise_books', 'lib_infra', 'lowest_class',
+            'highest_class', 'classtotal', 'lib_borrow_agg', 'lib_level_agg')
 
 
 class SchoolFinanceSerializer(KLPSerializer):

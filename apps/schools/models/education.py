@@ -3,7 +3,7 @@ from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from django.contrib.gis.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Count
 import json
 
 
@@ -226,6 +226,44 @@ class School(GeoBaseModel):
         except Exception, e:
             pass
         return lib_infra
+
+    def get_lib_level_agg(self):
+        data = None
+
+        from collections import defaultdict
+        data_grouped_by_color = defaultdict(list)
+
+        try:
+            data = self.liblevelagg_set.all().values()
+            for d in data:
+                data_grouped_by_color[d['book_level']].append(d)
+                # delete above and uncomment following to remove
+                # book_level from data
+                # data_grouped_by_color[d.pop('book_level')].append(d)
+        except:
+            pass
+        return data_grouped_by_color
+
+    def get_lib_borrow_agg(self):
+        data = None
+        try:
+            data = self.libborrow_set.extra(
+                select={
+                    'trans_month': 'getmonth(split_part(issue_date,\'/\',2))'
+                }
+            ).values('trans_year', 'class_name', 'trans_month').annotate(child_count=Count('child_id'))
+        except Exception, e:
+            raise e
+        return data
+
+    def get_total_students_in_class(self):
+        data = None
+        try:
+            # FIXIT: Needs some time
+            pass
+        except Exception, e:
+            raise e
+        return data
 
     def get_geometry(self):
         if hasattr(self, 'instcoord'):
