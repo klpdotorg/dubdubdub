@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
+from .partners import LibLevelAgg
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
 import json
@@ -244,6 +245,23 @@ class School(GeoBaseModel):
             pass
         return data_grouped_by_color
 
+    def get_lib_lang_agg(self):
+        data = None
+
+        from collections import defaultdict
+        data_grouped_by_lang = defaultdict(list)
+
+        try:
+            data = self.liblangagg_set.all().values()
+            for d in data:
+                data_grouped_by_lang[d['book_lang']].append(d)
+                # delete above and uncomment following to remove
+                # book_level from data
+                # data_grouped_by_color[d.pop('book_level')].append(d)
+        except:
+            pass
+        return data_grouped_by_lang
+
     def get_lib_borrow_agg(self):
         data = None
         try:
@@ -259,8 +277,15 @@ class School(GeoBaseModel):
     def get_total_students_in_class(self):
         data = None
         try:
-            # FIXIT: Needs some time
-            pass
+            data = self.studentgroup_set.filter(
+                students__studentstudentgroup__student__status=2,
+                students__studentstudentgroup__academic_year__name__in=LibLevelAgg.objects.values_list('year').distinct(),
+            ).extra(
+                select={
+                    'class_name': 'trim("tb_class"."name")',
+                    'academic_year': '"tb_academic_year"."name"',
+                }
+            ).annotate(Count('students__studentstudentgroup__student', distinct=True)).values()
         except Exception, e:
             raise e
         return data

@@ -135,14 +135,17 @@ class SchoolLibrarySerializer(KLPSerializer):
 
     lib_infra = serializers.CharField(source='get_lib_infra')
     lib_level_agg = serializers.CharField(source='get_lib_level_agg')
+    lib_lang_agg = serializers.CharField(source='get_lib_lang_agg')
     lib_borrow_agg = serializers.CharField(source='get_lib_borrow_agg')
-    classtotal = serializers.CharField(source='get_total_students_in_class')
+
+    # classtotal = serializers.CharField(source='get_total_students_in_class')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'acyear',
             'dise_books', 'lib_infra', 'lowest_class',
-            'highest_class', 'classtotal', 'lib_borrow_agg', 'lib_level_agg')
+            'highest_class', 'lib_borrow_agg',
+            'lib_level_agg', 'lib_lang_agg')
 
 
 class SchoolFinanceSerializer(KLPSerializer):
@@ -184,7 +187,7 @@ class SchoolFinanceSerializer(KLPSerializer):
             for paisa in paisa_criterions:
                 if paisa.operator == 'gt' and obj.dise_info.classroom_count > int(paisa.factor):
                     grant_amount = paisa.grant_amount
-                elif paisa.operator == 'lt' and obj.dise_info.classroom_count < int(paisa.factor):
+                elif paisa.operator == 'lt' and obj.dise_info.classroom_count <= int(paisa.factor):
                     grant_amount = paisa.grant_amount
         except:
             pass
