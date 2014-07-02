@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
-    VolunteerActivityType
+    VolunteerActivityType, UserVolunteerActivity
 from .serializers import UserSerializer, OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
-    VolunteerActivityTypeSerializer
+    VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission
@@ -204,3 +204,36 @@ class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAdminUser,)
     paginate_by = 50
     model = VolunteerActivityType
+
+
+class VolunteerActivityUsersView(generics.ListCreateAPIView):
+    serializer_class = UserVolunteerActivitySerializer
+    paginate_by = 50
+
+    def create(self, request, *args, **kwargs):
+        activity_id = self.kwargs['activity_pk']
+        request.DATA['activity'] = activity_id
+        user = request.user
+        if not user.is_authenticated():
+            raise PermissionDenied("Must be logged in to volunteer.")
+        user_id = request.DATA.get('user', None)
+        #import pdb;pdb.set_trace()
+        if not user_id:
+            request.DATA['user'] = request.user.id
+        else:
+            if not request.user.is_superuser and not\
+                    request.DATA['user'] == request.user.id:
+                raise PermissionDenied('''Only superusers can
+                                       volunteer other users.''')
+        return super(VolunteerActivityUsersView, self).create(request, *args,
+                                                              **kwargs)
+
+    def get_queryset(self):
+        activity_id = self.kwargs['activity_pk']
+        activity = get_object_or_404(VolunteerActivity, pk=activity_id)
+        organization = activity.organization
+
+        #FIXME: should this be be moved to a permission class?
+        if not organization.has_read_perms(self.request.user):
+            raise PermissionDenied()
+        return UserVolunteerActivity.objects.filter(activity=activity_id)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
-    VolunteerActivityType
+    VolunteerActivityType, UserVolunteerActivity
 
 from django.contrib.auth import login, authenticate, logout
 
@@ -74,3 +74,10 @@ class VolunteerActivitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VolunteerActivity
+
+
+class UserVolunteerActivitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        write_only_fields = ('activity',)
+        model = UserVolunteerActivity

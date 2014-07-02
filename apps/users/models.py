@@ -106,6 +106,8 @@ class Organization(models.Model):
             A user has read permmissions on the org if they are admin,
             manager or member
         '''
+        if not user.is_authenticated():
+            return False
         if user.is_superuser:
             return True
         if UserOrganization.objects.filter(user=user, organization=self)\
@@ -118,6 +120,8 @@ class Organization(models.Model):
         '''
             Only admin users have write perms on the organization
         '''
+        if not user.is_authenticated():
+            return False
         if user.is_superuser:
             return True
         if UserOrganization.objects.filter(user=user,
