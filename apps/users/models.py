@@ -190,6 +190,9 @@ class UserVolunteerActivity(models.Model):
     activity = models.ForeignKey('VolunteerActivity')
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
+    class Meta:
+        unique_together = ('user', 'activity',)
+
 
 class UserDonorRequirement(models.Model):
     user = models.ForeignKey('User')

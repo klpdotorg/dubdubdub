@@ -7,7 +7,8 @@ from .serializers import UserSerializer, OrganizationSerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     OrganizationsPermission, OrganizationPermission,\
-    OrganizationUsersPermission, VolunteerActivitiesPermission
+    OrganizationUsersPermission, VolunteerActivitiesPermission,\
+    UserVolunteerActivityPermission
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -237,3 +238,27 @@ class VolunteerActivityUsersView(generics.ListCreateAPIView):
         if not organization.has_read_perms(self.request.user):
             raise PermissionDenied()
         return UserVolunteerActivity.objects.filter(activity=activity_id)
+
+
+class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
+    '''
+        View to update status of user volunteer activities as well
+        as delete them.
+        Only users with write perms on organization who owns the activity
+        can change status.
+        Only volunteer user can delete.
+    '''
+    serializer_class = UserVolunteerActivitySerializer
+    permission_classes = (UserVolunteerActivityPermission,)
+
+    def update(self, request, *args, **kwargs):
+        if kwargs['partial'] is not True:
+            raise MethodNotAllowed("Use PATCH to change status")
+        return super(VolunteerActivityUserView, self).update(request,
+                                                             *args, **kwargs)
+
+    def get_object(self):
+        activity_id = self.kwargs['activity_pk']
+        user_id = self.kwargs['user_pk']
+        return get_object_or_404(UserVolunteerActivity, user=user_id,
+                                 activity=activity_id)
