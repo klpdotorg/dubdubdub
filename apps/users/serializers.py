@@ -74,6 +74,7 @@ class VolunteerActivitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VolunteerActivity
+        exclude = ('users',)
 
 
 class UserVolunteerActivitySerializer(serializers.ModelSerializer):
