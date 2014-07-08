@@ -32,6 +32,19 @@ class IsAdminOrIsSelf(permissions.BasePermission):
         return request.user == obj or request.user.is_superuser
 
 
+class IsAdminToWrite(permissions.BasePermission):
+    '''
+        Used where user needs to be admin to write,
+        but anyone can read.
+    '''
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.user.is_superuser:
+            return True
+        return False
+
+
 class OrganizationsPermission(permissions.BasePermission):
     '''
         Permission class to check whether user can create new organizations

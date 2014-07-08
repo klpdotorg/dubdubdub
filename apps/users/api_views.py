@@ -8,7 +8,7 @@ from .serializers import UserSerializer, OrganizationSerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
     DonorRequirementSerializer, DonationTypeSerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
-    OrganizationsPermission, OrganizationPermission,\
+    IsAdminToWrite, OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
     UserVolunteerActivityPermission, DonorRequirementsPermission
 from .filters import VolunteerActivityFilter, DonorRequirementFilter
@@ -187,12 +187,7 @@ class VolunteerActivityView(generics.RetrieveUpdateDestroyAPIView):
 class VolunteerActivityTypesView(generics.ListCreateAPIView):
     serializer_class = VolunteerActivityTypeSerializer
     paginate_by = 50
-
-    def create(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
-            raise PermissionDenied()
-        return super(VolunteerActivityTypesView, self).create(request, *args,
-                                                              **kwargs)
+    permission_classes = (IsAdminToWrite,)
 
     def get_queryset(self):
         return VolunteerActivityType.objects.all()
@@ -280,12 +275,7 @@ class DonorRequirementView(generics.RetrieveUpdateDestroyAPIView):
 class DonationTypesView(generics.ListCreateAPIView):
     serializer_class = DonationTypeSerializer
     paginate_by = 50
-
-    def create(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
-            raise PermissionDenied()
-        return super(DonationTypesView, self).create(request, *args,
-                                                     **kwargs)
+    permission_classes = (IsAdminToWrite,)
 
     def get_queryset(self):
         return DonationType.objects.all()
