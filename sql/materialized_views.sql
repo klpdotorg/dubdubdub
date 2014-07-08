@@ -96,8 +96,9 @@ SELECT t8.sid,
     t8.ward_id,
     t8.mla_const_id,
     t8.mp_const_id,
-    t8.heirarchy
-   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);
+    t8.heirarchy,
+    t8.bang_yn
+   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer, bang_yn integer);
 
 CREATE MATERIALIZED VIEW mvw_dise_rte_agg AS
 SELECT t1.dise_code,
