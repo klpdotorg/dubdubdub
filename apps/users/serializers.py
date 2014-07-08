@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
-    DonationType
+    DonationType, UserDonorRequirement
 
 from django.contrib.auth import login, authenticate, logout
 
@@ -96,3 +96,10 @@ class DonationTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DonationType
+
+
+class UserDonorRequirementSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        write_only_fields = ('donor_requirement',)
+        model = UserDonorRequirement

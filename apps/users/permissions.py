@@ -154,3 +154,24 @@ class UserVolunteerActivityPermission(permissions.BasePermission):
 
 class DonorRequirementsPermission(VolunteerActivitiesPermission):
     pass
+
+
+class UserDonorRequirementPermission(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        if not request.user.is_authenticated():
+            return False
+        if request.user.is_superuser:
+            return True
+        organization = obj.donor_requirement.organization
+        method = request.method
+        user = request.user
+        is_org_writable = organization.has_write_perms(user)
+        is_own_activity = obj.user == user
+        if method == 'PATCH':
+            return is_org_writable
+        if method == 'GET':
+            return is_org_writable or is_own_activity
+        if method == 'DELETE':
+            return is_own_activity
+        return False   

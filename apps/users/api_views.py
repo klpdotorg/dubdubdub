@@ -2,15 +2,17 @@ from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
-    DonationType
+    DonationType, UserDonorRequirement
 from .serializers import UserSerializer, OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
-    DonorRequirementSerializer, DonationTypeSerializer
+    DonorRequirementSerializer, DonationTypeSerializer,\
+    UserDonorRequirementSerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     IsAdminToWrite, OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
-    UserVolunteerActivityPermission, DonorRequirementsPermission
+    UserVolunteerActivityPermission, DonorRequirementsPermission,\
+    UserDonorRequirementPermission
 from .filters import VolunteerActivityFilter, DonorRequirementFilter
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
@@ -210,7 +212,6 @@ class VolunteerActivityUsersView(generics.ListCreateAPIView):
         if not user.is_authenticated():
             raise PermissionDenied("Must be logged in to volunteer.")
         user_id = request.DATA.get('user', None)
-        #import pdb;pdb.set_trace()
         if not user_id:
             request.DATA['user'] = request.user.id
         else:
@@ -285,3 +286,59 @@ class DonationTypeView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DonationTypeSerializer
     permission_classes = (permissions.IsAdminUser,)
     model = DonationType
+
+
+class DonorRequirementUsersView(generics.ListCreateAPIView):
+    serializer_class = UserDonorRequirementSerializer
+    paginate_by = 50
+
+    def create(self, request, *args, **kwargs):
+        requirement_id = self.kwargs['requirement_pk']
+        request.DATA['donor_requirement'] = requirement_id
+        user = request.user
+        if not user.is_authenticated():
+            raise PermissionDenied("Must be logged in to donate.")
+        user_id = request.DATA.get('user', None)
+        if not user_id:
+            request.DATA['user'] = request.user.id
+        else:
+            if not request.user.is_superuser and not\
+                    request.DATA['user'] == request.user.id:
+                raise PermissionDenied('''Only superusers can
+                                       volunteer other users.''')
+        return super(DonorRequirementUsersView, self).create(request, *args,
+                                                             **kwargs)
+
+    def get_queryset(self):
+        requirement_id = self.kwargs['requirement_pk']
+        requirement = get_object_or_404(DonorRequirement, pk=requirement_id)
+        organization = requirement.organization
+
+        #FIXME: should this be be moved to a permission class?
+        if not organization.has_read_perms(self.request.user):
+            raise PermissionDenied()
+        return UserDonorRequirement.objects.filter(donor_requirement=requirement_id)
+
+
+class DonorRequirementUserView(generics.RetrieveUpdateDestroyAPIView):
+    '''
+        View to update status of user donor requirements as well
+        as delete them.
+        Only users with write perms on organization who owns the requirement
+        can change status.
+        Only volunteer user can delete.
+    '''
+    serializer_class = UserDonorRequirementSerializer
+    permission_classes = (UserDonorRequirementPermission,)
+
+    def update(self, request, *args, **kwargs):
+        if kwargs['partial'] is not True:
+            raise MethodNotAllowed("Use PATCH to change status")
+        return super(DonorRequirementUserView, self).update(request,
+                                                            *args, **kwargs)
+
+    def get_object(self):
+        requirement_id = self.kwargs['requirement_pk']
+        user_id = self.kwargs['user_pk']
+        return get_object_or_404(UserDonorRequirement, user=user_id,
+                                 donor_requirement=requirement_id)
