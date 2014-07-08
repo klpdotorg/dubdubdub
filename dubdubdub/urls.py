@@ -59,4 +59,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^api/v1/', include('dubdubdub.api_urls')),
+    url(r'^api-docs/', include('rest_framework_swagger.urls'))
 )

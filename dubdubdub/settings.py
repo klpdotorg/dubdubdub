@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     # 'debug_toolbar',
     #'raven.contrib.django.raven_compat',
 
