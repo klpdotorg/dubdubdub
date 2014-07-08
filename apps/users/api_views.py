@@ -271,6 +271,12 @@ class DonorRequirementsView(generics.ListCreateAPIView):
         return DonorRequirement.objects.all()
 
 
+class DonorRequirementView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DonorRequirementSerializer
+    permission_classes = (DonorRequirementsPermission,)
+    model = DonorRequirement
+
+
 class DonationTypesView(generics.ListCreateAPIView):
     serializer_class = DonationTypeSerializer
     paginate_by = 50

@@ -14,7 +14,7 @@ from users.api_views import TestAuthenticatedView, UsersView,\
     VolunteerActivityView, VolunteerActivityTypesView,\
     VolunteerActivityTypeView, VolunteerActivityUsersView,\
     VolunteerActivityUserView, DonorRequirementsView,\
-    DonationTypesView, DonationTypeView
+    DonorRequirementView, DonationTypesView, DonationTypeView
 
 urlpatterns = patterns('',
 
@@ -101,10 +101,14 @@ urlpatterns = patterns('',
     url('^donor_requirement/donor_requirements$',
         DonorRequirementsView.as_view(),
         name='api_donorrequirements_view'),
+    url('^donor_requirement/(?P<pk>[0-9]+)$',
+        DonorRequirementView.as_view(),
+        name='api_donorrequirement_view'),
     url('^donor_requirement/donation_types$',
         DonationTypesView.as_view(),
         name='api_donationtypes_view'),
     url('^donor_requirement/donation_types/(?P<pk>[0-9]+)',
         DonationTypeView.as_view(),
         name='api_donationtype_view'),
+
 )
