@@ -1,14 +1,17 @@
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
-    VolunteerActivityType, UserVolunteerActivity
+    VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
+    DonationType
 from .serializers import UserSerializer, OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
-    VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer
+    VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
+    DonorRequirementSerializer, DonationTypeSerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
-    UserVolunteerActivityPermission
+    UserVolunteerActivityPermission, DonorRequirementsPermission
+from .filters import VolunteerActivityFilter, DonorRequirementFilter
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -162,7 +165,6 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
         user_id = self.kwargs['user_pk']
         org_user = get_object_or_404(UserOrganization, user=user_id,
                                      organization=organization_id)
-        #import pdb;pdb.set_trace()
         return org_user
 
 
@@ -170,14 +172,10 @@ class VolunteerActivitiesView(generics.ListCreateAPIView):
     serializer_class = VolunteerActivitySerializer
     paginate_by = 50
     permission_classes = (VolunteerActivitiesPermission,)
+    filter_class = VolunteerActivityFilter
 
     def get_queryset(self):
-        qset = VolunteerActivity.objects.all()
-        org_id = self.request.GET.get('organization', None)
-        if org_id:
-            qset = qset.filter(organization=org_id)
-        #FIXME ^^: add other required filters
-        return qset
+        return VolunteerActivity.objects.all()
 
 
 class VolunteerActivityView(generics.RetrieveUpdateDestroyAPIView):
@@ -203,7 +201,6 @@ class VolunteerActivityTypesView(generics.ListCreateAPIView):
 class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VolunteerActivityTypeSerializer
     permission_classes = (permissions.IsAdminUser,)
-    paginate_by = 50
     model = VolunteerActivityType
 
 
@@ -262,3 +259,33 @@ class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
         user_id = self.kwargs['user_pk']
         return get_object_or_404(UserVolunteerActivity, user=user_id,
                                  activity=activity_id)
+
+
+class DonorRequirementsView(generics.ListCreateAPIView):
+    serializer_class = DonorRequirementSerializer
+    paginate_by = 50
+    permission_classes = (DonorRequirementsPermission,)
+    filter_class = DonorRequirementFilter
+
+    def get_queryset(self):
+        return DonorRequirement.objects.all()
+
+
+class DonationTypesView(generics.ListCreateAPIView):
+    serializer_class = DonationTypeSerializer
+    paginate_by = 50
+
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        return super(DonationTypesView, self).create(request, *args,
+                                                     **kwargs)
+
+    def get_queryset(self):
+        return DonationType.objects.all()
+
+
+class DonationTypeView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DonationTypeSerializer
+    permission_classes = (permissions.IsAdminUser,)
+    model = DonationType

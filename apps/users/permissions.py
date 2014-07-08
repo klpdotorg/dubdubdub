@@ -137,3 +137,7 @@ class UserVolunteerActivityPermission(permissions.BasePermission):
         if method == 'DELETE':
             return is_own_activity
         return False
+
+
+class DonorRequirementsPermission(VolunteerActivitiesPermission):
+    pass
