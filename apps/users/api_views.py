@@ -77,14 +77,14 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 
 @api_view(['GET'])
-def signout(request):
+def logout(request):
     logout(request)
     return Response({'success': 'User logged out'})
 
 
 @api_view(['POST'])
 @csrf_exempt
-def signin(request):
+def login(request):
     email = request.POST.get("email", "")
     password = request.POST.get("password", "")
     user = authenticate(username=email, password=password)
