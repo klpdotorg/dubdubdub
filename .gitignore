@@ -2,6 +2,10 @@
 *.sw*
 *~
 
+# Mac related
+.DS_Store
+.Trashes
+
 #secret key
 secret.txt
 
