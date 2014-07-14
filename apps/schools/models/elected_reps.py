@@ -12,7 +12,7 @@ class ElectedrepMaster(BaseModel):
     '''
     id = models.IntegerField(primary_key=True)
     parent = models.ForeignKey('ElectedrepMaster', db_column='parent',
-                               blank=True, null=True)
+                               blank=True, null=True, on_delete=models.SET_NULL)
     elec_comm_code = models.IntegerField(blank=True, null=True)
     const_ward_name = models.CharField(max_length=300, blank=True)
 
@@ -41,15 +41,15 @@ class SchoolElectedrep(BaseModel):
     school = models.OneToOneField('School', primary_key=True, db_column='sid',
                                   related_name="electedrep")
     ward = models.ForeignKey('ElectedrepMaster', related_name='school_ward',
-                             db_column='ward_id', blank=True, null=True)
+                             db_column='ward_id', blank=True, null=True, on_delete=models.SET_NULL)
     mla_const = models.ForeignKey('ElectedrepMaster',
                                   related_name='school_mla_const',
                                   db_column='mla_const_id',
-                                  blank=True, null=True)
+                                  blank=True, null=True, on_delete=models.SET_NULL)
     mp_const = models.ForeignKey('ElectedrepMaster',
                                  related_name='school_mp_const',
                                  db_column='mp_const_id',
-                                 blank=True, null=True)
+                                 blank=True, null=True, on_delete=models.SET_NULL)
 
     # TYPO IN DB ---------------------------------------------vv
     hierarchy = models.ForeignKey('BoundaryType', db_column='heirarchy',

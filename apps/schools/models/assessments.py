@@ -8,7 +8,7 @@ class Assessment(BaseModel):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     programme = models.ForeignKey('Programme', db_column='pid', blank=True,
-                                  null=True)
+                                  null=True, on_delete=models.SET_NULL)
     start = models.DateField(blank=True, null=True)
     end = models.DateField(blank=True, null=True)
 
@@ -23,7 +23,7 @@ class Assessment(BaseModel):
 class InstitutionAgg(BaseModel):
     school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
-    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True)
+    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
@@ -39,7 +39,7 @@ class InstitutionAgg(BaseModel):
 class InstitutionAssessmentAgg(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -61,7 +61,7 @@ class InstitutionAssessmentAgg(BaseModel):
 class InstitutionAssessmentAggCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -122,7 +122,7 @@ class InstitutionAssessmentMtSinglescore(BaseModel):
 class InstitutionAssessmentReadingAggCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -210,7 +210,7 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
 class InstitutionBasicAssessmentInfo(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -230,7 +230,7 @@ class InstitutionBasicAssessmentInfo(BaseModel):
 class InstitutionBasicAssessmentInfoCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -264,7 +264,7 @@ class Partner(BaseModel):
 class PreschoolAssessmentAgg(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     agegroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -283,7 +283,7 @@ class PreschoolAssessmentAgg(BaseModel):
 class PreschoolBasicAssessmentInfo(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     agegroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -304,9 +304,9 @@ class Programme(BaseModel):
     end = models.DateField(blank=True, null=True)
     boundary_type = models.ForeignKey('BoundaryType', db_column='type')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid',
-                                      blank=True, null=True)
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     partner = models.ForeignKey('Partner', db_column='partnerid',
-                                blank=True, null=True)
+                                blank=True, null=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return "%s: %s" % (self.academic_year, self.name,)
@@ -319,7 +319,7 @@ class Programme(BaseModel):
 class Question(BaseModel):
     id = models.IntegerField(primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     desc = models.CharField(max_length=100)
     qtype = models.IntegerField(blank=True, null=True)
     maxmarks = models.DecimalField(max_digits=65535, decimal_places=65535,
@@ -339,7 +339,7 @@ class Question(BaseModel):
 class SchoolAgg(BaseModel):
     school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
-    boundary = models.ForeignKey('Boundary', blank=True, null=True)
+    boundary = models.ForeignKey('Boundary', blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
@@ -355,9 +355,9 @@ class SchoolAgg(BaseModel):
 class SchoolAssessmentAgg(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     student_group = models.ForeignKey('StudentGroup', db_column='clid',
-                                      blank=True, null=True)
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     aggtext = models.CharField(max_length=100)
@@ -375,9 +375,9 @@ class SchoolAssessmentAgg(BaseModel):
 class SchoolBasicAssessmentInfo(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     student_group = models.ForeignKey('StudentGroup', db_column='clid',
-                                      blank=True, null=True)
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
@@ -414,7 +414,7 @@ class SchoolEval(BaseModel):
                                   max_length=100, blank=True)
     domain = models.CharField(max_length=100, blank=True)
     question = models.ForeignKey('Question', db_column='qid',
-                                 blank=True, null=True)
+                                 blank=True, null=True, on_delete=models.SET_NULL)
     value = models.CharField(max_length=50, blank=True)
 
     def __unicode__(self):
