@@ -57,7 +57,7 @@ class UsersView(generics.ListCreateAPIView):
         password = self.request.POST.get('password', '')
         if password == '':
             raise ParseError("No password supplied")
-        super(UsersView, self).create(*args, **kwargs)
+        return super(UsersView, self).create(*args, **kwargs)
 
     def get_queryset(self):
         return User.objects.all()
