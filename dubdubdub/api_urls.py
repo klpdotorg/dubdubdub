@@ -70,6 +70,9 @@ urlpatterns = patterns('',
     url('^user/test_authenticated', TestAuthenticatedView.as_view(),
         name='api_test_authenticated'),
 
+    url(r'^password-reset/request$', 'users.api_views.password_reset_request',
+        name="api_password_reset_request"),
+
     url('^organization/organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
     url('^organization/(?P<pk>[0-9]+)$', OrganizationView.as_view(),
