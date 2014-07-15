@@ -103,8 +103,6 @@ def password_reset_request(request):
     Sends out the password reset mail
     FIXIT: Fails because of no is_active field on User model
     """
-    from django.contrib.auth.tokens import default_token_generator
-
     email = request.POST.get("email", "")
     if not email:
         raise AuthenticationFailed('Your registered email address must be provided to reset password')
@@ -113,7 +111,6 @@ def password_reset_request(request):
     if form.is_valid():
         opts = {
             'use_https': request.is_secure(),
-            'token_generator': default_token_generator,
             'request': request,
         }
 
