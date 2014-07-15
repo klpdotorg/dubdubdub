@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
-from django.contrib import admin
-admin.autodiscover()
+# from django.contrib import admin
+# admin.autodiscover()
 
 from common.views import StaticPageView
 
@@ -56,8 +56,9 @@ urlpatterns = patterns('',
             template_name='sikshana_programme.html'
         ), name='sikshana_programme'),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^grappelli/', include('grappelli.urls')),
+    # url(r'^admin/', include(admin.site.urls)),
+    # url(r'^grappelli/', include('grappelli.urls')),
+
     url(r'^api/v1/', include('dubdubdub.api_urls')),
     url(r'^api-docs/', include('rest_framework_swagger.urls'))
 )
