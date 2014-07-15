@@ -58,6 +58,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     #type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
+    is_active = models.BooleanField('active', default=True,
+        help_text='Designates whether this user should be treated as '
+                    'active. Unselect this instead of deleting accounts.')
+
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
