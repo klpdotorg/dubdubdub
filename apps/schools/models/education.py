@@ -64,7 +64,7 @@ class BoundaryHierarchy(BaseModel):
 class Boundary(BaseModel):
     id = models.IntegerField(primary_key=True)
     parent = models.ForeignKey("Boundary", blank=True, null=True,
-                               db_column='parent')
+                               db_column='parent', on_delete=models.SET_NULL)
     name = models.CharField(max_length=300)
     hierarchy = models.ForeignKey(BoundaryHierarchy, db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
@@ -141,7 +141,7 @@ class Child(BaseModel):
 class StudentGroup(BaseModel):
     id = models.IntegerField(primary_key=True)
     school = models.ForeignKey("School", blank=True, null=True,
-                               db_column="sid")
+                               db_column="sid", on_delete=models.SET_NULL)
     name = models.CharField(max_length=50)
     section = models.CharField(max_length=1, blank=True)
     students = models.ManyToManyField("Student", through="StudentStudentGroup")
