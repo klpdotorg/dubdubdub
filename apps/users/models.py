@@ -100,6 +100,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class Organization(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True)
+    logo = models.ImageField(upload_to='organization_logos', blank=True)
     email = models.EmailField()
     address = models.TextField(blank=True)
     contact_name = models.CharField(max_length=256)
