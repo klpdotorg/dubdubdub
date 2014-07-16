@@ -49,3 +49,8 @@ nosetests.xml
 
 # vagrant
 .vagrant
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
