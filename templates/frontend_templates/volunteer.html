@@ -1,0 +1,394 @@
+
+<script type="text/template" id="tpl-volunteer-modal">
+	<div class="modal volunteer-flow modal-volunteer">
+		<input type="hidden" name="data_location" value="Banasawadi" />
+		<input type="hidden" name="data_date" value="" />
+
+		<a class="button-back btn-modal-back"></a>
+    	<a class="button-close btn-modal-close"></a>
+    	<div class="content">
+    		<h2 class="modal-heading">Volunteer</h2>
+
+    		<div class="steps-wrapper">
+		    	<div class="step-item fadein visible" data-step="1" data-step-name="date">
+		    		<div class="step-date">
+		    			<h3 class="bordered-heading blue">Select Location & Date<span></span></h3>
+		    			<div class="input-wrapper" style="z-index:101;">
+
+		    				<select id="select-location" placeholder="Select a location...">
+								<option value="">Select a location...</option>
+								<option value="Banasawadi" selected>Banasawadi</option>
+								<option value="Malleswaram">Malleswaram</option>
+								<option value="Banasawadi2">Banasawadi</option>
+								<option value="Malleswaram2">Malleswaram</option>
+								<option value="Banasawadi3">Banasawadi</option>
+							</select>
+		    			</div>
+
+		    			<div class="cal">
+		    				<input class="js-datepicker-input" id="datepicker-input" type="hidden" readonly="readonly">
+		    				<div id="datepicker-wrapper"></div>
+		    			</div>
+		    			<div class="ta-c">
+		    				<a href="" class="button blue clickable btn-next-step-cal" style="display:none;">Next</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+		    	<div class="step-item" data-step="2" data-step-name="organization">
+	    			<div class="step-opportunities">
+	    			<h3 class="bordered-heading blue">Select Organization<span></span></h3>
+	    			<div class="opportunities-list organizations-list">
+	    				<div class="list-item btn-next-step-org" data-type="teaching">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">26</span>
+	    					</div>
+	    					<div class="left-col">
+	    						<img class="org-logo" src="images/partners_logo_akshara.png"/>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</div>
+
+	    				<div class="list-item btn-next-step-org" data-type="activity">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">17</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<img class="org-logo" src="images/partners_logo_nuepa.png"/>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</div>
+
+	    				<div class="list-item btn-next-step-org" data-type="skill">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">14</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<img class="org-logo" src="images/partners_logo_kseeb.png"/>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</div>
+
+	    				<div class="list-item btn-next-step-org" data-type="skill">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">14</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<img class="org-logo" src="images/partners_logo_akshaya_patra.png"/>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</div>
+
+	    				<p class="or-text no-border">or</p>
+
+	    				<a class="list-item show-all btn-next-step-org" data-type="all">Show all</a>
+
+	    				<!-- <div class="ta-c">
+		    				<a href="map.php?location=x&date=y&type=all" class="button blue Xjs-volunteer-next-step">Show Selected</a>
+		    			</div> -->
+	    			</div>
+	    			</div>
+	    		</div> <!-- Step End -->
+
+		    	<div class="step-item" data-step="3" data-step-name="opportunities">
+	    			<div class="step-opportunities">
+	    			<h3 class="bordered-heading blue">Opportunities Available <span></span></h3>
+	    			<div class="opportunities-list">
+	    				<a href="map.php" class="list-item teaching js-open-map" data-type="teaching">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">26</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Teaching Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<a href="map.php" class="list-item activity js-open-map" data-type="activity">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">17</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Activity Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<a href="map.php" class="list-item skill js-open-map" data-type="skill">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">14</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Skill Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<p class="or-text">or</p>
+
+	    				<a href="map.php" class="list-item show-all js-open-map" data-type="all">Show all</a>
+
+	    				<!-- <div class="ta-c">
+		    				<a href="map.php?location=x&date=y&type=all" class="button blue Xjs-volunteer-next-step">Show Selected</a>
+		    			</div> -->
+	    			</div>
+	    			</div>
+	    		</div> <!-- Step End -->
+
+    		</div>
+    	</div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-volunteer-modal-map">
+	<div class="modal volunteer-flow modal-volunteer second-step">
+		<input type="hidden" name="data_date" value="{{date}}" />
+		<input type="hidden" name="data_place_id" value="{{place_id}}" />
+		<input type="hidden" name="data_type" value="{{type}}" />
+
+		<a class="button-back btn-modal-back"></a>
+    	<a class="button-close btn-modal-close"></a>
+    	<div class="content">
+    		<h2 class="modal-heading">Volunteer</h2>
+
+    		<div class="steps-wrapper">
+		    	<div class="step-item {% if not date %}fadein visible{% endif %}" data-step-name="date">
+		    		<div class="step-date">
+		    			<h3 class="bordered-heading blue">Select Date<span></span></h3>
+
+		    			<div class="cal">
+		    				<input class="js-datepicker-input" id="datepicker-input" type="hidden" readonly="readonly">
+		    				<div id="datepicker-wrapper"></div>
+		    			</div>
+		    			<div class="ta-c mar_top_60">
+		    				<a class="button blue clickable btn-next-step-date" style="display:none;">Next</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+		    	<div class="step-item {% if date %}fadein visible{% endif %}" data-step-name="opportunities">
+	    			<div class="step-opportunities">
+	    			<h3 class="bordered-heading blue">Opportunities Available <span></span></h3>
+	    			<div class="opportunities-list">
+	    				<a class="list-item teaching btn-next-step-opportunities" data-type="teaching">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">26</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Teaching Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<a class="list-item activity btn-next-step-opportunities" data-type="activity">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">17</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Activity Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<a class="list-item skill btn-next-step-opportunities" data-type="skill">
+	    					<div class="available fr">
+	    						Available
+	    						<span class="count">14</span>
+	    					</div>
+	    					<div class="left-col">
+		    					<div class="title">Skill Based</div>
+		    					<div class="detail">
+		    						Truffaut occupy Vice you probably have not heard of them, selfies roof.
+		    					</div>
+		    				</div>
+		    				<div class="clr"></div>
+	    				</a>
+
+	    				<p class="or-text">or</p>
+
+	    				<a class="list-item show-all btn-next-step-opportunities" data-type="all">Show all</a>
+	    			</div>
+	    			</div>
+	    		</div> <!-- Step End -->
+
+	    		<div class="step-item" data-step-name="signup">
+		    		<div class="step-details">
+		    			<h3 class="bordered-heading blue">Signup<span></span></h3>
+		    			<input type="text" class="input-text width-100p" placeholder="Name">
+		    			<input type="text" class="input-text width-100p mar_top_30" placeholder="Email">
+		    			<input type="text" class="input-text width-100p mar_top_30" placeholder="Phone Number">
+		    			<input type="password" class="input-text width-100p mar_top_30" placeholder="Password">
+		    			<div class="ta-c mar_top_20">
+		    				<a class="button blue btn-next-step-confirmation">Submit</a>
+		    			</div>
+		    			<div class="ta-c mar_top_20">
+		    				<span class="alternate-text">Already a registered user?</span>
+		    				<a class="button no-mar filled-shadow small clickable dark_grey btn-next-step-login">Login</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+		    	<div class="step-item" data-step-name="login">
+		    		<div class="step-details">
+		    			<h3 class="bordered-heading blue">Login<span></span></h3>
+		    			<input type="text" class="input-text width-100p mar_top_100" placeholder="Email">
+		    			<input type="password" class="input-text width-100p mar_top_30" placeholder="Password">
+		    			<div class="ta-c mar_top_20">
+		    				<a class="button blue btn-next-step-confirmation">Login</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+		    	<div class="step-item" data-step-name="confirmation">
+		    		<div class="step-confirmation ta-c">
+		    			<h3 class="bordered-heading blue">Confirm Details<span></span></h3>
+		    			<div class="address en-school">
+		    				<div class="en-icon bigger en-school">s</div>
+		    				<div class="name">Govt. School for Girls</div>
+		    				<div class="details">
+			    				27th Street, Koramangala,<br>
+			    				Bangalore
+		    				</div>
+		    			</div>
+		    			<div class="date">
+		    				<div class="icon-cal"></div>
+		    				<div class="value">7th June, 2014</div>
+		    			</div>
+		    			<div class="confirm-org">
+		    				<div class="confirm-org-1 fl">
+		    					<div class="org-head">Organisation</div>
+		    					<div class="text">Akshara Foundation</div>
+		    				</div>
+		    				<div class="confirm-org-2 fr">
+		    					<div class="org-head">Oppertunity</div>
+		    					<div class="text teaching">Teaching Based</div>
+		    				</div>
+		    				<div class="clr"></div>
+		    			</div>
+		    			<div class="mar_top_40">
+		    				<a class="button dark_grey btn-modal-close">Cancel</a>
+		    				<a class="button blue btn-next-step-submit">Confirm</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+		    	<div class="step-item" data-step-name="submit">
+		    		<div class="step-submit ta-c">
+		    			<h3 class="bordered-heading blue">Teacher Based<span></span></h3>
+		    			<div class="address en-school">
+		    				<div class="en-icon bigger en-school">s</div>
+		    				<div class="name">Govt. School for Girls</div>
+		    				<div class="details">
+			    				27th Street, Koramangala,<br>
+			    				Bangalore
+		    				</div>
+		    			</div>
+		    			<div class="date">
+		    				<div class="icon-cal"></div>
+		    				<div class="value">7th June, 2014</div>
+		    			</div>
+		    			<div class="message">
+		    				Thank You  for Volunteering.
+		    				<div class="text">You will soon receive a confirmation email and sms.</div>
+		    			</div>
+		    			<div class="mar_top_40">
+		    				<a class="button blue btn-modal-close">Close</a>
+		    			</div>
+		    		</div>
+		    	</div> <!-- Step End -->
+
+    		</div>
+    	</div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-map-popup">
+	<div class="map-pin-details">
+		<div class="content">
+			<div class="info school">
+				<div class="icon fr">S</div>
+				<h2 class="name">Gian Jyoti Public School</h2>
+				<div class="item">
+					<div class="label">District</div>
+					<div class="value">Bangalore</div>
+				</div>
+				<div class="item">
+					<div class="label">Block</div>
+					<div class="value">North-2</div>
+				</div>
+				<div class="item">
+					<div class="label">Cluster</div>
+					<div class="value">Malleswaram</div>
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div class="details">
+				<div class="triangle2"></div>
+				<div  class="detail-item">
+					<h4 class="purple-heading">Students</h4>
+					<div class="gender_icons">
+						<div class="stats_gender_item no_width boy">
+							<span class="icon"></span>
+							<p class="label">Boys</p>
+							<p class="value">120</p>
+							<div class="clr"></div>
+						</div>
+						<div class="stats_gender_item no_width girl">
+							<span class="icon"></span>
+							<p class="label">Girls</p>
+							<p class="value">130</p>
+							<div class="clr"></div>
+						</div>
+						<div class="stats_gender_item no_width total last">
+							<span class="icon"></span>
+							<p class="label">Total</p>
+							<p class="value">250</p>
+							<div class="clr"></div>
+						</div>
+					</div>
+				</div>
+				<div  class="detail-item mar_top_20">
+					<h4 class="purple-heading">Facilities</h4>
+					<div class="facility-items ta-c">
+						<div class="icon computer"></div>
+						<div class="icon books"></div>
+						<div class="icon events"></div>
+						<div class="icon football last"></div>
+						<div class="clr"></div>
+					</div>
+				</div>
+				<a class="button blue mar_top_20 js-trigger-volunteer-map" {% if date %}data-date="{{ date }}"{% endif %} href="">Volunteer here</a>
+				<div class="mar_top_10">
+					<a class="button dark_grey fl js-trigger-compare" href="">Compare to</a>
+					<a href="school.php" target="_blank" class="button dark_grey last fr Xjs-trigger-info" href="">More Information</a>
+					<div class="clr"></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</script>
