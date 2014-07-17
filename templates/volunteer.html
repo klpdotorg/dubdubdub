@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}Volunteer{% endblock %}
+
+{% block endhead %}
+    <script type="text/javascript" src="{% static 'js/selectize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/swig.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/swig.filters.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/zebra_datepicker.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui-1.10.4.custom.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/selectBoxIt.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-volunteer">
+
+    <section class="volunteer-header">
+      <div class="content">
+        <div class="headline_text png24">Got some free time? Teach kids in your nearby schools</div>
+        <div class="headline_text_mobile"><img src="images/volunteer_header_text.png" alt="Got some free time? Teach kids in nearby schools" /></div>
+        <div class="fl child_1 png24"></div>
+        <div class="fr child_2 png24"></div>
+        <div class="question_box">
+          <h1>Volunteer to help<span></span></h1>
+          <!-- <p>How much time can you give?</p> -->
+          <p>Some statement here</p>
+          <!-- <div class="radio_option_wrapper">
+            <div class="item fl">
+              <div class="item-checkbox"><input type="radio" name="time" /></div> Half day
+            </div>
+            <div class="item fl">
+              <div class="item-checkbox"><input type="radio" name="time" /></div> Full day
+            </div>
+          </div> -->
+          <a href="{% url 'volunteer_register' %}" class="button js-trigger-volunteer">Volunteer Now</a>
+          <script>
+            $(document).ready(function(){
+              $('input').iCheck({
+                checkboxClass: 'icheckbox_minimal',
+                radioClass: 'iradio_minimal',
+                increaseArea: '20%' // optional
+              });
+            });
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <section class="volunteer-section how-volunteering-works">
+      <div class="container">
+        <h2>How volunteering works<span></span></h2>
+
+        <div class="grid_item grid_4 alpha col_locate_nearby_schools">
+          <div class="step-number"><span>1</span></div>
+          <div class="circular png24"></div>
+          <h3>Locate Nearby schools</h3>
+          <p>
+            Go to the map and locate a nearby school to volunteer in.
+          </p>
+        </div>
+        <div class="grid_item grid_4 col_teach_kids">
+          <div class="step-number"><span>2</span></div>
+          <div class="circular png24"></div>
+          <h3>Teach Kids</h3>
+          <p>
+            Teach kids, or help out with the day-to-day activities at the school.
+          </p>
+        </div>
+        <div class="grid_item grid_4 omega col_share_your_experience">
+          <div class="step-number"><span>3</span></div>
+          <div class="circular png24"></div>
+          <h3>Share your experience</h3>
+          <p>
+            Come back and share your experience with rest of the community.
+          </p>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </section>
+
+    <section class="volunteer-section donate-items">
+      <div class="container">
+        <h2>Can't find the time to volunteer?<span></span></h2>
+        <p class="ta_c">Help out by donating items to schools near you</p>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_computers.png"/><br/>
+            Computers<br/>(4)
+          </a>
+        </div>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_books.png"/><br/>
+            Books<br/>(4)
+          </a>
+        </div>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_lego_sets.png"/><br/>
+            Lego Sets<br/>(4)
+          </a>
+        </div>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_chairs.png"/><br/>
+            Chairs<br/>(4)
+          </a>
+        </div>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_desks.png"/><br/>
+            Desks<br/>(4)
+          </a>
+        </div>
+
+        <div class="column_item">
+          <a href="" class="donate_option">
+            <img src="images/donate_bicycles.png"/><br/>
+            Bicyles<br/>(4)
+          </a>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </section>
+
+    <section class="volunteer-section recently_shared_stories">
+      <div class="container">
+        <h2>Recently shared stories<span></span></h2>
+
+        <div class="column_item">
+          <h3>Gurliv Singh</h3>
+          <div class="date">17 August, 2013</div>
+          <p class="text">
+            There was a lack of drinking water supply and the toilets were also out of order.
+          </p>
+          <a href="">Read more</a>
+        </div>
+
+        <div class="column_item">
+          <h3>Saheen Fathima</h3>
+          <div class="date">21 July, 2013</div>
+          <p class="text">
+            Volunteerng was a very learning experience. I'm looking forward to more volunteering opportunities in future.
+          </p>
+          <a href="">Read more</a>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="modal_volunteer_flow" class="modal modal-volunteer-flow" style="display:none;">
+      <a href="" class="button-close fr btn-modal-close"></a>
+      <div class="content">
+        <h2 class="modal-heading">Volunteer</h2>
+
+        <div class="steps-wrapper">
+          <div class="step-item fadein visible" data-step="1">
+            <div class="step-date">
+              <h3 class="bordered-heading blue">Select Date & Location<span></span></h3>
+              <div class="input-wrapper">
+                <input type="text" class="input-text width-100p" placeholder="Whitefield, Bangalore">
+                <a href="" class="icon-location"></a>
+              </div>
+              <div class="cal">
+                <input id="datepicker-input" type="hidden" readonly="readonly">
+                <div id="datepicker-wrapper"></div>
+              </div>
+              <div class="ta-c">
+                <a href="" class="button blue clickable js-volunteer-next-step">Next</a>
+              </div>
+            </div>
+          </div> <!-- Step End -->
+
+          <div class="step-item" data-step="2">
+            <div class="step-opportunities">
+            <h3 class="bordered-heading blue">Select Organization<span></span></h3>
+            <div class="opportunities-list">
+              <a class="list-item teaching js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Teaching Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <a class="list-item activity js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Activity Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <a class="list-item skill js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Skill Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <p class="or-text">or</p>
+
+              <a class="list-item show-all js-volunteer-next-step">Show all</a>
+
+              <div class="ta-c">
+                <!-- <a href="" class="button blue js-volunteer-next-step">Show Selected</a> -->
+              </div>
+            </div>
+            </div>
+          </div> <!-- Step End -->
+
+          <div class="step-item" data-step="3">
+            <div class="step-opportunities">
+            <h3 class="bordered-heading blue">Opportunities Available <span></span></h3>
+            <div class="opportunities-list">
+              <a class="list-item teaching js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Teaching Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <a class="list-item activity js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Activity Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <a class="list-item skill js-volunteer-next-step">
+                <div class="left-col fl">
+                  <div class="title">Skill Based</div>
+                  <p>
+                    Truffaut occupy Vice you probably haven't heard of them, selfies roof.
+                  </p>
+                </div>
+                <div class="available fr">
+                  <span>Available</span>
+                  26
+                </div>
+                <div class="clr"></div>
+              </a>
+
+              <p class="or-text">or</p>
+
+              <a class="list-item show-all js-volunteer-next-step">Show all</a>
+
+              <div class="ta-c">
+                <!-- <a href="" class="button blue js-volunteer-next-step">Show Selected</a> -->
+              </div>
+            </div>
+            </div>
+          </div> <!-- Step End -->
+
+          <div class="step-item" data-step="4">
+            <div class="step-details">
+              <h3 class="bordered-heading blue">Fill Details<span></span></h3>
+              <input type="text" class="input-text width-100p" placeholder="Name">
+              <input type="text" class="input-text width-100p mar_top_30" placeholder="Email">
+              <input type="text" class="input-text width-100p mar_top_30" placeholder="Qualification">
+              <input type="text" class="input-text width-100p mar_top_30" placeholder="Phone Number">
+              <div class="ta-c mar_top_100">
+                <a href="" class="button blue js-volunteer-next-step">Next</a>
+              </div>
+            </div>
+          </div> <!-- Step End -->
+
+          <div class="step-item" data-step="5">
+            <div class="step-confirmation ta-c">
+              <h3 class="bordered-heading blue">Teacher Based<span></span></h3>
+              <div class="address en-school">
+                <div class="en-icon bigger en-school">s</div>
+                <div class="name">Govt. School for Girls</div>
+                <div class="details">
+                  27th Street, Koramangala,<br>
+                  Bangalore
+                </div>
+              </div>
+              <div class="date">
+                <div class="icon-cal"></div>
+                <div class="value">7th June, 2014</div>
+              </div>
+              <div class="message">
+                Thank You  for Volunteering.
+                <div class="text">You will soon receive a confirmation email and sms.</div>
+              </div>
+              <div class="mar_top_40">
+                <a href="" class="button blue">Confirm</a>
+              </div>
+            </div>
+          </div> <!-- Step End -->
+        </div>
+      </div>
+    </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+      resizeVolunteerHeader();
+      $(window).resize(function() {
+        resizeVolunteerHeader();
+      });
+    });
+
+    function resizeVolunteerHeader(){
+
+      if($(window).width() >=980){
+        // Its a desktop device
+        if($(window).height() <685){
+          // Resize only if height less than 685px (600px banner + 85px navigation)
+          var header_height = $(window).height() - (85);
+
+          $(".volunteer-header").css({
+            'height': header_height + 'px',
+          });
+          $(".volunteer-header .content").css({
+            'padding-top': 50 + 'px',
+          });
+
+          var headline_text_height = 130;
+          var headline_text_mar_btm = 50;
+          if(header_height<500){
+            headline_text_height = 110;
+            headline_text_mar_btm = 30;
+          }
+
+          $(".volunteer-header .content .headline_text").css({
+            'height': headline_text_height + 'px',
+            'background-size': 'auto '+headline_text_height+'px',
+            'margin-bottom': headline_text_mar_btm+'px'
+          });
+        }
+      }
+    }
+
+  </script>
+
+{% endblock %}

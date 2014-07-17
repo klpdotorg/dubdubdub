@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>{% block head %}
@@ -9,6 +11,7 @@
 	<link type="text/css" rel="stylesheet" href="/static/css/style.css" media="all"/>
 	<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/static/js/libs.combined.js"></script>
+
 	<link type="text/css" rel="stylesheet" href="/static/js/lib/iCheck/skins/minimal/minimal.css" media="all"/>
 	<script type="text/javascript" src="/static/js/lib/iCheck/jquery.icheck.min.js"></script>
 	<!--[if lt IE 9]>
@@ -22,6 +25,9 @@
 	</script>
 	<![endif]-->
 	{% endblock %}
+
+  {% block endhead %}
+  {% endblock %}
 </head>
 
 <body>
@@ -130,7 +136,7 @@
           <li><a href="{% url 'aboutus' %}" title="">About</a></li>
           <li><a href="mailto:team@klp.org.in" title="">Contact</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://www.facebook.com/klpdotorg" target="_blank">Facebook</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>  
+          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank">RSS Feed</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://www.youtube.com/user/klpdotorg" target="_blank">You Tube</a></li>
           <li class="hidden-phone hidden-tablet"><a href="/map" title="">School Map</a></li>
