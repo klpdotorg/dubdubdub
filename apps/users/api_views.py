@@ -1,4 +1,5 @@
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
+import datetime
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
@@ -213,6 +214,28 @@ class VolunteerActivitiesView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return VolunteerActivity.objects.all()
+
+
+@api_view(['GET'])
+def volunteer_activity_dates(request):
+    '''
+        Fetches valid volunteer dates, accepts some filters
+    '''
+    now = datetime.datetime.now()
+    #qset = VolunteerActivity.objects.all()
+    qset = VolunteerActivity.objects.filter(date__gte=now)
+    school = request.GET.get('school', None)
+    typ = request.GET.get('type', None)
+    organization = request.GET.get('organization', None)
+    if school:
+        qset = qset.objects.filter(school_id=school)
+    if typ:
+        qset = qset.objects.filter(type_id=typ)
+    if organization:
+        qset = qset.objects.filter(organization_id=organization)
+    qset = qset.values('date').distinct()
+    dates = [o['date'].strftime("%Y-%m-%d") for o in qset]
+    return Response(dates)
 
 
 class VolunteerActivityView(generics.RetrieveUpdateDestroyAPIView):

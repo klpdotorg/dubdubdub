@@ -98,6 +98,10 @@ urlpatterns = patterns('',
         VolunteerActivityUserView.as_view(),
         name='api_volunteeractivityuser_view'),
 
+    url('^volunteer_activity_dates',
+        'users.api_views.volunteer_activity_dates',
+        name='api_volunteeractivitydates_view'),
+
     url('^volunteer_activity_types$',
         VolunteerActivityTypesView.as_view(),
         name='api_volunteeractivitytypes_view'),
