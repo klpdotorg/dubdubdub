@@ -33,6 +33,8 @@ class SchoolsInfo(SchoolsList):
         Returns list of schools with more info about each school
     '''
     serializer_class = SchoolInfoSerializer
+    filter_class = SchoolFilter
+    search_fields = ('name',)
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
