@@ -236,6 +236,16 @@ REST_FRAMEWORK = {
     ),
 }
 
+TESTS_SCHOOLS_INPUT = {
+'SCHOOLS_LIB_ID': '33312',
+'SCHOOLS_LIB_ID2': '33313',
+'SCHOOL_INFO_ID' : '33312',
+'SCHOOL_DEMOGRAPHICS_ID' : '33312',
+'SCHOOL_PROGRAMMES_ID' : '25139',
+'SCHOOL_FINANCE_ID' : '4708',
+'SCHOOL_INFRA_ID' : '24594',
+}
+
 try:
     from local_settings import *
 except ImportError:
