@@ -52,8 +52,8 @@ class SchoolsDiseInfo(KLPListAPIView):
     bbox_filter_field = "school__instcoord__coord"
 
     def get_queryset(self):
-        year = self.kwargs.get('year', '2010-11')
-        schools = DiseInfo.objects.filter(acyear=year)\
+        year = self.kwargs.get('year', '2011-12')
+        schools = DiseInfo.objects.filter(acyear=year, school__status=2)\
             .select_related('instcoord', 'school')
         print schools.query
         return schools

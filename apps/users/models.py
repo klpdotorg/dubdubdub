@@ -58,6 +58,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     #type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
+    is_active = models.BooleanField('active', default=True,
+        help_text='Designates whether this user should be treated as '
+                    'active. Unselect this instead of deleting accounts.')
+
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
@@ -96,6 +100,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class Organization(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(blank=True)
+    logo = models.ImageField(upload_to='organization_logos', blank=True)
     email = models.EmailField()
     address = models.TextField(blank=True)
     contact_name = models.CharField(max_length=256)

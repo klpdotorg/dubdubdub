@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
@@ -56,7 +57,7 @@ class UsersView(generics.ListCreateAPIView):
         password = self.request.POST.get('password', '')
         if password == '':
             raise ParseError("No password supplied")
-        super(UsersView, self).create(*args, **kwargs)
+        return super(UsersView, self).create(*args, **kwargs)
 
     def get_queryset(self):
         return User.objects.all()
@@ -93,6 +94,30 @@ def login(request):
         token = Token.objects.get(user=user).key
         return Response({'success': 'User logged in', 'token': token})
     raise AuthenticationFailed("Username / password do not match")
+
+
+@api_view(['POST'])
+@csrf_exempt
+def password_reset_request(request):
+    """
+    Sends out the password reset mail
+    FIXIT: Fails because of no is_active field on User model
+    """
+    email = request.POST.get("email", "")
+    if not email:
+        raise AuthenticationFailed('Your registered email address must be provided to reset password')
+
+    form = PasswordResetForm(request.POST)
+    if form.is_valid():
+        opts = {
+            'use_https': request.is_secure(),
+            'request': request,
+        }
+
+        form.save(**opts)
+        return Response({'success': 'Password reset email sent'})
+    else:
+        raise AuthenticationFailed(', '.join(form.errors))
 
 
 class OrganizationsView(generics.ListCreateAPIView):
