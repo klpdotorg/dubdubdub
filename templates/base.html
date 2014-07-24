@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>{% block head %}
@@ -9,6 +11,7 @@
 	<link type="text/css" rel="stylesheet" href="/static/css/style.css" media="all"/>
 	<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/static/js/libs.combined.js"></script>
+
 	<link type="text/css" rel="stylesheet" href="/static/js/lib/iCheck/skins/minimal/minimal.css" media="all"/>
 	<script type="text/javascript" src="/static/js/lib/iCheck/jquery.icheck.min.js"></script>
 	<!--[if lt IE 9]>
@@ -22,15 +25,18 @@
 	</script>
 	<![endif]-->
 	{% endblock %}
+
+  {% block endhead %}
+  {% endblock %}
 </head>
 
 <body>
 
 	{% if not homepage %}
 
-	<header class="main-header">
+	<header class="main-header {% if header_full_width %}full_width{% endif %} {% if header_fixed %}fixed{% endif %}">
 		<div class="header-content">
-			<a href="index.php" class="header_mobile_logo"></a>
+			<a href="/" class="header_mobile_logo"></a>
 			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
 			<nav class="top-nav" role="navigation">
 				{% include "includes/_top_navigation.html" %}
@@ -38,21 +44,23 @@
 			<div class="clr"></div>
 		</div>
 
+    {% block subheader %}
 		<div class="subheader-wrapper">
 			<div class="subheader-content">
 				<div class="breadcrumb">
-			    	<a href="index.php">Home</a><span></span>
+			    	<a href="/">Home</a><span></span>
 			    	<a href="">{{ page_title }}</a>
 			    </div>
 			</div>
 		</div>
+    {% endblock %}
 	</header>
 
 	{% else %}
 
 	<header class="home-header" role="banner">
 		<div class="mobile_header">
-			<a href="index.php" class="header_mobile_logo"></a>
+			<a href="/" class="header_mobile_logo"></a>
 			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
 		</div>
 		<div class="blackboard_wrapper">
@@ -123,6 +131,7 @@
 
 	{% block content %} {% endblock %}
 
+  {% if not hide_footer %}
   <footer class="main-footer">
     <div class="footer-wrapper">
       <nav class="nav">
@@ -130,7 +139,7 @@
           <li><a href="{% url 'aboutus' %}" title="">About</a></li>
           <li><a href="mailto:team@klp.org.in" title="">Contact</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://www.facebook.com/klpdotorg" target="_blank">Facebook</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>  
+          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank">RSS Feed</a></li>
           <li class="hidden-phone hidden-tablet"><a href="http://www.youtube.com/user/klpdotorg" target="_blank">You Tube</a></li>
           <li class="hidden-phone hidden-tablet"><a href="/map" title="">School Map</a></li>
@@ -143,6 +152,7 @@
       <div class="copyright">Copyright 2013. All Rights Reserved.</div>
     </div>
   </footer>
+  {% endif %}
 
 	<script type="text/javascript">
     $(document).ready(function(){
