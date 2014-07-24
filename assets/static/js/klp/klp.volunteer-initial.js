@@ -89,7 +89,7 @@ var klp = klp || {};
 
 			$modal.removeClass("show");
 			$modal_overlay.removeClass("show");
-			
+
 			setTimeout(function(){
 				$modal.remove();
 			},300);
@@ -112,14 +112,14 @@ var klp = klp || {};
 			}
 		});
 
-		$modal.on('click', ".js-open-map", open_map);	
+		$modal.on('click', ".js-open-map", open_map);
 
 		function open_map(e){
 			e.preventDefault();
 			var location = $input_data_location.val();
 			var date = $input_data_date.val();
 			var type = $(this).data("type");
-			var url = "map.php?location="+location+"&date="+date+"&type="+type;
+			var url = "map?location="+location+"&date="+date+"&type="+type;
 			window.location.href = url;
 		}
 	};
@@ -160,7 +160,7 @@ var klp = klp || {};
 
 	$(document).ready(function(){
 		init();
-		$(document).on('click', ".js-trigger-volunteer", open_modal);	
+		$(document).on('click', ".js-trigger-volunteer", open_modal);
 	});
 
 })();

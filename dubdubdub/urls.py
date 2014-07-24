@@ -63,7 +63,7 @@ urlpatterns = patterns('',
         template_name='volunteer-register.html'
         ), name='volunteer_register'),
 
-    url(r'^map.php$', StaticPageView.as_view(
+    url(r'^map$', StaticPageView.as_view(
         template_name='map.html',
         extra_context={
             'header_full_width': True,
