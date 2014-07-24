@@ -34,7 +34,7 @@
 
 	{% if not homepage %}
 
-	<header class="main-header">
+	<header class="main-header {% if header_full_width %}full_width{% endif %} {% if header_fixed %}fixed{% endif %}">
 		<div class="header-content">
 			<a href="index.php" class="header_mobile_logo"></a>
 			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
@@ -44,6 +44,7 @@
 			<div class="clr"></div>
 		</div>
 
+    {% block subheader %}
 		<div class="subheader-wrapper">
 			<div class="subheader-content">
 				<div class="breadcrumb">
@@ -52,6 +53,7 @@
 			    </div>
 			</div>
 		</div>
+    {% endblock %}
 	</header>
 
 	{% else %}
@@ -129,6 +131,7 @@
 
 	{% block content %} {% endblock %}
 
+  {% if not hide_footer %}
   <footer class="main-footer">
     <div class="footer-wrapper">
       <nav class="nav">
@@ -149,6 +152,7 @@
       <div class="copyright">Copyright 2013. All Rights Reserved.</div>
     </div>
   </footer>
+  {% endif %}
 
 	<script type="text/javascript">
     $(document).ready(function(){
