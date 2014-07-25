@@ -48,3 +48,5 @@ nosetests.xml
 
 # vagrant
 .vagrant
+
+collected-static
