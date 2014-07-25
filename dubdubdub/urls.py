@@ -59,7 +59,7 @@ urlpatterns = patterns('',
     url(r'^volunteer$', StaticPageView.as_view(
         template_name='volunteer.html'
         ), name='volunteer'),
-    url(r'^volunteer/register$', StaticPageView.as_view(
+    url(r'^volunteer-register$', StaticPageView.as_view(
         template_name='volunteer-register.html'
         ), name='volunteer_register'),
 
