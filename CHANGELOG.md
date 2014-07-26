@@ -1,4 +1,4 @@
-Release 0.2:
+Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working
  - Password reset API working
  - Added `is_active` to User model [migrate]
