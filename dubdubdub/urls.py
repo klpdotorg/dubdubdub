@@ -71,6 +71,14 @@ urlpatterns = patterns('',
             'hide_footer': True
         }), name='map'),
 
+    url(r'^school$', StaticPageView.as_view(
+        template_name='school.html',
+        extra_context={
+            #'header_full_width': True,
+            #'header_fixed': True,
+            #'hide_footer': True
+        }), name='school_detail'),
+
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {
         'template_name': 'users/password-reset-confirm.html'
