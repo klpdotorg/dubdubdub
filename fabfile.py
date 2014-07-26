@@ -6,7 +6,6 @@ def test():
 
 def dev():
     env.hosts = ['dev.klp.org.in']
-    env.user = 'bibhas'
     env.port = 2020
     env.project_path = '/var/www/dubdubdub/'
     env.venv_path = '/home/dubdubdub/dubdubdub/'
@@ -39,14 +38,13 @@ def collectstatic():
             sudo('python manage.py collectstatic --noinput', user='dubdubdub')
 
 def deploy(pip_install=False, migrate=False):
-    ""
-    Use any of the commands
+    # Use any of the commands
 
-    fab dev deploy
-    fab dev deploy:migrate=True
-    fab dev deploy:pip_install=True
-    fab dev deploy:pip_install=True,migrate=True
-    ""
+    # fab dev deploy
+    # fab dev deploy:migrate=True
+    # fab dev deploy:pip_install=True
+    # fab dev deploy:pip_install=True,migrate=True
+
     git_pull(env.git_branch)
 
     if pip_install:
