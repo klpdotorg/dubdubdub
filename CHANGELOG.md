@@ -1,4 +1,15 @@
-Release 0.2:
+How to deploy
+---
+Use required commands
+
+    fab dev deploy
+    fab dev deploy:migrate=True
+    fab dev deploy:pip_install=True
+    fab dev deploy:pip_install=True,migrate=True
+
+Changelog
+---
+Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working
  - Password reset API working
  - Added `is_active` to User model [migrate]
