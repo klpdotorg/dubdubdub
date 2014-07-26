@@ -8,7 +8,6 @@ def test():
 
 def dev():
     env.hosts = ['dev.klp.org.in']
-    env.port = 2020
     env.project_path = '/var/www/dubdubdub/'
     env.venv_path = '/home/dubdubdub/dubdubdub/'
     env.git_branch = 'develop'
