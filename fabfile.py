@@ -1,6 +1,8 @@
 from fabric.api import *
 from fabric.contrib.files import *
 
+env.use_ssh_config = True
+
 def test():
     run('uname -a')
 
