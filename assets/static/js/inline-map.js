@@ -83,11 +83,11 @@ var marker_overlay_html;
 var place_data = {
     1: {
         name: "Gian Jyoti Public School",
-        latlong: [51.505, -0.09]
+        latlong: [12.979, 77.590]
     },
     2: {
         name: "Karnataka Public School",
-        latlong: [51.500, -0.094]
+        latlong: [12.97, 77.59]
     }
 };
 var tpl_map_popup;
@@ -143,7 +143,7 @@ function load_map() {
         // console.log("params set: "+map_voluteer_date);
     }
     marker_overlay_html = $("#tpl_marker_overlay").html();
-    map = L.map('map_canvas').setView([51.505, -0.09], 14);
+    map = L.map('map_canvas').setView([12.9793998, 77.5903608], 14);
     L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '',
