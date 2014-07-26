@@ -17,7 +17,7 @@ function init_tabs(){
 }
 
 function init_selects(){
-    
+
     $(".apply-selectboxit").selectBoxIt({
         autoWidth: true
     });
@@ -59,10 +59,20 @@ function get_relative_height(width, height, min_height){
     return ht;
 }
 
+function load_map() {
+    map = L.map('map-canvas').setView([51.505, -0.09], 14);
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '',
+        id: 'examples.map-i86knfo3'
+    }).addTo(map);
+}
+
 $(document).ready(function(){
     init_tabs();
     init_selects();
     init_library_view_toggle();
+    load_map();
 
     container_width = $(document).find(".container:first").width();
     container_width = parseInt(container_width,10);

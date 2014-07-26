@@ -7,6 +7,10 @@
     <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'js/jquery-ui-1.10.4.custom.min.js' %}"></script>
     <script src="{% static 'js/selectBoxIt.min.js' %}"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
     <script src="{% static 'js/inline-school.js' %}"></script>
 {% endblock %}
 
@@ -14,7 +18,7 @@
 
     <section class="school-page">
         <div class="page-header">
-            <div class="map-canvas"></div>
+            <div class="map-canvas" id="map-canvas"></div>
 
             <div class="school-info">
                 <div class="container">
@@ -64,7 +68,7 @@
                 <div class="fl-desktop">
                     <h4>Address</h4>
                     <p>1st Main Road, 2nd Cross, Yeshwanthura, <strong>Bangalore</strong> - 560022</p>
-                    
+
                     <h4 class="mar_top_25">Landmark</h4>
                     <p>Near St. Francis Church</p>
 
@@ -126,7 +130,7 @@
                 </div>
                 <div class="clr"></div>
             </div>  <!-- Info Tab END -->
-            
+
             <div class="tab-heading">Demographics</div>
             <div class="tab-content container" data-tab="demographics">
                 <div class="fl-desktop-tablet">
@@ -244,7 +248,7 @@
                     </p>
                 </div>
             </div>  <!-- Finances Tab END -->
-            
+
             <div class="tab-heading">Infrastructure</div>
             <div class="tab-content container" data-tab="infrastructure">
                 <h4>Infrastructure</h4>
@@ -491,7 +495,7 @@
                     </p>
                 </div>
             </div>  <!-- Library Tab END -->
-            
+
             <div class="tab-heading">Nutrition</div>
             <div class="tab-content container" data-tab="nutrition">
                 <h4>Mid-day Meal Summary</h4>
@@ -504,7 +508,7 @@
                     </p>
                 </div>
             </div>  <!-- Nutrition Tab END -->
-            
+
             <div class="tab-heading">Share your story</div>
             <div class="tab-content container" data-tab="share-story">
                 <div class="fl-desktop-tablet width-48p-desktop-tablet">
@@ -551,7 +555,7 @@
                 <!-- <div class="clr-phone-tablet"></div> -->
 
                 <div class="fr-desktop-tablet width-48p-desktop-tablet">
-                    
+
                     <div class="comments mar_top_25">
                         <h4>Visitor Comments</h4>
                         <div class="comment-item first">
