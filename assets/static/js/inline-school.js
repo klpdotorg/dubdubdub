@@ -60,11 +60,17 @@ function get_relative_height(width, height, min_height){
 }
 
 function load_map() {
-    map = L.map('map-canvas').setView([51.505, -0.09], 14);
-    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+    map = L.map('map-canvas', {
+        zoomControl: false
+    }).setView([12.97, 77.59], 14);
+    L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '',
         id: 'examples.map-i86knfo3'
+    }).addTo(map);
+
+    var marker = L.marker([12.97, 77.59], {
+        clickable: true
     }).addTo(map);
 }
 
