@@ -10,7 +10,7 @@ Use required commands
 Changelog
 ---
 Release 0.3:
- - <add things here>
+ - Updated Django version to 1.7c2 [pip-install]
 
 Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working
