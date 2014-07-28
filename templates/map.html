@@ -6,15 +6,17 @@
 {% block endbody %}
 
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
-    <script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.slimscroll.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/zebra_datepicker.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/jquery.easydropdown.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lib/director.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/swig.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/swig.filters.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
 
     <!--
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -24,7 +26,7 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-    <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
 {% block subheader %}
