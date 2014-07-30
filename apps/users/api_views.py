@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
@@ -79,7 +79,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 @api_view(['GET'])
 def logout(request):
-    logout(request)
+    auth_logout(request)
     return Response({'success': 'User logged out'})
 
 
@@ -90,7 +90,7 @@ def login(request):
     password = request.POST.get("password", "")
     user = authenticate(username=email, password=password)
     if user is not None:
-        login(request, user)
+        auth_login(request, user)
         token = Token.objects.get(user=user).key
         return Response({'success': 'User logged in', 'token': token})
     raise AuthenticationFailed("Username / password do not match")

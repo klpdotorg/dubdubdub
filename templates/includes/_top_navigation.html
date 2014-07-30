@@ -7,7 +7,7 @@
     </li>
     {% endif %}
     <li class="school_map">
-        <a href="/map" title="">School Map</a>
+        <a href="{% url 'map' %}" title="">School Map</a>
     </li>
     <li class="programmes">
         <a href="{% url 'reading_programme' %}" title="">Programmes</a>
@@ -16,7 +16,7 @@
             <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
         </ul>
     </li>
-    <li class="volunteer"><a href="/text/volunteer" title="">Volunteer</a></li>
+    <li class="volunteer"><a href="{% url 'volunteer' %}" title="">Volunteer</a></li>
     <li class="database">
         <a href="/listFiles/2" title="">Data</a>
         <ul>

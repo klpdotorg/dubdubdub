@@ -43,6 +43,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+   # def delete_user(self, email)
+
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
