@@ -2,13 +2,13 @@
     var klp = window.klp;
 
     var routes = {
-        '/search/:bbox/:zoom/\?:query_params': doSearch,
+        '/search/:bbox/:zoom/(.*)': doSearch,
         '/test': doTest,
         '': testRoute 
     };
 
-    function doSearch(bbox, zoom) {
-        console.log("search route called", bbox, zoom, query_params);
+    function doSearch(bbox, zoom, params) {
+        console.log("search route called", bbox, zoom, params);
         //console.log("location hash", window.location.hash);
     }
 
