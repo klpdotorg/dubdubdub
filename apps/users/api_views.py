@@ -65,7 +65,7 @@ class UsersView(generics.ListCreateAPIView):
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-    permission_classes = (IsAdminOrIsSelf,)
+    permission_classes = (IsAdminOrIsSelf, permissions.IsAuthenticated)
 
     def get_object(self):
         return User.objects.get(id=self.request.user.id)
