@@ -25,7 +25,7 @@ var KLPRouter = function(routes) {
             var matches = regex.exec(hash);
 
             if (matches !== null && matches.length > 0) {
-                this.routes[pattern](matches, query_params);
+                routes[pattern](matches, query_params);
             }
         }
     };
