@@ -26,7 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     token = serializers.Field(source='get_token')
     volunteer_activities = UserVolunteerActivityNestedSerializer(
-        source='uservolunteeractivity_set'
+        source='uservolunteeractivity_set',
+        read_only=True
     )
 
     def restore_object(self, attrs, instance=None):
