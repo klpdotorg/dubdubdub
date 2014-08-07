@@ -7,9 +7,27 @@ from .models import User, Organization, UserOrganization, VolunteerActivity,\
 from django.contrib.auth import login, authenticate, logout
 
 
+class VolunteerActivitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VolunteerActivity
+        exclude = ('users',)
+
+
+class UserVolunteerActivityNestedSerializer(serializers.ModelSerializer):
+    activity = VolunteerActivitySerializer()
+
+    class Meta:
+        model = UserVolunteerActivity
+        fields = ('activity', 'status',)
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     token = serializers.Field(source='get_token')
+    volunteer_activities = UserVolunteerActivityNestedSerializer(
+        source='uservolunteeractivity_set'
+    )
 
     def restore_object(self, attrs, instance=None):
         email = attrs.get('email', None)
@@ -47,7 +65,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
-                  'last_name', 'password', 'token',)
+                  'last_name', 'password', 'token', 'volunteer_activities')
         write_only_fields = ('password',)
 
 
@@ -71,17 +89,10 @@ class VolunteerActivityTypeSerializer(serializers.ModelSerializer):
         model = VolunteerActivityType
 
 
-class VolunteerActivitySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = VolunteerActivity
-        exclude = ('users',)
-
-
 class UserVolunteerActivitySerializer(serializers.ModelSerializer):
 
     class Meta:
-        write_only_fields = ('activity',)
+        fields = ('user', 'status',)
         model = UserVolunteerActivity
 
 

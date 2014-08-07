@@ -171,11 +171,8 @@ class OrganizationUsersView(generics.ListCreateAPIView):
     paginate_by = 50
     permission_classes = (OrganizationUsersPermission,)
 
-    def create(self, request, *args, **kwargs):
-        org_id = self.kwargs['org_pk']
-        request.DATA['organization'] = org_id
-        return super(OrganizationUsersView, self).create(request, *args,
-                                                         **kwargs)
+    def pre_save(self, obj):
+        obj.organization_id = self.kwargs['org_pk']
 
     def get_queryset(self):
         org_id = self.kwargs['org_pk']
@@ -229,23 +226,11 @@ class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
 class VolunteerActivityUsersView(generics.ListCreateAPIView):
     serializer_class = UserVolunteerActivitySerializer
     paginate_by = 50
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def create(self, request, *args, **kwargs):
-        activity_id = self.kwargs['activity_pk']
-        request.DATA['activity'] = activity_id
-        user = request.user
-        if not user.is_authenticated():
-            raise PermissionDenied("Must be logged in to volunteer.")
-        user_id = request.DATA.get('user', None)
-        if not user_id:
-            request.DATA['user'] = request.user.id
-        else:
-            if not request.user.is_superuser and not\
-                    request.DATA['user'] == request.user.id:
-                raise PermissionDenied('''Only superusers can
-                                       volunteer other users.''')
-        return super(VolunteerActivityUsersView, self).create(request, *args,
-                                                              **kwargs)
+    def pre_save(self, obj):
+        obj.activity_id = self.kwargs['activity_pk']
+        obj.user_id = self.request.user.id
 
     def get_queryset(self):
         activity_id = self.kwargs['activity_pk']
@@ -315,24 +300,12 @@ class DonationTypeView(generics.RetrieveUpdateDestroyAPIView):
 
 class DonorRequirementUsersView(generics.ListCreateAPIView):
     serializer_class = UserDonorRequirementSerializer
+    permission_classes = (permissions.IsAuthenticated,)
     paginate_by = 50
 
-    def create(self, request, *args, **kwargs):
-        requirement_id = self.kwargs['requirement_pk']
-        request.DATA['donor_requirement'] = requirement_id
-        user = request.user
-        if not user.is_authenticated():
-            raise PermissionDenied("Must be logged in to donate.")
-        user_id = request.DATA.get('user', None)
-        if not user_id:
-            request.DATA['user'] = request.user.id
-        else:
-            if not request.user.is_superuser and not\
-                    request.DATA['user'] == request.user.id:
-                raise PermissionDenied('''Only superusers can
-                                       volunteer other users.''')
-        return super(DonorRequirementUsersView, self).create(request, *args,
-                                                             **kwargs)
+    def pre_save(self, obj):
+        obj.donor_requirement_id = self.kwargs['requirement_pk']
+        obj.user_id = self.request.user.id
 
     def get_queryset(self):
         requirement_id = self.kwargs['requirement_pk']
