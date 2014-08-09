@@ -1,10 +1,12 @@
 (function() {
     var t = klp.map = {};
-
-    var window_width;
-    var $mobile_details_wrapper;
-    var map;
-    var marker_overlay_html;
+    var window_width,
+        $mobile_details_wrapper,
+        $_filter_layers_list,
+        $_filter_layers_button,
+        $_filter_radius_button,
+        map,
+        marker_overlay_html;
     var place_data = {
         1: {
             name: "Gian Jyoti Public School",
@@ -20,6 +22,23 @@
     var map_voluteer_date = false;
 
     t.init = function() {
+        $_filter_layers_list = $("#filter-layers-list");
+        $_filter_layers_button = $("#filter-layers-button");
+        $_filter_radius_button = $("#filter-radius-button");
+        $(document).on("click", ".js-toggle-layers-list", function(e){
+            var $trigger = $(e.target).closest(".js-toggle-layers-list");
+
+            if(!$_filter_layers_list.hasClass("show")){
+                // $trigger.addClass("open");
+                $_filter_layers_list.addClass("show");
+            } else {
+                // $trigger.removeClass("open");
+                $_filter_layers_list.removeClass("show");
+            }
+        });
+
+        $_filter_radius_button.on("click", toggleFilterRadius);
+        
         window_width = $(window).width();
         tpl_map_popup = swig.compile($("#tpl-map-popup").html());
         tpl_mobile_place_details = swig.compile($(
@@ -153,6 +172,18 @@
         var html = tpl_mobile_place_details(ctx);
         return html;
     }
+
+    function toggleFilterRadius(){
+        var $filter_radius_msg = $("#msg-filter-radius");
+
+        if(!$_filter_radius_button.hasClass("active")) {
+            // $_filter_radius_button.addClass("active");
+            $filter_radius_msg.removeClass("hide");
+        } else {
+            // $_filter_radius_button.removeClass("active");
+            $filter_radius_msg.addClass("hide");
+        }
+    };
 
     // function getUrlVar(key) {
     //     var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
