@@ -2,13 +2,13 @@
     var klp = window.klp;
     klp.init = function() {
 
-        klp.volunteer_date_filter.init();
-        klp.option_items.init();
+        klp.filters_modal.init();
         klp.map.init();
         klp.place_info.init();
         klp.comparison.init();
         klp.share_story.init();
         klp.volunteer_modal.init();
+        klp.volunteer_filters.init();
 
         $('html').click(function() {
             //Hide the menus if visible

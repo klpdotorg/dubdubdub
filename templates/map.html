@@ -18,14 +18,14 @@
     <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/comparison.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/volunteer_date_filter.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/share_story.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/option_items.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script>
 
 
     <!--
@@ -51,7 +51,7 @@
       <div class="volunteer-filters-wrapper fl">
         <div class="label fl">Location</div>
         <div class="filter-item fl">
-          <select name="location" class="dropdown">
+          <select name="location" class="volunteer-filters-dropdown">
             <option>Banaswadi</option>
             <option>Malleswaram</option>
             <option>Banaswadi</option>
@@ -75,7 +75,7 @@
 
         <div class="label fl">Organization</div>
         <div class="filter-item fl">
-          <select name="organization" class="dropdown">
+          <select name="organization" class="volunteer-filters-dropdown">
             <option selected>All</option>
             <option>Akshara Foundation</option>
             <option>Akshaya Patra</option>
@@ -86,7 +86,7 @@
 
         <div class="label fl">Opportunity</div>
         <div class="filter-item fl">
-          <select name="activity" class="dropdown">
+          <select name="activity" class="volunteer-filters-dropdown">
             <option selected>All</option>
             <option>Teaching Based</option>
             <option>Activity Based</option>
@@ -112,7 +112,7 @@
         <div class="option-item">
           <div class="inactive-overlay"></div>
           <span class="option-label">School Type</span>
-          <select name="type" class="dropdown">
+          <select name="type" class="filters-dropdown">
             <option>Primary School</option>
             <option>Preschool</option>
           </select>
@@ -121,7 +121,7 @@
         <div class="option-item">
           <div class="inactive-overlay"></div>
           <span class="option-label">District</span>
-          <select name="type" class="dropdown">
+          <select name="district" class="filters-dropdown">
             <option>Bagalkot</option>
             <option>Bangalore</option>
             <option>Bangalore Rural</option>
@@ -133,7 +133,7 @@
         <div class="option-item inactive">
           <div class="inactive-overlay"></div>
           <span class="option-label">Block</span>
-          <select name="type" class="dropdown">
+          <select name="block" class="filters-dropdown">
             <option>Badami</option>
             <option>Bilagi</option>
             <option>Hunagund</option>
@@ -144,7 +144,7 @@
         <div class="option-item inactive">
           <div class="inactive-overlay"></div>
           <span class="option-label">Cluster</span>
-          <select name="type" class="dropdown">
+          <select name="cluster" class="filters-dropdown">
             <option>Badami</option>
             <option>Halakurki</option>
             <option>Haligeri</option>
@@ -156,7 +156,7 @@
         <div class="option-item inactive">
           <div class="inactive-overlay"></div>
           <span class="option-label">School</span>
-          <select name="type" class="dropdown">
+          <select name="school" class="filters-dropdown">
             <option>GOVT Hps</option>
             <option>GOVT Kblps</option>
             <option>GOVT Kgs</option>
