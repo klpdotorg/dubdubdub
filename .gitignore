@@ -11,6 +11,7 @@ secret.txt
 
 #local settings
 local_settings.py
+local_test_settings.py
 
 # C extensions
 *.so
