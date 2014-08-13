@@ -1,4 +1,5 @@
 from schools.models import School, DiseInfo
+from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView
 from common.models import SumCase
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
@@ -16,6 +17,8 @@ class SchoolsList(KLPListAPIView):
     '''
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
+    filter_class = SchoolFilter
+    search_fields = ('name',)
 
     def get_queryset(self):
         qset = School.objects.filter(status=2)
@@ -30,6 +33,8 @@ class SchoolsInfo(SchoolsList):
         Returns list of schools with more info about each school
     '''
     serializer_class = SchoolInfoSerializer
+    filter_class = SchoolFilter
+    search_fields = ('name',)
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
