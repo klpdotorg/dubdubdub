@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
     DonationType, UserDonorRequirement
-from .serializers import UserSerializer, OrganizationSerializer,\
+from .serializers import UserSerializer, OtherUserSerializer,\
+    OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
     DonorRequirementSerializer, DonationTypeSerializer,\
@@ -64,6 +65,9 @@ class UsersView(generics.ListCreateAPIView):
 
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
+    '''
+        View to get and update currently logged in user's profile.
+    '''
     serializer_class = UserSerializer
     permission_classes = (IsAdminOrIsSelf, permissions.IsAuthenticated)
 
@@ -75,6 +79,15 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
             PATCH requests are made to edit user profile, disallow POST.
         '''
         raise MethodNotAllowed("POST")
+
+
+class OtherUserProfileView(generics.RetrieveAPIView):
+    '''
+        Get basic profile data for other users
+        (To be able to view their profile page, for eg.)
+    '''
+    serializer_class = OtherUserSerializer
+    model = User
 
 
 @api_view(['GET'])

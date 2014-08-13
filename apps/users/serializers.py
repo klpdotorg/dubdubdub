@@ -70,6 +70,20 @@ class UserSerializer(serializers.ModelSerializer):
         write_only_fields = ('password',)
 
 
+class OtherUserSerializer(serializers.ModelSerializer):
+    '''
+        Returns a subset of fields for querying other users' profile
+    '''
+    volunteer_activities = UserVolunteerActivityNestedSerializer(
+        source='uservolunteeractivity_set',
+        read_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'volunteer_activities',)
+
+
 class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
