@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
+from rest_framework.views import APIView
 from common.filters import KLPInBBOXFilter
 
 
@@ -14,6 +15,10 @@ class StaticPageView(TemplateView):
         context = super(StaticPageView, self).get_context_data(**kwargs)
         context.update(self.extra_context)
         return context
+
+
+class KLPAPIView(APIView):
+    pass
 
 
 class KLPListAPIView(generics.ListAPIView):

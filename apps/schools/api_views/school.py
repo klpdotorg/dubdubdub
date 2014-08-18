@@ -1,6 +1,6 @@
 from schools.models import School, DiseInfo
 from schools.filters import SchoolFilter
-from common.views import KLPListAPIView, KLPDetailAPIView
+from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.models import SumCase
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\

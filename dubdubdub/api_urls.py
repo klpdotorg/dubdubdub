@@ -6,7 +6,7 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,\
     Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,\
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,\
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,\
-    SchoolLibrary
+    SchoolLibrary, OmniSearch
 
 from users.api_views import TestAuthenticatedView, UsersView,\
     UserProfileView, OtherUserProfileView, OrganizationsView,\
@@ -24,6 +24,9 @@ urlpatterns = patterns('',
     # url(r'^schools/list', cache_page(60)(SchoolsList.as_view()),
     #    name='api_schools_list'),
     url(r'^$', 'schools.api_views.api_root', name='api_root'),
+
+    url(r'^search$', OmniSearch.as_view(), name='api_omni_search'),
+
     url(r'^schools/list$', SchoolsList.as_view(), name='api_schools_list'),
     url(r'^schools/info$', SchoolsInfo.as_view(), name='api_schools_info'),
     url(r'^schools/dise/(?P<year>[0-9\-]*)$', SchoolsDiseInfo.as_view(),

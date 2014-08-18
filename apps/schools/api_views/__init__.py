@@ -1,19 +1,72 @@
-from .school import SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,\
-    SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,\
-    SchoolLibrary
-from .boundary import Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1, \
-    Admin2s, Admin3sInsideAdmin2, Admin3s
-from .geo import Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,\
-    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool
+from .school import (SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
+    SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
+    SchoolLibrary)
+from .boundary import (Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
+    Admin2s, Admin3sInsideAdmin2, Admin3s)
+from .geo import (Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
+    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool)
+
+from common.views import KLPAPIView
+from schools.serializers import (SchoolListSerializer, BoundarySerializer,
+    AssemblySerializer, ParliamentSerializer, PincodeSerializer)
+from schools.models import School, Boundary, Assembly, Parliament, Postal
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 
+class OmniSearch(KLPAPIView):
+    def get(self, request, format=None):
+        response = {
+            'schools': [],
+            'boundaries': [],
+            'assemblies': [],
+            'parliaments': [],
+            'pincodes': [],
+        }
+
+        params = request.QUERY_PARAMS
+        text = params.get('text', '')
+
+        if not text:
+            return Response({
+                'error': 'A text must be provided to search'
+            }, status=404)
+
+        response['schools'] = SchoolListSerializer(
+            School.objects.filter(name__icontains=text, status=2)[:10],
+            many=True
+        ).data
+
+        response['boundaries'] = BoundarySerializer(
+            Boundary.objects.filter(name__icontains=text)[:10],
+            many=True
+        ).data
+
+        response['assemblies'] = AssemblySerializer(
+            Assembly.objects.filter(name__icontains=text)[:10],
+            many=True
+        ).data
+
+        response['parliaments'] = ParliamentSerializer(
+            Parliament.objects.filter(name__icontains=text)[:10],
+            many=True
+        ).data
+
+        response['pincodes'] = PincodeSerializer(
+            Postal.objects.filter(pincode__icontains=text)[:10],
+            many=True
+        ).data
+
+        return Response(response)
+
+
 @api_view(('GET',))
 def api_root(request, format=None):
     return Response({
+        'Omni Search': reverse('api_omni_search', request=request,
+                                    format=format) + "?text=pura",
         'Schools': {
             'Schools List': reverse('api_schools_list', request=request,
                                     format=format),
