@@ -48,7 +48,6 @@ class KLPJSONRenderer(JSONRenderer):
             data = self.get_feature(data)
 
         elif self.render_geometry and is_omni:
-            import pdb;pdb.set_trace()
             for key in data:
                 arr = data[key]
                 print arr
