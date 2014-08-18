@@ -40,7 +40,9 @@ class OmniSearch(KLPAPIView):
         ).data
 
         response['boundaries'] = BoundarySerializer(
-            Boundary.objects.filter(name__icontains=text)[:10],
+            Boundary.objects.filter(
+                name__icontains=text
+            ).select_related('hierarchy__name')[:10],
             many=True
         ).data
 
