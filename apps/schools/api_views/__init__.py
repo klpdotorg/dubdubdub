@@ -17,6 +17,8 @@ from rest_framework.reverse import reverse
 
 
 class OmniSearch(KLPAPIView):
+    is_omni = True
+
     def get(self, request, format=None):
         response = {
             'schools': [],
@@ -24,6 +26,11 @@ class OmniSearch(KLPAPIView):
             'assemblies': [],
             'parliaments': [],
             'pincodes': [],
+        }
+
+        context = {
+            'request': request,
+            'view': self
         }
 
         params = request.QUERY_PARAMS
@@ -36,29 +43,34 @@ class OmniSearch(KLPAPIView):
 
         response['schools'] = SchoolListSerializer(
             School.objects.filter(name__icontains=text, status=2)[:10],
-            many=True
+            many=True,
+            context=context
         ).data
 
         response['boundaries'] = BoundarySerializer(
             Boundary.objects.filter(
                 name__icontains=text
             ).select_related('hierarchy__name')[:10],
-            many=True
+            many=True,
+            context=context
         ).data
 
         response['assemblies'] = AssemblySerializer(
             Assembly.objects.filter(name__icontains=text)[:10],
-            many=True
+            many=True,
+            context=context
         ).data
 
         response['parliaments'] = ParliamentSerializer(
             Parliament.objects.filter(name__icontains=text)[:10],
-            many=True
+            many=True,
+            context=context
         ).data
 
         response['pincodes'] = PincodeSerializer(
             Postal.objects.filter(pincode__icontains=text)[:10],
-            many=True
+            many=True,
+            context=context
         ).data
 
         return Response(response)

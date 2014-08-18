@@ -13,7 +13,6 @@ class KLPJSONRenderer(JSONRenderer):
     format = 'json'
 
     def render(self, data, media_type=None, renderer_context=None):
-
         #figure out whether we need to render geometry based on GET param
         render_geometry = renderer_context['request'].GET.get('geometry', 'no')
         if render_geometry == 'yes':
@@ -30,6 +29,13 @@ class KLPJSONRenderer(JSONRenderer):
                 'features': data
             }
 
+        #If the view is an "omni" view, we need to handle it differently
+        is_omni = False
+        if isinstance(data, dict):
+            view = renderer_context['view']
+            if hasattr(view, 'is_omni') and view.is_omni:
+                is_omni = True
+
         #if geometry=yes and results are a list, convert to geojson
         if self.render_geometry and 'features' in data and \
                 isinstance(data['features'], list):
@@ -38,8 +44,17 @@ class KLPJSONRenderer(JSONRenderer):
             data['features'] = [self.get_feature(elem) for elem in features]
 
         #if geometry=yes and is a single feature, convert data to geojson
-        elif self.render_geometry:
+        elif self.render_geometry and not is_omni:
             data = self.get_feature(data)
+
+        elif self.render_geometry and is_omni:
+            import pdb;pdb.set_trace()
+            for key in data:
+                arr = data[key]
+                print arr
+                data[key] = {}
+                data[key]['type'] = 'FeatureCollection'
+                data[key]['features'] = [self.get_feature(elem) for elem in arr]
 
         #if geometry=no, just convert data as is to JSON
         else:
