@@ -50,7 +50,6 @@ class KLPJSONRenderer(JSONRenderer):
         elif self.render_geometry and is_omni:
             for key in data:
                 arr = data[key]
-                print arr
                 data[key] = {}
                 data[key]['type'] = 'FeatureCollection'
                 data[key]['features'] = [self.get_feature(elem) for elem in arr]
