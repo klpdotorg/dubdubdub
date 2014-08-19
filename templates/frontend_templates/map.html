@@ -1,4 +1,4 @@
-
+{% verbatim %}
   <script type="text/template" class="tpl-raw" data-tpl="marker_overlay" id="tpl_marker_overlay">
     <section class="map-pin-details">
       <div class="content">
@@ -74,15 +74,15 @@
           <h2 class="name">{{name}}</h2>
           <div class="item">
             <div class="label">District</div>
-            <div class="value">Bangalore</div>
+            <div class="value">{{ admin1.name|capitalize}}</div>
           </div>
           <div class="item">
-            <div class="label">Block</div>
-            <div class="value">North-2</div>
+            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+            <div class="value">{{admin2.name|capitalize}}</div>
           </div>
           <div class="item">
-            <div class="label">Cluster</div>
-            <div class="value">Malleswaram</div>
+            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+            <div class="value">{{admin3.name|capitalize}}</div>
           </div>
           <div class="clr"></div>
         </div>
@@ -1510,3 +1510,73 @@
     </div>
     <!-- Comparison Result ends -->
   </script>
+
+<!-- Map Popup -->
+
+  <script type="text/template" id="tpl-map-popup">
+  <div class="map-pin-details">
+    <div class="content">
+      <div class="info school">
+        <div class="icon fr">{% if type.id==1 %} S {% else %} P {% endif %}</div>
+        <h2 class="name">{{ name }}</h2>
+        <div class="item">
+          <div class="label">District</div>
+          <div class="value">{{ admin1.name|capitalize }}</div>
+        </div>
+        <div class="item">
+          <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+          <div class="value">{{ admin2.name|capitalize }}</div>
+        </div>
+        <div class="item">
+          <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+          <div class="value">{{ admin3.name|capitalize }}</div>
+        </div>
+        <div class="clr"></div>
+      </div>
+      <div class="details">
+        <div class="triangle2"></div>
+        <div  class="detail-item">
+          <h4 class="purple-heading">Students</h4>
+          <div class="gender_icons">
+            <div class="stats_gender_item no_width boy">
+              <span class="icon"></span>
+              <p class="label">Boys</p>
+              <p class="value">120</p>
+              <div class="clr"></div>
+            </div>
+            <div class="stats_gender_item no_width girl">
+              <span class="icon"></span>
+              <p class="label">Girls</p>
+              <p class="value">130</p>
+              <div class="clr"></div>
+            </div>
+            <div class="stats_gender_item no_width total last">
+              <span class="icon"></span>
+              <p class="label">Total</p>
+              <p class="value">250</p>
+              <div class="clr"></div>
+            </div>
+          </div>
+        </div>
+        <div  class="detail-item mar_top_20">
+          <h4 class="purple-heading">Facilities</h4>
+          <div class="facility-items ta-c">
+            <div class="icon computer"></div>
+            <div class="icon books"></div>
+            <div class="icon events"></div>
+            <div class="icon football last"></div>
+            <div class="clr"></div>
+          </div>
+        </div>
+        <a class="button blue mar_top_20 js-trigger-volunteer-map" {% if date %}data-date="{{ date }}"{% endif %} href="">Volunteer here</a>
+        <div class="mar_top_10">
+          <a class="button dark_grey fl js-trigger-compare" href="">Compare to</a>
+          <a href="school.php" target="_blank" class="button dark_grey last fr Xjs-trigger-info" href="">More Information</a>
+          <div class="clr"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</script>
+{% endverbatim %}

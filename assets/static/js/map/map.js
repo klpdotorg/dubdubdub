@@ -21,23 +21,31 @@
     var tpl_mobile_place_details;
     var map_voluteer_date = false;
 
+    var filterGeoJSON = function(geojson) {
+        return geojson.features.filter(emptyGeom);
+
+        function emptyGeom(feature) {
+            return !_.isEmpty(feature.geometry);
+        }
+    };
+
     t.init = function() {
-        $_filter_layers_list = $("#filter-layers-list");
-        $_filter_layers_button = $("#filter-layers-button");
-        $_filter_radius_button = $("#filter-radius-button");
-        $(document).on("click", ".js-toggle-layers-list", function(e){
-            var $trigger = $(e.target).closest(".js-toggle-layers-list");
+        // $_filter_layers_list = $("#filter-layers-list");
+        // $_filter_layers_button = $("#filter-layers-button");
+        // $_filter_radius_button = $("#filter-radius-button");
+        // $(document).on("click", ".js-toggle-layers-list", function(e){
+        //     var $trigger = $(e.target).closest(".js-toggle-layers-list");
 
-            if(!$_filter_layers_list.hasClass("show")){
-                // $trigger.addClass("open");
-                $_filter_layers_list.addClass("show");
-            } else {
-                // $trigger.removeClass("open");
-                $_filter_layers_list.removeClass("show");
-            }
-        });
+        //     if(!$_filter_layers_list.hasClass("show")){
+        //         // $trigger.addClass("open");
+        //         $_filter_layers_list.addClass("show");
+        //     } else {
+        //         // $trigger.removeClass("open");
+        //         $_filter_layers_list.removeClass("show");
+        //     }
+        // });
 
-        $_filter_radius_button.on("click", toggleFilterRadius);
+        // $_filter_radius_button.on("click", toggleFilterRadius);
         
         window_width = $(window).width();
         tpl_map_popup = swig.compile($("#tpl-map-popup").html());
@@ -65,6 +73,45 @@
             'top': map_overlay_top + 'px'
         });
         load_map();
+
+        var preschoolXHR = klp.api.do('schools/list', {'type':'preschools', 'geometry':'yes', 'per_page':'0'});
+        preschoolXHR.done(function (data) {
+                var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng)}, onEachFeature: onEachSchool}).addTo(map);
+                    function onEachSchool(feature, layer) {
+                        if (feature.properties) {
+
+                            layer.on('click', function() {
+                                markerPopup(this, feature);
+                            });
+                        }
+                    }
+
+                    function markerPopup(marker, feature) {
+                        // var marker = this;
+                        popInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
+                        popInfoXHR.done(function(data) {
+                            marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                            if (window_width < 768) {
+                                // Its a phone
+                                marker.closePopup(); // Close popup
+                                console.log("open details from bottom");
+
+                                // map.setView(marker.getLatLng(), 15);
+                                setTimeout(function() {
+                                    var details_ht = $mobile_details_wrapper.height();
+                                    var pan_y = parseInt(details_ht / 2.5);
+                                    map.panBy(L.point(0, pan_y));
+                                }, 300);
+                                var html = tpl_mobile_place_details(data);
+                                $mobile_details_wrapper.html(html).addClass("show");
+
+                            // show_mobile_place_details();
+                            // show_place_details(place_id);
+                            }
+                        })
+                        // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
+                }
+        });
     };
 
     t.closePopup = function() {
@@ -100,7 +147,7 @@
             id: 'examples.map-i86knfo3'
         }).addTo(map);
 
-        t.loadPlaces(place_data);
+        // t.loadPlaces(place_data);
         // for (var place_id in place_data) {
         //     if (place_data.hasOwnProperty(place_id)) {
         //         add_place_marker(place_id);
@@ -112,78 +159,78 @@
         });
     }
 
-    t.loadPlaces = function(places) {
-        for (var place_id in places) {
-            if (places.hasOwnProperty(place_id)) {
-                add_place_marker(place_id);
-            }
-        }
-    };
+    // t.loadPlaces = function(places) {
+    //     for (var place_id in places) {
+    //         if (places.hasOwnProperty(place_id)) {
+    //             add_place_marker(place_id);
+    //         }
+    //     }
+    // };
 
-    function add_place_marker(place_id) {
-        var place = place_data[place_id];
-        var marker = L.marker(place.latlong, {
-            clickable: true
-        }).addTo(map);
-        marker.bindPopup("", {
-            maxWidth: 380,
-            minWidth: 380
-        });
-        marker.on('click', function(e) {
-            if (window_width < 768) {
-                // Its a phone
-                marker.closePopup(); // Close popup
-                console.log("open details from bottom");
-                show_mobile_place_details(place_id);
-                // show_place_details(place_id);
-            } else {
-                // Set popup content
-                console.log("show popup");
-                var content = build_popup_content(place_id);
-                marker.setPopupContent(content);
-            }
-        });
-    }
+    // function add_place_marker(place_id) {
+    //     var place = place_data[place_id];
+    //     var marker = L.marker(place.latlong, {
+    //         clickable: true
+    //     }).addTo(map);
+    //     marker.bindPopup("", {
+    //         maxWidth: 380,
+    //         minWidth: 380
+    //     });
+    //     marker.on('click', function(e) {
+    //         if (window_width < 768) {
+    //             // Its a phone
+    //             marker.closePopup(); // Close popup
+    //             console.log("open details from bottom");
+    //             show_mobile_place_details(place_id);
+    //             // show_place_details(place_id);
+    //         } else {
+    //             // Set popup content
+    //             console.log("show popup");
+    //             var content = build_popup_content(place_id);
+    //             marker.setPopupContent(content);
+    //         }
+    //     });
+    // }
 
-    function show_mobile_place_details(place_id) {
-        var latlong = place_data[place_id].latlong;
-        map.setView(latlong, 15);
-        setTimeout(function() {
-            var details_ht = $mobile_details_wrapper.height();
-            var pan_y = parseInt(details_ht / 2.5);
-            map.panBy(L.point(0, pan_y));
-        }, 300);
-        var html = build_mobile_details_content(place_id);
-        $mobile_details_wrapper.html(html).addClass("show");
-    }
+    // function show_mobile_place_details(place_id) {
+    //     var latlong = place_data[place_id].latlong;
+    //     map.setView(latlong, 15);
+    //     setTimeout(function() {
+    //         var details_ht = $mobile_details_wrapper.height();
+    //         var pan_y = parseInt(details_ht / 2.5);
+    //         map.panBy(L.point(0, pan_y));
+    //     }, 300);
+    //     var html = build_mobile_details_content(place_id);
+    //     $mobile_details_wrapper.html(html).addClass("show");
+    // }
 
-    function build_popup_content(place_id) {
-        var ctx = {
-            date: map_voluteer_date
-        };
-        var html = tpl_map_popup(ctx);
-        return html;
-    }
+    // function build_popup_content(place_id) {
+    //     var ctx = {
+    //         date: map_voluteer_date
+    //     };
+    //     var html = tpl_map_popup(ctx);
+    //     return html;
+    // }
 
-    function build_mobile_details_content(place_id) {
-        var ctx = {
-            name: place_data[place_id].name
-        }
-        var html = tpl_mobile_place_details(ctx);
-        return html;
-    }
+    // function build_mobile_details_content(place_id) {
+    //     var ctx = {
+    //         name: place_data[place_id].name
+    //     }
+    //     var html = tpl_mobile_place_details(ctx);
+    //     return html;
+    // }
 
-    function toggleFilterRadius(){
-        var $filter_radius_msg = $("#msg-filter-radius");
+    // function toggleFilterRadius(){
+    //     var $filter_radius_msg = $("#msg-filter-radius");
 
-        if(!$_filter_radius_button.hasClass("active")) {
-            // $_filter_radius_button.addClass("active");
-            $filter_radius_msg.removeClass("hide");
-        } else {
-            // $_filter_radius_button.removeClass("active");
-            $filter_radius_msg.addClass("hide");
-        }
-    };
+    //     if(!$_filter_radius_button.hasClass("active")) {
+    //         // $_filter_radius_button.addClass("active");
+    //         $filter_radius_msg.removeClass("hide");
+    //     } else {
+    //         // $_filter_radius_button.removeClass("active");
+    //         $filter_radius_msg.addClass("hide");
+    //     }
+    // };
 
     // function getUrlVar(key) {
     //     var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
