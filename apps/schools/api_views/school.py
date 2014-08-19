@@ -28,9 +28,9 @@ class SchoolsList(KLPListAPIView):
 
         stype = self.request.GET.get('type', 'all')
 
-        if stype == 'pre':
+        if stype == 'preschools':
             qset = qset.filter(schooldetails__type=2)
-        elif stype == 'primary':
+        elif stype == 'primaryschools':
             qset = qset.filter(schooldetails__type=1)
 
         return qset
