@@ -71,18 +71,18 @@
       <div class="content">
         <div class="info school">
           <div class="icon-close fr js-close-details"></div>
-          <h2 class="name">{{name}}</h2>
+          <h2 class="name">{{ name }}</h2>
           <div class="item">
             <div class="label">District</div>
-            <div class="value">{{ admin1.name|capitalize}}</div>
+            <div class="value">{{ admin1.name|capitalize }}</div>
           </div>
           <div class="item">
             <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-            <div class="value">{{admin2.name|capitalize}}</div>
+            <div class="value">{{ admin2.name|capitalize }}</div>
           </div>
           <div class="item">
             <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-            <div class="value">{{admin3.name|capitalize}}</div>
+            <div class="value">{{ admin3.name|capitalize }}</div>
           </div>
           <div class="clr"></div>
         </div>
@@ -93,19 +93,19 @@
               <div class="stats_gender_item no_width boy">
                 <span class="icon"></span>
                 <p class="label">Boys</p>
-                <p class="value">120</p>
+                <p class="value">{{ num_boys }}</p>
                 <div class="clr"></div>
               </div>
               <div class="stats_gender_item no_width girl">
                 <span class="icon"></span>
                 <p class="label">Girls</p>
-                <p class="value">130</p>
+                <p class="value">{{ num_girls }}</p>
                 <div class="clr"></div>
               </div>
               <div class="stats_gender_item no_width total last">
                 <span class="icon"></span>
                 <p class="label">Total</p>
-                <p class="value">250</p>
+                <p class="value">{{ num_boys+num_girls }}</p>
                 <div class="clr"></div>
               </div>
             </div>
@@ -113,10 +113,10 @@
           <div class="detail-item mar_top_20" style="display:none;">
             <h4 class="purple-heading">Facilities</h4>
             <div class="facility-items ta-c">
-              <div class="icon computer"></div>
-              <div class="icon books"></div>
+              {% if basic_facilities.computer_lab %}<div class="icon computer"></div>{% endif %}
+              {% if basic_facilities.library %}<div class="icon books"></div>{% endif %}
               <div class="icon events"></div>
-              <div class="icon football last"></div>
+              {% if basic_facilities.playground %}<div class="icon football last"></div>{% endif %}
               <div class="clr"></div>
             </div>
           </div>
@@ -1541,19 +1541,19 @@
             <div class="stats_gender_item no_width boy">
               <span class="icon"></span>
               <p class="label">Boys</p>
-              <p class="value">120</p>
+              <p class="value">{{ num_boys }}</p>
               <div class="clr"></div>
             </div>
             <div class="stats_gender_item no_width girl">
               <span class="icon"></span>
               <p class="label">Girls</p>
-              <p class="value">130</p>
+              <p class="value">{{ num_girls }}</p>
               <div class="clr"></div>
             </div>
             <div class="stats_gender_item no_width total last">
               <span class="icon"></span>
               <p class="label">Total</p>
-              <p class="value">250</p>
+              <p class="value">{{ num_boys+num_girls }}</p>
               <div class="clr"></div>
             </div>
           </div>
@@ -1561,10 +1561,10 @@
         <div  class="detail-item mar_top_20">
           <h4 class="purple-heading">Facilities</h4>
           <div class="facility-items ta-c">
-            <div class="icon computer"></div>
-            <div class="icon books"></div>
+            {% if basic_facilities.computer_lab %}<div class="icon computer"></div>{% endif %}
+            {% if basic_facilities.library %}<div class="icon books"></div>{% endif %}
             <div class="icon events"></div>
-            <div class="icon football last"></div>
+            {% if basic_facilities.playground %}<div class="icon football last"></div>{% endif %}
             <div class="clr"></div>
           </div>
         </div>
