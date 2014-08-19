@@ -197,9 +197,19 @@ class School(GeoBaseModel):
 
     def get_basic_facilities(self):
         facilities = dict()
+
+        try:
+            # self.dise_info can be None or raise DoesNotExist
+            # Need to handle both
+            if not self.dise_info:
+                raise Exception('no dise')
+        except Exception, e:
+            return facilities
+
         for facility in self.dise_info.disefacilityagg_set.all():
             if facility.df_metric_id in ['computer_lab', 'library', 'playground']:
                 facilities[facility.df_metric_id] = (facility.score == 100)
+
         return facilities
 
     def get_mt_profile(self):
