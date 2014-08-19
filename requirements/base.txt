@@ -30,3 +30,6 @@ djangorestframework-gis==0.2
 
 #https://github.com/marcgibbons/django-rest-swagger
 django-rest-swagger
+
+#http://django-compressor.readthedocs.org/ (for js / css minification)
+django-compressor==1.4

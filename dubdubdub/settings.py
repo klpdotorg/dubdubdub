@@ -83,6 +83,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    
+    #compressor finder:
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, creates random key first at first time.
@@ -145,6 +148,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     "django.contrib.gis",
     'grappelli',
+    'compressor',
     'django.contrib.admin',
 
     # third party
