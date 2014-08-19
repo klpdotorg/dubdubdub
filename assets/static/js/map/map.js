@@ -90,6 +90,7 @@
                         // var marker = this;
                         popInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
                         popInfoXHR.done(function(data) {
+                            console.log(data);
                             marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                             if (window_width < 768) {
                                 // Its a phone
