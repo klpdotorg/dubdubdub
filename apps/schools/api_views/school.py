@@ -25,6 +25,14 @@ class SchoolsList(KLPListAPIView):
         get_geom = self.request.GET.get('geometry', 'no')
         if get_geom == 'yes':
             qset = qset.select_related('instcoord')
+
+        stype = self.request.GET.get('type', 'all')
+
+        if stype == 'preschools':
+            qset = qset.filter(schooldetails__type=2)
+        elif stype == 'primaryschools':
+            qset = qset.filter(schooldetails__type=1)
+
         return qset
 
 

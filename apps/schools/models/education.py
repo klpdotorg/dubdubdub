@@ -158,7 +158,7 @@ class StudentGroup(BaseModel):
 class School(GeoBaseModel):
     id = models.IntegerField(primary_key=True)
 
-    boundary_cluster = models.ForeignKey('Boundary', db_column='bid')
+    admin3 = models.ForeignKey('Boundary', db_column='bid')
 
     # TODO: check if address should be ForeignKey or OneToOneField
     # CHECK: http://hastebin.com/awotomoven aid appears once for each school
@@ -178,15 +178,6 @@ class School(GeoBaseModel):
 
     def get_dise_code(self):
         return self.dise_info_id
-
-    def get_boundary(self):
-        if self.boundary_cluster.type_id == 1:
-            return BoundaryPrimarySchool.objects.\
-                get(cluster_id=self.boundary_cluster_id) if \
-                self.boundary_cluster_id else None
-        else:
-            # TBD: return BoundaryPreschool when ready
-            return None
 
     def get_num_boys(self):
         sum_query = self.institutionagg_set.filter(sex='male').\
