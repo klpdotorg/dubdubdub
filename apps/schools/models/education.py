@@ -196,7 +196,11 @@ class School(GeoBaseModel):
             return None
 
     def get_basic_facilities(self):
-        facilities = dict()
+        facilities = {
+            'computer_lab': False,
+            'library': False,
+            'playground': False
+        }
 
         try:
             # self.dise_info can be None or raise DoesNotExist
@@ -204,6 +208,7 @@ class School(GeoBaseModel):
             if not self.dise_info:
                 raise Exception('no dise')
         except Exception, e:
+            print e
             return facilities
 
         for facility in self.dise_info.disefacilityagg_set.all():
