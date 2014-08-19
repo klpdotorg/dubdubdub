@@ -195,6 +195,13 @@ class School(GeoBaseModel):
         except:
             return None
 
+    def get_basic_facilities(self):
+        facilities = dict()
+        for facility in self.dise_info.disefacilityagg_set.all():
+            if facility.df_metric_id in ['computer_lab', 'library', 'playground']:
+                facilities[facility.df_metric_id] = (facility.score == 100)
+        return facilities
+
     def get_mt_profile(self):
         profile = {}
         for agg in self.institutionagg_set.all():

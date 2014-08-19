@@ -79,13 +79,15 @@ class SchoolInfoSerializer(KLPSerializer):
 
     num_boys = serializers.IntegerField(source='get_num_boys')
     num_girls = serializers.IntegerField(source='get_num_girls')
+    basic_facilities = serializers.CharField(source='get_basic_facilities')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full',
                   'landmark', 'identifiers', 'admin3', 'admin2', 'admin1',
                   'buses', 'parliament', 'assembly', 'ward',
-                  'dise_code', 'type', 'num_boys', 'num_girls',)
+                  'dise_code', 'type', 'num_boys', 'num_girls',
+                  'basic_facilities')
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
