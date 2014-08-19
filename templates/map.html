@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load compress %}
 
 {% block page_title %}School Map{% endblock %}
 
 {% block endbody %}
-
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
+    {% compress js %}
     <script type="text/javascript" src="{% static 'js/lib/jquery.slimscroll.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
@@ -27,7 +27,7 @@
     <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script>
-
+    {% endcompress %}
 
     <!--
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
