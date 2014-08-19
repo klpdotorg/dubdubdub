@@ -77,12 +77,15 @@ class SchoolInfoSerializer(KLPSerializer):
     parliament = ParliamentSerializer(source="schooldetails.parliament")
     ward = ElectedrepSerializer(source="get_ward")
 
+    num_boys = serializers.IntegerField(source='get_num_boys')
+    num_girls = serializers.IntegerField(source='get_num_girls')
+
     class Meta:
         model = School
         fields = ('id', 'name', 'mgmt', 'cat', 'moi', 'sex', 'address_full',
                   'landmark', 'identifiers', 'admin3', 'admin2', 'admin1',
                   'buses', 'parliament', 'assembly', 'ward',
-                  'dise_code', 'type',)
+                  'dise_code', 'type', 'num_boys', 'num_girls',)
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
