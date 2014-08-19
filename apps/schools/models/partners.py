@@ -88,7 +88,7 @@ class DiseInfo(BaseModel):
         for facility in self.disefacilityagg_set.all().select_related('df_metric'):
             if facility.df_group not in dise_facilities:
                 dise_facilities[facility.df_group] = {}
-            dise_facilities[facility.df_group][str(facility.df_metric.value).strip()] = facility.score
+            dise_facilities[facility.df_group][str(facility.df_metric.value).strip()] = (facility.score == 100)
         return dise_facilities
 
 
