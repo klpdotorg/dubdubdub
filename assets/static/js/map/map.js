@@ -142,11 +142,11 @@
         }
 
         var overlays = {
-            'Schools': schoolCluster,
-            'Preschools': preschoolCluster
+            '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
+            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster
         };
 
-        L.control.layers({}, overlays).addTo(map);
+        L.control.layers({}, overlays, {collapsed: true}).addTo(map);
     };
 
         
@@ -178,7 +178,7 @@
             //     // console.log("params set: "+map_voluteer_date);
             // }
             marker_overlay_html = $("#tpl_marker_overlay").html();
-            map = L.map('map_canvas').setView([12.9793998, 77.5903608], 14);
+            map = L.map('map_canvas', {MaxZoom: 16}).setView([12.9793998, 77.5903608], 14);
             L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '',

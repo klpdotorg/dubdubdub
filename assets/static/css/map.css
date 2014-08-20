@@ -1,14 +1,14 @@
 .marker-cluster-school {
-    background-color: rgba(31, 160, 156, 0.6);
+    background-color: rgba(38, 178, 98, 0.6);
 }
 .marker-cluster-school div {
-    background-color: rgba(31, 160, 156, 0.6);
+    background-color: rgba(38, 178, 98, 0.6);
 }
 .marker-cluster-preschool {
-    background-color: rgba(93, 83, 108, 0.6);
+    background-color: rgba(133, 100, 216, 0.6);
 }
 .marker-cluster-preschool div {
-    background-color: rgba(93, 83, 108, 0.6);
+    background-color: rgba(133, 100, 216, 0.6);
 }
 
 
@@ -32,4 +32,47 @@
 }
 .marker-cluster span {
     line-height: 30px;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: none;
+}
+
+.leaflet-control-layers-toggle {
+    background-image: url("../images/map/layers.png");
+}
+
+.en-icon {
+    display: inline-block;
+}
+
+.leaflet-control-layers label {
+    font-size: 12px;
+    line-height: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #CCC;
+}
+
+.leaflet-control-layers label:last-of-type {
+    border-bottom: none;
+}
+
+.leaflet-control-layers.leaflet-control-layers-expanded {
+    box-shadow: 0px 3px 3px 0px rgba(77, 77, 77, 0.3);
+    width: 220px;
+    border-radius: 0px;
+    background: none repeat scroll 0% 0% #F4F4F4;
+}
+
+.leaflet-container {
+    font-family: "Lato",sans-serif;
+}
+
+.leaflet-control-layers input {
+    float: right;
 }
