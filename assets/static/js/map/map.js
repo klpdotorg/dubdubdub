@@ -74,9 +74,18 @@
         });
         load_map();
 
+        var preschoolIcon = L.icon({
+            iconUrl:'static/images/map/preschool.png',
+            iconSize: [20, 30],
+            iconAnchor: [16, 80],
+            popupAnchor: [-6, -78]
+        });
+
+        var preschoolCluster = new L.MarkerClusterGroup({chunkedLoading: true, removeOutsideVisibleBounds: true, showCoverageOnHover: false}).addTo(map);
+
         var preschoolXHR = klp.api.do('schools/list', {'type':'preschools', 'geometry':'yes', 'per_page':'0'});
         preschoolXHR.done(function (data) {
-                var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng)}, onEachFeature: onEachSchool}).addTo(map);
+                var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng, {icon: preschoolIcon})}, onEachFeature: onEachSchool}).addTo(preschoolCluster);
                     function onEachSchool(feature, layer) {
                         if (feature.properties) {
 

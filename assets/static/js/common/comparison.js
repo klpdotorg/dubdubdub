@@ -113,4 +113,190 @@
         init: init,
         close: close
     };
+
+    function init_comparison_charts() {
+        var chart_width = 300;
+
+        $('#comparison_pie_chart_1').highcharts({
+            chart: {
+                height: chart_width,
+                width:chart_width,
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: null
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    startAngle: 0,
+                    endAngle: 360,
+                    center: ['50%', '50%'],
+                    colors: ['#609adf', '#f87c84']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Count',
+                innerSize: '85%',
+                data: [
+                    ['Boys', 65.0],
+                    ['Girls', 35.0]
+                ]
+            }],
+            credits:{
+                enabled:false
+            },
+            tooltip:{
+                enabled:true,
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
+                }
+            },
+            exporting:{
+                enabled:false
+            }
+        });
+
+        $('#comparison_pie_chart_2').highcharts({
+            chart: {
+                height: chart_width,
+                width:chart_width,
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: null
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    startAngle: 0,
+                    endAngle: 360,
+                    center: ['50%', '50%'],
+                    colors: ['#609adf', '#f87c84']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Count',
+                innerSize: '85%',
+                data: [
+                    ['Boys', 65.0],
+                    ['Girls', 35.0]
+                ]
+            }],
+            credits:{
+                enabled:false
+            },
+            tooltip:{
+                enabled:true,
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
+                }
+            },
+            exporting:{
+                enabled:false
+            }
+        });
+
+        $('#comparison_pie_chart_3').highcharts({
+            chart: {
+                height: chart_width,
+                width:chart_width,
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: null
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    startAngle: 0,
+                    endAngle: 360,
+                    center: ['50%', '50%'],
+                    colors: ['#41a098', '#d23f51', '#f89515']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Count',
+                innerSize: '85%',
+                data: [
+                    ['TLM', 40.0],
+                    ['SMG', 27.0],
+                    ['SG', 32.0]
+                ]
+            }],
+            credits:{
+                enabled:false
+            },
+            tooltip:{
+                enabled:true,
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
+                }
+            },
+            exporting:{
+                enabled:false
+            }
+        });
+
+        $('#comparison_pie_chart_4').highcharts({
+            chart: {
+                height: chart_width,
+                width:chart_width,
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: null
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: false
+                    },
+                    startAngle: 0,
+                    endAngle: 360,
+                    center: ['50%', '50%'],
+                    colors: ['#41a098', '#d23f51', '#f89515']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Count',
+                innerSize: '85%',
+                data: [
+                    ['TLM', 40.0],
+                    ['SMG', 27.0],
+                    ['SG', 32.0]
+                ]
+            }],
+            credits:{
+                enabled:false
+            },
+            tooltip:{
+                enabled:true,
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
+                }
+            },
+            exporting:{
+                enabled:false
+            }
+        });
+    }    
 })();
