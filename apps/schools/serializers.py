@@ -77,8 +77,8 @@ class SchoolInfoSerializer(KLPSerializer):
     parliament = ParliamentSerializer(source="schooldetails.parliament")
     ward = ElectedrepSerializer(source="get_ward")
 
-    num_boys = serializers.IntegerField(source='get_num_boys')
-    num_girls = serializers.IntegerField(source='get_num_girls')
+    num_boys = serializers.IntegerField(source='schooldetails.num_boys')
+    num_girls = serializers.IntegerField(source='schooldetails.num_girls')
     basic_facilities = serializers.CharField(source='get_basic_facilities')
 
     class Meta:
@@ -93,8 +93,8 @@ class SchoolInfoSerializer(KLPSerializer):
 class SchoolDemographicsSerializer(KLPSerializer):
     num_boys_dise = serializers.IntegerField(source='dise_info.boys_count')
     num_girls_dise = serializers.IntegerField(source='dise_info.girls_count')
-    num_boys = serializers.IntegerField(source='get_num_boys')
-    num_girls = serializers.IntegerField(source='get_num_girls')
+    num_boys = serializers.IntegerField(source='schooldetails.num_boys')
+    num_girls = serializers.IntegerField(source='schooldetails.num_girls')
     mt_profile = serializers.CharField(source='get_mt_profile')
     acyear = serializers.IntegerField(source='dise_info.acyear')
 

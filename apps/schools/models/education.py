@@ -179,16 +179,6 @@ class School(GeoBaseModel):
     def get_dise_code(self):
         return self.dise_info_id
 
-    def get_num_boys(self):
-        sum_query = self.institutionagg_set.filter(sex='male').\
-            aggregate(Sum('num'))
-        return sum_query['num__sum']
-
-    def get_num_girls(self):
-        sum_query = self.institutionagg_set.filter(sex='female').\
-            aggregate(Sum('num'))
-        return sum_query['num__sum']
-
     def get_ward(self):
         try:
             return self.electedrep.ward
@@ -212,7 +202,7 @@ class School(GeoBaseModel):
             return facilities
 
         for facility in self.dise_info.disefacilityagg_set.all():
-            if facility.df_metric_id in ['computer_lab', 'library', 'playground']:
+            if facility.df_metric_id in facilities.keys():
                 facilities[facility.df_metric_id] = (facility.score == 100)
 
         return facilities
@@ -238,6 +228,7 @@ class School(GeoBaseModel):
             lib_infra['Number of Computers'] = self.libinfra.numcomputers
             lib_infra['Number of UPS(s)'] = self.libinfra.numups
         except Exception, e:
+            print e
             pass
         return lib_infra
 
@@ -322,10 +313,13 @@ class SchoolDetails(BaseModel):
                                related_name="sd_admin2")
     admin1 = models.ForeignKey("Boundary", db_column="district_id",
                                related_name="sd_admin1")
-    type = models.ForeignKey('BoundaryType', db_column='type')
+    type = models.ForeignKey('BoundaryType', db_column='stype')
     assembly = models.ForeignKey('Assembly', db_column='assembly_id')
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')
     postal = models.ForeignKey('Postal', db_column='pin_id')
+
+    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
+    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
 
     def __unicode__(self):
         return str(self.pk)

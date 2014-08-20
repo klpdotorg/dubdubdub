@@ -86,7 +86,7 @@ class SchoolInfo(KLPDetailAPIView):
                             'schooldetails__parliament', 'electedrep__ward',
                             'schooldetails__admin1__hierarchy',
                             'schooldetails__admin2__hierarchy',
-                            'schooldetails__admin3__hierarchy',)
+                            'schooldetails__admin3__hierarchy')
 
 
 class SchoolDemographics(KLPDetailAPIView):
