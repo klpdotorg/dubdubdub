@@ -46,6 +46,10 @@
     display: inline-block;
 }
 
+.leaflet-control-layers {
+    border-radius: 5px 5px 0px 0px;
+}
+
 .leaflet-control-layers label {
     font-size: 12px;
     line-height: 26px;
@@ -75,4 +79,24 @@
 
 .leaflet-control-layers input {
     float: right;
+}
+
+.filter-control {
+    margin-top: 0px !important;
+    border-top: 1px solid #ccc;
+}
+
+.filter-tool {
+    background-color: white;
+    background-position: 50% 50%;
+    background-image: url('../images/map/filters.png');
+    background-repeat: no-repeat;
+    border-radius: 0px 0px 5px 5px;
+    width: 44px;
+    height: 44px;
+    display: block;
+}
+
+.filter-tool.active {
+    background-image: url('../images/map/filters_active.png');
 }

@@ -103,6 +103,8 @@
 
         var schoolXHR = klp.api.do('schools/list', {'type':'primaryschools', 'geometry':'yes', 'per_page':'0'});
 
+        var districtXHR = klp.api.do('boundary/admin1s', {'geometry':'yes', 'per_page':0});
+
         function onEachSchool(feature, layer) {
             if (feature.properties) {
 
@@ -120,6 +122,11 @@
             var schoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: schoolIcon});}, onEachFeature: onEachSchool}).addTo(schoolCluster);
         });
+
+        districtXHR.done(function (data) {
+            var districtLayer
+        })
+
 
         function markerPopup(marker, feature) {
             // var marker = this;
@@ -147,6 +154,36 @@
         };
 
         L.control.layers({}, overlays, {collapsed: true}).addTo(map);
+
+        // Control for Filters.
+
+        var filterControl = L.Control.extend({
+            options: {
+                position: 'topright'
+            },
+
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div', 'leaflet-control filter-control');
+                container.title = 'Filter Schools';
+                button = "<a class='filter-tool' href='#'></a>";
+                container.innerHTML = button;
+                L.DomEvent
+                .addListener(container, 'click', L.DomEvent.stopPropagation)
+                .addListener(container, 'click', L.DomEvent.preventDefault)
+                .addListener(container, 'click', this.onClick);
+
+                return container;
+            },
+
+            onClick: function(e) {
+                L.DomUtil.addClass(e.target, 'active');
+                klp.filters_modal.open();
+            }
+        });
+
+        map.addControl(new filterControl());
+        // var filter = new filterControl();
+        // filter.addTo(map);
     };
 
         
