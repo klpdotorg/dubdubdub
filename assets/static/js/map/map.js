@@ -78,14 +78,14 @@
         load_map();
 
         var preschoolIcon = L.icon({
-            iconUrl:'static/images/map/preschool.png',
+            iconUrl:'static/images/map/icon_preschool.png',
             iconSize: [20, 30],
             iconAnchor: [16, 80],
             popupAnchor: [-6, -78]
         });
 
         var schoolIcon = L.icon({
-            iconUrl:'static/images/map/school.png',
+            iconUrl:'static/images/map/icon_school.png',
             iconSize: [20, 30],
             iconAnchor: [16, 80],
             popupAnchor: [-6, -78]
@@ -113,12 +113,12 @@
         }
 
         preschoolXHR.done(function (data) {
-            var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng, {icon: preschoolIcon})}, onEachFeature: onEachSchool}).addTo(preschoolCluster);
+            var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng, {icon: preschoolIcon});}, onEachFeature: onEachSchool}).addTo(preschoolCluster);
         });
 
         schoolXHR.done(function (data) {
             var schoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
-                return L.marker(latlng, {icon: schoolIcon})}, onEachFeature: onEachSchool}).addTo(schoolCluster);
+                return L.marker(latlng, {icon: schoolIcon});}, onEachFeature: onEachSchool}).addTo(schoolCluster);
         });
 
         function markerPopup(marker, feature) {
@@ -140,6 +140,13 @@
                 }
             });
         }
+
+        var overlays = {
+            'Schools': schoolCluster,
+            'Preschools': preschoolCluster
+        };
+
+        L.control.layers({}, overlays).addTo(map);
     };
 
         
