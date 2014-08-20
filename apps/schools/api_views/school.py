@@ -52,7 +52,8 @@ class SchoolsInfo(SchoolsList):
                             'schooldetails__parliament', 'electedrep__ward',
                             'schooldetails__admin1__hierarchy',
                             'schooldetails__admin2__hierarchy',
-                            'schooldetails__admin3__hierarchy',)
+                            'schooldetails__admin3__hierarchy',)\
+            .prefetch_related('dise_info__disefacilityagg_set')
 
 
 class SchoolsDiseInfo(KLPListAPIView):
