@@ -1,0 +1,35 @@
+.marker-cluster-school {
+    background-color: rgba(31, 160, 156, 0.6);
+}
+.marker-cluster-school div {
+    background-color: rgba(31, 160, 156, 0.6);
+}
+.marker-cluster-preschool {
+    background-color: rgba(93, 83, 108, 0.6);
+}
+.marker-cluster-preschool div {
+    background-color: rgba(93, 83, 108, 0.6);
+}
+
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+    margin-left: -20px !important;
+    margin-top: -20px !important;
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.marker-cluster span {
+    line-height: 30px;
+}
