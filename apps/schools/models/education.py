@@ -66,7 +66,7 @@ class Boundary(BaseModel):
     parent = models.ForeignKey("Boundary", blank=True, null=True,
                                db_column='parent', on_delete=models.SET_NULL)
     name = models.CharField(max_length=300)
-    hierarchy = models.ForeignKey(BoundaryHierarchy, db_column='hid')
+    hierarchy = models.ForeignKey('BoundaryHierarchy', db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
 
     def __unicode__(self):
