@@ -198,7 +198,6 @@ class School(GeoBaseModel):
             if not self.dise_info:
                 raise Exception('no dise')
         except Exception, e:
-            print e
             return facilities
 
         for facility in self.dise_info.disefacilityagg_set.all():
