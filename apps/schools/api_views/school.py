@@ -39,6 +39,7 @@ class SchoolsList(KLPListAPIView):
 class SchoolsInfo(SchoolsList):
     '''
         Returns list of schools with more info about each school
+        for /schools/info
     '''
     serializer_class = SchoolInfoSerializer
     filter_class = SchoolFilter
@@ -75,7 +76,7 @@ class SchoolsDiseInfo(KLPListAPIView):
 
 class SchoolInfo(KLPDetailAPIView):
     '''
-        Returns info for a single school.
+        Returns info for a single school. for /school/:id
     '''
     serializer_class = SchoolInfoSerializer
 

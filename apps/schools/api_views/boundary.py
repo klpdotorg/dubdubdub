@@ -14,8 +14,8 @@ class Admin1s(KLPListAPIView):
 
     def get_queryset(self):
         return Boundary.objects.filter(hierarchy__name='district')\
-            .select_related('boundarycoord__coord', 'type__name',
-                            'hierarchy__name')
+            .select_related('boundarycoord__coord')\
+            .prefetch_related('hierarchy')
 
 
 class Admin2sInsideAdmin1(KLPListAPIView):
@@ -62,10 +62,9 @@ class Admin2s(KLPListAPIView):
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
-        return Boundary.objects.filter(Q(hierarchy__name='block') |
-                                       Q(hierarchy__name='project'))\
-            .select_related('boundarycoord__coord', 'type__name',
-                            'hierarchy__name')
+        return Boundary.objects.filter(hierarchy__name__in=['block', 'project'])\
+            .select_related('boundarycoord__coord')\
+            .prefetch_related('parent', 'hierarchy')
 
 
 class Admin3sInsideAdmin2(KLPListAPIView):
@@ -91,7 +90,6 @@ class Admin3s(KLPListAPIView):
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
-        return Boundary.objects.filter(Q(hierarchy__name='cluster') |
-                                       Q(hierarchy__name='circle'))\
-            .select_related('boundarycoord__coord', 'type__name',
-                            'hierarchy__name')
+        return Boundary.objects.filter(hierarchy__name__in=['cluster', 'circle'])\
+            .select_related('boundarycoord__coord')\
+            .prefetch_related('parent', 'hierarchy')

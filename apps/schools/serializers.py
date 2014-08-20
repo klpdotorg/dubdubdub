@@ -18,7 +18,7 @@ class BoundaryTypeSerializer(KLPSerializer):
 
 
 class BoundarySerializer(KLPSerializer):
-    type = serializers.CharField(source='get_type')
+    type = serializers.CharField(source='hierarchy.name')
 
     class Meta:
         model = Boundary
@@ -26,7 +26,7 @@ class BoundarySerializer(KLPSerializer):
 
 
 class BoundaryWithParentSerializer(KLPSerializer):
-    type = serializers.CharField(source='get_type')
+    type = serializers.CharField(source='hierarchy.name')
     parent = BoundarySerializer(source='parent')
 
     class Meta:
