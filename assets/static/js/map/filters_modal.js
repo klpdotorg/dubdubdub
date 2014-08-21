@@ -28,10 +28,16 @@
     };
 
     t.open = function() {
+        klp.openModal = t;
         var $modal_overlay = $("#modal_overlay");
-        var $modal = $(".modal-map-filter");        
+        var $modal = $(".modal-map-filter");      
         $modal_overlay.addClass("show");
         $modal.addClass("show");
+    };
+
+    t.close = function() {
+        var $filter_toggle = $(".filter-tool");
+        $filter_toggle.removeClass('active');
     };
 
 
