@@ -40,6 +40,8 @@
 
 .leaflet-control-layers-toggle {
     background-image: url("../images/map/layers.png");
+    width: 36px !important;
+    height: 36px !important;
 }
 
 .en-icon {
@@ -92,8 +94,8 @@
     background-image: url('../images/map/filters.png');
     background-repeat: no-repeat;
     border-radius: 0px 0px 5px 5px;
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     display: block;
 }
 
