@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 # from django.contrib import admin
 # admin.autodiscover()
-
+from schools.views import SchoolPageView
 from common.views import StaticPageView
 
 urlpatterns = patterns('',
@@ -78,6 +78,8 @@ urlpatterns = patterns('',
             #'header_fixed': True,
             #'hide_footer': True
         }), name='school_detail'),
+
+    url(r'^schoolpage/school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {

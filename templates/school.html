@@ -12,6 +12,10 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
     <script src="{% static 'js/inline-school.js' %}"></script>
+    <script>
+        SCHOOL_ID = {{ object.id }};
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -24,7 +28,7 @@
                 <div class="container">
                     <div class="info-wrapper">
                         <div class="en-icon big en-school school-entity-icon">S</div>
-                        <h2 class="en-school">Karnataka Primary School</h2>
+                        <h2 class="en-school">{{ object.name }}</h2>
 
                         <div class="address-block">
                             <div class="info-item">
