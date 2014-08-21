@@ -75,6 +75,14 @@ class Boundary(BaseModel):
     def get_type(self):
         return self.hierarchy.name
 
+    def get_school_type(self):
+        if self.hierarchy_id in [9, 10, 11]:
+            return 'primaryschool'
+        elif self.hierarchy_id in [13, 14, 15]:
+            return 'preschool'
+        else:
+            return 'school'
+
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
             return json.loads(self.boundarycoord.coord.geojson)

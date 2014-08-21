@@ -13,10 +13,19 @@ class Admin1s(KLPListAPIView):
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
-        return Boundary.objects.filter(hierarchy__name='district')\
+        btype = self.request.GET.get('school_type', 'all')
+        qset = Boundary.objects\
             .select_related('boundarycoord__coord')\
             .prefetch_related('hierarchy')
 
+        if btype == 'preschools':
+            qset = qset.filter(hierarchy_id=13)
+        elif btype == 'primaryschools':
+            qset = qset.filter(hierarchy_id=9)
+        else:
+            qset = qset.filter(hierarchy__name='district')
+
+        return qset
 
 class Admin2sInsideAdmin1(KLPListAPIView):
     '''
@@ -62,9 +71,19 @@ class Admin2s(KLPListAPIView):
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
-        return Boundary.objects.filter(hierarchy__name__in=['block', 'project'])\
+        btype = self.request.GET.get('school_type', 'all')
+        qset = Boundary.objects\
             .select_related('boundarycoord__coord')\
             .prefetch_related('parent', 'hierarchy')
+
+        if btype == 'preschools':
+            qset = qset.filter(hierarchy__name='project')
+        elif btype == 'primaryschools':
+            qset = qset.filter(hierarchy__name='block')
+        else:
+            qset = qset.filter(hierarchy__name__in=['block', 'project'])
+
+        return qset
 
 
 class Admin3sInsideAdmin2(KLPListAPIView):
@@ -90,6 +109,16 @@ class Admin3s(KLPListAPIView):
     bbox_filter_field = 'boundarycoord__coord'
 
     def get_queryset(self):
-        return Boundary.objects.filter(hierarchy__name__in=['cluster', 'circle'])\
+        btype = self.request.GET.get('school_type', 'all')
+        qset = Boundary.objects\
             .select_related('boundarycoord__coord')\
             .prefetch_related('parent', 'hierarchy')
+
+        if btype == 'preschools':
+            qset = qset.filter(hierarchy__name='circle')
+        elif btype == 'primaryschools':
+            qset = qset.filter(hierarchy__name='cluster')
+        else:
+            qset = qset.filter(hierarchy__name__in=['cluster', 'circle'])
+
+        return qset
