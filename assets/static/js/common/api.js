@@ -5,6 +5,9 @@
             if (typeof(method) === 'undefined') {
                 method = 'GET';
             }
+            if (typeof(data) === 'undefined') {
+                data = {};
+            }
             var $xhr = $.ajax({
                 url: base + endpoint,
                 data: data,

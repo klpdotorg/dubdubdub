@@ -7,11 +7,19 @@
     <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
     <script src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
+    <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
+    <script src="{% static 'js/lib/swig.min.js' %}"></script>
+    <script src="{% static 'js/lib/swig.filters.js' %}"></script>
+    <script src="{% static 'js/klp.js' %}"></script>
+    <script src="{% static 'js/common/api.js' %}"></script>
+    <script src="{% static 'js/school/init.js' %}"></script>
+    <script src="{% static 'js/school/tabs.js' %}"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-    <script src="{% static 'js/inline-school.js' %}"></script>
+    <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
+
     <script>
         SCHOOL_ID = {{ object.id }};
     </script>
@@ -67,530 +75,42 @@
         </div>
 
         <div class="school-details js-tabs-wrapper">
+
             <div class="tab-heading">Info</div>
-            <div class="tab-content container current" data-tab="info">
-                <div class="fl-desktop">
-                    <h4>Address</h4>
-                    <p>1st Main Road, 2nd Cross, Yeshwanthura, <strong>Bangalore</strong> - 560022</p>
-
-                    <h4 class="mar_top_25">Landmark</h4>
-                    <p>Near St. Francis Church</p>
-
-                    <h4 class="mar_top_25">School Information</h4>
-                    <table class="info_data_table">
-                        <tr>
-                            <td>Category</td>
-                            <td>Model Primary</td>
-                        </tr>
-                        <tr>
-                            <td>Buses</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Gender</td>
-                            <td>Co-ed</td>
-                        </tr>
-                        <tr>
-                            <td>Medium</td>
-                            <td>Kannada</td>
-                        </tr>
-                        <tr>
-                            <td>DSIE</td>
-                            <td>290200050050007</td>
-                        </tr>
-                    </table>
-
-                    <h4 class="mar_top_25">Constituency Information</h4>
-                    <table class="info_data_table">
-                        <tr>
-                            <td>MLA Constituency</td>
-                            <td>Malleswaram</td>
-                        </tr>
-                        <tr>
-                            <td>MLA Details</td>
-                            <td>Dr. Ashwath Narayan (BJP)</td>
-                        </tr>
-                        <tr>
-                            <td>MLA Constituency</td>
-                            <td>Malleswaram</td>
-                        </tr>
-                        <tr>
-                            <td>MLA Details</td>
-                            <td>DB Chandre Gowada (BJP)</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="photos-block fr-desktop">
-                    <h4>Photos</h4>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <a href=""><img src="images/map_photo.jpg" alt=""></a>
-                    <div class="clr"></div>
-                </div>
-                <div class="clr"></div>
+            <div class="tab-content container" data-tab="info">
             </div>  <!-- Info Tab END -->
 
             <div class="tab-heading">Demographics</div>
             <div class="tab-content container" data-tab="demographics">
-                <div class="fl-desktop-tablet">
-                    <h4>Student Information</h4>
-
-                    <div class="pie-chart-wrapper">
-                        <div id="pie_chart_1" class="chart fl"></div>
-                        <div class="gender_icons fl">
-                            <div class="stats_gender_item no_width boy">
-                                <span class="icon"></span>
-                                <p class="label">Boys</p>
-                                <p class="value">65%</p>
-                                <div class="clr"></div>
-                            </div>
-                            <div class="stats_gender_item no_width girl">
-                                <span class="icon"></span>
-                                <p class="label">Girls</p>
-                                <p class="value">65%</p>
-                                <div class="clr"></div>
-                            </div>
-                        </div>
-                        <div class="clr"></div>
-                    </div>
-                </div>
-                <div class="fr-desktop-tablet">
-                    <h4>Languages</h4>
-                    <div class="bar_graph_hor mar_top_25">
-                        <div class="item">
-                            <div class="label fl">English</div>
-                            <div class="bar fr"><div class="value" style="width:35%;"></div></div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="item">
-                            <div class="label fl">Kannada</div>
-                            <div class="bar fr"><div class="value" style="width:60%;"></div></div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="item">
-                            <div class="label fl">Urdu</div>
-                            <div class="bar fr"><div class="value" style="width:35%;"></div></div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="item">
-                            <div class="label fl">Others</div>
-                            <div class="bar fr"><div class="value" style="width:20%;"></div></div>
-                            <div class="clr"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clr"></div>
-
-                <h4 class="mar_top_25">DISE Student Profile</h4>
-                <table class="info_data_table label_small">
-                    <tr>
-                        <td>Source</td>
-                        <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
-                    </tr>
-                </table>
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=demographics</b></a>
-                    </p>
-                </div>
             </div>  <!-- Demographics Tab END -->
 
             <div class="tab-heading">Programmes</div>
             <div class="tab-content container" data-tab="programmes">
-                <h4>Programme Information</h4>
-                <a href="" class="black external"><b>Akshara Foundation-Reading (2006)</b></a><br/>
-                <a href="" class="black external"><b>Akshara Foundation-Remedial_Math_Level2 (2008)</b></a>
-
-                <table class="info_data_table label_small mar_top_25">
-                    <tr>
-                        <td>Source</td>
-                        <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
-                    </tr>
-                </table>
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=programmes</b></a>
-                    </p>
-                </div>
             </div>  <!-- Programme Tab END -->
 
             <div class="tab-heading">Finances</div>
             <div class="tab-content container" data-tab="finances">
-                <h4>SSA GRANTS ALLOCATION</h4>
-
-                <div class="ta_c" id="pie_chart_finance">{ Chart here }</div>
-
-                <table class="info_data_table label_longer mar_top_25 mar_btm_25">
-                    <tr>
-                        <td>School Maintence Grant (SMG)</td>
-                        <td>₹ 5,000 for upto 3 classrooms and ₹ 10,000 for more than 3 classrooms.</td>
-                    </tr>
-                    <tr>
-                        <td>School Grant (SG)</td>
-                        <td>₹ 5,000 for lower primary schools and ₹ 7,000 for upper and model primary schools.</td>
-                    </tr>
-                    <tr>
-                        <td>Teacher Learning Material Grant (TLM)</td>
-                        <td>₹ 500 per teacher.</td>
-                    </tr>
-                </table>
-
-                <p>
-                    This school with 3 classrooms or fewer has 3 teachers as per DISE sources.<br/>
-                    It is known to receive a total annual SSA grant of ₹ 13,500.
-                </p>
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=finances</b></a>
-                    </p>
-                </div>
             </div>  <!-- Finances Tab END -->
 
             <div class="tab-heading">Infrastructure</div>
             <div class="tab-content container" data-tab="infrastructure">
-                <h4>Infrastructure</h4>
-
-                <table class="infra_data_table mar_btm_25 fl-desktop">
-                    <tr>
-                        <td>Toilet Facilities</td>
-                        <td>
-                            <div class="green">Has Usable Toilets</div>
-                            <div class="red">Has Toilets</div>
-                            <div class="grey">Has Toilets</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Nutrition and Hygine</td>
-                        <td>
-                            <div class="green">Has Drinking Water Facilities</div>
-                            <div class="red">Has Handwash Facilities</div>
-                            <div class="grey">Has Clean and Timely Meals</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Basic Infrastructure</td>
-                        <td>
-                            <div class="green">Has Spacious Classrooms and Play Class</div>
-                            <div class="red">Has Walls Intact</div>
-                            <div class="grey">Has Flooring Intact</div>
-                            <div class="red">Has Roofs Intact</div>
-                            <div class="grey">Is in a Designated Building by DWCD</div>
-                            <div class="red">Has Water Supply</div>
-                            <div class="green">Has Waste Baskets</div>
-                        </td>
-                    </tr>
-                </table>
-
-                <div class="infra_data_indicators fr-desktop">
-                    <div class="green item">Indicates infrastructure present</div>
-                    <div class="red item">Indicates infrastructure absent</div>
-                    <div class="grey item">Indicates information unavailable</div>
-                </div>
-                <div class="clr"></div>
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=infrastructure</b></a>
-                    </p>
-                </div>
             </div>  <!-- Infrastructure Tab END -->
 
             <div class="tab-heading">Library</div>
             <div class="tab-content container" data-tab="library">
-
-                <div class="options-wrapper">
-                    <select name="" id="select_library_browse" class="apply-selectboxit">
-                        <option value="level" selected>Borrow By Level</option>
-                        <option value="language">Borrow By Language</option>
-                        <option value="aggregate">Aggregate</option>
-                    </select>
-
-                    <select name="" id="select_library_year" class="apply-selectboxit">
-                        <option data-selectedtext="Year 2012-2013" value="2012-2013" selected>2012-2013</option>
-                        <option data-selectedtext="Year 2011-2013" value="2011-2013">2011-2012</option>
-                        <option data-selectedtext="Year 2010-2011" value="2010-2011">2010-2011</option>
-                    </select>
-
-                    <select name="" id="select_library_class" class="apply-selectboxit">
-                        <option data-selectedtext="Class 1" value="1" selected>1</option>
-                        <option data-selectedtext="Class 2" value="2">2</option>
-                        <option data-selectedtext="Class 3" value="3">3</option>
-                    </select>
-
-                    <button class="styled" id="library_graph_table_switch">Switch to Table View</button>
-
-                </div>
-
-                <div class="ta_c" id="graph_library">{ Graph here }</div>
-
-                <table id="table_library" class="basic_table mar_top_25" style="display:none;">
-                    <tr>
-                        <th>Month</th>
-                        <th>Kannada</th>
-                        <th>Urdu</th>
-                        <th>Telugu</th>
-                        <th>Tamil</th>
-                        <th>Hindi</th>
-                        <th>English</th>
-                    </tr>
-                    <tr>
-                        <td>Jan</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Feb</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Mar</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Apr</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>May</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Jun</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Jul</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Aug</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Sep</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Oct</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Nov</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Dec</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>0.4</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                </table>
-
-                <h4 class="mar_top_25">Akshara Library Details</h4>
-
-                <table class="info_data_table label_long mar_top_25 mar_btm_25">
-                    <tr>
-                        <td>Number of Chairs</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Books</td>
-                        <td>1006</td>
-                    </tr>
-                    <tr>
-                        <td>Number of UPS(s)</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Status Library</td>
-                        <td>Handed over</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Tables</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Racks</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Number of Computers</td>
-                        <td>-</td>
-                    </tr>
-                </table>
-
-                <p>DISE Reports Number of Books as : <strong>175</strong></p>
-
-                <table class="info_data_table label_small">
-                    <tr>
-                        <td>Source</td>
-                        <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
-                    </tr>
-                </table>
-
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=nutrition</b></a>
-                    </p>
-                </div>
             </div>  <!-- Library Tab END -->
 
             <div class="tab-heading">Nutrition</div>
             <div class="tab-content container" data-tab="nutrition">
-                <h4>Mid-day Meal Summary</h4>
-
-                <div class="ta_c" id="graph_nutrition">{ Graph here }</div>
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=nutrition</b></a>
-                    </p>
-                </div>
             </div>  <!-- Nutrition Tab END -->
 
             <div class="tab-heading">Share your story</div>
             <div class="tab-content container" data-tab="share-story">
-                <div class="fl-desktop-tablet width-48p-desktop-tablet">
-                    <h4>Information from schools visits</h4>
-
-                    <p>
-                        This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:
-                    </p>
-
-                    <table class="info_data_table label_longer mar_top_25 mar_btm_25">
-                        <tr>
-                            <td>Play Material or Sports Equipment</td>
-                            <td class="green">Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Separate Room For Headmaster</td>
-                            <td class="red">No or Unknown</td>
-                        </tr>
-                        <tr>
-                            <td>Separate Toilet for Boys and Girls</td>
-                            <td class="green">Yes</td>
-                        </tr>
-                        <tr>
-                            <td>Library</td>
-                            <td class="green">Yes</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="fr-desktop-tablet width-48p-desktop-tablet">
-                    <div class="share-your-story">
-                        <a href="" id="trigger_share_story_modal" class="button orange">Share you story</a>
-                        <br/>
-                        <div class="stats first">
-                            <div class="number">4</div>
-                            <div class="text">Number of School Visits</div>
-                        </div>
-                        <div class="stats">
-                            <div class="number">4</div>
-                            <div class="text">Shared Stories</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="clr-phone-tablet"></div> -->
-
-                <div class="fr-desktop-tablet width-48p-desktop-tablet">
-
-                    <div class="comments mar_top_25">
-                        <h4>Visitor Comments</h4>
-                        <div class="comment-item first">
-                            <div class="name">Saheem Fatima</div>
-                            <p class="text">No electricity and no water supply.</p>
-                            <div class="timestamp">Shared on : July,21 2013</div>
-                        </div>
-                        <div class="comment-item">
-                            <div class="name">Saheem Fatima</div>
-                            <p class="text">No electricity and no water supply.</p>
-                            <div class="timestamp">Shared on : July,21 2013</div>
-                        </div>
-                        <div class="comment-item last">
-                            <div class="name">Saheem Fatima</div>
-                            <p class="text">No electricity and no water supply.</p>
-                            <div class="timestamp">Shared on : July,21 2013</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="clr"></div>
-
-                <div class="top_bordered_block">
-                    <p>
-                        Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=nutrition</b></a>
-                    </p>
-                </div>
             </div>  <!-- Share your story Tab END -->
+
         </div>
 
     </section>
 
+    {% include 'frontend_templates/school.html' %}
 {% endblock %}
