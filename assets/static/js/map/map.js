@@ -46,7 +46,6 @@
         // });
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
-        
         window_width = $(window).width();
         tpl_map_popup = swig.compile($("#tpl-map-popup").html());
         tpl_mobile_place_details = swig.compile($(
@@ -121,6 +120,12 @@
             }
         }
 
+        function onEachFeature(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(_.str.titleize(feature.properties.name));
+            }
+        }
+
         preschoolXHR.done(function (data) {
             var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng, {icon: preschoolIcon});}, onEachFeature: onEachSchool}).addTo(preschoolCluster);
         });
@@ -130,9 +135,10 @@
                 return L.marker(latlng, {icon: schoolIcon});}, onEachFeature: onEachSchool}).addTo(schoolCluster);
         });
 
+        var districtLayer;
         districtXHR.done(function (data) {
-            var districtLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
-                return L.marker(latlng, {icon: districtIcon});}, onEachFeature: onEachSchool});
+            districtLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {icon: districtIcon});}, onEachFeature: onEachFeature});
 
             districtLayer.addTo(map);
         });
