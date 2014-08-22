@@ -1,5 +1,6 @@
 (function() {
     window.klp = {};
+    klp.data = {};
     klp.openModal = null;
     $(document).ready(function() {
         $(document).on('click', ".btn-modal-close", function(e){

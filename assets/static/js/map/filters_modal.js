@@ -6,13 +6,14 @@
     t.init = function() {
         $_filter_button = $("#filter-button");
         $_filter_button.on("click", t.open);
-        $('.filters-dropdown').easyDropDown({
-            onChange: function(selected) {
-                var filterName = $(this).attr('name');
-                var selectedValue = selected.value;
-                t.setFilter(filterName, selectedValue);
-            }
-        });
+        $('.filters-dropdown').select2();
+        // $('.filters-dropdown').easyDropDown({
+        //     onChange: function(selected) {
+        //         var filterName = $(this).attr('name');
+        //         var selectedValue = selected.value;
+        //         t.setFilter(filterName, selectedValue);
+        //     }
+        // });
         // $('.option_item .item_values ul').slimScroll({
         //     height: '200px',
         //     size: '6px',
@@ -21,6 +22,42 @@
         //     railColor: '#f6f6f6',
         //     railOpacity: 1
         // });
+        var $select_district = $("#select-districts");
+        var $select_school = $("#select-school");
+
+        var districtsXHR = function(school_type) {
+            return klp.api.do('boundary/admin1s', {'school_type':school_type});
+        };
+
+        function format(item) { 
+            return _.str.titleize(item.name); 
+        };
+
+        $select_school.on("change", function(selected) {
+            if (selected.val == 'Primary School') {
+                districtsXHR('primaryschools').done(function (data) {
+                    $select_district.select2({
+                        data: {
+                            results: data.features,
+                            text: function(item) {
+                                return item.name;
+                            }
+                        },
+                        formatSelection: format,
+                        formatResult: format,
+                        width: 'element'
+                    });
+                });      
+            }
+
+            if (selected.val == 'Preschool') {
+                districtsXHR('preschools').done(function (data) {
+                    console.log('preschool', data);
+                });
+            }
+        });
+
+
     };
 
     t.setFilter = function(filterName, selectedValue) {
