@@ -97,6 +97,13 @@
             popupAnchor: [-6, -78]
         });
 
+        var preschoolDistrictIcon = L.icon({
+            iconUrl:'static/images/map/icon_preschool_district.png',
+            iconSize: [20, 30],
+            iconAnchor: [16, 80],
+            popupAnchor: [-6, -78]
+        });
+
         var preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(map);
@@ -105,11 +112,13 @@
             return new L.DivIcon({ className:'marker-cluster marker-cluster-school', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(map);
 
-        var preschoolXHR = klp.api.do('schools/list', {'type':'preschools', 'geometry':'yes', 'per_page':'0'});
+        var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0});
 
-        var schoolXHR = klp.api.do('schools/list', {'type':'primaryschools', 'geometry':'yes', 'per_page':'0'});
+        var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
-        var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry':'yes', 'per_page':0});
+        var districtXHR = klp.api.do('boundary/admin1s', {'school_type':' primaryschools', 'geometry': 'yes', 'per_page': 0});
+
+        var preschoolDistrictXHR = klp.api.do('boundary/admin1s', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0});
 
         function onEachSchool(feature, layer) {
             if (feature.properties) {
@@ -147,7 +156,14 @@
         var districtLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: districtIcon});
-            }, 
+            },
+            onEachFeature: onEachFeature
+        });
+
+        var preschoolDistrictLayer = L.geoJson(null, {
+            pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {icon: preschoolDistrictIcon});
+            },
             onEachFeature: onEachFeature
         });
 
@@ -156,6 +172,10 @@
             districtLayer.addTo(map);
         });
 
+        preschoolDistrictXHR.done(function (data) {
+            preschoolDistrictLayer.addData(filterGeoJSON(data));
+            preschoolDistrictLayer.addTo(map);
+        });
 
         function markerPopup(marker, feature) {
             // var marker = this;
@@ -180,7 +200,8 @@
         var overlays = {
             '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
             '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
-            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer
+            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer,
+            '<span class="en-icon small en-preschool-district">pd</span> <span class="label en-preschool-district">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer
         };
 
         L.control.layers({}, overlays, {collapsed: true}).addTo(map);
