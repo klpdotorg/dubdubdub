@@ -1,33 +1,66 @@
+{% verbatim %}
+
+<script type="text/html" id="tpl-school-info">
+    <div class="en-icon big en-school school-entity-icon">
+        S
+    </div>
+    <h2 class="en-school">{{ name }}</h2>
+
+    <div class="address-block">
+        <div class="info-item">
+            <div class="label">District</div>
+            <div class="value">{{ admin1.name|capitalize }}</div>
+        </div>
+        <div class="info-item">
+            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+            <div class="value">{{ admin2.name|capitalize }}</div>
+        </div>
+        <div class="info-item">
+            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+            <div class="value">{{ admin3.name|capitalize }}</div>
+        </div>
+        <div class="clr"></div>
+    </div>
+</script>
+
 <script type="text/html" id="tpl-tab-info">
     <div class="fl-desktop">
+        {% if address_full %}
         <h4>Address</h4>
-        <p>1st Main Road, 2nd Cross, Yeshwanthura, <strong>Bangalore</strong> - 560022</p>
+        <p>{{ address_full }}</p>
+        {% endif %}
 
+        {% if landmark %}
         <h4 class="mar_top_25">Landmark</h4>
-        <p>Near St. Francis Church</p>
+        <p>{{ landmark }}</p>
+        {% endif %}
 
         <h4 class="mar_top_25">School Information</h4>
         <table class="info_data_table">
             <tr>
                 <td>Category</td>
-                <td>Model Primary</td>
+                <td>{{ type.name }}</td>
             </tr>
+            {% if buses %}
             <tr>
                 <td>Buses</td>
-                <td>0</td>
+                <td>{{ buses }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <td>Gender</td>
-                <td>Co-ed</td>
+                <td>{{ sex|capitalize }}</td>
             </tr>
             <tr>
                 <td>Medium</td>
-                <td>Kannada</td>
+                <td>{{ moi|capitalize }}</td>
             </tr>
+            {% if dise_code %}
             <tr>
-                <td>DSIE</td>
-                <td>290200050050007</td>
+                <td>DISE</td>
+                <td>{{ dise_code }}</td>
             </tr>
+            {% endif %}
         </table>
 
         <h4 class="mar_top_25">Constituency Information</h4>
@@ -70,18 +103,18 @@
         <h4>Student Information</h4>
 
         <div class="pie-chart-wrapper">
-            <div id="pie_chart_1" class="chart fl"></div>
+            <div id="num_students_piechart" class="chart fl"></div>
             <div class="gender_icons fl">
                 <div class="stats_gender_item no_width boy">
                     <span class="icon"></span>
                     <p class="label">Boys</p>
-                    <p class="value">65%</p>
+                    <p class="value">{{ percent_boys }}%</p>
                     <div class="clr"></div>
                 </div>
                 <div class="stats_gender_item no_width girl">
                     <span class="icon"></span>
                     <p class="label">Girls</p>
-                    <p class="value">65%</p>
+                    <p class="value">{{ percent_girls }}%</p>
                     <div class="clr"></div>
                 </div>
             </div>
@@ -91,26 +124,13 @@
     <div class="fr-desktop-tablet">
         <h4>Languages</h4>
         <div class="bar_graph_hor mar_top_25">
+            {% for mt, percent in mt_profile_percents %}
             <div class="item">
-                <div class="label fl">English</div>
-                <div class="bar fr"><div class="value" style="width:35%;"></div></div>
+                <div class="label fl">{{ mt|capitalize }}</div>
+                <div class="bar fr"><div class="value" style="width:{{ percent }}%;"></div></div>
                 <div class="clr"></div>
             </div>
-            <div class="item">
-                <div class="label fl">Kannada</div>
-                <div class="bar fr"><div class="value" style="width:60%;"></div></div>
-                <div class="clr"></div>
-            </div>
-            <div class="item">
-                <div class="label fl">Urdu</div>
-                <div class="bar fr"><div class="value" style="width:35%;"></div></div>
-                <div class="clr"></div>
-            </div>
-            <div class="item">
-                <div class="label fl">Others</div>
-                <div class="bar fr"><div class="value" style="width:20%;"></div></div>
-                <div class="clr"></div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     <div class="clr"></div>
@@ -513,3 +533,5 @@
     </div>
 
 </script>
+
+{% endverbatim %}

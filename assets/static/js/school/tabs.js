@@ -13,7 +13,10 @@
                 getData: function() {
                     return klp.api.do(schoolInfoURL);
                 },
-                onRender: function() {
+                getContext: function(data) {
+                    return data;
+                },
+                onRender: function(data) {
                     console.log("post render info");
                 }
             },
@@ -21,7 +24,72 @@
                 getData: function() {
                     return klp.api.do(schoolInfoURL + '/demographics');
                 },
-                onRender: function() {
+                getContext: function(data) {
+                    var total_students = data.num_boys + data.num_girls;
+                    _(['num_boys', 'num_girls']).each(function(n) {
+                        if (data[n] === null) {
+                            data[n] = 0;
+                        }
+                    });
+                    data.has_num_students = data.num_boys && data.num_girls;
+                    data.percent_boys = ((data.num_boys / total_students) * 100).toFixed(2);
+                    data.percent_girls = ((data.num_girls / total_students) * 100).toFixed(2);
+                    var total_mts = _(_(data.mt_profile).values()).reduce(function(a, b) {
+                        return a + b;
+                    });
+                    data.mt_profile_percents = {};
+                    _(_(data.mt_profile).keys()).each(function(mt) {
+                        data.mt_profile_percents[mt] = (data.mt_profile[mt] / total_mts) * 100;
+                    });
+                    //console.log("data", data);
+                    return data;
+                },
+                onRender: function(data) {
+                    //console.log("onrender", data);
+                    $('#num_students_piechart').highcharts({
+                        chart: {
+                            height: 170,
+                            width:170,
+                            plotBackgroundColor: null,
+                            plotBorderWidth: 0,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: null
+                        },
+                        plotOptions: {
+                            pie: {
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                startAngle: 0,
+                                endAngle: 360,
+                                center: ['50%', '50%'],
+                                colors: ['#609adf', '#f87c84']
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: 'Count',
+                            innerSize: '80%',
+                            data: [
+                                ['Boys', parseFloat(data.percent_boys)],
+                                ['Girls', parseFloat(data.percent_girls)]
+                            ]
+                        }],
+                        credits:{
+                            enabled:false
+                        },
+                        tooltip:{
+                            enabled:true,
+                            formatter: function() {
+                                return '<b>'+ this.y +'%</b>';
+                            }
+                        },
+                        exporting:{
+                            enabled:false
+                        }
+                    });
 
                 }
             },
@@ -89,9 +157,13 @@
 
     t.showTab = function(tabName) {
         $('.tab-content.current').removeClass('current');
-        //FIXME: do some loading for before data arrives
+        $('#loadingTab').addClass('current');
         getData(tabName, function(data) {
+            if (tabs[tabName].hasOwnProperty('getContext')) {
+                data = tabs[tabName].getContext(data);
+            }
             var html = templates[tabName](data);
+            $('#loadingTab').removeClass('current');
             $('div[data-tab=' + tabName + ']').html(html).addClass('current');
             doPostRender(tabName, data);
         });

@@ -7,7 +7,6 @@
     <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
     <script src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
-    <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'js/lib/swig.min.js' %}"></script>
     <script src="{% static 'js/lib/swig.filters.js' %}"></script>
     <script src="{% static 'js/klp.js' %}"></script>
@@ -34,25 +33,8 @@
 
             <div class="school-info">
                 <div class="container">
-                    <div class="info-wrapper">
-                        <div class="en-icon big en-school school-entity-icon">S</div>
-                        <h2 class="en-school">{{ object.name }}</h2>
+                    <div class="info-wrapper" id="school-info-wrapper">
 
-                        <div class="address-block">
-                            <div class="info-item">
-                                <div class="label">District</div>
-                                <div class="value">Bangalore</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="label">Block</div>
-                                <div class="value">North-2</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="label">Cluster</div>
-                                <div class="value">Malleswaram</div>
-                            </div>
-                            <div class="clr"></div>
-                        </div>
                     </div>
                     <div class="buttons-wrapper">
                         <a class="button dark_grey btn-compare js-trigger-compare" href="">Compare to</a>
@@ -107,7 +89,10 @@
             <div class="tab-heading">Share your story</div>
             <div class="tab-content container" data-tab="share-story">
             </div>  <!-- Share your story Tab END -->
-
+        
+            <div class="tab-content container current" id="loadingTab">
+                Loading...
+            </div>
         </div>
 
     </section>
