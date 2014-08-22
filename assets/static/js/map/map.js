@@ -127,19 +127,32 @@
         }
 
         preschoolXHR.done(function (data) {
-            var preschoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng){ return L.marker(latlng, {icon: preschoolIcon});}, onEachFeature: onEachSchool}).addTo(preschoolCluster);
+            var preschoolLayer = L.geoJson(filterGeoJSON(data), {
+                pointToLayer: function(feature, latlng) { 
+                    return L.marker(latlng, {icon: preschoolIcon});
+                },
+                onEachFeature: onEachSchool
+            }).addTo(preschoolCluster);
         });
 
         schoolXHR.done(function (data) {
-            var schoolLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
-                return L.marker(latlng, {icon: schoolIcon});}, onEachFeature: onEachSchool}).addTo(schoolCluster);
+            var schoolLayer = L.geoJson(filterGeoJSON(data), {
+                pointToLayer: function(feature, latlng) {
+                    return L.marker(latlng, {icon: schoolIcon});
+                },
+                onEachFeature: onEachSchool
+            }).addTo(schoolCluster);
         });
 
-        var districtLayer;
-        districtXHR.done(function (data) {
-            districtLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
-                return L.marker(latlng, {icon: districtIcon});}, onEachFeature: onEachFeature});
+        var districtLayer = L.geoJson(null, {
+            pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {icon: districtIcon});
+            }, 
+            onEachFeature: onEachFeature
+        });
 
+        districtXHR.done(function (data) {
+            districtLayer.addData(filterGeoJSON(data));
             districtLayer.addTo(map);
         });
 
@@ -166,7 +179,8 @@
 
         var overlays = {
             '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
-            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster
+            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
+            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer
         };
 
         L.control.layers({}, overlays, {collapsed: true}).addTo(map);
