@@ -150,23 +150,40 @@
         });
 
         //FIXME: get tab name from url, default to info
-        t.showTab('info');
+        var firstTab = 'info';
+        var tabDeferred = t.showTab(firstTab);
+
+        //slightly ugly hack to lazy load all tabs only on mobile
+        //FIXME: possibly, get "isMobile" somewhere else, not sure
+        //checking for < 768 on page load is the best technique.
+        if ($(window).width() < 768) {
+            tabDeferred.done(function() {
+                var allTabs = _(tabs).keys();
+                var tabsToLoad = _(allTabs).without(firstTab);
+                _(tabsToLoad).each(function(tabName) {
+                    t.showTab(tabName);
+                });
+            });
+        }
         console.log(templates);
 
     };
 
     t.showTab = function(tabName) {
         $('.tab-content.current').removeClass('current');
-        $('#loadingTab').addClass('current');
+        //$('#loadingTab').addClass('current');
+        var $deferred = $.Deferred();
         getData(tabName, function(data) {
             if (tabs[tabName].hasOwnProperty('getContext')) {
                 data = tabs[tabName].getContext(data);
             }
             var html = templates[tabName](data);
-            $('#loadingTab').removeClass('current');
+            //$('#loadingTab').removeClass('current');
             $('div[data-tab=' + tabName + ']').html(html).addClass('current');
             doPostRender(tabName, data);
+            $deferred.resolve();
         });
+        return $deferred;
     };
 
     function getData(tabName, callback) {
