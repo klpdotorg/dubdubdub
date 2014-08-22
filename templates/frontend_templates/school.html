@@ -204,34 +204,18 @@
     <h4>Infrastructure</h4>
 
     <table class="infra_data_table mar_btm_25 fl-desktop">
+        {% for title, facilities in dise_facility %}
         <tr>
-            <td>Toilet Facilities</td>
+            <td>{{ title }}</td>
             <td>
-                <div class="green">Has Usable Toilets</div>
-                <div class="red">Has Toilets</div>
-                <div class="grey">Has Toilets</div>
+                {% for key, value in facilities %}
+                <div class="{% if value %}green{% else %}red{% endif %}">
+                    {{ key }}
+                </div>
+                {% endfor %}
             </td>
         </tr>
-        <tr>
-            <td>Nutrition and Hygine</td>
-            <td>
-                <div class="green">Has Drinking Water Facilities</div>
-                <div class="red">Has Handwash Facilities</div>
-                <div class="grey">Has Clean and Timely Meals</div>
-            </td>
-        </tr>
-        <tr>
-            <td>Basic Infrastructure</td>
-            <td>
-                <div class="green">Has Spacious Classrooms and Play Class</div>
-                <div class="red">Has Walls Intact</div>
-                <div class="grey">Has Flooring Intact</div>
-                <div class="red">Has Roofs Intact</div>
-                <div class="grey">Is in a Designated Building by DWCD</div>
-                <div class="red">Has Water Supply</div>
-                <div class="green">Has Waste Baskets</div>
-            </td>
-        </tr>
+        {% endfor %}
     </table>
 
     <div class="infra_data_indicators fr-desktop">
