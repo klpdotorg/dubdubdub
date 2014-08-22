@@ -91,6 +91,13 @@
             popupAnchor: [-6, -78]
         });
 
+        var districtIcon = L.icon({
+            iconUrl:'static/images/map/icon_school_district.png',
+            iconSize: [20, 30],
+            iconAnchor: [16, 80],
+            popupAnchor: [-6, -78]
+        });
+
         var preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(map);
@@ -103,7 +110,7 @@
 
         var schoolXHR = klp.api.do('schools/list', {'type':'primaryschools', 'geometry':'yes', 'per_page':'0'});
 
-        var districtXHR = klp.api.do('boundary/admin1s', {'geometry':'yes', 'per_page':0});
+        var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry':'yes', 'per_page':0});
 
         function onEachSchool(feature, layer) {
             if (feature.properties) {
@@ -124,8 +131,11 @@
         });
 
         districtXHR.done(function (data) {
-            var districtLayer
-        })
+            var districtLayer = L.geoJson(filterGeoJSON(data), {pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {icon: districtIcon});}, onEachFeature: onEachSchool});
+
+            districtLayer.addTo(map);
+        });
 
 
         function markerPopup(marker, feature) {
