@@ -22,10 +22,10 @@
         preschoolCluster;
 
     var mapLayers = {};
-    var allLayers;
 
     var disabledLayers,
-        enabledLayers;
+        enabledLayers,
+        allLayers;
 
     var filterGeoJSON = function(geojson) {
         return geojson.features.filter(emptyGeom);
@@ -55,12 +55,26 @@
         klp.router.events.on('hashchange', function (event, url, queryParams) {
             if (url === '') {
                 setURL();
-            }
-            else {
+            } else {
                 var urlSplit = url.split('/');
                 var urlZoom = urlSplit[0];
                 var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
                 map.setView(urlLatLng, urlZoom);
+            }
+
+            if (queryParams.hasOwnProperty('layers')) {
+                var urlLayers = queryParams.layers.split(',');
+                var invertedMapLayers = _.invert(mapLayers);
+                urlLayers.forEach(function(element, array, index) {
+                    var layerID = invertedMapLayers[element];
+
+                    //FIX ME: This is ugly.
+                    var theLayer = allLayers._layers[layerID];
+                    if (!enabledLayers.hasLayer(theLayer)) {
+                        console.log('theLayer', theLayer);
+                        enabledLayers.addLayer(theLayer);
+                    }
+                });
             }
         });
 
@@ -119,7 +133,7 @@
 
         var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
-        var districtXHR = klp.api.do('boundary/admin1s', {'school_type':' primaryschools', 'geometry': 'yes', 'per_page': 0});
+        var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
         var preschoolDistrictXHR = klp.api.do('boundary/admin1s', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0});
 
@@ -279,7 +293,9 @@
         mapLayers[circleLayer._leaflet_id] = 'circle';
         mapLayers[projectLayer._leaflet_id] = 'project';
 
-        console.log('layers', mapLayers);
+        allLayers = L.layerGroup([preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, projectLayer, circleLayer]);
+
+        console.log('all layers', allLayers);
 
         // Control for Filters.
 
@@ -314,12 +330,17 @@
         // Map Events
         map.on('zoomend', updateLayers);
         map.on('moveend', setURL);
-        map.on('overlayadd', function() {
-            console.log('layer added');
+        map.on('overlayadd', function(overlay) {
+            if (!enabledLayers.hasLayer(overlay.layer)) {
+                enabledLayers.addLayer(overlay.layer);
+            }
             setLayerHash();
         });
-        map.on('overlayremove', function() {
-            console.log('layer removed');
+        map.on('overlayremove', function(overlay) {
+            if (enabledLayers.hasLayer(overlay.layer)) {
+                enabledLayers.removeLayer(overlay.layer);
+            }
+            setLayerHash();
         });
 
         t.map = map;
@@ -363,10 +384,10 @@
         var urlLayers = [];
         enabledLayers.eachLayer(function(layer) {
             // console.log(layer._leaflet_id);
-            // urlLayers.push(mapLayers[layer._leaflet_id]);
+            urlLayers.push(mapLayers[layer._leaflet_id]);
         });
-        // console.log(urlLayers);
-        // console.log(mapLayers);
+        var layersHash = urlLayers.join(',');
+        klp.router.setHash(null, {layers: layersHash}, {trigger: false});
     }
         
     // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
