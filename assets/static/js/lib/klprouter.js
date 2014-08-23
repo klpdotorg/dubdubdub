@@ -33,6 +33,7 @@ var KLPRouter = function(routes) {
     };
 
     this.hashChanged = function() {
+        console.log("hash change called");
         var hash = window.location.hash.substr(1, window.location.hash.length-1);
         var queryParams = getQueryParams(hash);
 
@@ -65,6 +66,7 @@ var KLPRouter = function(routes) {
                         creating event in history
                 replace can be set to true only if trigger is false.
          */
+        console.log("set hash called", url, queryParams);
         var defaults = {
             'trigger': true,
             'replace': false
@@ -84,6 +86,10 @@ var KLPRouter = function(routes) {
             var newHash = url;
         }
 
+        //if URL has not changed, don't create a new state
+        if (newHash === hash) {
+            return;
+        }
         if (opts.trigger) {
             location.hash = newHash;
         } else if (!opts.replace) {

@@ -61,47 +61,62 @@
         // });
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
+        var currentURL, currentLayers, currentMarker;
         klp.router.events.on('hashchange', function (event, url, queryParams) {
             if (url === '') {
                 setURL();
             } else {
-                var urlSplit = url.split('/');
-                var urlZoom = urlSplit[0];
-                var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
-                map.setView(urlLatLng, urlZoom);
+                if (currentURL !== url) {
+                    console.log(currentURL, url);
+                    currentURL = url;
+                    var urlSplit = url.split('/');
+                    var urlZoom = urlSplit[0];
+                    var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
+                    map.setView(urlLatLng, urlZoom);
+
+                }
             }
 
             if (queryParams.hasOwnProperty('layers')) {
-                var urlLayers = queryParams.layers.split(',');
-                // var invertedMapLayers = _.invert(mapLayers);
-                urlLayers.forEach(function(element, array, index) {
-                    // var layerID = invertedMapLayers[element];
-                    var theLayer = getLayerFromName(element);
-                    // var theLayer = allLayers._layers[layerID];
-                    if (!enabledLayers.hasLayer(theLayer)) {
-                        console.log('theLayer', theLayer);
-                        enabledLayers.addLayer(theLayer);
-                    }
-                });
+                if (currentLayers !== queryParams['layers']) {
+                    currentLayers = queryParams['layers'];
+                    var urlLayers = queryParams.layers.split(',');
+                    // var invertedMapLayers = _.invert(mapLayers);
+                    urlLayers.forEach(function(element, array, index) {
+                        // var layerID = invertedMapLayers[element];
+                        var theLayer = getLayerFromName(element);
+                        // var theLayer = allLayers._layers[layerID];
+                        if (!enabledLayers.hasLayer(theLayer)) {
+                            console.log('theLayer', theLayer);
+                            enabledLayers.addLayer(theLayer);
+                        }
+                    });
+                }
             }
             if (queryParams.hasOwnProperty('marker')) {
-                var urlMarker = queryParams.marker.split('-');
-                var schoolType = urlMarker[0];
-                var schoolID = urlMarker[1];
-                var thisSchoolLayer = getLayerFromName(schoolType);
-                // console.log('thisSchoolLayer', thisSchoolLayer);
-                var thisSchoolXHR = klp.api.do('schools/school/'+schoolID, {'geometry': 'yes'});
-                thisSchoolXHR.done(function(data) {
-                    var thisSchoolMarker = L.geoJson(data, {
-                        pointToLayer: function(feature, latlng) {
-                            map.setView(latlng);
-                            return L.marker(latlng, {icon: mapIcon(schoolType)});
-                        },
-                        onEachFeature: function(feature, layer) {
-                            markerPopup(layer, feature);
-                        }
-                    }).addTo(map);
-                });
+                if (currentMarker !== queryParams['marker']) {
+                    currentMarker = queryParams['marker'];
+                    var urlMarker = queryParams.marker.split('-');
+                    var schoolType = urlMarker[0];
+                    var schoolID = urlMarker[1];
+                    var thisSchoolLayer = getLayerFromName(schoolType);
+                    // console.log('thisSchoolLayer', thisSchoolLayer);
+                    var thisSchoolXHR = klp.api.do('schools/school/'+schoolID, {'geometry': 'yes'});
+                    thisSchoolXHR.done(function(data) {
+                        var thisSchoolMarker = L.geoJson(data, {
+                            pointToLayer: function(feature, latlng) {
+                                map.setView(latlng);
+                                return L.marker(latlng, {icon: mapIcon(schoolType)});
+                            },
+                            onEachFeature: function(feature, layer) {
+                                markerPopup(layer, feature);
+                            }
+                        }).addTo(map);
+                    });
+                }
+            } else if (currentMarker) {
+                map.closePopup();
+                currentMarker = null;
             }
         });
 
@@ -185,9 +200,9 @@
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
                     if (feature.properties.type.id === 1) {
-                        klp.router.setHash({}, {marker: 'primaryschool-'+feature.properties.id}, {trigger: false});
+                        klp.router.setHash(null, {marker: 'primaryschool-'+feature.properties.id}, {trigger: false});
                     } else {
-                        klp.router.setHash({}, {marker: 'preschool-'+feature.properties.id}, {trigger: false});
+                        klp.router.setHash(null, {marker: 'preschool-'+feature.properties.id}, {trigger: false});
                     }
                 });
             }
@@ -465,7 +480,7 @@
         var currentZoom = map.getZoom();
         var mapCenter = map.getCenter();
         var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);
-        klp.router.setHash(mapURL, {}, {trigger: false});
+        klp.router.setHash(mapURL, {}, {trigger: false, replace: true});
     }
 
     function setLayerHash() {
