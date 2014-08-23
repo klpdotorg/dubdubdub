@@ -32,7 +32,7 @@ class SchoolsList(KLPListAPIView):
             qset = qset.filter(schooldetails__type=2)
         elif stype == 'primaryschools':
             qset = qset.filter(schooldetails__type=1)
-
+        qset = qset.select_related('schooldetails__type')
         return qset
 
 

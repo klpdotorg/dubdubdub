@@ -4,13 +4,6 @@ from schools.models import School, Boundary, DiseInfo, ElectedrepMaster,\
     BoundaryType, Assembly, Parliament, Postal, PaisaData
 
 
-class SchoolListSerializer(KLPSerializer):
-
-    class Meta:
-        model = School
-        fields = ('id', 'name',)
-
-
 class BoundaryTypeSerializer(KLPSerializer):
     class Meta:
         model = BoundaryType
@@ -61,6 +54,14 @@ class PincodeSerializer(KLPSimpleGeoSerializer):
     class Meta:
         model = Postal
         fields = ('id', 'pincode')
+
+
+class SchoolListSerializer(KLPSerializer):
+    type = BoundaryTypeSerializer(source='schooldetails.type')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'type',)
 
 
 class SchoolInfoSerializer(KLPSerializer):
