@@ -50,15 +50,13 @@
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
         klp.router.events.on('hashchange', function (event, url, queryParams) {
-            console.log('hashchange fired');
-            if (url == '') {
+            if (url === '') {
                 setURL();
             }
             else {
                 var urlSplit = url.split('/');
                 var urlZoom = urlSplit[0];
                 var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
-                console.log('urlqp', urlSplit);
                 map.setView(urlLatLng, urlZoom);
             }
         });
@@ -301,9 +299,6 @@
         // Map Events
         map.on('zoomend', updateLayers);
         map.on('moveend', setURL);
-        map.on('dragend', function() {
-            console.log('map dragged');
-        });
 
         t.map = map;
     };
