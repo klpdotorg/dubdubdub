@@ -1,4 +1,3 @@
-DROP MATERIALIZED VIEW IF EXISTS mvw_dise_info;
 CREATE MATERIALIZED VIEW mvw_dise_info AS
  SELECT t1.dise_code,
     t1.classroom_count,
@@ -47,7 +46,6 @@ from tb_dise_facility df,tb_dise_enrol de,tb_dise_general dg where de.school_cod
 -- list of cluster ids with block and districts
 -- Only for primary schools
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_boundary_primary;
 CREATE MATERIALIZED VIEW mvw_boundary_primary
 as select tb1.id as cluster_id,
 tb2.id as block_id,
@@ -62,7 +60,6 @@ and tb2.parent=tb3.id;
 -- details about the school(both primary and preschools)
 -- putting the locations in a view to save query time
 -- assembly and parliament IDs as well.
-DROP MATERIALIZED VIEW IF EXISTS mvw_school_details;
 CREATE MATERIALIZED VIEW mvw_school_details as
 SELECT tbs.id as id,
     tb1.id as cluster_or_circle_id,
@@ -92,7 +89,6 @@ SELECT tbs.id as id,
 
 -- Materialized view for electedrep views
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_electedrep_master;
 CREATE MATERIALIZED VIEW mvw_electedrep_master AS
 SELECT t7.id,
     t7.parent,
@@ -104,7 +100,6 @@ SELECT t7.id,
     t7.current_elected_party
    FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_school_electedrep;
 CREATE MATERIALIZED VIEW mvw_school_electedrep AS
 SELECT t8.sid,
     t8.ward_id,
@@ -114,7 +109,6 @@ SELECT t8.sid,
     t8.bang_yn
    FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer, bang_yn integer);
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_dise_rte_agg;
 CREATE MATERIALIZED VIEW mvw_dise_rte_agg AS
 SELECT t1.dise_code,
     t1.rte_metric,
@@ -122,7 +116,6 @@ SELECT t1.dise_code,
     t1.rte_group
    FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_rte_agg'::text) t1(dise_code character varying(32), rte_metric character varying(36), status character varying(30), rte_group character varying(32));
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_dise_facility_agg;
 CREATE MATERIALIZED VIEW mvw_dise_facility_agg AS
 SELECT t1.dise_code,
     t1.df_metric,
@@ -131,7 +124,6 @@ SELECT t1.dise_code,
    FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
 
 
-DROP MATERIALIZED VIEW IF EXISTS mvw_school_class_total_year;
 CREATE MATERIALIZED VIEW mvw_school_class_total_year AS
 SELECT sg.sid AS schid,
     btrim(sg.name::text) AS clas,
