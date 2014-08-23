@@ -179,7 +179,7 @@ class SchoolFinanceSerializer(KLPSerializer):
             paisa = PaisaData.objects.get(criteria='school_cat', factor=obj.cat)
             grant_amount = paisa.grant_amount
         except:
-            pass
+            print "Finance: School {} has no paisa data".format(obj.id)
         return grant_amount
 
     def get_smg_amount(self, obj):
@@ -196,8 +196,8 @@ class SchoolFinanceSerializer(KLPSerializer):
                     grant_amount = paisa.grant_amount
                 elif paisa.operator == 'lt' and obj.dise_info.classroom_count <= int(paisa.factor):
                     grant_amount = paisa.grant_amount
-        except:
-            pass
+        except Exception, e:
+            print "Finance: School {} has no dise data".format(obj.id)
         return grant_amount
 
     def get_tlm_amount(self, obj):
@@ -206,7 +206,7 @@ class SchoolFinanceSerializer(KLPSerializer):
             paisa = PaisaData.objects.get(criteria='teacher_count')
             grant_amount = obj.dise_info.teacher_count * paisa.grant_amount
         except Exception, e:
-            raise e
+            print "Finance: School {} has no dise data".format(obj.id)
         return grant_amount
 
 
