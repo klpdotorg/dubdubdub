@@ -73,7 +73,7 @@ class Admin2s(KLPListAPIView):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         qset = Boundary.objects\
-            .select_related('boundarycoord__coord')\
+            .select_related('boundarycoord__coord', 'parent__hierarchy')\
             .prefetch_related('parent', 'hierarchy')
 
         if btype == 'preschools':
@@ -111,7 +111,7 @@ class Admin3s(KLPListAPIView):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         qset = Boundary.objects\
-            .select_related('boundarycoord__coord')\
+            .select_related('boundarycoord__coord', 'parent__hierarchy')\
             .prefetch_related('parent', 'hierarchy')
 
         if btype == 'preschools':

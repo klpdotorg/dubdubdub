@@ -288,17 +288,17 @@ class School(GeoBaseModel):
     def get_total_students_in_class(self):
         data = None
         try:
-            data = self.studentgroup_set.filter(
-                students__studentstudentgroup__student__status=2,
-                students__studentstudentgroup__academic_year__name__in=LibLevelAgg.objects.values_list('year').distinct(),
-            ).extra(
-                select={
-                    'class_name': 'trim("tb_class"."name")',
-                    'academic_year': '"tb_academic_year"."name"',
-                }
-            ).annotate(Count('students__studentstudentgroup__student', distinct=True)).values()
+            temp = self.schoolclasstotalyear_set.all().select_related('academic_year')
+            data = list()
+
+            for t in temp:
+                d = dict()
+                d['clas'] = t.clas
+                d['total'] = t.total
+                d['academic_year'] = t.academic_year.name
+                data.append(d)
         except Exception, e:
-            raise e
+            print e
         return data
 
     def get_geometry(self):
@@ -334,6 +334,17 @@ class SchoolDetails(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_school_details'
+
+
+class SchoolClassTotalYear(BaseModel):
+    school = models.ForeignKey('School', db_column='schid', primary_key=True)
+    clas = models.IntegerField(db_column='clas')
+    total = models.IntegerField(db_column='total')
+    academic_year = models.ForeignKey('AcademicYear', db_column='academic_year')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_class_total_year'
 
 
 class Student(BaseModel):

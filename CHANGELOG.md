@@ -13,6 +13,7 @@ Release 0.3:
  - Updated Django version to 1.7c2 [pip-install]
  - Added django-compressor for js / css minification [pip-install]
  - Modified SchoolDetails Materialized View [run-sql]
+ - Added materialized view for total students per class per year [run-sql]
 
 Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working
