@@ -113,6 +113,9 @@
                         }).addTo(map);
                     });
                 }
+            } else if (currentMarker) {
+                map.closePopup();
+                currentMarker = null;
             }
         });
 
