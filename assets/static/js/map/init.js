@@ -1,7 +1,7 @@
 (function() {
     var klp = window.klp;
     klp.init = function() {
-
+        klp.router.init();
         klp.filters_modal.init();
         klp.map.init();
         klp.place_info.init();
@@ -24,7 +24,7 @@
         // });
 
         klp._tpl = klp.utils.compile_templates();
-        klp.router.init();
+        klp.router.start();
     };    
 
 })();
