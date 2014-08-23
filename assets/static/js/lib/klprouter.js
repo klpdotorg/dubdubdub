@@ -87,9 +87,7 @@ var KLPRouter = function(routes) {
     };
 
     this.start = function() {
-        if (window.location.hash !== "") {
-            this.hashChanged();
-        }
+        this.hashChanged();
     };
 
     this.init = function() {
