@@ -4,6 +4,7 @@
     var dataCache = {};
     var schoolInfoURL;
     var tabs;
+    var currentTab;
 
     t.init = function() {
         schoolInfoURL = 'schools/school/' + SCHOOL_ID;
@@ -140,18 +141,25 @@
             var $trigger = $(this).closest(".js-tab-link");
             var tab_id = $trigger.attr('data-tab');
 
-            // Change current tab link
-            $trigger.parent().find("li.current").removeClass('current');
-            $trigger.addClass("current");
-
             //show tab
             t.showTab(tab_id);
 
         });
 
-        //FIXME: get tab name from url, default to info
-        var firstTab = 'info';
+        var queryParams = klp.router.getHash().queryParams;
+        if (queryParams.hasOwnProperty('tab') && queryParams['tab'] in tabs) {
+            var firstTab = queryParams['tab'];
+        } else {
+            var firstTab = 'info';
+        }
+
         var tabDeferred = t.showTab(firstTab);
+        klp.router.events.on('hashchange', function(e, url, queryParams) {
+            console.log("hashchange");
+            if (queryParams.hasOwnProperty('tab') && queryParams['tab'] in tabs) {
+                t.showTab(queryParams['tab']);
+            }
+        });
 
         //slightly ugly hack to lazy load all tabs only on mobile
         //FIXME: possibly, get "isMobile" somewhere else, not sure
@@ -170,8 +178,18 @@
     };
 
     t.showTab = function(tabName) {
+        if (currentTab === tabName) {
+            return;
+        }
         $('.tab-content.current').removeClass('current');
-        //$('#loadingTab').addClass('current');
+        var queryParams = klp.router.getHash().queryParams;
+        if (!(queryParams.hasOwnProperty('tab') && queryParams['tab'] === tabName)) {
+            klp.router.setHash(null, {'tab': tabName}, {trigger: false});
+        }
+        currentTab = tabName;
+        var $tabButton = $('.js-tab-link[data-tab=' + tabName + ']');
+        $tabButton.parent().find("li.current").removeClass('current');
+        $tabButton.addClass("current");
         var $deferred = $.Deferred();
         getData(tabName, function(data) {
             if (tabs[tabName].hasOwnProperty('getContext')) {

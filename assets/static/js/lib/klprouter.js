@@ -47,6 +47,14 @@ var KLPRouter = function(routes) {
         that.events.trigger("hashchange", [hash.split("?")[0], queryParams]);
     };
 
+    this.getHash = function() {
+        var hash = window.location.hash.substr(1, window.location.hash.length-1);
+        return {
+            'url': hash.split("?")[0],
+            'queryParams': getQueryParams(hash)
+        }
+    };
+
     this.setHash = function(url, queryParams, options) {
         /*
             url <string>: new url base fragment
