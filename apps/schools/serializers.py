@@ -145,14 +145,14 @@ class SchoolLibrarySerializer(KLPSerializer):
     lib_lang_agg = serializers.CharField(source='get_lib_lang_agg')
     lib_borrow_agg = serializers.CharField(source='get_lib_borrow_agg')
 
-    # classtotal = serializers.CharField(source='get_total_students_in_class')
+    classtotal = serializers.CharField(source='get_total_students_in_class')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'acyear',
             'dise_books', 'lib_infra', 'lowest_class',
             'highest_class', 'lib_borrow_agg',
-            'lib_level_agg', 'lib_lang_agg')
+            'lib_level_agg', 'lib_lang_agg', 'classtotal')
 
 
 class SchoolFinanceSerializer(KLPSerializer):
