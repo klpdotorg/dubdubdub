@@ -38,10 +38,10 @@
     var getLayerFromName = function(name) {
         var invertedMapLayers = _.invert(mapLayers);
         var layerID = invertedMapLayers[name];
-        
+
         //FIX ME: This is ugly.
         return allLayers._layers[layerID];
-    }
+    };
 
     t.init = function() {
         // $_filter_layers_list = $("#filter-layers-list");
@@ -465,8 +465,12 @@
         //     map_voluteer_date = param_date;
         //     // console.log("params set: "+map_voluteer_date);
         // }
+        var southWest = L.latLng(11.57, 73.87),
+            northEast = L.latLng(18.45, 78.57),
+            bounds = L.latLngBounds(southWest, northEast);
+
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        map = L.map('map_canvas').setView([12.9793998, 77.5903608], 14);
+        map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
