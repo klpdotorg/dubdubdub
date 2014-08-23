@@ -287,6 +287,12 @@
 
         // Map Events
         map.on('zoomend', updateLayers);
+        map.on('moveend', setURL);
+        map.on('dragend', function() {
+            console.log('map dragged');
+        });
+
+        t.map = map;
     };
 
     function updateLayers() {
@@ -313,6 +319,13 @@
             enabledLayers.addLayer(preschoolCluster);
         }
 
+    }
+
+    function setURL() {
+        var currentZoom = map.getZoom();
+        var mapCenter = map.getCenter();
+        var mapURL = currentZoom+'/'+mapCenter.lng.toFixed(5)+'/'+mapCenter.lat.toFixed(5);
+        klp.router.setHash(mapURL, {}, {trigger: false});
     }
         
     // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
@@ -348,6 +361,8 @@
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
+
+        setURL();
 
         // t.loadPlaces(place_data);
         // for (var place_id in place_data) {
