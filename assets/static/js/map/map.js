@@ -21,6 +21,8 @@
         schoolCluster,
         preschoolCluster;
 
+    var mapLayers = {};
+
     var disabledLayers,
         enabledLayers;
 
@@ -106,6 +108,7 @@
         preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(enabledLayers);
+
 
         schoolCluster = L.markerClusterGroup({chunkedLoading: true, removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-school', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
@@ -264,6 +267,22 @@
 
         };
 
+        GLOB_LAYERS = [preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, circleLayer, projectLayer];
+        console.log("glob", GLOB_LAYERS);
+        console.log('d', districtLayer, 'b', blockLayer, 'c', clusterLayer, 'ci', circleLayer);
+        console.log("layers before", mapLayers);
+
+        // mapLayers[preschoolCluster._leaflet_id] = 'preschool' ;
+        // mapLayers[schoolCluster._leaflet_id] = 'school';
+        // mapLayers[districtLayer._leaflet_id] = 'district';
+        // mapLayers[preschoolDistrictLayer._leaflet_id] = 'preschooldistrict';
+        // mapLayers[blockLayer._leaflet_id] = 'block';
+        // mapLayers[clusterLayer._leaflet_id] = 'cluster';
+        // mapLayers[circleLayer._leaflet_id] = 'circle';
+        mapLayers[projectLayer['_leaflet_id']] = 'project';
+
+        console.log('layers', mapLayers);    
+
         L.control.layers({}, overlays, {collapsed: true}).addTo(map);
 
         // Control for Filters.
@@ -299,6 +318,13 @@
         // Map Events
         map.on('zoomend', updateLayers);
         map.on('moveend', setURL);
+        map.on('overlayadd', function() {
+            console.log('layer added');
+            setLayerHash()
+        });
+        map.on('overlayremove', function() {
+            console.log('layer removed');
+        });
 
         t.map = map;
     };
@@ -335,6 +361,16 @@
         var mapCenter = map.getCenter();
         var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);
         klp.router.setHash(mapURL, {}, {trigger: false});
+    }
+
+    function setLayerHash() {
+        var urlLayers = [];
+        enabledLayers.eachLayer(function(layer) {
+            // console.log(layer._leaflet_id);
+            // urlLayers.push(mapLayers[layer._leaflet_id]);
+        });
+        // console.log(urlLayers);
+        // console.log(mapLayers);
     }
         
     // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
