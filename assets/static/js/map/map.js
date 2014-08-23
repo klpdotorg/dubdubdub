@@ -49,6 +49,19 @@
         // });
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
+        klp.router.events.on('hashchange', function (event, url, queryParams) {
+            console.log('hashchange fired');
+            if (url == '') {
+                setURL();
+            }
+            else {
+                var urlSplit = url.split('/');
+                var urlZoom = urlSplit[0];
+                var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
+                console.log('urlqp', urlSplit);
+                map.setView(urlLatLng, urlZoom);
+            }
+        });
 
         window_width = $(window).width();
         tpl_map_popup = swig.compile($("#tpl-map-popup").html());
@@ -322,9 +335,10 @@
     }
 
     function setURL() {
+
         var currentZoom = map.getZoom();
         var mapCenter = map.getCenter();
-        var mapURL = currentZoom+'/'+mapCenter.lng.toFixed(5)+'/'+mapCenter.lat.toFixed(5);
+        var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);
         klp.router.setHash(mapURL, {}, {trigger: false});
     }
         
@@ -361,8 +375,6 @@
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
-
-        setURL();
 
         // t.loadPlaces(place_data);
         // for (var place_id in place_data) {
