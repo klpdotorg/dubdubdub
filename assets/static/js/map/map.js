@@ -22,6 +22,7 @@
         preschoolCluster;
 
     var mapLayers = {};
+    var allLayers;
 
     var disabledLayers,
         enabledLayers;
@@ -267,23 +268,18 @@
 
         };
 
-        GLOB_LAYERS = [preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, circleLayer, projectLayer];
-        console.log("glob", GLOB_LAYERS);
-        console.log('d', districtLayer, 'b', blockLayer, 'c', clusterLayer, 'ci', circleLayer);
-        console.log("layers before", mapLayers);
-
-        // mapLayers[preschoolCluster._leaflet_id] = 'preschool' ;
-        // mapLayers[schoolCluster._leaflet_id] = 'school';
-        // mapLayers[districtLayer._leaflet_id] = 'district';
-        // mapLayers[preschoolDistrictLayer._leaflet_id] = 'preschooldistrict';
-        // mapLayers[blockLayer._leaflet_id] = 'block';
-        // mapLayers[clusterLayer._leaflet_id] = 'cluster';
-        // mapLayers[circleLayer._leaflet_id] = 'circle';
-        mapLayers[projectLayer['_leaflet_id']] = 'project';
-
-        console.log('layers', mapLayers);    
-
         L.control.layers({}, overlays, {collapsed: true}).addTo(map);
+
+        mapLayers[preschoolCluster._leaflet_id] = 'preschool' ;
+        mapLayers[schoolCluster._leaflet_id] = 'school';
+        mapLayers[districtLayer._leaflet_id] = 'district';
+        mapLayers[preschoolDistrictLayer._leaflet_id] = 'preschooldistrict';
+        mapLayers[blockLayer._leaflet_id] = 'block';
+        mapLayers[clusterLayer._leaflet_id] = 'cluster';
+        mapLayers[circleLayer._leaflet_id] = 'circle';
+        mapLayers[projectLayer._leaflet_id] = 'project';
+
+        console.log('layers', mapLayers);
 
         // Control for Filters.
 
@@ -320,7 +316,7 @@
         map.on('moveend', setURL);
         map.on('overlayadd', function() {
             console.log('layer added');
-            setLayerHash()
+            setLayerHash();
         });
         map.on('overlayremove', function() {
             console.log('layer removed');
