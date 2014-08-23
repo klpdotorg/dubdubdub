@@ -44,6 +44,7 @@ var KLPRouter = function(routes) {
                 routes[pattern](matches, queryParams);
             }
         }
+        that.events.trigger("hashchanged", [hash.split("?")[0], queryParams]);
     };
 
     this.setHash = function(url, queryParams, options) {
@@ -79,11 +80,14 @@ var KLPRouter = function(routes) {
 
     };
 
-    this.init = function() {
-        window.addEventListener("hashchange", this.hashChanged, false);
-
+    this.start = function() {
         if (window.location.hash !== "") {
             this.hashChanged();
         }
+    };
+
+    this.init = function() {
+        window.addEventListener("hashchange", this.hashChanged, false);
+        that.events = $('<div />');
     };
 };
