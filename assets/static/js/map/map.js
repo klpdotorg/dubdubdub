@@ -35,6 +35,14 @@
         }
     };
 
+    var getLayerFromName = function(name) {
+        var invertedMapLayers = _.invert(mapLayers);
+        var layerID = invertedMapLayers[name];
+        
+        //FIX ME: This is ugly.
+        return allLayers._layers[layerID];
+    }
+
     t.init = function() {
         // $_filter_layers_list = $("#filter-layers-list");
         // $_filter_layers_button = $("#filter-layers-button");
@@ -64,16 +72,34 @@
 
             if (queryParams.hasOwnProperty('layers')) {
                 var urlLayers = queryParams.layers.split(',');
-                var invertedMapLayers = _.invert(mapLayers);
+                // var invertedMapLayers = _.invert(mapLayers);
                 urlLayers.forEach(function(element, array, index) {
-                    var layerID = invertedMapLayers[element];
-
-                    //FIX ME: This is ugly.
-                    var theLayer = allLayers._layers[layerID];
+                    // var layerID = invertedMapLayers[element];
+                    var theLayer = getLayerFromName(element);
+                    // var theLayer = allLayers._layers[layerID];
                     if (!enabledLayers.hasLayer(theLayer)) {
                         console.log('theLayer', theLayer);
                         enabledLayers.addLayer(theLayer);
                     }
+                });
+            }
+            if (queryParams.hasOwnProperty('marker')) {
+                var urlMarker = queryParams.marker.split('-');
+                var schoolType = urlMarker[0];
+                var schoolID = urlMarker[1];
+                var thisSchoolLayer = getLayerFromName(schoolType);
+                // console.log('thisSchoolLayer', thisSchoolLayer);
+                var thisSchoolXHR = klp.api.do('schools/school/'+schoolID, {'geometry': 'yes'});
+                thisSchoolXHR.done(function(data) {
+                    var thisSchoolMarker = L.geoJson(data, {
+                        pointToLayer: function(feature, latlng) {
+                            map.setView(latlng);
+                            return L.marker(latlng, {icon: mapIcon(schoolType)});
+                        },
+                        onEachFeature: function(feature, layer) {
+                            markerPopup(layer, feature);
+                        }
+                    }).addTo(map);
                 });
             }
         });
@@ -112,6 +138,12 @@
         enabledLayers = L.layerGroup().addTo(map);
 
         var mapIcon = function (type) {
+
+            // FIXME: May be fix this in the icon name.
+            // This is Sanjay's fault.
+            if (type === 'primaryschool') {
+                type = 'school';
+            }
             return L.icon({
                 iconUrl: 'static/images/map/icon_'+type+'.png',
                 iconSize: [20, 30],
@@ -147,9 +179,13 @@
 
         function onEachSchool(feature, layer) {
             if (feature.properties) {
-
-                layer.on('click', function() {
+                layer.on('click', function(e) {
                     markerPopup(this, feature);
+                    if (feature.properties.type.id === 1) {
+                        klp.router.setHash({}, {marker: 'primaryschool-'+feature.properties.id}, {trigger: false});
+                    } else {
+                        klp.router.setHash({}, {marker: 'preschool-'+feature.properties.id}, {trigger: false});
+                    }
                 });
             }
         }
