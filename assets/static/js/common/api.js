@@ -10,6 +10,11 @@
                 data = {};
             }
             var $deferred = $.Deferred();
+            $deferred.abort = function() {
+                if ($xhr && $xhr.state() === 'pending') {
+                    $xhr.abort();
+                }
+            };
             var cacheKey = JSON.stringify({
                 'endpoint': endpoint,
                 'data': data
