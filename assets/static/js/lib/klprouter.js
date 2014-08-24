@@ -1,7 +1,8 @@
 var KLPRouter = function(routes) {
     this.routes = routes || {};
     var that = this;
-
+    var previousURL = '', 
+        previousQueryParams = {};
     var getQueryParams = function(hash) {
         var queryParams = {};
         var hashSplit = hash.split("?");
@@ -36,7 +37,6 @@ var KLPRouter = function(routes) {
         console.log("hash change called");
         var hash = window.location.hash.substr(1, window.location.hash.length-1);
         var queryParams = getQueryParams(hash);
-
         for (pattern in routes) {
             var regex = new RegExp(pattern, "i");
             var matches = regex.exec(hash);
@@ -45,7 +45,42 @@ var KLPRouter = function(routes) {
                 routes[pattern](matches, queryParams);
             }
         }
-        that.events.trigger("hashchange", [hash.split("?")[0], queryParams]);
+        var newURL = hash.split("?")[0];
+        var changed = {}
+        _(_(queryParams).keys()).each(function(key) {
+            if (key in previousQueryParams) {
+                if (queryParams[key] === previousQueryParams[key]) {
+                    return;
+                } else {
+                    var oldVal = previousQueryParams[key];
+                }    
+            } else {
+                var oldVal = null;
+            }
+            changed[key] = {
+                'oldVal': oldVal,
+                'newVal': queryParams[key]
+            };
+        });
+
+        _(_(previousQueryParams.keys)).each(function(key) {
+            if (!(key in queryParams)) {
+                changed[key] = {
+                    'oldVal': previousQueryParams[key],
+                    'newVal': null
+                }
+            }
+        });
+
+        previousURL = newURL;
+        previousQueryParams = queryParams;
+        var paramsArray = [hash.split("?")[0], queryParams, changed];
+        that.events.trigger("hashchange", paramsArray);
+        _(_(changed).keys()).each(function(key) {
+            console.log("triggering hashchange:" + key, changed);
+            that.events.trigger("hashchange:" + key, paramsArray);
+        });
+
     };
 
     this.getHash = function() {
