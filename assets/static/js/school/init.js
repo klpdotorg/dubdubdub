@@ -33,7 +33,10 @@
 
             var tpl = swig.compile($('#tpl-school-info').html());
             //var html = swig.render($('#tpl-school-info').html(), {locals: data});
-            var html = tpl(data.properties);
+            var context = data.properties;
+            console.log('context', context);
+            context['type_name'] = context.type.id === 1 ? 'school' : 'preschool';
+            var html = tpl(context);
             $('#school-info-wrapper').html(html);
         });
         klp.router.start();
