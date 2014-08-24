@@ -414,8 +414,8 @@
         });
 
         map.on('popupclose', function(e) {
-            console.log('close popup', e);
             selectedMarkers.clearLayers();
+            klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
         t.map = map;
