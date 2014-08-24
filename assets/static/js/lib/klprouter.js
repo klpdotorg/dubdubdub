@@ -25,7 +25,7 @@ var KLPRouter = function(routes) {
     var getQueryString = function(queryObj) {
         var paramsArray = [];
         for (var param in queryObj) {
-            if (queryObj.hasOwnProperty(param)) {
+            if (queryObj.hasOwnProperty(param) && queryObj[param]) {
                 var s = param + '=' + queryObj[param];
                 paramsArray.push(s);
             }
