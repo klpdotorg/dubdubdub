@@ -13,6 +13,22 @@
                 _tpl[name] = swig.compile(content);
             });
             return _tpl;
+        },
+        
+        mapIcon: function (type) {
+
+            // FIXME: May be fix this in the icon name.
+            // This is Sanjay's fault.
+            type = type.replace(' ', '').toLowerCase();
+            if (type === 'primaryschool') {
+                type = 'school';
+            }
+            return L.icon({
+                iconUrl: '/static/images/map/icon_'+type+'.png',
+                iconSize: [20, 30],
+                iconAnchor: [10, 26],
+                popupAnchor: [0, -25]
+            });
         }
     }
 

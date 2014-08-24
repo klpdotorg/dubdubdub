@@ -14,6 +14,9 @@ Release 0.3:
  - Added django-compressor for js / css minification [pip-install]
  - Modified SchoolDetails Materialized View [run-sql]
  - Added materialized view for total students per class per year [run-sql]
+ - Stabilized front-end framework.
+ - Router methods, map layers and events.
+ - School page with limited features.
 
 Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working

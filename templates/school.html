@@ -12,14 +12,14 @@
     <script src="{% static 'js/lib/swig.min.js' %}"></script>
     <script src="{% static 'js/lib/swig.filters.js' %}"></script>
     <script src="{% static 'js/klp.js' %}"></script>
+    <script src="{% static 'js/common/utils.js' %}"></script>
     <script src="{% static 'js/common/api.js' %}"></script>
     <script src="{% static 'js/school/init.js' %}"></script>
     <script src="{% static 'js/school/tabs.js' %}"></script>
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
 
     <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
+    <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
 
     <script>
         SCHOOL_ID = {{ object.id }};

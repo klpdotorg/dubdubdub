@@ -11,6 +11,7 @@
     var tpl_map_popup;
     var tpl_mobile_place_details;
     var map_voluteer_date = false;
+    var mapIcon = klp.utils.mapIcon;
 
     var districtLayer,
         preschoolDistrictLayer,
@@ -137,20 +138,20 @@
         enabledLayers = L.layerGroup().addTo(map);
         selectedMarkers = L.layerGroup().addTo(map);
 
-        var mapIcon = function (type) {
+        // var mapIcon = function (type) {
 
-            // FIXME: May be fix this in the icon name.
-            // This is Sanjay's fault.
-            if (type === 'primaryschool') {
-                type = 'school';
-            }
-            return L.icon({
-                iconUrl: 'static/images/map/icon_'+type+'.png',
-                iconSize: [20, 30],
-                iconAnchor: [10, 26],
-                popupAnchor: [0, -25]
-            });
-        };
+        //     // FIXME: May be fix this in the icon name.
+        //     // This is Sanjay's fault.
+        //     if (type === 'primaryschool') {
+        //         type = 'school';
+        //     }
+        //     return L.icon({
+        //         iconUrl: 'static/images/map/icon_'+type+'.png',
+        //         iconSize: [20, 30],
+        //         iconAnchor: [10, 26],
+        //         popupAnchor: [0, -25]
+        //     });
+        // };
 
         preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
