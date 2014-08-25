@@ -144,7 +144,7 @@
                 var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
                 map.setView(searchPoint, 14);
-                setMarkerURL(data);
+                //setMarkerURL(data);
             }
 
             if (searchEntityType === 'boundary') {
@@ -243,7 +243,7 @@
             }
             if (queryParams.hasOwnProperty('marker')) {
                 if (currentMarker !== queryParams['marker']) {
-                    currentMarker = queryParams['marker'];
+                    //currentMarker = queryParams['marker'];
                     var urlMarker = queryParams.marker.split('-');
                     var schoolType = urlMarker[0];
                     var schoolID = urlMarker[1];
@@ -347,7 +347,7 @@
             if (feature.properties) {
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
-                    setMarkerURL(feature);
+                    //setMarkerURL(feature);
                 });
             }
         }
@@ -359,10 +359,16 @@
                 trigger: false,
             }
             if (typeID === 1) {
-                klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, opts);
+                var markerParam = 'primaryschool-' + schoolID;
             } else {
-                klp.router.setHash(null, {marker: 'preschool-'+schoolID}, opts);
+                var markerParam = 'preschool-' + schoolID;
             }
+            if (typeID === 1) {
+                klp.router.setHash(null, {marker: markerParam}, opts);
+            } else {
+                klp.router.setHash(null, {marker: markerParam}, opts);
+            }
+            currentMarker = markerParam;
         }
 
         function onEachFeature(feature, layer) {
@@ -526,6 +532,7 @@
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 document.title = "School: " + feature.properties.name;
+                setMarkerURL(feature);
                 if (window_width < 768) {
                     // Its a phone
                     marker.closePopup(); // Close popup
@@ -617,7 +624,7 @@
             // setTimeout(function() {
             //     selectedLayers.clearLayers();
             // }, 500);
-            klp.router.setHash(null, {marker: null}, {trigger: false, replace: true});
+            klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
         t.map = map;
