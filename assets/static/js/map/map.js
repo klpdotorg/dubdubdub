@@ -28,7 +28,8 @@
     var disabledLayers,
         enabledLayers,
         allLayers,
-        selectedMarkers;
+        selectedMarkers,
+        searchLayers;
 
     var filterGeoJSON = function(geojson) {
         return geojson.features.filter(emptyGeom);
@@ -44,6 +45,14 @@
 
         //FIX ME: This is ugly.
         return allLayers._layers[layerID];
+    };
+
+    var boundaryZoomLevels = {
+        'district': 8,
+        'block': 9,
+        'project': 9,
+        'cluster': 10,
+        'circle': 10
     };
 
     t.init = function() {
@@ -64,6 +73,126 @@
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
         var currentURL, currentLayers, currentMarker;
+
+        // Search.
+        var $searchInput = $(".search-input");
+        $searchInput.select2({
+            placeholder: 'Search for schools, boundaries and PIN codes',
+            minimumInputLength: 3,
+            ajax: {
+                url: "/api/v1/search",
+                quietMillis: 300,
+                data: function (term, page) {
+                    return {
+                        text: term,
+                        geometry: 'yes'
+                    };
+                },
+                results: function (data, page) {
+                    var searchResponse = {
+                        results: [
+                        {
+                            text: "Schools",
+                            children: makeResults(data.schools.features, 'school')
+                        },
+                        {
+                            text: "Boundaries",
+                            children: makeResults(data.boundaries.features, 'boundary')   
+                        },
+                        {
+                            text: "Parliaments",
+                            children: makeResults(data.parliaments.features, 'parliament')
+                        },
+                        {
+                            text: "Assemblies",
+                            children: makeResults(data.assemblies.features, 'assembly')
+                        },
+                        {
+                            text: "PIN codes",
+                            children: makeResults(data.pincodes.features, 'pincode')
+                        }
+                        ]
+                    };
+                    return {results: searchResponse.results};
+                }
+            }
+        });
+
+        $searchInput.on('change', function(choice) {
+            var data = choice.added.data;
+            console.log(data);
+            var searchPoint;
+            var searchGeometryType = data.geometry.type;
+            var searchGeometry = data.geometry.coordinates;
+            var searchEntityType = data.type;
+
+            if (searchEntityType === 'school') {
+                console.log('searched for schools');
+                searchPoint = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
+                var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)}); 
+                markerPopup(marker, data);
+            };
+
+            if (searchEntityType === 'boundary') {
+                console.log('boundary');
+                var boundaryType = data.properties.type;
+                searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
+                if (boundaryType === 'district') {
+                    console.log('district');
+                    var schoolType = data.properties.school_type;
+                    var marker = L.marker(searchPoint, {icon: mapIcon(schoolType+'_district')});
+                    marker.bindPopup(data.properties.name);
+                    marker.addTo(searchLayer).openPopup();
+                    map.setView(searchPoint, boundaryZoomLevels['district']);
+
+                // }
+                // if (boundaryType === 'block') {
+
+                // }
+                // if (boundaryType === 'cluster') {
+
+                // }
+                // if (boundaryType === 'project') {
+
+                // }
+                // if (boundaryType === 'circle') {
+
+                // }
+
+            }
+        }
+    });
+
+            // if (searchGeometryType === 'Point') {
+            //     console.log('Point searched');
+            //     var isSchool = data.properties.type && data.properties.type.id && (data.properties.type.id === 1 || data.properties.type.id === 2);
+            //     console.log("is school", isSchool);
+            //     if (isSchool) {
+    
+            //     } else {
+            //         searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
+            //     }
+            //     map.setView(searchPoint, 14);
+            // } else {
+            //     console.log('Polygon searched');
+            //     var searchLayer = L.geoJson(choice.added.data);
+            //     searchPoint = searchLayer.getBounds().getCenter();
+            //     L.marker(searchPoint).addTo(map);
+            // }
+            //     map.setView(searchPoint, 14);
+            // var searchPoint = 
+
+        function makeResults(array, type) {
+            return _(array).map(function(obj) {
+                obj.type = type;
+                return {
+                    id: obj.properties.id,
+                    text: _.str.titleize(obj.properties.name),
+                    data: obj
+                };
+            });
+        }
+
         klp.router.events.on('hashchange', function (event, url, queryParams) {
             if (url === '') {
                 setURL();
@@ -137,6 +266,7 @@
         disabledLayers = L.layerGroup();
         enabledLayers = L.layerGroup().addTo(map);
         selectedMarkers = L.layerGroup().addTo(map);
+        searchLayers = L.featureGroup().addTo(map);
 
         // var mapIcon = function (type) {
 
@@ -319,6 +449,7 @@
         });
 
         function markerPopup(marker, feature) {
+            console.log("marker popup called", marker, feature);
             var duplicateMarker;
             if (feature.properties.type.id === 1) {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('school')});
