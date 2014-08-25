@@ -55,7 +55,10 @@ class OmniSearch(KLPAPIView):
             Boundary.objects.filter(
                 name__icontains=text,
                 boundarycoord__coord__isnull=False
-            ).select_related('hierarchy__name')[:10],
+            ).select_related(
+                'hierarchy__name',
+                'parent__hierarchy__name'
+            ).prefetch_related('parent', 'hierarchy')[:10],
             many=True,
             context=context
         ).data
