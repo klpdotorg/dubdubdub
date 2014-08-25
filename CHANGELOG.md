@@ -9,6 +9,11 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.1: August 26: 28bd528f6841a6d861d053e7882acca1451aac64
+  - OmniSearch box on map page works
+  - Optimize some point loading behaviour on map page
+  - Set page title on marker popups
+
 Release 0.3: August 25: f826aa24958f6150da974961a0ce1f921a323525
  - Updated Django version to 1.7c2 [pip-install]
  - Added django-compressor for js / css minification [pip-install]
