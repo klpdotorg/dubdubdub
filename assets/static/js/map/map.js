@@ -589,7 +589,7 @@
         });
 
         map.on('popupclose', function(e) {
-            selectedMarkers.clearLayers();
+            selectedLayers.clearLayers();
             klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
