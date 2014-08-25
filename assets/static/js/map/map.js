@@ -387,8 +387,8 @@
                 return;
             }
 
-            var bboxString = map.getBounds().pad(2).toBBoxString();
-            mapBbox = bbox.pad(2); 
+            var bboxString = map.getBounds().pad(0.5).toBBoxString();
+            mapBbox = bbox.pad(0.5); 
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
                 console.log('aborting preschool xhr');
