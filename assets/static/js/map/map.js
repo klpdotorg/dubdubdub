@@ -153,11 +153,13 @@
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
             }
-            if (searchEntityType === 'pincode') {
+            if (searchEntityType === 'pincode'  || searchEntityType === 'parliament' || searchEntityType === 'assembly') {
                 var searchLayer = L.geoJson(data);
                 searchLayer.addTo(selectedLayers);
-                searchPoint = searchLayer.getBounds().getCenter();
-                map.setView(searchPoint, 14);
+                var geomBounds = searchLayer.getBounds();
+                map.fitBounds(geomBounds);
+                //searchPoint = searchLayer.getBounds().getCenter();
+                //map.setView(searchPoint, 14);
                 // setBoundaryResultsOnMap('pincode', searchPoint, data);
             }
                 // if (boundaryType === 'district') {
@@ -216,6 +218,7 @@
                 if (type === 'pincode') {
                     name = obj.properties.pincode;
                 }
+
                 obj.entity_type = type;
                 return {
                     id: obj.properties.id,
@@ -606,7 +609,14 @@
 
         map.on('popupclose', function(e) {
             document.title = "School Map";
-            selectedLayers.clearLayers();
+            console.log("close event", e);
+            selectedLayers.removeLayer(e.target._leaflet_id);
+            // console.log(e);
+            // console.log(selectedLayers);
+            // //GLOB = selectedLayers;
+            // setTimeout(function() {
+            //     selectedLayers.clearLayers();
+            // }, 500);
             klp.router.setHash(null, {marker: null}, {trigger: false, replace: true});
         });
 
