@@ -1,10 +1,10 @@
 {% verbatim %}
 
 <script type="text/html" id="tpl-school-info">
-    <div class="en-icon big en-school school-entity-icon">
-        S
+    <div class="en-icon big en-{{ type_name }} school-entity-icon">
+        {% if type_name == 'school' %} S {% else %} P {% endif %}
     </div>
-    <h2 class="en-school">{{ name }}</h2>
+    <h2 class="en-{{ type_name }}">{{ name }}</h2>
 
     <div class="address-block">
         <div class="info-item">

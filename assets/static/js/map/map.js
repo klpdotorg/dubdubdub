@@ -11,6 +11,7 @@
     var tpl_map_popup;
     var tpl_mobile_place_details;
     var map_voluteer_date = false;
+    var mapIcon = klp.utils.mapIcon;
 
     var districtLayer,
         preschoolDistrictLayer,
@@ -19,13 +20,15 @@
         projectLayer,
         circleLayer,
         schoolCluster,
-        preschoolCluster;
+        preschoolCluster,
+        popupInfoXHR;
 
     var mapLayers = {};
 
     var disabledLayers,
         enabledLayers,
-        allLayers;
+        allLayers,
+        selectedMarkers;
 
     var filterGeoJSON = function(geojson) {
         return geojson.features.filter(emptyGeom);
@@ -66,30 +69,12 @@
                 setURL();
             } else {
                 if (currentURL !== url) {
-                    console.log(currentURL, url);
                     currentURL = url;
                     var urlSplit = url.split('/');
                     var urlZoom = urlSplit[0];
                     var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
                     map.setView(urlLatLng, urlZoom);
 
-                }
-            }
-
-            if (queryParams.hasOwnProperty('layers')) {
-                if (currentLayers !== queryParams['layers']) {
-                    currentLayers = queryParams['layers'];
-                    var urlLayers = queryParams.layers.split(',');
-                    // var invertedMapLayers = _.invert(mapLayers);
-                    urlLayers.forEach(function(element, array, index) {
-                        // var layerID = invertedMapLayers[element];
-                        var theLayer = getLayerFromName(element);
-                        // var theLayer = allLayers._layers[layerID];
-                        if (!enabledLayers.hasLayer(theLayer)) {
-                            console.log('theLayer', theLayer);
-                            enabledLayers.addLayer(theLayer);
-                        }
-                    });
                 }
             }
             if (queryParams.hasOwnProperty('marker')) {
@@ -151,21 +136,22 @@
 
         disabledLayers = L.layerGroup();
         enabledLayers = L.layerGroup().addTo(map);
+        selectedMarkers = L.layerGroup().addTo(map);
 
-        var mapIcon = function (type) {
+        // var mapIcon = function (type) {
 
-            // FIXME: May be fix this in the icon name.
-            // This is Sanjay's fault.
-            if (type === 'primaryschool') {
-                type = 'school';
-            }
-            return L.icon({
-                iconUrl: 'static/images/map/icon_'+type+'.png',
-                iconSize: [20, 30],
-                iconAnchor: [16, 80],
-                popupAnchor: [-6, -78]
-            });
-        };
+        //     // FIXME: May be fix this in the icon name.
+        //     // This is Sanjay's fault.
+        //     if (type === 'primaryschool') {
+        //         type = 'school';
+        //     }
+        //     return L.icon({
+        //         iconUrl: 'static/images/map/icon_'+type+'.png',
+        //         iconSize: [20, 30],
+        //         iconAnchor: [10, 26],
+        //         popupAnchor: [0, -25]
+        //     });
+        // };
 
         preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
@@ -176,9 +162,9 @@
             return new L.DivIcon({ className:'marker-cluster marker-cluster-school', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(enabledLayers);
 
-        var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0});
+        // var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': map.getBounds().toBBoxString()});
 
-        var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0});
+        // var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': map.getBounds().toBBoxString()});
 
         var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
@@ -211,23 +197,54 @@
             }
         }
 
-        preschoolXHR.done(function (data) {
-            var preschoolLayer = L.geoJson(filterGeoJSON(data), {
-                pointToLayer: function(feature, latlng) {
-                    return L.marker(latlng, {icon: mapIcon('preschool')});
-                },
-                onEachFeature: onEachSchool
-            }).addTo(preschoolCluster);
-        });
+        // preschoolXHR.done(function (data) {
+        //     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
+        //         pointToLayer: function(feature, latlng) {
+        //             return L.marker(latlng, {icon: mapIcon('preschool')});
+        //         },
+        //         onEachFeature: onEachSchool
+        //     }).addTo(preschoolCluster);
+        // });
 
-        schoolXHR.done(function (data) {
-            var schoolLayer = L.geoJson(filterGeoJSON(data), {
-                pointToLayer: function(feature, latlng) {
-                    return L.marker(latlng, {icon: mapIcon('school')});
-                },
-                onEachFeature: onEachSchool
-            }).addTo(schoolCluster);
-        });
+        // schoolXHR.done(function (data) {
+        //     var schoolLayer = L.geoJson(filterGeoJSON(data), {
+        //         pointToLayer: function(feature, latlng) {
+        //             return L.marker(latlng, {icon: mapIcon('school')});
+        //         },
+        //         onEachFeature: onEachSchool
+        //     }).addTo(schoolCluster);
+        // });
+
+        function loadPointsByBbox() {
+
+            var bbox = map.getBounds().toBBoxString();
+
+            var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+
+            var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+
+            preschoolXHR.done(function (data) {
+                preschoolCluster.clearLayers();
+                var preschoolLayer = L.geoJson(filterGeoJSON(data), {
+                    pointToLayer: function(feature, latlng) {
+                        return L.marker(latlng, {icon: mapIcon('preschool')});
+                    },
+                    onEachFeature: onEachSchool
+                }).addTo(preschoolCluster);
+            });
+
+            schoolXHR.done(function (data) {
+                schoolCluster.clearLayers();
+                var schoolLayer = L.geoJson(filterGeoJSON(data), {
+                    pointToLayer: function(feature, latlng) {
+                        return L.marker(latlng, {icon: mapIcon('school')});
+                    },
+                    onEachFeature: onEachSchool
+                }).addTo(schoolCluster);
+            });
+        }
+
+        loadPointsByBbox();
 
         districtLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
@@ -302,10 +319,20 @@
         });
 
         function markerPopup(marker, feature) {
-            // var marker = this;
-            popInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
-            popInfoXHR.done(function(data) {
-                marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+            var duplicateMarker;
+            if (feature.properties.type.id === 1) {
+                duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('school')});
+            } else {
+                duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('preschool')});
+            }
+            selectedMarkers.addLayer(duplicateMarker);
+            // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
+            //     popupInfoXHR.abort();
+            // }
+            popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
+            popupInfoXHR.done(function(data) {
+                //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 if (window_width < 768) {
                     // Its a phone
                     marker.closePopup(); // Close popup
@@ -346,8 +373,6 @@
 
         allLayers = L.layerGroup([preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, projectLayer, circleLayer]);
 
-        console.log('all layers', allLayers);
-
         // Control for Filters.
 
         var filterControl = L.Control.extend({
@@ -380,18 +405,18 @@
 
         // Map Events
         map.on('zoomend', updateLayers);
-        map.on('moveend', setURL);
-        map.on('overlayadd', function(overlay) {
-            if (!enabledLayers.hasLayer(overlay.layer)) {
-                enabledLayers.addLayer(overlay.layer);
-            }
-            setLayerHash();
+        // map.on('movestart', function() {
+        //     currentMapBounds = map.getBounds().toBBoxString();
+        //     console.log(currentMapBounds);
+        // })
+        map.on('moveend', function() {
+            loadPointsByBbox();
+            setURL();
         });
-        map.on('overlayremove', function(overlay) {
-            if (enabledLayers.hasLayer(overlay.layer)) {
-                enabledLayers.removeLayer(overlay.layer);
-            }
-            setLayerHash();
+
+        map.on('popupclose', function(e) {
+            selectedMarkers.clearLayers();
+            klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
         t.map = map;
@@ -431,16 +456,6 @@
         klp.router.setHash(mapURL, {}, {trigger: false, replace: true});
     }
 
-    function setLayerHash() {
-        var urlLayers = [];
-        enabledLayers.eachLayer(function(layer) {
-            // console.log(layer._leaflet_id);
-            urlLayers.push(mapLayers[layer._leaflet_id]);
-        });
-        var layersHash = urlLayers.join(',');
-        klp.router.setHash(null, {layers: layersHash}, {trigger: false});
-    }
-        
     // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
 
     t.closePopup = function() {

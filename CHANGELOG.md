@@ -9,11 +9,14 @@ Use required commands
 
 Changelog
 ---
-Release 0.3:
+Release 0.3: August 25: f826aa24958f6150da974961a0ce1f921a323525
  - Updated Django version to 1.7c2 [pip-install]
  - Added django-compressor for js / css minification [pip-install]
  - Modified SchoolDetails Materialized View [run-sql]
  - Added materialized view for total students per class per year [run-sql]
+ - Stabilized front-end framework.
+ - Router methods, map layers and events.
+ - School page with limited features.
 
 Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
  - User auth working
