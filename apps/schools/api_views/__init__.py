@@ -42,33 +42,47 @@ class OmniSearch(KLPAPIView):
             }, status=404)
 
         response['schools'] = SchoolListSerializer(
-            School.objects.filter(name__icontains=text, status=2)[:10],
+            School.objects.filter(
+                name__icontains=text,
+                status=2,
+                instcoord__coord__isnull=False
+            )[:10],
             many=True,
             context=context
         ).data
 
         response['boundaries'] = BoundarySerializer(
             Boundary.objects.filter(
-                name__icontains=text
+                name__icontains=text,
+                boundarycoord__coord__isnull=False
             ).select_related('hierarchy__name')[:10],
             many=True,
             context=context
         ).data
 
         response['assemblies'] = AssemblySerializer(
-            Assembly.objects.filter(name__icontains=text)[:10],
+            Assembly.objects.filter(
+                name__icontains=text,
+                coord__isnull=False
+            )[:10],
             many=True,
             context=context
         ).data
 
         response['parliaments'] = ParliamentSerializer(
-            Parliament.objects.filter(name__icontains=text)[:10],
+            Parliament.objects.filter(
+                name__icontains=text,
+                coord__isnull=False
+            )[:10],
             many=True,
             context=context
         ).data
 
         response['pincodes'] = PincodeSerializer(
-            Postal.objects.filter(pincode__icontains=text)[:10],
+            Postal.objects.filter(
+                pincode__icontains=text,
+                coord__isnull=False
+            )[:10],
             many=True,
             context=context
         ).data
