@@ -104,8 +104,7 @@ var KLPRouter = function(routes) {
         console.log("set hash called", url, queryParams, options);
         var defaults = {
             'trigger': true,
-            'replace': false,
-            'title': null
+            'replace': false
         };
         var opts = $.extend(defaults, options);
         var hash = window.location.hash.substr(1, window.location.hash.length-1);
@@ -132,9 +131,6 @@ var KLPRouter = function(routes) {
             history.pushState(null, null, '#' + newHash);
         } else {
             history.replaceState(null, null, '#' + newHash);
-        }
-        if (opts.title) {
-            document.title = opts.title;
         }
 
     };

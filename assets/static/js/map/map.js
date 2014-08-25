@@ -352,11 +352,8 @@
         function setMarkerURL(feature) {
             var typeID = feature.properties.type.id;
             var schoolID = feature.properties.id;
-            var schoolName = feature.properties.name;
-            var title = 'School: ' + schoolName;
             var opts = {
                 trigger: false,
-                title: title
             }
             if (typeID === 1) {
                 klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, opts);
@@ -525,6 +522,7 @@
             popupInfoXHR.done(function(data) {
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                document.title = "School: " + feature.properties.name;
                 if (window_width < 768) {
                     // Its a phone
                     marker.closePopup(); // Close popup
@@ -607,6 +605,7 @@
         });
 
         map.on('popupclose', function(e) {
+            document.title = "School Map";
             selectedLayers.clearLayers();
             klp.router.setHash(null, {marker: null}, {trigger: false});
         });
