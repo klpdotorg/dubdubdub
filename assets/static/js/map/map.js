@@ -607,7 +607,7 @@
         map.on('popupclose', function(e) {
             document.title = "School Map";
             selectedLayers.clearLayers();
-            klp.router.setHash(null, {marker: null}, {trigger: false});
+            klp.router.setHash(null, {marker: null}, {trigger: false, replace: true});
         });
 
         t.map = map;
