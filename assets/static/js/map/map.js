@@ -144,7 +144,7 @@
                 var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
                 map.setView(searchPoint, 14);
-                setMarkerURL(data.properties.type.id, data.properties.id);
+                setMarkerURL(data);
             }
 
             if (searchEntityType === 'boundary') {
@@ -344,16 +344,24 @@
             if (feature.properties) {
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
-                    setMarkerURL(feature.properties.type.id, feature.properties.id);
+                    setMarkerURL(feature);
                 });
             }
         }
 
-        function setMarkerURL(typeID, schoolID) {
+        function setMarkerURL(feature) {
+            var typeID = feature.properties.type.id;
+            var schoolID = feature.properties.id;
+            var schoolName = feature.properties.name;
+            var title = 'School: ' + schoolName;
+            var opts = {
+                trigger: false,
+                title: title
+            }
             if (typeID === 1) {
-                klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, {trigger: false});
+                klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, opts);
             } else {
-                klp.router.setHash(null, {marker: 'preschool-'+schoolID}, {trigger: false});
+                klp.router.setHash(null, {marker: 'preschool-'+schoolID}, opts);
             }
         }
 
