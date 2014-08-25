@@ -22,7 +22,6 @@ class KLPInBBOXFilter(filters.BaseFilterBackend):
         return x
 
     def filter_queryset(self, request, queryset, view):
-        print "QUERY: ", queryset.query
         filter_field = getattr(view, 'bbox_filter_field', None)
         if not filter_field:
             return queryset
