@@ -9,7 +9,7 @@ Use required commands
 
 Changelog
 ---
-Release 0.3.1: August 26:
+Release 0.3.1: August 26: 28bd528f6841a6d861d053e7882acca1451aac64
   - OmniSearch box on map page works
   - Optimize some point loading behaviour on map page
   - Set page title on marker popups
