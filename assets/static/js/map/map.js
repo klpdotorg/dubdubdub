@@ -21,7 +21,9 @@
         circleLayer,
         schoolCluster,
         preschoolCluster,
-        popupInfoXHR;
+        popupInfoXHR,
+        preschoolXHR,
+        schoolXHR;
 
     var mapLayers = {};
 
@@ -219,9 +221,17 @@
 
             var bbox = map.getBounds().toBBoxString();
 
-            var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+            if (preschoolXHR && preschoolXHR.state() === 'pending') {
+                console.log('aborting preschool xhr');
+                preschoolXHR.abort();
+            }
+            preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
 
-            var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+            if (schoolXHR && schoolXHR.state() === 'pending') {
+                console.log("aborting school xhr");
+                schoolXHR.abort();
+            }
+            schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
 
             preschoolXHR.done(function (data) {
                 preschoolCluster.clearLayers();
