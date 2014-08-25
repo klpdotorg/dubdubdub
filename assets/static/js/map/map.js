@@ -12,6 +12,7 @@
     var tpl_mobile_place_details;
     var map_voluteer_date = false;
     var mapIcon = klp.utils.mapIcon;
+    var mapBbox;
 
     var districtLayer,
         preschoolDistrictLayer,
@@ -381,8 +382,13 @@
         // });
 
         function loadPointsByBbox() {
+            var bbox = map.getBounds();
+            if (mapBbox && mapBbox.contains(bbox)) {
+                return;
+            }
 
-            var bbox = map.getBounds().pad(2).toBBoxString();
+            var bboxString = map.getBounds().pad(2).toBBoxString();
+            mapBbox = bbox.pad(2); 
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
                 console.log('aborting preschool xhr');
@@ -395,7 +401,7 @@
             }
             
             if (enabledLayers.hasLayer(preschoolCluster)) {
-                preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+                preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
                 preschoolXHR.done(function (data) {
                     preschoolCluster.clearLayers();
                     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
@@ -408,7 +414,7 @@
             }
 
             if (enabledLayers.hasLayer(schoolCluster)) {
-                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bboxString': bbox});
                 schoolXHR.done(function (data) {
                     schoolCluster.clearLayers();
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
