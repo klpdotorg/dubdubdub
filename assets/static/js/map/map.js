@@ -28,8 +28,7 @@
     var disabledLayers,
         enabledLayers,
         allLayers,
-        selectedMarkers,
-        searchLayers;
+        selectedLayers;
 
     var filterGeoJSON = function(geojson) {
         return geojson.features.filter(emptyGeom);
@@ -51,8 +50,14 @@
         'district': 8,
         'block': 9,
         'project': 9,
+        'pincode': 9,
         'cluster': 10,
         'circle': 10
+    };
+
+    var schoolDistrictMap = {
+        'primaryschool': 'Primary School',
+        'preschool': 'Preschool'
     };
 
     t.init = function() {
@@ -82,6 +87,7 @@
             ajax: {
                 url: "/api/v1/search",
                 quietMillis: 300,
+                allowClear: true,
                 data: function (term, page) {
                     return {
                         text: term,
@@ -124,44 +130,56 @@
             var searchPoint;
             var searchGeometryType = data.geometry.type;
             var searchGeometry = data.geometry.coordinates;
-            var searchEntityType = data.type;
+            var searchEntityType = data.entity_type;
+
+            selectedLayers.clearLayers();
+            // selectedMarkers.clearLayers();
 
             if (searchEntityType === 'school') {
                 console.log('searched for schools');
                 searchPoint = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
-                var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)}); 
+                var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
-            };
+                map.setView(searchPoint, 14);
+                setMarkerURL(data.properties.type.id, data.properties.id);
+            }
 
             if (searchEntityType === 'boundary') {
                 console.log('boundary');
                 var boundaryType = data.properties.type;
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
-                if (boundaryType === 'district') {
-                    console.log('district');
-                    var schoolType = data.properties.school_type;
-                    var marker = L.marker(searchPoint, {icon: mapIcon(schoolType+'_district')});
-                    marker.bindPopup(data.properties.name);
-                    marker.addTo(searchLayer).openPopup();
-                    map.setView(searchPoint, boundaryZoomLevels['district']);
-
-                // }
-                // if (boundaryType === 'block') {
-
-                // }
-                // if (boundaryType === 'cluster') {
-
-                // }
-                // if (boundaryType === 'project') {
-
-                // }
-                // if (boundaryType === 'circle') {
-
-                // }
-
+                setBoundaryResultsOnMap(boundaryType, searchPoint, data);
             }
-        }
+            if (searchEntityType === 'pincode') {
+                var searchLayer = L.geoJson(data);
+                searchLayer.addTo(selectedLayers);
+                searchPoint = searchLayer.getBounds().getCenter();
+                map.setView(searchPoint, 14);
+                // setBoundaryResultsOnMap('pincode', searchPoint, data);
+            }
+                // if (boundaryType === 'district') {
+
+                //     console.log('district');
+                //     var schoolType = data.properties.school_type;
+                //     var marker = L.marker(searchPoint, {icon: mapIcon(schoolType+'_district')});
+                //     marker.bindPopup(data.properties.name);
+                //     marker.addTo(searchLayer).openPopup();
+                //     map.setView(searchPoint, boundaryZoomLevels['district']);
     });
+
+        function setBoundaryResultsOnMap(type, point, data) {
+            var marker;
+            if (type === 'district') {
+                var schoolType = data.properties.school_type;
+                marker = L.marker(point, {icon: mapIcon(schoolType+'_district')});
+            } else {
+                marker = L.marker(point, {icon: mapIcon(type)});
+            }
+            marker.bindPopup(data.properties.name);
+            marker.addTo(selectedLayers).openPopup();
+            console.log(boundaryZoomLevels[type]);
+            map.setView(point, boundaryZoomLevels[type]);
+        }
 
             // if (searchGeometryType === 'Point') {
             //     console.log('Point searched');
@@ -184,10 +202,21 @@
 
         function makeResults(array, type) {
             return _(array).map(function(obj) {
-                obj.type = type;
+                var name = obj.properties.name;
+                if (type === 'boundary') {
+                    if (obj.properties.type === 'district') {
+                        name = obj.properties.name + ' - ' + schoolDistrictMap[obj.properties.school_type] + ' ' + obj.properties.type;
+                    } else {
+                        name = obj.properties.name + ' - ' + obj.properties.type;
+                    }
+                }
+                if (type === 'pincode') {
+                    name = obj.properties.pincode;
+                }
+                obj.entity_type = type;
                 return {
                     id: obj.properties.id,
-                    text: _.str.titleize(obj.properties.name),
+                    text: _.str.titleize(name),
                     data: obj
                 };
             });
@@ -266,7 +295,7 @@
         disabledLayers = L.layerGroup();
         enabledLayers = L.layerGroup().addTo(map);
         selectedMarkers = L.layerGroup().addTo(map);
-        searchLayers = L.featureGroup().addTo(map);
+        selectedLayers = L.featureGroup().addTo(map);
 
         // var mapIcon = function (type) {
 
@@ -312,12 +341,16 @@
             if (feature.properties) {
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
-                    if (feature.properties.type.id === 1) {
-                        klp.router.setHash(null, {marker: 'primaryschool-'+feature.properties.id}, {trigger: false});
-                    } else {
-                        klp.router.setHash(null, {marker: 'preschool-'+feature.properties.id}, {trigger: false});
-                    }
+                    setMarkerURL(feature.properties.type.id, feature.properties.id);
                 });
+            }
+        }
+
+        function setMarkerURL(typeID, schoolID) {
+            if (typeID === 1) {
+                klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, {trigger: false});
+            } else {
+                klp.router.setHash(null, {marker: 'preschool-'+schoolID}, {trigger: false});
             }
         }
 
@@ -456,7 +489,7 @@
             } else {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('preschool')});
             }
-            selectedMarkers.addLayer(duplicateMarker);
+            selectedLayers.addLayer(duplicateMarker);
             // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
             //     popupInfoXHR.abort();
             // }
