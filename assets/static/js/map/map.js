@@ -414,7 +414,7 @@
             }
 
             if (enabledLayers.hasLayer(schoolCluster)) {
-                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bboxString': bbox});
+                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bboxString': bboxString});
                 schoolXHR.done(function (data) {
                     schoolCluster.clearLayers();
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
