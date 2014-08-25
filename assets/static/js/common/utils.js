@@ -23,6 +23,9 @@
             if (type === 'primaryschool') {
                 type = 'school';
             }
+            if (type === 'primaryschool_district') {
+                type = 'school_district';
+            }
             return L.icon({
                 iconUrl: '/static/images/map/icon_'+type+'.png',
                 iconSize: [20, 30],
