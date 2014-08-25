@@ -102,3 +102,8 @@
 .filter-tool.active {
     background-image: url('../images/map/filters_active.png');
 }
+
+.search-input {
+    padding: 0 !important;
+    border: 0 !important;
+}

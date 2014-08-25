@@ -382,39 +382,43 @@
 
         function loadPointsByBbox() {
 
-            var bbox = map.getBounds().toBBoxString();
+            var bbox = map.getBounds().pad(2).toBBoxString();
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
                 console.log('aborting preschool xhr');
                 preschoolXHR.abort();
             }
-            preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
 
             if (schoolXHR && schoolXHR.state() === 'pending') {
                 console.log("aborting school xhr");
                 schoolXHR.abort();
             }
-            schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+            
+            if (enabledLayers.hasLayer(preschoolCluster)) {
+                preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+                preschoolXHR.done(function (data) {
+                    preschoolCluster.clearLayers();
+                    var preschoolLayer = L.geoJson(filterGeoJSON(data), {
+                        pointToLayer: function(feature, latlng) {
+                            return L.marker(latlng, {icon: mapIcon('preschool')});
+                        },
+                        onEachFeature: onEachSchool
+                    }).addTo(preschoolCluster);
+                });
+            }
 
-            preschoolXHR.done(function (data) {
-                preschoolCluster.clearLayers();
-                var preschoolLayer = L.geoJson(filterGeoJSON(data), {
-                    pointToLayer: function(feature, latlng) {
-                        return L.marker(latlng, {icon: mapIcon('preschool')});
-                    },
-                    onEachFeature: onEachSchool
-                }).addTo(preschoolCluster);
-            });
-
-            schoolXHR.done(function (data) {
-                schoolCluster.clearLayers();
-                var schoolLayer = L.geoJson(filterGeoJSON(data), {
-                    pointToLayer: function(feature, latlng) {
-                        return L.marker(latlng, {icon: mapIcon('school')});
-                    },
-                    onEachFeature: onEachSchool
-                }).addTo(schoolCluster);
-            });
+            if (enabledLayers.hasLayer(schoolCluster)) {
+                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bbox});
+                schoolXHR.done(function (data) {
+                    schoolCluster.clearLayers();
+                    var schoolLayer = L.geoJson(filterGeoJSON(data), {
+                        pointToLayer: function(feature, latlng) {
+                            return L.marker(latlng, {icon: mapIcon('school')});
+                        },
+                        onEachFeature: onEachSchool
+                    }).addTo(schoolCluster);
+                });
+            }
         }
 
         loadPointsByBbox();
