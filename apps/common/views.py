@@ -27,7 +27,7 @@ class KLPListAPIView(generics.ListAPIView):
 
     def __init__(self, *args, **kwargs):
         super(KLPListAPIView, self).__init__(*args, **kwargs)
-        if self.bbox_filter_field:
+        if self.bbox_filter_field and KLPInBBOXFilter not in self.filter_backends:
             self.filter_backends += (KLPInBBOXFilter,)
 
     def finalize_response(self, *args, **kwargs):
