@@ -26,6 +26,12 @@
             if (type === 'primaryschool_district') {
                 type = 'school_district';
             }
+            if (type === 'primaryschool_block') {
+                type = 'school_block';
+            }
+            if (type === 'primaryschool_cluster') {
+                type = 'school_cluster';
+            }
             return L.icon({
                 iconUrl: '/static/images/map/icon_'+type+'.png',
                 iconSize: [20, 30],

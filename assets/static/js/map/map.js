@@ -155,23 +155,16 @@
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
             }
             if (searchEntityType === 'pincode'  || searchEntityType === 'parliament' || searchEntityType === 'assembly') {
-                klp.router.setHash(null, {marker: searchEntityType+'-'+data.properties.id}, {trigger: false});
+                var urlID = data.properties.id;
+                if (searchEntityType === 'pincode') {
+                    urlID = data.properties.pincode;
+                }
+                klp.router.setHash(null, {marker: searchEntityType+'-'+urlID}, {trigger: false});
                 var searchLayer = L.geoJson(data);
                 searchLayer.addTo(selectedLayers);
                 var geomBounds = searchLayer.getBounds();
                 map.fitBounds(geomBounds);
-                //searchPoint = searchLayer.getBounds().getCenter();
-                //map.setView(searchPoint, 14);
-                // setBoundaryResultsOnMap('pincode', searchPoint, data);
             }
-                // if (boundaryType === 'district') {
-
-                //     console.log('district');
-                //     var schoolType = data.properties.school_type;
-                //     var marker = L.marker(searchPoint, {icon: mapIcon(schoolType+'_district')});
-                //     marker.bindPopup(data.properties.name);
-                //     marker.addTo(searchLayer).openPopup();
-                //     map.setView(searchPoint, boundaryZoomLevels['district']);
     });
 
         function setBoundaryResultsOnMap(type, point, data) {
@@ -187,25 +180,6 @@
             console.log(boundaryZoomLevels[type]);
             map.setView(point, boundaryZoomLevels[type]);
         }
-
-            // if (searchGeometryType === 'Point') {
-            //     console.log('Point searched');
-            //     var isSchool = data.properties.type && data.properties.type.id && (data.properties.type.id === 1 || data.properties.type.id === 2);
-            //     console.log("is school", isSchool);
-            //     if (isSchool) {
-    
-            //     } else {
-            //         searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
-            //     }
-            //     map.setView(searchPoint, 14);
-            // } else {
-            //     console.log('Polygon searched');
-            //     var searchLayer = L.geoJson(choice.added.data);
-            //     searchPoint = searchLayer.getBounds().getCenter();
-            //     L.marker(searchPoint).addTo(map);
-            // }
-            //     map.setView(searchPoint, 14);
-            // var searchPoint = 
 
         function makeResults(array, type) {
             return _(array).map(function(obj) {
@@ -247,22 +221,50 @@
                 if (currentMarker !== queryParams['marker']) {
                     //currentMarker = queryParams['marker'];
                     var urlMarker = queryParams.marker.split('-');
-                    var schoolType = urlMarker[0];
-                    var schoolID = urlMarker[1];
-                    var thisSchoolLayer = getLayerFromName(schoolType);
-                    // console.log('thisSchoolLayer', thisSchoolLayer);
-                    var thisSchoolXHR = klp.api.do('schools/school/'+schoolID, {'geometry': 'yes'});
-                    thisSchoolXHR.done(function(data) {
-                        var thisSchoolMarker = L.geoJson(data, {
-                            pointToLayer: function(feature, latlng) {
-                                map.setView(latlng);
-                                return L.marker(latlng, {icon: mapIcon(schoolType)});
-                            },
-                            onEachFeature: function(feature, layer) {
-                                markerPopup(layer, feature);
-                            }
-                        }).addTo(map);
-                    });
+                    var entityType = urlMarker[0];
+                    var entityID = urlMarker[1];
+
+                    selectedLayers.clearLayers();
+
+                    if (entityType === 'primaryschool' || entityType === 'preschool') {
+                        var thisSchoolXHR = klp.api.do('schools/school/'+entityID, {'geometry': 'yes'});
+                        thisSchoolXHR.done(function(data) {
+                            var thisSchoolMarker = L.geoJson(data, {
+                                pointToLayer: function(feature, latlng) {
+                                    map.setView(latlng);
+                                    return L.marker(latlng, {icon: mapIcon(entityType)});
+                                },
+                                onEachFeature: function(feature, layer) {
+                                    markerPopup(layer, feature);
+                                }
+                            }).addTo(map);
+                        });
+                    } else if (entityType === 'pincode' || entityType === 'parliament' || entityType === 'assembly') {
+                        var urlString = entityType+'/'+entityID;
+                        var thisEntityXHR = klp.api.do('boundary/'+urlString, {'geometry': 
+                            'yes'});
+                        thisEntityXHR.done(function(data) {
+                            var thisEntityPolygon = L.geoJson(data);
+                            thisEntityPolygon.addTo(selectedLayers);
+                            var geomBounds = selectedLayers.getBounds();
+                            map.fitBounds(geomBounds);
+                        });
+                    } else if (entityType === 'boundary') {
+                        var thisEntityXHR = klp.api.do('boundary/admin/'+entityID, {'geometry': 'yes'});
+                        thisEntityXHR.done(function(data) {
+                            var iconType = data.properties.school_type+'_'+data.properties.type;
+                            console.log('iconType', iconType);
+                            var thisEntityMarker = L.geoJson(data, {
+                                pointToLayer: function(feature, latlng) {
+                                    map.setView(latlng);
+                                    return L.marker(latlng, {icon: mapIcon(iconType)});
+                                }
+                            });
+                            thisEntityMarker.bindPopup(data.properties.name);
+                            thisEntityMarker.addTo(selectedLayers);
+                            thisEntityMarker.openPopup();
+                        });
+                    }
                 }
             } else if (currentMarker) {
                 map.closePopup();
