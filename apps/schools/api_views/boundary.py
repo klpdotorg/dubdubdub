@@ -1,11 +1,12 @@
 from schools.models import Boundary
 from common.views import KLPListAPIView
+from common.mixxins import CacheMixin
 from schools.serializers import BoundarySerializer,\
     BoundaryWithParentSerializer
 from django.db.models import Q
 
 
-class Admin1s(KLPListAPIView):
+class Admin1s(KLPListAPIView, CacheMixin):
     '''
         Returns a list of all districts (id and name)
     '''
@@ -15,7 +16,7 @@ class Admin1s(KLPListAPIView):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         qset = Boundary.objects\
-            .select_related('boundarycoord__coord')\
+            .select_related('boundarycoord__coord', 'hierarchy__name')\
             .prefetch_related('hierarchy')
 
         if btype == 'preschools':
@@ -63,7 +64,7 @@ class Admin3sInsideAdmin1(KLPListAPIView):
                             'hierarchy__name')
 
 
-class Admin2s(KLPListAPIView):
+class Admin2s(KLPListAPIView, CacheMixin):
     '''
         Returns a list of all blocks (id and name)
     '''
@@ -73,7 +74,7 @@ class Admin2s(KLPListAPIView):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         qset = Boundary.objects\
-            .select_related('boundarycoord__coord', 'parent__hierarchy')\
+            .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 
         if btype == 'preschools':
@@ -101,7 +102,7 @@ class Admin3sInsideAdmin2(KLPListAPIView):
                             'hierarchy__name')
 
 
-class Admin3s(KLPListAPIView):
+class Admin3s(KLPListAPIView, CacheMixin):
     '''
         Returns a list of all districts (id and name)
     '''
@@ -111,7 +112,7 @@ class Admin3s(KLPListAPIView):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         qset = Boundary.objects\
-            .select_related('boundarycoord__coord', 'parent__hierarchy')\
+            .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 
         if btype == 'preschools':
