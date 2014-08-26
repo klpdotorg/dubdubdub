@@ -148,12 +148,14 @@
             }
 
             if (searchEntityType === 'boundary') {
+                klp.router.setHash(null, {marker: 'boundary-'+data.properties.id}, {trigger: false});
                 console.log('boundary');
                 var boundaryType = data.properties.type;
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
             }
             if (searchEntityType === 'pincode'  || searchEntityType === 'parliament' || searchEntityType === 'assembly') {
+                klp.router.setHash(null, {marker: searchEntityType+'-'+data.properties.id}, {trigger: false});
                 var searchLayer = L.geoJson(data);
                 searchLayer.addTo(selectedLayers);
                 var geomBounds = searchLayer.getBounds();
