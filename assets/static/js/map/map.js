@@ -616,14 +616,7 @@
 
         map.on('popupclose', function(e) {
             document.title = "School Map";
-            console.log("close event", e);
-            selectedLayers.removeLayer(e.target._leaflet_id);
-            // console.log(e);
-            // console.log(selectedLayers);
-            // //GLOB = selectedLayers;
-            // setTimeout(function() {
-            //     selectedLayers.clearLayers();
-            // }, 500);
+            selectedLayers.removeLayer(e.popup._source);
             klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
