@@ -1,3 +1,4 @@
+'use strict';
 (function() {
     var t = klp.map = {};
     var window_width,
@@ -304,7 +305,6 @@
 
         disabledLayers = L.layerGroup();
         enabledLayers = L.layerGroup().addTo(map);
-        selectedMarkers = L.layerGroup().addTo(map);
         selectedLayers = L.featureGroup().addTo(map);
 
         // var mapIcon = function (type) {
@@ -522,26 +522,28 @@
         function markerPopup(marker, feature) {
             console.log("marker popup called", marker, feature);
             var duplicateMarker;
+            var isMobile = $(window).width() < 768;
             if (feature.properties.type.id === 1) {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('school')});
             } else {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('preschool')});
             }
-            selectedLayers.addLayer(duplicateMarker);
+            if (!isMobile) {
+                selectedLayers.addLayer(duplicateMarker);
+            }
             // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
             //     popupInfoXHR.abort();
             // }
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
-                duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
-                document.title = "School: " + feature.properties.name;
-                setMarkerURL(feature);
-                if (window_width < 768) {
+                if (!isMobile) {
+                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                } else {
                     // Its a phone
-                    marker.closePopup(); // Close popup
+                    //marker.closePopup(); // Close popup
                     // duplicateMarker.closePopup();
-                    map.closePopup();
+                    //map.closePopup();
                     // map.setView(marker.getLatLng(), 15);
                     setTimeout(function() {
                         var details_ht = $mobile_details_wrapper.height();
@@ -551,6 +553,9 @@
                     var html = tpl_mobile_place_details(data);
                     $mobile_details_wrapper.html(html).addClass("show");
                 }
+                document.title = "School: " + feature.properties.name;
+                setMarkerURL(feature);
+
             });
         }
 
@@ -589,7 +594,7 @@
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-control filter-control');
                 container.title = 'Filter Schools';
-                button = "<a class='filter-tool' href='#'></a>";
+                var button = "<a class='filter-tool' href='#'></a>";
                 container.innerHTML = button;
                 L.DomEvent
                 .addListener(container, 'click', L.DomEvent.stopPropagation)

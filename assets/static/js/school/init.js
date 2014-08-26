@@ -1,3 +1,4 @@
+'use strict';
 (function() {
     klp.init = function() {
         klp.router = new KLPRouter({});
