@@ -2,7 +2,7 @@ from .school import (SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
     SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
     SchoolLibrary)
 from .boundary import (Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
-    Admin2s, Admin3sInsideAdmin2, Admin3s)
+    Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails)
 from .geo import (Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool)
 
@@ -129,6 +129,9 @@ def api_root(request, format=None):
         },
 
         'Boundary': {
+            'Admin Details': reverse('api_admin_details', request=request,
+                                         format=format, kwargs={'id': 8897}),
+
             'Admin1s': reverse('api_admin1s', request=request, format=format),
 
             'Admin2s in Admin1': reverse('api_admin1s_admin2', request=request,

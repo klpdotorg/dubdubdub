@@ -6,7 +6,7 @@ from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,\
     Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,\
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,\
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,\
-    SchoolLibrary, OmniSearch
+    SchoolLibrary, OmniSearch, AdminDetails
 
 from users.api_views import TestAuthenticatedView, UsersView,\
     UserProfileView, OtherUserProfileView, OrganizationsView,\
@@ -44,6 +44,7 @@ urlpatterns = patterns('',
     url(r'^schools/school/(?P<pk>[0-9]+)/library$',
         SchoolLibrary.as_view(), name='api_school_library'),
 
+    url(r'^boundary/admin/(?P<id>[0-9]+)$', AdminDetails.as_view(), name="api_admin_details"),
     url(r'^boundary/admin1s$', Admin1s.as_view(), name="api_admin1s"),
     url(r'^boundary/admin1/(?P<id>[0-9]+)/admin2$',
         Admin2sInsideAdmin1.as_view(), name="api_admin1s_admin2"),
