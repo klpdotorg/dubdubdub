@@ -144,7 +144,7 @@
                 var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
                 map.setView(searchPoint, 14);
-                setMarkerURL(data);
+                //setMarkerURL(data);
             }
 
             if (searchEntityType === 'boundary') {
@@ -153,11 +153,13 @@
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
             }
-            if (searchEntityType === 'pincode') {
+            if (searchEntityType === 'pincode'  || searchEntityType === 'parliament' || searchEntityType === 'assembly') {
                 var searchLayer = L.geoJson(data);
                 searchLayer.addTo(selectedLayers);
-                searchPoint = searchLayer.getBounds().getCenter();
-                map.setView(searchPoint, 14);
+                var geomBounds = searchLayer.getBounds();
+                map.fitBounds(geomBounds);
+                //searchPoint = searchLayer.getBounds().getCenter();
+                //map.setView(searchPoint, 14);
                 // setBoundaryResultsOnMap('pincode', searchPoint, data);
             }
                 // if (boundaryType === 'district') {
@@ -216,6 +218,7 @@
                 if (type === 'pincode') {
                     name = obj.properties.pincode;
                 }
+
                 obj.entity_type = type;
                 return {
                     id: obj.properties.id,
@@ -240,7 +243,7 @@
             }
             if (queryParams.hasOwnProperty('marker')) {
                 if (currentMarker !== queryParams['marker']) {
-                    currentMarker = queryParams['marker'];
+                    //currentMarker = queryParams['marker'];
                     var urlMarker = queryParams.marker.split('-');
                     var schoolType = urlMarker[0];
                     var schoolID = urlMarker[1];
@@ -344,7 +347,7 @@
             if (feature.properties) {
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
-                    setMarkerURL(feature);
+                    //setMarkerURL(feature);
                 });
             }
         }
@@ -356,10 +359,16 @@
                 trigger: false,
             }
             if (typeID === 1) {
-                klp.router.setHash(null, {marker: 'primaryschool-'+schoolID}, opts);
+                var markerParam = 'primaryschool-' + schoolID;
             } else {
-                klp.router.setHash(null, {marker: 'preschool-'+schoolID}, opts);
+                var markerParam = 'preschool-' + schoolID;
             }
+            if (typeID === 1) {
+                klp.router.setHash(null, {marker: markerParam}, opts);
+            } else {
+                klp.router.setHash(null, {marker: markerParam}, opts);
+            }
+            currentMarker = markerParam;
         }
 
         function onEachFeature(feature, layer) {
@@ -523,6 +532,7 @@
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 document.title = "School: " + feature.properties.name;
+                setMarkerURL(feature);
                 if (window_width < 768) {
                     // Its a phone
                     marker.closePopup(); // Close popup
@@ -606,8 +616,15 @@
 
         map.on('popupclose', function(e) {
             document.title = "School Map";
-            selectedLayers.clearLayers();
-            klp.router.setHash(null, {marker: null}, {trigger: false, replace: true});
+            console.log("close event", e);
+            selectedLayers.removeLayer(e.target._leaflet_id);
+            // console.log(e);
+            // console.log(selectedLayers);
+            // //GLOB = selectedLayers;
+            // setTimeout(function() {
+            //     selectedLayers.clearLayers();
+            // }, 500);
+            klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 
         t.map = map;
