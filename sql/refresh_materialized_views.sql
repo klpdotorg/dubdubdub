@@ -8,3 +8,4 @@ REFRESH MATERIALIZED VIEW mvw_school_electedrep;
 REFRESH MATERIALIZED VIEW mvw_dise_info;
 REFRESH MATERIALIZED VIEW mvw_dise_rte_agg;
 REFRESH MATERIALIZED VIEW mvw_dise_facility_agg;
+REFRESH MATERIALIZED VIEW mvw_inst_coord;

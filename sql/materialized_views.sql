@@ -46,16 +46,22 @@ from tb_dise_facility df,tb_dise_enrol de,tb_dise_general dg where de.school_cod
 -- list of cluster ids with block and districts
 -- Only for primary schools
 
-CREATE MATERIALIZED VIEW mvw_boundary_primary
-as select tb1.id as cluster_id,
-tb2.id as block_id,
-tb3.id as district_id
-from tb_boundary tb1, tb_boundary tb2, tb_boundary tb3
-where tb1.hid=11 and tb1.type=1
-and tb2.hid=10 and tb2.type=1
-and tb1.parent=tb2.id
-and tb3.hid=9 and tb3.type=1
-and tb2.parent=tb3.id;
+CREATE materialized VIEW mvw_boundary_primary AS
+SELECT tb1.id AS cluster_id,
+       tb2.id AS block_id,
+       tb3.id AS district_id
+FROM tb_boundary tb1,
+     tb_boundary tb2,
+     tb_boundary tb3
+WHERE tb1.hid=11
+    AND tb1.type=1
+    AND tb2.hid=10
+    AND tb2.type=1
+    AND tb1.parent=tb2.id
+    AND tb3.hid=9
+    AND tb3.type=1
+    AND tb2.parent=tb3.id;
+
 
 -- details about the school(both primary and preschools)
 -- putting the locations in a view to save query time
@@ -122,7 +128,8 @@ SELECT t1.dise_code,
     t1.score,
     t1.df_group
    FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
-
+CREATE INDEX dise_code_idx ON mvw_dise_facility_agg (dise_code);
+ANALYZE mvw_dise_facility_agg;
 
 CREATE MATERIALIZED VIEW mvw_school_class_total_year AS
 SELECT sg.sid AS schid,
@@ -136,3 +143,8 @@ SELECT sg.sid AS schid,
   WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT vw_lib_level_agg.year
            FROM vw_lib_level_agg))
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
+
+CREATE materialized VIEW mvw_inst_coord AS
+SELECT t2.instid,
+       t2.coord
+FROM dblink('host=localhost dbname=klp-coord user=klp password=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);

@@ -20,7 +20,7 @@ class InstCoord(GeoBaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_inst_coord'
+        db_table = 'mvw_inst_coord'
 
 
 class BoundaryCoord(GeoBaseModel):
