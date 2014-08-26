@@ -618,14 +618,14 @@
 
         map.on('popupclose', function(e) {
             document.title = "School Map";
-            console.log("close event", e);
-            selectedLayers.removeLayer(e.target._leaflet_id);
-            // console.log(e);
-            // console.log(selectedLayers);
-            // //GLOB = selectedLayers;
-            // setTimeout(function() {
-            //     selectedLayers.clearLayers();
-            // }, 500);
+            //If we don't wrap this in a setTimeout, there is some
+            //some strange race condition in leaflet since we are calling
+            //clearLayers() on selectedLayers inside the select2 onchange
+            //which conflicts with this, but is okay if we wrap in a setTimeout
+            //FIXME: but really not sure how to fix.
+            setTimeout(function() {
+                selectedLayers.removeLayer(e.popup._source);
+            }, 0);
             klp.router.setHash(null, {marker: null}, {trigger: false});
         });
 

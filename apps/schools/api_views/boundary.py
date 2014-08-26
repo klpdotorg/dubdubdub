@@ -1,6 +1,6 @@
 from schools.models import Boundary
 from common.views import KLPListAPIView
-from common.mixxins import CacheMixin
+from common.mixins import CacheMixin
 from schools.serializers import BoundarySerializer,\
     BoundaryWithParentSerializer
 from django.db.models import Q
