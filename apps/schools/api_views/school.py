@@ -33,6 +33,19 @@ class SchoolsList(KLPListAPIView):
         elif stype == 'primaryschools':
             qset = qset.filter(schooldetails__type=1)
         qset = qset.select_related('schooldetails__type')
+
+        if self.request.GET.get('admin1', ''):
+            admin1 = self.request.GET.get('admin1')
+            qset = qset.filter(schooldetails__admin1_id=admin1)
+
+        if self.request.GET.get('admin2', ''):
+            admin2 = self.request.GET.get('admin2')
+            qset = qset.filter(schooldetails__admin2_id=admin2)
+
+        if self.request.GET.get('admin3', ''):
+            admin3 = self.request.GET.get('admin3')
+            qset = qset.filter(schooldetails__admin3_id=admin3)
+
         return qset
 
 
@@ -46,8 +59,10 @@ class SchoolsInfo(SchoolsList):
     search_fields = ('name',)
 
     def get_queryset(self):
-        return School.objects.filter(status=2)\
-            .select_related('instcoord', 'address', 'schooldetails__admin3',
+        # inherit all the filtering from SchoolsList
+        qset = super(SchoolsInfo, self).get_queryset()
+
+        qset = qset.select_related('address', 'schooldetails__admin3',
                             'schooldetails__admin2', 'schooldetails__admin1',
                             'schooldetails__type', 'schooldetails__assembly',
                             'schooldetails__parliament', 'electedrep__ward',
@@ -55,6 +70,7 @@ class SchoolsInfo(SchoolsList):
                             'schooldetails__admin2__hierarchy',
                             'schooldetails__admin3__hierarchy',)\
             .prefetch_related('dise_info__disefacilityagg_set')
+        return qset
 
 
 class SchoolsDiseInfo(KLPListAPIView):
