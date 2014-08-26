@@ -1,22 +1,23 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
-from schools.api_views import SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,\
-    SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance,\
-    Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,\
-    Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,\
-    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,\
-    SchoolLibrary, OmniSearch, AdminDetails
+from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
+    SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance,
+    Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
+    Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
+    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
+    SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
+    PincodeDetails)
 
-from users.api_views import TestAuthenticatedView, UsersView,\
-    UserProfileView, OtherUserProfileView, OrganizationsView,\
-    OrganizationView, OrganizationUsersView, OrganizationUserView,\
-    VolunteerActivitiesView, VolunteerActivityView,\
-    VolunteerActivityTypesView,\
-    VolunteerActivityTypeView, VolunteerActivityUsersView,\
-    VolunteerActivityUserView, DonorRequirementsView,\
-    DonorRequirementView, DonationTypesView, DonationTypeView,\
-    DonorRequirementUsersView, DonorRequirementUserView
+from users.api_views import (TestAuthenticatedView, UsersView,
+    UserProfileView, OtherUserProfileView, OrganizationsView,
+    OrganizationView, OrganizationUsersView, OrganizationUserView,
+    VolunteerActivitiesView, VolunteerActivityView,
+    VolunteerActivityTypesView,
+    VolunteerActivityTypeView, VolunteerActivityUsersView,
+    VolunteerActivityUserView, DonorRequirementsView,
+    DonorRequirementView, DonationTypesView, DonationTypeView,
+    DonorRequirementUsersView, DonorRequirementUserView)
 
 urlpatterns = patterns('',
 
@@ -43,6 +44,10 @@ urlpatterns = patterns('',
         SchoolInfra.as_view(), name='api_school_infra'),
     url(r'^schools/school/(?P<pk>[0-9]+)/library$',
         SchoolLibrary.as_view(), name='api_school_library'),
+
+    url(r'^boundary/assembly/(?P<id>[0-9]+)$', AssemblyDetails.as_view(), name="api_assembly_details"),
+    url(r'^boundary/parliament/(?P<id>[0-9]+)$', ParliamentDetails.as_view(), name="api_parliament_details"),
+    url(r'^boundary/pincode/(?P<pincode>[0-9]+)$', PincodeDetails.as_view(), name="api_pincode_details"),
 
     url(r'^boundary/admin/(?P<id>[0-9]+)$', AdminDetails.as_view(), name="api_admin_details"),
     url(r'^boundary/admin1s$', Admin1s.as_view(), name="api_admin1s"),

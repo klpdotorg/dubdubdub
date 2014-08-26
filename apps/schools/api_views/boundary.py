@@ -1,8 +1,9 @@
-from schools.models import Boundary
+from schools.models import Boundary, Assembly, Parliament, Postal
 from common.views import KLPListAPIView, KLPDetailAPIView
 from common.mixins import CacheMixin
-from schools.serializers import BoundarySerializer,\
-    BoundaryWithParentSerializer
+from schools.serializers import (BoundarySerializer,
+    BoundaryWithParentSerializer, AssemblySerializer, ParliamentSerializer,
+    PincodeSerializer)
 from django.db.models import Q
 
 
@@ -13,6 +14,34 @@ class AdminDetails(KLPDetailAPIView, CacheMixin):
 
     def get_queryset(self):
         return Boundary.objects.all()
+
+
+class AssemblyDetails(KLPDetailAPIView, CacheMixin):
+    serializer_class = AssemblySerializer
+    bbox_filter_field = 'coord'
+    lookup_url_kwarg = 'id'
+
+    def get_queryset(self):
+        return Assembly.objects.all()
+
+
+class ParliamentDetails(KLPDetailAPIView, CacheMixin):
+    serializer_class = ParliamentSerializer
+    bbox_filter_field = 'coord'
+    lookup_url_kwarg = 'id'
+
+    def get_queryset(self):
+        return Parliament.objects.all()
+
+
+class PincodeDetails(KLPDetailAPIView, CacheMixin):
+    serializer_class = PincodeSerializer
+    bbox_filter_field = 'coord'
+    lookup_url_kwarg = 'pincode'
+    lookup_field = 'pincode'
+
+    def get_queryset(self):
+        return Postal.objects.all()
 
 
 class Admin1s(KLPListAPIView, CacheMixin):
