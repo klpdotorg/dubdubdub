@@ -538,6 +538,8 @@
                 if (window_width < 768) {
                     // Its a phone
                     marker.closePopup(); // Close popup
+                    // duplicateMarker.closePopup();
+                    map.closePopup();
                     // map.setView(marker.getLatLng(), 15);
                     setTimeout(function() {
                         var details_ht = $mobile_details_wrapper.height();
