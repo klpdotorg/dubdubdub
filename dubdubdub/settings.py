@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    
+
     #compressor finder:
     'compressor.finders.CompressorFinder',
 )
@@ -223,6 +223,9 @@ CACHES = {
         'LOCATION': '/tmp/dubdubdub_cache',
     }
 }
+
+# 10 days
+CACHE_TIMEOUT = 60 * 60 * 24 * 10
 
 #REST Framework config options:
 REST_FRAMEWORK = {
