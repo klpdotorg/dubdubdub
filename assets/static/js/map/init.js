@@ -1,3 +1,4 @@
+'use strict';
 (function() {
     var klp = window.klp;
     klp.init = function() {

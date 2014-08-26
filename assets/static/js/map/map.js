@@ -1,3 +1,4 @@
+'use strict';
 (function() {
     var t = klp.map = {};
     var window_width,
@@ -302,7 +303,6 @@
 
         disabledLayers = L.layerGroup();
         enabledLayers = L.layerGroup().addTo(map);
-        selectedMarkers = L.layerGroup().addTo(map);
         selectedLayers = L.featureGroup().addTo(map);
 
         // var mapIcon = function (type) {
@@ -592,7 +592,7 @@
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-control filter-control');
                 container.title = 'Filter Schools';
-                button = "<a class='filter-tool' href='#'></a>";
+                var button = "<a class='filter-tool' href='#'></a>";
                 container.innerHTML = button;
                 L.DomEvent
                 .addListener(container, 'click', L.DomEvent.stopPropagation)
