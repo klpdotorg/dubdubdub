@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+Release 0.4:
+  - Added materialized view for inst coords and added index to facility_agg [run-sql]
+  - (more things to come)
+
 Release 0.3.1: August 26: 048f9bc41fa80dc3d46038171e4a0ec329f35712
   - OmniSearch box on map page works
   - Optimize some point loading behaviour on map page
