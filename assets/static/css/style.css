@@ -9746,8 +9746,21 @@ button.Zebra_DatePicker_Icon_Inside {
 .center {
   text-align: center; }
 
-body {
-  background: red !important; }
+.modal-map-filter .klp-filter-select {
+  min-height: 50px;
+  vertical-align: top;
+  border-right: 1px solid #d8d8d8;
+  border-left: 1px solid #d8d8d8; }
+  .modal-map-filter .klp-filter-select:first-of-type {
+    border-left: none; }
+  .modal-map-filter .klp-filter-select:last-of-type {
+    border-right: none; }
+
+.select2-drop-mask {
+  display: none !important; }
+
+.klp-filter-select.v-border .select2-container {
+  border: none; }
 
 .textarea,
 .input-text {

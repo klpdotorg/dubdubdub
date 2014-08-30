@@ -1,0 +1,22 @@
+.modal-map-filter {
+  .klp-filter-select {
+    min-height: 50px;
+    vertical-align: top;
+    border-right: 1px solid #d8d8d8;
+    border-left: 1px solid #d8d8d8;
+
+    &:first-of-type {
+        border-left: none;
+    }
+
+    &:last-of-type {
+        border-right: none;
+    }
+  }  
+} 
+
+.select2-drop-mask {
+    display: none !important;
+} //FLAG: REMOVE LATER
+
+
