@@ -116,7 +116,8 @@
       <div class="options-wrapper">
         <div class="klp-filter-select v-border">
           <div class="label">School Type</div>
-          <select name="type" id="select-school" class="filters-dropdown">
+          <select name="type" id="select-type" class="filters-dropdown">
+            <option></option>
             <option>Primary School</option>
             <option>Preschool</option>
           </select>
@@ -124,37 +125,23 @@
 
         <div class="klp-filter-select v-border">
           <div class="label">District</div>
-          <input type="text" name="district" id="select-districts" class="" />
+          <input type="hidden" class="filter-dropdown" id="select-district" />
+          </select>
         </div>
 
         <div class="klp-filter-select v-border">
           <div class="label">Block</div>
-          <select name="block" class="filters-dropdown">
-            <option>Badami</option>
-            <option>Bilagi</option>
-            <option>Hunagund</option>
-            <option>Jamakhandi</option>
-          </select>
+          <input type="hidden" class="filter-dropdown" id="select-block" />
         </div>
 
         <div class="klp-filter-select v-border">
           <div class="label">Cluster</div>
-          <select name="cluster" class="filters-dropdown">
-            <option>Badami</option>
-            <option>Halakurki</option>
-            <option>Haligeri</option>
-            <option>Hebballi</option>
-            <option>Katageri</option>
-          </select>
-        </div>
+          <input type="hidden" class="filter-dropdown" id="select-cluster" />
+         </div>
 
         <div class="klp-filter-select v-border">
           <div class="label">School</div>
-          <select name="school" class="filters-dropdown">
-            <option>GOVT Hps</option>
-            <option>GOVT Kblps</option>
-            <option>GOVT Kgs</option>
-          </select>
+          <input type="hidden" class="filter-dropdown" id="select-school" />
         </div>
       </div>
     </div>

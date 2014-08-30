@@ -6,56 +6,94 @@
     t.init = function() {
         $_filter_button = $("#filter-button");
         $_filter_button.on("click", t.open);
-        $('.filters-dropdown').select2();
-        // $('.filters-dropdown').easyDropDown({
-        //     onChange: function(selected) {
-        //         var filterName = $(this).attr('name');
-        //         var selectedValue = selected.value;
-        //         t.setFilter(filterName, selectedValue);
-        //     }
-        // });
-        // $('.option_item .item_values ul').slimScroll({
-        //     height: '200px',
-        //     size: '6px',
-        //     color: '#8d8d8d',
-        //     railVisible: true,
-        //     railColor: '#f6f6f6',
-        //     railOpacity: 1
-        // });
-        var $select_district = $("#select-districts");
+        // $('.filters-dropdown').select2();
+
+        var $select_type = $("#select-type");
+        var $select_district = $("#select-district");
+        var $select_block = $("#select-block");
+        var $select_cluster = $("#select-cluster");
         var $select_school = $("#select-school");
 
+        $select_type.select2();
+        // $select_district.select2();
+
         var districtsXHR = function(school_type) {
-            return klp.api.do('boundary/admin1s', {'school_type':school_type});
+            return klp.api.do('boundary/admin1s', {'school_type':school_type, 'geometry': 'yes'});
         };
 
-        function format(item) { 
-            return _.str.titleize(item.name); 
-        };
+        function format(item) {
+            return _.str.titleize(item.properties.name);
+        }
 
-        $select_school.on("change", function(selected) {
+        function populateSelect(container, data) {
+            data.features.forEach(function(d) {
+                d.id = d.properties.id;
+            });
+            container.select2({
+                data: {
+                    results: data.features,
+                    text: function(item) {
+                        return item.properties.name;
+                    }
+                },
+                formatSelection: format,
+                formatResult: format,
+            });
+        }
+
+        $select_type.on("change", function(selected) {
             if (selected.val == 'Primary School') {
                 districtsXHR('primaryschools').done(function (data) {
-                    $select_district.select2({
-                        data: {
-                            results: data.features,
-                            text: function(item) {
-                                return item.name;
-                            }
-                        },
-                        formatSelection: format,
-                        formatResult: format,
-                        width: 'element'
-                    });
-                });      
+                    populateSelect($select_district, data);
+                });
             }
 
             if (selected.val == 'Preschool') {
                 districtsXHR('preschools').done(function (data) {
-                    console.log('preschool', data);
+                    populateSelect($select_district, data);
                 });
             }
         });
+
+        $select_district.on("change", function(selected) {
+            setMapView(selected, 8);
+            var blockXHR = klp.api.do('boundary/admin1/'+selected.val+'/admin2', {'geometry': 'yes', 'per_page': 0});
+            blockXHR.done(function (data) {
+
+                populateSelect($select_block, data);
+            });
+        });
+
+        $select_block.on("change", function(selected) {
+            setMapView(selected, 9)
+            var clusterXHR = klp.api.do('boundary/admin2/'+selected.val+'/admin3', {'geometry': 'yes', 'per_page': 0});
+            clusterXHR.done(function (data) {
+                populateSelect($select_cluster, data);
+            });
+        });
+
+        $select_cluster.on("change", function(selected) {
+            setMapView(selected, 10)
+            var schoolXHR = klp.api.do('schools/info', {'admin3':selected.val, 'geometry': 'yes', 'per_page': 0});
+            schoolXHR.done(function (data) {
+                console.log('schools', data);
+                populateSelect($select_school, data);
+            });
+        });
+
+        $select_school.on("change", function(selected) {
+            setMapView(selected, 12);
+            // FIXME: make this a close function. This is Sanjay's fault.
+            $('.btn-modal-close').click();
+            var schoolType = selected.added.properties.type.name.toLowerCase().replace(' ', '');
+            console.log(schoolType);
+            klp.router.setHash(null, {marker: schoolType+'-'+selected.val}, {trigger:true});
+        });
+
+        function setMapView(selection, zoom) {
+            var selectedLatlng = L.latLng(selection.added.geometry.coordinates[1], selection.added.geometry.coordinates[0]);
+            klp.map.map.setView(selectedLatlng, zoom);
+        }
 
 
     };

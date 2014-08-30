@@ -704,7 +704,7 @@
         // }
         var southWest = L.latLng(11.57, 73.87),
             northEast = L.latLng(18.45, 78.57),
-            bounds = L.latLngBounds(southWest, northEast);
+            bounds = L.latLngBounds(southWest, northEast).pad(1);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
         map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);

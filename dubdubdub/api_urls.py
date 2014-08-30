@@ -56,7 +56,7 @@ urlpatterns = patterns('',
     url(r'^boundary/admin1/(?P<id>[0-9]+)/admin3$',
         Admin3sInsideAdmin1.as_view(), name="api_admin1s_admin3"),
     url(r'^boundary/admin2s$', Admin2s.as_view(), name="api_admin2s"),
-    url(r'^boundary/admin2s/(?P<id>[0-9]+)/admin3$',
+    url(r'^boundary/admin2/(?P<id>[0-9]+)/admin3$',
         Admin3sInsideAdmin2.as_view(), name="api_admin2s_admin3"),
     url(r'^boundary/admin3s$', Admin3s.as_view(), name="api_admin3s"),
 
