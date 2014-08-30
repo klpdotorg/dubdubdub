@@ -13,6 +13,7 @@
         var $select_block = $("#select-block");
         var $select_cluster = $("#select-cluster");
         var $select_school = $("#select-school");
+        var $download_button = $("#download");
 
         $select_type.select2();
         // $select_district.select2();
@@ -65,7 +66,7 @@
         });
 
         $select_block.on("change", function(selected) {
-            setMapView(selected, 9)
+            setMapView(selected, 9);
             var clusterXHR = klp.api.do('boundary/admin2/'+selected.val+'/admin3', {'geometry': 'yes', 'per_page': 0});
             clusterXHR.done(function (data) {
                 populateSelect($select_cluster, data);
@@ -73,8 +74,10 @@
         });
 
         $select_cluster.on("change", function(selected) {
-            setMapView(selected, 10)
+            setMapView(selected, 10);
             var schoolXHR = klp.api.do('schools/info', {'admin3':selected.val, 'geometry': 'yes', 'per_page': 0});
+            $download_button.attr('href', '/api/v1/schools/info?admin3='+selected.val+'&format=csv');
+            $download_button.removeClass('hide');
             schoolXHR.done(function (data) {
                 console.log('schools', data);
                 populateSelect($select_school, data);
@@ -82,7 +85,7 @@
         });
 
         $select_school.on("change", function(selected) {
-            setMapView(selected, 12);
+            setMapView(selected, 13);
             // FIXME: make this a close function. This is Sanjay's fault.
             $('.btn-modal-close').click();
             var schoolType = selected.added.properties.type.name.toLowerCase().replace(' ', '');
