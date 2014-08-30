@@ -38,7 +38,12 @@
                 iconAnchor: [10, 26],
                 popupAnchor: [0, -25]
             });
+        },
+
+        alertMessage: function(message, status) {
+            // Status - error, success, warning.
+            alert(message);
         }
-    }
+    };
 
 })();

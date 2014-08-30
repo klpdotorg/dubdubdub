@@ -60,7 +60,6 @@
             setMapView(selected, 8);
             var blockXHR = klp.api.do('boundary/admin1/'+selected.val+'/admin2', {'geometry': 'yes', 'per_page': 0});
             blockXHR.done(function (data) {
-
                 populateSelect($select_block, data);
             });
         });
@@ -94,11 +93,13 @@
         });
 
         function setMapView(selection, zoom) {
-            var selectedLatlng = L.latLng(selection.added.geometry.coordinates[1], selection.added.geometry.coordinates[0]);
-            klp.map.map.setView(selectedLatlng, zoom);
+            if (_.isEmpty(selection.added.geometry)) {
+                klp.utils.alertMessage('No location data');
+            } else {
+                var selectedLatlng = L.latLng(selection.added.geometry.coordinates[1], selection.added.geometry.coordinates[0]);
+                klp.map.map.setView(selectedLatlng, zoom);
+            }
         }
-
-
     };
 
     t.setFilter = function(filterName, selectedValue) {
