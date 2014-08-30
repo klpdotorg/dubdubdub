@@ -1,0 +1,81 @@
+.page-organisation-profile{
+	&.org-head{
+		border-bottom: 1px solid #D8D8D8;
+	}
+	ul.tabs{
+		list-style: none; margin-bottom: -1px; zoom: 1;
+		// height: 32px; overflow: hidden;
+
+		&:before, &:after{
+			content:"";
+			display: table;
+		}
+		&:after{
+			clear: both;
+		}
+		li{
+			float:left; margin-right: 5px; cursor: pointer;
+			display: block; font-size: 10px; line-height: 32px; font-weight: bold;
+			text-transform: uppercase; color: #393939; letter-spacing: 1px;
+			padding: 0 10px; text-decoration: none;
+
+			&:last-child{ margin-right:0; }
+		}
+		li.current,li:hover{
+			background: #fff; border: 1px solid $primary-border-color; border-bottom: none;
+			line-height: 31px; padding: 0 9px;
+		}
+	}
+	.tab-heading{
+		display: none; background: #f8f8f8;
+		font-size: 14px; line-height: 16px; font-weight: $bold;
+		color: #393939;
+		letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+		padding: 8px 5%; margin: 25px 0;
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		@include if-device(phone) {
+			display: block;
+		}
+	}
+	.tab-content{
+		display: none;
+
+		&.current{
+			display: block;
+		}
+		@include if-device(phone) {
+			display: block;
+		}
+	}
+	.page-section-menu{
+		.options-wrapper{
+			border-top: none; border-bottom: none;
+			.option-item{
+				min-width: 100%; background: #F9F9F9;
+				border: 1px solid #D9D9D9; @include border-radius(3px);
+				.option-label{
+					font-size: 14px; color: #9399A1; top: 10px;
+				}
+				.dropdown{
+					height: 60px;
+					.selected{
+						padding-top: 30px;
+					}
+					ul li{
+						background: #fff;
+						&:hover{
+							background: #f5f5f5;
+						}
+						&.active{
+							background: #eeeeee;
+						}
+					}
+					.selected{
+						font-size: 16px; font-weight: bold; color: #000;
+					}
+				}
+			}
+		}
+	}
+}

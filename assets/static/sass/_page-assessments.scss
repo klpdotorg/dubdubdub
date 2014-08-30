@@ -1,0 +1,305 @@
+.page-assessments{
+
+	.color-gray-dark{
+		color: #393939;
+	}
+
+	.color-green{
+		color: #4AC18D;
+	}
+
+	.color-gray{
+		color: #888;
+	}
+
+	.bold{
+		font-weight: bold;
+	}
+
+	.pb-5{
+		padding-bottom: 5px;
+	}
+
+	.info-wrapper{
+		padding: 20px 0;
+	}
+
+	h2.en-school{
+		font-size: 20px; line-height: 32px; margin: 0;
+		text-align: left; font-weight: normal; text-transform: none;
+		@include text-shadow(1px 1px 0px, rgba(255,255,255,0.5));
+	}
+
+	.school-entity-icon{
+		position: absolute; margin-left: -40px;
+	}
+
+	.info-item{
+		float: left; margin-right: 50px;
+		@include text-shadow(1px 1px 0px, #fff);
+
+		.label,.value{
+			text-transform: uppercase; font-size: 11px; line-height: 18px; 
+			color: #898989; font-weight: bold; letter-spacing: 1px;
+		}
+		.value{
+			text-transform: none; color: #393939; letter-spacing: normal; font-size: 12px;
+		}
+	}
+
+	.filter-subheader{
+		width: 100%; height: 50px; background: #f6f6f6;
+		border-bottom: none; border-top: 1px solid #d8d8d8; @include box-shadow(0 2px 4px 0, rgba(77,77,77,0.30));
+
+		.filter-item{
+			margin-right: 30px; padding-top: 11px; position: relative;
+		}
+
+		.label{
+			color: #444; font-size: 10px; line-height: 50px;
+			font-weight: $bold; text-transform: uppercase;
+			margin-right: 10px;
+		}
+
+		.dropdown{
+			width: inherit; padding: 0 30px 0 5px;
+			float: none; height: 26px;
+			background-color: transparent;
+			border:1px solid #CACACA;
+			@include border-radius(3px);
+
+			&.open{
+				border-color: #adadad;
+			}
+
+			.selected{
+				color:#5f5f5f; line-height: 26px; text-transform: none;
+				text-overflow:ellipsis;
+			}
+
+			.carat, .carat:after{
+				border-top: 6px solid #CACACA;
+				right:5px;
+			}
+
+			> div{
+				width: 160px;
+				margin-top: 2px; overflow: hidden;
+				background: #fff;
+				border: 1px solid #CACACA;
+				@include border-radius(3px);
+			}
+
+			li{
+				color:#5f5f5f; border-bottom: 0px solid #CACACA;
+				text-transform: none;
+				height: 30px;
+				line-height: 30px;
+
+				&.focus{
+					background: #f6f6f6;
+				}
+				&.active{
+					background: darken(#f6f6f6, 3%);
+				}
+			}
+		}
+		@include if-device(phone){
+			height: 120px;
+			.label{
+				line-height: 40px; min-width: 25%;
+			}
+			.filter-item{
+				padding-top: 6px;
+			}
+		}
+	}
+
+	.table_header{
+		color: #fff; background: #8e8ca5; text-transform: uppercase;
+		line-height: 40px; height:40px; letter-spacing: 1px; font-weight: $bold;
+		text-align: center; margin-top: 60px; position: relative;
+
+		.year_selector{
+			position:absolute;right:0; top:0;
+			
+			.selection{
+				padding: 0 15px;border-left: 1px solid #fff; font-weight: $light;
+				span.value{
+					padding-right: 15px;
+					background-repeat: no-repeat; background-position: right center;
+					@include bg-image-2x("../images/status_dropdown_triangle", png, 8px, 4px);
+				}
+				span.label{
+					font-weight: $bold;
+					@include if-device(phone) {
+						display: none;
+					}
+				}
+			}
+			
+			ul{
+				width:inherit;
+				display: none; list-style: none;
+				li{
+					a{
+						display: block; text-align: left;
+						padding: 0 15px; color: #fff;
+						&:hover{
+							background:#8e8ca5; text-decoration: none;
+						}
+					}
+					
+				}
+			}
+
+			&.open{
+				background: #6e6c88;
+				ul{
+					display: block;
+				}
+			}
+
+			&:hover{
+				background: #6e6c88; cursor: pointer;
+			}
+		}
+
+		@include if-device(phone) {
+			text-align: left; height: 80px;
+			.pad-10{
+				padding: 0 10px;
+			}
+			.year_selector{
+				top: 40px; left: 0; display: block; padding: 0 10px;
+				.selection{
+					border: none; padding: 0;
+				}
+			}
+		}
+	}
+
+	.scores-box{
+		border: 1px solid $primary-border-color; border-top: 0; padding: 30px 60px; margin-bottom: 60px;
+
+		.scores-box-upr{
+			margin-bottom: 50px;
+		}
+
+		@include if-device(phone){
+			padding: 30px 20px;
+		}
+	}
+
+	.circular_count_item{
+		text-align: center;
+		p{
+			margin: 0; text-align: center; *font-weight: $bold;
+		}
+		p.value{
+			display: inline-block; border: 2px solid #6d6d6d; margin-top:10px;
+			width:90px; padding:36px 0; /* 80px height = 64px pad+16px text */
+			font-size: $p-font-size; line-height: $p-font-size; color: $base-text-color; font-weight: $regular;
+			@include border-radius(50%);
+			*border:none; *padding:10px 0;
+		}
+		p.count-head{
+			line-height: 16px; margin-bottom: 10px;
+		}
+	}
+
+	.comparison{
+		font-size: 16px; font-weight: bold; margin-left: 200px;
+
+		.heading{
+			font-size: 14px; text-transform: uppercase; margin-bottom: 10px;
+		}
+
+		ul.comparison-list{
+			list-style: none;
+			li{
+				padding: 5px 0; border-bottom: 1px solid $primary-border-color;
+			}
+		}
+	}
+	.stats_gender_item{
+		width: 100%; font-size: 14px; font-weight: bold; margin: 0 0 20px;
+	}
+	.gender-comparison{
+		width: 45%; margin-right: 10%;
+		.gender-detail{
+			margin-left: 60px;
+		}
+	}
+	.gender-total{
+		line-height: 14px; padding: 6px 0 5px;
+	}
+	.bar{
+		width: 100%; height: 15px; background: #EDEDED;
+		.bar-value{
+			width: 32%; height: 100%; background-color: #5f5f5f;
+			&.bar-value-47{
+				width: 47%;
+			}
+			&.bar-value-38{
+				width: 38%;
+			}
+			&.bar-value-23{
+				width: 23%;
+			}
+			&.bg-green{
+				background-color: #4AC18D;
+			}
+		}
+	}
+	.lang-marks{
+		width: 45%;
+		.item{
+			margin-bottom: 15px; zoom: 1;
+		}
+		.label{
+			width: 30%; text-transform: uppercase; font-weight: 700; color: #393939; font-size: 13px;
+		}
+		.percent{
+			width: 8%; font-weight: bold; text-align: center;
+		}
+		.bar{
+			width: 62%;
+		}
+		@include if-device(phone){
+			.percent{
+				text-align: left;
+			}
+		}
+	}
+
+	@include if-device(phone-tablet){
+		.school-entity-icon{
+			display: none;
+		}
+	}
+
+	@include if-device(phone){
+		.phn-grid-full{
+			width: 100%; margin-left: 0; margin-right: 0;
+		}
+		.phn-mb-60{
+			margin-bottom: 60px;
+		}
+		.phn-mb-30{
+			margin-bottom: 30px;
+		}
+		.phn-block{
+			display: block;
+		}
+		.phn-clr{
+			clear: both;
+		}
+		.comparison{
+			font-size: 14px;
+		}
+		.stats_gender_item, .lang-marks .label{
+			font-size: 12px;
+		}
+	}
+}

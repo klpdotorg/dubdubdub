@@ -1,0 +1,59 @@
+.page-about{
+	padding-bottom: 25px;
+	h1{
+		@include heading_color($color_about);
+	}
+	.video_wrapper{
+		width:850px; margin: 0 auto 50px;
+		.video_frame{
+			width: 100%;
+		}
+		@include if-device(phone-tablet) {
+			width:100%; margin-bottom:25px;
+			.video_frame{
+				height: 300px;
+			}
+		}
+		@include if-device(phone) {
+			.video_frame{
+				height: 220px;
+			}
+		}
+	}
+	p{
+		span.text_klp, a.text_link{
+			color: $color_about;
+		}
+		span.text_akshara_f{
+			color: #26b262;
+		}
+	}
+
+	.about-map{
+		background: #f6f6f6; margin: 50px 0; text-align: center; padding: 60px 0;
+		a{
+			color:$color_about; font-size:24px;letter-spacing: 1px; padding-left: 190px;
+			font-weight: $light;
+			&:before{
+				content:"";
+				display: inline-block; position: absolute; margin: -80px 0 0 -210px;
+				height: 189px; width:189px; border: 1px solid $color_about;
+				// /*background: #000 url("../images/volunteer_stories.jpg") no-repeat center center;*/
+
+				background-repeat: no-repeat; background-position: center center;
+				@include bg-image-2x("../images/volunteer_stories", jpg, 192px, 192px);
+
+				@include border-radius(50%);
+			}
+		}
+		@include if-device(phone) {
+			margin: 25px 0; padding: 25px 0;
+			a{
+				font-size:18px; padding-left: 0px;
+				&:before{
+					display:none;
+				}
+			}
+		}
+	}
+}

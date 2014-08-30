@@ -1,0 +1,63 @@
+
+@mixin filter-grayscale($value){
+	-webkit-filter: grayscale($value);
+	-moz-filter: grayscale($value);
+	-ms-filter: grayscale($value);
+	-o-filter: grayscale($value);
+	filter: grayscale($value);
+}
+
+@mixin opacity($opacity) {
+	zoom: 1;
+	filter: alpha(opacity=($opacity*100));
+	opacity: $opacity;
+}
+
+@mixin non-selectable() {
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	user-select: none;
+}
+
+@mixin ellipsis() {
+	white-space: nowrap;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+@mixin hide-text{
+    overflow:hidden;
+    text-indent:-9999px;
+    display:block;
+}
+
+@mixin inline-block($suffix:""){
+    display: inline-block #{$suffix};
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline #{$suffix};
+    *vertical-align: auto;
+}
+
+@mixin clearfix{
+    zoom:1;
+
+	&:before,
+	&:after{
+		content:"";
+    	display:table;
+	}
+	&:after{
+		clear:both;
+	}
+}
+
+@mixin border-box{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+

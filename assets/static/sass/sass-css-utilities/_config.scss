@@ -1,0 +1,37 @@
+// Default config values. Do NOT modify in this file.
+
+	$config-global-use-important: true !default;
+
+// ====== Prefixes ======
+
+	$config-prefix-tablet:       "tab-" !default;
+	$config-prefix-phone-tablet: "phn-tab-" !default;
+	$config-prefix-phone:        "phn-" !default;
+
+// ====== Paddings ======
+
+	$config-paddings: 			   (0 5 10 15 20 25 30) !default;
+	$config-tablet-paddings:       $config-paddings !default;
+	$config-phone-tablet-paddings: $config-paddings !default;
+	$config-phone-paddings:        $config-paddings !default;
+
+// ====== Margins ======
+
+	$config-margins: 			   (0 5 10 15 20 25 30) !default;
+	$config-tablet-margins:        $config-margins !default;
+	$config-phone-tablet-margins:  $config-margins !default;
+	$config-phone-margins:         $config-margins !default;
+
+// ====== Setting default variables based on config. Do not edit unless you know what you are doing! ======
+
+	$important: if($config-global-use-important, " !important", "");
+	$important-paddings: $important;
+	$important-margins: $important;
+
+	@if variable-exists(config-paddings-use-important) {
+		$important-paddings: if($config-paddings-use-important, " !important", "");
+	}
+	@if variable-exists(config-margins-use-important) {
+		$important-margins: if($config-margins-use-important, " !important", "");
+	}
+

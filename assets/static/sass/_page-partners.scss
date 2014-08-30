@@ -1,0 +1,70 @@
+.page-partners{
+	padding-bottom: 50px;
+
+	h1{
+		color:$color_about;
+		span{
+			background:$color_about;
+		}
+	}
+
+	.col_logo{
+		margin-top: 25px;margin-bottom: 25px; text-align: center;
+	}
+
+	p{
+		span.text_orange, a.text_orange{
+			color: $color_about;
+		}
+		&.bordered_text{
+			margin: 50px 0;
+		}
+	}
+
+	.district_list_column{
+		width: 48%; margin: 0 1%;
+		*width:45% !important;
+
+		.list_block{
+			text-align: center; margin: 50px 0;
+
+			h2{
+				color: $color_about; font-weight: $regular; margin-bottom: 25px;
+			}
+
+			ul{
+				list-style: none; padding: 0; margin:0;
+				li{
+					text-align: center;
+					font-size: 14px; line-height: 28px;
+				}
+			}
+		}
+	}
+
+	@include if-device(phone-tablet) {
+		.col_logo{
+			width: 50%; float: left; display: block; margin: 25px 0 0;
+		}
+		p.bordered_text{
+			margin-bottom:25px;
+		}
+		
+		.logos_wrapper .clr{
+			clear:none!important;
+		}
+
+		@include if-device(phone) {
+			.col_logo{
+				width: 100%;
+			}
+			.district_list_column{
+				width: 100%; margin: 0;
+
+				.list_block{
+					margin: 25px 0;
+				}
+			}
+		}
+	}
+}

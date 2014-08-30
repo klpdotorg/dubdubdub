@@ -1,0 +1,334 @@
+.home-header{
+	.mobile_header{
+		display: none; width:100%; min-height: 40px; position:absolute; z-index: 10; top:0; left: 0;
+		background-color: #fff;
+
+		.header_mobile_logo{
+			// @extend .main-header .header-content .header_mobile_logo;
+			display: block; float: left;
+			height: 40px;width: 56px; padding-left: 10px;
+			background-repeat: no-repeat; background-position: right center;
+			@include bg-image-2x("../images/KLP_logo", png, 56px, 29px);
+		}
+
+		.mobile_icon{
+			display: block; float: right; height: 40px;width: 40px; 
+			background-repeat: no-repeat; background-position: center center;
+			@include bg-image-2x("../images/top_menu_mobile_icon", png, 22px, 15px);
+		}
+
+		@include if-device(phone-tablet) {
+			display: block;
+		}
+	}
+	.blackboard_wrapper{
+		background:#000 url("../images/bg_blackboard_big.jpg") repeat;
+		background-size: cover;
+		width:100%;
+
+		.content{
+			width:960px; margin: 0 auto; padding-top: 30px; min-height:670px; overflow:hidden;
+			background: url("../images/hp_student.png") no-repeat bottom right;
+			*height:700px!important;
+		}
+
+		h1{
+			// /*background: url("../images/home_klp_logo.png") center center no-repeat;*/
+			background-repeat: no-repeat; background-position: center center;
+			@include bg-image-2x("../images/home_klp_logo", png, 177px, 161px);
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			width:100%; height:162px;
+			padding: 0; margin:0;
+			*background-position-x: 25%;
+			_background-position-x: 50%;
+		}
+
+		.headline-text{
+			// /*background: url("../images/home_headline_text.png") 0 0 no-repeat;*/
+			background-repeat: no-repeat; background-position: 0 0;
+			@include bg-image-2x("../images/home_headline_text", png, 523px, 183px);
+			width:523px; height:183px;
+			margin-top: 60px;
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.headline-text-mobile{
+			display:none; margin: 50px 0 25px; text-align: center; width: 100%;
+			img{
+				width: 90%;
+			}
+		}
+
+		.info{
+			width:560px; margin-top: 50px;
+			font-size: 16px; line-height: 26px;
+			color: #ddd; font-weight: $light;
+
+			p{ color: #d8d8d8;	margin:0; }
+
+			a{	color:$base-text-color;  }
+
+			@include if-device(tablet) {
+				width:450px;
+			}
+		}
+
+		/*
+		@media screen and (min-width: 980px) and (max-height: 749px) {
+			.headline-text{
+				margin-top: 30px;
+				background-size:auto 130px;
+				height:130px;
+			}
+			.info{
+				margin-top: 30px;
+			}
+		}
+		*/
+
+		@include if-device(phone-tablet) {
+			.content{
+				width:auto; min-height:inherit; padding: 60px 3% 0;
+				background-size: 250px auto;
+			}
+			h1{
+				background-size: 150px auto; height: 138px;
+			}
+			.info{
+				padding-bottom: 25px;
+			}
+		}
+
+		@include if-device(phone) {
+			.content{
+				background:none;
+			}
+			h1{
+				background-size: 120px auto; height: 110px;
+			}
+			.headline-text{
+				display:none;
+			}
+			.headline-text-mobile{
+				display:block;
+			}
+			.info{
+				width:auto; margin-top: 25px; padding-bottom: 25px;
+			}
+		}
+	}
+}
+
+.home-section{
+	width:100%; padding: 50px 0;
+
+	.circular{
+		width:190px; height:190px; background:#fff; margin: 0 auto 50px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		@include border-radius(50%);
+	}
+}
+
+@mixin home-section_circular($bg_color,$bg_img) {
+	background-color:$bg_color !important;
+	background-image: url($bg_img);
+}
+
+.home-section.how-you-can-help{
+	background: #2C3E50;
+	h2{
+		color: #fff;
+		span{
+			background: #fff;
+		}
+	}
+
+	p{
+		font-size: $p-font-size; line-height: 26px; color: #fff; font-weight: $light; text-align: center;
+		padding: 0 10px;
+	}
+	h3{  margin-bottom: 25px; }
+
+	.grid_item:before{
+		content: ""; display: block;
+		width:190px; height:190px; margin: 0 auto 50px;
+		background-position: center center;
+		background-repeat: no-repeat;
+		@include border-radius(50%);
+	}
+
+	.col_pay_a_visit{
+		&:before{
+			background-color: $color_programmes !important;
+			// /*background-image: url("../images/auto.png");*/
+			@include bg-image-2x("../images/auto", png, 120px, 81px);
+		}
+		h3{	color: $color_programmes; }
+	}
+
+	.col_volunteer{
+		&:before{
+			background-color: $color_volunteer !important;
+			// /*background-image: url("../images/helpout.png");*/
+			@include bg-image-2x("../images/helpout", png, 154px, 192px);
+		}
+		h3{ color: $color_volunteer; }
+	}
+
+	.col_donate{
+		&:before{
+			background-color: $color_database !important;
+			// /* background-image: url("../images/books.png"); */
+			@include bg-image-2x("../images/books", png, 120px, 86px);
+		}
+		h3{ color: $color_database; }
+	}
+
+	@include if-device(phone) {
+		p{
+			padding: 0;
+		}
+		.grid_item{
+			display:block; width: auto!important;
+			float: none;
+			position: relative;
+			margin-left: 0%;
+			margin-right: 0%;
+			&:before{
+				width:110px; height:110px;
+				background-size: 80%; margin-bottom: 25px;
+			}
+		}
+	}
+}
+
+.home-section.recent-activities{
+	background: #fff;
+	
+	.grid_item{
+		h2{
+			color: #393939;
+			span{
+				background: #393939;
+			}
+			&:after{
+				content: ""; display: block;
+				width:190px; height:190px; margin: 50px auto;
+				background-position: center center;
+				background-repeat: no-repeat;
+				border: 1px solid #6d6d6d;
+				@include border-radius(50%);
+			}
+		}
+		p{
+			font-size: $p-font-size; line-height: 26px; color: $base-text-color; font-weight: $light; text-align: center;
+			padding: 0 10px;
+		}
+		h3{  
+			font-size:18px; color:#393939; margin-bottom: 0px; text-transform: none; font-weight: normal;
+		}
+		h4{  
+			font-size:18px; color:#393939; margin-bottom: 25px; text-transform: none; font-weight: normal;
+		}
+	}
+
+	.col_schools_around_you{
+		h2{
+			span{
+				background: $color_school_map;
+			}
+			&:after{
+				background-color: $color_school_map !important;
+				// /*background-image: url("../images/schools_around_you.jpg");*/
+				@include bg-image-2x("../images/schools_around_you", jpg, 192px, 192px);
+			}
+		}
+		h4{	color: $color_school_map; }
+	}
+
+	.col_volunteer_stories{
+		h2{
+			span{
+				background: $color_volunteer;
+			}
+			&:after{
+				background-color: $color_volunteer !important;
+				// /*background-image: url("../images/volunteer_stories.jpg");*/
+				@include bg-image-2x("../images/volunteer_stories", jpg, 192px, 192px);
+			}
+		}
+		h4{	color: $color_volunteer; }
+	}
+
+	.col_updates{
+		h2{
+			span{
+				background: $color_programmes;
+			}
+			&:after{
+				background-color: $color_programmes !important;
+				// /*background-image: url("../images/updates.jpg");*/
+				@include bg-image-2x("../images/updates", jpg, 192px, 192px);
+			}
+		}
+		h4{	color: $color_programmes; }
+	}
+
+	@include if-device(phone) {
+		.grid_item{
+			display:block; width: auto!important;
+			float: none; position: relative;
+			margin-left: 0%; margin-right: 0%;
+			
+			h2{
+				margin-bottom: 0px;
+				&:after{
+					width:110px; height:110px;
+					background-size: 100%; margin: 25px auto;
+				}
+			}
+
+			p{
+				padding: 0; margin-bottom: 50px;
+				&:last-child{
+					margin-bottom: 25px;
+				}
+			}
+		}
+	}
+}
+
+.home-section.come-volunteer{
+	background: #C6DFE7;
+	h2{
+		color: #393939;
+		span{
+			background: #393939;
+		}
+	}
+
+	p{
+		text-align: center; font-size: $p-font-size; line-height: 26px; color: #393939; 
+		padding-top: 125px; margin: 25px 0 0;
+		background-repeat: no-repeat; background-position: top center;
+		@include bg-image-2x("../images/home_children", png, 590px, 100px);
+
+		@include if-device(phone-tablet) {
+			background-size: 95% auto; padding-top: 145px;
+		}
+		@media screen and (min-width: 650px)and (max-width: 767px){
+			padding-top: 110px;
+		}
+		@media screen and (min-width: 500px)and (max-width: 649px){
+			padding-top: 100px;
+		}
+		@media screen and (max-width: 499px){
+			padding-top: 80px;
+		}
+	}
+}

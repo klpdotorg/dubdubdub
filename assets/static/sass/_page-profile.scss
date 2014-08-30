@@ -1,0 +1,85 @@
+.page-profile{
+	&.profile-head{
+		border-bottom: 1px solid #D8D8D8;
+	}
+	.profile-img{
+		width: 80px; height: 80px;
+		@include border-radius(50%); border: 2px solid #D8D8D8;
+	}
+	.location{
+		font-size: 12px; line-height: 18px; color: #898989; margin: 0;
+	}
+	.verified{
+		@include bg-image-2x("../images/icon_verified", png, auto, 100%); background-repeat: no-repeat;
+		padding-left: 20px;
+	}
+}
+.stats_opportunities{
+	margin: 10px auto; width: 140px;
+	p{
+		margin: 0;
+	}
+	.label{
+		font-size: 13px; line-height: 24px; text-transform: uppercase;
+		span{
+			font-weight: $regular;
+		}
+	}
+	.value{
+		font-size: 22px; line-height: 22px; font-weight: $bold; color: #609adf;
+	}
+	.icon{
+		display: block; float: left; 
+		width:48px; height:48px; margin-right: 10px;
+		background-color: #609adf; background-position: center center; background-repeat: no-repeat;
+		@include border-radius(50%);
+		&.donation{
+			@include bg-image-2x("../images/icon_donation", png, 100%, 100%);
+		}
+		&.volunteer{
+			@include bg-image-2x("../images/icon_volunteer", png, 100%, 100%);
+		}
+	}
+	
+}
+.stats_opportunities.no_width{
+	width: auto; min-width: 100px;
+}
+.desc-title{
+	color: #393939; text-align: left; letter-spacing: normal;
+	font-size: 18px; line-height: 26px; font-weight: 700; margin: 0;
+	&.green{
+		color: $color_green;
+	}
+	&.green2{
+		color: $color_database;
+	}
+	&.blue{
+		color: $color_volunteer;
+	}
+}
+.profile-description{
+	font-size: 14px; line-height: 24px; color: #6D6D6D;
+}
+.profile-title{
+	font-size: 12px; line-height: 18px; color: #7B7994; letter-spacing: 1px;
+}
+.left-column, .right-column{
+	width: 47.9%;
+}
+.column-content{
+	font-size: 18px; line-height: 26px;
+}
+.column-sections{
+	border-bottom: 1px solid #D8D8D8;
+}
+
+.left-column{
+	border-right: 1px solid #D8D8D8; padding-right: 2%;
+	@include if-device(phone){
+		border-right: none;
+	}
+}
+.right-column{
+	padding-left: 2%;
+}

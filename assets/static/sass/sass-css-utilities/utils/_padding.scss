@@ -1,0 +1,50 @@
+
+@mixin auto-generate-paddings($values, $prefix:"") {
+
+	@each $val in $values{
+		// Padding all
+		.#{$prefix}pad-#{$val}{
+			padding: #{$val}px#{$important-paddings};
+		}
+
+		// Padding top and vertical
+		.#{$prefix}pt-#{$val},
+		.#{$prefix}pv-#{$val}{
+			padding-top: #{$val}px#{$important-paddings};
+		}
+
+		// Padding bottom and vertical
+		.#{$prefix}pb-#{$val},
+		.#{$prefix}pv-#{$val}{
+			padding-bottom: #{$val}px#{$important-paddings};
+		}
+
+		// Padding left and horizontal
+		.#{$prefix}pl-#{$val},
+		.#{$prefix}ph-#{$val}{
+			padding-left: #{$val}px#{$important-paddings};
+		}
+
+		// Padding right and horizontal
+		.#{$prefix}pr-#{$val},
+		.#{$prefix}ph-#{$val}{
+			padding-right: #{$val}px#{$important-paddings};
+		}
+	}
+}
+
+// Auto generated padding classes
+
+	@include auto-generate-paddings($config-paddings);
+
+	@include if-device(tablet) {
+		@include auto-generate-paddings($config-tablet-paddings, $config-prefix-tablet);
+	}
+
+	@include if-device(phone-tablet) {
+		@include auto-generate-paddings($config-phone-tablet-paddings, $config-prefix-phone-tablet);
+	}
+
+	@include if-device(phone) {
+		@include auto-generate-paddings($config-phone-paddings, $config-prefix-phone);
+	}

@@ -1,0 +1,83 @@
+.page-programmes{
+
+	padding-bottom: 30px;
+
+	h1{
+		margin-bottom: 80px; *background:none;
+	}
+
+	.programmes-list-wrapper{
+		display: table;
+	}
+
+	.programme-type{
+		display: table-row; 
+
+		.thumb{
+			float: left; display: table-cell; 
+			vertical-align: middle; padding-bottom: 50px;
+
+			a{
+				width:190px; height: 190px; display: block;
+				background: url("../images/thumb_reading_programme.jpg") no-repeat center center;
+				@include border-radius(50%);
+			}
+			&.reading a{
+				background-image: url("../images/thumb_reading_programme.jpg");
+			}
+			&.maths a{
+				background-image: url("../images/thumb_maths_programme.jpg");
+			}
+			&.library a{
+				background-image: url("../images/thumb_library_programme.jpg");
+			}
+			&.preschool a{
+				background-image: url("../images/thumb_preschool_programme.jpg");
+			}
+		}
+
+		.details{
+			padding-left: 40px; padding-bottom: 50px; 
+			*margin-left: 200px!important; 
+			display: table-cell; vertical-align: middle; 
+
+			h2{
+				color:$color_programmes; text-align:left; margin: 0 0 10px;
+				a{
+					color:inherit; text-decoration: none;
+				}
+			}
+			p{
+				margin: 5px 0 0;
+				a.read_more{
+					color: #393939; font-weight: $bold;
+				}
+			}
+		}
+	}
+
+	@include if-device(phone-tablet) {
+		h1{
+			margin-bottom: 50px;
+		}
+
+		.programme-type{
+			
+			.details{
+				padding-bottom: 25px;
+				h2{
+					letter-spacing: normal; font-size: 20px;
+				}
+			}
+
+			@include if-device(phone) {
+				.thumb{
+					display: none;
+				}
+				.details{
+					padding-left: 0;
+				}
+			}
+		}
+	}
+}

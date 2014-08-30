@@ -1,0 +1,29 @@
+.page-thank-you{
+	.tick{
+		width: 32px; height: 32px;
+		@include bg-image-2x("../images/tick-green", png, auto, 100%);
+	}
+	.title{
+		font-size: 20px; line-height: 28px;
+	}
+	.address{
+		.name{
+			font-size: 24px; font-weight: $light; line-height: 30px;
+		}
+		.details{
+			font-size: 12px; line-height: 15px;
+			letter-spacing: 2px; text-transform: uppercase;
+		}
+	}
+	.text{
+		font-size: 16px; line-height: 22px;
+
+		&.small{
+			font-size: 14px; line-height: 20px;
+		}
+	}
+	.items{
+		width: 220px;
+		font-size: 16px; line-height: 22px;
+	}
+}
