@@ -7,4 +7,8 @@ class CacheMixin(APIView):
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(CacheMixin, cls).as_view(**initkwargs)
-        return cache_page(settings.CACHE_TIMEOUT)(view)
+
+        if settings.CACHE_ENABLED:
+            return cache_page(settings.CACHE_TIMEOUT)(view)
+        else:
+            return view

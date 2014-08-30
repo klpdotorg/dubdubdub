@@ -2,6 +2,7 @@ from schools.models import School, DiseInfo
 from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.models import SumCase
+from common.mixins import CacheMixin
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\
     SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
@@ -11,7 +12,7 @@ from django.http import Http404
 import re
 
 
-class SchoolsList(KLPListAPIView):
+class SchoolsList(KLPListAPIView, CacheMixin):
     '''
         Returns list of schools with id and name.
     '''
@@ -49,7 +50,7 @@ class SchoolsList(KLPListAPIView):
         return qset
 
 
-class SchoolsInfo(SchoolsList):
+class SchoolsInfo(SchoolsList, CacheMixin):
     '''
         Returns list of schools with more info about each school
         for /schools/info
