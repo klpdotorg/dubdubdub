@@ -38,6 +38,13 @@ We use Vagrant for development. Here's everything you need to know about setting
 
 and go to `http://localhost:8001`
 
+#### CSS workflow:
+1. Add a partial to assets/static/sass/dev and import it in assets/static/sass/style.scss. For example, see [assets/static/sass/dev/_sample.scss](https://github.com/klpdotorg/dubdubdub/blob/develop/assets/static/sass/dev/_sample.scss).
+
+2. Run Sass before you commit the changes
+    
+    $ sass assets/static/sass/style.scss assets/static/css/style.css
+
 #### Running unit tests
 
 Unit tests are available for the schools and users endpoints. Below are instructions to run the unit tests available so far. 
