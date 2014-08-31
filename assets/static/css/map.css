@@ -86,6 +86,7 @@
 .filter-control {
     margin-top: 0px !important;
     border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .filter-tool {
@@ -93,7 +94,6 @@
     background-position: 50% 50%;
     background-image: url('../images/map/filters.png');
     background-repeat: no-repeat;
-    border-radius: 0px 0px 5px 5px;
     width: 36px;
     height: 36px;
     display: block;
@@ -106,4 +106,36 @@
 .search-input {
     padding: 0 !important;
     border: 0 !important;
+}
+
+.leaflet-draw {
+    margin-top: 0 !important;
+}
+
+.leaflet-bar {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.leaflet-draw-draw-circle {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.leaflet-draw-draw-circle {
+    background-position: 0 0 !important; 
+}
+
+.leaflet-draw-toolbar a {
+    background-image: url('../images/map/radius.png');
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat;
+}
+
+.leaflet-bar a:last-child {
+    border-radius: 0px 0px 5px 5px !important;
+}
+
+.leaflet-right .leaflet-draw-actions {
+    right: 36px;
 }

@@ -20,6 +20,11 @@ def git_checkout(branch):
     with cd(env.project_path):
         sudo('git checkout {}'.format(branch), user='dubdubdub')
 
+def run_mview():
+    with cd(env.project_path):
+        with prefix('source {venv_path}bin/activate'.format(venv_path=env.venv_path)):
+            sudo('psql -d klpwww_ver4 < sql/materialized_views.sql', user='postgres')
+
 def pip_install_packages():
     with cd(env.project_path):
         with prefix('source {venv_path}bin/activate'.format(venv_path=env.venv_path)):
@@ -38,13 +43,14 @@ def collectstatic():
         with prefix('source {venv_path}bin/activate'.format(venv_path=env.venv_path)):
             sudo('python manage.py collectstatic --noinput', user='dubdubdub')
 
-def deploy(pip_install=False, migrate=False):
+def deploy(pip_install=False, migrate=False, mview=False):
     # Use any of the commands
 
     # fab dev deploy
     # fab dev deploy:migrate=True
     # fab dev deploy:pip_install=True
     # fab dev deploy:pip_install=True,migrate=True
+    # fab dev deploy:pip_install=True,migrate=True,mview=True
 
     git_pull(env.git_branch)
 
@@ -53,6 +59,9 @@ def deploy(pip_install=False, migrate=False):
 
     if migrate:
         migrate_all()
+
+    if mview:
+        run_mview()
 
     collectstatic()
     apache_reload()
