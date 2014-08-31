@@ -570,9 +570,8 @@
                     var html = tpl_mobile_place_details(data);
                     $mobile_details_wrapper.html(html).addClass("show");
                 }
-                document.title = "School: " + feature.properties.name;
                 setMarkerURL(feature);
-
+                document.title = "School: " + feature.properties.name;
             });
         }
 
@@ -664,7 +663,6 @@
         });
 
         map.on('popupclose', function(e) {
-            document.title = "School Map";
             //If we don't wrap this in a setTimeout, there is some
             //some strange race condition in leaflet since we are calling
             //clearLayers() on selectedLayers inside the select2 onchange
@@ -675,6 +673,7 @@
             }, 0);
             if (state.addPopupCloseHistory) {
                 klp.router.setHash(null, {marker: null}, {trigger: false});
+                document.title = "School Map";
             } else {
                 state.addPopupCloseHistory = true;
             }
