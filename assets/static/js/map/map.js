@@ -5,7 +5,7 @@
         $mobile_details_wrapper,
         $_filter_layers_list,
         $_filter_layers_button,
-        $_filter_radius_button,
+        $radiusButton,
         map,
         marker_overlay_html;
 
@@ -658,6 +658,15 @@
                 selectedLayers.removeLayer(e.popup._source);
             }, 0);
             klp.router.setHash(null, {marker: null}, {trigger: false});
+        });
+
+        map.on('draw:drawstart', function (e) {
+            $radiusButton = $('.leaflet-draw-draw-circle');
+            $radiusButton.addClass('active');
+        });
+
+        map.on('draw:drawstop', function (e) {
+            $radiusButton.removeClass('active');
         });
 
         map.on('draw:created', function (e) {
