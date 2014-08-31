@@ -20,6 +20,14 @@ var KLPRouter = function(routes) {
         return queryParams;       
     };
 
+    var getURL = function(hash) {
+        if (hash.indexOf("?") === -1) {
+            return hash;
+        } else {
+            return hash.split("?")[0];
+        }
+    };
+
     var getQueryString = function(queryObj) {
         var paramsArray = [];
         for (var param in queryObj) {
@@ -32,16 +40,18 @@ var KLPRouter = function(routes) {
     };
 
     this.hashChanged = function(e) {
+        var previousURL, previousQueryParams;
         if (e) {
-            //console.log(e);
-            //GLOB_E = e;
             var oldFullURL = e.oldURL;
             var oldHash = oldFullURL.split('#')[1];
-            var previousQueryParams = getQueryParams(oldHash);
+            previousQueryParams = getQueryParams(oldHash);
+            previousURL = getURL(oldHash);
+            console.log('previous params', previousURL, previousQueryParams);
+            //var previousURL = oldFullURL.
         } else {
-            var previousQueryParams = {};
+            previousQueryParams = {};
+            previousURL = '';
         }
-        console.log("hash change called with previous params as ", previousQueryParams);
         var hash = window.location.hash.substr(1, window.location.hash.length-1);
         var queryParams = getQueryParams(hash);
         for (pattern in routes) {
@@ -53,7 +63,7 @@ var KLPRouter = function(routes) {
             }
         }
         var newURL = hash.split("?")[0];
-        var changed = {}
+        var changed = {};
         _(_(queryParams).keys()).each(function(key) {
             if (key in previousQueryParams) {
                 if (queryParams[key] === previousQueryParams[key]) {
@@ -70,7 +80,7 @@ var KLPRouter = function(routes) {
             };
         });
 
-        _(_(previousQueryParams.keys)).each(function(key) {
+        _(_(previousQueryParams).keys()).each(function(key) {
             if (!(key in queryParams)) {
                 changed[key] = {
                     'oldVal': previousQueryParams[key],
@@ -78,14 +88,18 @@ var KLPRouter = function(routes) {
                 }
             }
         });
+        var paramsObj = {
+            'url': hash.split("?")[0],
+            'queryParams': queryParams,
+            'oldURL': previousURL,
+            'changed': changed
 
-        var paramsArray = [hash.split("?")[0], queryParams, changed];
-        that.events.trigger("hashchange", paramsArray);
+        };
+        that.events.trigger("hashchange", [paramsObj]);
         _(_(changed).keys()).each(function(key) {
-            console.log("triggering hashchange:" + key, changed);
-            that.events.trigger("hashchange:" + key, paramsArray);
+            console.log("triggering hashchange:" + key, paramsObj);
+            that.events.trigger("hashchange:" + key, [paramsObj]);
         });
-
     };
 
     this.getHash = function() {
