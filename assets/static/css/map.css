@@ -143,3 +143,10 @@
 .leaflet-right .leaflet-draw-actions {
     right: 36px;
 }
+
+/* Hide map controls on small devices. */
+@media (max-width: 768px) {
+    .leaflet-control-container {
+        display: none;
+    }
+}
