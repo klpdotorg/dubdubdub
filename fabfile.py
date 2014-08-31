@@ -23,7 +23,7 @@ def git_checkout(branch):
 def run_mview():
     with cd(env.project_path):
         with prefix('source {venv_path}bin/activate'.format(venv_path=env.venv_path)):
-            sudo('psql -d klpwww_ver4 < sql/materialized_views.sql, user='postgres')
+            sudo('psql -d klpwww_ver4 < sql/materialized_views.sql', user='postgres')
 
 def pip_install_packages():
     with cd(env.project_path):
