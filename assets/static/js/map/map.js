@@ -15,6 +15,9 @@
     var mapIcon = klp.utils.mapIcon;
     var mapBbox;
 
+    var state = {
+        'addPopupCloseHistory': true
+    };
     var districtLayer,
         preschoolDistrictLayer,
         blockLayer,
@@ -131,12 +134,15 @@
 
         $searchInput.on('change', function(choice) {
             var data = choice.added.data;
-            console.log(data);
+            //console.log(data);
             var searchPoint;
             var searchGeometryType = data.geometry.type;
             var searchGeometry = data.geometry.coordinates;
             var searchEntityType = data.entity_type;
-
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
+            
             selectedLayers.clearLayers();
             // selectedMarkers.clearLayers();
 
@@ -227,6 +233,9 @@
                 //currentMarker = queryParams['marker'];
             var queryParams = params.queryParams,
                 changed = params.changed;
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
             if (changed.marker.oldVal && !changed.marker.newVal) {
                 map.closePopup();
                 return;            
@@ -539,6 +548,9 @@
             // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
             //     popupInfoXHR.abort();
             // }
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
@@ -661,7 +673,11 @@
             setTimeout(function() {
                 selectedLayers.removeLayer(e.popup._source);
             }, 0);
-            klp.router.setHash(null, {marker: null}, {trigger: false});
+            if (state.addPopupCloseHistory) {
+                klp.router.setHash(null, {marker: null}, {trigger: false});
+            } else {
+                state.addPopupCloseHistory = true;
+            }
         });
 
         map.on('draw:drawstart', function (e) {
