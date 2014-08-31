@@ -1,8 +1,6 @@
 var KLPRouter = function(routes) {
     this.routes = routes || {};
     var that = this;
-    var previousURL = '', 
-        previousQueryParams = {};
     var getQueryParams = function(hash) {
         var queryParams = {};
         var hashSplit = hash.split("?");
@@ -33,8 +31,17 @@ var KLPRouter = function(routes) {
         return paramsArray.join('&');
     };
 
-    this.hashChanged = function() {
-        console.log("hash change called");
+    this.hashChanged = function(e) {
+        if (e) {
+            //console.log(e);
+            //GLOB_E = e;
+            var oldFullURL = e.oldURL;
+            var oldHash = oldFullURL.split('#')[1];
+            var previousQueryParams = getQueryParams(oldHash);
+        } else {
+            var previousQueryParams = {};
+        }
+        console.log("hash change called with previous params as ", previousQueryParams);
         var hash = window.location.hash.substr(1, window.location.hash.length-1);
         var queryParams = getQueryParams(hash);
         for (pattern in routes) {
@@ -72,8 +79,6 @@ var KLPRouter = function(routes) {
             }
         });
 
-        previousURL = newURL;
-        previousQueryParams = queryParams;
         var paramsArray = [hash.split("?")[0], queryParams, changed];
         that.events.trigger("hashchange", paramsArray);
         _(_(changed).keys()).each(function(key) {
