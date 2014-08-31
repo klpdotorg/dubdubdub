@@ -23,6 +23,7 @@
         circleLayer,
         schoolCluster,
         preschoolCluster,
+        radiusLayer,
         popupInfoXHR,
         preschoolXHR,
         schoolXHR;
@@ -611,8 +612,29 @@
         });
 
         map.addControl(new filterControl());
-        // var filter = new filterControl();
-        // filter.addTo(map);
+
+        // Radius tool.
+        // Initialise the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        // Initialise the draw control and pass it the FeatureGroup of editable layers
+        var drawControl = new L.Control.Draw({
+            position: 'topright',
+            draw: {
+                polyline: false,
+                polygon: false,
+                rectangle: false,
+                marker: false,
+                circle: true
+            },
+            edit: {
+                featureGroup: drawnItems,
+                edit: false,
+                remove: false
+            }
+        });
+        map.addControl(drawControl);
 
         // Map Events
         map.on('zoomend', updateLayers);
@@ -636,6 +658,30 @@
                 selectedLayers.removeLayer(e.popup._source);
             }, 0);
             klp.router.setHash(null, {marker: null}, {trigger: false});
+        });
+
+        map.on('draw:created', function (e) {
+            var type = e.layerType,
+                layer = e.layer,
+                bbox = e.layer.getBounds().pad(0.01),
+                bboxString = bbox.toBBoxString();
+
+            map.fitBounds(bbox);
+            var radiusXHR = klp.api.do('schools/info', {'bbox':bboxString, 'geometry': 'yes', 'per_page': 0});
+            radiusXHR.done(function (data) {
+                radiusLayer = L.geoJson(filterGeoJSON(data), {
+                    pointToLayer: function(feature, latlng) {
+                        if (feature.properties.type.id == 1) {
+                            return L.marker(latlng, {icon: mapIcon('primaryschool')});
+                        } else {
+                            return L.marker(latlng, {icon: mapIcon('preschool')});
+                        }
+                    },
+                    onEachFeature: onEachSchool
+                    });
+                enabledLayers.clearLayers();
+                enabledLayers.addLayer(radiusLayer);
+                });
         });
 
         t.map = map;
