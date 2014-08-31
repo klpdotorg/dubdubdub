@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.4.1: August 31: 0a83b5ad5b0f9d9d8eaee841d234ad2bcc933818
+  - Responsive fixes.
+
 Release 0.4: August 31: 66b43577d76b4c5514ef7c7774a12ee78484b413
   - Added materialized view for inst coords and added index to facility_agg [run-sql]
 
