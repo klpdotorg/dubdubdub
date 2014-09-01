@@ -253,7 +253,7 @@
             <option data-selectedtext="Class 3" value="3">3</option>
         </select>
 
-        <button class="styled" id="library_graph_table_switch">Switch to Table View</button>
+        <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>
 
     </div>
 
@@ -382,10 +382,13 @@
     <h4 class="mar_top_25">Akshara Library Details</h4>
 
     <table class="info_data_table label_long mar_top_25 mar_btm_25">
+        {% for value in lib_infra %}
         <tr>
-            <td>Number of Chairs</td>
-            <td>-</td>
+            <td>{{ loop.key }}</td>
+            <td>{% if value %} {{ value }} {% else %} - {% endif %}</td>
         </tr>
+        {% endfor %}
+        <!--
         <tr>
             <td>Number of Books</td>
             <td>1006</td>
@@ -410,6 +413,7 @@
             <td>Number of Computers</td>
             <td>-</td>
         </tr>
+        -->
     </table>
 
     <p>DISE Reports Number of Books as : <strong>175</strong></p>

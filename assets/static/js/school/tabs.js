@@ -6,6 +6,8 @@
     var schoolInfoURL;
     var tabs;
     var currentTab;
+    var container_width = 960;
+    var chart_gradient_param = [0, 0, 0, 300];
 
     t.init = function() {
         schoolInfoURL = 'schools/school/' + SCHOOL_ID;
@@ -113,11 +115,186 @@
             'library': {
                 getData: function() {
                     return klp.api.do(schoolInfoURL + '/library');
+                },
+
+                getContext: function(data) {
+                    // Step 0: Check if library data exists.
+                    // Step 1: Array of years.
+                    // Step 2: Array of classes.
+                    // Step 3: Array of levels.
+                    // Step 4: Array of languages.
+                    // Step 5: Array of months.
+                    console.log(data);
+                    return data;
+                },
+                onRender: function(data) {
+                    $(".apply-selectboxit").selectBoxIt();
+                    $('#graph_library').highcharts({
+                        chart: {
+                            type: 'area',
+                            width: container_width,
+                            height: klp.utils.getRelativeHeight(960, 400, 200, container_width)
+                        },
+                        title: {
+                            text: null
+                        },
+                        xAxis: {
+                            title: {
+                                text: 'Month of the Year'
+                            },
+                            labels: {
+                                formatter: function() {
+                                    return this.value; 
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Avg. No. of transations per student'
+                            },
+                            labels: {
+                                formatter: function() {
+                                    return this.value;
+                                    // return this.value / 1000 +'k';
+                                }
+                            }
+                        },credits:{
+                            enabled:false
+                        },
+                        tooltip: {
+                            // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+                        },
+                        plotOptions: {
+                            area: {
+                                fillOpacity:1
+                            }
+                        },
+                        series: [{
+                            name: 'Easy',
+                            data: [0.2, 0.3, 0.4, 0.5, 0.8, 0.4 , 0.6, 0.4, 0.6, 0.4, 0.2, 0 ],
+                            color: '#56af31',
+                            fillColor: {
+                                linearGradient: chart_gradient_param,
+                                stops: [
+                                    [0, '#e5f3e0'],
+                                    [1, 'rgba(255,255,255,0.3)']
+                                ]
+                            }
+                        }, {
+                            name: 'Medium',
+                            data: [0, 0.2, 0.4, 0.4, 0.5, 0.8, 0.2 , 0.3, 0.4, 0.3, 0.4, 0.2 ],
+                            color: '#3892e3',
+                            fillColor: {
+                                linearGradient: chart_gradient_param,
+                                stops: [
+                                    [0, '#92c3ef'],
+                                    [1, 'rgba(255,255,255,0.3)']
+                                ]
+                            }
+                        }, {
+                            name: 'Hard',
+                            data: [0, 0.2, 0.4, 0.2, 0.2, 0.4, 0.3 , 0.2, null, null, null, null ],
+                            color: '#cb0012',
+                            fillColor: {
+                                linearGradient: chart_gradient_param,
+                                stops: [
+                                    [0, '#de69c4'],
+                                    [1, 'rgba(255,255,255,0.3)']
+                                ]
+                            }
+                        }]
+                    });
                 }
             },
             'nutrition': {
                 getData: function() {
-                    return klp.api.do(schoolInfoURL + '/infrastructure');
+                    return klp.api.do(schoolInfoURL + '/nutrition');
+                },
+
+                getContext: function(data) {
+                    console.log('nutrition', data);
+                    data.indent = [];
+                    data.attendance = [];
+                    data.categories = [];
+                    // console.log('could be array', _.toArray(data));
+                    data.mdm_agg.forEach(function(element, index) {
+                        data.categories.push(element.mon+ ' week ' + element.wk);
+                        data.indent.push(element.indent);
+                        data.attendance.push(element.attend);
+                    });
+                    console.log('categories', data.categories);
+                    return data;
+                },
+
+                onRender: function(data) {
+                    $('#graph_nutrition').highcharts({
+                        chart: {
+                            type: 'area',
+                            width: container_width,
+                            height: klp.utils.getRelativeHeight(960,400, 230, container_width)
+                        },
+                        title:{
+                            text: null
+                        },
+                        subtitle: {
+                            text: "'Food Indent' vs 'Attendance Tracking'"
+                        },
+                        xAxis: {
+                            categories: data.categories,
+                            tickInterval: 2
+                            // allowDecimals: false,
+                            // labels: {
+                            //     formatter: function() {
+                            //         return this.value; // clean, unformatted number for year
+                            //     }
+                            // }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Number of children'
+                            },
+                            labels: {
+                                formatter: function() {
+                                    return this.value;
+                                    // return this.value / 1000 +'k';
+                                }
+                            }
+                        },
+                        credits:{
+                            enabled:false
+                        },
+                        tooltip: {
+                            // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+                        },
+                        plotOptions: {
+                            area: {
+                                fillOpacity:1
+                            }
+                        },
+                        series: [{
+                            name: 'Indent',
+                            data: data.indent,
+                            color: '#56af31',
+                            fillColor: {
+                                linearGradient: chart_gradient_param,
+                                stops: [
+                                    [0, '#e5f3e0'],
+                                    [1, 'rgba(255,255,255,0.3)']
+                                ]
+                            }
+                        }, {
+                            name: 'Attendance',
+                            data: data.attendance,
+                            color: '#3892e3',
+                            fillColor: {
+                                linearGradient: chart_gradient_param,
+                                stops: [
+                                    [0, '#92c3ef'],
+                                    [1, 'rgba(255,255,255,0.3)']
+                                ]
+                            }
+                        }]
+                    });
                 }
             },
             'share-story': {

@@ -43,6 +43,18 @@
         alertMessage: function(message, status) {
             // Status - error, success, warning.
             alert(message);
+        },
+        getRelativeHeight: function (width, height, min_height, container_width){
+            var ht = (height/width)*container_width;
+            ht = parseInt(ht,10);
+            if(ht<min_height){
+                return min_height;
+            }
+            // If number is odd, convert to even
+            if(Math.abs(ht) % 2 == 1){
+                ht++;
+            }
+            return ht;
         }
     };
 
