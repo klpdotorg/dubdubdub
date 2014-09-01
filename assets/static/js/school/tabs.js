@@ -60,7 +60,6 @@
 
                 getContext: function(data) {
                     // Step 0: Check if library data exists.
-                    console.log('library data', data);
                     data.years = [];
                     data.klasses = [];
                     data.lib_borrow_agg.forEach(function (element, index) {
@@ -114,86 +113,10 @@
                         var libraryParam = $selectLibraryParam.val();
                         var libraryYear = $selectLibraryYear.val();
                         var libraryClass = $selectLibraryClass.val();
-                        console.log(libraryParam, libraryYear, libraryClass);
+                        $('#graph_library').libraryChart(data, {'parameter': libraryParam, 'year': libraryYear, 'klass': libraryClass});
                     }
 
-                    $('#graph_library').highcharts({
-                        chart: {
-                            type: 'area',
-                            width: container_width,
-                            height: klp.utils.getRelativeHeight(960, 400, 200, container_width)
-                        },
-                        title: {
-                            text: null
-                        },
-                        xAxis: {
-                            categories: ['January', 'February', 'March', 'April', 'May',
-                                'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                            title: {
-                                text: 'Month of the Year'
-                            },
-                            labels: {
-                                formatter: function() {
-                                    return this.value; 
-                                }
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Avg. No. of transations per student'
-                            },
-                            labels: {
-                                formatter: function() {
-                                    return this.value;
-                                    // return this.value / 1000 +'k';
-                                }
-                            }
-                        },credits:{
-                            enabled:false
-                        },
-                        tooltip: {
-                            // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
-                        },
-                        plotOptions: {
-                            area: {
-                                fillOpacity:1
-                            }
-                        },
-                        series: [{
-                            name: 'Easy',
-                            data: [0.2, 0.3, 0.4, 0.5, 0.8, 0.4 , 0.6, 0.4, 0.6, 0.4, 0.2, 0 ],
-                            color: '#56af31',
-                            fillColor: {
-                                linearGradient: chart_gradient_param,
-                                stops: [
-                                    [0, '#e5f3e0'],
-                                    [1, 'rgba(255,255,255,0.3)']
-                                ]
-                            }
-                        }, {
-                            name: 'Medium',
-                            data: [0, 0.2, 0.4, 0.4, 0.5, 0.8, 0.2 , 0.3, 0.4, 0.3, 0.4, 0.2 ],
-                            color: '#3892e3',
-                            fillColor: {
-                                linearGradient: chart_gradient_param,
-                                stops: [
-                                    [0, '#92c3ef'],
-                                    [1, 'rgba(255,255,255,0.3)']
-                                ]
-                            }
-                        }, {
-                            name: 'Hard',
-                            data: [0, 0.2, 0.4, 0.2, 0.2, 0.4, 0.3 , 0.2, null, null, null, null ],
-                            color: '#cb0012',
-                            fillColor: {
-                                linearGradient: chart_gradient_param,
-                                stops: [
-                                    [0, '#de69c4'],
-                                    [1, 'rgba(255,255,255,0.3)']
-                                ]
-                            }
-                        }]
-                    });
+                    drawChart();
                 }
             },
             'nutrition': {
