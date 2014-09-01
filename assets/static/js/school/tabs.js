@@ -118,13 +118,13 @@
                 },
 
                 getContext: function(data) {
+                    data.years = [];
                     // Step 0: Check if library data exists.
                     // Step 1: Array of years.
                     // Step 2: Array of classes.
                     // Step 3: Array of levels.
                     // Step 4: Array of languages.
                     // Step 5: Array of months.
-                    console.log(data);
                     return data;
                 },
                 onRender: function(data) {
@@ -212,7 +212,11 @@
                 },
 
                 getContext: function(data) {
-                    console.log('nutrition', data);
+                    data.hasData = true;
+                    if (_.isEmpty(data.mdm_agg)) {
+                        data.hasData = false;
+                        return data;
+                    }
                     data.indent = [];
                     data.attendance = [];
                     data.categories = [];
@@ -222,79 +226,83 @@
                         data.indent.push(element.indent);
                         data.attendance.push(element.attend);
                     });
-                    console.log('categories', data.categories);
                     return data;
                 },
 
                 onRender: function(data) {
-                    $('#graph_nutrition').highcharts({
-                        chart: {
-                            type: 'area',
-                            width: container_width,
-                            height: klp.utils.getRelativeHeight(960,400, 230, container_width)
-                        },
-                        title:{
-                            text: null
-                        },
-                        subtitle: {
-                            text: "'Food Indent' vs 'Attendance Tracking'"
-                        },
-                        xAxis: {
-                            categories: data.categories,
-                            tickInterval: 2
-                            // allowDecimals: false,
-                            // labels: {
-                            //     formatter: function() {
-                            //         return this.value; // clean, unformatted number for year
-                            //     }
-                            // }
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Number of children'
+                    if (data.hasData) {
+                        $('.data').removeClass('hide');
+                        $('#graph_nutrition').highcharts({
+                            chart: {
+                                type: 'area',
+                                width: container_width,
+                                height: klp.utils.getRelativeHeight(960,400, 230, container_width)
                             },
-                            labels: {
-                                formatter: function() {
-                                    return this.value;
-                                    // return this.value / 1000 +'k';
+                            title:{
+                                text: null
+                            },
+                            subtitle: {
+                                text: "Food Indent vs Attendance Tracking"
+                            },
+                            xAxis: {
+                                categories: data.categories,
+                                tickInterval: 2
+                                // allowDecimals: false,
+                                // labels: {
+                                //     formatter: function() {
+                                //         return this.value; // clean, unformatted number for year
+                                //     }
+                                // }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'Number of children'
+                                },
+                                labels: {
+                                    formatter: function() {
+                                        return this.value;
+                                        // return this.value / 1000 +'k';
+                                    }
                                 }
-                            }
-                        },
-                        credits:{
-                            enabled:false
-                        },
-                        tooltip: {
-                            // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
-                        },
-                        plotOptions: {
-                            area: {
-                                fillOpacity:1
-                            }
-                        },
-                        series: [{
-                            name: 'Indent',
-                            data: data.indent,
-                            color: '#56af31',
-                            fillColor: {
-                                linearGradient: chart_gradient_param,
-                                stops: [
-                                    [0, '#e5f3e0'],
-                                    [1, 'rgba(255,255,255,0.3)']
-                                ]
-                            }
-                        }, {
-                            name: 'Attendance',
-                            data: data.attendance,
-                            color: '#3892e3',
-                            fillColor: {
-                                linearGradient: chart_gradient_param,
-                                stops: [
-                                    [0, '#92c3ef'],
-                                    [1, 'rgba(255,255,255,0.3)']
-                                ]
-                            }
-                        }]
-                    });
+                            },
+                            credits:{
+                                enabled:false
+                            },
+                            tooltip: {
+                                // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+                            },
+                            plotOptions: {
+                                area: {
+                                    fillOpacity:1
+                                }
+                            },
+                            series: [{
+                                name: 'Indent',
+                                data: data.indent,
+                                color: '#56af31',
+                                fillColor: {
+                                    linearGradient: chart_gradient_param,
+                                    stops: [
+                                        [0, '#e5f3e0'],
+                                        [1, 'rgba(255,255,255,0.3)']
+                                    ]
+                                }
+                            }, {
+                                name: 'Attendance',
+                                data: data.attendance,
+                                color: '#3892e3',
+                                fillColor: {
+                                    linearGradient: chart_gradient_param,
+                                    stops: [
+                                        [0, '#92c3ef'],
+                                        [1, 'rgba(255,255,255,0.3)']
+                                    ]
+                                }
+                            }]
+                        });
+                    } else {
+                        $('.no-data').removeClass('hide');
+                    }
                 }
             },
             'share-story': {
