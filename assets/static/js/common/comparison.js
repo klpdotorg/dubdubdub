@@ -23,7 +23,11 @@
 
     var fetchData = function(entity) {
         var schoolURL = '/schools/school/' + entity.id;
-        var endpoints = [schoolURL + '/infrastructure', schoolURL + '/finance'];
+        var endpoints = [
+            schoolURL + '/infrastructure',
+            schoolURL + '/finance',
+            schoolURL + '/demographics'
+        ];
         var endpointsParamsString = _(endpoints).map(function(s) {
             return 'endpoints=' + s;
         }).join('&');
@@ -33,6 +37,7 @@
         apiXHR.done(function(data) {
             entity.infrastructure_data = data[endpoints[0]];
             entity.finance_data = data[endpoints[1]];
+            entity.demographics_data = data[endpoints[2]];
             $deferred.resolve(entity);
         });
         apiXHR.fail(function(err) {
@@ -40,6 +45,35 @@
             $deferred.reject(err);
         });
         return $deferred;
+    };
+
+    var getContext = function(entity) {
+        var context = $.extend(entity, klp.utils.getBoyGirlPercents(entity.num_boys, entity.num_girls));
+        var mt = klp.utils.getMTProfilePercents(entity.demographics_data.mt_profile);
+        context.mt_profile_percents = mt.percents;
+        context.total_mt = mt.total;
+        return context;
+    };
+
+    var getMTProfiles = function(entity1, entity2) {
+        var mt1 = entity1.mt_profile_percents;
+        var mt2 = entity2.mt_profile_percents;
+        var allLanguages = _(_(mt1).keys().concat(_(mt2).keys())).unique();
+        console.log("all languages", allLanguages);
+        var mts = {};
+        _(allLanguages).each(function(lang) {
+            mts[lang] = {};
+            mts[lang].school1 = {
+                'percent': mt1.hasOwnProperty(lang) ? mt1[lang] : 0,
+                'total': entity1.demographics_data.mt_profile.hasOwnProperty(lang) ? entity1.demographics_data.mt_profile[lang] : 0
+            };
+            mts[lang].school2 = {
+                'percent': mt2.hasOwnProperty(lang) ? mt2[lang] : 0,
+                'total': entity2.demographics_data.mt_profile.hasOwnProperty(lang) ? entity2.demographics_data.mt_profile[lang] : 0               
+            };
+        });
+        console.log("mts", mts);
+        return mts;
     };
 
     var selectOptionRight = function(entity) {
@@ -181,9 +215,12 @@
             e.preventDefault();
             $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
                 //console.log("compare xhrs done ", data1, data2);
+                var school1 = getContext(data1);
+                var school2 = getContext(data2);
                 var context = {
-                    'school1': klp.utils.addSchoolContext(data1),
-                    'school2': klp.utils.addSchoolContext(data2)
+                    'school1': school1,
+                    'school2': school2,
+                    'mt_profiles': getMTProfiles(school1, school2)
                 };
                 var html = templates['comparison-result'](context);
                 //console.log('comparison result html', html);
