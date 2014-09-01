@@ -7,7 +7,7 @@ from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
-    PincodeDetails)
+    PincodeDetails, SchoolNutrition)
 
 from users.api_views import (TestAuthenticatedView, UsersView,
     UserProfileView, OtherUserProfileView, OrganizationsView,
@@ -44,6 +44,8 @@ urlpatterns = patterns('',
         SchoolInfra.as_view(), name='api_school_infra'),
     url(r'^schools/school/(?P<pk>[0-9]+)/library$',
         SchoolLibrary.as_view(), name='api_school_library'),
+    url(r'^schools/school/(?P<pk>[0-9]+)/nutrition$',
+        SchoolNutrition.as_view(), name='api_school_nutrition'),
 
     url(r'^boundary/assembly/(?P<id>[0-9]+)$', AssemblyDetails.as_view(), name="api_assembly_details"),
     url(r'^boundary/parliament/(?P<id>[0-9]+)$', ParliamentDetails.as_view(), name="api_parliament_details"),

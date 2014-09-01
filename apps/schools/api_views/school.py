@@ -1,4 +1,4 @@
-from schools.models import School, DiseInfo
+from schools.models import School, DiseInfo, MdmAgg
 from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.models import SumCase
@@ -6,7 +6,7 @@ from common.mixins import CacheMixin
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\
     SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
-    SchoolLibrarySerializer
+    SchoolLibrarySerializer, SchoolNutritionSerializer
 from django.contrib.gis.geos import Polygon
 from django.http import Http404
 import re
@@ -141,6 +141,14 @@ class SchoolLibrary(KLPDetailAPIView):
                             'schooldetails__admin3__hierarchy',
                             'schooldetails__admin2', 'schooldetails__admin1',
                             'libinfra', 'studentgroup__students__studentstudentgroup__academic_year')
+
+
+class SchoolNutrition(KLPDetailAPIView):
+    serializer_class = SchoolNutritionSerializer
+
+    def get_queryset(self):
+        return School.objects.filter(status=2)\
+            .select_related('mdmagg_set',)
 
 
 class SchoolProgrammes(KLPDetailAPIView):

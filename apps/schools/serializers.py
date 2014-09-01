@@ -1,7 +1,7 @@
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import School, Boundary, DiseInfo, ElectedrepMaster,\
-    BoundaryType, Assembly, Parliament, Postal, PaisaData
+    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -112,6 +112,17 @@ class SchoolProgrammesSerializer(KLPSerializer):
     class Meta:
         model = School
         fields = ('id', 'name',)
+
+
+class SchoolNutritionSerializer(KLPSerializer):
+    mdm_agg = serializers.SerializerMethodField('get_mdm_agg')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'mdm_agg')
+
+    def get_mdm_agg(self, obj):
+        return obj.mdmagg_set.all().values()
 
 
 class SchoolInfraSerializer(KLPSerializer):

@@ -1,6 +1,6 @@
 from .school import (SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
     SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
-    SchoolLibrary)
+    SchoolLibrary, SchoolNutrition)
 from .boundary import (Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails, AssemblyDetails,
     ParliamentDetails, PincodeDetails)
@@ -126,7 +126,10 @@ def api_root(request, format=None):
                                       format=format, kwargs={'pk': 3573}),
 
             'School Library': reverse('api_school_library', request=request,
-                                      format=format, kwargs={'pk': 3573})
+                                      format=format, kwargs={'pk': 3573}),
+
+            'School Nutrition': reverse('api_school_nutrition', request=request,
+                                      format=format, kwargs={'pk': 33313})
         },
 
         'Boundary': {
