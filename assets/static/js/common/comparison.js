@@ -12,11 +12,46 @@
     var templates = {};
 
     var entityOne = null,
-        entityTwo = null;
+        entityTwo = null,
+        entityOneXHR,
+        entityTwoXHR;
 
     var getCompareOptionHTML = function(data) {
         data.type_name = data.type.id === 1 ? 'school' : 'preschool';
         return templates['compare-option'](data);
+    };
+
+    var fetchData = function(entity) {
+        var schoolURL = '/schools/school/' + entity.id;
+        var endpoints = [schoolURL + '/infrastructure', schoolURL + '/finance'];
+        var endpointsParamsString = _(endpoints).map(function(s) {
+            return 'endpoints=' + s;
+        }).join('&');
+        var $deferred = $.Deferred();
+        var apiURL = 'merge?' + endpointsParamsString;
+        var apiXHR = klp.api.do(apiURL);
+        apiXHR.done(function(data) {
+            entity.infrastructure_data = data[endpoints[0]];
+            entity.finance_data = data[endpoints[1]];
+            $deferred.resolve(entity);
+        });
+        apiXHR.fail(function(err) {
+            alert("failed to load school data");
+            $deferred.reject(err);
+        });
+        return $deferred;
+    };
+
+    var selectOptionRight = function(entity) {
+        entityTwo = entity;
+        entityTwoXHR = fetchData(entity);
+        var html = getCompareOptionHTML(entity);
+        //console.log("right html", html);
+        $dropdown_wrapper.removeClass("show");
+        $comparison_option_right.html(html);
+        $comparison_default_right.hide();
+        $comparison_option_right.removeClass('hide').show();
+        show_submit_button();
     };
 
     var open = function(entity1){
@@ -26,6 +61,7 @@
             klp.map.closePopup();
         }
         entityOne = entity1;
+        entityOneXHR = fetchData(entity1);
         var html = getCompareOptionHTML(entity1);
         $comparison_option_left.html(html);
         //klp.place_info.close_place();
@@ -40,6 +76,7 @@
     var close = function(e){
         e.preventDefault();
         $compare_flow.removeClass("show");
+        entityOne = entityTwo = entityOneXHR = entityTwoXHR = null;
         setTimeout(function(){
             $compare_flow.removeClass("show").addClass("hide");
             clear_option_left();
@@ -73,14 +110,6 @@
     var show_options_dropdown_right = function(e){
         e.preventDefault();
         $dropdown_wrapper.toggleClass("show");
-    };
-    var select_options_right = function(e){
-        e.preventDefault();
-
-        $dropdown_wrapper.removeClass("show");
-        $comparison_option_right.show();
-        $comparison_default_right.hide();
-        show_submit_button();
     };
 
     var init = function(){
@@ -118,7 +147,7 @@
                     };
                 },
                 results: function (data, page) {
-                    console.log("data", data);
+                    //console.log("data", data);
                     return {results: data.features};
                 }
             },
@@ -137,16 +166,9 @@
         });
 
         $comparison_search.on("change", function(e) {
-            console.log("changed event ", e);
+            //console.log("changed event ", e);
             var data = e.added;
-            entityTwo = data;
-            var html = getCompareOptionHTML(data);
-            console.log("right html", html);
-            $dropdown_wrapper.removeClass("show");
-            $comparison_option_right.html(html);
-            $comparison_default_right.hide();
-            $comparison_option_right.removeClass('hide').show();
-            show_submit_button();
+            selectOptionRight(data);
         });
 
         //$(document).on('click', ".js-trigger-compare", open);
@@ -154,21 +176,34 @@
         $(document).on('click', ".js-comparison-clear-left", clear_option_left);
         $(document).on('click', ".js-comparison-clear-right", clear_option_right);
         $(document).on('click', ".js-comparison-show-options-right", show_options_dropdown_right);
-        $(document).on('click', ".js-dropdown-option-right", select_options_right);
+        //$(document).on('click', ".js-dropdown-option-right", select_options_right);
         $(document).on('click', ".js-btn-compare", function(e){
             e.preventDefault();
+            $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
+                //console.log("compare xhrs done ", data1, data2);
+                var context = {
+                    'school1': klp.utils.addSchoolContext(data1),
+                    'school2': klp.utils.addSchoolContext(data2)
+                };
+                var html = templates['comparison-result'](context);
+                //console.log('comparison result html', html);
+                $comparison_result_wrapper.html(html);
+                $comparison_result_wrapper.html(html).addClass('show');
+                setTimeout(function(){
+                    var $selects = $comparison_result_wrapper.find('select');
+                    $selects.easyDropDown();
+                },0);
+
+                setTimeout(function(){
+                    init_comparison_charts(context);
+                },100);                
+                //var html = templates['comparison-result'](context);
+            });
             $btn_comparison_submit.removeClass("show");
-            var html = klp._tpl.comparison_result();
-            $comparison_result_wrapper.html(html).addClass('show');
+            //var html = klp._tpl.comparison_result();
+            //$comparison_result_wrapper.html(html).addClass('show');
 
-            setTimeout(function(){
-                var $selects = $comparison_result_wrapper.find('select');
-                $selects.easyDropDown();
-            },0);
 
-            setTimeout(function(){
-                init_comparison_charts();
-            },100);
         });
     };
 
@@ -178,98 +213,18 @@
         close: close
     };
 
-    function init_comparison_charts() {
+    function init_comparison_charts(context) {
         var chart_width = 300;
+        var s1 = context.school1;
+        var s2 = context.school2;
+        var boyGirlChartOptions = {
+            innerSize: '85%',
+            width: chart_width,
+            height: chart_width
+        };
+        $('#comparison_boygirlchart_1').boyGirlChart(s1, boyGirlChartOptions);
 
-        $('#comparison_pie_chart_1').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#609adf', '#f87c84']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['Boys', 65.0],
-                    ['Girls', 35.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
-
-        $('#comparison_pie_chart_2').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#609adf', '#f87c84']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['Boys', 65.0],
-                    ['Girls', 35.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
+        $('#comparison_boygirlchart_2').boyGirlChart(s2, boyGirlChartOptions);
 
         $('#comparison_pie_chart_3').highcharts({
             chart: {
