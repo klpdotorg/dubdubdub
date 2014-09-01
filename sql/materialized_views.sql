@@ -154,3 +154,56 @@ SELECT id as klpid, mon, wk, indent, attend
 FROM dblink('host=localhost dbname=apmdm user=klp password=klp'::text, 'select * from tb_mdm_agg'::text) t1(id integer, mon character varying(15), wk integer, indent integer, attend integer);
 CREATE INDEX klpid_idx ON mvw_mdm_agg (klpid);
 ANALYZE mvw_mdm_agg;
+
+CREATE MATERIALIZED VIEW mvw_dise_info_olap AS
+SELECT t1.school_code as dise_code,
+    t1.tot_clrooms as classroom_count,
+    t1.teacher_count,
+    t1.total_boys AS boys_count,
+    t1.total_girls AS girls_count,
+    t1.lowest_class,
+    t1.highest_class,
+    t1.acyear,
+    t1.school_dev_grant_recd as sg_recd,
+    t1.school_dev_grant_expnd AS sg_expnd,
+    t1.tlm_grant_recd AS tlm_recd,
+    t1.tlm_grant_expnd AS tlm_expnd,
+    t1.funds_from_students_recd AS ffs_recd,
+    t1.funds_from_students_expnd AS ffs_expnd,
+    t1.books_in_library
+FROM dblink(
+    'host=localhost dbname=klpdise_olap user=klp password=klp'::text,
+    'SELECT
+        school_code,
+        lowest_class,
+        highest_class,
+        (SELECT ''2011-12'') AS acyear,
+        school_dev_grant_recd,
+        school_dev_grant_expnd,
+        tlm_grant_recd,
+        tlm_grant_expnd,
+        funds_from_students_recd,
+        funds_from_students_expnd,
+        tot_clrooms,
+        books_in_library,
+        (male_tch + female_tch) AS teacher_count,
+        total_boys,
+        total_girls
+    FROM dise_1112_basic_data'
+) t1(
+    school_code character varying(32),
+    lowest_class integer,
+    highest_class integer,
+    acyear character varying(10),
+    school_dev_grant_recd double precision,
+    school_dev_grant_expnd double precision,
+    tlm_grant_recd double precision,
+    tlm_grant_expnd double precision,
+    funds_from_students_recd double precision,
+    funds_from_students_expnd double precision,
+    tot_clrooms integer,
+    books_in_library integer,
+    teacher_count integer,
+    total_boys integer,
+    total_girls integer
+);

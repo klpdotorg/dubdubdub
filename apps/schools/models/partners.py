@@ -73,7 +73,7 @@ class DiseInfo(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'mvw_dise_info'
+        db_table = 'mvw_dise_info_olap'
 
     def get_rte_details(self):
         dise_rte = {}
