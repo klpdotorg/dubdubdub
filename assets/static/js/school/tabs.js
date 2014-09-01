@@ -118,17 +118,64 @@
                 },
 
                 getContext: function(data) {
-                    data.years = [];
                     // Step 0: Check if library data exists.
+                    console.log('library data', data);
+                    data.years = [];
+                    data.klasses = [];
+                    data.lib_borrow_agg.forEach(function (element, index) {
+                        data.years.push(element.trans_year);
+                        data.klasses.push(element.class_name);
+                    });
+                    _.each(data.lib_lang_agg, function(element, index) {
+                        element.forEach(function(element, index) {
+                            data.years.push(element.year);
+                            data.klasses.push(element.class_name);
+                        });
+                    });
+                    _.each(data.lib_level_agg, function(element, index) {
+                        element.forEach(function(element, index) {
+                            data.years.push(element.year);
+                            data.klasses.push(element.class_name);
+                        });
+                    });
+
                     // Step 1: Array of years.
+                    data.years = _.uniq(data.years).sort();
+
                     // Step 2: Array of classes.
+                    data.klasses = _.uniq(_.map(data.klasses, function (klass) {
+                        return String(klass);
+                    })).sort();
+
                     // Step 3: Array of levels.
+                    data.levels = _.keys(data.lib_level_agg);
+
                     // Step 4: Array of languages.
-                    // Step 5: Array of months.
+                    data.languages = _.keys(data.lib_lang_agg);
+
+                    console.log('years', data.years);
+                    console.log('klasses', data.klasses);
+                    console.log('levels', data.levels);
+                    console.log('languages', data.languages);
                     return data;
                 },
                 onRender: function(data) {
                     $(".apply-selectboxit").selectBoxIt();
+                    var $selectLibraryParam = $("#select_library_browse");
+                    var $selectLibraryYear = $("#select_library_year");
+                    var $selectLibraryClass = $("#select_library_class");
+
+                    $selectLibraryParam.on('change', drawChart);
+                    $selectLibraryYear.on('change', drawChart);
+                    $selectLibraryClass.on('change', drawChart);
+                    
+                    function drawChart() {
+                        var libraryParam = $selectLibraryParam.val();
+                        var libraryYear = $selectLibraryYear.val();
+                        var libraryClass = $selectLibraryClass.val();
+                        console.log(libraryParam, libraryYear, libraryClass);
+                    }
+
                     $('#graph_library').highcharts({
                         chart: {
                             type: 'area',
@@ -139,6 +186,8 @@
                             text: null
                         },
                         xAxis: {
+                            categories: ['January', 'February', 'March', 'April', 'May',
+                                'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                             title: {
                                 text: 'Month of the Year'
                             },

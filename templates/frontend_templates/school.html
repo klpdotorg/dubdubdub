@@ -242,15 +242,15 @@
         </select>
 
         <select name="" id="select_library_year" class="apply-selectboxit">
-            <option data-selectedtext="Year 2012-2013" value="2012-2013" selected>2012-2013</option>
-            <option data-selectedtext="Year 2011-2013" value="2011-2013">2011-2012</option>
-            <option data-selectedtext="Year 2010-2011" value="2010-2011">2010-2011</option>
+            {% for year in years %}
+                <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
+            {% endfor %}
         </select>
 
         <select name="" id="select_library_class" class="apply-selectboxit">
-            <option data-selectedtext="Class 1" value="1" selected>1</option>
-            <option data-selectedtext="Class 2" value="2">2</option>
-            <option data-selectedtext="Class 3" value="3">3</option>
+        {% for klass in klasses %}
+            <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
+        {% endfor %}
         </select>
 
         <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>
