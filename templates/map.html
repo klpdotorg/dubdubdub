@@ -462,35 +462,11 @@
           </div>
 
           <div class="info school left-align js-comparison-option-left">
-            <div class="en-icon big en-school fl">S</div>
-            <div class="ml">
-              <h2 class="name en-school">Gian Jyoti Public School</h2>
-              <div class="item">
-                <div class="label">District</div>
-                <div class="value">Bangalore</div>
-              </div>
-              <div class="item">
-                <div class="label">Block</div>
-                <div class="value">North-2</div>
-              </div>
-              <div class="item">
-                <div class="label">Cluster</div>
-                <div class="value">Malleswaram</div>
-              </div>
-            </div>
-            <div class="clr"></div>
+
           </div>
 
           <div class="info school-district right-align hide js-comparison-option-right">
-            <div class="en-icon big en-school-district fr">SD</div>
-            <div class="mr">
-              <h2 class="name en-school-district ta-r">Bangalore</h2>
-              <div class="item">
-                <div class="label">State</div>
-                <div class="value">Karnataka</div>
-              </div>
-            </div>
-            <div class="clr"></div>
+
           </div>
 
           <div class="info default right-align js-comparison-default-right">
@@ -514,21 +490,10 @@
       <div class="dropdown-wrapper" id="dropdown_wrapper">
         <div class="triangle"></div>
         <div class="search-box">
-          <input type="text" class="input-search" placeholder="Search"/>
+          <input type="text" id="comparison-search-select" class="input-search" placeholder="Search"/>
           <a href="" class="icon"><i class="icon-search"></i></a>
           <div class="clr"></div>
         </div>
-
-        <a href="" class="info school js-dropdown-option-right">
-          <div class="en-icon small en-school fl">S</div>
-          <div class="name en-school">Delhi Public School</div>
-          <div class="clr"></div>
-        </a>
-        <a href="" class="info school-district js-dropdown-option-right">
-          <div class="en-icon small en-school-district fl">SD</div>
-          <div class="name en-school-district">Bangalore</div>
-          <div class="clr"></div>
-        </a>
     </section>
 
     <section id="map_overlay" class="map_overlay hide">
@@ -608,4 +573,5 @@
   <div id="modal_wrapper"></div>
 
   {% include 'frontend_templates/volunteer.html' %}
+  {% include 'frontend_templates/compare.html' %}
 {% endblock %}

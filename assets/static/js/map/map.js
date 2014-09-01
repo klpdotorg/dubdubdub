@@ -173,7 +173,7 @@
                 var geomBounds = searchLayer.getBounds();
                 map.fitBounds(geomBounds);
             }
-    });
+        });
 
         function setBoundaryResultsOnMap(type, point, data) {
             var marker;
@@ -572,6 +572,11 @@
                 }
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
+                $('.js-trigger-compare').unbind('click');
+                $('.js-trigger-compare').click(function(e) {
+                    e.preventDefault();
+                    klp.comparison.open(data);
+                });
             });
         }
 
