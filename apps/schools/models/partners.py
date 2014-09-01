@@ -256,7 +256,7 @@ class MdmAgg(BaseModel):
     https://github.com/klpdotorg/importers/blob/master/apmdm/agg_apmdm.sql
     '''
     #we set primary_key=True to make django happy, though school is not unique
-    school = models.ForeignKey("School", primary_key=True, db_column='id')
+    school = models.ForeignKey("School", primary_key=True, db_column='klpid')
     mon = models.CharField(max_length=15, blank=True)
     wk = models.IntegerField(blank=True, null=True)
     indent = models.IntegerField(blank=True, null=True)
@@ -267,5 +267,5 @@ class MdmAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_mdm_agg'
+        db_table = 'mvw_mdm_agg'
         unique_together = ('school', 'mon', 'wk',)
