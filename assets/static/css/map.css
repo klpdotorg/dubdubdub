@@ -132,10 +132,21 @@
     background-repeat: no-repeat;
 }
 
+.leaflet-draw-toolbar a.active {
+    background-image: url('../images/map/radius_active.png');
+}
+
 .leaflet-bar a:last-child {
     border-radius: 0px 0px 5px 5px !important;
 }
 
 .leaflet-right .leaflet-draw-actions {
     right: 36px;
+}
+
+/* Hide map controls on small devices. */
+@media (max-width: 768px) {
+    .leaflet-control-container {
+        display: none;
+    }
 }

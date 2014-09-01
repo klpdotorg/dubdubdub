@@ -155,9 +155,10 @@
         }
 
         var tabDeferred = t.showTab(firstTab);
-        klp.router.events.on('hashchange', function(e, url, queryParams) {
-            console.log("hashchange");
-            if (queryParams.hasOwnProperty('tab') && queryParams['tab'] in tabs) {
+        klp.router.events.on('hashchange:tab', function(e, params) {
+            console.log("hashchange:tab", params);
+            var queryParams = params.queryParams;
+            if (queryParams['tab'] in tabs) {
                 t.showTab(queryParams['tab']);
             }
         });

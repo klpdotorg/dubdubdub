@@ -5,7 +5,7 @@
         $mobile_details_wrapper,
         $_filter_layers_list,
         $_filter_layers_button,
-        $_filter_radius_button,
+        $radiusButton,
         map,
         marker_overlay_html;
 
@@ -15,6 +15,9 @@
     var mapIcon = klp.utils.mapIcon;
     var mapBbox;
 
+    var state = {
+        'addPopupCloseHistory': true
+    };
     var districtLayer,
         preschoolDistrictLayer,
         blockLayer,
@@ -82,7 +85,7 @@
         // });
 
         // $_filter_radius_button.on("click", toggleFilterRadius);
-        var currentURL, currentLayers, currentMarker;
+        //var currentURL, currentLayers, currentMarker;
 
         // Search.
         var $searchInput = $(".search-input");
@@ -131,12 +134,15 @@
 
         $searchInput.on('change', function(choice) {
             var data = choice.added.data;
-            console.log(data);
+            //console.log(data);
             var searchPoint;
             var searchGeometryType = data.geometry.type;
             var searchGeometry = data.geometry.coordinates;
             var searchEntityType = data.entity_type;
-
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
+            
             selectedLayers.clearLayers();
             // selectedMarkers.clearLayers();
 
@@ -206,12 +212,14 @@
             });
         }
 
-        klp.router.events.on('hashchange', function (event, url, queryParams) {
+        klp.router.events.on('hashchange', function (event, params) {
+            var url = params.url,
+                oldURL = params.oldURL;
             if (url === '') {
                 setURL();
             } else {
-                if (currentURL !== url) {
-                    currentURL = url;
+                if (oldURL !== url) {
+                    //currentURL = url;
                     var urlSplit = url.split('/');
                     var urlZoom = urlSplit[0];
                     var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
@@ -219,60 +227,66 @@
 
                 }
             }
-            if (queryParams.hasOwnProperty('marker')) {
-                if (currentMarker !== queryParams['marker']) {
-                    //currentMarker = queryParams['marker'];
-                    var urlMarker = queryParams.marker.split('-');
-                    var entityType = urlMarker[0];
-                    var entityID = urlMarker[1];
+        });
 
-                    selectedLayers.clearLayers();
-
-                    if (entityType === 'primaryschool' || entityType === 'preschool') {
-                        var thisSchoolXHR = klp.api.do('schools/school/'+entityID, {'geometry': 'yes'});
-                        thisSchoolXHR.done(function(data) {
-                            var thisSchoolMarker = L.geoJson(data, {
-                                pointToLayer: function(feature, latlng) {
-                                    map.setView(latlng);
-                                    return L.marker(latlng, {icon: mapIcon(entityType)});
-                                },
-                                onEachFeature: function(feature, layer) {
-                                    markerPopup(layer, feature);
-                                }
-                            }).addTo(map);
-                        });
-                    } else if (entityType === 'pincode' || entityType === 'parliament' || entityType === 'assembly') {
-                        var urlString = entityType+'/'+entityID;
-                        var thisEntityXHR = klp.api.do('boundary/'+urlString, {'geometry': 
-                            'yes'});
-                        thisEntityXHR.done(function(data) {
-                            var thisEntityPolygon = L.geoJson(data);
-                            thisEntityPolygon.addTo(selectedLayers);
-                            var geomBounds = selectedLayers.getBounds();
-                            map.fitBounds(geomBounds);
-                        });
-                    } else if (entityType === 'boundary') {
-                        var thisEntityXHR = klp.api.do('boundary/admin/'+entityID, {'geometry': 'yes'});
-                        thisEntityXHR.done(function(data) {
-                            var iconType = data.properties.school_type+'_'+data.properties.type;
-                            console.log('iconType', iconType);
-                            var thisEntityMarker = L.geoJson(data, {
-                                pointToLayer: function(feature, latlng) {
-                                    map.setView(latlng);
-                                    return L.marker(latlng, {icon: mapIcon(iconType)});
-                                }
-                            });
-                            thisEntityMarker.bindPopup(data.properties.name);
-                            thisEntityMarker.addTo(selectedLayers);
-                            thisEntityMarker.openPopup();
-                        });
-                    }
-                }
-            } else if (currentMarker) {
+        klp.router.events.on('hashchange:marker', function (event, params) {
+                //currentMarker = queryParams['marker'];
+            var queryParams = params.queryParams,
+                changed = params.changed;
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
+            if (changed.marker.oldVal && !changed.marker.newVal) {
                 map.closePopup();
-                currentMarker = null;
+                return;            
+            }
+            var urlMarker = queryParams.marker.split('-');
+            var entityType = urlMarker[0];
+            var entityID = urlMarker[1];
+
+            selectedLayers.clearLayers();
+
+            if (entityType === 'primaryschool' || entityType === 'preschool') {
+                var thisSchoolXHR = klp.api.do('schools/school/'+entityID, {'geometry': 'yes'});
+                thisSchoolXHR.done(function(data) {
+                    var thisSchoolMarker = L.geoJson(data, {
+                        pointToLayer: function(feature, latlng) {
+                            map.setView(latlng);
+                            return L.marker(latlng, {icon: mapIcon(entityType)});
+                        },
+                        onEachFeature: function(feature, layer) {
+                            markerPopup(layer, feature);
+                        }
+                    }).addTo(map);
+                });
+            } else if (entityType === 'pincode' || entityType === 'parliament' || entityType === 'assembly') {
+                var urlString = entityType+'/'+entityID;
+                var thisEntityXHR = klp.api.do('boundary/'+urlString, {'geometry': 
+                    'yes'});
+                thisEntityXHR.done(function(data) {
+                    var thisEntityPolygon = L.geoJson(data);
+                    thisEntityPolygon.addTo(selectedLayers);
+                    var geomBounds = selectedLayers.getBounds();
+                    map.fitBounds(geomBounds);
+                });
+            } else if (entityType === 'boundary') {
+                var thisEntityXHR = klp.api.do('boundary/admin/'+entityID, {'geometry': 'yes'});
+                thisEntityXHR.done(function(data) {
+                    var iconType = data.properties.school_type+'_'+data.properties.type;
+                    console.log('iconType', iconType);
+                    var thisEntityMarker = L.geoJson(data, {
+                        pointToLayer: function(feature, latlng) {
+                            map.setView(latlng);
+                            return L.marker(latlng, {icon: mapIcon(iconType)});
+                        }
+                    });
+                    thisEntityMarker.bindPopup(data.properties.name);
+                    thisEntityMarker.addTo(selectedLayers);
+                    thisEntityMarker.openPopup();
+                });
             }
         });
+
 
         window_width = $(window).width();
         tpl_map_popup = swig.compile($("#tpl-map-popup").html());
@@ -373,7 +387,6 @@
             } else {
                 klp.router.setHash(null, {marker: markerParam}, opts);
             }
-            currentMarker = markerParam;
         }
 
         function onEachFeature(feature, layer) {
@@ -535,6 +548,9 @@
             // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
             //     popupInfoXHR.abort();
             // }
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
@@ -554,9 +570,8 @@
                     var html = tpl_mobile_place_details(data);
                     $mobile_details_wrapper.html(html).addClass("show");
                 }
-                document.title = "School: " + feature.properties.name;
                 setMarkerURL(feature);
-
+                document.title = "School: " + feature.properties.name;
             });
         }
 
@@ -648,7 +663,6 @@
         });
 
         map.on('popupclose', function(e) {
-            document.title = "School Map";
             //If we don't wrap this in a setTimeout, there is some
             //some strange race condition in leaflet since we are calling
             //clearLayers() on selectedLayers inside the select2 onchange
@@ -657,7 +671,21 @@
             setTimeout(function() {
                 selectedLayers.removeLayer(e.popup._source);
             }, 0);
-            klp.router.setHash(null, {marker: null}, {trigger: false});
+            if (state.addPopupCloseHistory) {
+                klp.router.setHash(null, {marker: null}, {trigger: false});
+                document.title = "School Map";
+            } else {
+                state.addPopupCloseHistory = true;
+            }
+        });
+
+        map.on('draw:drawstart', function (e) {
+            $radiusButton = $('.leaflet-draw-draw-circle');
+            $radiusButton.addClass('active');
+        });
+
+        map.on('draw:drawstop', function (e) {
+            $radiusButton.removeClass('active');
         });
 
         map.on('draw:created', function (e) {
