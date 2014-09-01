@@ -9,14 +9,26 @@
         $comparison_default_right,
         $comparison_result_wrapper;
 
-    var open = function(e){
-        e.preventDefault();
+    var templates = {};
 
+    var entityOne = null,
+        entityTwo = null;
+
+    var getCompareOptionHTML = function(data) {
+        data.type_name = data.type.id === 1 ? 'school' : 'preschool';
+        return templates['compare-option'](data);
+    };
+
+    var open = function(entity1){
+        //e.preventDefault();
+        console.log("compare open called with ", entity1);
         if(klp.map){
             klp.map.closePopup();
         }
-
-        klp.place_info.close_place();
+        entityOne = entity1;
+        var html = getCompareOptionHTML(entity1);
+        $comparison_option_left.html(html);
+        //klp.place_info.close_place();
         $comparison_result_wrapper.removeClass('show');
 
         $compare_flow.removeClass("hide");
@@ -83,17 +95,68 @@
         $comparison_default_right = $(".js-comparison-default-right");
 
         $comparison_result_wrapper = $(".js-comparison-result-wrapper");
+        $comparison_search = $("#comparison-search-select");
+        _(['compare-option', 'comparison-result']).each(function(templateName) {
+            var html = $('#tpl-' + templateName).html();
+            //console.log("html", templateName, html);
+            templates[templateName] = swig.compile(html);
+        });
 
-        $(document).on('click', ".js-trigger-compare", open);
+        $comparison_search.select2({
+            placeholder: 'Search for schools...',
+            minimumInputLength: 3,
+            quietMillis: 300,
+            allowClear: true,
+            ajax: {
+                url: "/api/v1/schools/info",
+                quietMillis: 300,
+                allowClear: true,
+                data: function (term, page) {
+                    return {
+                        search: term,
+                        type: entityOne.type.id === 1 ? 'primaryschools' : 'preschools'
+                    };
+                },
+                results: function (data, page) {
+                    console.log("data", data);
+                    return {results: data.features};
+                }
+            },
+            formatResult: function(item) {
+                return item.name;
+                // console.log("item", item);
+                // return {
+                //     id: item.id,
+                //     text: item.name,
+                //     data: item
+                // }
+            },
+            formatSelection: function(item) {
+                return item.name;
+            }
+        });
+
+        $comparison_search.on("change", function(e) {
+            console.log("changed event ", e);
+            var data = e.added;
+            entityTwo = data;
+            var html = getCompareOptionHTML(data);
+            console.log("right html", html);
+            $dropdown_wrapper.removeClass("show");
+            $comparison_option_right.html(html);
+            $comparison_default_right.hide();
+            $comparison_option_right.removeClass('hide').show();
+            show_submit_button();
+        });
+
+        //$(document).on('click', ".js-trigger-compare", open);
         $(document).on('click', ".js-comparison-close", close);
         $(document).on('click', ".js-comparison-clear-left", clear_option_left);
         $(document).on('click', ".js-comparison-clear-right", clear_option_right);
         $(document).on('click', ".js-comparison-show-options-right", show_options_dropdown_right);
         $(document).on('click', ".js-dropdown-option-right", select_options_right);
-
         $(document).on('click', ".js-btn-compare", function(e){
             e.preventDefault();
-
             $btn_comparison_submit.removeClass("show");
             var html = klp._tpl.comparison_result();
             $comparison_result_wrapper.html(html).addClass('show');
@@ -111,6 +174,7 @@
 
     klp.comparison = {
         init: init,
+        open: open,
         close: close
     };
 
