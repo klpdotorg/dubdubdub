@@ -46,7 +46,7 @@
         entityTwo = entity;
         entityTwoXHR = fetchData(entity);
         var html = getCompareOptionHTML(entity);
-        console.log("right html", html);
+        //console.log("right html", html);
         $dropdown_wrapper.removeClass("show");
         $comparison_option_right.html(html);
         $comparison_default_right.hide();
@@ -147,7 +147,7 @@
                     };
                 },
                 results: function (data, page) {
-                    console.log("data", data);
+                    //console.log("data", data);
                     return {results: data.features};
                 }
             },
@@ -166,7 +166,7 @@
         });
 
         $comparison_search.on("change", function(e) {
-            console.log("changed event ", e);
+            //console.log("changed event ", e);
             var data = e.added;
             selectOptionRight(data);
         });
@@ -180,13 +180,13 @@
         $(document).on('click', ".js-btn-compare", function(e){
             e.preventDefault();
             $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
-                console.log("compare xhrs done ", data1, data2);
+                //console.log("compare xhrs done ", data1, data2);
                 var context = {
-                    'school1': data1,
-                    'school2': data2
+                    'school1': klp.utils.addSchoolContext(data1),
+                    'school2': klp.utils.addSchoolContext(data2)
                 };
                 var html = templates['comparison-result'](context);
-                console.log('comparison result html', html);
+                //console.log('comparison result html', html);
                 $comparison_result_wrapper.html(html);
                 $comparison_result_wrapper.html(html).addClass('show');
                 setTimeout(function(){
@@ -213,98 +213,18 @@
         close: close
     };
 
-    function init_comparison_charts() {
+    function init_comparison_charts(context) {
         var chart_width = 300;
+        var s1 = context.school1;
+        var s2 = context.school2;
+        var boyGirlChartOptions = {
+            innerSize: '85%',
+            width: chart_width,
+            height: chart_width
+        };
+        $('#comparison_boygirlchart_1').boyGirlChart(s1, boyGirlChartOptions);
 
-        $('#comparison_pie_chart_1').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#609adf', '#f87c84']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['Boys', 65.0],
-                    ['Girls', 35.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
-
-        $('#comparison_pie_chart_2').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#609adf', '#f87c84']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['Boys', 65.0],
-                    ['Girls', 35.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
+        $('#comparison_boygirlchart_2').boyGirlChart(s2, boyGirlChartOptions);
 
         $('#comparison_pie_chart_3').highcharts({
             chart: {

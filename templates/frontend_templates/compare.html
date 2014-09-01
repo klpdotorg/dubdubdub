@@ -36,32 +36,32 @@
 
       <div class="width-48p fl ta-c">
         <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_pie_chart_1"></div>
+          <div class="chart" id="comparison_boygirlchart_1"></div>
           <div class="gender_icons">
             <div class="stats_gender_item no_width boy">
               <span class="icon"></span>
               <p class="label">Boys</p>
-              <p class="value">65%</p>
+              <p class="value">{{ school1.percent_boys }}%</p>
               <div class="clr"></div>
             </div>
             <div class="stats_gender_item no_width girl">
               <span class="icon"></span>
               <p class="label">Girls</p>
-              <p class="value">35%</p>
+              <p class="value">{{ school1.percent_girls }}%</p>
               <div class="clr"></div>
             </div>
           </div>
         </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">7100</span></div>
+        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
         <div class="stat-ratio">
           <div class="stat-item boy">
             Boys<br>
-            <span>2</span>
+            <span>{{ school1.num_boys }}</span>
           </div>
           <div class="fl">:</div>
           <div class="stat-item girl">
             Girls<br>
-            <span>1</span>
+            <span>{{ school1.num_girls }}</span>
           </div>
           <div class="clr"></div>
         </div>
@@ -69,32 +69,32 @@
 
       <div class="width-48p fr ta-c">
         <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_pie_chart_2"></div>
+          <div class="chart" id="comparison_boygirlchart_2"></div>
           <div class="gender_icons">
             <div class="stats_gender_item no_width boy">
               <span class="icon"></span>
               <p class="label">Boys</p>
-              <p class="value">65%</p>
+              <p class="value">{{ school2.percent_boys }}%</p>
               <div class="clr"></div>
             </div>
             <div class="stats_gender_item no_width girl">
               <span class="icon"></span>
               <p class="label">Girls</p>
-              <p class="value">35%</p>
+              <p class="value">{{ school2.percent_girls }}%</p>
               <div class="clr"></div>
             </div>
           </div>
         </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">7100</span></div>
+        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school2.total_students }}</span></div>
         <div class="stat-ratio">
           <div class="stat-item boy">
             Boys<br>
-            <span>2</span>
+            <span>{{ school2.num_boys }}</span>
           </div>
           <div class="fl">:</div>
           <div class="stat-item girl">
             Girls<br>
-            <span>1</span>
+            <span>{{ school2.num_girls }}</span>
           </div>
           <div class="clr"></div>
         </div>
@@ -102,6 +102,7 @@
 
       <div class="clr"></div>
 
+      <!--
       <div class="aggregate-stats width-400">
         <div class="label">Aggregate stats</div>
         <div class="text mar_top_10">
@@ -114,6 +115,7 @@
           <span class="bold girl">Girls</span> in a District <span class="bold">2400</span>
         </div>
       </div>
+      -->
     </div>
     <!-- Comparison Result ends -->
 

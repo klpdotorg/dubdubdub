@@ -44,6 +44,7 @@
             // Status - error, success, warning.
             alert(message);
         },
+
         getRelativeHeight: function (width, height, min_height, container_width){
             var ht = (height/width)*container_width;
             ht = parseInt(ht,10);
@@ -55,7 +56,32 @@
                 ht++;
             }
             return ht;
+        },
+
+        addSchoolContext: function(data) {
+           var total_students = data.num_boys + data.num_girls;
+            _(['num_boys', 'num_girls']).each(function(n) {
+                if (data[n] === null) {
+                    data[n] = 0;
+                }
+            });
+            data.has_num_students = data.num_boys && data.num_girls;
+            data.total_students = total_students;
+            data.percent_boys = Math.round((data.num_boys / total_students) * 100);
+            data.percent_girls = Math.round((data.num_girls / total_students) * 100);
+            if (data.hasOwnProperty('mt_profile')) {
+                var total_mts = _(_(data.mt_profile).values()).reduce(function(a, b) {
+                    return a + b;
+                });
+                data.mt_profile_percents = {};
+                _(_(data.mt_profile).keys()).each(function(mt) {
+                    data.mt_profile_percents[mt] = (data.mt_profile[mt] / total_mts) * 100;
+                });
+            }
+
+            return data;
         }
+
     };
 
 })();
