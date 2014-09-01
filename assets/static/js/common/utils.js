@@ -58,27 +58,37 @@
             return ht;
         },
 
-        addSchoolContext: function(data) {
-           var total_students = data.num_boys + data.num_girls;
-            _(['num_boys', 'num_girls']).each(function(n) {
-                if (data[n] === null) {
-                    data[n] = 0;
-                }
+        getMTProfilePercents: function(mt_profile) {
+            var total_mts = _(_(mt_profile).values()).reduce(function(a, b) {
+                return a + b;
             });
-            data.has_num_students = data.num_boys && data.num_girls;
-            data.total_students = total_students;
-            data.percent_boys = Math.round((data.num_boys / total_students) * 100);
-            data.percent_girls = Math.round((data.num_girls / total_students) * 100);
-            if (data.hasOwnProperty('mt_profile')) {
-                var total_mts = _(_(data.mt_profile).values()).reduce(function(a, b) {
-                    return a + b;
-                });
-                data.mt_profile_percents = {};
-                _(_(data.mt_profile).keys()).each(function(mt) {
-                    data.mt_profile_percents[mt] = (data.mt_profile[mt] / total_mts) * 100;
-                });
-            }
+            mt_profile_percents = {};
+            _(_(mt_profile).keys()).each(function(mt) {
+                mt_profile_percents[mt] = ((mt_profile[mt] / total_mts) * 100).toFixed(2);
+            });
+            return {
+                total: total_mts,
+                percents: mt_profile_percents
+            };           
+        },
 
+        getBoyGirlPercents: function(num_boys, num_girls) {
+            var total_students = num_boys + num_girls;
+            var percent_boys = Math.round((num_boys / total_students) * 100);
+            var percent_girls = Math.round((num_girls / total_students) * 100);
+            return {
+                total_students: total_students,
+                percent_boys: percent_boys,
+                percent_girls: percent_girls
+            };
+        },
+
+        addSchoolContext: function(data) {
+            data.has_num_students = data.num_boys && data.num_girls;
+            data = $.extend(data, klp.utils.getBoyGirlPercents(data.num_boys, data.num_girls));
+            if (data.hasOwnProperty('mt_profile')) {
+                data.mt_profile_percents = klp.utils.getMTProfilePercents(data.mt_profile).percents;
+            }
             return data;
         }
 
