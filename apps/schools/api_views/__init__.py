@@ -8,6 +8,7 @@ from .geo import (Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool)
 
 from common.views import KLPAPIView
+import dubdubdub.api_urls
 from schools.serializers import (SchoolListSerializer, BoundarySerializer,
     AssemblySerializer, ParliamentSerializer, PincodeSerializer)
 from schools.models import School, Boundary, Assembly, Parliament, Postal
@@ -15,6 +16,8 @@ from schools.models import School, Boundary, Assembly, Parliament, Postal
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from django.core.urlresolvers import resolve, Resolver404
+import urlparse
 
 
 class OmniSearch(KLPAPIView):
@@ -92,6 +95,31 @@ class OmniSearch(KLPAPIView):
         ).data
 
         return Response(response)
+
+
+
+class MergeEndpoints(KLPAPIView):
+    def get(self, request, format=None):
+        endpoints = request.GET.getlist('endpoints', [])
+        data = {}
+
+        if not endpoints:
+            return Response({
+                'error': 'no endpoints specified'
+            }, status=404)
+
+        for endpoint in endpoints:
+            parsed = urlparse.urlparse(endpoint)
+            try:
+                view, args, kwargs = resolve(parsed.path, urlconf=dubdubdub.api_urls)
+                kwargs['request'] = request
+
+                data[endpoint] = view(*args, **kwargs).data
+            except Exception as e:
+                print e
+                continue
+
+        return Response(data, status=200)
 
 
 @api_view(('GET',))

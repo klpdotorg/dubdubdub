@@ -7,7 +7,7 @@ from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
-    PincodeDetails, SchoolNutrition)
+    PincodeDetails, SchoolNutrition, MergeEndpoints)
 
 from users.api_views import (TestAuthenticatedView, UsersView,
     UserProfileView, OtherUserProfileView, OrganizationsView,
@@ -25,6 +25,8 @@ urlpatterns = patterns('',
     # url(r'^schools/list', cache_page(60)(SchoolsList.as_view()),
     #    name='api_schools_list'),
     url(r'^$', 'schools.api_views.api_root', name='api_root'),
+
+    url(r'^merge$', MergeEndpoints.as_view(), name='api_merge'),
 
     url(r'^search$', OmniSearch.as_view(), name='api_omni_search'),
 
