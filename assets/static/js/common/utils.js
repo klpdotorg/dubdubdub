@@ -59,6 +59,12 @@
         },
 
         getMTProfilePercents: function(mt_profile) {
+            if (!mt_profile) {
+                return {
+                    total: 0,
+                    percents: {}
+                };
+            }
             var total_mts = _(_(mt_profile).values()).reduce(function(a, b) {
                 return a + b;
             });
@@ -81,6 +87,18 @@
                 percent_boys: percent_boys,
                 percent_girls: percent_girls
             };
+        },
+
+        getFinancePercents: function(financeData) {
+            var sgAmount = financeData.sg_amount ? financeData.sg_amount : 0;
+            var smgAmount = financeData.smg_amount ? financeData.smg_amount : 0;
+            var tlmAmount = financeData.tlm_amount ? financeData.tlm_amount : 0;
+            var total = sgAmount + smgAmount + tlmAmount;
+            return {
+                'sg': ((sgAmount / total) * 100).toFixed(2),
+                'smg': ((smgAmount / total) * 100).toFixed(2),
+                'tlm': ((tlmAmount / total) * 100).toFixed(2)
+            }
         },
 
         addSchoolContext: function(data) {

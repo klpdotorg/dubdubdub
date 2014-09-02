@@ -52,6 +52,10 @@
         var mt = klp.utils.getMTProfilePercents(entity.demographics_data.mt_profile);
         context.mt_profile_percents = mt.percents;
         context.total_mt = mt.total;
+        context.hasFinanceData = entity.finance_data.sg_amount || entity.finance_data.smg_amount || entity.finance_data.tlm_amount;
+        if (context.hasFinanceData) {
+            context.finance_percents = klp.utils.getFinancePercents(entity.finance_data);
+        }
         return context;
     };
 
@@ -254,105 +258,23 @@
         var chart_width = 300;
         var s1 = context.school1;
         var s2 = context.school2;
-        var boyGirlChartOptions = {
+        var chartOptions = {
             innerSize: '85%',
             width: chart_width,
             height: chart_width
         };
-        $('#comparison_boygirlchart_1').boyGirlChart(s1, boyGirlChartOptions);
 
-        $('#comparison_boygirlchart_2').boyGirlChart(s2, boyGirlChartOptions);
+        $('#comparison_boygirlchart_1').boyGirlChart(s1, chartOptions);
 
-        $('#comparison_pie_chart_3').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#41a098', '#d23f51', '#f89515']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['TLM', 40.0],
-                    ['SMG', 27.0],
-                    ['SG', 32.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
+        $('#comparison_boygirlchart_2').boyGirlChart(s2, chartOptions);
 
-        $('#comparison_pie_chart_4').highcharts({
-            chart: {
-                height: chart_width,
-                width:chart_width,
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            title: {
-                text: null
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    startAngle: 0,
-                    endAngle: 360,
-                    center: ['50%', '50%'],
-                    colors: ['#41a098', '#d23f51', '#f89515']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Count',
-                innerSize: '85%',
-                data: [
-                    ['TLM', 40.0],
-                    ['SMG', 27.0],
-                    ['SG', 32.0]
-                ]
-            }],
-            credits:{
-                enabled:false
-            },
-            tooltip:{
-                enabled:true,
-                formatter: function() {
-                    return '<b>'+ this.point.name +'</b> - ' + this.y +'%';
-                }
-            },
-            exporting:{
-                enabled:false
-            }
-        });
+        if (s1.hasFinanceData) {
+            $('#comparison_financechart_1').financeChart(s1.finance_percents, chartOptions);
+        }
+
+        if (s2.hasFinanceData) {
+            $('#comparison_financechart_2').financeChart(s2.finance_percents, chartOptions);
+        }
+
     }    
 })();
