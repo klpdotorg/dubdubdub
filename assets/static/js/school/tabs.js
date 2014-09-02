@@ -290,6 +290,7 @@
         var $tabButton = $('.js-tab-link[data-tab=' + tabName + ']');
         $tabButton.parent().find("li.current").removeClass('current');
         $tabButton.addClass("current");
+        $('div[data-tab=' + tabName + ']').addClass('current');
         var $deferred = $.Deferred();
         getData(tabName, function(data) {
             if (tabs[tabName].hasOwnProperty('getContext')) {
@@ -297,7 +298,7 @@
             }
             var html = templates[tabName](data);
             //$('#loadingTab').removeClass('current');
-            $('div[data-tab=' + tabName + ']').html(html).addClass('current');
+            $('div[data-tab=' + tabName + ']').html(html);
             doPostRender(tabName, data);
             $deferred.resolve();
         });
