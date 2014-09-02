@@ -78,6 +78,18 @@
             };           
         },
 
+        getStudentTeacherRatio: function(data) {
+            var numBoys = data.num_boys_dise || 0;
+            var numGirls = data.num_girls_dise || 0;
+            var totalStudents = numBoys + numGirls;
+            var numTeachers = data.teacher_count || null;
+            if (numTeachers) {
+                return parseInt(totalStudents / numTeachers);
+            } else {
+                return false;
+            }
+        },
+
         getBoyGirlPercents: function(num_boys, num_girls) {
             var total_students = num_boys + num_girls;
             var percent_boys = Math.round((num_boys / total_students) * 100);

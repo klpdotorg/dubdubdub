@@ -57,6 +57,8 @@
         if (context.hasFinanceData) {
             context.finance_percents = klp.utils.getFinancePercents(entity.finance_data);
         }
+        context.studentTeacherRatio = klp.utils.getStudentTeacherRatio(entity.infrastructure_data);
+        context.hasStudents = entity.num_boys || entity.num_girls;
         return context;
     };
 

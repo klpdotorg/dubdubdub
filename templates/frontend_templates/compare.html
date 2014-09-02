@@ -35,6 +35,7 @@
       </div>
 
       <div class="width-48p fl ta-c">
+        {% if school1.hasStudents %}
         <div class="pie-chart-wrapper">
           <div class="chart" id="comparison_boygirlchart_1"></div>
           <div class="gender_icons">
@@ -66,8 +67,14 @@
           <div class="clr"></div>
         </div>
       </div>
+      {% else %}
+      <div class="no-data">
+        No data available
+      </div>
+      {% endif %}
 
       <div class="width-48p fr ta-c">
+        {% if school2.hasStudents %}
         <div class="pie-chart-wrapper">
           <div class="chart" id="comparison_boygirlchart_2"></div>
           <div class="gender_icons">
@@ -98,6 +105,11 @@
           </div>
           <div class="clr"></div>
         </div>
+        {% else %}
+        <div class="no-data">
+          No data available
+        </div>
+        {% endif %}
       </div>
 
       <div class="clr"></div>
@@ -212,6 +224,7 @@
     </div>
     <!-- Comparison Result ends -->
 
+    <!--
     <div class="comparison-result score-distribution">
       <div class="result-header">
         <div class="heading">Score Distribution</div>
@@ -283,8 +296,10 @@
 
       </div>
     </div>
+    -->
     <!-- Comparison Result ends -->
 
+    <!--
     <div class="comparison-result grade-distribution">
       <div class="result-header">
         <div class="heading">Grade Distribution</div>
@@ -333,7 +348,7 @@
 
           <div class="clr"></div>
         </div>
-        <!-- Bar item ends here -->
+
 
         <div class="comparison-item">
 
@@ -371,7 +386,7 @@
 
           <div class="clr"></div>
         </div>
-        <!-- Bar item ends here -->
+
 
         <div class="comparison-item">
 
@@ -409,7 +424,7 @@
 
           <div class="clr"></div>
         </div>
-        <!-- Bar item ends here -->
+
 
         <div class="comparison-item">
 
@@ -447,7 +462,7 @@
 
           <div class="clr"></div>
         </div>
-        <!-- Bar item ends here -->
+
 
         <div class="comparison-item">
 
@@ -485,7 +500,7 @@
 
           <div class="clr"></div>
         </div>
-        <!-- Bar item ends here -->
+
 
         <div class="aggregate-stats width-400">
           <div class="label">Aggregate stats</div>
@@ -505,7 +520,9 @@
 
       </div>
     </div>
+    -->
     <!-- Comparison Result ends -->
+
 
     <div class="comparison-result teacher-student-ratio">
       <div class="result-header">
@@ -519,47 +536,61 @@
       </div>
       <div class="result-content">
         <div class="width-48p fl ta-c">
+          {% if school1.studentTeacherRatio %}
           <div class="stat-ratio">
             <div class="stat-item teacher">
               Teacher<br>
-              <span>2</span>
+              <span>1</span>
             </div>
             <div class="fl">:</div>
             <div class="stat-item student">
               Student<br>
-              <span>1</span>
+              <span>{{ school1.studentTeacherRatio }}</span>
             </div>
             <div class="clr"></div>
           </div>
+          {% else %}
+          <div class="no-data">
+            Data unavailable
+          </div>
+          {% endif %}
         </div>
 
         <div class="width-48p fr ta-c">
+          {% if school2.studentTeacherRatio %}
           <div class="stat-ratio">
             <div class="stat-item teacher">
               Teacher<br>
-              <span>2</span>
+              <span>1</span>
             </div>
             <div class="fl">:</div>
             <div class="stat-item student">
               Student<br>
-              <span>1</span>
+              <span>{{ school2.studentTeacherRatio }}</span>
             </div>
             <div class="clr"></div>
           </div>
+          {% else %}
+          <div class="no-data">
+            Data unavailable
+          </div>
+          {% endif %}
         </div>
 
         <div class="clr"></div>
 
+        <!--
         <div class="aggregate-stats width-400">
           <div class="label">Aggregate stats</div>
           <div class="text mar_top_10">
             Teacher Student Ration in Karnataka is <span class="bold">1:25</span>
           </div>
         </div>
+        -->
 
       </div>
     </div>
-    <!-- Comparison Result ends -->
+
 
     <div class="comparison-result infrastructure">
       <div class="result-header">
