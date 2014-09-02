@@ -48,9 +48,10 @@
     };
 
     var getContext = function(entity) {
+        console.log("get context called with ", entity);
         var context = $.extend(entity, klp.utils.getBoyGirlPercents(entity.num_boys, entity.num_girls));
         var mt = klp.utils.getMTProfilePercents(entity.demographics_data.mt_profile);
-        context.mt_profile_percents = mt.percents;
+        context.mt_profile_percents = mt.percents || {};
         context.total_mt = mt.total;
         context.hasFinanceData = entity.finance_data.sg_amount || entity.finance_data.smg_amount || entity.finance_data.tlm_amount;
         if (context.hasFinanceData) {
@@ -60,8 +61,9 @@
     };
 
     var getMTProfiles = function(entity1, entity2) {
-        var mt1 = entity1.mt_profile_percents;
-        var mt2 = entity2.mt_profile_percents;
+        var mt1 = entity1.mt_profile_percents || {};
+        var mt2 = entity2.mt_profile_percents || {};
+        console.log("mt1", mt1, "mt2", mt2);
         var allLanguages = _(_(mt1).keys().concat(_(mt2).keys())).unique();
         console.log("all languages", allLanguages);
         var mts = {};
@@ -78,6 +80,47 @@
         });
         console.log("mts", mts);
         return mts;
+    };
+
+    var getInfrastructureComparison = function(entity1, entity2) {
+        var data1 = entity1.infrastructure_data.dise_facility;
+        var data2 = entity2.infrastructure_data.dise_facility;
+        var topLevelKeys = _(_(data1).keys().concat(_(data2).keys())).unique();
+        var allOptions = {};
+        _(topLevelKeys).each(function(key) {
+            if (key in data1 && key in data2) {
+                var arr = _(_(data1[key]).keys().concat(_(data2[key]).keys())).unique();
+            } else if (key in data1) {
+                var arr = _(data1[key]).keys();
+            } else {
+                var arr = _(data2[key]).keys();
+            }
+            allOptions[key] = arr;
+        });
+        var data = {};
+        _(allOptions).each(function(value, key) {
+            data[key] = {};
+            _(allOptions[key]).each(function(nestedKey) {
+                data[key][nestedKey] = {
+                    'entity1': getInfrastructureItem(data1, key, nestedKey),
+                    'entity2': getInfrastructureItem(data2, key, nestedKey)
+                }
+            });
+        });
+        console.log("infrastructure compare data ", data);
+        return data;
+    };
+
+    var getInfrastructureItem = function(entity, key, nestedKey) {
+        if (!entity.hasOwnProperty(key) || !entity[key].hasOwnProperty(nestedKey)) {
+            return 'grey';
+        }
+        var hasInfra = entity[key][nestedKey];
+        if (hasInfra) {
+            return 'green';
+        } else {
+            return 'red';
+        }
     };
 
     var selectOptionRight = function(entity) {
@@ -106,6 +149,7 @@
         $comparison_result_wrapper.removeClass('show');
 
         $compare_flow.removeClass("hide");
+
         setTimeout(function(){
             $compare_flow.removeClass("hide").addClass("show");
         },0);
@@ -219,12 +263,15 @@
             e.preventDefault();
             $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
                 //console.log("compare xhrs done ", data1, data2);
+                console.log("school1", data1, "school2", data2);
                 var school1 = getContext(data1);
                 var school2 = getContext(data2);
+
                 var context = {
                     'school1': school1,
                     'school2': school2,
-                    'mt_profiles': getMTProfiles(school1, school2)
+                    'mt_profiles': getMTProfiles(school1, school2),
+                    'infrastructure': getInfrastructureComparison(school1, school2)
                 };
                 var html = templates['comparison-result'](context);
                 //console.log('comparison result html', html);

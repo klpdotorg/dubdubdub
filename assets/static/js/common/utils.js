@@ -59,7 +59,7 @@
         },
 
         getMTProfilePercents: function(mt_profile) {
-            if (!mt_profile) {
+            if (!mt_profile || _.isEmpty(mt_profile)) {
                 return {
                     total: 0,
                     percents: {}

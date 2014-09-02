@@ -573,69 +573,27 @@
       </div>
 
       <div class="result-content">
+        {% for key, value in infrastructure %}
         <div class="comparison-item">
           <div class="comparison-heading purple width-25p">
-            <div class="heading-text">Toilet Facilities</div>
+            <div class="heading-text">{{ key }}</div>
           </div>
 
           <div class="infra-indicator col-left width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
+            {% for k, v in value %}
+            <div class="infra-indicator-item {{ v.entity1 }}">{{ k }}</div>
+            {% endfor %}
           </div>
 
           <div class="infra-indicator col-right width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
+            {% for k, v in value %}
+            <div class="infra-indicator-item {{ v.entity2 }}">{{ k }}</div>
+            {% endfor %}
           </div>
-
           <div class="clr"></div>
         </div>
+        {% endfor %}
         <!-- Infra Item ends -->
-
-        <div class="comparison-item">
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">Nutrition and Hygine</div>
-          </div>
-
-          <div class="infra-indicator col-left width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
-          </div>
-
-          <div class="infra-indicator col-right width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
-          </div>
-
-          <div class="clr"></div>
-        </div>
-        <!-- Infra Item ends -->
-
-        <div class="comparison-item">
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">Basic Infrastructure</div>
-          </div>
-
-          <div class="infra-indicator col-left width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
-          </div>
-
-          <div class="infra-indicator col-right width-37p">
-            <div class="infra-indicator-item green">Has Usable Toilets</div>
-            <div class="infra-indicator-item red">Doesn't have Sheltered Toilets</div>
-            <div class="infra-indicator-item grey">Has Shelters for Toilets</div>
-          </div>
-
-          <div class="clr"></div>
-        </div>
-        <!-- Infra Item ends -->
-
       </div>
     </div>
     <!-- Comparison Result ends -->
