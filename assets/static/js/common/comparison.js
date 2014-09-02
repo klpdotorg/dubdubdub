@@ -258,6 +258,7 @@
         var chart_width = 300;
         var s1 = context.school1;
         var s2 = context.school2;
+        console.log("charts init called with ", context);
         var chartOptions = {
             innerSize: '85%',
             width: chart_width,

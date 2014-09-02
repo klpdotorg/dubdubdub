@@ -663,11 +663,23 @@
           </div>
 
           <div class="col-left width-37p ta-c">
-            <div class="text big red">No</div>
+            <div class="text big {% if school1.basic_facilities.computer_lab %} green {% else %} red {% endif %}">
+              {% if school1.basic_facilities.computer_lab %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </div>
           </div>
 
           <div class="col-right width-37p ta-c">
-            <div class="text big green">Yes</div>
+            <div class="text big {% if school2.basic_facilities.computer_lab %} green {% else %} red {% endif %}">
+              {% if school2.basic_facilities.computer_lab %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </div>
           </div>
 
           <div class="clr"></div>
@@ -684,11 +696,23 @@
           </div>
 
           <div class="col-left width-37p ta-c">
-            <div class="text big green">Yes</div>
+            <div class="text big {% if school1.basic_facilities.library %} green {% else %} red {% endif %}">
+              {% if school1.basic_facilities.library %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </div>
           </div>
 
           <div class="col-right width-37p ta-c">
-            <div class="text big red">No</div>
+            <div class="text big {% if school2.basic_facilities.library %} green {% else %} red {% endif %}">
+              {% if school2.basic_facilities.library %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </div>
           </div>
 
           <div class="clr"></div>
