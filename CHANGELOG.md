@@ -12,6 +12,7 @@ Changelog
 
 Release 0.5:
   - Added materialized view for MDM agg [run-sql]
+  - Update to django 1.7 [pip-install]
 
 Release 0.4.1: August 31: 0a83b5ad5b0f9d9d8eaee841d234ad2bcc933818
   - Responsive fixes.
