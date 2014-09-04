@@ -1,4 +1,3 @@
-DROP MATERIALIZED VIEW mvw_dise_info;
 
 -- list of cluster ids with block and districts
 -- Only for primary schools
@@ -23,7 +22,6 @@ WHERE tb1.hid=11
 -- details about the school(both primary and preschools)
 -- putting the locations in a view to save query time
 -- assembly and parliament IDs as well.
-DROP MATERIALIZED VIEW mvw_school_details;
 CREATE MATERIALIZED VIEW mvw_school_details as
 SELECT tbs.id as id,
     tb1.id as cluster_or_circle_id,
@@ -64,7 +62,6 @@ SELECT t7.id,
     t7.current_elected_party
    FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
 
-DROP MATERIALIZED VIEW mvw_school_electedrep;
 CREATE MATERIALIZED VIEW mvw_school_electedrep AS
 SELECT t8.sid,
     t8.ward_id,
@@ -90,7 +87,6 @@ SELECT t1.dise_code,
 CREATE INDEX dise_code_idx ON mvw_dise_facility_agg (dise_code);
 ANALYZE mvw_dise_facility_agg;
 
-DROP MATERIALIZED VIEW mvw_school_class_total_year;
 CREATE MATERIALIZED VIEW mvw_school_class_total_year AS
 SELECT sg.sid AS schid,
     btrim(sg.name::text) AS clas,
@@ -104,20 +100,17 @@ SELECT sg.sid AS schid,
            FROM vw_lib_level_agg))
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
 
-DROP materialized VIEW mvw_inst_coord;
 CREATE materialized VIEW mvw_inst_coord AS
 SELECT t2.instid,
        t2.coord
 FROM dblink('host=localhost dbname=klp-coord user=klp password=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
 
-DROP materialized VIEW mvw_mdm_agg;
 CREATE materialized VIEW mvw_mdm_agg AS
 SELECT id as klpid, mon, wk, indent, attend
 FROM dblink('host=localhost dbname=apmdm user=klp password=klp'::text, 'select * from tb_mdm_agg'::text) t1(id integer, mon character varying(15), wk integer, indent integer, attend integer);
 CREATE INDEX klpid_idx ON mvw_mdm_agg (klpid);
 ANALYZE mvw_mdm_agg;
 
-DROP MATERIALIZED VIEW mvw_dise_info_olap;
 CREATE MATERIALIZED VIEW mvw_dise_info_olap AS
 SELECT t1.school_code as dise_code,
     t1.tot_clrooms as classroom_count,
@@ -170,3 +163,22 @@ FROM dblink(
     total_boys integer,
     total_girls integer
 );
+
+
+DROP MATERIALIZED VIEW mvw_ang_infra_agg;
+CREATE MATERIALIZED VIEW mvw_ang_infra_agg AS
+SELECT t1.sid,
+    t1.ai_metric,
+    t1.perc_score,
+    t1.ai_group
+FROM dblink(
+   'host=localhost dbname=ang_infra user=klp password=klp'::text,
+   'select NULLIF(sid, 0)::int as sid, ai_metric, perc_score, ai_group from tb_ang_infra_agg'::text) t1(sid integer, ai_metric character varying(30), perc_score numeric(5,0), ai_group character varying(30));
+CREATE INDEX sid_idx ON mvw_ang_infra_agg (sid);
+ANALYZE mvw_ang_infra_agg;
+
+
+CREATE MATERIALIZED VIEW mvw_ang_display_master AS
+SELECT t1.key,
+    t1.value
+   FROM dblink('host=localhost dbname=ang_infra user=klp password=klp'::text, 'select * from tb_display_master'::text) t1(key character varying(32), value character varying(200));

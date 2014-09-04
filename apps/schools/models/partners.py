@@ -44,6 +44,48 @@ class DiseFacilityAgg(BaseModel):
         db_table = 'mvw_dise_facility_agg'
 
 
+
+class AnganwadiDisplayMaster(BaseModel):
+    '''
+    View table:
+    This is a table to map the key values of
+    mvw_ang_display_master into readable text on the Webpage
+    The view is from ang_infra.
+    '''
+    key = models.CharField(max_length=36, primary_key=True)
+    value = models.CharField(max_length=200, blank=True)
+
+    def __unicode__(self):
+        return "%s" % self.key
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_ang_display_master'
+
+
+class AnganwadiInfraAgg(BaseModel):
+    '''
+    View table:
+    The Anganwadi infrastructure data source also has many fields.
+    This is an aggregation per school into 15 metrics and 4 groups.
+    The view is from ang_infra.
+    '''
+    school = models.ForeignKey('School', db_column='sid',
+                                  primary_key=True)
+    ai_metric = models.ForeignKey('AnganwadiDisplayMaster',
+                                   db_column='ai_metric', blank=True)
+    perc_score = models.DecimalField(max_digits=5, decimal_places=0, blank=True,
+                                null=True)
+    ai_group = models.CharField(max_length=30, blank=True)
+
+    def __unicode__(self):
+        return "%s" % (self.school,)
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_ang_infra_agg'
+
+
 class DiseInfo(BaseModel):
     '''
     View table:
