@@ -6,7 +6,7 @@ from common.mixins import CacheMixin
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\
     SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
-    SchoolLibrarySerializer, SchoolNutritionSerializer
+    SchoolLibrarySerializer, SchoolNutritionSerializer, PrechoolInfraSerializer
 from django.contrib.gis.geos import Polygon
 from django.http import Http404
 import re
@@ -117,7 +117,14 @@ class SchoolDemographics(KLPDetailAPIView):
 
 
 class SchoolInfra(KLPDetailAPIView):
-    serializer_class = SchoolInfraSerializer
+    def get_serializer_class(self):
+        sid = self.kwargs.get('pk')
+        school = School.objects.get(pk=sid)
+
+        if school.schooldetails.type_id == 2:
+            return PrechoolInfraSerializer
+        else:
+            return SchoolInfraSerializer
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
