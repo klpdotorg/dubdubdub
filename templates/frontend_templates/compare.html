@@ -66,12 +66,13 @@
           </div>
           <div class="clr"></div>
         </div>
-      </div>
       {% else %}
-      <div class="no-data">
-        No data available
-      </div>
+        <div class="pie-chart-wrapper no-data">
+          No data available
+          <div class="clr"></div>
+        </div>
       {% endif %}
+      </div>
 
       <div class="width-48p fr ta-c">
         {% if school2.hasStudents %}
@@ -106,9 +107,10 @@
           <div class="clr"></div>
         </div>
         {% else %}
-        <div class="no-data">
+        <div class="pie-chart-wrapper no-data">
           No data available
-        </div>
+          <div class="clr"></div>
+        </div>        
         {% endif %}
       </div>
 
