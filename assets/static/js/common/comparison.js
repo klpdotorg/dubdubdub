@@ -188,7 +188,7 @@
 
         $comparison_option_right.hide();
         $comparison_default_right.show();
-
+        entityTwo = entityTwoXHR = null;
         reset_submit_button();
     };
     var show_options_dropdown_right = function(e){
