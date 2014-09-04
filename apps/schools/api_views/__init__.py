@@ -17,6 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
+from django.db.models import Q
 import urlparse
 
 
@@ -47,10 +48,13 @@ class OmniSearch(KLPAPIView):
 
         response['schools'] = SchoolListSerializer(
             School.objects.filter(
-                name__icontains=text,
-                status=2,
-                instcoord__coord__isnull=False
-            )[:10],
+                Q(name__icontains=text) | Q(id__contains=text) | Q(dise_info__dise_code__contains=text),
+                Q(status=2),
+                Q(instcoord__coord__isnull=False)
+            ).select_related(
+                'instcoord',
+                'schooldetails__type'
+            ).prefetch_related('schooldetails')[:10],
             many=True,
             context=context
         ).data

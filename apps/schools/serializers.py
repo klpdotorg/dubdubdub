@@ -61,7 +61,7 @@ class SchoolListSerializer(KLPSerializer):
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'type',)
+        fields = ('id', 'name', 'dise_info', 'type',)
 
 
 class SchoolInfoSerializer(KLPSerializer):
