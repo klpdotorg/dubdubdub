@@ -1,7 +1,7 @@
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import School, Boundary, DiseInfo, ElectedrepMaster,\
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg
+from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
+    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -129,6 +129,9 @@ class SchoolInfraSerializer(KLPSerializer):
     acyear = serializers.CharField(source="dise_info.acyear")
     num_boys_dise = serializers.IntegerField(source='dise_info.boys_count')
     num_girls_dise = serializers.IntegerField(source='dise_info.girls_count')
+    num_boys = serializers.IntegerField(source='schooldetails.num_boys')
+    num_girls = serializers.IntegerField(source='schooldetails.num_girls')
+
     classroom_count = serializers.IntegerField(source='dise_info.classroom_count')
     lowest_class = serializers.IntegerField(source='dise_info.lowest_class')
     highest_class = serializers.IntegerField(source='dise_info.highest_class')
@@ -141,9 +144,29 @@ class SchoolInfraSerializer(KLPSerializer):
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'num_boys_dise',
-            'num_girls_dise', 'classroom_count', 'lowest_class',
+            'num_girls_dise', 'num_boys', 'num_girls', 'classroom_count', 'lowest_class',
             'highest_class', 'status', 'teacher_count',
             'dise_books', 'dise_rte', 'dise_facility')
+
+
+class PrechoolInfraSerializer(KLPSerializer):
+    num_boys = serializers.IntegerField(source='schooldetails.num_boys')
+    num_girls = serializers.IntegerField(source='schooldetails.num_girls')
+
+    ang_facility = serializers.SerializerMethodField('get_ang_facility_details')
+
+    class Meta:
+        model = School
+        fields = ('id', 'name', 'num_boys', 'num_girls', 'ang_facility')
+
+    def get_ang_facility_details(self, obj):
+        data = {}
+        ang_infras = obj.anganwadiinfraagg_set.all().prefetch_related('ai_metric')
+        for infra in ang_infras:
+            if infra.ai_group not in data:
+                data[infra.ai_group] = {}
+            data[infra.ai_group][infra.ai_metric.value.strip()] = (infra.perc_score == 100)
+        return data
 
 
 class SchoolLibrarySerializer(KLPSerializer):
