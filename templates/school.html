@@ -15,6 +15,7 @@
     <script src="{% static 'js/common/utils.js' %}"></script>
     <script src="{% static 'js/common/api.js' %}"></script>
     <script src="{% static 'js/common/charts.js' %}"></script>
+    <script src="{% static 'js/common/comparison.js' %}"></script>
     <script src="{% static 'js/school/init.js' %}"></script>
     <script src="{% static 'js/school/tabs.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
@@ -30,6 +31,53 @@
 
 {% block content %}
 
+    <section id="compare_flow" class="school-comparison-flow hide">
+      <div class="content">
+        <div class="compare-box">
+          <a href="#" class="button-close js-comparison-close" title="Close"><span></span></a>
+
+          <div class="vs-separator">
+            <!-- <a href="" class="label fl js-comparison-clear-left">clear</a> -->
+            <div class="label bg fl">Comparing</div>
+            <a href="" class="label fl js-comparison-clear-right">clear</a>
+            <div class="vr"></div>
+            <div class="vs-label">vs</div>
+          </div>
+
+          <div class="info school left-align js-comparison-option-left">
+
+          </div>
+
+          <div class="info school-district right-align hide js-comparison-option-right">
+
+          </div>
+
+          <div class="info default right-align js-comparison-default-right">
+            <a href="" class="title-select ta-r mar_top_15 js-comparison-show-options-right">Click to select an entity</a>
+            <!-- <div class="text-select ta-r">or select one by clicking a pin on the map below</div> -->
+
+            <div class="clr"></div>
+          </div>
+          <div class="clr"></div>
+
+          <a href="" class="btn compare-now js-btn-compare">Compare now</a>
+          <a href="" class="btn cancel js-btn-cancel js-comparison-close show">Cancel</a>
+        </div>
+
+        <div class="comparison-result-wrapper js-comparison-result-wrapper">
+
+        </div>
+
+      </div>
+
+      <div class="dropdown-wrapper" id="dropdown_wrapper">
+        <div class="triangle"></div>
+        <div class="search-box">
+          <input type="text" id="comparison-search-select" class="input-search" placeholder="Search"/>
+          <a href="" class="icon"><i class="icon-search"></i></a>
+          <div class="clr"></div>
+        </div>
+    </section>
     <section class="school-page">
         <div class="page-header">
             <div class="map-canvas" id="map-canvas"></div>
@@ -105,4 +153,6 @@
     </section>
 
     {% include 'frontend_templates/school.html' %}
+    {% include 'frontend_templates/compare.html' %}
+
 {% endblock %}

@@ -4,11 +4,16 @@
         klp.router = new KLPRouter({});
         klp.router.init();
         klp.tabs.init();
+        klp.comparison.init();
         var $infoXHR = klp.api.do("schools/school/" + SCHOOL_ID, {geometry: 'yes'});
 
         // FIX THIS LATER
         $('#map-canvas').css('zIndex', 1);
         $infoXHR.done(function(data) {
+            $('.js-trigger-compare').click(function(e) {
+                e.preventDefault();
+                klp.comparison.open(data.properties);
+            });
             var markerLatlng = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
             var map = L.map('map-canvas', {
                 touchZoom: false,
