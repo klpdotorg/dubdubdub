@@ -43,9 +43,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-   # def delete_user(self, email)
-
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
@@ -167,13 +164,13 @@ class VolunteerActivityType(models.Model):
         return self.name
 
 
-class DonationType(models.Model):
-    name = models.CharField(max_length=64)
-    image = models.ImageField(upload_to='donation_type_images')
-    text = models.TextField(blank=True)
+# class DonationType(models.Model):
+#     name = models.CharField(max_length=64)
+#     image = models.ImageField(upload_to='donation_type_images')
+#     text = models.TextField(blank=True)
 
-    def __unicode__(self):
-        return self.name
+#     def __unicode__(self):
+#         return self.name
 
 
 class VolunteerActivity(models.Model):
@@ -185,12 +182,12 @@ class VolunteerActivity(models.Model):
     users = models.ManyToManyField('User', through='UserVolunteerActivity')
 
 
-class DonorRequirement(models.Model):
-    organization = models.ForeignKey('Organization')
-    type = models.ForeignKey('DonationType')
-    school = models.ForeignKey(School)
-    text = models.TextField(blank=True)
-    users = models.ManyToManyField('User', through='UserDonorRequirement')
+# class DonorRequirement(models.Model):
+#     organization = models.ForeignKey('Organization')
+#     type = models.ForeignKey('DonationType')
+#     school = models.ForeignKey(School)
+#     text = models.TextField(blank=True)
+#     users = models.ManyToManyField('User', through='UserDonorRequirement')
 
 
 class UserVolunteerActivity(models.Model):
@@ -202,11 +199,47 @@ class UserVolunteerActivity(models.Model):
         unique_together = ('user', 'activity',)
 
 
-class UserDonorRequirement(models.Model):
-    user = models.ForeignKey('User')
-    donor_requirement = models.ForeignKey('DonorRequirement')
-    date = models.DateField()
+# class UserDonorRequirement(models.Model):
+#     user = models.ForeignKey('User')
+#     donor_requirement = models.ForeignKey('DonorRequirement')
+#     date = models.DateField()
 
-    #what was donated
-    donation = models.CharField(max_length=256)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+#     #what was donated
+#     donation = models.CharField(max_length=256)
+#     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+
+class DonationRequirement(models.Model):
+    organization = models.ForeignKey('Organization')
+    description = models.TextField(blank=True)
+    end_date = models.DateField(null=True)
+
+    def __unicode__(self):
+        return self.description
+
+
+class DonationItemCategory(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.name
+
+
+class DonationItem(models.Model):
+    requirement = models.ForeignKey('DonationRequirement')
+    name = models.CharField(max_length=256)
+    category = models.ForeignKey('DonationItemCategory')
+    quantity = models.IntegerField(blank=True, null=True)
+    unit = models.CharField(max_length=64, blank=True)
+    users = models.ManyToManyField('User', through='UserDonationItem')
+
+    def __unicode__(self):
+        return self.name
+
+
+class UserDonationItem(models.Model):
+    user = models.ForeignKey('User')
+    donation_item = models.ForeignKey('DonationItem')
+    quantity = models.IntegerField(blank=True, null=True)
+    date = models.DateField()
+    completed = models.BooleanField(default=False)
+    pickup_address = models.TextField(blank=True)
