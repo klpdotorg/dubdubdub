@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
-    VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
-    DonationType, UserDonorRequirement
+    VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
+    DonationItem, UserDonationItem, DonationItemCategory
 
 from django.contrib.auth import login, authenticate, logout
 
@@ -111,21 +111,47 @@ class UserVolunteerActivitySerializer(serializers.ModelSerializer):
         model = UserVolunteerActivity
 
 
-class DonorRequirementSerializer(serializers.ModelSerializer):
+class DonationItemCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = DonorRequirement
-        exclude = ('users',)
+        model = DonationItemCategory
 
 
-class DonationTypeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = DonationType
-
-
-class UserDonorRequirementSerializer(serializers.ModelSerializer):
+class DonationItemSerializer(serializers.ModelSerializer):
 
     class Meta:
-        write_only_fields = ('donor_requirement',)
-        model = UserDonorRequirement
+        model = DonationItem
+
+
+class DonationRequirementSerializer(serializers.ModelSerializer):
+    items = DonationItemSerializer(many=True)
+    #users = UserDonationItemSerializer(many=True)
+
+    class Meta:
+        model = DonationRequirement
+
+
+class UserDonationItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserDonationItem
+
+
+# class DonorRequirementSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = DonorRequirement
+#         exclude = ('users',)
+
+
+# class DonationTypeSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = DonationType
+
+
+# class UserDonorRequirementSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         write_only_fields = ('donor_requirement',)
+#         model = UserDonorRequirement

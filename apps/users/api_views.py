@@ -3,20 +3,20 @@ import datetime
 from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
-    VolunteerActivityType, UserVolunteerActivity, DonorRequirement,\
-    DonationType, UserDonorRequirement
+    VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
+    DonationItemCategory, UserDonationItem
 from .serializers import UserSerializer, OtherUserSerializer,\
     OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
-    DonorRequirementSerializer, DonationTypeSerializer,\
-    UserDonorRequirementSerializer
+    DonationRequirementSerializer, DonationItemCategorySerializer,\
+    UserDonationItemSerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     IsAdminToWrite, OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
-    UserVolunteerActivityPermission, DonorRequirementsPermission,\
+    UserVolunteerActivityPermission, DonationRequirementsPermission,\
     UserDonorRequirementPermission
-from .filters import VolunteerActivityFilter, DonorRequirementFilter
+from .filters import VolunteerActivityFilter, DonationRequirementFilter
 from common.utils import render_to_json_response
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
@@ -303,76 +303,97 @@ class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
                                  activity=activity_id)
 
 
-class DonorRequirementsView(generics.ListCreateAPIView):
-    serializer_class = DonorRequirementSerializer
-    paginate_by = 50
-    permission_classes = (DonorRequirementsPermission,)
-    filter_class = DonorRequirementFilter
-
-    def get_queryset(self):
-        return DonorRequirement.objects.all()
-
-
-class DonorRequirementView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = DonorRequirementSerializer
-    permission_classes = (DonorRequirementsPermission,)
-    model = DonorRequirement
-
-
-class DonationTypesView(generics.ListCreateAPIView):
-    serializer_class = DonationTypeSerializer
-    paginate_by = 50
+class DonationItemCategoriesView(generics.ListCreateAPIView):
+    serializer_class = DonationItemCategorySerializer
     permission_classes = (IsAdminToWrite,)
-
-    def get_queryset(self):
-        return DonationType.objects.all()
-
-
-class DonationTypeView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = DonationTypeSerializer
-    permission_classes = (permissions.IsAdminUser,)
-    model = DonationType
-
-
-class DonorRequirementUsersView(generics.ListCreateAPIView):
-    serializer_class = UserDonorRequirementSerializer
-    permission_classes = (permissions.IsAuthenticated,)
     paginate_by = 50
 
-    def pre_save(self, obj):
-        obj.donor_requirement_id = self.kwargs['requirement_pk']
-        obj.user_id = self.request.user.id
+    def get_queryset(self):
+        return DonationItemCategory.objects.all()
+
+
+class DonationRequirementsView(generics.ListCreateAPIView):
+    serializer_class = DonationRequirementSerializer
+    paginate_by = 50
+    permission_classes = (DonationRequirementsPermission,)
+    filter_class = DonationRequirementFilter
 
     def get_queryset(self):
-        requirement_id = self.kwargs['requirement_pk']
-        requirement = get_object_or_404(DonorRequirement, pk=requirement_id)
-        organization = requirement.organization
-
-        #FIXME: should this be be moved to a permission class?
-        if not organization.has_read_perms(self.request.user):
-            raise PermissionDenied()
-        return UserDonorRequirement.objects.filter(donor_requirement=requirement_id)
+        return DonationRequirement.objects.all()
 
 
-class DonorRequirementUserView(generics.RetrieveUpdateDestroyAPIView):
-    '''
-        View to update status of user donor requirements as well
-        as delete them.
-        Only users with write perms on organization who owns the requirement
-        can change status.
-        Only volunteer user can delete.
-    '''
-    serializer_class = UserDonorRequirementSerializer
-    permission_classes = (UserDonorRequirementPermission,)
+class UserDonationItemCreateView(generics.CreateAPIView):
+    serializer_class = UserDonationItemSerializer
+    model = UserDonationItem
 
-    def update(self, request, *args, **kwargs):
-        if kwargs['partial'] is not True:
-            raise MethodNotAllowed("Use PATCH to change status")
-        return super(DonorRequirementUserView, self).update(request,
-                                                            *args, **kwargs)
 
-    def get_object(self):
-        requirement_id = self.kwargs['requirement_pk']
-        user_id = self.kwargs['user_pk']
-        return get_object_or_404(UserDonorRequirement, user=user_id,
-                                 donor_requirement=requirement_id)
+class UserDonationItemModifyView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserDonationItemSerializer
+    model = UserDonationItem
+    #FIXME: add permissions, etc.
+
+
+
+# class DonorRequirementView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = DonorRequirementSerializer
+#     permission_classes = (DonorRequirementsPermission,)
+#     model = DonorRequirement
+
+
+# class DonationTypesView(generics.ListCreateAPIView):
+#     serializer_class = DonationTypeSerializer
+#     paginate_by = 50
+#     permission_classes = (IsAdminToWrite,)
+
+#     def get_queryset(self):
+#         return DonationType.objects.all()
+
+
+# class DonationTypeView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = DonationTypeSerializer
+#     permission_classes = (permissions.IsAdminUser,)
+#     model = DonationType
+
+
+# class DonorRequirementUsersView(generics.ListCreateAPIView):
+#     serializer_class = UserDonorRequirementSerializer
+#     permission_classes = (permissions.IsAuthenticated,)
+#     paginate_by = 50
+
+#     def pre_save(self, obj):
+#         obj.donor_requirement_id = self.kwargs['requirement_pk']
+#         obj.user_id = self.request.user.id
+
+#     def get_queryset(self):
+#         requirement_id = self.kwargs['requirement_pk']
+#         requirement = get_object_or_404(DonorRequirement, pk=requirement_id)
+#         organization = requirement.organization
+
+#         #FIXME: should this be be moved to a permission class?
+#         if not organization.has_read_perms(self.request.user):
+#             raise PermissionDenied()
+#         return UserDonorRequirement.objects.filter(donor_requirement=requirement_id)
+
+
+# class DonorRequirementUserView(generics.RetrieveUpdateDestroyAPIView):
+#     '''
+#         View to update status of user donor requirements as well
+#         as delete them.
+#         Only users with write perms on organization who owns the requirement
+#         can change status.
+#         Only volunteer user can delete.
+#     '''
+#     serializer_class = UserDonorRequirementSerializer
+#     permission_classes = (UserDonorRequirementPermission,)
+
+#     def update(self, request, *args, **kwargs):
+#         if kwargs['partial'] is not True:
+#             raise MethodNotAllowed("Use PATCH to change status")
+#         return super(DonorRequirementUserView, self).update(request,
+#                                                             *args, **kwargs)
+
+#     def get_object(self):
+#         requirement_id = self.kwargs['requirement_pk']
+#         user_id = self.kwargs['user_pk']
+#         return get_object_or_404(UserDonorRequirement, user=user_id,
+#                                  donor_requirement=requirement_id)

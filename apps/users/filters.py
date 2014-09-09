@@ -1,5 +1,5 @@
 import django_filters
-from .models import VolunteerActivity, DonorRequirement
+from .models import VolunteerActivity, DonationRequirement
 
 
 class VolunteerActivityFilter(django_filters.FilterSet):
@@ -9,8 +9,8 @@ class VolunteerActivityFilter(django_filters.FilterSet):
         fields = ['organization', 'type', 'date', 'school', 'users']
 
 
-class DonorRequirementFilter(django_filters.FilterSet):
+class DonationRequirementFilter(django_filters.FilterSet):
 
     class Meta:
-        model = DonorRequirement
-        fields = ['organization', 'type', 'school', 'users']
+        model = DonationRequirement
+        fields = ['organization'] #FIXME

@@ -227,7 +227,7 @@ class DonationItemCategory(models.Model):
 
 
 class DonationItem(models.Model):
-    requirement = models.ForeignKey('DonationRequirement')
+    requirement = models.ForeignKey('DonationRequirement', related_name='items')
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
     category = models.ForeignKey('DonationItemCategory')

@@ -152,7 +152,7 @@ class UserVolunteerActivityPermission(permissions.BasePermission):
         return False
 
 
-class DonorRequirementsPermission(VolunteerActivitiesPermission):
+class DonationRequirementsPermission(VolunteerActivitiesPermission):
     pass
 
 
