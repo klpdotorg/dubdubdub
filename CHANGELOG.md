@@ -12,6 +12,7 @@ Changelog
 
 Release 0.6:
   - Added Anganwadi db as MView [run-sql]
+  - Re-model donation work-flow [sql-migrate]
 
 Release 0.5.1: September 3: d94e37756b64cf8df2ff290b7ff97bc870e84269
   - Update to django 1.7 [pip-install]
