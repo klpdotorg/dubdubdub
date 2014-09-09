@@ -209,7 +209,9 @@ class UserVolunteerActivity(models.Model):
 #     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
 class DonationRequirement(models.Model):
+    school = models.ForeignKey(School)
     organization = models.ForeignKey('Organization')
+    title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     end_date = models.DateField(null=True)
 
@@ -227,6 +229,7 @@ class DonationItemCategory(models.Model):
 class DonationItem(models.Model):
     requirement = models.ForeignKey('DonationRequirement')
     name = models.CharField(max_length=256)
+    description = models.TextField(blank=True)
     category = models.ForeignKey('DonationItemCategory')
     quantity = models.IntegerField(blank=True, null=True)
     unit = models.CharField(max_length=64, blank=True)
@@ -235,11 +238,17 @@ class DonationItem(models.Model):
     def __unicode__(self):
         return self.name
 
+DONATION_STATUS_CHOICES = (
+    (0, 'New'),
+    (1, 'In Progress'),
+    (2, 'Completed'),
+    (3, 'Cancelled'),
+)
 
 class UserDonationItem(models.Model):
     user = models.ForeignKey('User')
     donation_item = models.ForeignKey('DonationItem')
     quantity = models.IntegerField(blank=True, null=True)
     date = models.DateField()
-    completed = models.BooleanField(default=False)
-    pickup_address = models.TextField(blank=True)
+    status = models.IntegerField(choices=DONATION_STATUS_CHOICES, default=0)
+    notes = models.TextField(blank=True)
