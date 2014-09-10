@@ -19,4 +19,13 @@
         localStorage.removeItem(emailKey);
     };
 
+    t.requireLogin = function(callback) {
+        var token = t.getToken();
+        if (token) {
+            callback();
+        } else {
+            klp.login_modal.open(callback);
+        }
+    };
+
 })();
