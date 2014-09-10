@@ -1,3 +1,16 @@
 .klp-filter-select.v-border .select2-container {
     border: none;
 }
+
+//For select2 on compare modal
+
+.school-comparison-flow .dropdown-wrapper {
+    background: transparent;
+    box-shadow: none;
+    top: 111px;
+
+    .search-box .input-search {
+        background: transparent;
+        border-bottom: none;
+    }   
+}

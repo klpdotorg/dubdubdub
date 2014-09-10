@@ -10288,6 +10288,14 @@ button.Zebra_DatePicker_Icon_Inside {
 .klp-filter-select.v-border .select2-container {
   border: none; }
 
+.school-comparison-flow .dropdown-wrapper {
+  background: transparent;
+  box-shadow: none;
+  top: 111px; }
+  .school-comparison-flow .dropdown-wrapper .search-box .input-search {
+    background: transparent;
+    border-bottom: none; }
+
 .textarea,
 .input-text {
   height: 32px;
