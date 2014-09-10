@@ -39,6 +39,29 @@
                 });
             }
             return $deferred;
+        },
+
+        'signup': function(data) {
+            var url = base + 'users';
+            var $xhr = $.ajax({
+                url: url,
+                data: data,
+                type: 'POST',
+                dataType: 'json'
+            });
+            return $xhr;
+        },
+
+        'login': function(data) {
+            var url = base + 'users/login';
+            var $xhr = $.ajax({
+                url: url,
+                data: data,
+                type: 'POST',
+                dataType: 'json'
+            });
+            return $xhr;
         }
-    }
+    };
+
 })();
