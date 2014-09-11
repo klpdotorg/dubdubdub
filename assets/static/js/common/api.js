@@ -41,6 +41,29 @@
             return $deferred;
         },
 
+        'authDo': function(endpoint, data, method) {
+            var token = klp.auth.getToken();
+            if (!token) {
+                alert("error: attempted to make authenticated request without token.");
+                return;               
+            }
+            if (!method) {
+                alert("error: attempted to call authDo without specfying method");
+                return;
+            }
+            var url = base + endpoint;
+            var $xhr = $.ajax({
+                url: url,
+                data: data,
+                type: method,
+                dataType: 'json',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Authorization", 'Token ' + token);
+                }
+            });
+            return $xhr;
+        },
+
         'signup': function(data) {
             var url = base + 'users';
             var $xhr = $.ajax({
