@@ -4,13 +4,13 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
-    DonationItemCategory, UserDonationItem
+    DonationItemCategory, UserDonationItem, DonationItem
 from .serializers import UserSerializer, OtherUserSerializer,\
     OrganizationSerializer,\
     OrganizationUserSerializer, VolunteerActivitySerializer,\
     VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
     DonationRequirementSerializer, DonationItemCategorySerializer,\
-    UserDonationItemSerializer
+    UserDonationItemSerializer, DonationItemSerializer
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     IsAdminToWrite, OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
@@ -326,16 +326,45 @@ class DonationRequirementsView(generics.ListCreateAPIView):
         return DonationRequirement.objects.all()
 
 
-class UserDonationItemCreateView(generics.CreateAPIView):
+class DonationRequirementView(generics.ListCreateAPIView):
+    serializer_class = DonationRequirementSerializer
+    model = DonationRequirement
+
+
+class DonationItemsView(generics.ListCreateAPIView):
+    serializer_class = DonationItemSerializer
+    paginate_by = 50
+    #permission_classes = (DonationRequirementsPermission,)
+    #filter_class = DonationRequirementFilter
+
+    def pre_save(self, obj):
+        obj.requirement = self.kwargs['requirement_pk']
+
+    def get_queryset(self):
+        requirement_id = self.kwargs['requirement_pk']
+        return DonationItem.objects.filter(requirement=requirement_id)
+
+
+class DonationItemView(generics.ListCreateAPIView):
+    serializer_class = DonationItemSerializer
+
+
+class DonationUsersView(generics.ListCreateAPIView):
+    serializer_class = UserDonationItemSerializer
+    paginate_by = 50
+
+    def pre_save(self, obj):
+        obj.donation_item = self.kwargs['item_pk']
+        obj.user = self.request.user
+
+    def get_queryset(self):
+        item_id = self.kwargs['item_pk']
+        return UserDonationItem.objects.filter(donation_item=item_id)
+
+
+class DonationUserView(generics.ListCreateAPIView):
     serializer_class = UserDonationItemSerializer
     model = UserDonationItem
-
-
-class UserDonationItemModifyView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = UserDonationItemSerializer
-    model = UserDonationItem
-    #FIXME: add permissions, etc.
-
 
 
 # class DonorRequirementView(generics.RetrieveUpdateDestroyAPIView):

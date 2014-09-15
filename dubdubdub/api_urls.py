@@ -16,8 +16,9 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     VolunteerActivityTypesView,
     VolunteerActivityTypeView, VolunteerActivityUsersView,
     VolunteerActivityUserView, DonationItemCategoriesView,
-    DonationRequirementsView, UserDonationItemCreateView,
-    UserDonationItemModifyView)
+    DonationRequirementsView, DonationRequirementView,
+    DonationItemsView, DonationItemView,
+    DonationUsersView, DonationUserView)
 
 urlpatterns = patterns('',
 
@@ -126,13 +127,33 @@ urlpatterns = patterns('',
         DonationRequirementsView.as_view(),
         name='api_donationrequirements_view'),
 
-    url('^donation_requirements/donate$',
-        UserDonationItemCreateView.as_view(),
-        name='api_donate_create_view'),
+    url('^donation_requirements/(?P<pk>[0-9]+)$',
+        DonationRequirementView.as_view(),
+        name='api_donationrequirement_view'),
 
-    url('^donation_requirements/donate/(?P<pk>[0-9]+)$',
-        UserDonationItemModifyView.as_view(),
-        name='api_donate_modify_view'),
+    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items$',
+        DonationItemsView.as_view(),
+        name='api_donationitems_view'),  
+
+    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/(?P<pk>[0-9]+)$',
+        DonationItemView.as_view(),
+        name='api_donationitem_view'),  
+
+    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/(?P<item_pk>[0-9]+)/users$',
+        DonationUsersView.as_view(),
+        name='api_donationusers_view'),      
+
+    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/(?P<item_pk>[0-9]+)/users/(?P<pk>[0-9]+)$',
+        DonationUserView.as_view(),
+        name='api_donationuser_view'),      
+
+    # url('^donation_requirements/donate$',
+    #     UserDonationItemCreateView.as_view(),
+    #     name='api_donate_create_view'),
+
+    # url('^donation_requirements/donate/(?P<pk>[0-9]+)$',
+    #     UserDonationItemModifyView.as_view(),
+    #     name='api_donate_modify_view'),
 
     # url('^donor_requirements$',
     #     DonorRequirementsView.as_view(),

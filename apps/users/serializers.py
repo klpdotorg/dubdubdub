@@ -124,7 +124,7 @@ class DonationItemSerializer(serializers.ModelSerializer):
 
 
 class DonationRequirementSerializer(serializers.ModelSerializer):
-    items = DonationItemSerializer(many=True)
+    items = DonationItemSerializer(many=True, read_only=True)
     #users = UserDonationItemSerializer(many=True)
 
     class Meta:
