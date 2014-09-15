@@ -71,7 +71,8 @@ class OrganizationPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         user = request.user
         if request.method in permissions.SAFE_METHODS:
-            return obj.has_read_perms(user)
+            return True
+            #return obj.has_read_perms(user)
         else:
             return obj.has_write_perms(user)
 
