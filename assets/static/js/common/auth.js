@@ -2,12 +2,18 @@
     var t = klp.auth = {};
     var tokenKey = "klpUserToken";
     var emailKey = "klpUserEmail";
+    var firstNameKey = "klpUserFirstName";
+    var lastNameKey = "klpUserLastName";
 
     t.loginUser = function(userData) {
         var token = userData.token;
         var email = userData.email;
+        var firstName = userData.first_name;
+        var lastName = userData.last_name;
         localStorage.setItem(tokenKey, token);
         localStorage.setItem(emailKey, email);
+        localStorage.setItem(firstNameKey, firstName);
+        localStorage.setItem(lastNameKey, lastName);
         t.events.trigger('login', userData);
     };
 
@@ -18,6 +24,8 @@
     t.logoutUser = function() {
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(emailKey);
+        localStorage.removeItem(firstNameKey);
+        localStorage.removeItem(lastNameKey);
         t.events.trigger('logout');
     };
 
@@ -75,6 +83,16 @@
             $user.text("Login / Signup");
             $user.data('state', 'anonymous');
         });
+
+        //if user has a token, show logged in state:
+        var token = t.getToken();
+        if (token) {
+            var userData = {
+                first_name: localStorage.getItem(firstNameKey),
+                last_name: localStorage.getItem(lastNameKey)
+            };
+            t.events.trigger('login', [userData]);
+        }
     };
 
 })();
