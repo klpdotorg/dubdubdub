@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block page_title %}Edit Profile{% endblock %}
+
+{% block endbody %}
+	<script type="text/javascript" src="{% static 'js/profile_edit/init.js' %}"></script>
+    <script>
+    	USER_ID = {{ object.id }}
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+	<section class="pb-30">
+		<div class="container">
+			<h1 class="bordered blue">Edit Profile</h1>
+			<div>
+				<div class="grid_6 alpha">
+					<form class="edit-profile-form">
+						<div class="mb-30">
+							<label class="block bold mb-5">Name</label>
+							<input class="input" type="text">
+						</div>
+						<div class="mb-30">
+							<label class="block bold mb-5">Email</label>
+							<input class="input" type="text">
+						</div>
+						<div class="mb-30">
+							<label class="block bold mb-5">Mobile</label>
+							<input class="input" type="text">
+						</div>
+						<div class="mb-30">
+							<label class="block bold mb-5">Address</label>
+							<textarea class="input textarea"></textarea>
+						</div>
+						<div class="mb-30">
+							<label class="block bold mb-5">Country</label>
+							<select class="select2">
+								<option>India</option>
+								<option>USA</option>
+								<option>Canada</option>
+								<option>Australia</option>
+								<option>Brazil</option>
+							</select>
+						</div>
+						<div class="ta-c">
+							<a class="button blue mt-30 phn-mt-10" href="#">Submit</a>
+						</div>
+					</form>
+				</div>
+				<div class="grid_6 omega">
+					<form class="edit-profile-form grey-bg ma mb-20">
+						<div class="pad-30">
+							<div class="edit-img">
+								<img class="profile-img fl mr-20" src="/static/images/thumb_reading_programme.jpg">
+								<input type="submit" value="Select Image" class="button-hollow small fl">
+								<div class="img-path fr">C:/img.jpg</div>
+								<div class="clr"></div>
+							</div>
+						</div>
+					</form>
+					<form class="edit-profile-form grey-bg ma">
+						<div class="pad-30">
+							<h2 class="tile-head blue mb-30">Change password</h2>
+							<div class="mb-30">
+								<label class="block bold mb-5">New Password</label>
+								<input class="input" type="Password">
+							</div>
+							<div class="mb-30">
+								<label class="block bold mb-5">Confirm New Password</label>
+								<input class="input" type="Password">
+							</div>
+							<div class="ta-c">
+								<a class="button blue mt-30 phn-mt-10" href="#">Submit</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="clr"></div>
+			</div>
+			
+		</div>
+	</section>
+
+	
+
+{% endblock %}

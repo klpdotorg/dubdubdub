@@ -9,3 +9,13 @@ class ProfilePageView(DetailView):
 class OrganizationPageView(DetailView):
     model = Organization
     template_name = 'organization.html'
+
+
+class ProfileEditPageView(DetailView):
+    model = User
+    template_name = 'profile_edit.html'
+
+
+class OrganizationEditPageView(DetailView):
+    model = Organization
+    template_name = 'organization_edit.html'
