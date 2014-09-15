@@ -37,7 +37,7 @@
 		line-height: 22px;
 	}
 	.info-item{
-		float: left; margin-right: 20px;
+		float: left; margin-right: 19px;
 		@include text-shadow(1px 1px 0px, #fff);
 
 		.label,.value{
@@ -46,6 +46,10 @@
 		}
 		.value{
 			text-transform: none; color: #393939; letter-spacing: normal; font-size: 12px;
+		}
+
+		@include if-device(tablet){
+			margin-right: 25px;
 		}
 	}
 	.quant-item{
@@ -93,6 +97,7 @@
 	.signup-wrapper{
 		width: 640px;
 		background-color: #F6F6F6; border: 1px solid #D8D8D8;
+		@include border-radius(3px);
 
 		.bordered{
 			font-size: 22px; line-height: 28px; text-transform: none;

@@ -1,8 +1,4 @@
 .page-thank-you{
-	.tick{
-		width: 32px; height: 32px;
-		@include bg-image-2x("../images/tick-green", png, auto, 100%);
-	}
 	.title{
 		font-size: 20px; line-height: 28px;
 	}
@@ -26,4 +22,9 @@
 		width: 220px;
 		font-size: 16px; line-height: 22px;
 	}
+}
+.tick{
+	width: 32px; height: 32px;
+	@include bg-image-2x("../images/tick-green", png);
+	background-size: 32px;
 }

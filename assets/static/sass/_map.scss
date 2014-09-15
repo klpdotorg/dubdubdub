@@ -30,6 +30,12 @@
 	text-align: center; text-transform: uppercase;
 	@include border-radius(50%);
 
+	&.bigger-2{
+		height: 46px; width: 46px;
+		font-size: 22px; line-height: 48px;
+		border: 1px solid transparent;
+	}
+
 	&.bigger{
 		height: 30px; width: 30px;
 		font-size: 16px; line-height: 32px;
@@ -586,6 +592,16 @@
 					color: $color_maps_school;
 				}
 			}
+
+			&.blue{
+				.icon{
+					color: $color_blue; border-color: $color_blue;
+				}
+				.name{
+					color: $color_blue;
+				}
+			}
+
 			&.school-district{
 				.icon{
 					color: $color_school_district; border-color: $color_school_district;
@@ -607,6 +623,9 @@
 				@include inline-block; width: 100px; text-align: left; margin-right: 25px;
 				p{
 					margin: 0;
+				}
+				&.large{
+					width: 145px;
 				}
 			}
 			.button{

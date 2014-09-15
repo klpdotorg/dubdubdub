@@ -1,0 +1,25 @@
+.page-volunteer-map{
+
+	&.sidebar-wrapper{
+		width: 400px;
+	}
+
+	.place_item{
+		padding: 20px !important;
+
+		.stats{
+			width: 49%;
+
+			.school{
+				line-height: 20px;
+			}
+		}
+		.details{
+			width: 49%;
+		}
+		.info{
+			color: #8C8C8C;
+		}
+	}
+
+}

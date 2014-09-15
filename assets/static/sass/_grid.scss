@@ -305,3 +305,12 @@
 .container .pull_11 {
   left:-91.667%;
 }
+
+@include if-device(tablet) {
+  .container .tab-grid-one-third{
+    width: 30.33%;
+  }
+  .container .tab-grid-two-third{
+    width: 63.67%;
+  }
+}

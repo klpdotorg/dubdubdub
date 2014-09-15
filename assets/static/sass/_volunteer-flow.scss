@@ -68,6 +68,23 @@
 			margin-right: 10px;
 		}
 	}
+	.step-submit{
+		.confirm-org{
+			width: 100%; margin-top: 50px;
+			.confirm-org-1{
+				width: 48%; padding-right: 2%;
+			}
+			.confirm-org-2{
+				width: 48%; padding-left: 2%;
+			}
+			.org-head{
+				font-size: 12px; text-transform: uppercase; color: #8D8D8D;
+			}
+			.text{
+				font-size: 16px; font-weight: bold;
+			}
+		}
+	}
 	.cal{
 		width: 320px; height: 280px; margin: 30px auto 0;
 	}

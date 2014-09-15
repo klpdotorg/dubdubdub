@@ -218,6 +218,12 @@
 		h4{
 			font-size: 12px; line-height: 12px; font-weight: $bold; color: #7B7795;
 			text-align: left; margin: 0 0 10px; letter-spacing: 1px;
+			&.large{
+				font-size: 20px; line-height: 20px; text-transform: none; font-weight: $regular;
+			}
+			&.black{
+				color: #393939;
+			}
 		}
 
 		p{
@@ -366,6 +372,30 @@
 		}
 		.button{
 			margin-top: 18px;
+		}
+	}
+
+	.stats_gender_item{
+		&.large{
+			width: 150px;
+		}
+	}
+
+	.tab-volunteer{
+		.title{
+			font-size: 20px; line-height: 28px;
+		}
+		.items{
+			font-size: 16px; line-height: 22px;
+		}
+	}
+
+	.tab-items{
+		.title{
+			font-size: 20px; line-height: 28px;
+		}
+		.items{
+			font-size: 16px; line-height: 22px;
 		}
 	}
 

@@ -10,7 +10,7 @@
 		font-size: 12px; line-height: 18px; color: #898989; margin: 0;
 	}
 	.verified{
-		@include bg-image-2x("../images/icon_verified", png, auto, 100%); background-repeat: no-repeat;
+		@include bg-image-2x("../images/icon_verified", png, auto, 100%); background-size: auto 100%; background-repeat: no-repeat;
 		padding-left: 20px;
 	}
 }
@@ -34,10 +34,10 @@
 		background-color: #609adf; background-position: center center; background-repeat: no-repeat;
 		@include border-radius(50%);
 		&.donation{
-			@include bg-image-2x("../images/icon_donation", png, 100%, 100%);
+			@include bg-image-2x("../images/icon_donation", png, 100%, 100%); background-size: auto 100%;
 		}
 		&.volunteer{
-			@include bg-image-2x("../images/icon_volunteer", png, 100%, 100%);
+			@include bg-image-2x("../images/icon_volunteer", png, 100%, 100%); background-size: auto 100%;
 		}
 	}
 	

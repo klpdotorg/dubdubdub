@@ -98,7 +98,7 @@
 	}
 }
 
-@mixin bg-image-2x($file, $type, $width, $height) {
+@mixin bg-image-2x($file, $type, $width:false, $height:false) {
   background-image: url($file + '.' + $type);
   @media only screen and (-webkit-min-device-pixel-ratio: 2),
     only screen and (-moz-min-device-pixel-ratio: 2),
@@ -108,10 +108,13 @@
     only screen and (min-resolution: 2dppx){
     & {
       background-image: url($file + '@2x.' + $type);
-      -webkit-background-size: $width $height;
-      -moz-background-size: $width $height;
-      -o-background-size: $width $height;
-      background-size: $width $height;
+
+      @if $width {
+        -webkit-background-size: $width $height;
+        -moz-background-size: $width $height;
+        -o-background-size: $width $height;
+        background-size: $width $height;
+      }
     }
   }
 }

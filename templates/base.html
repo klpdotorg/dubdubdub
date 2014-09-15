@@ -58,10 +58,25 @@
     {% block subheader %}
 		<div class="subheader-wrapper">
 			<div class="subheader-content">
-				<div class="breadcrumb">
+				<div class="breadcrumb fl">
 			    	<a href="/">Home</a><span></span>
 			    	<a href="">{{ page_title }}</a>
 			    </div>
+                <div class="profile-options-wrapper fr">
+                    <div class="profile-options">Gurliv Sembhi</div>
+                    <ul class="options-list">
+                        <li>
+                            <a href="#">Account</a>
+                        </li>
+                        <li>
+                            <a href="#">Privacy</a>
+                        </li>
+                        <li>
+                            <a href="#">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clr"></div>
 			</div>
 		</div>
     {% endblock %}
@@ -136,6 +151,8 @@
 
 		});
 
+
+
 	</script>
 
 	{% endif %}
@@ -167,6 +184,20 @@
 
 	<script type="text/javascript">
     $(document).ready(function(){
+        $(document).on("click", ".profile-options-wrapper .profile-options", function(e){
+            if($(document).width() < 768){
+                return true;
+            }
+
+            e.preventDefault();
+
+            if(!$(".profile-options-wrapper").hasClass("show-drop")) {
+                $(".profile-options-wrapper").addClass("show-drop");
+            } else {
+                $(".profile-options-wrapper").removeClass("show-drop");
+            }
+        });
+
         //$(document).pngFix();
     });
   </script>
