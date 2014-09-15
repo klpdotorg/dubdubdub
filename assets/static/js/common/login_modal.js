@@ -36,18 +36,22 @@
         if (e) {
             e.preventDefault();
         }
-
+        klp.utils.clearValidationErrors('signupForm');
         var isValid = klp.utils.validateRequired('signupForm');
         if (isValid) {
-            var data = {
-                'first_name': $('#signupFirstName').val(),
-                'last_name': $('#signupLastName').val(),
-                'mobile_no': $('#signupPhone').val(),
-                'email': $('#signupEmail').val(),
-                'password': $('#signupPassword').val()
+            var fields = {
+                'first_name': $('#signupFirstName'),
+                'last_name': $('#signupLastName'),
+                'mobile_no': $('#signupPhone'),
+                'email': $('#signupEmail'),
+                'password': $('#signupPassword')                
             };
+
+            var data = {};
+            _(_(fields).keys()).each(function(key) {
+                data[key] = fields[key].val();
+            });
             
-            //FIXME: do front-end validations
             var signupXHR = klp.api.signup(data);
             
             signupXHR.done(function(userData) {            
@@ -61,7 +65,18 @@
             signupXHR.fail(function(err) {
                 //FIXME: deal with errors
                 console.log("signup error", err);
-                alert("error signing up");
+                var errors = JSON.parse(err.responseText);
+                if ('detail' in errors && errors.detail === 'duplicate email') {
+                    var $field = fields.email;
+                    klp.utils.invalidateField($field, "This email address already exists.");
+                } else {
+                    _(_(errors).keys()).each(function(errorKey) {
+                        var errorMsg = errors[errorKey];
+                        var $field = fields[errorKey];
+                        klp.utils.invalidateField($field, errorMsg);
+                    });
+                }
+                //alert("error signing up");
             });
         }
     }

@@ -140,6 +140,12 @@
                 }
             });
             return isValid;
+        },
+
+        clearValidationErrors: function(formID) {
+            var $form = $('#' + formID);
+            $form.find('.error').removeClass('error');
+            $form.find('.error-message').remove();
         }
 
     };
