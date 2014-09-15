@@ -105,7 +105,11 @@
 
             loginXHR.fail(function(err) {
                 console.log("login error", err);
-                alert("error logging in");
+                var errors = JSON.parse(err.responseText);
+                var $field = $('#loginPassword');
+                if (errors.detail) {
+                    klp.utils.invalidateField($field, errors.detail);
+                }
             });
         }
     }
