@@ -118,13 +118,17 @@ class SchoolDemographics(KLPDetailAPIView):
 
 class SchoolInfra(KLPDetailAPIView):
     def get_serializer_class(self):
-        sid = self.kwargs.get('pk')
-        school = School.objects.get(pk=sid)
+        sid = self.kwargs.get('pk') if hasattr(self, 'kwargs') else None
 
-        if school.schooldetails.type_id == 2:
-            return PrechoolInfraSerializer
+        if sid:
+            school = School.objects.get(pk=sid)
+
+            if school.schooldetails.type_id == 2:
+                return PrechoolInfraSerializer
+            else:
+                return SchoolInfraSerializer
         else:
-            return SchoolInfraSerializer
+            return None
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
