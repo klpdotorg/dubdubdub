@@ -18,6 +18,7 @@
     t.logoutUser = function() {
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(emailKey);
+        t.events.trigger('logout');
     };
 
     t.requireLogin = function(callback) {
@@ -31,12 +32,12 @@
 
     t.init = function() {
         t.events = $('<div />');
-        console.log("initting auth");
+        //console.log("initting auth");
         $(document).on("click", ".profile-options-wrapper .profile-options", function(e){
-            console.log("clicked auth");
+            //console.log("clicked auth");
             var $user = $('#authUsername');
             var state = $user.data('state');
-            console.log('state', state);
+            //console.log('state', state);
             if (state === 'anonymous') {
                 klp.login_modal.open();
             } else {
@@ -54,6 +55,12 @@
             }
         });
 
+        $('#logoutUser').click(function(e) {
+            e.preventDefault();
+            t.logoutUser();
+            $(".profile-options-wrapper").removeClass("show-drop");
+        });
+
         t.events.on('login', function(e, data) {
             var firstName = data.first_name;
             var lastName = data.last_name;
@@ -61,6 +68,12 @@
             var $user = $('#authUsername');
             $user.text(name);
             $user.data('state', 'loggedin')
+        });
+
+        t.events.on('logout', function(e) {
+            var $user = $('#authUsername');
+            $user.text("Login / Signup");
+            $user.data('state', 'anonymous');
         });
     };
 
