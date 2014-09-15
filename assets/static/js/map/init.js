@@ -4,7 +4,7 @@
     klp.init = function() {
         klp.router.init();
         klp.filters_modal.init();
-        klp.login_modal.init();
+        //klp.login_modal.init();
         klp.map.init();
         klp.place_info.init();
         klp.comparison.init();

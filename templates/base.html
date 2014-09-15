@@ -14,6 +14,9 @@
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
     {% endcompress %}
 
+    <script>
+        window.klp = {};
+    </script>
     {% compress js %}
 	<script type="text/javascript" src="{% static 'js/lib/jquery-1.9.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/libs.combined.js' %}"></script>
@@ -21,7 +24,10 @@
     <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/select2-3.5.1/select2.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
     {% endcompress %}
@@ -62,8 +68,9 @@
 			    	<a href="/">Home</a><span></span>
 			    	<a href="">{{ page_title }}</a>
 			    </div>
+
                 <div class="profile-options-wrapper fr">
-                    <div class="profile-options">Gurliv Sembhi</div>
+                    <div class="profile-options" id="authUsername" data-state="anonymous">Login / Signup</div>
                     <ul class="options-list">
                         <li>
                             <a href="#">Account</a>
@@ -159,6 +166,7 @@
 
 	{% block content %} {% endblock %}
 
+    {% include 'includes/_login_modal.html' %}
   {% if not hide_footer %}
   <footer class="main-footer">
     <div class="footer-wrapper">
@@ -183,24 +191,8 @@
   {% endif %}
 
 	<script type="text/javascript">
-    $(document).ready(function(){
-        $(document).on("click", ".profile-options-wrapper .profile-options", function(e){
-            if($(document).width() < 768){
-                return true;
-            }
-
-            e.preventDefault();
-
-            if(!$(".profile-options-wrapper").hasClass("show-drop")) {
-                $(".profile-options-wrapper").addClass("show-drop");
-            } else {
-                $(".profile-options-wrapper").removeClass("show-drop");
-            }
-        });
-
         //$(document).pngFix();
-    });
-  </script>
+    </script>
 
   {% block endbody %}
   {% endblock %}

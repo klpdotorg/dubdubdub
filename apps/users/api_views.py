@@ -105,8 +105,12 @@ def login(request):
     user = authenticate(username=email, password=password)
     if user is not None:
         auth_login(request, user)
-        token = Token.objects.get(user=user).key
-        return Response({'success': 'User logged in', 'token': token})
+        user_data = {
+            'token': Token.objects.get(user=user).key,
+            'first_name': user.first_name,
+            'last_name': user.last_name
+        }
+        return Response(user_data)
     raise AuthenticationFailed("Username / password do not match")
 
 

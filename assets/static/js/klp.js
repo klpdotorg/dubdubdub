@@ -1,5 +1,4 @@
 (function() {
-    window.klp = {};
     klp.data = {};
     klp.openModal = null;
     $(document).ready(function() {
@@ -13,6 +12,10 @@
                 klp.openModal = null;
             }
         });
-        klp.init();
+        klp.auth.init();
+        klp.login_modal.init();
+        if (klp.hasOwnProperty('init')) {
+            klp.init();
+        }
     });
 })();
