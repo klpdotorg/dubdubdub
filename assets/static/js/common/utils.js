@@ -120,6 +120,26 @@
                 data.mt_profile_percents = klp.utils.getMTProfilePercents(data.mt_profile).percents;
             }
             return data;
+        },
+
+        invalidateField: function($field, message) {
+            $field.addClass('error');
+            var $error = $('<div />').addClass('error-message mt-5');
+            $error.text(message);
+            $field.after($error);
+        },
+
+        validateRequired: function(formID) {
+            var $form = $('#' + formID);
+            var isValid = true;
+            $form.find('[data-required=true]').each(function() {
+                var $this = $(this);
+                if ($this.val() === '') {
+                    isValid = false;
+                    klp.utils.invalidateField($this, "This field is required.");
+                }
+            });
+            return isValid;
         }
 
     };

@@ -3,11 +3,11 @@
     var postLoginCallback = null;
     t.open = function(callback) {
         postLoginCallback = callback;
-        $('.login-modal').addClass('show');
+        $('.js-login-modal').addClass('show');
     };
 
     t.close = function() {
-        $('.login-modal').removeClass('show');
+        $('.js-login-modal').removeClass('show');
         postLoginCallback = null;
     };
 
@@ -36,56 +36,63 @@
         if (e) {
             e.preventDefault();
         }
-        var data = {
-            'first_name': $('#signupFirstName').val(),
-            'last_name': $('#signupLastName').val(),
-            'mobile_no': $('#signupPhone').val(),
-            'email': $('#signupEmail').val(),
-            'password': $('#signupPassword').val()
-        };
-        
-        //FIXME: do front-end validations
-        var signupXHR = klp.api.signup(data);
-        
-        signupXHR.done(function(userData) {            
-            klp.auth.loginUser(userData);
-            if (postLoginCallback) {
-                postLoginCallback();
-            }
-            t.close();
-        });
 
-        signupXHR.fail(function(err) {
-            //FIXME: deal with errors
-            console.log("signup error", err);
-            alert("error signing up");
-        });
+        var isValid = klp.utils.validateRequired('signupForm');
+        if (isValid) {
+            var data = {
+                'first_name': $('#signupFirstName').val(),
+                'last_name': $('#signupLastName').val(),
+                'mobile_no': $('#signupPhone').val(),
+                'email': $('#signupEmail').val(),
+                'password': $('#signupPassword').val()
+            };
+            
+            //FIXME: do front-end validations
+            var signupXHR = klp.api.signup(data);
+            
+            signupXHR.done(function(userData) {            
+                klp.auth.loginUser(userData);
+                if (postLoginCallback) {
+                    postLoginCallback();
+                }
+                t.close();
+            });
+
+            signupXHR.fail(function(err) {
+                //FIXME: deal with errors
+                console.log("signup error", err);
+                alert("error signing up");
+            });
+        }
     }
 
     function submitLogin(e) {
         if (e) {
             e.preventDefault();
         }
-        var data = {
-            'email': $('#loginEmail').val(),
-            'password': $('#loginPassword').val()
-        };
-        var loginXHR = klp.api.login(data);
-        loginXHR.done(function(userData) {
-            userData.email = data.email;
-            klp.auth.loginUser(userData);
-            if (postLoginCallback) {
-                postLoginCallback();
-            }
-            t.close();
-            //console.log("login done", postLoginCallback);
+        var isValid = klp.utils.validateRequired('loginForm');
+        if (isValid) {
+            var data = {
+                'email': $('#loginEmail').val(),
+                'password': $('#loginPassword').val()
+            };
+            var loginXHR = klp.api.login(data);
+            loginXHR.done(function(userData) {
+                userData.email = data.email;
+                klp.auth.loginUser(userData);
+                if (postLoginCallback) {
+                    postLoginCallback();
+                }
+                t.close();
+                //console.log("login done", postLoginCallback);
 
-        });
+            });
 
-        loginXHR.fail(function(err) {
-            console.log("login error", err);
-            alert("error logging in");
-        });
+            loginXHR.fail(function(err) {
+                console.log("login error", err);
+                alert("error logging in");
+            });
+        }
     }
 
 })();
