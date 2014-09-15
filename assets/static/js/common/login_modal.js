@@ -36,8 +36,9 @@
         if (e) {
             e.preventDefault();
         }
-        klp.utils.clearValidationErrors('signupForm');
-        var isValid = klp.utils.validateRequired('signupForm');
+        var formID = 'signupForm';
+        klp.utils.clearValidationErrors(formID);
+        var isValid = klp.utils.validateRequired(formID);
         if (isValid) {
             var fields = {
                 'first_name': $('#signupFirstName'),
@@ -52,9 +53,11 @@
                 data[key] = fields[key].val();
             });
             
+            klp.utils.startSubmit(formID);
             var signupXHR = klp.api.signup(data);
             
-            signupXHR.done(function(userData) {            
+            signupXHR.done(function(userData) {
+                klp.utils.stopSubmit(formID);           
                 klp.auth.loginUser(userData);
                 if (postLoginCallback) {
                     postLoginCallback();
@@ -65,6 +68,7 @@
             signupXHR.fail(function(err) {
                 //FIXME: deal with errors
                 console.log("signup error", err);
+                klp.utils.stopSubmit(formID);
                 var errors = JSON.parse(err.responseText);
                 if ('detail' in errors && errors.detail === 'duplicate email') {
                     var $field = fields.email;
@@ -85,6 +89,7 @@
         if (e) {
             e.preventDefault();
         }
+        var formID = 'loginForm';
         var isValid = klp.utils.validateRequired('loginForm');
         if (isValid) {
             var data = {
@@ -92,7 +97,9 @@
                 'password': $('#loginPassword').val()
             };
             var loginXHR = klp.api.login(data);
+            klp.utils.startSubmit(formID);
             loginXHR.done(function(userData) {
+                klp.utils.stopSubmit(formID);
                 userData.email = data.email;
                 klp.auth.loginUser(userData);
                 if (postLoginCallback) {
@@ -105,6 +112,7 @@
 
             loginXHR.fail(function(err) {
                 console.log("login error", err);
+                klp.utils.stopSubmit(formID);
                 var errors = JSON.parse(err.responseText);
                 var $field = $('#loginPassword');
                 if (errors.detail) {

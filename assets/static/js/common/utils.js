@@ -146,8 +146,19 @@
             var $form = $('#' + formID);
             $form.find('.error').removeClass('error');
             $form.find('.error-message').remove();
-        }
+        },
 
+        startSubmit: function(formID) {
+            var $form = $('#' + formID);
+            $form.find('.js-submit-btn').hide();
+            $form.find('.js-submit-loading').show();
+        },
+
+        stopSubmit: function(formID) {
+            var $form = $('#' + formID);
+            $form.find('.js-submit-btn').show();
+            $form.find('.js-submit-loading').hide();            
+        }
     };
 
 })();
