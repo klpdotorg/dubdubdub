@@ -65,13 +65,14 @@ class OrganizationPermission(permissions.BasePermission):
     '''
         Permission class to check if user has permissions to view / edit
         an organization instance
-        Calls has_read_perms and has_write_perms methods on Organization model
+        Calls has_write_perms methods on Organization model
     '''
 
     def has_object_permission(self, request, view, obj):
         user = request.user
         if request.method in permissions.SAFE_METHODS:
-            return obj.has_read_perms(user)
+            return True
+            #return obj.has_read_perms(user)
         else:
             return obj.has_write_perms(user)
 
