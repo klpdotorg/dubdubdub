@@ -14,18 +14,25 @@ class OrganizationBasicSerializer(serializers.ModelSerializer):
         model = Organization
 
 
-class OrganizationUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        write_only_fields = ('organization',)
-        model = UserOrganization
-
-
 class UserBasicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name',)
+
+
+class OrganizationUserSerializer(serializers.ModelSerializer):
+    organization_details = OrganizationBasicSerializer(
+        source='organization',
+        read_only=True
+    )
+    user_details = UserBasicSerializer(
+        source='user',
+        read_only=True
+    )
+    class Meta:
+        write_only_fields = ('organization', 'user',)
+        model = UserOrganization
 
 
 class UserVolunteerActivitySerializer(serializers.ModelSerializer):
@@ -72,8 +79,14 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True
     )
 
+    users = OrganizationUserSerializer(
+        source='userorganization_set',
+        read_only=True,
+        many=True
+    )
+
     class Meta:
-        exclude = ('users',)
+        #exclude = ('users',)
         model = Organization
 
 
@@ -83,6 +96,12 @@ class UserSerializer(serializers.ModelSerializer):
     volunteer_activities = UserVolunteerActivityNestedSerializer(
         source='uservolunteeractivity_set',
         read_only=True
+    )
+
+    organisations = OrganizationUserSerializer(
+        source='userorganization_set',
+        read_only=True,
+        many=True
     )
 
     def restore_object(self, attrs, instance=None):
@@ -121,7 +140,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
-                  'last_name', 'password', 'token', 'volunteer_activities')
+                  'last_name', 'password', 'token', 'volunteer_activities',
+                  'organisations')
         write_only_fields = ('password',)
 
 
@@ -134,9 +154,15 @@ class OtherUserSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    organisations = OrganizationUserSerializer(
+        source='userorganization_set',
+        read_only=True,
+        many=True
+    )
+
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'volunteer_activities',)
+        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organisations',)
 
 
 class VolunteerActivityTypeSerializer(serializers.ModelSerializer):
@@ -160,6 +186,14 @@ class DonationItemSerializer(serializers.ModelSerializer):
 class DonationRequirementSerializer(serializers.ModelSerializer):
     items = DonationItemSerializer(many=True, read_only=True)
     #users = UserDonationItemSerializer(many=True)
+    organization_details = OrganizationBasicSerializer(
+        source='organization',
+        read_only=True
+    )
+    school_details = SchoolListSerializer(
+        source='school',
+        read_only=True
+    )
 
     class Meta:
         model = DonationRequirement
