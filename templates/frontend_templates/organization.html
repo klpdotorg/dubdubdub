@@ -1,5 +1,5 @@
 {% verbatim %}
-<script id="tpl-volunteerActivity">
+<script type="text/html" id="tpl-volunteerActivity">
     <div class="required pb-20">
         <div class="fl phn-fn mt-5 mb-5">
             <div class="font-20 color-red">{{ activity_type_details.name }}</div>
@@ -25,6 +25,15 @@
         </div>
         <a class="button fr mt-5 phn-fn phn-mt-10" href="#">Volunteer Now</a>
         <div class="clr"></div>
+    </div>
+</script>
+
+<script type="text/html" id="tpl-emptyVolunteerActivities">
+    <div class="required pb-20">
+        <div class="no-data">
+            This organisation does not have any volunteer activities.
+        </div>
+        <div class="clr">
     </div>
 </script>
 {% endverbatim %}

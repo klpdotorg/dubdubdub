@@ -9,10 +9,15 @@
             }
             var volunteerCount = data.volunteer_activities.length;
             $('#volunteerCount').text(volunteerCount);
-            _(data.volunteer_activities).each(function(v) {
-                var html = tplVolunteer(v);
+            if (volunteerCount > 0) {
+                _(data.volunteer_activities).each(function(v) {
+                    var html = tplVolunteer(v);
+                    $('#volunteerActivitiesList').append(html);
+                });
+            } else {
+                var html = $('#tpl-emptyVolunteerActivities').html();
                 $('#volunteerActivitiesList').append(html);
-            });
+            }
         });
     };
 
