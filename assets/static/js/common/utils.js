@@ -137,11 +137,27 @@
             return data;
         },
 
+        getFormData: function(fields) {
+            var data = {};
+            _(_(fields).keys()).each(function(key) {
+                data[key] = fields[key].val();
+            });
+            return data;
+        },
+
         invalidateField: function($field, message) {
             $field.addClass('error');
             var $error = $('<div />').addClass('error-message mt-5');
             $error.text(message);
             $field.after($error);
+        },
+
+        invalidateErrors: function(fields, errors) {
+            _(_(errors).keys()).each(function(errorKey) {
+                var errorMsg = errors[errorKey];
+                var $field = fields[errorKey];
+                klp.utils.invalidateField($field, errorMsg);
+            });
         },
 
         validateRequired: function(formID) {
