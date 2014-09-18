@@ -108,7 +108,7 @@ class UserSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    organisations = OrganizationUserSerializer(
+    organizations = OrganizationUserSerializer(
         source='userorganization_set',
         read_only=True,
         many=True
@@ -151,7 +151,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
                   'last_name', 'password', 'token', 'volunteer_activities',
-                  'organisations')
+                  'organizations')
         write_only_fields = ('password',)
 
 
@@ -164,7 +164,7 @@ class OtherUserSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    organisations = OrganizationUserSerializer(
+    organizations = OrganizationUserSerializer(
         source='userorganization_set',
         read_only=True,
         many=True
@@ -172,7 +172,7 @@ class OtherUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organisations',)
+        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organizations',)
 
 
 
