@@ -74,6 +74,7 @@
         $('#logoutUser').click(function(e) {
             e.preventDefault();
             t.logoutUser();
+            klp.utils.alertMessage("Logged out successfully", "success");
             $(".profile-options-wrapper").removeClass("show-drop");
         });
 

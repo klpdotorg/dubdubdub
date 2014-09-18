@@ -59,6 +59,7 @@
             signupXHR.done(function(userData) {
                 klp.utils.stopSubmit(formID);           
                 klp.auth.loginUser(userData);
+                klp.utils.alertMessage("Thanks for signing up!", "success");
                 if (postLoginCallback) {
                     postLoginCallback();
                 }
@@ -102,6 +103,7 @@
                 klp.utils.stopSubmit(formID);
                 userData.email = data.email;
                 klp.auth.loginUser(userData);
+                klp.utils.alertMessage("Logged in successfully!", "success");
                 if (postLoginCallback) {
                     postLoginCallback();
                 }

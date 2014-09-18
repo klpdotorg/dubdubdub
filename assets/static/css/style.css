@@ -10701,10 +10701,12 @@ button.Zebra_DatePicker_Icon_Inside {
   font-weight: bold; }
 
 .alert.success {
-  background-color: green; }
+  background-color: green;
+  color: white; }
 
 .alert.warning {
-  background-color: orange; }
+  background-color: orange;
+  color: white; }
 
 .alert.error {
   background-color: red;
