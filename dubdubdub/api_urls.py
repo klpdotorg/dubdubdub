@@ -16,7 +16,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     VolunteerActivityTypesView,
     VolunteerActivityTypeView, VolunteerActivityUsersView,
     VolunteerActivityUserView, DonationItemCategoriesView,
-    DonationRequirementsView, PasswordChangeView,
+    DonationRequirementsView, DonationRequirementView, PasswordChangeView,
     DonationItemsView, DonationItemView,
     DonationUsersView, DonationUserView)
 
