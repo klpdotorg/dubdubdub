@@ -3,11 +3,33 @@ from rest_framework.exceptions import PermissionDenied
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
     DonationItem, UserDonationItem, DonationItemCategory
-
+from schools.serializers import SchoolListSerializer
 from django.contrib.auth import login, authenticate, logout
 
 
+class OrganizationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        exclude = ('users',)
+        model = Organization
+
+
+class OrganizationUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        write_only_fields = ('organization',)
+        model = UserOrganization
+
+
 class VolunteerActivitySerializer(serializers.ModelSerializer):
+    organization_details = OrganizationSerializer(
+        source='organization',
+        read_only=True
+    )
+    school_details = SchoolListSerializer(
+        source='school',
+        read_only=True
+    )
 
     class Meta:
         model = VolunteerActivity
@@ -84,18 +106,6 @@ class OtherUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'volunteer_activities',)
 
 
-class OrganizationSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        exclude = ('users',)
-        model = Organization
-
-
-class OrganizationUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        write_only_fields = ('organization',)
-        model = UserOrganization
 
 
 class VolunteerActivityTypeSerializer(serializers.ModelSerializer):

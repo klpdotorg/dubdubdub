@@ -24,6 +24,10 @@
         return localStorage.getItem(tokenKey);
     };
 
+    t.getId = function() {
+        return localStorage.getItem(idKey);
+    };
+
     t.logoutUser = function() {
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(emailKey);
