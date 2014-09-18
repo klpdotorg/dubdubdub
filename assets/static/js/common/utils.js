@@ -42,7 +42,22 @@
 
         alertMessage: function(message, status) {
             // Status - error, success, warning.
-            alert(message);
+            var $alert = $('<div />')
+                            .addClass('alert')
+                            .hide()
+                            .text(message)
+                            .appendTo('body')
+                            .slideDown(250);
+
+            if (status) {
+                $alert.addClass(status);
+            }
+            setTimeout(function() {
+                $alert.slideUp(500, function() {
+                    $alert.remove();
+                });
+            }, 3000);
+            //alert(message);
         },
 
         getRelativeHeight: function (width, height, min_height, container_width){
