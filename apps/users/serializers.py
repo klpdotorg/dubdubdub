@@ -7,24 +7,35 @@ from schools.serializers import SchoolListSerializer
 from django.contrib.auth import login, authenticate, logout
 
 
-class OrganizationSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        exclude = ('users',)
-        model = Organization
-
-
 class OrganizationBasicSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ('id', 'name',)
         model = Organization
 
+
 class OrganizationUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         write_only_fields = ('organization',)
         model = UserOrganization
+
+
+class UserBasicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name',)
+
+
+class UserVolunteerActivitySerializer(serializers.ModelSerializer):
+    user_details = UserBasicSerializer(
+        source='user',
+        read_only=True
+    )
+    class Meta:
+        fields = ('user', 'status', 'user_details',)
+        model = UserVolunteerActivity
 
 
 class VolunteerActivitySerializer(serializers.ModelSerializer):
@@ -36,7 +47,11 @@ class VolunteerActivitySerializer(serializers.ModelSerializer):
         source='school',
         read_only=True
     )
-
+    user_details = UserVolunteerActivitySerializer(
+        many=True,
+        read_only=True,
+        source='uservolunteeractivity_set'
+    )
     class Meta:
         model = VolunteerActivity
         exclude = ('users',)
@@ -48,6 +63,18 @@ class UserVolunteerActivityNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserVolunteerActivity
         fields = ('activity', 'status',)
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    volunteer_activities = VolunteerActivitySerializer(
+        source='volunteeractivity_set',
+        read_only=True,
+        many=True
+    )
+
+    class Meta:
+        exclude = ('users',)
+        model = Organization
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -112,19 +139,10 @@ class OtherUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'volunteer_activities',)
 
 
-
-
 class VolunteerActivityTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VolunteerActivityType
-
-
-class UserVolunteerActivitySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = ('user', 'status',)
-        model = UserVolunteerActivity
 
 
 class DonationItemCategorySerializer(serializers.ModelSerializer):
