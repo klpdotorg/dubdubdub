@@ -14,6 +14,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         model = Organization
 
 
+class OrganizationBasicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('id', 'name',)
+        model = Organization
+
 class OrganizationUserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -22,7 +28,7 @@ class OrganizationUserSerializer(serializers.ModelSerializer):
 
 
 class VolunteerActivitySerializer(serializers.ModelSerializer):
-    organization_details = OrganizationSerializer(
+    organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
     )
@@ -128,7 +134,7 @@ class DonationItemCategorySerializer(serializers.ModelSerializer):
 
 
 class DonationItemSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = DonationItem
 
