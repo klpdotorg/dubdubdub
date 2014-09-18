@@ -21,6 +21,12 @@ class UserBasicSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name',)
 
 
+class VolunteerActivityTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VolunteerActivityType
+
+
 class OrganizationUserSerializer(serializers.ModelSerializer):
     organization_details = OrganizationBasicSerializer(
         source='organization',
@@ -54,14 +60,18 @@ class VolunteerActivitySerializer(serializers.ModelSerializer):
         source='school',
         read_only=True
     )
-    user_details = UserVolunteerActivitySerializer(
+    users = UserVolunteerActivitySerializer(
         many=True,
         read_only=True,
         source='uservolunteeractivity_set'
     )
+    activity_type_details = VolunteerActivityTypeSerializer(
+        read_only=True,
+        source='type'
+    )
     class Meta:
         model = VolunteerActivity
-        exclude = ('users',)
+        #exclude = ('users',)
 
 
 class UserVolunteerActivityNestedSerializer(serializers.ModelSerializer):
@@ -165,10 +175,6 @@ class OtherUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organisations',)
 
 
-class VolunteerActivityTypeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = VolunteerActivityType
 
 
 class DonationItemCategorySerializer(serializers.ModelSerializer):

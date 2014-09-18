@@ -16,16 +16,21 @@
 		<div class="container">
 			<div class="grid_8 alpha phn-width-full phn-mar-0 phn-mb-20">
 				<h3 class="desc-title green2">{{ object.name }}</h3>
-				<a class="color-grey" href="http://www.akshara.org.in" target="_blank">http://www.akshara.org.in</a><br/>
-				<a href="organisation-profile-edit.php" class="button-hollow mt-5">Edit Profile</a>
+				{% if object.url %}
+				<a class="color-grey" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
+				{% endif %}
+				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn" style="display:none;">Edit Profile</a>
 			</div>
 			<div class="grid_4 omega phn-width-full phn-mar-0">
-				<img class="mb-20" src="images/partners_logo_akshara.png">
+				{% if object.logo %}
+				<img class="mb-20" src="{{ object.logo.url }}">
+				{% endif %}
 			</div>
 			<div class="clr"></div>
 			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
 				<p class="profile-description mt-0">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+					<!--
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. -->
 				</p>
 			</div>
 			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
@@ -33,12 +38,12 @@
 				<div class="stats_opportunities fl">
 					<span class="icon donation"></span>
 					<p class="label">Donation</p>
-					<p class="value">5</p>
+					<p class="value" id="donationCount"></p>
 				</div>
 				<div class="stats_opportunities fl">
 					<span class="icon volunteer"></span>
 					<p class="label">Volunteer</p>
-					<p class="value">2</p>
+					<p class="value" id="volunteerCount"></p>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -75,56 +80,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="grid_9 alpha phn-width-full phn-mar-0">
+				<div class="grid_9 alpha phn-width-full phn-mar-0" id="volunteerActivitiesList">
 					<div class="profile-title bold uppercase">Volunteering opportunties</div>
-					<div class="required pb-20">
-						<div class="fl phn-fn mt-5 mb-5">
-							<div class="font-20 color-red">Activity Based</div>
-							<span class="color-grey-light-2">For </span>
-							<span class="color-green-2 uppercase"> Akshara Foundation</span>
-						</div>
-						<div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-							<a href="school.php" class="font-20 color-green">Gian Jyoti Public School</a>
-							<br/>
-							<div class="color-grey-light-2">Street No-4, Banasawadi, Bangalore</div>
-						</div>
-						<div class="clr"></div>
-						<p class="mt-10 mb-10">
-							In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris.
-						</p>
-						<div class="fl phn-fn">
-							<div class="color-black bold">
-								Date:
-							</div>
-							<div class="font-16 color-blue bold">15 Aug, 2014</div>
-						</div>
-						<a class="button fr mt-5 phn-fn phn-mt-10" href="#">Volunteer Now</a>
-						<div class="clr"></div>
-					</div>
-					<div class="required pt-20 pb-20">
-						<div class="fl phn-fn mt-5 mb-5">
-							<div class="font-20 color-red">Activity Based</div>
-							<span class="color-grey-light-2">For </span>
-							<span class="color-green-2 uppercase"> Akshara Foundation</span>
-						</div>
-						<div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-							<a href="school.php" class="font-20 color-green">Gian Jyoti Public School</a>
-							<br/>
-							<div class="color-grey-light-2">Street No-4, Banasawadi, Bangalore</div>
-						</div>
-						<div class="clr"></div>
-						<p class="mt-10 mb-10">
-							In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris.
-						</p>
-						<div class="fl phn-fn">
-							<div class="color-black bold">
-								Date:
-							</div>
-							<div class="font-16 color-blue bold">15 Aug, 2014</div>
-						</div>
-						<a class="button fr mt-5 phn-fn phn-mt-10" href="#">Volunteer Now</a>
-						<div class="clr"></div>
-					</div>
+
 				</div>
 				<div class="clr"></div>
 			</div>	<!-- Volunteer Tab END -->
@@ -204,7 +162,8 @@
 			</div>	<!-- Donation Tab END -->
 		</div>
 	</section>
-
+	{% include 'frontend_templates/organization.html' %}
+	
 	<script type="text/javascript">
 
 		function init_tabs(){
