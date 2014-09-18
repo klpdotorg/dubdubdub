@@ -4,8 +4,10 @@
     var emailKey = "klpUserEmail";
     var firstNameKey = "klpUserFirstName";
     var lastNameKey = "klpUserLastName";
+    var idKey = "klpUserId";
 
     t.loginUser = function(userData) {
+        console.log("user data", userData);
         var token = userData.token;
         var email = userData.email;
         var firstName = userData.first_name;
@@ -14,6 +16,7 @@
         localStorage.setItem(emailKey, email);
         localStorage.setItem(firstNameKey, firstName);
         localStorage.setItem(lastNameKey, lastName);
+        localStorage.setItem(idKey, userData.id);
         t.events.trigger('login', userData);
     };
 
@@ -21,11 +24,16 @@
         return localStorage.getItem(tokenKey);
     };
 
+    t.getId = function() {
+        return localStorage.getItem(idKey);
+    };
+
     t.logoutUser = function() {
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(emailKey);
         localStorage.removeItem(firstNameKey);
         localStorage.removeItem(lastNameKey);
+        localStorage.removeItem(idKey);
         t.events.trigger('logout');
     };
 
@@ -75,7 +83,11 @@
             var name = firstName + " " + lastName;
             var $user = $('#authUsername');
             $user.text(name);
-            $user.data('state', 'loggedin')
+            $user.data('state', 'loggedin');
+            var profileURL = "/profile/" + data.id;
+            var editProfileURL = profileURL + "/edit";
+            $('#userProfileBtn').attr("href", profileURL);
+            $('#userEditProfileBtn').attr("href", editProfileURL);
         });
 
         t.events.on('logout', function(e) {
@@ -89,7 +101,9 @@
         if (token) {
             var userData = {
                 first_name: localStorage.getItem(firstNameKey),
-                last_name: localStorage.getItem(lastNameKey)
+                last_name: localStorage.getItem(lastNameKey),
+                id: localStorage.getItem(idKey),
+                email: localStorage.getItem(emailKey)
             };
             t.events.trigger('login', [userData]);
         }

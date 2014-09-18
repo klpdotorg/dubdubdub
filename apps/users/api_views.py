@@ -108,7 +108,8 @@ def login(request):
         user_data = {
             'token': Token.objects.get(user=user).key,
             'first_name': user.first_name,
-            'last_name': user.last_name
+            'last_name': user.last_name,
+            'id': user.id
         }
         return Response(user_data)
     raise AuthenticationFailed("Username / password do not match")
