@@ -1,6 +1,6 @@
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 import datetime
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
@@ -136,6 +136,23 @@ def password_reset_request(request):
         return Response({'success': 'Password reset email sent'})
     else:
         raise AuthenticationFailed(', '.join(form.errors))
+
+
+class PasswordChangeView(APIView):
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return Response({
+                'success': 'successfully changed your password'
+            })
+        else:
+            raise APIException(','.join(form.errors))
 
 
 class OrganizationsView(generics.ListCreateAPIView):

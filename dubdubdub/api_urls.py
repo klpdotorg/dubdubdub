@@ -17,7 +17,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     VolunteerActivityTypeView, VolunteerActivityUsersView,
     VolunteerActivityUserView, DonationItemCategoriesView,
     DonationRequirementsView, UserDonationItemCreateView,
-    UserDonationItemModifyView)
+    UserDonationItemModifyView, PasswordChangeView)
 
 urlpatterns = patterns('',
 
@@ -87,6 +87,8 @@ urlpatterns = patterns('',
 
     url(r'^password-reset/request$', 'users.api_views.password_reset_request',
         name="api_password_reset_request"),
+    url(r'^password-change/$', PasswordChangeView.as_view(),
+        name="api_password_change"),
 
     url('^organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
