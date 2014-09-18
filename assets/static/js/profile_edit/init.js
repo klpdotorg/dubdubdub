@@ -33,6 +33,30 @@
                 e.preventDefault();
                 $('#userProfileForm').submit();
             });
+
+            $('#changePasswordForm').submit(function(e) {
+                if (e) {
+                    e.preventDefault();
+                }
+                var data = {
+                    'old_password': $('#oldPassword').val(),
+                    'new_password1': $('#newPassword1').val(),
+                    'new_password2': $('#newPassword2').val()
+                };
+
+                //FIXME: do validations
+                var passXHR = klp.api.authDo("password-change/", data, "POST");
+                passXHR.done(function(response) {
+                    console.log("success", response);
+                });
+                passXHR.fail(function(err) {
+                    console.log("error updating pass", err);
+                });
+            });
+
+            $('#submitPassword').click(function(e) {
+                $('#changePasswordForm').submit();
+            });
         });
     };
 })();
