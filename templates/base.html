@@ -23,6 +23,8 @@
 	<script type="text/javascript" src="{% static 'js/lib/underscore-min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/select2-3.5.1/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
@@ -69,21 +71,9 @@
 			    	<a href="/">Home</a><span></span>
 			    	<a href="">{{ page_title }}</a>
 			    </div>
+                
+                {% include 'includes/_profile_options.html' %}
 
-                <div class="profile-options-wrapper fr">
-                    <div class="profile-options" id="authUsername" data-state="anonymous">Login / Signup</div>
-                    <ul class="options-list">
-                        <li>
-                            <a href="#">Account</a>
-                        </li>
-                        <li>
-                            <a href="#">Privacy</a>
-                        </li>
-                        <li>
-                            <a href="#" id="logoutUser">Logout</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="clr"></div>
 			</div>
 		</div>

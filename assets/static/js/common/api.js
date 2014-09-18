@@ -47,9 +47,11 @@
                 alert("error: attempted to make authenticated request without token.");
                 return;               
             }
+            if (!data) {
+                data = {};
+            }
             if (!method) {
-                alert("error: attempted to call authDo without specfying method");
-                return;
+                method = 'GET';
             }
             var url = base + endpoint;
             var $xhr = $.ajax({

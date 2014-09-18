@@ -1,0 +1,39 @@
+{% verbatim %}
+<script type="text/html" id="tpl-volunteerActivity">
+    <div class="required pb-20">
+        <div class="fl phn-fn mt-5 mb-5">
+            <div class="font-20 color-red">{{ activity_type_details.name }}</div>
+            <span class="color-grey-light-2">For </span>
+            <span class="color-green-2 uppercase"> {{ organization_details.name }} </span>
+        </div>
+        <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
+            <a href="/schoolpage/school/{{ school_details.id }}" class="font-20 color-green">{{ school_details.name }}</a>
+            <br/>
+            {% if school_details.address_full %}
+            <div class="color-grey-light-2">{{ school_details.address_full }}</div>
+            {% endif %}
+        </div>
+        <div class="clr"></div>
+        <p class="mt-10 mb-10">
+            {{ text }}
+        </p>
+        <div class="fl phn-fn">
+            <div class="color-black bold">
+                Date:
+            </div>
+            <div class="font-16 color-blue bold">{{ date }}</div>
+        </div>
+        <a class="button fr mt-5 phn-fn phn-mt-10" href="#">Volunteer Now</a>
+        <div class="clr"></div>
+    </div>
+</script>
+
+<script type="text/html" id="tpl-emptyVolunteerActivities">
+    <div class="required pb-20">
+        <div class="no-data">
+            This organisation does not have any volunteer activities.
+        </div>
+        <div class="clr">
+    </div>
+</script>
+{% endverbatim %}
