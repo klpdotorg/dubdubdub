@@ -7,8 +7,8 @@ import json
 
 class Answer(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    story = models.ForeignKey('StoriesStory')
-    question = models.ForeignKey('StoriesQuestion')
+    story = models.ForeignKey('Story')
+    question = models.ForeignKey('Question')
     text = models.TextField()
 
     class Meta:
@@ -20,10 +20,10 @@ class Question(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     text = models.TextField()
     data_type = models.IntegerField()
-    question_type = models.ForeignKey('StoriesQuestiontype')
+    question_type = models.ForeignKey('QuestionType')
     options = models.TextField(blank=True)
     is_active = models.BooleanField()
-    school_type = models.ForeignKey('BoundaryType', db_column='school_type', blank=True, null=True)
+    school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
     qid = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -34,7 +34,7 @@ class Question(models.Model):
 class Questiongroup(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     version = models.IntegerField()
-    source = models.ForeignKey('StoriesSource')
+    source = models.ForeignKey('Source')
 
     class Meta:
         managed = False
@@ -43,8 +43,8 @@ class Questiongroup(models.Model):
 
 class QuestiongroupQuestions(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    questiongroup = models.ForeignKey('StoriesQuestiongroup')
-    question = models.ForeignKey('StoriesQuestion')
+    questiongroup = models.ForeignKey('Questiongroup')
+    question = models.ForeignKey('Question')
     sequence = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -72,8 +72,8 @@ class Source(models.Model):
 
 class Story(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    user = models.ForeignKey('User', blank=True, null=True)
-    school = models.ForeignKey('School')
+    user = models.ForeignKey('users.User', blank=True, null=True)
+    school = models.ForeignKey('schools.School')
     group = models.ForeignKey('Questiongroup')
     is_verified = models.BooleanField()
     name = models.CharField(max_length=100, blank=True)
