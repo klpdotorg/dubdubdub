@@ -17,7 +17,7 @@
 			<h1 class="bordered blue">Manage Organisation</h1>
 
 			<div class="font-20">
-				Editing <span class="color-green-2"> {{ object.name }}</span>
+				Editing <span class="color-green-2" id="displayOrgName"> {{ object.name }}</span>
 			</div>
 
 			<ul class="tabs phn-hide">
@@ -37,37 +37,39 @@
 			<div class="tab-heading">Edit Details</div>
 			<div class="tab-content container current" data-tab="details">
 				<div class="grid_6 alpha">
-					<form class="edit-profile-form">
+					<form class="edit-profile-form" id="orgForm">
 						<div class="mb-30">
 							<label class="block bold mb-5">Name</label>
-							<input class="input error" type="text">
-							<div class="error-message mt-5">Please enter correct name.</div>
+							<input class="input" data-required="true" id="orgName" type="text">
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">
 								URL
 								<span class="color-grey-light">(optional)</span>
 							</label>
-							<input class="input" type="text">
+							<input class="input" id="orgURL" type="text">
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">Email</label>
-							<input class="input" type="text">
+							<input class="input" data-required="true" id="orgEmail" type="text">
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">Contact Person</label>
-							<input class="input" type="text">
+							<input class="input" id="orgContactName" type="text">
 						</div>
+						<!--
 						<div class="mb-30">
 							<label class="block bold mb-5">Address</label>
-							<textarea class="input textarea"></textarea>
+							<textarea class="input textarea" id="orgAddress"></textarea>
 						</div>
+						-->
 						<div class="ta-c">
-							<a class="button blue mt-30 phn-mt-10" href="#">Submit</a>
+							<a class="button blue mt-30 phn-mt-10" href="#" id="submitBtn">Submit</a>
 						</div>
 					</form>
 				</div>
 				<div class="grid_6 omega">
+					<!--
 					<form class="edit-profile-form grey-bg ma">
 						<div class="pad-30">
 							<div class="edit-img">
@@ -80,6 +82,7 @@
 							</div>
 						</div>
 					</form>
+					-->
 				</div>
 				<div class="clr"></div>
 			</div>	<!-- Details Tab END -->
