@@ -84,15 +84,12 @@
         </table>
     </div>
     <div class="photos-block fr-desktop">
+        {% if images.length > 0 %}
         <h4>Photos</h4>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
-        <a href=""><img src="images/map_photo.jpg" alt=""></a>
+            {% for image in images %}
+            <a href="{{ image }}" class="gallery"><img src="{{ image }}" alt=""></a>
+            {% endfor %}
+        {% endif %}
         <div class="clr"></div>
     </div>
     <div class="clr"></div>
