@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 from schools.views import SchoolPageView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationPageView,
@@ -86,10 +86,10 @@ urlpatterns = patterns('',
     url(r'^profile/(?P<pk>[0-9]*)$', ProfilePageView.as_view(), name='profile_page'),
 
     url(r'^organisation/(?P<pk>[0-9]*)$', OrganizationPageView.as_view(), name='organization_page'),
-    
-    url(r'^profile/(?P<pk>[0-9]*)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),    
 
-    url(r'^organisation/(?P<pk>[0-9]*)/edit$', OrganizationEditPageView.as_view(), name='organization_edit_page'),    
+    url(r'^profile/(?P<pk>[0-9]*)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),
+
+    url(r'^organisation/(?P<pk>[0-9]*)/edit$', OrganizationEditPageView.as_view(), name='organization_edit_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {
@@ -100,8 +100,8 @@ urlpatterns = patterns('',
         },
         name='password_reset_complete'),
 
-    # url(r'^admin/', include(admin.site.urls)),
-    # url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^api/v1/', include('dubdubdub.api_urls')),
     url(r'^api-docs/', include('rest_framework_swagger.urls'))

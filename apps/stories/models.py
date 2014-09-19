@@ -26,6 +26,9 @@ class Question(models.Model):
     school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
     qid = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return ' - '.join([self.text, self.question_type.name])
+
     class Meta:
         managed = False
         db_table = 'stories_question'
@@ -55,6 +58,9 @@ class QuestiongroupQuestions(models.Model):
 class QuestionType(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     name = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         managed = False
