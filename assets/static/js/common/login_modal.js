@@ -48,10 +48,7 @@
                 'password': $('#signupPassword')                
             };
 
-            var data = {};
-            _(_(fields).keys()).each(function(key) {
-                data[key] = fields[key].val();
-            });
+            var data = klp.utils.getFormData(fields);
             
             klp.utils.startSubmit(formID);
             var signupXHR = klp.api.signup(data);
@@ -59,6 +56,7 @@
             signupXHR.done(function(userData) {
                 klp.utils.stopSubmit(formID);           
                 klp.auth.loginUser(userData);
+                klp.utils.alertMessage("Thanks for signing up!", "success");
                 if (postLoginCallback) {
                     postLoginCallback();
                 }
@@ -74,11 +72,7 @@
                     var $field = fields.email;
                     klp.utils.invalidateField($field, "This email address already exists.");
                 } else {
-                    _(_(errors).keys()).each(function(errorKey) {
-                        var errorMsg = errors[errorKey];
-                        var $field = fields[errorKey];
-                        klp.utils.invalidateField($field, errorMsg);
-                    });
+                    klp.utils.invalidateErrors(fields, errors);
                 }
                 //alert("error signing up");
             });
@@ -102,6 +96,7 @@
                 klp.utils.stopSubmit(formID);
                 userData.email = data.email;
                 klp.auth.loginUser(userData);
+                klp.utils.alertMessage("Logged in successfully!", "success");
                 if (postLoginCallback) {
                     postLoginCallback();
                 }

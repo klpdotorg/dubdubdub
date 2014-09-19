@@ -21,7 +21,7 @@
 					<form class="edit-profile-form" id="userProfileForm">
 						<div class="mb-30">
 							<label class="block bold mb-5">First Name</label>
-							<input class="input" id="firstName" type="text">
+							<input class="input" id="firstName" data-required="true" type="text">
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">Last Name</label>
@@ -29,11 +29,11 @@
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">Email</label>
-							<input class="input" id="email" type="text">
+							<input class="input" id="email" data-required="true" type="text">
 						</div>
 						<div class="mb-30">
 							<label class="block bold mb-5">Mobile</label>
-							<input class="input" id="mobileNo" type="text">
+							<input class="input" id="mobileNo" data-required="true" type="text">
 						</div>
 						<!--
 						<div class="mb-30">
@@ -74,15 +74,15 @@
 							<h2 class="tile-head blue mb-30">Change password</h2>
 							<div class="mb-30">
 								<label class="block bold mb-5">Old Password</label>
-								<input class="input" id="oldPassword" type="Password">
+								<input class="input" id="oldPassword" type="Password" data-required="true">
 							</div>							
 							<div class="mb-30">
 								<label class="block bold mb-5">New Password</label>
-								<input class="input" id="newPassword1" type="Password">
+								<input class="input" id="newPassword1" type="Password" data-required="true">
 							</div>
 							<div class="mb-30">
 								<label class="block bold mb-5">Confirm New Password</label>
-								<input class="input" id="newPassword2" type="Password">
+								<input class="input" id="newPassword2" type="Password" data-required="true">
 							</div>
 							<div class="ta-c">
 								<a class="button blue mt-30 phn-mt-10" id="submitPassword" href="#">Submit</a>

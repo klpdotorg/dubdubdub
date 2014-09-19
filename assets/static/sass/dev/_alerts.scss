@@ -1,0 +1,28 @@
+.alert {
+    position: fixed;
+    top: 0px;
+    left: 20%;
+    right: 20%;
+    z-index: 9999;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 0px 0px 20px 20px;
+    background-color: yellow;
+    text-align: center;
+    font-weight: bold;
+}
+
+.alert.success {
+    background-color: green;
+    color: white;
+}
+
+.alert.warning {
+    background-color: orange;
+    color: white;
+}
+
+.alert.error {
+    background-color: red;
+    color: white;
+}
