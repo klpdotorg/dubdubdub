@@ -22,7 +22,7 @@ class Question(models.Model):
     data_type = models.IntegerField()
     question_type = models.ForeignKey('QuestionType')
     options = models.TextField(blank=True)
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
     qid = models.IntegerField(blank=True, null=True)
 
@@ -75,7 +75,7 @@ class Story(models.Model):
     user = models.ForeignKey('users.User', blank=True, null=True)
     school = models.ForeignKey('schools.School')
     group = models.ForeignKey('Questiongroup')
-    is_verified = models.BooleanField()
+    is_verified = models.BooleanField(default=False)
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
     date = models.CharField(max_length=50, blank=True)
@@ -93,7 +93,7 @@ class StoryImage(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     story = models.ForeignKey('Story')
     image = models.CharField(max_length=100)
-    is_verified = models.BooleanField()
+    is_verified = models.BooleanField(default=False)
     filename = models.CharField(max_length=50, blank=True)
 
     class Meta:
