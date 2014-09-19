@@ -86,6 +86,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_token(self):
         return Token.objects.get(user=self).key
 
+    def get_short_name(self):
+        return self.first_name or self.username
+
+    @property
+    def is_staff(self):
+        return self.is_superuser
+
     def __unicode__(self):
         return self.email
 
