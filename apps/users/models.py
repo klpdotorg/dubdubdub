@@ -181,6 +181,8 @@ class VolunteerActivity(models.Model):
     text = models.TextField(blank=True)
     users = models.ManyToManyField('User', through='UserVolunteerActivity')
 
+    def get_geometry(self):
+        return self.school.get_geometry()
 
 # class DonorRequirement(models.Model):
 #     organization = models.ForeignKey('Organization')

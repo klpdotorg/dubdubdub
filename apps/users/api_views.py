@@ -230,7 +230,6 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
 
 class VolunteerActivitiesView(generics.ListCreateAPIView):
     serializer_class = VolunteerActivitySerializer
-    paginate_by = 50
     permission_classes = (VolunteerActivitiesPermission,)
     filter_class = VolunteerActivityFilter
 
