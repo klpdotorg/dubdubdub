@@ -258,6 +258,8 @@ TESTS_SCHOOLS_INPUT = {
 'SCHOOL_INFRA_ID' : '24594',
 }
 
+IMAGE_URL_BASE = 'http://www.klp.org.in/uploaded_images/school_pics_hash/{}'
+
 try:
     from local_settings import *
 except ImportError:

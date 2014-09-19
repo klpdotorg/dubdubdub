@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
+from stories.models import StoryImage
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from .partners import LibLevelAgg
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
+from django.conf import settings
 import json
 
 
@@ -192,6 +194,13 @@ class School(GeoBaseModel):
             return self.electedrep.ward
         except:
             return None
+
+    def get_images(self):
+        images = []
+        for story in self.story_set.filter(is_verified=True):
+            for image in story.storyimage_set.filter(is_verified=True):
+                images.append(settings.IMAGE_URL_BASE.format(image.image))
+        return images
 
     def get_basic_facilities(self):
         facilities = {
