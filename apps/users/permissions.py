@@ -100,12 +100,13 @@ class VolunteerActivitiesPermission(permissions.BasePermission):
         #Anyone can see the list of volunteer activities
         if request.method in permissions.SAFE_METHODS:
             return True
-        post_data = request.POST
+        post_data = request.DATA
         org_id = post_data.get('organization', None)
 
+        #import pdb;pdb.set_trace()
         #FIXME: raise better error if org_id is invalid / missing
         try:
-            organization = Organization.objects.get(pk=org_id)
+            organization = Organization.objects.get(pk=int(org_id))
         except:
             raise APIException("organization not specified or not found")
         #If user has write perms on org, allow him / her to create

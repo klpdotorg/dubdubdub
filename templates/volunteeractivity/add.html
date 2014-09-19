@@ -1,0 +1,9 @@
+{% extends 'volunteeractivity/form_base.html' %}
+{% load static %}
+
+{% block endbody_extra %}
+    <script>
+        ORGANIZATION_ID = {{ object.id }};
+    </script>
+    <script src="{% static 'js/volunteer_add/init.js' %}"></script>
+{% endblock %}

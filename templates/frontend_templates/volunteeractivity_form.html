@@ -1,0 +1,20 @@
+{% verbatim %}
+<script type="text/html" id="tpl-activityDetails">
+    <div class="fl">
+        <div class="font-20 color-red">{{ activity_type_details.name }}</div>
+        <div>
+            <span class="color-grey-light-2">For </span>
+            <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
+        </div>
+    </div>
+    <div class="fr ta-r">
+        <div class="font-20 color-green">{{ school_details.name }}</div>
+        {% if school_details.address_full %}
+            <div>{{ school_details.address_full }}</div>
+        {% endif %}
+    </div>
+    <div class="clr"></div>
+</script>
+
+
+{% endverbatim %}
