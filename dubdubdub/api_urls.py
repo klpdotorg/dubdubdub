@@ -20,6 +20,8 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationItemsView, DonationItemView,
     DonationUsersView, DonationUserView)
 
+from stories.api_views import (StoryQuestionsView)
+
 urlpatterns = patterns('',
 
     # Caches the results of the url for 60 seconds
@@ -90,6 +92,10 @@ urlpatterns = patterns('',
         name="api_password_reset_request"),
     url(r'^password-change/$', PasswordChangeView.as_view(),
         name="api_password_change"),
+
+    # SYS urls
+    url(r'^stories/(?P<pk>[0-9]+)/questions$', StoryQuestionsView.as_view(),
+        name="api_stories_questions"),
 
     url('^organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
