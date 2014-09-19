@@ -5,6 +5,7 @@ from .models import User, Organization, UserOrganization, VolunteerActivity,\
     DonationItem, UserDonationItem, DonationItemCategory
 from schools.serializers import SchoolListSerializer
 from django.contrib.auth import login, authenticate, logout
+from common.serializers import KLPSerializer
 
 
 class OrganizationBasicSerializer(serializers.ModelSerializer):
@@ -51,7 +52,7 @@ class UserVolunteerActivitySerializer(serializers.ModelSerializer):
         model = UserVolunteerActivity
 
 
-class VolunteerActivitySerializer(serializers.ModelSerializer):
+class VolunteerActivitySerializer(KLPSerializer):
     organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
@@ -69,6 +70,7 @@ class VolunteerActivitySerializer(serializers.ModelSerializer):
         read_only=True,
         source='type'
     )
+    
     class Meta:
         model = VolunteerActivity
         #exclude = ('users',)

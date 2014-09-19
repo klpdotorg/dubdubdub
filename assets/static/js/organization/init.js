@@ -26,11 +26,12 @@
         if (!loggedInId) {
             return false;
         }
+        var isAdmin = false;
         _(users).each(function(u) {
             if (u.user_details.id === parseInt(loggedInId)) {
-                return true;
+                isAdmin = true;
             }
         });
-        return false;
+        return isAdmin;
     }
 })();

@@ -21,6 +21,7 @@
                     return data;
                 },
                 onRender: function(data) {
+                    $('a.gallery').colorbox();
                     console.log("post render info");
                 }
             },
