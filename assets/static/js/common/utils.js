@@ -189,6 +189,48 @@
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').show();
             $form.find('.js-submit-loading').hide();            
+        },
+
+        schoolSelect2: function($elem, options) {
+            $elem.select2({
+                placeholder: 'Search for schools...',
+                minimumInputLength: 3,
+                quietMillis: 300,
+                allowClear: true,
+                initSelection: function(element, callback) {
+                    var id = $(element).val();
+                    if (id !== '') {
+                        var url = "schools/school/" + id;
+                        var $xhr = klp.api.do(url);
+                        $xhr.done(function(response) {
+                            callback({
+                                'id': response.id,
+                                'name': response.name
+                            })
+                        });
+                    }
+                },
+                ajax: {
+                    url: "/api/v1/schools/info",
+                    quietMillis: 300,
+                    allowClear: true,
+                    data: function (term, page) {
+                        return {
+                            search: term
+                        };
+                    },
+                    results: function (data, page) {
+                        //console.log("data", data);
+                        return {results: data.features};
+                    }
+                },
+                formatResult: function(item) {
+                    return item.name;
+                },
+                formatSelection: function(item) {
+                    return item.name;
+                }
+            });
         }
     };
 

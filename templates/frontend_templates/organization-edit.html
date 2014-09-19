@@ -7,10 +7,12 @@
         </td>
         <td>
             <div class="color-green bold">{{ school_details.name }}</div>
+            {% if school_details.address_full %}
             <div class="color-grey-light-2 mt-5">{{ school_details.address_full }}</div>
+            {% endif %}
         </td>
         <td>
-            <a href="/volunteer/{{ id }}/edit" class="font-14 color-blue">{{ users.length }} volunteers</a>
+            <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="font-14 color-blue">{{ users.length }} volunteers</a>
         </td>
         <td class="ta-r">
             <!--
@@ -32,7 +34,7 @@
                 </ul>
             </div>
             -->
-            <a href="/volunteer/{{ id }}/edit" class="button-hollow fr mt-0 mr-10">Edit</a>
+            <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="button-hollow fr mt-0 mr-10">Edit</a>
             <div class="clr"></div>
         </td>
     </tr>

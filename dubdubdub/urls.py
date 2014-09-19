@@ -5,7 +5,9 @@ from django.views.generic import TemplateView
 from schools.views import SchoolPageView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationPageView,
-                         ProfileEditPageView, OrganizationEditPageView)
+                         ProfileEditPageView, OrganizationEditPageView,
+                         VolunteerActivityAddPageView,
+                         VolunteerActivityEditPageView)
 
 urlpatterns = patterns('',
 
@@ -89,7 +91,17 @@ urlpatterns = patterns('',
     
     url(r'^profile/(?P<pk>[0-9]*)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),    
 
-    url(r'^organisation/(?P<pk>[0-9]*)/edit$', OrganizationEditPageView.as_view(), name='organization_edit_page'),    
+    url(r'^organisation/(?P<pk>[0-9]*)/edit$',
+        OrganizationEditPageView.as_view(),
+        name='organization_edit_page'),
+
+    url(r'^organisation/(?P<pk>[0-9]*)/volunteer_activity$',
+        VolunteerActivityAddPageView.as_view(),
+        name='volunteeractivity_add_page'),
+
+    url(r'^organisation/(?P<org_pk>[0-9]*)/volunteer_activity/(?P<pk>[0-9]*)$',
+        VolunteerActivityEditPageView.as_view(),
+        name='volunteeractivity_edit_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {
