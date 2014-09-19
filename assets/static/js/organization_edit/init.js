@@ -42,6 +42,13 @@
                 e.preventDefault();
                 $('#' + formID).submit();
             });
+
+            var tplVolunteerOpportunity = swig.compile($('#tpl-volunteerOpportunity').html());
+            _(data.volunteer_activities).each(function(v) {
+                var html = tplVolunteerOpportunity(v);
+                $('#volunteerTable').append(html);
+            });
+            
         });
     };
 })();

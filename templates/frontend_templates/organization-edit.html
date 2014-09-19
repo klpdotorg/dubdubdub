@@ -1,0 +1,42 @@
+{% verbatim %}
+<script type="text/html" id="tpl-volunteerOpportunity">
+    <tr>
+        <td>
+            <div class="color-red bold">{{ activity_type_details.name }}</div>
+            <div class="color-grey-light-2 mt-5">{{ text }}</div>
+        </td>
+        <td>
+            <div class="color-green bold">{{ school_details.name }}</div>
+            <div class="color-grey-light-2 mt-5">{{ school_details.address_full }}</div>
+        </td>
+        <td>
+            <a href="/volunteer/{{ id }}/edit" class="font-14 color-blue">{{ users.length }} volunteers</a>
+        </td>
+        <td class="ta-r">
+            <!--
+            <div class="action-dropdown fr">
+                <a href="#" class="dropdown-trigger small"></a>
+                <ul class="action-dropdown-list ta-l">
+                    <li>
+                        <a href="#">Option 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 3</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 4</a>
+                    </li>
+                </ul>
+            </div>
+            -->
+            <a href="/volunteer/{{ id }}/edit" class="button-hollow fr mt-0 mr-10">Edit</a>
+            <div class="clr"></div>
+        </td>
+    </tr>
+</script>
+
+
+{% endverbatim %}
