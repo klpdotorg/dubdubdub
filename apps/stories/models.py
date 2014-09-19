@@ -6,10 +6,12 @@ import json
 
 
 class Answer(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     story = models.ForeignKey('Story')
     question = models.ForeignKey('Question')
     text = models.TextField()
+
+    def __unicode__(self):
+        return ' - '.join([self.story.name, self.question.text, self.text])
 
     class Meta:
         managed = False
@@ -17,7 +19,6 @@ class Answer(models.Model):
 
 
 class Question(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     text = models.TextField()
     data_type = models.IntegerField()
     question_type = models.ForeignKey('QuestionType')
@@ -35,7 +36,6 @@ class Question(models.Model):
 
 
 class Questiongroup(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     version = models.IntegerField()
     source = models.ForeignKey('Source')
 
@@ -45,7 +45,6 @@ class Questiongroup(models.Model):
 
 
 class QuestiongroupQuestions(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     questiongroup = models.ForeignKey('Questiongroup')
     question = models.ForeignKey('Question')
     sequence = models.IntegerField(blank=True, null=True)
@@ -56,7 +55,6 @@ class QuestiongroupQuestions(models.Model):
 
 
 class QuestionType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     name = models.CharField(max_length=64)
 
     def __unicode__(self):
@@ -68,7 +66,6 @@ class QuestionType(models.Model):
 
 
 class Source(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     name = models.CharField(max_length=64)
 
     class Meta:
@@ -77,7 +74,6 @@ class Source(models.Model):
 
 
 class Story(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     user = models.ForeignKey('users.User', blank=True, null=True)
     school = models.ForeignKey('schools.School')
     group = models.ForeignKey('Questiongroup')
@@ -96,7 +92,6 @@ class Story(models.Model):
 
 
 class StoryImage(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
     story = models.ForeignKey('Story')
     image = models.CharField(max_length=100)
     is_verified = models.BooleanField(default=False)
