@@ -281,6 +281,10 @@
         $mobile_details_wrapper.on("click", ".js-close-details", function(e) {
             e.preventDefault();
             $mobile_details_wrapper.removeClass("show");
+            klp.router.setHash(null, {marker: null});
+            document.title = 'School Map';
+
+
         });
 
         // $('input').iCheck({
@@ -703,9 +707,8 @@
 
         // Close the popup on mobile when clicked elesewhere on the map.
         if (isMobile) {
-            var $mobilePopup = $('.mobile-details-wrapper');
             map.on('click', function() {
-                $mobilePopup.removeClass('show');
+                $('.js-close-details').trigger('click');
             });
         }
 
