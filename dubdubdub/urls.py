@@ -38,6 +38,10 @@ urlpatterns = patterns('',
         template_name='reports.html'
         ), name='reports'),
 
+    #data page
+    url(r'^text/data$', StaticPageView.as_view(
+        template_name='data.html'
+        ), name='data'),
 
     #programme pages
     url(r'^text/reading$', StaticPageView.as_view(
