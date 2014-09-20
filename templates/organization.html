@@ -5,6 +5,8 @@
 {% block endbody %}
     <script type="text/javascript" src="/static/js/lib/jquery.easydropdown.min.js"></script>
     <script type="text/javascript" src="{% static 'js/organization/init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/common/volunteer_here.js' %}"></script>
+
     <script>
     	ORGANIZATION_ID = {{ object.id }};
     </script>
@@ -163,7 +165,8 @@
 		</div>
 	</section>
 	{% include 'frontend_templates/organization.html' %}
-	
+	{% include 'frontend_templates/volunteer_here.html' %}
+
 	<script type="text/javascript">
 
 		function init_tabs(){
