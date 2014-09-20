@@ -309,15 +309,22 @@ class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
         Only volunteer user can delete.
     '''
     serializer_class = UserVolunteerActivitySerializer
-    permission_classes = (UserVolunteerActivityPermission,)
+    #permission_classes = (UserVolunteerActivityPermission,)
 
     def update(self, request, *args, **kwargs):
+        #import pdb;pdb.set_trace()
         if kwargs['partial'] is not True:
             raise MethodNotAllowed("Use PATCH to change status")
         return super(VolunteerActivityUserView, self).update(request,
                                                              *args, **kwargs)
 
+    # @classmethod
+    # def as_view(*args, **kwargs):
+    #     import pdb;pdb.set_trace()
+
+
     def get_object(self):
+        #import pdb;pdb.set_trace()
         activity_id = self.kwargs['activity_pk']
         user_id = self.kwargs['user_pk']
         return get_object_or_404(UserVolunteerActivity, user=user_id,

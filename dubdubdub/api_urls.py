@@ -86,7 +86,7 @@ urlpatterns = patterns('',
     url('^users/logout$', 'users.api_views.logout', name='api_user_logout'),
     url('^users/test_authenticated', TestAuthenticatedView.as_view(),
         name='api_test_authenticated'),
-    url('users/(?P<pk>[0-9]+)$', OtherUserProfileView.as_view(), name='api_other_user_profile'),
+    url('^users/(?P<pk>[0-9]+)$', OtherUserProfileView.as_view(), name='api_other_user_profile'),
 
     url(r'^password-reset/request$', 'users.api_views.password_reset_request',
         name="api_password_reset_request"),

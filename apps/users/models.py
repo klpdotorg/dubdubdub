@@ -234,6 +234,9 @@ class DonationItemCategory(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Donation item categories"
+
 
 class DonationItem(models.Model):
     requirement = models.ForeignKey('DonationRequirement', related_name='items')
