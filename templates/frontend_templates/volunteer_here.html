@@ -1,0 +1,35 @@
+{% verbatim %}
+<script type="text/html" id="tpl-volunteerHereModal">
+    <div class="modal volunteer-flow modal-volunteer second-step js-volunteerHereModal">
+        <a class="button-close btn-modal-close"></a>
+        <div class="content">
+            <h2 class="modal-heading">Volunteer</h2>
+            <div class="steps-wrapper">
+                <div class="step-item" data-step-name="submit">
+                    <div class="step-submit ta-c">
+                        <h3 class="bordered-heading blue">{{ activity_type_details.name }}<span></span></h3>
+                        <div class="address en-school">
+                            <div class="en-icon bigger en-school">s</div>
+                            <div class="name">{{ school_details.name }}</div>
+                            <div class="details">
+                                {{ school_details.address_full }}
+                            </div>
+                        </div>
+                        <div class="date">
+                            <div class="icon-cal"></div>
+                            <div class="value">{{ date }}</div>
+                        </div>
+                        <div class="message">
+                            Thank You  for Volunteering.
+                            <div class="text">You will soon receive a confirmation email and sms.</div>
+                        </div>
+                        <div class="mar_top_40">
+                            <a class="button blue btn-modal-close">Close</a>
+                        </div>
+                    </div>
+                </div> <!-- Step End -->
+            </div>
+        </div>
+    </div>
+</script>
+{% endverbatim %}

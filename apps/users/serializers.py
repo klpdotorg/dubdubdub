@@ -42,13 +42,35 @@ class OrganizationUserSerializer(serializers.ModelSerializer):
         model = UserOrganization
 
 
+class VolunteerActivityBasicSerializer(serializers.ModelSerializer):
+    organization_details = OrganizationBasicSerializer(
+        source='organization',
+        read_only=True
+    )
+    school_details = SchoolListSerializer(
+        source='school',
+        read_only=True
+    )
+    activity_type_details = VolunteerActivityTypeSerializer(
+        read_only=True,
+        source='type'
+    )
+    
+    class Meta:
+        model = VolunteerActivity
+
+
 class UserVolunteerActivitySerializer(serializers.ModelSerializer):
     user_details = UserBasicSerializer(
         source='user',
         read_only=True
     )
+    activity_details = VolunteerActivityBasicSerializer(
+        source='activity',
+        read_only=True
+    )
     class Meta:
-        fields = ('user', 'status', 'user_details',)
+        fields = ('status', 'user_details', 'activity_details',)
         model = UserVolunteerActivity
 
 

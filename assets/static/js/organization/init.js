@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.volunteer_here.init();
         var $orgXHR = klp.api.do("organizations/" + ORGANIZATION_ID);
         var tplVolunteer = swig.compile($('#tpl-volunteerActivity').html());
         $orgXHR.done(function(data) {
