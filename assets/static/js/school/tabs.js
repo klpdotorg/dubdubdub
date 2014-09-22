@@ -101,6 +101,12 @@
                     return data;
                 },
                 onRender: function(data) {
+                    if (data.years.length === 0 || data.klasses.length === 0 || data.levels.length === 0) {
+                        $(".options-wrapper").addClass('hide');
+                        $("#graph_library").addClass('hide');
+                        $('.no-data').removeClass('hide');
+                        return;
+                    }
                     $(".apply-selectboxit").selectBoxIt();
                     var $selectLibraryParam = $("#select_library_browse");
                     var $selectLibraryYear = $("#select_library_year");
