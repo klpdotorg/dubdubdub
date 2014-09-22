@@ -224,6 +224,15 @@
                     //FIXME: replace with real SYS end-point
                     return klp.api.do(schoolInfoURL);
                 }
+            },
+            'volunteer': {
+                getData: function() {
+                    var url = "volunteer_activities";
+                    var params = {
+                        school: SCHOOL_ID
+                    };
+                    return klp.api.do(url, params);
+                }
             }
 
         };
