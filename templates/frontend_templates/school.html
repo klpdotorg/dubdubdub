@@ -201,11 +201,11 @@
     <h4>Infrastructure</h4>
 
     <table class="infra_data_table mar_btm_25 fl-desktop">
-        {% for title, facilities in dise_facility %}
+        {% for title, facs in facilities %}
         <tr>
             <td>{{ title }}</td>
             <td>
-                {% for key, value in facilities %}
+                {% for key, value in facs %}
                 <div class="{% if value %}green{% else %}red{% endif %}">
                     {{ key }}
                 </div>
