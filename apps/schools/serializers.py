@@ -118,11 +118,17 @@ class SchoolProgrammesSerializer(KLPSerializer):
 
 
 class SchoolNutritionSerializer(KLPSerializer):
+    num_boys_dise = serializers.IntegerField(source='dise_info.boys_count')
+    num_girls_dise = serializers.IntegerField(source='dise_info.girls_count')
+    num_boys = serializers.IntegerField(source='schooldetails.num_boys')
+    num_girls = serializers.IntegerField(source='schooldetails.num_girls')
+
     mdm_agg = serializers.SerializerMethodField('get_mdm_agg')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'mdm_agg')
+        fields = ('id', 'name', 'num_boys_dise', 'num_girls_dise', 'num_boys',
+            'num_girls', 'mdm_agg')
 
     def get_mdm_agg(self, obj):
         return obj.mdmagg_set.all().values()
