@@ -193,7 +193,7 @@
     };
     var show_options_dropdown_right = function(e){
         e.preventDefault();
-        $dropdown_wrapper.toggleClass("show");
+        $dropdown_wrapper.addClass("show");
     };
 
     var init = function(){
