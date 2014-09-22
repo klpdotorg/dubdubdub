@@ -2,12 +2,15 @@
 <script type="text/html" id="tpl-userVolunteerActivity">
     <div class="column-sections mt-30 mb-30 pb-15">
         <div class="column-content mb-10">
-            <a class="desc-title green" href="/schoolpage/school/{{ activity.school_details.id }}">{{ activity.school_details.name }}</a><!-- in <span class="desc-title">Malleswaram, Bangalore</span> -->
+            <a class="desc-title green" href="/schoolpage/school/{{ activity.school_details.id }}">{{ activity.school_details.name }}</a> 
+                {% if activity.school_details.address_full %}
+                    in <span class="desc-title">Malleswaram, Bangalore</span>
+                {% endif %}
         </div>
         <div class="mb-10">
             For <a class="uppercase color-green-2" href="/organisation/{{ activity.organization_details.id }}">{{ activity.organization_details.name }}</a>
         </div>
-        <div class="color-grey-light fl">{{ activity.date }}</div>
+        <div class="color-grey-light fl">{{ activity.date|date('jS F, Y') }}</div>
         {% if status == 1 %}
         <div class="verified color-green uppercase bold fr">Verified</div>
         {% endif %}

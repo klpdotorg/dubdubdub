@@ -185,9 +185,9 @@
         if(e){
             e.preventDefault();
         }
-
         $comparison_option_right.hide();
         $comparison_default_right.show();
+        $dropdown_wrapper.removeClass("show");
         entityTwo = entityTwoXHR = null;
         reset_submit_button();
     };
