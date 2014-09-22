@@ -47,6 +47,23 @@
             'finances': {
                 getData: function() {
                     return klp.api.do(schoolInfoURL + '/finance');
+                },
+                getContext: function(data) {
+                    data.sg_amount = data.sg_amount ? data.sg_amount : 0;
+                    data.smg_amount = data.smg_amount ? data.smg_amount : 0;
+                    data.tlm_amount = data.tlm_amount ? data.tlm_amount : 0;
+                    data.total_amount = data.sg_amount + data.smg_amount + data.tlm_amount;
+                    return data;
+                },
+                onRender: function(data) {
+                    var container_width = $(document).find(".container:first").width();
+                    var chartData = klp.utils.getFinancePercents(data);
+                    var chartOptions = {
+                        width: container_width,
+                        height: 200,
+                        innerSize: '60%'
+                    }; 
+                    $('#pie_chart_finance').financeChart(chartData, chartOptions);
                 }
             },
             'infrastructure': {

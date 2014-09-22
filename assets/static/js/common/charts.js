@@ -84,7 +84,7 @@
             plotOptions: {
                 pie: {
                     dataLabels: {
-                        enabled: false
+                        enabled: true
                     },
                     startAngle: 0,
                     endAngle: 360,

@@ -186,15 +186,15 @@
     </table>
 
     <p>
-        This school with 3 classrooms or fewer has 3 teachers as per DISE sources.<br/>
-        It is known to receive a total annual SSA grant of ₹ 13,500.
+        {% if classroom_count > 3 %}
+        This school with more than 3 classrooms has 
+        {% else %}
+        This school with 3 classrooms or fewer has
+        {% endif %}
+        {{ teacher_count }} teachers as per DISE sources.<br/>
+        It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
     </p>
 
-    <div class="top_bordered_block">
-        <p>
-            Directly access this page from here <a href=""><b>http://klp.org.in/schoolpage/school/33175?tab=finances</b></a>
-        </p>
-    </div>
 </script>
 
 <script type="text/html" id="tpl-tab-infrastructure">
