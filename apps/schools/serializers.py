@@ -142,25 +142,25 @@ class SchoolInfraSerializer(KLPSerializer):
     dise_books = serializers.IntegerField(source='dise_info.books_in_library')
 
     dise_rte = serializers.CharField(source='dise_info.get_rte_details')
-    dise_facility = serializers.CharField(source='dise_info.get_facility_details')
+    facilities = serializers.CharField(source='dise_info.get_facility_details')
 
     class Meta:
         model = School
         fields = ('id', 'name', 'dise_info', 'num_boys_dise',
             'num_girls_dise', 'num_boys', 'num_girls', 'classroom_count', 'lowest_class',
             'highest_class', 'status', 'teacher_count',
-            'dise_books', 'dise_rte', 'dise_facility')
+            'dise_books', 'dise_rte', 'facilities')
 
 
 class PrechoolInfraSerializer(KLPSerializer):
     num_boys = serializers.IntegerField(source='schooldetails.num_boys')
     num_girls = serializers.IntegerField(source='schooldetails.num_girls')
 
-    ang_facility = serializers.SerializerMethodField('get_ang_facility_details')
+    facilities = serializers.SerializerMethodField('get_ang_facility_details')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'num_boys', 'num_girls', 'ang_facility')
+        fields = ('id', 'name', 'num_boys', 'num_girls', 'facilities')
 
     def get_ang_facility_details(self, obj):
         data = {}
