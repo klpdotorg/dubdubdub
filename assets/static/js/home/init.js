@@ -12,6 +12,15 @@
             processRequest(data.feed);
         });
 
+        //get and show SYS info
+        var url = "stories/info/";
+        var sysXHR = klp.api.do(url);
+        var tplSysInfo = swig.compile($('#tpl-sysInfo').html());
+        sysXHR.done(function(data) {
+            var html = tplSysInfo(data);
+            $('#sysinfo').html(html);
+        });
+
     };
 
     var months = new Array("Nothing","Jan","Feb","March","April","May","June","July","Aug","Sept","Oct","Nov","Dec");
