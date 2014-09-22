@@ -20,7 +20,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationItemsView, DonationItemView,
     DonationUsersView, DonationUserView)
 
-from stories.api_views import (StoryQuestionsView)
+from stories.api_views import (StoryQuestionsView, StoriesView)
 
 urlpatterns = patterns('',
 
@@ -96,6 +96,8 @@ urlpatterns = patterns('',
     # SYS urls
     url(r'^stories/(?P<pk>[0-9]+)/questions$', StoryQuestionsView.as_view(),
         name="api_stories_questions"),
+    url(r'^stories/$', StoriesView.as_view(),
+        name="api_stories"),
 
     url('^organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
