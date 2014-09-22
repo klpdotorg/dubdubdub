@@ -201,11 +201,11 @@
     <h4>Infrastructure</h4>
 
     <table class="infra_data_table mar_btm_25 fl-desktop">
-        {% for title, facilities in dise_facility %}
+        {% for title, facs in facilities %}
         <tr>
             <td>{{ title }}</td>
             <td>
-                {% for key, value in facilities %}
+                {% for key, value in facs %}
                 <div class="{% if value %}green{% else %}red{% endif %}">
                     {{ key }}
                 </div>
@@ -527,37 +527,43 @@
 </script>
 
 <script type="text/html" id="tpl-tab-volunteer">
-    {% for f in features %}
-    <div class="required pb-20">
-        <div class="fl phn-fn mt-5 mb-5">
-            <a href="#" class="font-20 color-red">{{ f.activity_type_details.name }}</a>
-            <br/>
-            <span class="color-grey-light-2">For </span>
-            <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
-        </div>
-        <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-            <!-- 
-            <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
-            <br/>
-            <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
-            -->
-        </div>
-        <div class="clr"></div>
-        <p>
-            {{ f.text }}
-        </p>
-        <div class="fl phn-fn">
-            <div class="color-black bold mt-10">
-                Date:
+    {% if features.length %}
+        {% for f in features %}
+        <div class="required pb-20">
+            <div class="fl phn-fn mt-5 mb-5">
+                <a href="#" class="font-20 color-red">{{ f.activity_type_details.name }}</a>
+                <br/>
+                <span class="color-grey-light-2">For </span>
+                <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
             </div>
-            <div class="font-16 color-blue bold">{{ f.date|date('jS F, Y') }}</div>
+            <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
+                <!-- 
+                <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
+                <br/>
+                <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
+                -->
+            </div>
+            <div class="clr"></div>
+            <p>
+                {{ f.text }}
+            </p>
+            <div class="fl phn-fn">
+                <div class="color-black bold mt-10">
+                    Date:
+                </div>
+                <div class="font-16 color-blue bold">{{ f.date|date('jS F, Y') }}</div>
+            </div>
+            <a class="button fr phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
+                Volunteer Now
+            </a>
+            <div class="clr"></div>
         </div>
-        <a class="button fr phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
-            Volunteer Now
-        </a>
-        <div class="clr"></div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="required pb-20">
+            No volunteering opportunities at this school.
+        </div>
+    {% endif %}
 </script>
 
 {% endverbatim %}

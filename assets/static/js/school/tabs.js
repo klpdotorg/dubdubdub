@@ -238,6 +238,9 @@
                         school: SCHOOL_ID
                     };
                     return klp.api.do(url, params);
+                },
+                onRender: function(data) {
+                    klp.volunteer_here.checkSelf(data.features);
                 }
             }
 

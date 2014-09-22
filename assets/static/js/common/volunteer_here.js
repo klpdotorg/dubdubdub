@@ -13,6 +13,24 @@
         });
     };
 
+    //Loops through all volunteer here buttons, checks if user is already registered,
+    //deals with it appropriately. 
+    t.checkSelf = function(activities) {
+        var userId = klp.auth.getId();
+        if (!userId) {
+            return;
+        }
+        _(activities).each(function(a, index) {
+            _(a.users).each(function(user) {
+                if (parseInt(user.user_details.id) === parseInt(userId)) {
+                    var btn = $('.js-volunteerHereBtn').eq(index);
+                    btn.attr("data-self", "true");
+                    btn.hide(); //FIXME: display something instead of hiding
+                }
+            });
+        });
+    };
+
     function doConfirm(activityId) {
         var url = "volunteer_activities/" + activityId + "/users";
         var $xhr = klp.api.authDo(url, {}, "POST");
