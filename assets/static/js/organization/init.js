@@ -15,6 +15,7 @@
                     var html = tplVolunteer(v);
                     $('#volunteerActivitiesList').append(html);
                 });
+                klp.volunteer_here.checkSelf(data.volunteer_activities);
             } else {
                 var html = $('#tpl-emptyVolunteerActivities').html();
                 $('#volunteerActivitiesList').append(html);

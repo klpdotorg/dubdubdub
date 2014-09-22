@@ -85,8 +85,8 @@
     };
 
     var getInfrastructureComparison = function(entity1, entity2) {
-        var data1 = entity1.infrastructure_data.dise_facility || {};
-        var data2 = entity2.infrastructure_data.dise_facility || {};
+        var data1 = entity1.infrastructure_data.facilities || {};
+        var data2 = entity2.infrastructure_data.facilities || {};
         var topLevelKeys = _(_(data1).keys().concat(_(data2).keys())).unique();
         var allOptions = {};
         _(topLevelKeys).each(function(key) {
@@ -185,9 +185,9 @@
         if(e){
             e.preventDefault();
         }
-
         $comparison_option_right.hide();
         $comparison_default_right.show();
+        $dropdown_wrapper.removeClass("show");
         entityTwo = entityTwoXHR = null;
         reset_submit_button();
     };
