@@ -5,7 +5,7 @@ from django.core.urlresolvers import resolve, Resolver404
 from django.db.models import Q
 
 from schools.models import School
-from .models import Question,  Story
+from .models import Question,  Story, StoryImage
 from .serializers import SchoolQuestionsSerializer, StorySerializer
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
@@ -13,6 +13,14 @@ from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 from rest_framework import authentication, permissions
 
+
+class StoryInfoView(KLPAPIView):
+    def get(self, request):
+        return Response({
+            'total_stories': Story.objects.all().count(),
+            'total_verified_stories': Story.objects.filter(is_verified=True).count(),
+            'total_images': StoryImage.objects.all().count()
+        })
 
 class StoryQuestionsView(KLPDetailAPIView):
     serializer_class = SchoolQuestionsSerializer

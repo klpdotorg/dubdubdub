@@ -20,7 +20,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationItemsView, DonationItemView,
     DonationUsersView, DonationUserView)
 
-from stories.api_views import (StoryQuestionsView, StoriesView)
+from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView)
 
 urlpatterns = patterns('',
 
@@ -98,6 +98,8 @@ urlpatterns = patterns('',
         name="api_stories_questions"),
     url(r'^stories/$', StoriesView.as_view(),
         name="api_stories"),
+    url(r'^stories/info/$', StoryInfoView.as_view(),
+        name="api_stories_info"),
 
     url('^organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
