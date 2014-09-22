@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
-from stories.models import StoryImage
+from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from .partners import LibLevelAgg
@@ -222,6 +222,13 @@ class School(GeoBaseModel):
                 facilities[facility.df_metric_id] = (facility.score == 100)
 
         return facilities
+
+    def get_questions(self):
+        questions = Question.objects.filter(
+            school_type=self.schooldetails.type,
+            is_active=True
+        )
+        return questions
 
     def get_mt_profile(self):
         profile = {}

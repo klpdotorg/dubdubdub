@@ -38,6 +38,7 @@ class Question(models.Model):
 class Questiongroup(models.Model):
     version = models.IntegerField()
     source = models.ForeignKey('Source')
+    questions = models.ManyToManyField('Question', through='QuestiongroupQuestions')
 
     class Meta:
         managed = False
