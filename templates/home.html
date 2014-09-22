@@ -1,8 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}KLP{% endblock %}
 
+{% block endbody %}
+    <script src="{% static 'js/home/init.js' %}"></script>
 
+{% endblock %}
 
 {% block content %}
 
@@ -38,32 +42,43 @@
 
 <section class="home-section recent-activities">
     <div class="container">
-        <div class="grid_item grid_4 alpha col_schools_around_you">
-            <h2>Schools Nearby<span></span></h2>
-            <h3>Updates from GKHPS</h3>
-            <h4>Homaravu</h4>
-            <p>
-                Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
-            </p>
-        </div>
-        <div class="grid_item grid_4 col_volunteer_stories">
-            <h2>Volunteer Stories<span></span></h2>
-            <h3>The New Maps Portal</h3>
-            <h4>Behind the Scenes</h4>
-            <p>
-                I recently re-wrote the maps portal for the KLP. The map is an important part of our project, action and process because it serves as the pivot point of navigation.
-            </p>
-        </div>
-        <div class="grid_item grid_4 omega col_updates">
-            <h2>Updates<span></span></h2>
-            <h3>The New Maps Portal</h3>
-            <h4>Behind the Scenes</h4>
-            <p>
-                Teach for India is currently in 5 cities - Mumbai , Pune , Hyderabad , Delhi , Chennai.
-            </p>
-        </div>
-        <div class="clr"></div>
+            
+            <div class="grid_item grid_4 col_volunteer_stories">
+                    <h2>Volunteer Stories<span></span></h2>
+                    <h3>Latest Counts</h3>
+                    <h4>Shared Stories and Images</h4>
+                    <div id="sysinfo"></div>
+            </div>
+            <div class="grid_item grid_4 omega col_updates">
+                    <h2>Updates<span></span></h2>
+                    <h3>From the KLP Blog</h3>
+                    <h4>Recent Blog Posts</h4>
+                    <p>
+                            <div id="blog">
+                            <!--
+                            <script>
+                                    function processReq(root)
+                                    {
+                                            var feed= root.feed;
+                                            klp.utils.processRequest(feed);
+                                    }
+                            </script>
+                            <script src=http://blog.klp.org.in/feeds/posts/default?alt=json-in-script&callback=processReq></script>   
+                            -->
+                            </div> 
+                    </p>
+            </div>
+            <div class="grid_item grid_4 alpha col_schools_around_you">
+                    <h2>Technology<span></span></h2>
+                    <h3>The New Maps Portal</h3>
+                    <h4>Behind the Scenes</h4>
+                    <p>
+                            I recently re-wrote the maps portal for the KLP. The map is an important part of our project, action and process because it serves as the pivot point of navigation. <a href="http://blog.klp.org.in/2013/05/designing-new-map-portal.html" target="_blank"> Read more... </a>
+                    </p>
+            </div>
+            <div class="clr"></div>
     </div>
+
 </section>
 
 <section class="home-section come-volunteer">
