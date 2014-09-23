@@ -470,7 +470,7 @@
 
     <div class="fr-desktop-tablet width-48p-desktop-tablet">
         <div class="share-your-story">
-            <a href="" id="trigger_share_story_modal" class="button orange">Share you story</a>
+            <a href="" id="trigger_share_story_form" class="button orange">Share you story</a>
             <br/>
             <!--
             <div class="stats first">
@@ -549,6 +549,58 @@
             No volunteering opportunities at this school.
         </div>
     {% endif %}
+</script>
+
+<script type="text/html" id="tpl-share-story-form">
+    <form id="sysForm" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
+        <div class="field-container">
+            <label for="name_id">Name:</label>
+            <input name="name" id="name_id" />
+        </div>
+        <div class="field-container">
+            <label for="email_id">E-mail:</label>
+            <input name="email" id="email_id" />
+        </div>
+        <div class="field-container">
+            <label for="comments_id">Comments:</label>
+            <textarea name="comments" id="comments_id" />
+        </div>
+        {% for q in questions %}
+        <div class="field-container">
+            {% if q.question_type == 'checkbox' %}
+            <span class='checkbox-text'>
+                {{ q.text }}
+            </span>
+            <input type="checkbox" name="question_{{ q.qid }}" />
+            {% elseif q.question_type == 'radio' %}
+            <div class='radio-text'>
+                {{ q.text }}
+            </div>
+            <div class='radio-options'>
+                {% for option in q.options %}
+                <input type='radio' class='radio-option' value='{{ option }}' name='question_{{ q.qid }}' />
+                {{ option }}
+                <br />
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="">
+            Upload images:
+        </div>
+        <div class="field-container">
+            <input name="image" type="file" />
+        </div>
+        <div class="field-container">
+            <input name="image" type="file" />
+        </div>
+        <div class="field-container">
+            <input name="image" type="file" />
+        </div>
+        <input type="submit" class="button" />
+    </form>
+
 </script>
 
 {% endverbatim %}

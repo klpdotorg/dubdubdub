@@ -4,6 +4,7 @@
         klp.router = new KLPRouter({});
         klp.router.init();
         klp.tabs.init();
+        klp.share_story.init(SCHOOL_ID);
         klp.comparison.init();
         klp.volunteer_here.init();
         var $infoXHR = klp.api.do("schools/school/" + SCHOOL_ID, {geometry: 'yes'});
