@@ -5513,11 +5513,12 @@ table.tbl-common {
     visibility: visible; }
 
 .modal {
-  position: fixed;
+    padding: 30px;
+  position: absolute;
   top: 50%;
   left: 50%;
   margin-left: -200px;
-  margin-top: -300px;
+  margin-top: -100px;
   width: 400px;
   height: 600px;
   z-index: 1001;
