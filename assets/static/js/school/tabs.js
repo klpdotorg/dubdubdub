@@ -31,12 +31,12 @@
                 },
                 getContext: function(data) {
                     var d = klp.utils.addSchoolContext(data);
-                     //console.log("data", data);
+                    d.dise = klp.utils.getBoyGirlPercents(data.num_boys, data.num_girls);
                     return d;
                 },
                 onRender: function(data) {
-                    //console.log("onrender", data);
                     $('#num_students_piechart').boyGirlChart(data);
+                    $('#num_students_piechart_dise').boyGirlChart(data.dise);
                 }
             },
             'programmes': {
@@ -157,13 +157,18 @@
                     data.indent = [];
                     data.attendance = [];
                     data.categories = [];
-                    // console.log('could be array', _.toArray(data));
+                    data.diseEnrollment = [];
+                    data.klpEnrollment = [];
+
                     data.mdm_agg.forEach(function(element, index) {
                         data.categories.push(element.mon+ ' week ' + element.wk);
                         data.indent.push(element.indent);
                         data.attendance.push(element.attend);
+                        data.diseEnrollment.push(data.num_boys_dise + data.num_girls_dise);
+                        data.klpEnrollment.push(data.num_boys + data.num_girls);
                     });
                     return data;
+
                 },
 
                 onRender: function(data) {
@@ -203,14 +208,14 @@
                                 }
                             },
                             credits:{
-                                enabled:false
+                                enabled: false
                             },
                             tooltip: {
                                 // pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
                             },
                             plotOptions: {
                                 area: {
-                                    fillOpacity:1
+                                    fillOpacity: 0
                                 }
                             },
                             series: [{
@@ -235,7 +240,16 @@
                                         [1, 'rgba(255,255,255,0.3)']
                                     ]
                                 }
-                            }]
+                            }, {
+                                name: 'KLP Enrollment',
+                                data: data.klpEnrollment,
+                                color: '#646157'
+                            }, {
+                                name: 'DISE Enrollment',
+                                data: data.diseEnrollment,
+                                color: '#e4b324'
+                            }
+                            ]
                         });
                     } else {
                         $('.no-data').removeClass('hide');
