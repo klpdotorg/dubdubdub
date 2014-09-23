@@ -102,6 +102,26 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
+@receiver(post_save, sender=User)
+def user_updated(sender, instance=None, created=False, **kwargs):
+    if not created:
+        return
+
+    import string
+    from django.core.mail import send_mail
+    from django.core.urlresolvers import reverse
+
+    email_verification_code = ''.join([random.choice(string.hexdigits) for x in range(32)])
+    instance.email_verification_code = email_verification_code
+    url = reverse('user_email_verify') + '?token={token}&email={email}'.format(
+        token=email_verification_code,
+        email=instance.email
+    )
+
+    send_mail('Please verify your email address', url, 'dev@klp.org.in',
+        [instance.email], fail_silently=True)
+    instance.save()
+
 
 #Q: should these models go into a separate app?
 class Organization(models.Model):

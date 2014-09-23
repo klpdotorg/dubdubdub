@@ -51,14 +51,18 @@ class UsersView(generics.ListCreateAPIView):
         mobile_no = self.request.POST.get('mobile_no', None)
         first_name = self.request.POST.get('first_name', None)
         last_name = self.request.POST.get('last_name', None)
+
         if not email or not mobile_no or not first_name or not last_name:
             raise ParseError("""Insufficient data: required fields are email,
-                             mobile_no, first_name and last_name""")
+                mobile_no, first_name and last_name""")
+
         if User.objects.filter(email=email).count() > 0:
             raise APIException("duplicate email")
+
         password = self.request.POST.get('password', '')
         if password == '':
             raise ParseError("No password supplied")
+
         return super(UsersView, self).create(*args, **kwargs)
 
     def get_queryset(self):
