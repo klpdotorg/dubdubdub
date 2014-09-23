@@ -24,7 +24,7 @@
 				<li data-tab="details" class="js-tab-link current">Edit Details</li>
 				<!-- <li data-tab="members" class="js-tab-link">Members</li> -->
 				<li data-tab="volunteer" class="js-tab-link">Volunteer Opportunities</li>
-				<li data-tab="donation" class="js-tab-link">Donation Requests</li>
+				<!-- <li data-tab="donation" class="js-tab-link">Donation Requests</li> -->
 			</ul>
 		</div>
 	</section>
@@ -167,6 +167,9 @@
 			<div class="tab-heading">Volunteer Opportunities</div>
 			<div class="tab-content container" data-tab="volunteer">
 				<div>
+					<a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
+						Add Volunteer Activity
+					</a>
 					<table class="tbl-common ta-l" id="volunteerTable">
 						<tr>
 							<th class="cell-width-40">Title</th>
@@ -179,6 +182,7 @@
 				</div>
 			</div>	<!-- Volunteer Opportunites Tab END -->
 
+			<!--
 			<div class="tab-heading">Donation Requests</div>
 			<div class="tab-content container" data-tab="donation">
 				<div>
@@ -281,7 +285,7 @@
 						</tr>
 					</table>
 				</div>
-			</div>	<!-- Donation Requests Tab END -->
+			</div> -->	<!-- Donation Requests Tab END -->
 		</div>
 	</section>
 
