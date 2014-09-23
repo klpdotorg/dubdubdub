@@ -6,7 +6,7 @@ from django.db.models import Q
 
 from schools.models import School
 from .models import Question,  Story, StoryImage
-from .serializers import SchoolQuestionsSerializer, StorySerializer
+from .serializers import SchoolQuestionsSerializer, StorySerializer, StoryWithAnswersSerializer
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 from rest_framework.exceptions import APIException, PermissionDenied,\
@@ -31,8 +31,15 @@ class StoryQuestionsView(KLPDetailAPIView):
 
 
 class StoriesView(KLPListAPIView):
-    serializer_class = StorySerializer
     bbox_filter_field = "school__instcoord__coord"
+
+    def get_serializer_class(self):
+        get_answers = self.request.GET.get('answers', 'no')
+
+        if get_answers == 'yes':
+            return StoryWithAnswersSerializer
+        else:
+            return StorySerializer
 
     def get_queryset(self):
         qset = Story.objects.filter()

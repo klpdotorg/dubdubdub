@@ -3,7 +3,7 @@ from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
 from .models import (Question, Questiongroup, QuestionType,
-    QuestiongroupQuestions, Story)
+    QuestiongroupQuestions, Story, Answer)
 
 
 class QuestionSerializer(KLPSerializer):
@@ -26,6 +26,14 @@ class SchoolQuestionsSerializer(KLPSerializer):
         fields = ('id', 'name', 'questions')
 
 
+class AnswerSerializer(KLPSerializer):
+    question = QuestionSerializer(source='question')
+
+    class Meta:
+        model = Answer
+        field = ('question', 'text')
+
+
 class StorySerializer(KLPSerializer):
     date = serializers.SerializerMethodField('get_date_string')
 
@@ -35,3 +43,18 @@ class StorySerializer(KLPSerializer):
 
     def get_date_string(self, obj):
         return obj.entered_timestamp.strftime('%Y-%m-%d')
+
+
+class StoryWithAnswersSerializer(KLPSerializer):
+    date = serializers.SerializerMethodField('get_date_string')
+    answers = AnswerSerializer(many=True, source='answer_set')
+
+    class Meta:
+        model = Story
+        fields = ('name', 'date', 'school', 'comments', 'is_verified', 'answers')
+
+    def get_date_string(self, obj):
+        return obj.entered_timestamp.strftime('%Y-%m-%d')
+
+    def get_answers(self, obj):
+        return obj.answer_set.all()
