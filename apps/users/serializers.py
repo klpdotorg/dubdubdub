@@ -55,7 +55,7 @@ class VolunteerActivityBasicSerializer(serializers.ModelSerializer):
         read_only=True,
         source='type'
     )
-    
+
     class Meta:
         model = VolunteerActivity
 
@@ -92,7 +92,7 @@ class VolunteerActivitySerializer(KLPSerializer):
         read_only=True,
         source='type'
     )
-    
+
     class Meta:
         model = VolunteerActivity
         #exclude = ('users',)
@@ -171,6 +171,18 @@ class UserSerializer(serializers.ModelSerializer):
     def save_object(self, *args, **kwargs):
         pass
 
+    def validate_mobile_no(self, attrs, source):
+        value = attrs[source]
+
+        if not len(str(value)) == 10:
+            raise serializers.ValidationError("Phone number must be a 10 digit number")
+        else:
+            try:
+                int(value)
+            except Exception, e:
+                raise serializers.ValidationError("Phone number must only have numbers")
+        return attrs
+
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
@@ -208,7 +220,7 @@ class DonationItemCategorySerializer(serializers.ModelSerializer):
 
 
 class DonationItemSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = DonationItem
 
