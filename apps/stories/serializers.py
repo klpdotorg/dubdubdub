@@ -29,4 +29,4 @@ class SchoolQuestionsSerializer(KLPSerializer):
 class StorySerializer(KLPSerializer):
     class Meta:
         model = Story
-        fields = ('name', 'date', 'comments', 'is_verified')
+        fields = ('name', 'date', 'school', 'comments', 'is_verified')
