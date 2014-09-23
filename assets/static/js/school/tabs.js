@@ -31,12 +31,12 @@
                 },
                 getContext: function(data) {
                     var d = klp.utils.addSchoolContext(data);
-                     //console.log("data", data);
+                    d.dise = klp.utils.getBoyGirlPercents(data.num_boys, data.num_girls);
                     return d;
                 },
                 onRender: function(data) {
-                    //console.log("onrender", data);
                     $('#num_students_piechart').boyGirlChart(data);
+                    $('#num_students_piechart_dise').boyGirlChart(data.dise);
                 }
             },
             'programmes': {
