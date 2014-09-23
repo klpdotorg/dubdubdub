@@ -79,6 +79,14 @@ urlpatterns = patterns('',
             'hide_footer': True
         }), name='map'),
 
+   url(r'^volunteer-map$', StaticPageView.as_view(
+        template_name='volunteer-map.html',
+        extra_context={
+            #'header_full_width': True,
+            #'header_fixed': True,
+            #'hide_footer': True
+        }), name='volunteer_map'),
+
     url(r'^school$', StaticPageView.as_view(
         template_name='school.html',
         extra_context={
