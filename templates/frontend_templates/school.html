@@ -492,7 +492,13 @@
             <h4>Visitor Comments</h4>
             {% for story in features %}
             <div class="comment-item first">
-                <div class="name">{{ story.name }}</div>
+                <div class="name">
+                    {% if story.name %}
+                        {{ story.name }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </div>
                 {% if story.comments %}
                     <p class="text">{{ story.comments }}</p>
                 {% endif %}
