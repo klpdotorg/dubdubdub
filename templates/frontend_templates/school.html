@@ -450,22 +450,21 @@
         </p>
 
         <table class="info_data_table label_longer mar_top_25 mar_btm_25">
+            {% if latest_answers %}
+                {% for answer in latest_answers %}
+                <tr>
+                    <td>{{ answer.question.text }}</td>
+                    <td class="{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
+                        {{ answer.text }}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
             <tr>
-                <td>Play Material or Sports Equipment</td>
-                <td class="green">Yes</td>
+                <td>No answers available for school.</td>
+                <td></td>
             </tr>
-            <tr>
-                <td>Separate Room For Headmaster</td>
-                <td class="red">No or Unknown</td>
-            </tr>
-            <tr>
-                <td>Separate Toilet for Boys and Girls</td>
-                <td class="green">Yes</td>
-            </tr>
-            <tr>
-                <td>Library</td>
-                <td class="green">Yes</td>
-            </tr>
+            {% endif %}
         </table>
     </div>
 
@@ -473,12 +472,14 @@
         <div class="share-your-story">
             <a href="" id="trigger_share_story_modal" class="button orange">Share you story</a>
             <br/>
+            <!--
             <div class="stats first">
-                <div class="number">4</div>
+                <div class="number"></div>
                 <div class="text">Number of School Visits</div>
             </div>
+            -->
             <div class="stats">
-                <div class="number">4</div>
+                <div class="number">{{ count }}</div>
                 <div class="text">Shared Stories</div>
             </div>
         </div>
@@ -489,21 +490,17 @@
 
         <div class="comments mar_top_25">
             <h4>Visitor Comments</h4>
+            {% for story in features %}
             <div class="comment-item first">
-                <div class="name">Saheem Fatima</div>
-                <p class="text">No electricity and no water supply.</p>
-                <div class="timestamp">Shared on : July,21 2013</div>
+                <div class="name">{{ story.name }}</div>
+                {% if story.comments %}
+                    <p class="text">{{ story.comments }}</p>
+                {% endif %}
+                {% if story.date %}
+                <div class="timestamp">Shared on : {{ story.date|date('jS F, Y') }}</div>
+                {% endif %}
             </div>
-            <div class="comment-item">
-                <div class="name">Saheem Fatima</div>
-                <p class="text">No electricity and no water supply.</p>
-                <div class="timestamp">Shared on : July,21 2013</div>
-            </div>
-            <div class="comment-item last">
-                <div class="name">Saheem Fatima</div>
-                <p class="text">No electricity and no water supply.</p>
-                <div class="timestamp">Shared on : July,21 2013</div>
-            </div>
+            {% endfor %}
         </div>
 
     </div>

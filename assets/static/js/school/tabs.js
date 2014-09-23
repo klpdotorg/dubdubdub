@@ -259,7 +259,43 @@
             'share-story': {
                 getData: function() {
                     //FIXME: replace with real SYS end-point
-                    return klp.api.do(schoolInfoURL);
+                    var url ="stories/";
+                    var params = {
+                        'school_id': SCHOOL_ID,
+                        'answers': 'yes'
+                    };
+                    return klp.api.do(url, params);
+                },
+                getContext: function(data) {
+                    var latestStory = getLatestStoryWithAnswers(data.features);
+                    if (latestStory) {
+                        data.latest_answers = getCleanedAnswers(latestStory.answers);
+                    } else {
+                        data.latest_answers = null;
+                    }
+                    console.log("sys data", data);
+                    return data;
+
+                    function getLatestStoryWithAnswers(stories) {
+                        for (var i=0; i < stories.length; i++) {
+                            var thisStory = stories[i];
+                            if (thisStory.answers.length > 0) {
+                                return thisStory;
+                            }
+                        }
+                        return null;
+                    }
+
+                    function getCleanedAnswers(answers) {
+                        var cleanedAnswers = [];
+                        _(answers).each(function(a) {
+                            if (a.text === 'Yes' || a.text === 'No') {
+                                cleanedAnswers.push(a);
+                            }
+                        });
+                        console.log("answers", answers, cleanedAnswers);
+                        return cleanedAnswers;
+                    }
                 }
             },
             'volunteer': {
