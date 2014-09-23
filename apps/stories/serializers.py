@@ -27,6 +27,11 @@ class SchoolQuestionsSerializer(KLPSerializer):
 
 
 class StorySerializer(KLPSerializer):
+    date = serializers.SerializerMethodField('get_date_string')
+
     class Meta:
         model = Story
         fields = ('name', 'date', 'school', 'comments', 'is_verified')
+
+    def get_date_string(self, obj):
+        return obj.entered_timestamp.strftime('%Y-%m-%d')
