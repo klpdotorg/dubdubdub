@@ -10,10 +10,11 @@ Use required commands
 Changelog
 ---
 
-Release 0.6:
+Release 0.6: September 23: 3c229cb1beb9408ba03113eecd36a77b9d4caadf
   - Added Anganwadi db as MView [run-sql]
   - Re-model donation work-flow [sql-migrate]
   - Added stories [run-sql sys_new_schemas.sql]
+  - More front-end polish.
 
 Release 0.5.1: September 3: d94e37756b64cf8df2ff290b7ff97bc870e84269
   - Update to django 1.7 [pip-install]
