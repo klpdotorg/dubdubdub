@@ -7,7 +7,7 @@ from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationPageView,
                          ProfileEditPageView, OrganizationEditPageView,
                          VolunteerActivityAddPageView,
-                         VolunteerActivityEditPageView)
+                         VolunteerActivityEditPageView, EmailVerificationView)
 
 urlpatterns = patterns('',
 
@@ -97,6 +97,8 @@ urlpatterns = patterns('',
 
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
 
+    url(r'^users/verify_email', EmailVerificationView.as_view(), name='user_email_verify'),
+
     url(r'^profile/(?P<pk>[0-9]*)$', ProfilePageView.as_view(), name='profile_page'),
 
     url(r'^organisation/(?P<pk>[0-9]*)$', OrganizationPageView.as_view(), name='organization_page'),
@@ -112,7 +114,7 @@ urlpatterns = patterns('',
     url(r'^organisation/(?P<org_pk>[0-9]*)/volunteer_activity/(?P<pk>[0-9]*)$',
         VolunteerActivityEditPageView.as_view(),
         name='volunteeractivity_edit_page'),
-    
+
     url(r'^profile/(?P<pk>[0-9]*)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
