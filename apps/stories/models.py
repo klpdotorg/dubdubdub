@@ -91,6 +91,9 @@ class Story(models.Model):
         managed = False
         db_table = 'stories_story'
 
+    def get_geometry(self):
+        return self.school.get_geometry() or None
+
 
 class StoryImage(models.Model):
     story = models.ForeignKey('Story')
