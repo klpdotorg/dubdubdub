@@ -19,7 +19,7 @@ class SchoolsList(KLPListAPIView, CacheMixin):
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
     filter_class = SchoolFilter
-    search_fields = ('name',)
+    search_fields = ('name', 'id', 'dise_info__dise_code',)
 
     def get_queryset(self):
         qset = School.objects.filter(status=2)
@@ -57,7 +57,7 @@ class SchoolsInfo(SchoolsList, CacheMixin):
     '''
     serializer_class = SchoolInfoSerializer
     filter_class = SchoolFilter
-    search_fields = ('name',)
+    search_fields = ('name', 'id', 'dise_info__dise_code',)
 
     def get_queryset(self):
         # inherit all the filtering from SchoolsList
