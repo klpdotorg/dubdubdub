@@ -10702,6 +10702,11 @@ button.Zebra_DatePicker_Icon_Inside {
     background: transparent;
     border-bottom: none; }
 
+.school-comparison-flow .dropdown-wrapper .search-box .input-search {
+  padding: 4px 0;
+  height: 31px;
+  line-height: 31px; }
+
 .alert {
   position: fixed;
   top: 25px;

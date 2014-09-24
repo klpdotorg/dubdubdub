@@ -279,10 +279,10 @@
                 //console.log('comparison result html', html);
                 $comparison_result_wrapper.html(html);
                 $comparison_result_wrapper.html(html).addClass('show');
-                setTimeout(function(){
-                    var $selects = $comparison_result_wrapper.find('select');
-                    $selects.easyDropDown();
-                },0);
+                // setTimeout(function(){
+                //     var $selects = $comparison_result_wrapper.find('select');
+                //     $selects.easyDropDown();
+                // },0);
 
                 setTimeout(function(){
                     init_comparison_charts(context);
