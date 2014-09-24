@@ -21,7 +21,7 @@
                     return data;
                 },
                 onRender: function(data) {
-                    $('a.gallery').colorbox();
+                    $('a.gallery').colorbox({'rel': 'group1'});
                     console.log("post render info");
                 }
             },
