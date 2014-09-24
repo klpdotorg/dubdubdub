@@ -34,6 +34,19 @@
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
     {% endcompress %}
+    {% if not settings.DEBUG %}
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-3982320-11', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+    {% endif %}
+
 	<!--[if lt IE 9]>
 	<script src="{% static 'js/lib/html5shiv.js' %}"></script>
 	<![endif]-->
@@ -95,7 +108,7 @@
 			<div class="content png24">
 				<h1 class="disable-text-select png24">Karnataka Learning Partnership</h1>
 				<div class="headline-text disable-text-select png24">Come Engage With Us And Help Us Make Our Schools Better For Our Children.</div>
-				<div class="headline-text-mobile"><img src="images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
+				<div class="headline-text-mobile"><img src="/static/images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
 				<div class="info">
 					<p>The Karnataka Learning Partnership is a public platform where all the stakeholders involved in primary education can participate and contribute to the cause of ensuring better schools and education for all children in Karnataka.</p>
 					<p><a href="{% url 'aboutus' %}">Read more</a></p>
