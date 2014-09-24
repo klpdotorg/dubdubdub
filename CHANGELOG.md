@@ -9,7 +9,10 @@ Use required commands
 
 Changelog
 ---
-Release 0.6.1: September 24:
+Release 0.7:
+  - Cleaned up SYS data [run-sql sys_cleanup.sql]
+
+Release 0.6.1: September 24: <FILL IT>
   - added mviews for lib data [run-sql materialized_views_sep24.sql]
 
 Release 0.6: September 23: 3c229cb1beb9408ba03113eecd36a77b9d4caadf
@@ -46,7 +49,7 @@ Release 0.3: August 25: f826aa24958f6150da974961a0ce1f921a323525
  - School page with limited features.
 
 Release 0.2: July 26: 5c28f9cbc1aad0d1653401c671285012fd6fa882
- - User auth working
+ - User auth working [run-sql auth_token.sql]
  - Password reset API working
  - Added `is_active` to User model [migrate]
  - Added organization logo [migrate]
