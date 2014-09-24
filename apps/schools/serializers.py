@@ -85,6 +85,8 @@ class SchoolInfoSerializer(KLPSerializer):
     num_girls = serializers.IntegerField(source='schooldetails.num_girls')
     basic_facilities = serializers.CharField(source='get_basic_facilities')
 
+    has_volunteer_activities = serializers.CharField(source='has_volunteer_activities')
+
     images = serializers.CharField(source='get_images')
 
     class Meta:
@@ -93,7 +95,7 @@ class SchoolInfoSerializer(KLPSerializer):
                   'landmark', 'identifiers', 'admin3', 'admin2', 'admin1',
                   'buses', 'parliament', 'assembly', 'ward',
                   'dise_code', 'type', 'num_boys', 'num_girls',
-                  'basic_facilities', 'images')
+                  'basic_facilities', 'images', 'has_volunteer_activities')
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
