@@ -10719,6 +10719,9 @@ button.Zebra_DatePicker_Icon_Inside {
 .field-container {
   padding: 10px; }
 
+#sysForm label {
+  float: none; }
+
 .textarea,
 .input-text {
   height: 32px;
