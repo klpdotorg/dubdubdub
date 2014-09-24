@@ -3,7 +3,7 @@ from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
 from .models import (Question, Questiongroup, QuestionType,
-    QuestiongroupQuestions, Story, Answer)
+    QuestiongroupQuestions, Story, Answer, StoryImage)
 
 
 class QuestionSerializer(KLPSerializer):
@@ -34,15 +34,24 @@ class AnswerSerializer(KLPSerializer):
         field = ('question', 'text')
 
 
+class StoryImageSerializer(KLPSerializer):
+    image_url = serializers.CharField(source='image.url')
+
+    class Meta:
+        model = StoryImage
+        fields = ('image_url', 'is_verified')
+
+
 class StorySerializer(KLPSerializer):
     date = serializers.SerializerMethodField('get_date_string')
+    images = StoryImageSerializer(many=True, source='storyimage_set')
 
     class Meta:
         model = Story
-        fields = ('name', 'date', 'school', 'comments', 'is_verified')
+        fields = ('name', 'date', 'school', 'comments', 'is_verified', 'images')
 
     def get_date_string(self, obj):
-        return obj.entered_timestamp.strftime('%Y-%m-%d')
+        return obj.entered_timestamp.strftime('%Y-%m-%d') if obj.entered_timestamp else ''
 
 
 class StoryWithAnswersSerializer(KLPSerializer):

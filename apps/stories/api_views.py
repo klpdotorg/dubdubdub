@@ -13,6 +13,10 @@ from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 from rest_framework import authentication, permissions
 
+import random
+from base64 import b64decode
+from django.core.files.base import ContentFile
+
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -54,3 +58,56 @@ class StoriesView(KLPListAPIView):
             qset = qset.filter(is_verified=False)
 
         return qset
+
+
+class ShareYourStoryView(KLPAPIView):
+    def post(self, request, pk=None):
+        name = request.POST.get('name', 'Anonymous User')
+        email = request.POST.get('email', '')
+        comments = request.POST.get('comments', '')
+
+        try:
+            school = School.objects.get(pk=pk)
+        except Exception, e:
+            return Response({
+                'error': 'School not found'
+            }, status=404)
+
+        story = Story(
+            email=email,
+            name=name,
+            school=school,
+            group_id=1,
+            comments=comments.strip()
+        )
+        story.save()
+
+        for key in request.POST.keys():
+            if not key.startswith('question_'):
+                continue
+
+            _, qid = key.split('_')
+            try:
+                question = Question.objects.get(qid=qid)
+                answer = Answer(
+                    story=story,
+                    question=question,
+                    text="Yes" if request.POST.get(key) in ["on", "Yes"] else "No"
+                )
+                answer.save()
+            except Exception, e:
+                pass
+
+        images = request.POST.getlist('images[]')
+        for image in images:
+            image_type, data = image.split(',')
+            image_data = b64decode(data)
+            simage = StoryImage(
+                story=story,
+                image=ContentFile(image_data, '{}_{}.png'.format(school.id, random.randint(0, 999)))
+            )
+            simage.save()
+
+        return Response({
+            'success': 'Story has been saved'
+        })

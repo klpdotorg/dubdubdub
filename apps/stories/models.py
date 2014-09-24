@@ -97,7 +97,7 @@ class Story(models.Model):
 
 class StoryImage(models.Model):
     story = models.ForeignKey('Story')
-    image = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='sys_images')
     is_verified = models.BooleanField(default=False)
     filename = models.CharField(max_length=50, blank=True)
 

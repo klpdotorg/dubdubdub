@@ -51,5 +51,6 @@ nosetests.xml
 .vagrant
 
 collected-static
+media
 
 misc.sql
