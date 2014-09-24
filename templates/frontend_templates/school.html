@@ -568,11 +568,11 @@
     <form id="sysForm" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
         <div class="field-container">
             <label for="name_id">Name:</label>
-            <input name="name" id="name_id" />
+            <input type="text" name="name" id="name_id" />
         </div>
         <div class="field-container">
             <label for="email_id">E-mail:</label>
-            <input name="email" id="email_id" />
+            <input type='email' name="email" id="email_id" />
         </div>
         <div class="field-container">
             <label for="comments_id">Comments:</label>
