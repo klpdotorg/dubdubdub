@@ -110,6 +110,8 @@ def user_updated(sender, instance=None, created=False, **kwargs):
     import string
     from django.core.mail import send_mail
     from django.core.urlresolvers import reverse
+    from common.utils import send_templated_mail
+    from django.contrib.sites.models import Site
 
     email_verification_code = ''.join([random.choice(string.hexdigits) for x in range(32)])
     instance.email_verification_code = email_verification_code
@@ -118,8 +120,18 @@ def user_updated(sender, instance=None, created=False, **kwargs):
         email=instance.email
     )
 
-    send_mail('Please verify your email address', url, 'dev@klp.org.in',
-        [instance.email], fail_silently=True)
+    send_templated_mail(
+        from_email='dev@klp.org.in',
+        to_email=instance.email,
+        subject='Please verify your email address',
+        template_name='email_templates/register.html',
+        context={
+            'user': instance,
+            'site_url': Site.objects.get_current().domain,
+            'url': url
+        }
+    )
+
     instance.save()
 
 
