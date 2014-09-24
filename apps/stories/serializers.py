@@ -48,7 +48,7 @@ class StorySerializer(KLPSerializer):
 
     class Meta:
         model = Story
-        fields = ('name', 'date', 'school', 'comments', 'is_verified', 'images')
+        fields = ('id', 'name', 'date', 'school', 'comments', 'is_verified', 'images')
 
     def get_date_string(self, obj):
         return obj.entered_timestamp.strftime('%Y-%m-%d') if obj.entered_timestamp else ''
@@ -56,14 +56,15 @@ class StorySerializer(KLPSerializer):
 
 class StoryWithAnswersSerializer(KLPSerializer):
     date = serializers.SerializerMethodField('get_date_string')
+    images = StoryImageSerializer(many=True, source='storyimage_set')
     answers = AnswerSerializer(many=True, source='answer_set')
 
     class Meta:
         model = Story
-        fields = ('name', 'date', 'school', 'comments', 'is_verified', 'answers')
+        fields = ('id', 'name', 'date', 'school', 'comments', 'is_verified', 'images', 'answers')
 
     def get_date_string(self, obj):
-        return obj.entered_timestamp.strftime('%Y-%m-%d')
+        return obj.entered_timestamp.strftime('%Y-%m-%d') if obj.entered_timestamp else ''
 
     def get_answers(self, obj):
         return obj.answer_set.all()
