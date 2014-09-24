@@ -35,6 +35,35 @@
                 }
             });
         }
+
+        function setURL() {
+            var currentZoom = map.getZoom();
+            var mapCenter = map.getCenter();
+            var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);
+            klp.router.setHash(mapURL, {}, {trigger: false, replace: true});
+        }
+
+        klp.router.events.on('hashchange', function (event, params) {
+            var url = params.url,
+                oldURL = params.oldURL;
+            if (url === '') {
+                setURL();
+            } else {
+                if (oldURL !== url) {
+                    //currentURL = url;
+                    var urlSplit = url.split('/');
+                    var urlZoom = urlSplit[0];
+                    var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
+                    map.setView(urlLatLng, urlZoom);
+
+                }
+            }
+        });
+
+        // Map Events
+        map.on('moveend', function () {
+            setURL();
+        });
     };
 
     function load_map() {
@@ -46,6 +75,8 @@
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
+
+        map.locate({setView: true, maxZoom: 15});
     }
 
 
