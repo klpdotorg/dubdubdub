@@ -10693,27 +10693,31 @@ button.Zebra_DatePicker_Icon_Inside {
 
 .alert {
   position: fixed;
-  top: 0px;
+  top: 25px;
   left: 20%;
   right: 20%;
   z-index: 9999;
-  padding: 20px;
-  border-radius: 0px 0px 20px 20px;
+  padding: 10px;
   background-color: yellow;
   text-align: center;
-  font-weight: bold; }
+  font-weight: bold;
+  opacity: 0.9;
+  border-radius: 5px;
+  font-size: 120%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9); }
 
 .alert.success {
-  background-color: green;
-  color: white; }
+  background-color: #75CF7E; }
 
 .alert.warning {
-  background-color: orange;
-  color: white; }
+  background-color: #EC6608; }
 
 .alert.error {
-  background-color: red;
-  color: white; }
+  background-color: #CB0012; }
+
+.field-container {
+  padding: 10px; }
 
 .textarea,
 .input-text {
