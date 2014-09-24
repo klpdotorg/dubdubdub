@@ -305,6 +305,25 @@
                         console.log("answers", answers, cleanedAnswers);
                         return cleanedAnswers;
                     }
+                },
+                onRender: function(data) {
+                    var $container = $('.tab-content[data-tab=share-story]');
+                    var containerHTML = $container.html();
+                    klp.share_story.init(SCHOOL_ID, containerHTML);
+                    var urlState = klp.router.getHash();
+                    var queryParams = urlState.queryParams;
+                    // if (queryParams.hasOwnProperty('state') && queryParams.state === 'form') {
+                        
+                    // }
+                    klp.router.events.on("hashchange:state", function(e, params) {
+                        console.log("hashchange state fired", params);
+                        if (params.changed['state'].newVal === null) {
+                            //console.log("old html", oldHtml);
+                            $container.html(containerHTML);
+                        } else if (params.changed['state'].newVal === 'form') {
+                            $("#trigger_share_story_form").click();
+                        }
+                    });
                 }
             },
             'volunteer': {
