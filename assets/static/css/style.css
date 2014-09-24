@@ -10720,7 +10720,8 @@ button.Zebra_DatePicker_Icon_Inside {
   padding: 10px; }
 
 #sysForm label {
-  float: none; }
+  float: none;
+  line-height: inherit; }
 
 .form input[type="checkbox"], .form input[type="radio"] {
   min-width: 0;
@@ -10731,11 +10732,12 @@ button.Zebra_DatePicker_Icon_Inside {
 
 .form label {
   min-width: 80px;
-  display: inline-block; }
+  display: inline-block;
+  vertical-align: middle; }
 
 .form .checkbox-text {
   width: -webkit-calc(100% - 50px);
-  width: calc(100% - 50px); }
+  width: calc(100% - 80px); }
 
 .textarea,
 .input-text {

@@ -1,0 +1,28 @@
+.field-container {
+    padding: 10px;
+}
+
+#sysForm label {
+    float: none;
+    line-height: inherit;
+}
+
+.form input[type="checkbox"],  .form input[type="radio"] {
+    min-width: 0;
+    margin-right: 10px;
+}
+
+.form input[type="radio"] {
+    margin-left: 20px;
+}
+
+.form label {
+    min-width: 80px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.form .checkbox-text {
+    width: -webkit-calc(100% - 50px);
+    width: calc(100% - 80px);
+}
