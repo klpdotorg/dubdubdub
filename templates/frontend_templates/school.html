@@ -616,12 +616,14 @@
             </label>
             {% elseif q.question_type == 'radio' %}
             <div class='radio-text'>
-                {{ q.text }}
+                <label>{{ q.text }}</label>
             </div>
             <div class='radio-options'>
                 {% for option in q.options %}
-                <input type='radio' class='radio-option' value='{{ option }}' name='question_{{ q.qid }}' />
-                {{ option }}
+                <input type='radio' class='radio-option' value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
+                <label for="id_question_{{ q.qid }}_{{ option }}">
+                    {{ option }}
+                </label>
                 <br />
                 {% endfor %}
             </div>
