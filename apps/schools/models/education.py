@@ -202,6 +202,10 @@ class School(GeoBaseModel):
                 images.append(settings.IMAGE_URL_BASE.format(image.image))
         return images
 
+    @property
+    def has_volunteer_activities(self):
+        return self.volunteeractivity_set.all().count() > 0
+
     def get_basic_facilities(self):
         facilities = {
             'computer_lab': False,
