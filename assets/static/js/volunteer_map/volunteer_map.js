@@ -3,7 +3,6 @@
 
     var map;
     t.init = function() {
-//        console.log("initting");
         load_map();
 
         var sidebar_height = $("#sidebar_wrapper").height();
@@ -13,6 +12,25 @@
             color: '#8d8d8d',
             railVisible: false
         });
+
+        // Google Geocode Search
+        var searchInput = $('.search-input');
+        searchInput.on('keypress', function(e) {
+            if (e.keyCode === 13) {
+                search($(e.target).val());
+                }
+            });
+
+        function search(query) {
+            var apiKey = "AIzaSyB19tHGJ8R3eX3JhR655zzo72dyB4628vc";
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?address="+query+"&key="+apiKey;
+            $.ajax({
+                url: url
+            }).done(function (data) {
+                console.log(data);
+            });
+            // console.log(e);
+        }
     };
 
     function load_map() {
@@ -25,6 +43,7 @@
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
     }
+
 
 
 })();
