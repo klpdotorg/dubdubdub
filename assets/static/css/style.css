@@ -10755,6 +10755,10 @@ button.Zebra_DatePicker_Icon_Inside {
   width: -webkit-calc(100% - 50px);
   width: calc(100% - 80px); }
 
+.imagePreview {
+  display: inherit;
+  margin-top: 10px; }
+
 .textarea,
 .input-text {
   height: 32px;
