@@ -209,7 +209,7 @@ class LibBorrow(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_lib_borrow'
+        db_table = 'mvw_lib_borrow'
 
 
 class LibLangAgg(BaseModel):
@@ -237,7 +237,7 @@ class LibLangAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_lib_lang_agg'
+        db_table = 'mvw_lib_lang_agg'
 
 
 class LibLevelAgg(BaseModel):
@@ -263,7 +263,7 @@ class LibLevelAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_lib_level_agg'
+        db_table = 'mvw_lib_level_agg'
 
 
 class Libinfra(BaseModel):
@@ -288,7 +288,7 @@ class Libinfra(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_libinfra'
+        db_table = 'mvw_libinfra'
 
 
 class MdmAgg(BaseModel):
