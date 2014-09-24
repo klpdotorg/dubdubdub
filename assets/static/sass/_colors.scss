@@ -31,3 +31,8 @@
 .color-grey-light-2{
 	color: #8A8B8C;
 }
+
+.grey-bg{
+	background-color: #F6F6F6;
+	border: 1px solid #D8D8D8; @include border-radius(3px);
+}

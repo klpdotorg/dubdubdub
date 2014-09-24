@@ -20,13 +20,10 @@
 {% endblock %}
 
 {% block subheader %}
-	<div class="map-subheader-wrapper show-volunteer-filters">
+	<div class="map-subheader-wrapper volunteer-map-subheader-wrapper show-volunteer-filters">
 		<div class="subheader-content">
-			<!-- <input type="text" name="search" placeholder="Search" class="search-input fl"/> -->
 			<input type="text" name="search" placeholder="Search" class="search-input fl"/>
-			
 			<a class="button no-mar filled-shadow clickable grey mt-10 mr-10 fr hide phn-block js-toggle-vol-mobile-filters">Filters</a>
-			
 			<div class="phn-clr"></div>
 
 			<div class="volunteer-filters-wrapper fl">
@@ -54,7 +51,6 @@
 		    			</div>
 					</div>
 
-					
 					<script type="text/javascript">
 						// function init_volunteer_date_filter(){
 						// 	var $date_input = $("#vol-date-input");
@@ -94,9 +90,10 @@
 
 					</script>
 				</div>
+				<div class="hide phn-block phn-clr"></div>
 
 				<div class="label fl">Organization</div>
-				<div class="filter-item fl">
+				<div class="filter-item fl phn-fr">
 					<select name="organization" class="dropdown">
 						<option selected>All</option>
 						<option>Akshara Foundation</option>
@@ -105,9 +102,10 @@
 						<option>NUEPA</option>
 					</select>
 				</div>
+				<div class="hide phn-block phn-clr"></div>
 
 				<div class="label fl">Opportunity</div>
-				<div class="filter-item fl">
+				<div class="filter-item fl phn-fr">
 					<select name="activity" class="dropdown">
 						<option selected>All</option>
 						<option>Teaching Based</option>
@@ -121,6 +119,8 @@
 			<div class="clr"></div>
 		</div>
 	</div>
+
+
 {% endblock %}
 
 {% block content %}
@@ -160,13 +160,13 @@
 
 	</script>
 
-	<div class="map_page">
+	<div class="map_page page-volunteer-map">
 		<section class="map_canvas_full">
 			<div id="map_canvas"></div>
 		</section>
 
-		<section id="sidebar_wrapper" class="sidebar-wrapper page-volunteer-map">
-			<ul>
+		<section id="sidebar_wrapper" class="sidebar-wrapper">
+			<ul id="volunteerActivityList">
 				<li class="place_item">
 					<div class="stats">
 						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>

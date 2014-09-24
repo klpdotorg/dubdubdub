@@ -3,6 +3,11 @@
     klp.init = function() {
         klp.volunteer_map.init();
         init_volunteer_date_filter();
+        $(document).on("click", ".js-toggle-vol-mobile-filters", function(){
+            //console.log("here 2");
+            $(".volunteer-filters-wrapper").toggleClass("show-mobile");
+        });
+
     };
 
     function init_volunteer_date_filter(){
