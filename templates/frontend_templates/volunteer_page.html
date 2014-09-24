@@ -1,0 +1,25 @@
+{% verbatim %}
+<script type="text/html" id="tpl-recentStories">
+  <div class="container">
+      <h2>Recently shared stories<span></span></h2>
+      {% for story in stories %}
+      <div class="column_item">
+
+          <h3>
+            {% if story.name %}
+                {{ story.name }}
+            {% else %}
+                Anonymous
+            {% endif %}
+          </h3>
+          <div class="date">{{ story.date|date('jS F, Y') }}</div>
+          <p class="text">
+              {{ story.comments }}
+          </p>
+          <a href="/schoolpage/school/{{ story.school }}#?tab=share-story">Read more</a>
+      </div>
+      {% endfor %}
+    <div class="clr"></div>
+  </div>
+</script>
+{% endverbatim %}

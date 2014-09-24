@@ -5,10 +5,7 @@
 
 {% block endbody %}
     <script type="text/javascript" src="{% static 'js/lib/selectize.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/volunteer_page/init.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/inline-volunteer.js' %}"></script>
 {% endblock %}
 
@@ -123,30 +120,8 @@
     </section>
     -->
 
-    <section class="volunteer-section recently_shared_stories">
-      <div class="container">
-        <h2>Recently shared stories<span></span></h2>
+    <section class="volunteer-section recently_shared_stories" id="recentlySharedStories">
 
-        <div class="column_item">
-          <h3>Gurliv Singh</h3>
-          <div class="date">17 August, 2013</div>
-          <p class="text">
-            There was a lack of drinking water supply and the toilets were also out of order.
-          </p>
-          <a href="">Read more</a>
-        </div>
-
-        <div class="column_item">
-          <h3>Saheen Fathima</h3>
-          <div class="date">21 July, 2013</div>
-          <p class="text">
-            Volunteerng was a very learning experience. I'm looking forward to more volunteering opportunities in future.
-          </p>
-          <a href="">Read more</a>
-        </div>
-
-        <div class="clr"></div>
-      </div>
     </section>
   </div>
 
@@ -352,5 +327,7 @@
     </div> -->
 
   {% include 'frontend_templates/volunteer.html' %}
+  {% include 'frontend_templates/volunteer_page.html' %}
+  
 {% endblock %}
 
