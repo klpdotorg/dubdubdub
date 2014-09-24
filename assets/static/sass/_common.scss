@@ -858,6 +858,7 @@ a.external{
 		border: 4px solid #3891F3;
 	}
 }
+
 .input{
 	width: 98%; height: 25px; padding: 0 1%;
 	border: 1px solid #CFCFCF; @include border-radius(3px);
@@ -925,6 +926,10 @@ a.external{
 	font-size: 20px; line-height: 25px; color: #adadad; padding: 0 9px 3px;
 	@include inline-block;
 	border: 1px solid #adadad; @include border-radius(3px);
+
+	&.small{
+		font-size: 18px; line-height: 22px; padding: 0 8px 3px;
+	}
 
 	&:hover{
 		text-decoration: none; color: #898989; border-color: #898989;
@@ -1094,6 +1099,9 @@ table.tbl-common{
 	td{
 		padding: 10px 15px; vertical-align: top;
 	}
+	.cell-width-10{
+		width: 10%;
+	}
 	.cell-width-15{
 		width: 15%;
 	}
@@ -1106,8 +1114,22 @@ table.tbl-common{
 	.cell-width-30{
 		width: 30%;
 	}
+	.cell-width-35{
+		width: 35%;
+	}
 	.cell-width-40{
 		width: 40%;
+	}
+
+	&.cell-pl-10{
+		th, td{
+			padding-left: 10px;
+		}
+	}
+	&.cell-pr-10{
+		th, td{
+			padding-right: 10px;
+		}
 	}
 
 	&.no-border{
@@ -1120,5 +1142,73 @@ table.tbl-common{
 		th, td{
 			vertical-align: middle;
 		}
+	}
+}
+
+.add-req-form{
+	.input{
+		width: 90%; padding: 0 5%;
+		&.pad-h-10{
+			width: 80%; padding: 0 10%;
+		}
+	}
+	.tile-head {
+		font-size: 16px; font-weight: normal;
+	}
+}
+
+.add-member-wrapper{
+	display: none;
+
+	&.show{
+		display: block;
+	}
+}
+
+.add-member{
+	width: 500px;
+	background-color: #F6F6F6; 
+	border: 1px solid #D8D8D8; @include border-radius(3px);
+
+	.token-input-list{
+		list-style: none;
+		color: #fff; padding: 0 10px;
+		@include border-radius(0 0 3px 3px);
+
+		li.token-input-token{
+			position: relative;
+			background-color: $color_volunteer; @include border-radius(2px);
+			padding: 5px 10px; margin-top: 5px;
+			
+			&:last-of-type{
+				border-bottom: none;
+			}
+		}
+	}
+
+	.member-input-box{
+		background: #fff;
+		border: 1px solid #CFCFCF; @include border-radius(3px);
+
+		input{
+			width: 94%; height: 32px;
+			padding: 0 3%;
+			border: none; outline: none;
+		}
+
+		.token-input-delete-token{
+			font-weight: bold; font-size: 16px; cursor: pointer;
+			color: #26649B; position: absolute;
+			height: 26px; top: 0; right: 0; padding: 0 10px;
+			line-height: 24px; text-align: center; text-decoration: none;
+
+			&:hover{
+				background: rgba(255,255,255,0.1); color: #fff;
+			}
+		}
+	}
+
+	.tile-head {
+		font-size: 16px; font-weight: normal;
 	}
 }

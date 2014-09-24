@@ -543,9 +543,7 @@
 	}
 
 	.map-pin-details{ 
-		width: 380px; 
-		// height: 270px; overflow: hidden;
-		// @include box-shadow(0 0px 4px 0, rgba(77,77,77,0.30));
+		width: 380px; background: #fff;
 		font-family: $base-font-family;
 
 		&.sample{
@@ -553,11 +551,8 @@
 		}
 
 		.info{
-			background: rgba(255,255,255,0.8);
 			@include border-radius-top-left(3px);
 			@include border-radius-top-right(3px);
-			// padding: 5px  15px 10px;
-			// margin-left: 20px; 
 			padding-bottom: 20px;
 			border-bottom: 1px solid #dedede;
 
@@ -565,6 +560,9 @@
 				font-size: 18px; line-height: 28px; margin: 0;
 				text-align: left; font-weight: normal; text-transform: none;
 				@include text-shadow(1px 1px 0px, rgba(255,255,255,0.5));
+			}
+			.address{
+				color: #898989; margin-top: 2px;
 			}
 			.item{
 				float: left; margin-right: 50px;
@@ -613,8 +611,6 @@
 		}
 		.details{
 			background: #fff; padding: 15px 0 0 0; text-align: center;
-			@include border-radius-bottom-right(3px);
-			@include border-radius-bottom-left(3px);
 
 			.purple-heading{
 				margin-bottom: 5px; text-align: center;
@@ -642,13 +638,44 @@
 			}
 		}
 
-		// .triangle2{
-		// 	display: none;
-		// 	position: absolute; left: 50%; bottom: -12px; margin-left: -14px;
-		// 	width: 24px; height: 12px;
-		// 	background-repeat: no-repeat; background-position: top center;
-		// 	@include bg-image-2x("../images/triangle_down", png, 24px, 12px);
-		// }
+		.vol-oppor-count{
+			background: #f6f6f6; padding: 5px;
+		}
+
+		.vol-oppor-wrapper{
+			height: 180px; overflow-y: scroll;
+		}
+
+		.vol-oppor-item {
+			border-top: 1px solid #dedede; padding: 15px 0;
+
+			.thumb{
+				width: 32px; height: 32px;
+			}
+			.button{
+				margin: 4px 0 0;
+			}
+			.item-title {
+				font-size: 14px; line-height: 18px;
+			}
+			.item-org{
+				font-size: 10px;
+			}
+			.item-info {
+				margin-left: 42px;
+			}
+			.item-desc{
+				color: #898989; padding-top: 15px;
+			}
+		}
+
+		&.vol-oppor {
+			.info{
+				.icon{
+					margin-top: 0;
+				}
+			}
+		}
 	}
 
 	.compare-flow{
@@ -1061,7 +1088,7 @@
 	}
 
 	.map_overlay{
-		position: absolute; z-index: 9; right:20px; left: 305px; bottom: 20px; min-width: 830px;
+		position: absolute; z-index: 9; right:20px; left: 20px; bottom: 20px; min-width: 830px;
 		@include opacity(0);
 		@include transition(all 300ms ease-in-out);
 		@include transform(translate3d(0, 20px, 0));
@@ -1333,9 +1360,6 @@
 	@include if-device(phone) {
 		.map_canvas_full{
 			top: 63px; left:0;
-		}
-		.sidebar_wrapper, .sidebar-wrapper{
-			display: none;
 		}
 	}
 }

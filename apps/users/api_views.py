@@ -18,6 +18,7 @@ from .permissions import UserListPermission, IsAdminOrIsSelf,\
     UserDonorRequirementPermission
 from .filters import VolunteerActivityFilter, DonationRequirementFilter
 from common.utils import render_to_json_response
+from common.views import KLPListAPIView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
@@ -232,10 +233,11 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
         return org_user
 
 
-class VolunteerActivitiesView(generics.ListCreateAPIView):
+class VolunteerActivitiesView(KLPListAPIView):
     serializer_class = VolunteerActivitySerializer
     permission_classes = (VolunteerActivitiesPermission,)
     filter_class = VolunteerActivityFilter
+    bbox_filter_field = ('school__instcoord__coord',)
 
     def get_queryset(self):
         return VolunteerActivity.objects.all()
