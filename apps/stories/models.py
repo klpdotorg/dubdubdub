@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
+from common.utils import send_templated_mail
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
 import json
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.sites.models import Site
 
 
 class Answer(models.Model):
@@ -93,6 +97,23 @@ class Story(models.Model):
 
     def get_geometry(self):
         return self.school.get_geometry() or None
+
+@receiver(post_save, sender=Story)
+def story_updated(sender, instance=None, created=False, **kwargs):
+    if not created:
+        return
+
+    send_templated_mail(
+        from_email='dev@klp.org.in',
+        to_email=instance.email,
+        subject='Please verify your email address',
+        template_name='email_templates/post_sys.html',
+        context={
+            'school': instance.school,
+            'site_url': Site.objects.get_current().domain,
+            'school_url': '/schoolpage/school/{}'.format(instance.id)
+        }
+    )
 
 
 class StoryImage(models.Model):
