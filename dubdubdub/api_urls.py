@@ -19,7 +19,8 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationRequirementsView, DonationRequirementView, PasswordChangeView,
     DonationItemsView, DonationItemView, DonationUsersView, DonationUserView)
 
-from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView)
+from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView,
+    ShareYourStoryView)
 
 urlpatterns = patterns('',
 
@@ -93,6 +94,8 @@ urlpatterns = patterns('',
         name="api_password_change"),
 
     # SYS urls
+    url(r'^stories/(?P<pk>[0-9]+)$', ShareYourStoryView.as_view(),
+        name="api_share_story"),
     url(r'^stories/(?P<pk>[0-9]+)/questions$', StoryQuestionsView.as_view(),
         name="api_stories_questions"),
     url(r'^stories/$', StoriesView.as_view(),
