@@ -91,7 +91,7 @@ class SchoolsDiseInfo(KLPListAPIView):
         return schools
 
 
-class SchoolInfo(KLPDetailAPIView):
+class SchoolInfo(KLPDetailAPIView, CacheMixin):
     '''
         Returns info for a single school. for /school/:id
     '''
@@ -116,7 +116,7 @@ class SchoolDemographics(KLPDetailAPIView):
             .select_related('dise_info',)
 
 
-class SchoolInfra(KLPDetailAPIView):
+class SchoolInfra(KLPDetailAPIView, CacheMixin):
     def get_serializer_class(self):
         sid = self.kwargs.get('pk') if hasattr(self, 'kwargs') else None
 
@@ -140,7 +140,7 @@ class SchoolInfra(KLPDetailAPIView):
                             'schooldetails__admin2', 'schooldetails__admin1')
 
 
-class SchoolLibrary(KLPDetailAPIView):
+class SchoolLibrary(KLPDetailAPIView, CacheMixin):
     serializer_class = SchoolLibrarySerializer
 
     def get_queryset(self):

@@ -172,7 +172,7 @@
             <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
         </tr>
     </table>
- 
+
 </script>
 
 <script type="text/html" id="tpl-tab-programmes">
@@ -211,7 +211,7 @@
 
     <p>
         {% if classroom_count > 3 %}
-        This school with more than 3 classrooms has 
+        This school with more than 3 classrooms has
         {% else %}
         This school with 3 classrooms or fewer has
         {% endif %}
@@ -563,7 +563,7 @@
                 <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
             </div>
             <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-                <!-- 
+                <!--
                 <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
                 <br/>
                 <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
@@ -593,14 +593,15 @@
 </script>
 
 <script type="text/html" id="tpl-share-story-form">
+    <h2>Share Your Story</h2>
     <form id="sysForm" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
         <div class="field-container">
             <label for="name_id">Name:</label>
-            <input name="name" id="name_id" />
+            <input type="text" name="name" id="name_id" />
         </div>
         <div class="field-container">
             <label for="email_id">E-mail:</label>
-            <input name="email" id="email_id" />
+            <input type='email' name="email" id="email_id" />
         </div>
         <div class="field-container">
             <label for="comments_id">Comments:</label>
