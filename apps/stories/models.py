@@ -106,7 +106,7 @@ def story_updated(sender, instance=None, created=False, **kwargs):
     send_templated_mail(
         from_email='dev@klp.org.in',
         to_email=instance.email,
-        subject='Please verify your email address',
+        subject='Thank you for Sharing Your Story at {}'.format(instance.school.name),
         template_name='email_templates/post_sys.html',
         context={
             'school': instance.school,
