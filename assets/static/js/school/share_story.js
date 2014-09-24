@@ -50,8 +50,47 @@
                 var html = tplSysForm(data);
                 //console.log("oldHtml", oldHtml);
                 $('.tab-content[data-tab=share-story]').html(html);
-                $('[name=image]').imagePreview();
-            });
+                doPostFormRender();
+                
+            });            
         });
     };
+
+    function doPostFormRender() {
+        $('[name=image]').imagePreview();
+        $('#sysForm').submit(function(e) {
+            if (e) {
+                e.preventDefault();
+            }
+            var $this = $(this);
+            var dataArray = $this.serializeArray();
+            var dataObj = {};
+            _(dataArray).each(function(a) {
+                dataObj[a.name] = a.value;
+            });
+            dataObj['images'] = getImagesData();
+            var postURL = "stories/" + SCHOOL_ID;
+            console.log("data obj", dataObj);
+            var $xhr = klp.api.do(postURL, dataObj, 'POST');
+            $xhr.done(function() {
+                klp.utils.alertMessage("Thank you for submitting your story!", "success");
+                klp.router.setHash(null, {state: null});
+            });
+            $xhr.fail(function() {
+                klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
+            });
+        });
+    }
+
+    function getImagesData() {
+        var images = [];
+        $('.imagePreview').each(function() {
+            var src = $(this).attr('src');
+            if (src) {
+                images.push(src);
+            } 
+        });
+        return images;
+    }
+
 })();
