@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView
@@ -21,32 +22,39 @@ urlpatterns = patterns('',
         ), name='home'),
 
     #about pages
-    url(r'^text/aboutus$', StaticPageView.as_view(
+    url(r'^about$', StaticPageView.as_view(
         template_name='aboutus.html'
         ), name='aboutus'),
+    url(r'text/aboutus', RedirectView.as_view(url='/about')),
 
-    url(r'^text/partners$', StaticPageView.as_view(
+    url(r'^partners$', StaticPageView.as_view(
         template_name='partners.html'
         ), name='partners'),
+    url(r'text/partners', RedirectView.as_view(url='/partners')),
 
-    url(r'^text/disclaimer$', StaticPageView.as_view(
+    url(r'^disclaimer$', StaticPageView.as_view(
         template_name='disclaimer.html'
         ), name='disclaimer'),
+    url(r'text/disclaimer', RedirectView.as_view(url='/disclaimer')),
 
     #reports page
-    url(r'^text/reports$', StaticPageView.as_view(
+    url(r'^reports$', StaticPageView.as_view(
         template_name='reports.html'
         ), name='reports'),
+    url(r'text/reports', RedirectView.as_view(url='/reports')),
 
     #data page
-    url(r'^text/data$', StaticPageView.as_view(
+    url(r'^data$', StaticPageView.as_view(
         template_name='data.html'
         ), name='data'),
+    url(r'text/data', RedirectView.as_view(url='/data')),
+    url(r'listFiles/2', RedirectView.as_view(url='/data')),
 
     #programme pages
-    url(r'^text/reading$', StaticPageView.as_view(
+    url(r'^programmes/reading$', StaticPageView.as_view(
         template_name='reading_programme.html'
         ), name='reading_programme'),
+    url(r'text/reading', RedirectView.as_view(url='/programmes/reading')),
 
     url(r'^text/maths$', StaticPageView.as_view(
         template_name='maths_programme.html'
@@ -60,9 +68,10 @@ urlpatterns = patterns('',
         template_name='preschool_programme.html'
         ), name='preschool_programme'),
 
-    url(r'^text/sikshana$', StaticPageView.as_view(
+    url(r'^programmes/sikshana$', StaticPageView.as_view(
         template_name='sikshana_programme.html'
         ), name='sikshana_programme'),
+    url(r'text/sikshana', RedirectView.as_view(url='/programmes/sikshana')),
 
     url(r'^volunteer$', StaticPageView.as_view(
         template_name='volunteer.html'
@@ -131,5 +140,5 @@ urlpatterns = patterns('',
     url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^api/v1/', include('dubdubdub.api_urls')),
-    url(r'^api-docs/', include('rest_framework_swagger.urls'))
+    url(r'^api-docs/', include('rest_framework_swagger.urls')),
 )
