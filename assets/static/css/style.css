@@ -10733,6 +10733,10 @@ button.Zebra_DatePicker_Icon_Inside {
   min-width: 80px;
   display: inline-block; }
 
+.form .checkbox-text {
+  width: -webkit-calc(100% - 50px);
+  width: calc(100% - 50px); }
+
 .textarea,
 .input-text {
   height: 32px;
