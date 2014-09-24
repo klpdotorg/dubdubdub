@@ -9,8 +9,8 @@
         klp.place_info.init();
         klp.comparison.init();
         klp.share_story.init();
-        klp.volunteer_modal.init();
-        klp.volunteer_filters.init();
+        // klp.volunteer_modal.init();
+        // klp.volunteer_filters.init();
 
         $('html').click(function() {
             //Hide the menus if visible

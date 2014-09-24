@@ -5,10 +5,10 @@
         $datepicker_wrapper;
 
     t.init = function() {
-        $(document).on("click", ".js-volunteer-trigger", function(e){
-            e.preventDefault();
-            t.show();
-        });
+        // $(document).on("click", ".js-volunteer-trigger", function(e){
+        //     e.preventDefault();
+        //     t.show();
+        // });
         $('.volunteer-filters-dropdown').easyDropDown({
             onChange: function(selected) {
                 var filterName = $(this).attr('name');

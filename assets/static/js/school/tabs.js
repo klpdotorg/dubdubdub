@@ -21,7 +21,7 @@
                     return data;
                 },
                 onRender: function(data) {
-                    $('a.gallery').colorbox();
+                    $('a.gallery').colorbox({'rel': 'group1'});
                     console.log("post render info");
                 }
             },
@@ -31,11 +31,20 @@
                 },
                 getContext: function(data) {
                     var d = klp.utils.addSchoolContext(data);
-                    d.dise = klp.utils.getBoyGirlPercents(data.num_boys, data.num_girls);
+                    d.dise = klp.utils.getBoyGirlPercents(data.num_boys_dise, data.num_girls_dise);
                     return d;
                 },
                 onRender: function(data) {
+                    if (data.num_boys === 0 && data.num_girls === 0) {
+                        $('#no-data.klp').removeClass('hide');
+                        return;
+                    }
                     $('#num_students_piechart').boyGirlChart(data);
+
+                    if (data.num_boys_dise === 0 && data.num_girls === 0) {
+                        $('.no-data.dise').removeClass('hide');
+                        return;
+                    }
                     $('#num_students_piechart_dise').boyGirlChart(data.dise);
                 }
             },
