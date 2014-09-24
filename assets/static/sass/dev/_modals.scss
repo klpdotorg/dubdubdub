@@ -15,3 +15,22 @@
   }  
 }
 
+.volunteer-flow .login-step-item {
+    visibility: inherit;
+    opacity: 1;
+}
+
+.modal {
+    height: auto;
+    margin-top: 0;
+    top: 50px;
+}
+
+.modal .button-close {
+    right: 30px;
+}
+
+//If height of modal changes, change this media query
+@media only screen and (max-height: 620px) {
+    .modal {position: absolute;}
+}

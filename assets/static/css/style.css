@@ -10676,6 +10676,21 @@ button.Zebra_DatePicker_Icon_Inside {
   .modal-map-filter .klp-filter-select:last-of-type {
     border-right: none; }
 
+.volunteer-flow .login-step-item {
+  visibility: inherit;
+  opacity: 1; }
+
+.modal {
+  height: auto;
+  margin-top: 0;
+  top: 50px; }
+
+.modal .button-close {
+  right: 30px; }
+
+@media only screen and (max-height: 620px) {
+  .modal {
+    position: absolute; } }
 .klp-filter-select.v-border .select2-container {
   border: none; }
 
@@ -10689,27 +10704,51 @@ button.Zebra_DatePicker_Icon_Inside {
 
 .alert {
   position: fixed;
-  top: 0px;
+  top: 25px;
   left: 20%;
   right: 20%;
   z-index: 9999;
-  padding: 20px;
-  border-radius: 0px 0px 20px 20px;
+  padding: 10px;
   background-color: yellow;
   text-align: center;
-  font-weight: bold; }
+  font-weight: bold;
+  opacity: 0.9;
+  border-radius: 5px;
+  font-size: 120%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9); }
 
 .alert.success {
-  background-color: green;
-  color: white; }
+  background-color: #75CF7E; }
 
 .alert.warning {
-  background-color: orange;
-  color: white; }
+  background-color: #EC6608; }
 
 .alert.error {
-  background-color: red;
-  color: white; }
+  background-color: #CB0012; }
+
+.field-container {
+  padding: 10px; }
+
+#sysForm label {
+  float: none;
+  line-height: inherit; }
+
+.form input[type="checkbox"], .form input[type="radio"] {
+  min-width: 0;
+  margin-right: 10px; }
+
+.form input[type="radio"] {
+  margin-left: 20px; }
+
+.form label {
+  min-width: 80px;
+  display: inline-block;
+  vertical-align: middle; }
+
+.form .checkbox-text {
+  width: -webkit-calc(100% - 50px);
+  width: calc(100% - 80px); }
 
 .textarea,
 .input-text {
