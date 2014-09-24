@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 0.6.1: September 24:
+  - added mviews for lib data [run-sql materialized_views_sep24.sql]
 
 Release 0.6: September 23: 3c229cb1beb9408ba03113eecd36a77b9d4caadf
   - Added Anganwadi db as MView [run-sql]
