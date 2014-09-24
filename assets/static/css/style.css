@@ -10677,9 +10677,20 @@ button.Zebra_DatePicker_Icon_Inside {
     border-right: none; }
 
 .volunteer-flow .login-step-item {
-  visibility: visible;
+  visibility: inherit;
   opacity: 1; }
 
+.modal {
+  height: auto;
+  margin-top: 0;
+  top: 50px; }
+
+.modal .button-close {
+  right: 30px; }
+
+@media only screen and (max-height: 620px) {
+  .modal {
+    position: absolute; } }
 .klp-filter-select.v-border .select2-container {
   border: none; }
 
