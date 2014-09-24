@@ -5,7 +5,8 @@ from django.core.urlresolvers import resolve, Resolver404
 from django.db.models import Q
 
 from schools.models import School
-from .models import Question,  Story, StoryImage
+from users.models import User
+from .models import Question,  Story, StoryImage, Answer
 from .serializers import SchoolQuestionsSerializer, StorySerializer, StoryWithAnswersSerializer
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
@@ -82,6 +83,13 @@ class ShareYourStoryView(KLPAPIView):
         )
         story.save()
 
+        try:
+            user = User.objects.get(email=email)
+            story.user = user
+            story.save()
+        except Exception, e:
+            pass
+
         for key in request.POST.keys():
             if not key.startswith('question_'):
                 continue
@@ -89,14 +97,15 @@ class ShareYourStoryView(KLPAPIView):
             _, qid = key.split('_')
             try:
                 question = Question.objects.get(qid=qid)
+                print question
                 answer = Answer(
                     story=story,
                     question=question,
-                    text="Yes" if request.POST.get(key) in ["on", "Yes"] else "No"
+                    text=request.POST.get(key)
                 )
                 answer.save()
             except Exception, e:
-                pass
+                print e
 
         images = request.POST.getlist('images[]')
         for image in images:
@@ -104,7 +113,7 @@ class ShareYourStoryView(KLPAPIView):
             image_data = b64decode(data)
             simage = StoryImage(
                 story=story,
-                image=ContentFile(image_data, '{}_{}.png'.format(school.id, random.randint(0, 999)))
+                image=ContentFile(image_data, '{}_{}.png'.format(school.id, random.randint(0, 9999)))
             )
             simage.save()
 
