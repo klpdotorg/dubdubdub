@@ -10676,6 +10676,10 @@ button.Zebra_DatePicker_Icon_Inside {
   .modal-map-filter .klp-filter-select:last-of-type {
     border-right: none; }
 
+.volunteer-flow .login-step-item {
+  visibility: visible;
+  opacity: 1; }
+
 .klp-filter-select.v-border .select2-container {
   border: none; }
 

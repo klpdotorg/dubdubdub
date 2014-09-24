@@ -594,7 +594,7 @@
 
 <script type="text/html" id="tpl-share-story-form">
     <h2>Share Your Story</h2>
-    <form id="sysForm" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
+    <form id="sysForm" class="form" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
         <div class="field-container">
             <label for="name_id">Name:</label>
             <input type="text" name="name" id="name_id" />
@@ -610,10 +610,10 @@
         {% for q in questions %}
         <div class="field-container">
             {% if q.question_type == 'checkbox' %}
-            <span class='checkbox-text'>
+            <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" />
+            <label class='checkbox-text' for='id_question_{{ q.qid }}'>
                 {{ q.text }}
-            </span>
-            <input type="checkbox" name="question_{{ q.qid }}" />
+            </label>
             {% elseif q.question_type == 'radio' %}
             <div class='radio-text'>
                 {{ q.text }}
