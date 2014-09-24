@@ -10722,6 +10722,17 @@ button.Zebra_DatePicker_Icon_Inside {
 #sysForm label {
   float: none; }
 
+.form input[type="checkbox"], .form input[type="radio"] {
+  min-width: 0;
+  margin-right: 10px; }
+
+.form input[type="radio"] {
+  margin-left: 20px; }
+
+.form label {
+  min-width: 80px;
+  display: inline-block; }
+
 .textarea,
 .input-text {
   height: 32px;
