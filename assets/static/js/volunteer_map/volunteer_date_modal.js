@@ -31,6 +31,7 @@
 
     t.close = function() {
         $('.volunteerDateModal').removeClass('show');
+        $('.modal-overlay').removeClass('show');
     };
 
     function onDateSelect(date) {
