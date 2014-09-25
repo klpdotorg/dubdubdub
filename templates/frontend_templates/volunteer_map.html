@@ -6,12 +6,12 @@
 				<div class="icon fr">S</div>
 				<h2 class="name mr-30">
 					<a href="/schoolpage/school/{{ features.0.school_details.name }}" class="color-green">
-						{{ features.0.school_details.name }}
+						{{ features[0].school_details.name }}
 					</a>
 				</h2>
 				<div class="address">
-					{% if features.0.school_details.full_address %}
-						{{ features.0.school_details.full_address }}
+					{% if features[0].school_details.full_address %}
+						{{ features[0].school_details.full_address }}
 					{% endif %}
 				</div>
 			</div>

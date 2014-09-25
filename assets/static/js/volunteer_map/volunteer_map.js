@@ -4,7 +4,7 @@
     var map;
     var activitiesLayer;
     var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
-    var tplVolunteerPopup = swig.compile($('#tplVolunteerMapPopup').html());
+    var tplVolunteerMapPopup = swig.compile($('#tplVolunteerMapPopup').html());
     t.init = function() {
         load_map();
 
@@ -147,9 +147,9 @@
             params['activity_type'] = type;
         }
 
-        var popupInforXHR = klp.api.do('volunteer_activities', params);
-        popupInforXHR.done(function (data) {
-            console.log('popup data', data);
+        var popupInfoXHR = klp.api.do('volunteer_activities', params);
+        popupInfoXHR.done(function (data) {
+            marker.bindPopup(tplVolunteerMapPopup(data)).openPopup();
         });
 
     }
