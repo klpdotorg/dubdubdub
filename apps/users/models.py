@@ -194,10 +194,17 @@ class UserOrganization(models.Model):
         unique_together = ('user', 'organization',)
 
 
+TYPE_COLOR_CHOICES = (
+    ('red', 'Red'),
+    ('green', 'Green'),
+    ('purple', 'Purple'),
+)
+
 class VolunteerActivityType(models.Model):
     name = models.CharField(max_length=64)
     image = models.ImageField(upload_to='activity_type_images')
     text = models.TextField(blank=True)
+    color = models.CharField(choices=TYPE_COLOR_CHOICES, max_length=64)
 
     def __unicode__(self):
         return self.name
