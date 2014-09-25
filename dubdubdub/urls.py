@@ -104,7 +104,11 @@ urlpatterns = patterns('',
             #'hide_footer': True
         }), name='school_detail'),
 
-    url(r'^schoolpage/school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
+    url(r'^school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
+    url(r'^schoolpage/school/(?P<pk>[0-9]*)$', RedirectView.as_view(
+        pattern_name='school_page',
+        query_string=True
+    ), name='old_school_page'),
 
     url(r'^users/verify_email', EmailVerificationView.as_view(), name='user_email_verify'),
 
