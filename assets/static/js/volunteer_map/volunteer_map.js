@@ -2,6 +2,7 @@
     var t = klp.volunteer_map = {};
 
     var map;
+    var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
     t.init = function() {
         load_map();
 
@@ -65,6 +66,45 @@
             setURL();
         });
     };
+
+    t.applyFilters = function() {
+        var filterParams = getFilters();
+        var $activitiesXHR = klp.api.do('volunteer_activities', filterParams);
+        $activitiesXHR.done(function(data) {
+            console.log("activities", data);
+            clearActivities();
+            loadActivities(data);
+        });
+    };
+
+    function getFilters() {
+        var filterParams = {};
+        var date = $('#vol-date-input').val();
+        var org = $('#filterOrganization').val();
+        var typ = $('#filterActivityType').val();
+        if (date) {
+            filterParams.date = date;
+        }
+        if (org) {
+            filterParams.org = org;
+        }
+        if (typ) {
+            filterParams.activity_type = typ;
+        }
+        return filterParams;        
+    }
+
+    function clearActivities() {
+        $('#volunteerActivityList').empty();
+    }
+
+    function loadActivities(data) {
+        var activities = data.features;
+        _(activities).each(function(activity) {
+            var html = tplVolunteerListItem(activity);
+            $('#volunteerActivityList').append(html);
+        });
+    }
 
     function load_map() {
         var southWest = L.latLng(11.57, 73.87),

@@ -69,7 +69,7 @@ class VolunteerActivityEditPageView(DetailView):
 
 class VolunteerMapPageView(StaticPageView):
 
-    def get_context_date(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(VolunteerMapPageView, self).get_context_data(**kwargs)
         context['activity_types'] = VolunteerActivityType.objects.all()
         context['organizations'] = Organization.objects.all()
