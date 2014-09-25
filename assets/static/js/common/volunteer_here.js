@@ -8,7 +8,10 @@
             var $this = $(this);
             var activityId = $this.attr("data-id");
             klp.auth.requireLogin(function() {
-                doConfirm(activityId);
+                var $xhr = klp.api.authDo('volunteer_activities/' + activityId);
+                $xhr.done(function(data) {
+                    showConfirmModal(data);
+                });
             });
         });
     };
@@ -36,7 +39,9 @@
         var $xhr = klp.api.authDo(url, {}, "POST");
         $xhr.done(function(data) {
             console.log("volunteer confirm", data);
-            showConfirmModal(data);
+            klp.utils.alertMessage("Confirmed. Thanks for volunteering!", "success");
+            t.close();
+            //showConfirmModal(data);
         });
         $xhr.fail(function(err) {
             //FIXME: check better for errors / duplicate signup
@@ -44,14 +49,30 @@
         });
     }
 
+    t.close =function() {
+        $('.js-volunteerHereModal').hide().remove();
+    };
+
     function showConfirmModal(data) {
-        var html = tplConfirmModal(data.activity_details);
+        var userId = klp.auth.getId();
+        for (var i=0; i<data.users.length;i++) {
+            if (parseInt(userId) === data.users[i].user_details.id) {
+                klp.utils.alertMessage("Already signed up for this activity.", "warning");
+                return;
+            }
+        }
+        var html = tplConfirmModal(data);
         $('.js-volunteerHereModal').remove();
         $('body').append(html);
+        var activityId = data.id;
         $('.js-volunteerHereModal').addClass('show');
-        $('.js-volunteerHereModal').find('.step-item').css({
-            'visibility': 'visible',
+        $('.js-volunteerHereModal').find('.confirmationStep').css({
+            'visibility': 'inherit',
             'opacity': '1'
+        });
+        $('.confirmVolunteerBtn').click(function(e) {
+            e.preventDefault();
+            doConfirm(activityId);
         });
     }
 
