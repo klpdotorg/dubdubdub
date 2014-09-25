@@ -7,25 +7,18 @@
         $datepicker_input = $modal.find('#datepicker-modal-input');
         var $datesXHR = klp.api.do('volunteer_activity_dates');
         $datesXHR.done(function(data) {
-            data = {
-                    features: [
-                    "2014-09-27",
-                    "2014-11-12"
-                    ]
-                    };
-            currentDates = data.features;
-                    $datepicker_input.Zebra_DatePicker({
-            always_visible: $modal.find('#datepicker-modal-wrapper'),
-            format: 'Y-m-d',
-            first_day_of_week: 0,
-            show_clear_date: false,
-            direction: [true, 92],
-            disabled_dates: getDisableDates(data.features),
-            show_select_today: false,
-            onSelect: onDateSelect,
-            onClear: onDateClear,
-        });
-        datepicker = $datepicker_input.data('Zebra_DatePicker');
+            $datepicker_input.Zebra_DatePicker({
+                always_visible: $modal.find('#datepicker-modal-wrapper'),
+                format: 'Y-m-d',
+                first_day_of_week: 0,
+                show_clear_date: false,
+                direction: [true, 92],
+                disabled_dates: getDisableDates(data.features),
+                show_select_today: false,
+                onSelect: onDateSelect,
+                onClear: onDateClear,
+            });
+            datepicker = $datepicker_input.data('Zebra_DatePicker');
         });
     };
 
