@@ -87,7 +87,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return Token.objects.get(user=self).key
 
     def get_short_name(self):
-        return self.first_name or self.username
+        return self.first_name or ''
 
     @property
     def is_staff(self):

@@ -1,27 +1,31 @@
 (function() {
     var t = klp.volunteer_date_modal = {};
     var datepicker;
+    var $datepicker_input;
     t.init = function() {
         var $modal = $('.volunteerDateModal');
-        var $datepicker_input = $modal.find('#datepicker-modal-input');
-
-        $datepicker_input.Zebra_DatePicker({
-            always_visible: $modal.find('#datepicker-modal-wrapper'),
-            first_day_of_week: 0,
-            show_clear_date: false,
-            show_select_today: false,
-            //disabled_dates: ['* * * *'],
-            onSelect: onDateSelect,
-            onClear: onDateClear,
-            format: 'Y-m-d'
-        });
-        datepicker = $datepicker_input.data('Zebra_DatePicker');
+        $datepicker_input = $modal.find('#datepicker-modal-input');
         var $datesXHR = klp.api.do('volunteer_activity_dates');
         $datesXHR.done(function(data) {
-            datepicker.update({
-                //disabled_dates: ['* * * *'],
-                enabled_dates: data.features
-            });
+            data = {
+                    features: [
+                    "2014-09-27",
+                    "2014-11-12"
+                    ]
+                    };
+            currentDates = data.features;
+                    $datepicker_input.Zebra_DatePicker({
+            always_visible: $modal.find('#datepicker-modal-wrapper'),
+            format: 'Y-m-d',
+            first_day_of_week: 0,
+            show_clear_date: false,
+            direction: [true, 92],
+            disabled_dates: getDisableDates(data.features),
+            show_select_today: false,
+            onSelect: onDateSelect,
+            onClear: onDateClear,
+        });
+        datepicker = $datepicker_input.data('Zebra_DatePicker');
         });
     };
 
@@ -35,11 +39,25 @@
     };
 
     function onDateSelect(date) {
-        console.log("date selected", date);
+        t.close();
+        $('#vol-date-input').val(date);
     }
 
     function onDateClear() {
 
     }
 
+    function getDisableDates(currentDates) {
+        var today = moment().format('YYYY-MM-DD');
+        var threeMonths = [];
+        for (var i=1; i<92; i++) {
+            threeMonths.push(moment().add(i, 'days').format('YYYY-MM-DD'));
+        }
+        var disabledDates = _.difference(threeMonths, currentDates);
+        var disabledDatesFormatted = [];
+        disabledDates.forEach(function (element) {
+            disabledDatesFormatted.push(moment(element).format('D M YYYY'));
+        });
+        return disabledDatesFormatted;
+    }
 })();
