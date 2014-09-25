@@ -255,11 +255,11 @@ def volunteer_activity_dates(request):
     typ = request.GET.get('type', None)
     organization = request.GET.get('organization', None)
     if school:
-        qset = qset.objects.filter(school_id=school)
+        qset = qset.filter(school_id=school)
     if typ:
-        qset = qset.objects.filter(type_id=typ)
+        qset = qset.filter(type_id=typ)
     if organization:
-        qset = qset.objects.filter(organization_id=organization)
+        qset = qset.filter(organization_id=organization)
     qset = qset.values('date').distinct()
     dates = [o['date'].strftime("%Y-%m-%d") for o in qset]
     return Response(dates)
