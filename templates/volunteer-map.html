@@ -102,23 +102,22 @@
 
 				<div class="label fl">Organization</div>
 				<div class="filter-item fl phn-fr">
-					<select name="organization" class="dropdown">
-						<option selected>All</option>
-						<option>Akshara Foundation</option>
-						<option>Akshaya Patra</option>
-						<option>KSEEB</option>
-						<option>NUEPA</option>
+					<select name="organization" id="filterOrganization" class="dropdown">
+						<option value="" selected>All</option>
+						{% for org in organizations %}
+						<option value="{{ org.id }}">{{ org.name }}</option>
+						{% endfor %}
 					</select>
 				</div>
 				<div class="hide phn-block phn-clr"></div>
 
 				<div class="label fl">Opportunity</div>
 				<div class="filter-item fl phn-fr">
-					<select name="activity" class="dropdown">
-						<option selected>All</option>
-						<option>Teaching Based</option>
-						<option>Activity Based</option>
-						<option>Skill Based</option>
+					<select name="activity" id="filterActivityType" class="dropdown">
+						<option value="" selected>All</option>
+						{% for typ in activity_types %}
+						<option value="{{ typ.id }}">{{ typ.name }}</option>
+						{% endfor %}
 					</select>
 				</div>
 				<div class="clr"></div>
@@ -175,140 +174,6 @@
 
 		<section id="sidebar_wrapper" class="sidebar-wrapper">
 			<ul id="volunteerActivityList">
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-red ellipsis">Activity Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-green ellipsis">Teaching Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-red ellipsis">Activity Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-purple ellipsis">Skill Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-purple ellipsis">Skill Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-green ellipsis">Teaching Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-				<li class="place_item">
-					<div class="stats">
-						<div class="school bold color-green ellipsis">Gian Jyoti Public School</div>
-					</div>
-					<div class="details">
-						<h3 class="bold color-red ellipsis">Activity Based</h3>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="stats">
-						<span class="distance">800m</span>
-					</div>
-					<div class="details">
-						For <span class="uppercase color-green-2">Akshara Foundation</span>
-					</div>
-					<div class="clr mb-5"></div>
-					<div class="info">
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry of the printing and typesetting industry.
-					</div>
-				</li>
-			</ul>
 			</ul>
 		</section>
 
@@ -347,4 +212,5 @@
 				</div>
 		</div>
 
+	{% include 'frontend_templates/volunteer_map.html' %}
 {% endblock %}
