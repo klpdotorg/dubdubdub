@@ -4,7 +4,7 @@
     var map;
     var activitiesLayer;
     var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
-    var tplVolunteerPopup = swig.compile($('#tplVolunteerMapPopup'));
+    var tplVolunteerPopup = swig.compile($('#tplVolunteerMapPopup').html());
     t.init = function() {
         load_map();
 
@@ -125,9 +125,43 @@
         activitiesLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: klp.utils.mapIcon(feature.properties.school_details.type.name)});
-            }
+            },
+            onEachFeature: onEachSchool
         }).addTo(map);
     }
+
+    function markerPopup(marker, feature) {
+        var school_id = feature.properties.school_details.id;
+        var date = $('#vol-date-input').val();
+        var organisation = $('#filterOrganization').val();
+        var type = $('#filterActivityType').val();
+        var params = {
+            'date': date,
+            'school': school_id
+        };
+        if (organisation) {
+            params['organization'] = organisation;
+        }
+
+        if (type) {
+            params['activity_type'] = type;
+        }
+
+        var popupInforXHR = klp.api.do('volunteer_activities', params);
+        popupInforXHR.done(function (data) {
+            console.log('popup data', data);
+        });
+
+    }
+
+    function onEachSchool(feature, layer) {
+    if (feature.properties) {
+        layer.on('click', function(e) {
+            markerPopup(this, feature);
+            //setMarkerURL(feature);
+        });
+    }
+}
 
 
 
