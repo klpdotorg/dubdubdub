@@ -4,6 +4,7 @@
         klp.router = new KLPRouter({});
         klp.router.init();
         klp.volunteer_map.init();
+        klp.volunteer_here.init();
         klp.volunteer_date_modal.init();
         init_volunteer_date_filter();
         $(document).on("click", ".js-toggle-vol-mobile-filters", function(){

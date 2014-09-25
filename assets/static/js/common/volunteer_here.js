@@ -5,6 +5,7 @@
     t.init = function() {
         $(document).on("click", ".js-volunteerHereBtn", function(e) {
             e.preventDefault();
+            console.log("clicked volunteer here");
             var $this = $(this);
             var activityId = $this.attr("data-id");
             klp.auth.requireLogin(function() {
