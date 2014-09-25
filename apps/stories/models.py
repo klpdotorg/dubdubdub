@@ -112,7 +112,7 @@ def story_updated(sender, instance=None, created=False, **kwargs):
         context={
             'school': instance.school,
             'site_url': Site.objects.get_current().domain,
-            'school_url': '/school/{}'.format(instance.id)
+            'school_url': instance.school.get_absolute_url(),
         }
     )
 

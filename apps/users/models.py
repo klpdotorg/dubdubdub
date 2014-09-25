@@ -258,12 +258,12 @@ def user_updated(sender, instance=None, created=False, **kwargs):
         subject='Please verify your email address',
         template_name='email_templates/volunteer.html',
         context={
-            'org': instance.activity.organization
+            'org': instance.activity.organization,
             'user': instance.user,
             'activity': instance.activity,
             'school': instance.activity.school,
             'site_url': Site.objects.get_current().domain,
-            'school_url': '/school/{}'.format(instance.id)
+            'school_url': instance.activity.school.get_absolute_url(),
             'url': url
         }
     )

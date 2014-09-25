@@ -7,6 +7,7 @@ from .partners import LibLevelAgg
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
 from django.conf import settings
+from django.core.urlresolvers import reverse
 import json
 
 
@@ -189,6 +190,9 @@ class School(GeoBaseModel):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('school_page', kwargs={'pk': self.id})
 
     def get_dise_code(self):
         return self.dise_info_id
