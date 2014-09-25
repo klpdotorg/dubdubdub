@@ -69,20 +69,36 @@
         <table class="info_data_table">
             <tr>
                 <td>MLA Constituency</td>
-                <td>Malleswaram</td>
+                <td>
+                    {% if assembly.name %}
+                        {{ assembly.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
             </tr>
+            <!--
             <tr>
                 <td>MLA Details</td>
                 <td>Dr. Ashwath Narayan (BJP)</td>
             </tr>
+            -->
             <tr>
-                <td>MLA Constituency</td>
-                <td>Malleswaram</td>
+                <td>MP Constituency</td>
+                <td>
+                    {% if parliament.name %}
+                        {{ parliament.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
             </tr>
+            <!--
             <tr>
                 <td>MLA Details</td>
                 <td>DB Chandre Gowada (BJP)</td>
             </tr>
+            -->
         </table>
     </div>
     <div class="photos-block fr-desktop">
