@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,\
     PermissionsMixin
 from rest_framework.authtoken.models import Token
@@ -121,7 +122,7 @@ def user_updated(sender, instance=None, created=False, **kwargs):
     )
 
     send_templated_mail(
-        from_email='dev@klp.org.in',
+        from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.email],
         subject='Please verify your email address',
         template_name='email_templates/register.html',
@@ -246,6 +247,26 @@ class UserVolunteerActivity(models.Model):
     class Meta:
         unique_together = ('user', 'activity',)
 
+@receiver(post_save, sender=UserVolunteerActivity)
+def user_updated(sender, instance=None, created=False, **kwargs):
+    if not created:
+        return
+
+    send_templated_mail(
+        from_email=settings.EMAIL_DEFAULT_FROM,
+        to_emails=[instance.email, instance.activity.organization.email],
+        subject='Please verify your email address',
+        template_name='email_templates/volunteer.html',
+        context={
+            'org': instance.activity.organization
+            'user': instance.user,
+            'activity': instance.activity,
+            'school': instance.activity.school,
+            'site_url': Site.objects.get_current().domain,
+            'school_url': '/school/{}'.format(instance.id)
+            'url': url
+        }
+    )
 
 # class UserDonorRequirement(models.Model):
 #     user = models.ForeignKey('User')

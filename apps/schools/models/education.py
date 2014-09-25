@@ -41,6 +41,10 @@ class Address(BaseModel):
             self.address, self.area, self.pincode
         ]))
 
+    @property
+    def identifires(self):
+        return self.get_identifiers()
+
     def get_identifiers(self):
         return ', '.join(filter(None, [
             self.instidentification, self.instidentification2
