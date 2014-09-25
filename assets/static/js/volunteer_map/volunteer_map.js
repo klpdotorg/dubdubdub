@@ -68,7 +68,8 @@
     };
 
     t.applyFilters = function() {
-        var filterParams = getFilters();
+        var params = getFilters();
+        params.geometry = 'yes';
         var $activitiesXHR = klp.api.do('volunteer_activities', filterParams);
         $activitiesXHR.done(function(data) {
             console.log("activities", data);
