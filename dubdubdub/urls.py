@@ -8,7 +8,8 @@ from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationPageView,
                          ProfileEditPageView, OrganizationEditPageView,
                          VolunteerActivityAddPageView,
-                         VolunteerActivityEditPageView, EmailVerificationView)
+                         VolunteerActivityEditPageView, EmailVerificationView,
+                         VolunteerMapPageView)
 
 urlpatterns = patterns('',
 
@@ -88,13 +89,14 @@ urlpatterns = patterns('',
             'hide_footer': True
         }), name='map'),
 
-   url(r'^volunteer-map$', StaticPageView.as_view(
-        template_name='volunteer-map.html',
-        extra_context={
-            #'header_full_width': True,
-            #'header_fixed': True,
-            #'hide_footer': True
-        }), name='volunteer_map'),
+
+    # url(r'^volunteer-map$', StaticPageView.as_view(
+    #     template_name='volunteer-map.html',
+    #     extra_context={
+    #         'header_full_width': True,
+    #         'header_fixed': True,
+    #         'hide_footer': True
+    #     }), name='volunteer_map'),
 
     url(r'^school$', StaticPageView.as_view(
         template_name='school.html',
@@ -103,6 +105,14 @@ urlpatterns = patterns('',
             #'header_fixed': True,
             #'hide_footer': True
         }), name='school_detail'),
+
+    url(r'^volunteer-map$', VolunteerMapPage.as_view(
+        template_name='volunteer-map.html',
+        extra_context={
+            'header_full_width': True,
+            'header_fixed': True,
+            'hide_footer': True
+        }), name='volunteer_map'),
 
     url(r'^school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$', RedirectView.as_view(
