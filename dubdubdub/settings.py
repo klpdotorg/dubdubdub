@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+EMAIL_DEFAULT_FROM = 'dev@klp.org.in'
+
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 #TEST_RUNNER='django.test.runner.DiscoverRunner'
 # Hosts/domain names that are valid for this site; required if DEBUG is False

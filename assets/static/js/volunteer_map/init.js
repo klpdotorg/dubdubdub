@@ -22,7 +22,7 @@
 
         $date_input.Zebra_DatePicker({
             always_visible: $datepicker_wrapper,
-            format: 'd-m-Y',
+            format: 'Y-m-d',
             first_day_of_week: 0,
             show_clear_date: false,
             show_select_today: false,

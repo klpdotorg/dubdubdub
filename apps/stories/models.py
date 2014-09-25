@@ -3,6 +3,7 @@ from common.models import BaseModel, GeoBaseModel
 from common.utils import send_templated_mail
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
+from django.conf import settings
 import json
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -104,14 +105,14 @@ def story_updated(sender, instance=None, created=False, **kwargs):
         return
 
     send_templated_mail(
-        from_email='dev@klp.org.in',
+        from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.email, 'team@klp.org.in'],
         subject='Thank you for Sharing Your Story at {}'.format(instance.school.name),
         template_name='email_templates/post_sys.html',
         context={
             'school': instance.school,
             'site_url': Site.objects.get_current().domain,
-            'school_url': '/schoolpage/school/{}'.format(instance.id)
+            'school_url': instance.school.get_absolute_url(),
         }
     )
 
