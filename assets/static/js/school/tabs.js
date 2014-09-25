@@ -35,17 +35,20 @@
                     return d;
                 },
                 onRender: function(data) {
-                    if (data.num_boys === 0 && data.num_girls === 0) {
-                        $('#no-data.klp').removeClass('hide');
-                        return;
+                    if (!data.num_boys && !data.num_girls) {
+                        //console.log("no boy-girl data!");
+                        $('.no-data.klp').removeClass('hide');
+                        $('#boygirlChartWrapper').hide();
+                    } else {
+                        $('#num_students_piechart').boyGirlChart(data);
                     }
-                    $('#num_students_piechart').boyGirlChart(data);
 
-                    if (data.num_boys_dise === 0 && data.num_girls === 0) {
+                    if (!data.num_boys_dise && !data.num_girls_dise) {
                         $('.no-data.dise').removeClass('hide');
-                        return;
+                        $('#boygirlChartWrapperDISE').hide();
+                    } else {
+                        $('#num_students_piechart_dise').boyGirlChart(data.dise);
                     }
-                    $('#num_students_piechart_dise').boyGirlChart(data.dise);
                 }
             },
             'programmes': {
