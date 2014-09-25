@@ -2,6 +2,7 @@
     var t = klp.volunteer_map = {};
 
     var map;
+    var activitiesLayer;
     var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
     t.init = function() {
         load_map();
@@ -105,6 +106,8 @@
             var html = tplVolunteerListItem(activity.properties);
             $('#volunteerActivityList').append(html);
         });
+        activitiesLayer.addData(activities);
+        map.fitBounds(activitiesLayer.getBounds());
     }
 
     function load_map() {
@@ -118,6 +121,11 @@
         }).addTo(map);
 
         map.locate({setView: true, maxZoom: 15});
+        activitiesLayer = L.geoJson(null, {
+            pointToLayer: function(feature, latlng) {
+                return L.marker(latlng, {icon: klp.utils.mapIcon(feature.properties.school_details.type.name)});
+            }
+        }).addTo(map);
     }
 
 
