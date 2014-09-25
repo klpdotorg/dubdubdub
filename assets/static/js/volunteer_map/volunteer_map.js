@@ -4,6 +4,7 @@
     var map;
     var activitiesLayer;
     var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
+    var tplVolunteerPopup = swig.compile($('#tplVolunteerMapPopup'));
     t.init = function() {
         load_map();
 
