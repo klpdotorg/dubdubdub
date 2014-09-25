@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.template import Context
 
 
-def send_templated_mail(from_email, to_email, subject, template_name, context=None):
+def send_templated_mail(from_email, to_emails, subject, template_name, context=None):
     plaintext = get_template(template_name)
     htmly = get_template(template_name)
 
@@ -13,7 +13,7 @@ def send_templated_mail(from_email, to_email, subject, template_name, context=No
 
     text_content = plaintext.render(con)
     html_content = htmly.render(con)
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    msg = EmailMultiAlternatives(subject, text_content, from_email, to_emails)
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 

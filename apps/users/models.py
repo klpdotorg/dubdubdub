@@ -122,7 +122,7 @@ def user_updated(sender, instance=None, created=False, **kwargs):
 
     send_templated_mail(
         from_email='dev@klp.org.in',
-        to_email=instance.email,
+        to_emails=[instance.email],
         subject='Please verify your email address',
         template_name='email_templates/register.html',
         context={
