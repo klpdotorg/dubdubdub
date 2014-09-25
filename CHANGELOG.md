@@ -13,6 +13,7 @@ Changelog
 Release 0.7:
   - Cleaned up SYS data [run-sql sys_cleanup.sql]
   - Add color field to volunteer activity types [sql-migrate]
+  - Fixed foreignkey to auth_users on django_admin_log [run-sql admin_log_fk_cleanup.sql]
 
 Release 0.6.1: September 24: <FILL IT>
   - added mviews for lib data [run-sql materialized_views_sep24.sql]
