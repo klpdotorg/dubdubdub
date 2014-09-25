@@ -4,37 +4,39 @@
 		<div class="content">
 			<div class="info school">
 				<div class="icon fr">S</div>
-				<h2 class="name mr-30"><a href="" class="color-green">Gian Jyoti Public School</a></h2>
+				<h2 class="name mr-30">
+					<a href="/schoolpage/school/{{ features.0.school_details.name }}" class="color-green">
+						{{ features.0.school_details.name }}
+					</a>
+				</h2>
 				<div class="address">
-					Street No-4, Banasawadi, Bangalore
+					{% if features.0.school_details.full_address %}
+						{{ features.0.school_details.full_address }}
+					{% endif %}
 				</div>
 			</div>
 			<div class="vol-oppor-wrapper">
-				<div class="vol-oppor-count ta-c">3 opportunities available</div>
+				{% if features.length == 1 %}
+				<div class="vol-oppor-count ta-c">1 opportunity available</div>
+				{% else %}
+				<div class="vol-oppor-count ta-c">{{ features.length }} opportunity available</div>
+				{% endif %}
+				{% for f in features %}
 				<div class="vol-oppor-item">
-					<img class="thumb fl" src="images/volunteer/activity.png"/>
-					<a class="button blue small clickable fr js-trigger-volunteer-confirm">Volunteer</a>
+					<img class="thumb fl" src="{{ f.activity_type_details.image }}"/>
+					<a class="button blue small clickable fr js-trigger-volunteer-confirm js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
 					<div class="item-info">
-						<div class="item-title bold color-red">Activity Based</div>
-						<div class="item-org">For <span class="uppercase color-green-2">Akshara Foundation</span></div>
+						<div class="item-title bold color-{{ f.activity_type_details.color }}">
+							{{ f.activity_type_details.name }}
+						</div>
+						<div class="item-org">For <span class="uppercase color-green-2">{{ f.organization_details.name }}</span></div>
 					</div>
 					<div class="clr"></div>
 					<div class="item-desc">
-						Truffaut occupy Vice you probably haven't heard of them, selfies roof. Truffaut occupy Vice you probably .Truffaut occupy Vice you probably haven't heard.
+						{{ f.text }}
 					</div>
 				</div>
-				<div class="vol-oppor-item">
-					<img class="thumb fl" src="images/volunteer/activity.png"/>
-					<a class="button blue small clickable fr js-trigger-volunteer-confirm">Volunteer</a>
-					<div class="item-info">
-						<div class="item-title bold color-red">Activity Based</div>
-						<div class="item-org">For <span class="uppercase color-green-2">Akshara Foundation</span></div>
-					</div>
-					<div class="clr"></div>
-					<div class="item-desc">
-						Truffaut occupy Vice you probably haven't heard of them, selfies roof. Truffaut occupy Vice you probably .Truffaut occupy Vice you probably haven't heard.
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
