@@ -149,7 +149,7 @@
 
         var popupInfoXHR = klp.api.do('volunteer_activities', params);
         popupInfoXHR.done(function (data) {
-            marker.bindPopup(tplVolunteerMapPopup(data)).openPopup();
+            marker.bindPopup(tplVolunteerMapPopup(data), {maxWidth:381, minWidth:381}).openPopup();
         });
 
     }
