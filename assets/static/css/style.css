@@ -5294,7 +5294,7 @@ table.tbl-common {
   -o-transform: translateX(0) translateY(0);
   transform: translateX(0) translateY(0); }
   .volunteer-flow .step-item.visible {
-    visibility: visible; }
+    visibility: inherit; }
 .volunteer-flow .fadein, .volunteer-flow .fadeout {
   -webkit-transition: all 300ms ease-in-out;
   -moz-transition: all 300ms ease-in-out;
