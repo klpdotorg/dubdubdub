@@ -3413,7 +3413,7 @@ a {
   zoom: 1;
   *display: inline ;
   *vertical-align: auto;
-  margin: 10px 25px 10px 0;
+  margin: 10px 12px;
   width: 30px;
   height: 20px;
   background-repeat: no-repeat;
@@ -9573,6 +9573,7 @@ button.Zebra_DatePicker_Icon_Inside {
   z-index: 1; }
 .school-comparison-flow .vs-separator {
   position: absolute;
+  width: 196px;
   left: 50%;
   top: 0;
   margin-left: -98px; }
@@ -9585,7 +9586,12 @@ button.Zebra_DatePicker_Icon_Inside {
     font-size: 10px;
     text-transform: uppercase; }
     .school-comparison-flow .vs-separator .label.bg {
-      padding: 0 10px;
+      position: absolute;
+      width: 90px;
+      left: 50%;
+      margin: 0 0 0 -45px;
+      text-align: center;
+      padding: 0;
       background: #898989;
       color: #fff; }
   .school-comparison-flow .vs-separator .vr {

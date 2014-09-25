@@ -47,7 +47,8 @@
 		background: #fff; position: relative; z-index: 1;
 	}
 	.vs-separator{
-		position: absolute; left: 50%; top: 0; margin-left: -98px;
+		position: absolute; width: 196px; left: 50%; top: 0; margin-left: -98px;
+
 		.label{
 			margin: 0 5px;
 			color: #898989;
@@ -55,7 +56,8 @@
 			font-size: 10px; text-transform: uppercase;
 
 			&.bg{
-				padding: 0 10px;
+				position: absolute; width: 90px; left: 50%; margin: 0 0 0 -45px;
+				text-align: center; padding: 0;
 				background: #898989; color: #fff;
 			}
 		}
