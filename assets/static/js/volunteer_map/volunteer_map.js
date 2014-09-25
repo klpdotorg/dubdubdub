@@ -70,7 +70,7 @@
     t.applyFilters = function() {
         var params = getFilters();
         params.geometry = 'yes';
-        var $activitiesXHR = klp.api.do('volunteer_activities', filterParams);
+        var $activitiesXHR = klp.api.do('volunteer_activities', params);
         $activitiesXHR.done(function(data) {
             console.log("activities", data);
             clearActivities();
