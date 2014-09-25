@@ -10,6 +10,12 @@ import uuid
 import random
 import datetime
 
+import string
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from common.utils import send_templated_mail
+from django.contrib.sites.models import Site
+
 USER_TYPE_CHOICES = (
     (0, 'Volunteer'),
     (1, 'Developer'),
@@ -107,12 +113,6 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 def user_updated(sender, instance=None, created=False, **kwargs):
     if not created:
         return
-
-    import string
-    from django.core.mail import send_mail
-    from django.core.urlresolvers import reverse
-    from common.utils import send_templated_mail
-    from django.contrib.sites.models import Site
 
     email_verification_code = ''.join([random.choice(string.hexdigits) for x in range(32)])
     instance.email_verification_code = email_verification_code
@@ -248,7 +248,7 @@ class UserVolunteerActivity(models.Model):
         unique_together = ('user', 'activity',)
 
 @receiver(post_save, sender=UserVolunteerActivity)
-def user_updated(sender, instance=None, created=False, **kwargs):
+def volunteer_activity_created(sender, instance=None, created=False, **kwargs):
     if not created:
         return
 
@@ -263,8 +263,7 @@ def user_updated(sender, instance=None, created=False, **kwargs):
             'activity': instance.activity,
             'school': instance.activity.school,
             'site_url': Site.objects.get_current().domain,
-            'school_url': instance.activity.school.get_absolute_url(),
-            'url': url
+            'school_url': instance.activity.school.get_absolute_url()
         }
     )
 
