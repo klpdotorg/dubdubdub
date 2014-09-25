@@ -21,7 +21,7 @@
 		@include transform(translateX(0) translateY(0));
 
 		&.visible{
-			visibility: visible;
+			visibility: inherit;
 		}
 	}
 
