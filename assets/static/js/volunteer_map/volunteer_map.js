@@ -102,7 +102,7 @@
     function loadActivities(data) {
         var activities = data.features;
         _(activities).each(function(activity) {
-            var html = tplVolunteerListItem(activity);
+            var html = tplVolunteerListItem(activity.properties);
             $('#volunteerActivityList').append(html);
         });
     }
