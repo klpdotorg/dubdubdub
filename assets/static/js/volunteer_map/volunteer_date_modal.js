@@ -1,6 +1,6 @@
 (function() {
     var t = klp.volunteer_date_modal = {};
-
+    var datepicker;
     t.init = function() {
         var $modal = $('.volunteerDateModal');
         var $datepicker_input = $modal.find('#datepicker-modal-input');
@@ -10,11 +10,19 @@
             first_day_of_week: 0,
             show_clear_date: false,
             show_select_today: false,
-            disabled_dates: ['1,3,4,5,12,13,14,22,24'],
+            //disabled_dates: ['* * * *'],
             onSelect: onDateSelect,
-            onClear: onDateClear
+            onClear: onDateClear,
+            format: 'Y-m-d'
         });
-        var datepicker = $datepicker_input.data('Zebra_DatePicker');
+        datepicker = $datepicker_input.data('Zebra_DatePicker');
+        var $datesXHR = klp.api.do('volunteer_activity_dates');
+        $datesXHR.done(function(data) {
+            datepicker.update({
+                //disabled_dates: ['* * * *'],
+                enabled_dates: data.features
+            });
+        });
     };
 
     t.open = function() {
@@ -25,8 +33,8 @@
         $('.volunteerDateModal').removeClass('show');
     };
 
-    function onDateSelect() {
-
+    function onDateSelect(date) {
+        console.log("date selected", date);
     }
 
     function onDateClear() {

@@ -10,6 +10,7 @@
             //console.log("here 2");
             $(".volunteer-filters-wrapper").toggleClass("show-mobile");
         });
+        klp.volunteer_date_modal.open();
         klp.router.start();
     };
 
