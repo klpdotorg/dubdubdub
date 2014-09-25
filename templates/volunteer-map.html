@@ -309,30 +309,32 @@
 			<div class="content"></div>
 		</section>
 	
-		<div id="modal_volunteer_flow" class="modal modal-volunteer-flow volunteerDateModal">
-	    	<a href="" class="button-close fr btn-modal-close"></a>
-	    	<div class="content">
-	    		<h2 class="modal-heading">Volunteer</h2>
-
-	    		<div class="steps-wrapper">
-			    	<div class="step-item fadein visible" data-step="1">
-			    		<div class="step-date">
-			    			<h3 class="bordered-heading blue">Select Date<span></span></h3>
-			    			<!--
-			    			<div class="input-wrapper">
-			    				<input type="text" class="input-text width-100p" placeholder="Whitefield, Bangalore">
-			    				<a href="" class="icon-location"></a>
-			    			</div>
-			    			-->
-			    			<div class="cal">
-			    				<input id="datepicker-modal-input" type="hidden" readonly="readonly">
-			    				<div id="datepicker-modal-wrapper"></div>
-			    			</div>
-			    			<div class="ta-c">
-			    				<a href="" class="button blue clickable js-volunteer-next-step">Next</a>
-			    			</div>
-			    		</div> 
-			    	</div> <!-- Step End -->
+		<div id="modal_overlay" class="modal-overlay show"></div>
+		<div id="modal_wrapper">
+			<div id="modal_volunteer_flow" class="modal volunteer-flow modal-volunteer volunteerDateModal">
+		    	<a href="" class="button-close fr btn-modal-close"></a>
+		    	<div class="content">
+		    		<h2 class="modal-heading">Volunteer</h2>
+		    		<div class="steps-wrapper">
+				    	<div class="step-item fadein visible" data-step="1">
+				    		<div class="step-date">
+				    			<h3 class="bordered-heading blue">Select Date<span></span></h3>
+				    			<!--
+				    			<div class="input-wrapper">
+				    				<input type="text" class="input-text width-100p" placeholder="Whitefield, Bangalore">
+				    				<a href="" class="icon-location"></a>
+				    			</div>
+				    			-->
+				    			<div class="cal">
+				    				<input id="datepicker-modal-input" type="hidden" readonly="readonly">
+				    				<div id="datepicker-modal-wrapper"></div>
+				    			</div>
+				    			<div class="ta-c">
+				    				<a href="" class="button blue clickable js-volunteer-next-step">Next</a>
+				    			</div>
+				    		</div> 
+				    	</div> <!-- Step End -->
+					</div>
 				</div>
 			</div>
 		</div>
