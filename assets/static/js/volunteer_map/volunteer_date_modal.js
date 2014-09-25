@@ -34,6 +34,7 @@
     function onDateSelect(date) {
         t.close();
         $('#vol-date-input').val(date);
+        klp.volunteer_map.applyFilters();
     }
 
     function onDateClear() {
