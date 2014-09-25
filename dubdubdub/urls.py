@@ -106,7 +106,7 @@ urlpatterns = patterns('',
             #'hide_footer': True
         }), name='school_detail'),
 
-    url(r'^volunteer-map$', VolunteerMapPage.as_view(
+    url(r'^volunteer-map$', VolunteerMapPageView.as_view(
         template_name='volunteer-map.html',
         extra_context={
             'header_full_width': True,

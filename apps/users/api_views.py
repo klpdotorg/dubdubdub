@@ -23,6 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
@@ -233,7 +234,7 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
         return org_user
 
 
-class VolunteerActivitiesView(KLPListAPIView):
+class VolunteerActivitiesView(generics.ListCreateAPIView, KLPListAPIView):
     serializer_class = VolunteerActivitySerializer
     permission_classes = (VolunteerActivitiesPermission,)
     filter_class = VolunteerActivityFilter
