@@ -95,6 +95,7 @@
             e.preventDefault();
         }
         var formID = 'loginForm';
+        klp.utils.clearValidationErrors(formID);
         var isValid = klp.utils.validateRequired('loginForm');
         if (isValid) {
             var data = {
