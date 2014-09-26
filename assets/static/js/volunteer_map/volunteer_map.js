@@ -67,6 +67,11 @@
         map.on('moveend', function () {
             setURL();
         });
+
+        $('#filterOrganization, #filterActivityType').on('change', function(e) {
+            console.log("filter changed");
+            t.applyFilters();
+        });
     };
 
     t.applyFilters = function() {

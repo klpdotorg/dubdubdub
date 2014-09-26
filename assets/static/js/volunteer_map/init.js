@@ -27,7 +27,7 @@
             first_day_of_week: 0,
             show_clear_date: false,
             show_select_today: false,
-            disabled_dates: ['1,3,4,5,12,13,14,22,24'],
+            //disabled_dates: ['1,3,4,5,12,13,14,22,24'],
             onSelect: onDateSelect,
             onClear: onDateClear
         });
@@ -36,6 +36,7 @@
         function onDateSelect(date){
             $date_input.val(date);
             $calender_wrapper.removeClass("show");
+            klp.volunteer_map.applyFilters();
          // $btn_next_step_cal.show();
         }
 
