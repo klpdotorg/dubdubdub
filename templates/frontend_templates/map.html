@@ -121,8 +121,8 @@
             </div>
           </div>
           <div class="mar_top_10">
-            <a class="button blue fl js-trigger-volunteer-map" href="volunteer_register.php">Volunteer</a>
-            <a class="button dark_grey last fr" href="/schoolpage/school/{{ id }}">More Info</a>
+            <a class="button blue fl js-trigger-volunteer-map" href="/school/{{ id }}#?tab=volunteer">Volunteer</a>
+            <a class="button dark_grey last fr" href="/school/{{ id }}">More Info</a>
             <div class="clr"></div>
           </div>
 
@@ -787,10 +787,10 @@
             <div class="clr"></div>
           </div>
         </div>
-        <a class="button blue mar_top_20 js-trigger-volunteer-map" {% if date %}data-date="{{ date }}"{% endif %} href="">Volunteer here</a>
+        <a class="button blue mar_top_20 js-trigger-volunteer-map" href="/school/{{ id }}#?tab=volunteer">Volunteer here</a>
         <div class="mar_top_10">
           <a class="button dark_grey fl js-trigger-compare" href="">Compare to</a>
-          <a target="_blank" class="button dark_grey last fr Xjs-trigger-info" href="/schoolpage/school/{{ id }}">More Information</a>
+          <a target="_blank" class="button dark_grey last fr Xjs-trigger-info" href="/school/{{ id }}">More Information</a>
           <div class="clr"></div>
         </div>
 
