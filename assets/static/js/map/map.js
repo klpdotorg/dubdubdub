@@ -14,7 +14,6 @@
     var map_voluteer_date = false;
     var mapIcon = klp.utils.mapIcon;
     var mapBbox;
-
     var state = {
         'addPopupCloseHistory': true
     };
@@ -421,9 +420,12 @@
                 schoolXHR.abort();
             }
             
+
             if (enabledLayers.hasLayer(preschoolCluster)) {
+                t.startLoading();
                 preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
                 preschoolXHR.done(function (data) {
+                    t.stopLoading();
                     preschoolCluster.clearLayers();
                     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -435,8 +437,10 @@
             }
 
             if (enabledLayers.hasLayer(schoolCluster)) {
+                t.startLoading();
                 schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
                 schoolXHR.done(function (data) {
+                    t.stopLoading();
                     schoolCluster.clearLayers();
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -539,8 +543,10 @@
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
+            t.startLoading();
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
+                t.stopLoading();
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 if (!isMobile) {
                     duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
@@ -712,7 +718,15 @@
             });
         }
 
-        t.map = map;
+        //t.map = map;
+    };
+
+    t.startLoading = function() {
+        t.map.spin(true, {top: '40px', 'left': '70px'});
+    };
+
+    t.stopLoading = function() {
+        t.map.spin(false);
     };
 
     function updateLayers() {
@@ -781,7 +795,7 @@
             bounds = L.latLngBounds(southWest, northEast).pad(1);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
