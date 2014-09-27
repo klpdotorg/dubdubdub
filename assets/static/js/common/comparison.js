@@ -157,6 +157,21 @@
         },0);
     };
 
+    var openFromURL = function(compareString) {
+        var entities = compareString.split(",")
+        if (entities.length !== 2) {
+            //invalid URL Hash, must be like "3537,4219"
+            return;
+        }
+        var $xhr1 = klp.api.do("schools/school/" + entities[0]);
+        var $xhr2 = klp.api.do("schools/school/" + entities[1]);
+        $.when($xhr1, $xhr2).done(function(school1, school2) {
+            open(school1);    
+            selectOptionRight(school2);
+            $btn_comparison_submit.click();
+        });
+    };
+
     var close = function(e){
         e.preventDefault();
         $compare_flow.removeClass("show");
@@ -166,6 +181,7 @@
             clear_option_left();
             clear_option_right();
         },300);
+        klp.router.setHash(null, {compare: null}, {trigger: false});
     };
 
     var reset_submit_button = function(){
@@ -283,7 +299,9 @@
                 //     var $selects = $comparison_result_wrapper.find('select');
                 //     $selects.easyDropDown();
                 // },0);
-
+                var urlString = [school1.id, school2.id].join(",")
+                //console.log("url string", urlString);
+                klp.router.setHash(null, {'compare': urlString}, {trigger: false});
                 setTimeout(function(){
                     init_comparison_charts(context);
                 },100);                
@@ -294,6 +312,15 @@
             //$comparison_result_wrapper.html(html).addClass('show');
 
 
+        });
+        klp.router.events.on('hashchange:compare', function(e, params) {
+            console.log("change params", params);
+            var changedCompare = params.changed.compare;
+            if (changedCompare.newVal) {
+                openFromURL(changedCompare.newVal);
+            } else {
+                close();
+            }
         });
     };
 
