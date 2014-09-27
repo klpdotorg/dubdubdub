@@ -37,14 +37,14 @@
                 onRender: function(data) {
                     if (!data.num_boys && !data.num_girls) {
                         //console.log("no boy-girl data!");
-                        $('.no-data.klp').removeClass('hide');
+                        $('.no-data.klp').show();
                         $('#boygirlChartWrapper').hide();
                     } else {
                         $('#num_students_piechart').boyGirlChart(data);
                     }
 
                     if (!data.num_boys_dise && !data.num_girls_dise) {
-                        $('.no-data.dise').removeClass('hide');
+                        $('.no-data.dise').show();
                         $('#boygirlChartWrapperDISE').hide();
                     } else {
                         $('#num_students_piechart_dise').boyGirlChart(data.dise);
