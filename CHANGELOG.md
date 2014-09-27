@@ -10,6 +10,10 @@ Use required commands
 Changelog
 ---
 
+Release 0.8: 88a6a92017a87ed1a782c898f765ac84fd089f0f
+  - Permanent URLs for compare state
+  - Several front-end fixes
+
 Release 0.7:
   - Cleaned up SYS data [run-sql sys_cleanup.sql]
   - Add color field to volunteer activity types [sql-migrate]
