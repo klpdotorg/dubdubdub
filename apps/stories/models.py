@@ -95,9 +95,14 @@ class Story(models.Model):
     class Meta:
         managed = False
         db_table = 'stories_story'
+        verbose_name_plural = 'Stories'
+        ordering = ['-entered_timestamp']
 
     def get_geometry(self):
         return self.school.get_geometry() or None
+
+    def __unicode__(self):
+        return "%s: %s" % (self.name, self.comments,)
 
 @receiver(post_save, sender=Story)
 def story_updated(sender, instance=None, created=False, **kwargs):
