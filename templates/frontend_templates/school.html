@@ -69,20 +69,36 @@
         <table class="info_data_table">
             <tr>
                 <td>MLA Constituency</td>
-                <td>Malleswaram</td>
+                <td>
+                    {% if assembly.name %}
+                        {{ assembly.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
             </tr>
+            <!--
             <tr>
                 <td>MLA Details</td>
                 <td>Dr. Ashwath Narayan (BJP)</td>
             </tr>
+            -->
             <tr>
-                <td>MLA Constituency</td>
-                <td>Malleswaram</td>
+                <td>MP Constituency</td>
+                <td>
+                    {% if parliament.name %}
+                        {{ parliament.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
             </tr>
+            <!--
             <tr>
                 <td>MLA Details</td>
                 <td>DB Chandre Gowada (BJP)</td>
             </tr>
+            -->
         </table>
     </div>
     <div class="photos-block fr-desktop">
@@ -107,11 +123,11 @@
 <script type="text/html" id="tpl-tab-demographics">
     <div class="fl-desktop-tablet">
         <h4>Student Information</h4>
-        <div class="hide no-data klp">
+        <div class="no-data klp" style="display:none;">
             <p> No data available </p>
         </div>
 
-        <div class="pie-chart-wrapper">
+        <div class="pie-chart-wrapper" id="boygirlChartWrapper">
             <div id="num_students_piechart" class="chart fl"></div>
             <div class="gender_icons fl">
                 <div class="stats_gender_item no_width boy">
@@ -145,10 +161,10 @@
     <div class="clr"></div>
 
     <h4 class="mar_top_25">DISE Student Profile</h4>
-    <div class="hide no-data dise">
+    <div class="no-data dise" style="display:none;">
         <p> No data available </p>
     </div>
-        <div class="pie-chart-wrapper">
+        <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
             <div id="num_students_piechart_dise" class="chart fl"></div>
             <div class="gender_icons fl">
                 <div class="stats_gender_item no_width boy">
@@ -471,7 +487,7 @@
     <table class="info_data_table label_small">
         <tr>
             <td>Source</td>
-            <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
+            <td>KLP Database (2011-2012), <strong>Akshay Patra</strong></td>
         </tr>
     </table>
 </script>

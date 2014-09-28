@@ -4,10 +4,13 @@
     t.open = function(callback) {
         postLoginCallback = callback;
         $('.js-login-modal').addClass('show');
+        showSignup();
     };
 
     t.close = function() {
+        //showSignup();
         $('.js-login-modal').removeClass('show');
+
         postLoginCallback = null;
     };
 
@@ -25,6 +28,14 @@
 
         $('.js-showLogin').click(showLogin);
     };
+
+    function showSignup(e) {
+        if (e) {
+            e.preventDefault();
+        }
+        $('#loginContainer').hide();
+        $('#signupContainer').show();
+    }
 
     function showLogin(e) {
         e.preventDefault();
@@ -84,6 +95,7 @@
             e.preventDefault();
         }
         var formID = 'loginForm';
+        klp.utils.clearValidationErrors(formID);
         var isValid = klp.utils.validateRequired('loginForm');
         if (isValid) {
             var data = {

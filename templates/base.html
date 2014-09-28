@@ -12,8 +12,9 @@
     {% compress css %}
 	<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all"/>
     <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
     {% endcompress %}
-
     <script>
         window.klp = {};
     </script>
@@ -32,8 +33,7 @@
     <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
+
     {% endcompress %}
     {% if not settings.DEBUG %}
         <script>
