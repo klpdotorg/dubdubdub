@@ -57,10 +57,6 @@
             if (state === 'anonymous') {
                 klp.login_modal.open();
             } else {
-                if($(document).width() < 768){
-                    return true;
-                }
-
                 e.preventDefault();
 
                 if(!$(".profile-options-wrapper").hasClass("show-drop")) {
