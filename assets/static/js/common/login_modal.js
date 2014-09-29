@@ -27,6 +27,7 @@
         });
 
         $('.js-showLogin').click(showLogin);
+        $('.js-showSignup').click(showSignup);
 
         $('#forgotPasswordForm').submit(submitForgotPassword);
         $('#forgotPasswordFormSubmit').click(function(e) {
