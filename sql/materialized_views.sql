@@ -104,6 +104,8 @@ CREATE materialized VIEW mvw_inst_coord AS
 SELECT t2.instid,
        t2.coord
 FROM dblink('host=localhost dbname=klp-coord user=klp password=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
+CREATE UNIQUE INDEX udx_instid ON mvw_inst_coord (instid); 
+CREATE INDEX idx_inst_geom ON mvw_inst_coord USING gist(coord);
 
 CREATE materialized VIEW mvw_mdm_agg AS
 SELECT id as klpid, mon, wk, indent, attend

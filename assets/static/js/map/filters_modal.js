@@ -31,6 +31,11 @@
                 d.id = d.properties.id;
             });
             container.select2({
+                sortResults: function(results) {
+                    return _.sortBy(results, function(result) {
+                        return result.properties.name;
+                    });
+                },
                 data: {
                     results: data.features,
                     text: function(item) {

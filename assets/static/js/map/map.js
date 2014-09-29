@@ -801,12 +801,9 @@
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
 
-        // t.loadPlaces(place_data);
-        // for (var place_id in place_data) {
-        //     if (place_data.hasOwnProperty(place_id)) {
-        //         add_place_marker(place_id);
-        //     }
-        // }
+        // Try to find users location.
+        map.locate({setView: true, maxZoom: 15});
+
         $(document).on('click', ".js-trigger-volunteer-map", function() {
             map.closePopup();
             map_voluteer_date = false;

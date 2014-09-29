@@ -104,6 +104,7 @@
 
     function clearActivities() {
         $('#volunteerActivityList').empty();
+        activitiesLayer.clearLayers();
     }
 
     function loadActivities(data) {
