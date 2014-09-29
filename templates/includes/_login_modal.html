@@ -40,8 +40,26 @@
                             </div>
                         </div>
                     </form>
+                    <div class="ta-c mar_top_20">
+                        <a class="button no-mar filled-shadow small clickable dark_grey btn-next-step js-showForgotPassword">Forgot Password?</a>
+                    </div>
                 </div>
             </div> <!-- Step End -->
+            <div class="step-item login-step-item" id="forgotPasswordContainer" data-step-name="forgot_password" style="display:none;">
+                <div class="step-details">
+                    <h3 class="bordered-heading blue">Forgot Password<span></span></h3>
+                    <form id="forgotPasswordForm">
+                        <input type="text" id="forgotPasswordEmail" data-required="true" class="input-text width-100p mar_top_100" placeholder="Email">
+                        <div class="ta-c mar_top_20">
+                            <a class="button blue btn-next-step-confirmation js-submit-btn" id="forgotPasswordFormSubmit">Reset Password</a>
+                            <div class="js-submit-loading" style="display:none;">
+                                Sending...
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- Step End -->
+
         </div>
     </div>      
 </div>

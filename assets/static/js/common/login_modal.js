@@ -27,6 +27,13 @@
         });
 
         $('.js-showLogin').click(showLogin);
+
+        $('#forgotPasswordForm').submit(submitForgotPassword);
+        $('#forgotPasswordFormSubmit').click(function(e) {
+            e.preventDefault();
+            $('#forgotPasswordForm').submit();
+        });
+        $('.js-showForgotPassword').click(showForgotPassword);
     };
 
     function showSignup(e) {
@@ -34,7 +41,18 @@
             e.preventDefault();
         }
         $('#loginContainer').hide();
+        $('#forgotPasswordContainer').hide();
         $('#signupContainer').show();
+
+    }
+
+    function showForgotPassword(e) {
+        if (e) {
+            e.preventDefault();
+        }
+        $('#loginContainer').hide();
+        $('#signupContainer').hide();
+        $('#forgotPasswordContainer').show();
     }
 
     function showLogin(e) {
@@ -128,5 +146,32 @@
             });
         }
     }
+
+    function submitForgotPassword(e) {
+        if (e) {
+            e.preventDefault();
+        }
+        var formID = 'forgotPasswordForm';
+
+        klp.utils.clearValidationErrors(formID);
+        var isValid = klp.utils.validateRequired(formID);
+        if (isValid) {
+            var data = {
+                'email': $('#forgotPasswordEmail').val()
+            };
+            var url = 'password-reset/request';
+            var $xhr = klp.api.do(url, data, 'POST');
+            klp.utils.startSubmit(formID);
+            $xhr.done(function() {  
+                klp.utils.stopSubmit(formID);
+                klp.utils.alertMessage("Please check your email for password reset instructions", "success");
+                t.close();
+            });
+            $xhr.fail(function(err) {
+                klp.utils.alertMessage("Invalid email address", "error");
+            });
+        }
+    }
+
 
 })();
