@@ -1,13 +1,13 @@
 .volunteer-flow{
 
 	.teaching{
-		color: #23BA89;
+		color: $color_programmes;
 	}
 	.activity{
-		color: #FB4C2F;
+		color: $color_about;
 	}
 	.skill{
-		color: #7A63D6;
+		color: $color_reports;
 	}
 
 	.steps-wrapper{
@@ -21,7 +21,7 @@
 		@include transform(translateX(0) translateY(0));
 
 		&.visible{
-			visibility: inherit;
+			visibility: visible;
 		}
 	}
 
@@ -142,7 +142,7 @@
 
 				.title,
 				.available .count{
-					color: #23BA89;
+					color: $color_programmes;
 				}
 			}
 			&.activity{
@@ -150,7 +150,7 @@
 
 				.title,
 				.available .count{
-					color: #FB4C2F;
+					color: $color_about;
 				}
 			}
 			&.skill{
@@ -158,7 +158,7 @@
 
 				.title,
 				.available .count{
-					color: #7A63D6;
+					color: $color_reports;
 				}
 			}
 			&.show-all{

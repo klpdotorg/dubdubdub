@@ -56,5 +56,17 @@
 				display: block !important;
 			}
 		}
+		.calendar-wrapper{
+			left: auto; right: 0; top: 40px;
+			margin: 0; width: 280px;
+
+			.Zebra_DatePicker{
+				display: block; width: 89%;
+
+				.dp_header{
+					width: 100% !important;
+				}
+			}
+		}
 	}
 }

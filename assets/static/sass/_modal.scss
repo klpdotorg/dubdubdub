@@ -77,6 +77,12 @@ $modal-height: 600px;
 			color: #F88733;
 		}
 	}
+
+	@include if-device(phone) {
+		width: 100% !important; height: 100% !important;
+		left: 0 !important; top: 0 !important; margin: 0 !important;
+		overflow-y: scroll;
+	}
 }
 
 .modal-share-story{
@@ -134,11 +140,22 @@ $modal-height: 600px;
 	}
 }
 
-.modal-volunteer{
+.modal-volunteer {
 	width: 420px; height:540px; margin-left: -210px; margin-top: -270px;
 
 	.modal-heading{
 		margin-top: 20px;
+	}
+
+	@include if-device(phone) {
+
+		.steps-wrapper{
+			height: 100%;
+		}
+
+		.step-details{
+			width: 90%;
+		}
 	}
 }
 

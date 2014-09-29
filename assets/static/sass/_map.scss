@@ -145,6 +145,17 @@
 			cursor: pointer;
 		}
 
+		.date-input-wrapper{
+			position: relative;
+
+			.dropdown-icon{
+				position: absolute; right: 5px; top: 50%; margin-top: -2px;
+				border: 6px solid transparent; border-top: 6px solid #CACACA;
+				z-index: 1; @include transform-origin(50% 20%);
+				cursor: pointer;
+			}
+		}
+
 		.dropdown{
 			width: 80px; padding: 0 15px 0 5px;
 			float: none; height: 26px;
@@ -240,7 +251,7 @@
 
 	.calendar-wrapper{
 		display: none;
-		position:absolute; top:51px; left: -125px;
+		position:absolute; z-index:10; top:51px; left: -125px;
 		width: 350px; height: 310px;
 		background: #f4f4f4;
 		@include border-radius-bottom-left(5px);
@@ -643,7 +654,7 @@
 		}
 
 		.vol-oppor-wrapper{
-			height: 180px; overflow-y: scroll;
+			height: 250px; overflow-y: scroll;
 		}
 
 		.vol-oppor-item {
@@ -1363,3 +1374,4 @@
 		}
 	}
 }
+
