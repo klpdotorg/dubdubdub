@@ -125,7 +125,7 @@ def user_updated(sender, instance=None, created=False, **kwargs):
         from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.email],
         subject='Please verify your email address',
-        template_name='email_templates/register',
+        template_name='register',
         context={
             'user': instance,
             'site_url': Site.objects.get_current().domain,
@@ -256,7 +256,7 @@ def volunteer_activity_created(sender, instance=None, created=False, **kwargs):
         from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.user.email, instance.activity.organization.email],
         subject='Please verify your email address',
-        template_name='email_templates/volunteer',
+        template_name='volunteer',
         context={
             'org': instance.activity.organization,
             'user': instance.user,
