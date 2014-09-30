@@ -787,7 +787,9 @@
             <div class="clr"></div>
           </div>
         </div>
+        {% if has_volunteer_activities %}
         <a class="button blue mar_top_20 js-trigger-volunteer-map" href="/school/{{ id }}#?tab=volunteer">Volunteer here</a>
+        {% endif %}
         <div class="mar_top_10">
           <a class="button dark_grey fl js-trigger-compare" href="">Compare to</a>
           <a target="_blank" class="button dark_grey last fr Xjs-trigger-info" href="/school/{{ id }}">More Information</a>
