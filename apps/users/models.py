@@ -254,7 +254,7 @@ def volunteer_activity_created(sender, instance=None, created=False, **kwargs):
 
     send_templated_mail(
         from_email=settings.EMAIL_DEFAULT_FROM,
-        to_emails=[instance.email, instance.activity.organization.email],
+        to_emails=[instance.user.email, instance.activity.organization.email],
         subject='Please verify your email address',
         template_name='email_templates/volunteer.html',
         context={
