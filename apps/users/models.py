@@ -100,6 +100,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_superuser
 
+    def send_user_created_verify_email_mail(self):
+        email_verification_code = ''.join([random.choice(string.hexdigits) for x in range(32)])
+        self.email_verification_code = email_verification_code
+        url = reverse('user_email_verify') + '?token={token}&email={email}'.format(
+            token=email_verification_code,
+            email=self.email
+        )
+
+        send_templated_mail(
+            from_email=settings.EMAIL_DEFAULT_FROM,
+            to_emails=[self.email],
+            subject='Please verify your email address',
+            template_name='register',
+            context={
+                'user': self,
+                'site_url': Site.objects.get_current().domain,
+                'url': url
+            }
+        )
+
+        self.save()
+
     def __unicode__(self):
         return self.email
 
@@ -110,31 +132,11 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
-def user_updated(sender, instance=None, created=False, **kwargs):
+def user_created_verify_email(sender, instance=None, created=False, **kwargs):
     if not created:
         return
 
-    email_verification_code = ''.join([random.choice(string.hexdigits) for x in range(32)])
-    instance.email_verification_code = email_verification_code
-    url = reverse('user_email_verify') + '?token={token}&email={email}'.format(
-        token=email_verification_code,
-        email=instance.email
-    )
-
-    send_templated_mail(
-        from_email=settings.EMAIL_DEFAULT_FROM,
-        to_emails=[instance.email],
-        subject='Please verify your email address',
-        template_name='register',
-        context={
-            'user': instance,
-            'site_url': Site.objects.get_current().domain,
-            'url': url
-        }
-    )
-
-    instance.save()
-
+    instance.send_user_created_verify_email_mail()
 
 #Q: should these models go into a separate app?
 class Organization(models.Model):
@@ -247,25 +249,28 @@ class UserVolunteerActivity(models.Model):
     class Meta:
         unique_together = ('user', 'activity',)
 
+    def send_volunteer_activity_created_mail(self):
+        send_templated_mail(
+            from_email=settings.EMAIL_DEFAULT_FROM,
+            to_emails=[self.user.email, self.activity.organization.email],
+            subject='Please verify your email address',
+            template_name='volunteer',
+            context={
+                'org': self.activity.organization,
+                'user': self.user,
+                'activity': self.activity,
+                'school': self.activity.school,
+                'site_url': Site.objects.get_current().domain,
+                'school_url': self.activity.school.get_absolute_url()
+            }
+        )
+
 @receiver(post_save, sender=UserVolunteerActivity)
 def volunteer_activity_created(sender, instance=None, created=False, **kwargs):
     if not created:
         return
 
-    send_templated_mail(
-        from_email=settings.EMAIL_DEFAULT_FROM,
-        to_emails=[instance.user.email, instance.activity.organization.email],
-        subject='Please verify your email address',
-        template_name='volunteer',
-        context={
-            'org': instance.activity.organization,
-            'user': instance.user,
-            'activity': instance.activity,
-            'school': instance.activity.school,
-            'site_url': Site.objects.get_current().domain,
-            'school_url': instance.activity.school.get_absolute_url()
-        }
-    )
+    instance.send_volunteer_activity_created_mail()
 
 # class UserDonorRequirement(models.Model):
 #     user = models.ForeignKey('User')
