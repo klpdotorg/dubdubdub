@@ -1,0 +1,18 @@
+Dear {{ user.first_name }},
+
+Thank you for signing up to volunteer for {{ org.name }} to help with {{ activity.type.name }} on {{ activity.date }} at {{ school.name }}.
+
+To help you locate the school, here is a link to the school page that includes a map and landmarks: http://{{ site_url }}{{ school_url }}
+
+{{ school.name }}
+{{ school.address.full }}
+{{ school.address.landmark }}
+{{ school.address.identifires }}
+
+The contact person at {{ org.name }} for further details on this volunteering activity is {{ org.contact_name }} and their email ID is {{ org.email }}. They are copied on this email and will follow up with you on this. Please do write to them for any information or assistance you require.
+
+Please do take some pictures of your volunteering activity and look around when you visit the school.
+
+We’re thrilled that you are a part of our mission to improve schools and learning in Karnataka!
+
+~ {{ org.name }} & Team KLP

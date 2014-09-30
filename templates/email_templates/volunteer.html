@@ -1,18 +1,20 @@
-Dear {{ user.first_name }},
+<p>Dear {{ user.first_name }},</p>
 
-Thank you for signing up to volunteer for {{ org.name }} to help with {{ activity.type.name }} on {{ activity.date }} at {{ school.name }}.
+<p>Thank you for signing up to volunteer for {{ org.name }} to help with {{ activity.type.name }} on {{ activity.date }} at {{ school.name }}.</p>
 
-To help you locate the school, here is a link to the school page that includes a map and landmarks: http://{{ site_url }}{{ school_url }}
+<p>To help you locate the school, here is a link to the school page that includes a map and landmarks: <a href="http://{{ site_url }}{{ school_url }}">http://{{ site_url }}{{ school_url }}</a></p>
 
-{{ school.name }}
-{{ school.address.full }}
-{{ school.address.landmark }}
-{{ school.address.identifires }}
+<p>
+  {{ school.name }} <br>
+  {{ school.address.full }} <br>
+  {{ school.address.landmark }} <br>
+  {{ school.address.identifires }} <br>
+</p>
 
-The contact person at {{ org.name }} for further details on this volunteering activity is {{ org.contact_name }} and their email ID is {{ org.email }}. They are copied on this email and will follow up with you on this. Please do write to them for any information or assistance you require.
+<p>The contact person at {{ org.name }} for further details on this volunteering activity is {{ org.contact_name }} and their email ID is {{ org.email }}. They are copied on this email and will follow up with you on this. Please do write to them for any information or assistance you require.</p>
 
-Please do take some pictures of your volunteering activity and look around when you visit the school.
+<p>Please do take some pictures of your volunteering activity and look around when you visit the school.</p>
 
-We’re thrilled that you are a part of our mission to improve schools and learning in Karnataka!
+<p>We’re thrilled that you are a part of our mission to improve schools and learning in Karnataka!</p>
 
-~ {{ org.name }} & Team KLP
+<p>~ {{ org.name }} & Team KLP</p>

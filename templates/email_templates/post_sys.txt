@@ -1,0 +1,9 @@
+Thank you for taking the time and sharing your experience when visiting {{ school.name }} in {{ school.schooldetails.admin2 }}, {{ school.schooldetails.admin1 }}. Your feedback has been successfully recorded.
+
+For future reference, information on the school you visited can be found here: http://{{ site_url }}{{ school_url }}
+
+It will take a little while for your comments and inputs to show up as they need to be approved by a moderator. We appreciate your continued help in improving schools and learning in Karnataka! Thank you and please spread the word!
+
+~ Team KLP
+
+PS: You can reply to this email and we will respond soonest!

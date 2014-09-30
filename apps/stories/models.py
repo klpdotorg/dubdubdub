@@ -113,7 +113,7 @@ def story_updated(sender, instance=None, created=False, **kwargs):
         from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.email, 'team@klp.org.in'],
         subject='Thank you for Sharing Your Story at {}'.format(instance.school.name),
-        template_name='email_templates/post_sys.html',
+        template_name='email_templates/post_sys',
         context={
             'school': instance.school,
             'site_url': Site.objects.get_current().domain,

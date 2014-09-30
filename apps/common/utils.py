@@ -6,8 +6,8 @@ from django.template import Context
 
 
 def send_templated_mail(from_email, to_emails, subject, template_name, context=None):
-    plaintext = get_template(template_name)
-    htmly = get_template(template_name)
+    plaintext = get_template(template_name + '.txt')
+    htmly = get_template(template_name + '.html')
 
     con = Context(context)
 
