@@ -25,7 +25,8 @@
             $xhr.done(function(response) {
                 console.log("saved", response);
                 alert("saved");
-                location.href = "/organisation/" + ORGANIZATION_ID;
+                location.reload();
+                //location.href = "/organisation/" + ORGANIZATION_ID;
             });
 
             $xhr.fail(function(err) {
