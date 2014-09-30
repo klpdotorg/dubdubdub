@@ -80,7 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.changed = datetime.datetime.today()
         if self.created is None:
             self.created = self.changed
-        super(User, self).save(*args, **kwargs)
+        return super(User, self).save(*args, **kwargs)
 
     def generate_email_token(self):
         token = uuid.uuid4().get_hex()
