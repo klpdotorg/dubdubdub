@@ -231,6 +231,10 @@
                     return item.name;
                 }
             });
+        },
+
+        getSchoolType: function(id) {
+            return id === 1 ? 'school' : 'preschool';
         }
     };
 

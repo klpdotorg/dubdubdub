@@ -18,6 +18,7 @@
                     return klp.api.do(schoolInfoURL);
                 },
                 getContext: function(data) {
+                    data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return data;
                 },
                 onRender: function(data) {
@@ -32,6 +33,7 @@
                 getContext: function(data) {
                     var d = klp.utils.addSchoolContext(data);
                     d.dise = klp.utils.getBoyGirlPercents(data.num_boys_dise, data.num_girls_dise);
+                    d.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return d;
                 },
                 onRender: function(data) {
@@ -65,6 +67,7 @@
                     data.smg_amount = data.smg_amount ? data.smg_amount : 0;
                     data.tlm_amount = data.tlm_amount ? data.tlm_amount : 0;
                     data.total_amount = data.sg_amount + data.smg_amount + data.tlm_amount;
+                    data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return data;
                 },
                 onRender: function(data) {
@@ -81,6 +84,10 @@
             'infrastructure': {
                 getData: function() {
                     return klp.api.do(schoolInfoURL + '/infrastructure');
+                },
+                getContext: function(data) {
+                    data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
+                    return data;
                 }
             },
             'library': {
@@ -127,6 +134,7 @@
                     console.log('klasses', data.klasses);
                     console.log('levels', data.levels);
                     console.log('languages', data.languages);
+                    data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return data;
                 },
                 onRender: function(data) {
@@ -179,6 +187,7 @@
                         data.diseEnrollment.push(data.num_boys_dise + data.num_girls_dise);
                         data.klpEnrollment.push(data.num_boys + data.num_girls);
                     });
+                    data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return data;
 
                 },

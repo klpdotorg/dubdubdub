@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{% static 'js/lib/colorbox-1.5.14/colorbox 2.css' %}" />
     <script>
         SCHOOL_ID = {{ object.id }};
+        SCHOOL_TYPE_ID = {{ object.schooldetails.type.id }};
     </script>
 
 {% endblock %}
