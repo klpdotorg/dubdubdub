@@ -4,7 +4,7 @@
         <div class="column-content mb-10">
             <a class="desc-title green" href="/schoolpage/school/{{ activity.school_details.id }}">{{ activity.school_details.name }}</a> 
                 {% if activity.school_details.address_full %}
-                    in <span class="desc-title">Malleswaram, Bangalore</span>
+                    in <span class="desc-title">{{ activity.school_details.address_full }}</span>
                 {% endif %}
         </div>
         <div class="mb-10">
