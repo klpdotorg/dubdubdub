@@ -142,7 +142,7 @@ def password_reset_request(request):
         form.save(**opts)
         return Response({'success': 'Password reset email sent'})
     else:
-        raise AuthenticationFailed(', '.join(form.errors))
+        return Response({'error': 'We don\'t know the provided email address.'})
 
 
 class PasswordChangeView(APIView):
