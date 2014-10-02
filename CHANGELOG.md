@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.9: a35c01f81f74a65bb7013148e61586e600ab3adb
+    - Fix several front-end issues, see issue tracker
+
 Release 0.8: 88a6a92017a87ed1a782c898f765ac84fd089f0f
   - Permanent URLs for compare state
   - Several front-end fixes
