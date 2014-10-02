@@ -24,10 +24,15 @@
 
     t.open = function() {
         $('.volunteerDateModal').addClass('show');
+        klp.openModal = t;
     };
 
     t.close = function() {
-        $('.volunteerDateModal').removeClass('show');
+        $('.volunteerDateModal').removeClass('show').remove(); //FIXME
+        //^ we remove this from the DOM because otherwise there's some 
+        //weirdo visible child that remains clickable
+        //ideally, fix this properly.
+        
         $('.modal-overlay').removeClass('show');
     };
 
