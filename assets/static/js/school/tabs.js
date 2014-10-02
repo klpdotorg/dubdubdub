@@ -367,7 +367,7 @@
             var tab_id = $trigger.attr('data-tab');
 
             //show tab
-            t.showTab(tab_id);
+            t.showTab(tab_id, false);
 
         });
 
@@ -378,7 +378,7 @@
             var firstTab = 'info';
         }
 
-        var tabDeferred = t.showTab(firstTab);
+        var tabDeferred = t.showTab(firstTab, true);
         klp.router.events.on('hashchange:tab', function(e, params) {
             console.log("hashchange:tab", params);
             var queryParams = params.queryParams;
@@ -395,7 +395,7 @@
                 var allTabs = _(tabs).keys();
                 var tabsToLoad = _(allTabs).without(firstTab);
                 _(tabsToLoad).each(function(tabName) {
-                    t.showTab(tabName);
+                    t.showTab(tabName, true);
                 });
             });
         }
@@ -403,14 +403,26 @@
 
     };
 
-    t.showTab = function(tabName) {
+    /*
+        Arguments:
+            tabName <string>: name of tab to show
+            replaceState <boolean>: whether to "replace state", if true,
+                will not add a new history entry for this tab show. This exists
+                so that when we load all tabs on mobile, we can avoid adding new history
+                entries for each tab.
+
+     */
+    t.showTab = function(tabName, replaceState) {
         if (currentTab === tabName) {
             return;
+        }
+        if (typeof(replaceState) === 'undefined') {
+            replaceState = false;
         }
         $('.tab-content.current').removeClass('current');
         var queryParams = klp.router.getHash().queryParams;
         if (!(queryParams.hasOwnProperty('tab') && queryParams['tab'] === tabName)) {
-            klp.router.setHash(null, {'tab': tabName}, {trigger: false});
+            klp.router.setHash(null, {'tab': tabName}, {trigger: false, replace: replaceState});
         }
         currentTab = tabName;
         var $tabButton = $('.js-tab-link[data-tab=' + tabName + ']');
