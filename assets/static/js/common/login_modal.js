@@ -173,7 +173,13 @@
                 t.close();
             });
             $xhr.fail(function(err) {
-                klp.utils.alertMessage("Invalid email address", "error");
+                klp.utils.stopSubmit(formID);
+                var errorJSON = JSON.parse(err.responseText);
+                if (errorJSON.detail) {
+                    klp.utils.invalidateField($('#forgotPasswordEmail'), errorJSON.detail);
+
+                }
+                //klp.utils.alertMessage("Invalid email address", "error");
             });
         }
     }
