@@ -134,6 +134,9 @@ def password_reset_request(request):
 
     form = PasswordResetForm(request.POST)
     if form.is_valid():
+        if User.objects.filter(email=email).count() == 0:
+            raise AuthenticationFailed('We don\'t know this email address.')
+
         opts = {
             'use_https': request.is_secure(),
             'request': request,
@@ -142,7 +145,7 @@ def password_reset_request(request):
         form.save(**opts)
         return Response({'success': 'Password reset email sent'})
     else:
-        raise AuthenticationFailed('We don\'t know the provided email address.')
+        raise AuthenticationFailed('Invalid email address.')
 
 
 class PasswordChangeView(APIView):
