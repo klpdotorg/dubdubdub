@@ -58,7 +58,6 @@
                 klp.login_modal.open();
             } else {
                 e.preventDefault();
-
                 if(!$(".profile-options-wrapper").hasClass("show-drop")) {
                     $(".profile-options-wrapper").addClass("show-drop");
                 } else {
