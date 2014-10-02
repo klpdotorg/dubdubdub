@@ -3,14 +3,18 @@
     var postLoginCallback = null;
     t.open = function(callback) {
         postLoginCallback = callback;
+        klp.openModal = t;
         $('.js-login-modal').addClass('show');
         showSignup();
     };
 
     t.close = function() {
         //showSignup();
+        console.log("login modal close called");
         $('.js-login-modal').removeClass('show');
-
+        klp.utils.clearForm('signupForm');
+        klp.utils.clearForm('loginForm');
+        klp.utils.clearForm('forgotPasswordForm');
         postLoginCallback = null;
     };
 

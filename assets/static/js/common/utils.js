@@ -179,6 +179,13 @@
             $form.find('.error-message').remove();
         },
 
+        clearForm: function(formID) {
+            $('#' + formID).find('input, select').not('[type=submit]').each(function() {
+                $(this).val('');
+            });
+            klp.utils.clearValidationErrors(formID);
+        },
+
         startSubmit: function(formID) {
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').hide();
@@ -231,6 +238,10 @@
                     return item.name;
                 }
             });
+        },
+
+        getSchoolType: function(id) {
+            return id === 1 ? 'school' : 'preschool';
         }
     };
 

@@ -29,7 +29,13 @@
 						<div class="item-title bold color-{{ f.activity_type_details.color }}">
 							{{ f.activity_type_details.name }}
 						</div>
-						<div class="item-org">For <span class="uppercase color-green-2">{{ f.organization_details.name }}</span></div>
+						<div class="item-org">For 
+							<span class="uppercase color-green-2">
+								<a href="/organisation/{{ f.organization_details.id }}">
+									{{ f.organization_details.name }}
+								</a>
+							</span>
+						</div>
 					</div>
 					<div class="clr"></div>
 					<div class="item-desc">
@@ -58,8 +64,12 @@
 			<span class="distance">800m</span>
 		</div>
 		-->
-		<div class="details">
-			For <span class="uppercase color-green-2">{{ organization_details.name }}</span>
+		<div class="details"> For 
+			<span class="uppercase color-green-2">
+				<a href="/organisation/{{ f.organization_details.id }}">
+					{{ f.organization_details.name }}
+				</a>
+			</span>
 		</div>
 		<div class="clr mb-5"></div>
 		<div class="info">
