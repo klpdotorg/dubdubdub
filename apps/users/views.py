@@ -7,6 +7,18 @@ class ProfilePageView(DetailView):
     model = User
     template_name = 'profile.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfilePageView, self).get_context_data(**kwargs)
+        user = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/profile/%d' % (user.id,),
+                'name': 'Profile: %s %s' % (user.first_name, user.last_name,)
+            }
+        ]
+        return context
+
+
 
 class EmailVerificationView(StaticPageView):
     template_name = 'email_verified.html'
@@ -34,15 +46,56 @@ class OrganizationPageView(DetailView):
     model = Organization
     template_name = 'organization.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(OrganizationPageView, self).get_context_data(**kwargs)
+        org = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            }
+        ]
+        return context
+
 
 class ProfileEditPageView(DetailView):
     model = User
     template_name = 'profile_edit.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEditPageView, self).get_context_data(**kwargs)
+        user = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/profile/%d' % (user.id,),
+                'name': 'Profile'
+            },
+            {
+                'url': '/profile/%d/edit' % (user.id,),
+                'name': 'Edit'
+            }
+        ]
+        return context
+
 
 class OrganizationEditPageView(DetailView):
     model = Organization
     template_name = 'organization_edit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrganizationEditPageView, self).get_context_data(**kwargs)
+        org = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            },
+            {
+                'url': '/organisation/%d/edit' % (org.id,),
+                'name': 'Edit'
+            }
+        ]
+        return context
 
 
 class VolunteerActivityAddPageView(DetailView):
@@ -53,6 +106,21 @@ class VolunteerActivityAddPageView(DetailView):
         context = super(VolunteerActivityAddPageView, self).get_context_data(**kwargs)
         context['action'] = 'Add'
         context['activity_types'] = VolunteerActivityType.objects.all()
+        org = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            },
+            {
+                'url': '/organisation/%d/edit' % (org.id,),
+                'name': 'Edit'
+            },
+            {
+                'url': '/organisation/%d/volunteer_activity' % (org.id,),
+                'name': 'Add Volunteer Activity'
+            },            
+        ]        
         return context
 
 
@@ -64,6 +132,22 @@ class VolunteerActivityEditPageView(DetailView):
         context = super(VolunteerActivityEditPageView, self).get_context_data(**kwargs)
         context['action'] = 'Edit'
         context['activity_types'] = VolunteerActivityType.objects.all()
+        activity = context['object']
+        org = activity.organization
+        context['breadcrumbs'] = [
+           {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            },
+            {
+                'url': '/organisation/%d/edit' % (org.id,),
+                'name': 'Edit'
+            },
+            {
+                'url': '/organisation/%d/volunteer_activity/%d' % (org.id, activity.id,),
+                'name': 'Edit Volunteer Activity'
+            }
+        ]
         return context
 
 

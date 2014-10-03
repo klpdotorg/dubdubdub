@@ -24,61 +24,151 @@ urlpatterns = patterns('',
 
     #about pages
     url(r'^about$', StaticPageView.as_view(
-        template_name='aboutus.html'
+        template_name='aboutus.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/about',
+                    'name': 'About'
+                }
+            ]
+        }
         ), name='aboutus'),
     url(r'text/aboutus', RedirectView.as_view(url='/about')),
 
     url(r'^partners$', StaticPageView.as_view(
-        template_name='partners.html'
+        template_name='partners.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/partners',
+                    'name': 'Partners'
+                }
+            ]
+        }
         ), name='partners'),
     url(r'text/partners', RedirectView.as_view(url='/partners')),
 
     url(r'^disclaimer$', StaticPageView.as_view(
-        template_name='disclaimer.html'
+        template_name='disclaimer.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/disclaimer',
+                    'name': 'Disclaimer'
+                }
+            ]
+        }
         ), name='disclaimer'),
     url(r'text/disclaimer', RedirectView.as_view(url='/disclaimer')),
 
     #reports page
     url(r'^reports$', StaticPageView.as_view(
-        template_name='reports.html'
+        template_name='reports.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/reports',
+                    'name': 'Reports'
+                }
+            ]
+        }
         ), name='reports'),
     url(r'text/reports', RedirectView.as_view(url='/reports')),
 
     #data page
     url(r'^data$', StaticPageView.as_view(
-        template_name='data.html'
+        template_name='data.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/data',
+                    'name': 'Data'
+                }
+            ]
+        }
         ), name='data'),
     url(r'text/data', RedirectView.as_view(url='/data')),
     url(r'listFiles/2', RedirectView.as_view(url='/data')),
 
     #programme pages
     url(r'^programmes/reading$', StaticPageView.as_view(
-        template_name='reading_programme.html'
+        template_name='reading_programme.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/programmes/reading',
+                    'name': 'Reading Programme'
+                }
+            ]
+        }
         ), name='reading_programme'),
     url(r'text/reading', RedirectView.as_view(url='/programmes/reading')),
 
     url(r'^text/maths$', StaticPageView.as_view(
-        template_name='maths_programme.html'
+        template_name='maths_programme.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/text/maths',
+                    'name': 'Maths Programme'
+                }
+            ]
+        }
         ), name='maths_programme'),
 
     url(r'^text/library$', StaticPageView.as_view(
-        template_name='library_programme.html'
+        template_name='library_programme.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/text/library',
+                    'name': 'Library Programme'
+                }
+            ]
+        }
         ), name='library_programme'),
 
     url(r'^text/preschool$', StaticPageView.as_view(
-        template_name='preschool_programme.html'
+        template_name='preschool_programme.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/text/preschool',
+                    'name': 'Preschool Programme'
+                }
+            ]
+        }
         ), name='preschool_programme'),
 
     url(r'^programmes/sikshana$', StaticPageView.as_view(
-        template_name='sikshana_programme.html'
+        template_name='sikshana_programme.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/programmes/sikshana',
+                    'name': 'Sikshana Programme'
+                }
+            ]
+        }
         ), name='sikshana_programme'),
+
     url(r'text/sikshana', RedirectView.as_view(url='/programmes/sikshana')),
 
     url(r'^volunteer$', StaticPageView.as_view(
-        template_name='volunteer.html'
+        template_name='volunteer.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/volunteer',
+                    'name': 'Volunteer'
+                }
+            ]
+        }
         ), name='volunteer'),
+
     url(r'^volunteer-register$', StaticPageView.as_view(
-        template_name='volunteer-register.html'
+        template_name='volunteer-register.html',
         ), name='volunteer_register'),
 
     url(r'^map$', StaticPageView.as_view(
@@ -86,7 +176,13 @@ urlpatterns = patterns('',
         extra_context={
             'header_full_width': True,
             'header_fixed': True,
-            'hide_footer': True
+            'hide_footer': True,
+            'breadcrumbs': [
+                {
+                    'url': '/map',
+                    'name': 'Map'
+                }
+            ]
         }), name='map'),
 
 
@@ -111,7 +207,17 @@ urlpatterns = patterns('',
         extra_context={
             'header_full_width': True,
             'header_fixed': True,
-            'hide_footer': True
+            'hide_footer': True,
+            'breadcrumbs': [
+                {
+                    'url': '/volunteer',
+                    'name': 'Volunteer'
+                },
+                {
+                    'url': '/volunteer-map',
+                    'name': 'Activities'
+                }
+            ]
         }), name='volunteer_map'),
 
     url(r'^school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),

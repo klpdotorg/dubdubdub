@@ -87,8 +87,11 @@
 		<div class="subheader-wrapper">
 			<div class="subheader-content">
 				<div class="breadcrumb fl">
-			    	<a href="/">Home</a><span></span>
-			    	<a href="">{{ page_title }}</a>
+			    	<a href="/">Home</a>
+            {% for b in breadcrumbs %}
+            <span></span>
+			    	<a href="{{ b.url }}">{{ b.name }}</a>
+            {% endfor %}
 			    </div>
                 
                 {% include 'includes/_profile_options.html' %}
