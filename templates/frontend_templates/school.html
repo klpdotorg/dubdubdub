@@ -573,10 +573,12 @@
         {% for f in features %}
         <div class="required pb-20">
             <div class="fl phn-fn mt-5 mb-5">
-                <a href="#" class="font-20 color-red">{{ f.activity_type_details.name }}</a>
+                <span class="font-20 color-red">{{ f.activity_type_details.name }}</span>
                 <br/>
                 <span class="color-grey-light-2">For </span>
-                <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
+                <a href="/organisation/{{ f.organization_details.id }}">
+                    <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
+                </a>
             </div>
             <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
                 <!--
