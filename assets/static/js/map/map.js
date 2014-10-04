@@ -792,7 +792,7 @@
         // }
         var southWest = L.latLng(11.57, 73.87),
             northEast = L.latLng(18.45, 78.57),
-            bounds = L.latLngBounds(southWest, northEast).pad(1);
+            bounds = L.latLngBounds(southWest, northEast);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
         t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
@@ -804,9 +804,11 @@
         // Try to find users location.
         map.locate({setView: false, maxZoom: 15});
         map.on('locationfound', onLocationFound);
-        
+
         function onLocationFound(e) {
-            map.setView(e.latlng, 15);
+            if (bounds.contains(e.latlng)) {
+                map.setView(e.latlng, 15);
+            }
         }
 
         $(document).on('click', ".js-trigger-volunteer-map", function() {
