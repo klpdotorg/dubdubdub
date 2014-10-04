@@ -262,6 +262,8 @@ TESTS_SCHOOLS_INPUT = {
 
 IMAGE_URL_BASE = 'http://www.klp.org.in/uploaded_images/school_pics_hash/{}'
 
+BLOG_FEED_URL = 'http://blog.klp.org.in/feeds/posts/default?alt=json'
+
 try:
     from local_settings import *
 except ImportError:

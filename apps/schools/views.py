@@ -1,7 +1,9 @@
 #page views go here. For API views, use api_views.py
 from django.views.generic.detail import DetailView
 from .models import School
-
+from django.conf import settings
+import urllib2
+from django.http import HttpResponse
 
 class SchoolPageView(DetailView):
     model = School
@@ -23,3 +25,10 @@ class SchoolPageView(DetailView):
             }
         ]
         return context
+
+
+def blog_feed(request):
+    url = settings.BLOG_FEED_URL
+    json = urllib2.urlopen(url).read()
+    return HttpResponse(json)
+

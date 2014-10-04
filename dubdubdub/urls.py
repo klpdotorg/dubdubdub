@@ -256,6 +256,8 @@ urlpatterns = patterns('',
         },
         name='password_reset_complete'),
 
+    url(r'^blog-feed$', 'schools.views.blog_feed', name='blog_feed'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
 
