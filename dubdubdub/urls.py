@@ -220,7 +220,7 @@ urlpatterns = patterns('',
             ]
         }), name='volunteer_map'),
 
-    url(r'^school/(?P<pk>[0-9]*)$', SchoolPageView.as_view(), name='school_page'),
+    url(r'^school/(?P<pk>[0-9]*)/$', SchoolPageView.as_view(), name='school_page'),
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$', RedirectView.as_view(
         pattern_name='school_page',
         query_string=True
