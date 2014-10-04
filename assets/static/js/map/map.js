@@ -802,7 +802,12 @@
         }).addTo(map);
 
         // Try to find users location.
-        map.locate({setView: true, maxZoom: 15});
+        map.locate({setView: false, maxZoom: 15});
+        map.on('locationfound', onLocationFound);
+        
+        function onLocationFound(e) {
+            map.setView(e.latlng, 15);
+        }
 
         $(document).on('click', ".js-trigger-volunteer-map", function() {
             map.closePopup();
