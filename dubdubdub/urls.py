@@ -228,9 +228,9 @@ urlpatterns = patterns('',
 
     url(r'^users/verify_email', EmailVerificationView.as_view(), name='user_email_verify'),
 
-    url(r'^profile/(?P<pk>[0-9]*)$', ProfilePageView.as_view(), name='profile_page'),
+    url(r'^profile/(?P<pk>[0-9]*)/$', ProfilePageView.as_view(), name='profile_page'),
 
-    url(r'^organisation/(?P<pk>[0-9]*)$', OrganizationPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<pk>[0-9]*)/$', OrganizationPageView.as_view(), name='organization_page'),
 
     url(r'^organisation/(?P<pk>[0-9]*)/edit$',
         OrganizationEditPageView.as_view(),
