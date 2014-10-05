@@ -155,7 +155,7 @@ urlpatterns = patterns('',
 
     url(r'text/sikshana', RedirectView.as_view(url='/programmes/sikshana')),
 
-    url(r'^volunteer$', StaticPageView.as_view(
+    url(r'^volunteer/$', StaticPageView.as_view(
         template_name='volunteer.html',
         extra_context={
             'breadcrumbs': [
@@ -166,6 +166,7 @@ urlpatterns = patterns('',
             ]
         }
         ), name='volunteer'),
+    url(r'text/volunteer', RedirectView.as_view(url='/volunteer/')),
 
     url(r'^volunteer-register$', StaticPageView.as_view(
         template_name='volunteer-register.html',
