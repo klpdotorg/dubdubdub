@@ -102,7 +102,7 @@ class Story(models.Model):
         return self.school.get_geometry() or None
 
     def __unicode__(self):
-        return "%s: %s" % (self.name, self.comments,)
+        return "%s: %s" % (self.name, self.entered_timestamp,)
 
 @receiver(post_save, sender=Story)
 def story_updated(sender, instance=None, created=False, **kwargs):
@@ -131,3 +131,7 @@ class StoryImage(models.Model):
     class Meta:
         managed = False
         db_table = 'stories_storyimage'
+
+    def __unicode__(self):
+        return "{}: {}".format(self.story.name, self.image)
+
