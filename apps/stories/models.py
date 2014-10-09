@@ -49,6 +49,9 @@ class Questiongroup(models.Model):
         managed = False
         db_table = 'stories_questiongroup'
 
+    def __unicode__(self):
+        return '{} v{}'.format(self.source.name, self.version)
+
 
 class QuestiongroupQuestions(models.Model):
     questiongroup = models.ForeignKey('Questiongroup')
@@ -58,6 +61,9 @@ class QuestiongroupQuestions(models.Model):
     class Meta:
         managed = False
         db_table = 'stories_questiongroup_questions'
+
+    def __unicode__(self):
+        return '{}: {}'.format(self.questiongroup, self.question)
 
 
 class QuestionType(models.Model):
@@ -73,6 +79,9 @@ class QuestionType(models.Model):
 
 class Source(models.Model):
     name = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         managed = False
