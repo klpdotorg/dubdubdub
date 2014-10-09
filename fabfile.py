@@ -12,6 +12,10 @@ def dev():
     env.venv_path = '/home/dubdubdub/dubdubdub/'
     env.git_branch = 'develop'
 
+def git(command='status'):
+    with cd(env.project_path):
+        sudo('git {}'.format(command), user='dubdubdub')
+
 def git_pull(branch):
     with cd(env.project_path):
         sudo('git pull origin {}'.format(branch), user='dubdubdub')
