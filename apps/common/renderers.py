@@ -15,7 +15,10 @@ class KLPJSONRenderer(JSONRenderer):
     def render(self, data, media_type=None, renderer_context=None):
         #figure out whether we need to render geometry based on GET param
         render_geometry = renderer_context['request'].GET.get('geometry', 'no')
-        if render_geometry == 'yes':
+        status = renderer_context['response'].status_code
+
+        #only try and fetch geometries if response status is 200
+        if render_geometry == 'yes' and status == 200:
             self.render_geometry = True
         else:
             self.render_geometry = False
@@ -68,9 +71,10 @@ class KLPJSONRenderer(JSONRenderer):
         '''
         #this should never be called if geometry=no
         if 'geometry' not in elem:
-            raise Exception("Element does not contain a 'geometry' key")
-        #convert flat dict representation to geojson for the feature
-        geometry = elem.pop('geometry')
+            geometry = {}
+        else:
+            geometry = elem.pop('geometry')
+
         feature = {
             'type': 'Feature',
             'geometry': geometry,
