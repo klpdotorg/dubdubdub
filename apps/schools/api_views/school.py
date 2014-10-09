@@ -159,7 +159,7 @@ class SchoolNutrition(KLPDetailAPIView):
 
     def get_queryset(self):
         return School.objects.filter(status=2)\
-            .select_related('mdmagg_set',)
+            .select_related('mdmagg_set', 'dise_info',)
 
 
 class SchoolProgrammes(KLPDetailAPIView):

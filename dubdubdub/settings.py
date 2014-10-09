@@ -7,7 +7,7 @@ PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Bibhas', 'bibhas@klp.org.in'),
+    ('Dev Team', 'dev@klp.org.in'),
 )
 
 DATABASES = {

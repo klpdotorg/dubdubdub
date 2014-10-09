@@ -4,6 +4,8 @@ from .models import School
 from django.conf import settings
 import urllib2
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
+
 
 class SchoolPageView(DetailView):
     model = School
@@ -16,11 +18,11 @@ class SchoolPageView(DetailView):
         school = context['object']
         context['breadcrumbs'] = [
             {
-                'url': '/map',
+                'url': reverse('map'),
                 'name': 'Map'
             },
             {
-                'url': '/school/%d' % (school.id,),
+                'url': reverse('school_page', kwargs={'pk': school.id}),
                 'name': 'School: %s' % (school.name,)
             }
         ]
