@@ -150,14 +150,13 @@ class Organization(models.Model):
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
+    def generate_slug(self, regenerate=False):
+        if not self.slug or regenerate:
             slug = slugify(self.name)
-
             if Organization.objects.filter(slug=slug).count() > 0:
                 slug = '-'.join([slug, str(random.randint(1, 9))])
             self.slug = slug
-        super(Organization, self).save(*args, **kwargs) # Call the "real" save() method.
+        self.save()
 
     def get_absolute_url(self):
         return reverse('organization_page', kwargs={'pk': self.id})
@@ -202,6 +201,14 @@ class Organization(models.Model):
 
     def __unicode__(self):
         return self.name
+
+@receiver(post_save, sender=Organization)
+def generate_slug_if_no_slug(sender, instance=None, created=False, **kwargs):
+    if instance.slug:
+        return
+
+    instance.generate_slug()
+
 
 USER_ROLE_CHOICES = (
     (0, 'admin'),

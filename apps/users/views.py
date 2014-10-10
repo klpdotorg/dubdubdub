@@ -64,7 +64,7 @@ class OrganizationSlugPageView(DetailView):
 
 
 class OrganizationPKPageView(RedirectView):
-    permanent = True
+    permanent = False
     query_string = True
     pattern_name = 'article-detail'
 
