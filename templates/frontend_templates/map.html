@@ -49,7 +49,7 @@
             <div class="facility-items ta-c">
               {% if basic_facilities.computer_lab %}<div class="icon computer"></div>{% endif %}
               {% if basic_facilities.library %}<div class="icon books"></div>{% endif %}
-              <div class="icon events"></div>
+              {% if has_volunteer_activities %}<div class="icon events"></div>{% endif %}
               {% if basic_facilities.playground %}<div class="icon football last"></div>{% endif %}
               <div class="clr"></div>
             </div>
@@ -119,7 +119,7 @@
           <div class="facility-items ta-c">
             {% if basic_facilities.computer_lab %}<div class="icon computer" title="Has Computers"></div>{% endif %}
             {% if basic_facilities.library %}<div class="icon books" title="Has a Library"></div>{% endif %}
-            <div class="icon events" title="Needs Volunteers"></div>
+            {% if has_volunteer_activities %}<div class="icon events" title="Needs Volunteers"></div>{% endif %}
             {% if basic_facilities.playground %}<div class="icon football last" title="Has a Playground"></div>{% endif %}
             <div class="clr"></div>
           </div>
