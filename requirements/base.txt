@@ -3,7 +3,7 @@ Django==1.7
 #South==0.8.1
 argparse==1.2.1
 django-debug-toolbar==1.0.1
-django-grappelli
+django-suit==0.2.11
 geojson==1.0.1
 #newrelic==2.10.0.8
 psycopg2==2.5.1
