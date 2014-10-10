@@ -97,7 +97,7 @@ class Story(models.Model):
     email = models.CharField(max_length=100, blank=True)
     date = models.CharField(max_length=50, blank=True)
     telephone = models.CharField(max_length=50, blank=True)
-    entered_timestamp = models.DateTimeField(blank=True, null=True)
+    entered_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     comments = models.CharField(max_length=2000, blank=True)
     sysid = models.IntegerField(blank=True, null=True)
 

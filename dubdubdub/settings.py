@@ -21,7 +21,7 @@ DATABASES = {
     }
 }
 
-EMAIL_DEFAULT_FROM = 'dev@klp.org.in'
+EMAIL_DEFAULT_FROM = 'Team KLP <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 #TEST_RUNNER='django.test.runner.DiscoverRunner'
@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.gis",
-    'grappelli',
+    'suit',
     'compressor',
     'django.contrib.admin',
 
@@ -166,6 +166,12 @@ INSTALLED_APPS = (
     'schools',
     'users',
     'stories',
+)
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
 )
 
 #DATADUMP_ROOT = os.path.join(PROJECT_ROOT, 'data')

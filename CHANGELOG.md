@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.11:
+  - Replaced grapelli with Django Suit [pip install django-suit]
+
 Release 0.10: 5c0fc22cf27a4420893dd14021af3ab0b21e4726
   - Implement breadcrumbs
   - Various front-end fixes
