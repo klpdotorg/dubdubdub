@@ -1,0 +1,9 @@
+Dear {{ user.first_name }},
+
+Thank you for volunteering for {{ org.name }} and helping on {{ activity.date }} at {{ school.name }}.
+
+We’d be grateful if you could take a moment of your time to fill in your observations about the school and post a few photos you might have taken at https://{{ site_url }}{{ school_url }}#?tab=share-story .
+
+We hope to see you volunteering again soon! You can take a look at open volunteering opportunities for {{ org.name }} at https://{{ site_url }}{{ org_url }} and all open volunteering opportunities at https://{{ site_url }}{{ volunteer_url }}.
+
+~ {{ org.name }} & Team KLP

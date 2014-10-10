@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser,\
@@ -148,6 +148,9 @@ class Organization(models.Model):
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
 
+    def get_absolute_url(self):
+        return reverse('organization_page', kwargs={'pk': self.id})
+
     def get_manager_emails(self):
         '''
             Get emails (as list) of all addresses management emails should be sent to.
@@ -290,6 +293,34 @@ def volunteer_activity_created(sender, instance=None, created=False, **kwargs):
         return
 
     instance.send_volunteer_activity_created_mail()
+
+@receiver(pre_save, sender=UserVolunteerActivity)
+def status_changed(sender, instance, **kwargs):
+    try:
+        obj = UserVolunteerActivity.objects.get(pk=instance.pk)
+    except UserVolunteerActivity.DoesNotExist:
+        pass # Object is new, so field hasn't technically changed, but you may want to do something else here.
+    else:
+        if not obj.status == instance.status and instance.status == 2: # Status is completed
+            send_templated_mail(
+                from_email=settings.EMAIL_DEFAULT_FROM,
+                to_emails=instance.get_emails(),
+                subject='Thank you for volunteering with {org} on {date}'.format(
+                    org=instance.activity.organization.name,
+                    date=instance.activity.date
+                ),
+                template_name='volunteer_completed',
+                context={
+                    'org': instance.activity.organization,
+                    'org_url': instance.activity.organization.get_absolute_url(),
+                    'user': instance.user,
+                    'activity': instance.activity,
+                    'school': instance.activity.school,
+                    'site_url': Site.objects.get_current().domain,
+                    'school_url': instance.activity.school.get_absolute_url(),
+                    'volunteer_url': reverse('volunteer_map')
+                }
+            )
 
 # class UserDonorRequirement(models.Model):
 #     user = models.ForeignKey('User')
