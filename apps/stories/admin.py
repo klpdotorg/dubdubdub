@@ -7,14 +7,19 @@ from .models import (Answer, Question, Questiongroup, QuestiongroupQuestions,
 class AnswerInline(admin.StackedInline):
     model = Answer
     extra = 0
-    read_only_fields = ('question',)
+    readonly_fields = ('question',)
+
+
+class StoryImageInline(admin.StackedInline):
+    model = StoryImage
+    extra = 0
 
 
 class StoryAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
-    inlines = [AnswerInline]
+    inlines = [AnswerInline, StoryImageInline]
 
 
 admin.site.register([Answer, Question, Questiongroup, QuestiongroupQuestions,
