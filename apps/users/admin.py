@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Organization, User, UserOrganization, VolunteerActivityType,
-    DonationItemCategory)
+    DonationItemCategory, VolunteerActivity, UserVolunteerActivity)
 
 class UserOrganizationInline(admin.TabularInline):
     model = UserOrganization
@@ -12,5 +12,5 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(User)
-admin.site.register(VolunteerActivityType)
+admin.site.register([VolunteerActivityType, VolunteerActivity, UserVolunteerActivity])
 admin.site.register(DonationItemCategory)
