@@ -269,7 +269,10 @@ class UserVolunteerActivity(models.Model):
         send_templated_mail(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=self.get_emails(),
-            subject='Thank you for volunteering on klp.org.in',
+            subject='Volunteering with {org} on {date}'.format(
+                org=self.activity.organization.name,
+                date=self.activity.date
+            ),
             template_name='volunteer',
             context={
                 'org': self.activity.organization,
