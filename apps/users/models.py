@@ -148,6 +148,14 @@ class Organization(models.Model):
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
 
+    def get_manager_emails(self):
+        '''
+            Get emails (as list) of all addresses management emails should be sent to.
+        '''
+        org_email = self.email
+        users_emails = [u.email for u in self.users.all()]
+        return [org_email] + users_emails
+
     def has_read_perms(self, user):
         '''
             A user has read permmissions on the org if they are admin,
@@ -173,7 +181,7 @@ class Organization(models.Model):
             return True
         if UserOrganization.objects.filter(user=user,
                                            organization=self,
-                                           role=0).count() > 0:
+                                           role__lte=1).count() > 0:
             return True
         else:
             return False
@@ -249,11 +257,19 @@ class UserVolunteerActivity(models.Model):
     class Meta:
         unique_together = ('user', 'activity',)
 
+    def get_emails(self):
+        '''
+            Get emails where activity confirmation needs to be sent to
+            (user who signed up + all org managers)
+        '''
+        org_emails = self.activity.organization.get_manager_emails()
+        return list(set([self.user.email] + org_emails))
+
     def send_volunteer_activity_created_mail(self):
         send_templated_mail(
             from_email=settings.EMAIL_DEFAULT_FROM,
-            to_emails=[self.user.email, self.activity.organization.email],
-            subject='Please verify your email address',
+            to_emails=self.get_emails(),
+            subject='Thank you for volunteering on klp.org.in',
             template_name='volunteer',
             context={
                 'org': self.activity.organization,
