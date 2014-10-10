@@ -253,7 +253,10 @@ class UserVolunteerActivity(models.Model):
         send_templated_mail(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=[self.user.email, self.activity.organization.email],
-            subject='Please verify your email address',
+            subject='Volunteering with {org} on {date}'.format(
+                org=self.activity.organization.name,
+                date=self.activity.date
+            ),
             template_name='volunteer',
             context={
                 'org': self.activity.organization,
