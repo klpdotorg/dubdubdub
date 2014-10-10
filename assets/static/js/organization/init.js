@@ -20,6 +20,15 @@
                 var html = $('#tpl-emptyVolunteerActivities').html();
                 $('#volunteerActivitiesList').append(html);
             }
+            klp.auth.events.on("login", function() {
+                if (hasEditPermissions(data.users)) {
+                    $('#editOrganizationBtn').show();
+                }
+                klp.volunteer_here.checkSelf(data.volunteer_activities);             
+            });
+            klp.auth.events.on("logout", function() {
+                $('#editOrganizationBtn').hide();
+            });
         });
     };
 

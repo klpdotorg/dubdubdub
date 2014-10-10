@@ -49,6 +49,9 @@
                 $('#volunteerTable').append(html);
             });
             
+            klp.auth.events.on("logout", function() {
+                location.href = "/organisation/" + data.id;
+            });
         });
     };
 })();

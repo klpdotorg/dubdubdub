@@ -32,6 +32,17 @@
                 var html = $('#tpl-emptyOrganizations').html();
                 $('#userOrganizations').append(html);
             }
+
+            klp.auth.events.on("login", function() {
+                var loggedInId = parseInt(klp.auth.getId());
+                if (loggedInId === data.id) {
+                    $('#editProfileBtn').show();
+                }
+            });
+
+            klp.auth.events.on("logout", function() {
+                $('#editProfileBtn').hide();
+            });
         });
     };
 

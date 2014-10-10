@@ -83,6 +83,11 @@
             $('#submitPassword').click(function(e) {
                 $('#changePasswordForm').submit();
             });
+
+            klp.auth.events.on("logout", function() {
+                location.href = "/profile/" + data.id;
+            });
+            
         });
     };
 })();
