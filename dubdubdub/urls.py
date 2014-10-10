@@ -5,11 +5,10 @@ from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView
 from common.views import StaticPageView
-from users.views import (ProfilePageView, OrganizationPageView,
-                         ProfileEditPageView, OrganizationEditPageView,
-                         VolunteerActivityAddPageView,
-                         VolunteerActivityEditPageView, EmailVerificationView,
-                         VolunteerMapPageView)
+from users.views import (ProfilePageView, OrganizationSlugPageView,
+    OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
+    VolunteerActivityAddPageView, VolunteerActivityEditPageView,
+    EmailVerificationView, VolunteerMapPageView)
 
 urlpatterns = patterns('',
 
@@ -231,7 +230,8 @@ urlpatterns = patterns('',
 
     url(r'^profile/(?P<pk>[0-9]*)/$', ProfilePageView.as_view(), name='profile_page'),
 
-    url(r'^organisation/(?P<pk>[0-9]*)/$', OrganizationPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<pk>[0-9]+)/$', OrganizationPKPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<slug>[-a-zA-Z0-9_]+)/$', OrganizationSlugPageView.as_view(), name='organization_page_slug'),
 
     url(r'^organisation/(?P<pk>[0-9]*)/edit$',
         OrganizationEditPageView.as_view(),

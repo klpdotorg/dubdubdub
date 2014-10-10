@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from common.utils import send_templated_mail
 from django.contrib.sites.models import Site
+from django.utils.text import slugify
 
 USER_TYPE_CHOICES = (
     (0, 'Volunteer'),
@@ -141,12 +142,22 @@ def user_created_verify_email(sender, instance=None, created=False, **kwargs):
 #Q: should these models go into a separate app?
 class Organization(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128, blank=True, null=True)
     url = models.URLField(blank=True)
     logo = models.ImageField(upload_to='organization_logos', blank=True)
     email = models.EmailField()
     address = models.TextField(blank=True)
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = slugify(self.name)
+
+            if Organization.objects.filter(slug=slug).count() > 0:
+                slug = '-'.join([slug, str(random.randint(1, 9))])
+            self.slug = slug
+        super(Organization, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def get_absolute_url(self):
         return reverse('organization_page', kwargs={'pk': self.id})
