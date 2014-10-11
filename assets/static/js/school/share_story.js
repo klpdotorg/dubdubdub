@@ -72,11 +72,14 @@
             var postURL = "stories/" + SCHOOL_ID;
             console.log("data obj", dataObj);
             var $xhr = klp.api.do(postURL, dataObj, 'POST');
+            klp.utils.startSubmit('sysForm');
             $xhr.done(function() {
                 klp.utils.alertMessage("Thank you for submitting your story!", "success");
                 klp.router.setHash(null, {state: null});
+                klp.utils.stopSubmit('sysForm');
             });
             $xhr.fail(function() {
+                klp.utils.stopSubmit('sysForm');
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
             });
         });
