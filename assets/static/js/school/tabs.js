@@ -283,7 +283,8 @@
                     var url ="stories/";
                     var params = {
                         'school_id': SCHOOL_ID,
-                        'answers': 'yes'
+                        'answers': 'yes',
+                        'verified': 'yes'
                     };
                     return klp.api.do(url, params);
                 },
