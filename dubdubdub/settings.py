@@ -21,7 +21,7 @@ DATABASES = {
     }
 }
 
-EMAIL_DEFAULT_FROM = 'Team KLP <dev@klp.org.in>'
+EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 #TEST_RUNNER='django.test.runner.DiscoverRunner'
