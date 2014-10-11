@@ -12,7 +12,7 @@
 
     t.init = function() {
         schoolInfoURL = 'schools/school/' + SCHOOL_ID;
-        schoolType = SCHOOL_TYPE_ID === 2 ? 'preschool' : 'school';
+        schoolType = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
         tabs = {
             'info': {
                 getData: function() {

@@ -53,15 +53,18 @@
                 <td>Gender</td>
                 <td>{{ sex|capitalize }}</td>
             </tr>
+
+            {% if type.id == 1 %}
             <tr>
                 <td>Medium</td>
                 <td>{{ moi|capitalize }}</td>
             </tr>
-            {% if dise_code %}
+                {% if dise_code %}
             <tr>
                 <td>DISE</td>
                 <td>{{ dise_code }}</td>
             </tr>
+                {% endif %}
             {% endif %}
         </table>
 
@@ -160,28 +163,31 @@
     </div>
     <div class="clr"></div>
 
+    {% if type_name != 'preschool' %}
     <h4 class="mar_top_25">DISE Student Profile</h4>
     <div class="no-data dise" style="display:none;">
         <p> No data available </p>
     </div>
-        <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
-            <div id="num_students_piechart_dise" class="chart fl"></div>
-            <div class="gender_icons fl">
-                <div class="stats_gender_item no_width boy">
-                    <span class="icon"></span>
-                    <p class="label">Boys</p>
-                    <p class="value">{{ dise.percent_boys }}%</p>
-                    <div class="clr"></div>
-                </div>
-                <div class="stats_gender_item no_width girl">
-                    <span class="icon"></span>
-                    <p class="label">Girls</p>
-                    <p class="value">{{ dise.percent_girls }}%</p>
-                    <div class="clr"></div>
-                </div>
+    <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
+        <div id="num_students_piechart_dise" class="chart fl"></div>
+        <div class="gender_icons fl">
+            <div class="stats_gender_item no_width boy">
+                <span class="icon"></span>
+                <p class="label">Boys</p>
+                <p class="value">{{ dise.percent_boys }}%</p>
+                <div class="clr"></div>
             </div>
-            <div class="clr"></div>
+            <div class="stats_gender_item no_width girl">
+                <span class="icon"></span>
+                <p class="label">Girls</p>
+                <p class="value">{{ dise.percent_girls }}%</p>
+                <div class="clr"></div>
+            </div>
         </div>
+        <div class="clr"></div>
+    </div>
+    {% endif %}
+    
     <table class="info_data_table label_small">
         <tr>
             <td>Source</td>
