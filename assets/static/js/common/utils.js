@@ -189,12 +189,14 @@
         startSubmit: function(formID) {
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').hide();
+            $form.find('input, textarea, select').attr('disabled', 'disabled');
             $form.find('.js-submit-loading').show();
         },
 
         stopSubmit: function(formID) {
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').show();
+            $form.find('input, textarea, select').removeAttr('disabled');
             $form.find('.js-submit-loading').hide();            
         },
 
