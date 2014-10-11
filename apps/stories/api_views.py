@@ -36,6 +36,14 @@ class StoryQuestionsView(KLPDetailAPIView):
 
 
 class StoriesView(KLPListAPIView):
+    """Returns the stories for a given school
+
+    URL params:
+    school_id   ID of the school whose stories are needed
+    answers     [yes, no] if answers should be returned
+    verified    [yes, no] if only verified or not-verified stories should be
+                returned, if not mentioned, returns all
+    """
     bbox_filter_field = "school__instcoord__coord"
 
     def get_serializer_class(self):
