@@ -5,11 +5,10 @@ from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView
 from common.views import StaticPageView
-from users.views import (ProfilePageView, OrganizationPageView,
-                         ProfileEditPageView, OrganizationEditPageView,
-                         VolunteerActivityAddPageView,
-                         VolunteerActivityEditPageView, EmailVerificationView,
-                         VolunteerMapPageView)
+from users.views import (ProfilePageView, OrganizationSlugPageView,
+    OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
+    VolunteerActivityAddPageView, VolunteerActivityEditPageView,
+    EmailVerificationView, VolunteerMapPageView)
 
 urlpatterns = patterns('',
 
@@ -221,7 +220,7 @@ urlpatterns = patterns('',
             ]
         }), name='volunteer_map'),
 
-    url(r'^school/(?P<pk>[0-9]*)/$', SchoolPageView.as_view(), name='school_page'),
+    url(r'^school/(?P<pk>[0-9]+)/$', SchoolPageView.as_view(), name='school_page'),
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$$', RedirectView.as_view(
         pattern_name='school_page',
         query_string=True
@@ -229,23 +228,24 @@ urlpatterns = patterns('',
 
     url(r'^users/verify_email', EmailVerificationView.as_view(), name='user_email_verify'),
 
-    url(r'^profile/(?P<pk>[0-9]*)/$', ProfilePageView.as_view(), name='profile_page'),
+    url(r'^profile/(?P<pk>[0-9]+)/$', ProfilePageView.as_view(), name='profile_page'),
 
-    url(r'^organisation/(?P<pk>[0-9]*)/$', OrganizationPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<pk>[0-9]+)/$', OrganizationPKPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<slug>[-a-zA-Z0-9_]+)/$', OrganizationSlugPageView.as_view(), name='organization_page_slug'),
 
-    url(r'^organisation/(?P<pk>[0-9]*)/edit$',
+    url(r'^organisation/(?P<pk>[0-9]+)/edit$',
         OrganizationEditPageView.as_view(),
         name='organization_edit_page'),
 
-    url(r'^organisation/(?P<pk>[0-9]*)/volunteer_activity$',
+    url(r'^organisation/(?P<pk>[0-9]+)/volunteer_activity$',
         VolunteerActivityAddPageView.as_view(),
         name='volunteeractivity_add_page'),
 
-    url(r'^organisation/(?P<org_pk>[0-9]*)/volunteer_activity/(?P<pk>[0-9]*)$',
+    url(r'^organisation/(?P<org_pk>[0-9]+)/volunteer_activity/(?P<pk>[0-9]+)$',
         VolunteerActivityEditPageView.as_view(),
         name='volunteeractivity_edit_page'),
 
-    url(r'^profile/(?P<pk>[0-9]*)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),
+    url(r'^profile/(?P<pk>[0-9]+)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {

@@ -1,6 +1,9 @@
 from django.views.generic.detail import DetailView
+from django.views.generic.base import RedirectView
 from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404
 from common.views import StaticPageView
+from django.core.urlresolvers import reverse
 from models import User, Organization, VolunteerActivity, VolunteerActivityType
 
 class ProfilePageView(DetailView):
@@ -42,12 +45,14 @@ class EmailVerificationView(StaticPageView):
         return super(EmailVerificationView, self).get(request, **kwargs)
 
 
-class OrganizationPageView(DetailView):
+class OrganizationSlugPageView(DetailView):
     model = Organization
+    slug_field = 'slug'
+    slug_url_kwargs = 'slug'
     template_name = 'organization.html'
 
     def get_context_data(self, **kwargs):
-        context = super(OrganizationPageView, self).get_context_data(**kwargs)
+        context = super(OrganizationSlugPageView, self).get_context_data(**kwargs)
         org = context['object']
         context['breadcrumbs'] = [
             {
@@ -56,6 +61,18 @@ class OrganizationPageView(DetailView):
             }
         ]
         return context
+
+
+class OrganizationPKPageView(RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = 'article-detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        org = get_object_or_404(Organization, pk=kwargs['pk'])
+        if not org.slug:
+            org.save()
+        return reverse('organization_page_slug', kwargs={'slug': org.slug})
 
 
 class ProfileEditPageView(DetailView):
@@ -119,8 +136,8 @@ class VolunteerActivityAddPageView(DetailView):
             {
                 'url': '/organisation/%d/volunteer_activity' % (org.id,),
                 'name': 'Add Volunteer Activity'
-            },            
-        ]        
+            },
+        ]
         return context
 
 

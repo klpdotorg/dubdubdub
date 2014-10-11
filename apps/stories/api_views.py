@@ -66,6 +66,8 @@ class ShareYourStoryView(KLPAPIView):
         name = request.POST.get('name', 'Anonymous User')
         email = request.POST.get('email', '')
         comments = request.POST.get('comments', '')
+        telephone = request.POST.get('telephone', '')
+        date = request.POST.get('date', '')
 
         try:
             school = School.objects.get(pk=pk)
@@ -78,6 +80,8 @@ class ShareYourStoryView(KLPAPIView):
             email=email,
             name=name,
             school=school,
+            telephone=telephone,
+            date=date,
             group_id=1,
             comments=comments.strip()
         )
