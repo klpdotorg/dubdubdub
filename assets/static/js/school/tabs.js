@@ -8,10 +8,11 @@
     var currentTab;
     var container_width = 960;
     var chart_gradient_param = [0, 0, 0, 300];
+    var schoolType;
 
     t.init = function() {
         schoolInfoURL = 'schools/school/' + SCHOOL_ID;
-   
+        schoolType = SCHOOL_TYPE_ID === 2 ? 'preschool' : 'school';
         tabs = {
             'info': {
                 getData: function() {
@@ -354,9 +355,19 @@
 
         };
 
+        //tabs to omit for preschools
+        var preschoolOmit = ['finances', 'library', 'nutrition'];
+        if (schoolType === 'preschool') {
+            hidePreschoolTabs(preschoolOmit);
+        }
+
+        var keys = _(tabs).keys();
+        if (schoolType === 'preschool') {
+            keys = _(keys).without(preschoolOmit);
+        }
 
         //compile templates for tabs
-        _(_(tabs).keys()).each(function(tabName) {
+        _(keys).each(function(tabName) {
             console.log("tab name", tabName);
             var templateString = $('#tpl-tab-' + tabName).html();
             templates[tabName] = swig.compile(templateString);
@@ -393,8 +404,7 @@
         //checking for < 768 on page load is the best technique.
         if ($(window).width() < 768) {
             tabDeferred.done(function() {
-                var allTabs = _(tabs).keys();
-                var tabsToLoad = _(allTabs).without(firstTab);
+                var tabsToLoad = _(keys).without(firstTab);
                 _(tabsToLoad).each(function(tabName) {
                     t.showTab(tabName, true);
                 });
@@ -460,6 +470,13 @@
         if (tabs[tabName].hasOwnProperty('onRender')) {
             tabs[tabName].onRender(data);
         }
+    }
+
+    function hidePreschoolTabs(tabNames) {
+        _(tabNames).each(function(tabName) {
+            $('.tabs').find('li[data-tab=' + tabName + ']').hide();
+            $('.js-tabs-wrapper').find('[data-tab=' + tabName + ']').hide().prev().hide();
+        });
     }
 
 })();
