@@ -12,6 +12,12 @@ def dev():
     env.venv_path = '/home/dubdubdub/dubdubdub/'
     env.git_branch = 'develop'
 
+def production():
+    env.hosts = ['klp.org.in']
+    env.project_path = '/var/www/dubdubdub/'
+    env.venv_path = '/home/dubdubdub/dubdubdub/'
+    env.git_branch = 'master'
+
 def git(command='status'):
     with cd(env.project_path):
         sudo('git {}'.format(command), user='dubdubdub')
