@@ -49,6 +49,12 @@
                 <td>{{ buses }}</td>
             </tr>
             {% endif %}
+            {% if identifiers %}
+            <tr>
+                <td>Identifiers</td>
+                <td>{{ identifiers }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <td>Gender</td>
                 <td>{{ sex|capitalize }}</td>
