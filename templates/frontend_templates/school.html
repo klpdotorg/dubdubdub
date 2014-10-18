@@ -601,7 +601,7 @@
             </div>
             <div class="clr"></div>
             <p>
-                {{ f.text }}
+                {{ f.text|striptags|nl2br|autolink|safe }}
             </p>
             <div class="fl phn-fn">
                 <div class="color-black bold mt-10">

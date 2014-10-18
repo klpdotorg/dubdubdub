@@ -73,7 +73,7 @@
 		</div>
 		<div class="clr mb-5"></div>
 		<div class="info">
-			{{ text }}
+			{{ text|striptags|nl2br|autolink|safe }}
 		</div>
 	</li>
 </script>

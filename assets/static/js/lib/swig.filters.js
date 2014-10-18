@@ -9,3 +9,13 @@ swig.setFilter('length', function (input) {
 		return input.length;
 	}
 });
+
+// convert newlines to <br>
+swig.setFilter('nl2br', function (input) {
+    return input.replace(/\n/g, '<br/>');
+});
+
+// convert urls in text to links
+swig.setFilter('autolink', function (input) {
+    return Autolinker.link(input);
+});

@@ -15,7 +15,7 @@
         </div>
         <div class="clr"></div>
         <p class="mt-10 mb-10">
-            {{ text }}
+            {{ text|striptags|nl2br|autolink|safe }}
         </p>
         <div class="fl phn-fn">
             <div class="color-black bold">
