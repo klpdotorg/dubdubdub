@@ -362,6 +362,7 @@ class DonationRequirement(models.Model):
 
 class DonationItemCategory(models.Model):
     name = models.CharField(max_length=128)
+    #add slug
 
     def __unicode__(self):
         return self.name
@@ -392,7 +393,8 @@ DONATION_STATUS_CHOICES = (
 class UserDonationItem(models.Model):
     user = models.ForeignKey('User')
     donation_item = models.ForeignKey('DonationItem')
-    quantity = models.IntegerField(blank=True, null=True)
+    quantity = models.IntegerField(blank=True, null=True) #don't make optional
     date = models.DateField()
     status = models.IntegerField(choices=DONATION_STATUS_CHOICES, default=0)
     notes = models.TextField(blank=True)
+    #add more details of user
