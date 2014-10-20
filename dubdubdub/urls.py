@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.contrib import admin
@@ -265,3 +266,10 @@ urlpatterns = patterns('',
     url(r'^api/v1/', include('dubdubdub.api_urls')),
     url(r'^api-docs/', include('rest_framework_swagger.urls')),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   )
