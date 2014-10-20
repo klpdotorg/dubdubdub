@@ -17,6 +17,7 @@ from rest_framework import authentication, permissions
 import random
 from base64 import b64decode
 from django.core.files.base import ContentFile
+from PIL import Image
 
 
 class StoryInfoView(KLPAPIView):
@@ -123,11 +124,23 @@ class ShareYourStoryView(KLPAPIView):
         for image in images:
             image_type, data = image.split(',')
             image_data = b64decode(data)
+            file_name = '{}_{}.png'.format(school.id, random.randint(0, 9999))
+
             simage = StoryImage(
                 story=story,
-                image=ContentFile(image_data, '{}_{}.png'.format(school.id, random.randint(0, 9999)))
+                image=ContentFile(image_data, file_name)
             )
             simage.save()
+
+            try:
+                import os
+                pil_image = Image.open(simage.image)
+                pil_image.thumbnail((128, 128), )
+
+                thumb_path = os.path.join(settings.MEDIA_ROOT, 'sys_images', 'thumb', file_name)
+                pil_image.save(open(thumb_path, 'w'))
+            except Exception as e:
+                print e
 
         return Response({
             'success': 'Story has been saved'
