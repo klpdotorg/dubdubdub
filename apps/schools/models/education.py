@@ -207,7 +207,10 @@ class School(GeoBaseModel):
         images = []
         for story in self.story_set.filter(is_verified=True):
             for image in story.storyimage_set.filter(is_verified=True):
-                images.append(settings.IMAGE_URL_BASE.format(image.image))
+
+                images.append(
+                    image.image.url
+                )
         return images
 
     @property
