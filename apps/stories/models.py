@@ -144,3 +144,8 @@ class StoryImage(models.Model):
     def __unicode__(self):
         return "{}: {}".format(self.story.name, self.image)
 
+    def image_tag(self):
+        return '<img src="{url}" alt="" />'.format(url=self.image.url)
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
+

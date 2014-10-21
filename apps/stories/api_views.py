@@ -128,6 +128,7 @@ class ShareYourStoryView(KLPAPIView):
 
             simage = StoryImage(
                 story=story,
+                filename=file_name,
                 image=ContentFile(image_data, file_name)
             )
             simage.save()
