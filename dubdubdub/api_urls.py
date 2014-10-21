@@ -16,8 +16,8 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     VolunteerActivityTypesView,
     VolunteerActivityTypeView, VolunteerActivityUsersView,
     VolunteerActivityUserView, DonationItemCategoriesView,
-    DonationRequirementsView, DonationRequirementView, PasswordChangeView,
-    DonationItemsView, DonationItemView, DonationUsersView, DonationUserView)
+    DonationRequirementListView, DonationRequirementDetailsView, PasswordChangeView,
+    DonationItemListView, DonationItemDetailsView, DonationUsersView, DonationUserView)
 
 from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView,
     ShareYourStoryView)
@@ -137,20 +137,20 @@ urlpatterns = patterns('',
         VolunteerActivityTypeView.as_view(),
         name='api_volunteeractivitytype_view'),
 
-    url('^donation_requirements$',
-        DonationRequirementsView.as_view(),
-        name='api_donationrequirements_view'),
+    url('^donation_requirements/$',
+        DonationRequirementListView.as_view(),
+        name='api_donationrequirementlist_view'),
 
-    url('^donation_requirements/(?P<pk>[0-9]+)$',
-        DonationRequirementView.as_view(),
+    url('^donation_requirements/(?P<pk>[0-9]+)/$',
+        DonationRequirementDetailsView.as_view(),
         name='api_donationrequirement_view'),
 
-    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items$',
-        DonationItemsView.as_view(),
-        name='api_donationitems_view'),
+    url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/$',
+        DonationItemListView.as_view(),
+        name='api_donationitemlist_view'),
 
     url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/(?P<pk>[0-9]+)$',
-        DonationItemView.as_view(),
+        DonationItemDetailsView.as_view(),
         name='api_donationitem_view'),
 
     url('^donation_requirements/(?P<requirement_pk>[0-9]+)/items/(?P<item_pk>[0-9]+)/users$',

@@ -5,12 +5,13 @@ from django.shortcuts import get_object_or_404
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
     DonationItemCategory, UserDonationItem, DonationItem
-from .serializers import UserSerializer, OtherUserSerializer,\
-    OrganizationSerializer,\
-    OrganizationUserSerializer, VolunteerActivitySerializer,\
-    VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,\
-    DonationRequirementSerializer, DonationItemCategorySerializer,\
-    UserDonationItemSerializer, DonationItemSerializer
+from .serializers import (UserSerializer, OtherUserSerializer,
+    OrganizationSerializer,
+    OrganizationUserSerializer, VolunteerActivitySerializer,
+    VolunteerActivityTypeSerializer, UserVolunteerActivitySerializer,
+    DonationRequirementSerializer, DonationItemCategorySerializer,
+    UserDonationItemSerializer, DonationItemSerializer,
+    DonationRequirementSerializer)
 from .permissions import UserListPermission, IsAdminOrIsSelf,\
     IsAdminToWrite, OrganizationsPermission, OrganizationPermission,\
     OrganizationUsersPermission, VolunteerActivitiesPermission,\
@@ -350,7 +351,19 @@ class DonationItemCategoriesView(generics.ListCreateAPIView):
         return DonationItemCategory.objects.all()
 
 
-class DonationRequirementsView(generics.ListCreateAPIView):
+class DonationRequirementListView(generics.ListCreateAPIView):
+    """
+    Lists all the available donation requirements on GET,
+    Creates donation requirement on POST
+
+    GET params:
+    organization    - ID of the organizations to be listed
+
+    POST params:
+    organization    - ID of the organization
+    school          - ID of the school
+    @@ other properties of DonationRequirement model
+    """
     serializer_class = DonationRequirementSerializer
     paginate_by = 50
     permission_classes = (DonationRequirementsPermission,)
@@ -360,26 +373,34 @@ class DonationRequirementsView(generics.ListCreateAPIView):
         return DonationRequirement.objects.all()
 
 
-class DonationRequirementView(generics.ListCreateAPIView):
+class DonationRequirementDetailsView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DonationRequirementSerializer
     model = DonationRequirement
 
 
-class DonationItemsView(generics.ListCreateAPIView):
+class DonationItemListView(generics.ListCreateAPIView):
+    """
+    Lists all the available donation requirements on GET,
+    Creates donation requirement on POST
+
+    GET params:
+    @@ None - provide requirement id in URL
+
+    POST params:
+    requirement     - ID of the donation requirement (required)
+    @@ other properties of DonationItem model
+    """
     serializer_class = DonationItemSerializer
     paginate_by = 50
     #permission_classes = (DonationRequirementsPermission,)
     #filter_class = DonationRequirementFilter
-
-    def pre_save(self, obj):
-        obj.requirement = self.kwargs['requirement_pk']
 
     def get_queryset(self):
         requirement_id = self.kwargs['requirement_pk']
         return DonationItem.objects.filter(requirement=requirement_id)
 
 
-class DonationItemView(generics.ListCreateAPIView):
+class DonationItemDetailsView(generics.ListCreateAPIView):
     serializer_class = DonationItemSerializer
 
 
