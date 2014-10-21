@@ -19,3 +19,8 @@ swig.setFilter('nl2br', function (input) {
 swig.setFilter('autolink', function (input) {
     return Autolinker.link(input);
 });
+
+//Convert to int (strip decimal places)
+swig.setFilter('int', function (input) {
+    return parseInt(input).toString();
+});
