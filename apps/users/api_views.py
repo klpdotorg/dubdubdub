@@ -374,6 +374,11 @@ class DonationRequirementListView(generics.ListCreateAPIView):
 
 
 class DonationRequirementDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET         - Returns requirement details
+    PUT/PATCH   - Updated requirement details
+    DELETE      - Deletes requirement details
+    """
     serializer_class = DonationRequirementSerializer
     model = DonationRequirement
 
@@ -400,8 +405,14 @@ class DonationItemListView(generics.ListCreateAPIView):
         return DonationItem.objects.filter(requirement=requirement_id)
 
 
-class DonationItemDetailsView(generics.ListCreateAPIView):
+class DonationItemDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET         - Returns donation item details
+    PUT/PATCH   - Updated donation item details
+    DELETE      - Deletes donation item details
+    """
     serializer_class = DonationItemSerializer
+    model = DonationItem
 
 
 class DonationUsersView(generics.ListCreateAPIView):
