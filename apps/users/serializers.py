@@ -226,8 +226,8 @@ class DonationItemSerializer(serializers.ModelSerializer):
 
 
 class DonationRequirementSerializer(serializers.ModelSerializer):
-    items = DonationItemSerializer(many=True, read_only=True)
-    #users = UserDonationItemSerializer(many=True)
+    items_count = serializers.IntegerField(source='items.count')
+    items_url = serializers.CharField(source='get_items_url')
     organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
