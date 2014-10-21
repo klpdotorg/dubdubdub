@@ -250,9 +250,24 @@
 		.pie-chart-wrapper{
 			.chart{
 				width:170px; height:170px; margin-right: 25px;
+				position: absolute; z-index: 0;
 			}
 			.gender_icons{
-				margin-top:25px;
+				margin-top: 25px;
+
+				&.absolute{
+					position: relative; z-index: 1;
+					padding-top: 55px; width: 170px;
+					margin-top: 0; margin-left: auto; margin-right: auto;
+
+					.value{
+						font-size: 22px;
+					}
+				}
+
+				@include if-device(phone){
+					margin-top: 45px;
+				}
 			}
 		}
 
@@ -396,6 +411,45 @@
 		}
 		.items{
 			font-size: 16px; line-height: 22px;
+		}
+	}
+
+	.lang-marks{
+		width: 350px;
+		
+		.item{
+			margin-bottom: 15px; zoom: 1;
+		}
+		.label{
+			width: 30%; text-transform: uppercase; font-weight: 700; color: #393939; font-size: 13px;
+		}
+		.percent{
+			width: 2%; font-weight: bold; text-align: center; padding-right: 2%; text-align: left;
+		}
+		
+		@include if-device(phone){
+			.percent{
+				text-align: left;
+			}
+		}
+	}
+
+	.bar{
+		width: 62%; height: 15px; background: #EDEDED;
+		.bar-value{
+			width: 32%; height: 100%; background-color: #5f5f5f;
+			&.bar-value-47{
+				width: 47%;
+			}
+			&.bar-value-38{
+				width: 38%;
+			}
+			&.bar-value-23{
+				width: 23%;
+			}
+			&.bg-green{
+				background-color: #4AC18D;
+			}
 		}
 	}
 

@@ -1,9 +1,10 @@
 @import 'bourbon/bourbon';
 @import "config";
+@import "config";
 @import "sass-css-utilities/sass-css-utilities";
 @import "mixins";
-@import "base";
 @import "colors";
+@import "base";
 @import "grid";
 @import "navigation";
 @import "footer";
@@ -16,6 +17,7 @@
 @import "select2";
 @import "volunteer-flow";
 @import "modal";
+@import "token-input";
 @import "page-home";
 @import "page-volunteer";
 @import "page-partners";
@@ -39,13 +41,6 @@
 @import "page-volunteer-map";
 @import "style-guide";
 @import "dev/sample";
-@import "dev/helpers";
-@import "dev/modals";
-@import "dev/select2";
-@import "dev/alerts";
-@import "dev/sys";
-@import "dev/volunteer-map";
-
 
 .textarea,
 .input-text{

@@ -1,26 +1,4 @@
 .home-header{
-	.mobile_header{
-		display: none; width:100%; min-height: 40px; position:absolute; z-index: 10; top:0; left: 0;
-		background-color: #fff;
-
-		.header_mobile_logo{
-			// @extend .main-header .header-content .header_mobile_logo;
-			display: block; float: left;
-			height: 40px;width: 56px; padding-left: 10px;
-			background-repeat: no-repeat; background-position: right center;
-			@include bg-image-2x("../images/KLP_logo", png, 56px, 29px);
-		}
-
-		.mobile_icon{
-			display: block; float: right; height: 40px;width: 40px; 
-			background-repeat: no-repeat; background-position: center center;
-			@include bg-image-2x("../images/top_menu_mobile_icon", png, 22px, 15px);
-		}
-
-		@include if-device(phone-tablet) {
-			display: block;
-		}
-	}
 	.blackboard_wrapper{
 		background:#000 url("../images/bg_blackboard_big.jpg") repeat;
 		background-size: cover;
@@ -137,6 +115,15 @@
 @mixin home-section_circular($bg_color,$bg_img) {
 	background-color:$bg_color !important;
 	background-image: url($bg_img);
+}
+
+.home-section.donate{
+	h2{
+		
+		span{
+			background: #3892e3;
+		}
+	}	
 }
 
 .home-section.how-you-can-help{

@@ -2,7 +2,7 @@
 .school-comparison-flow {
 
 	&.is-map-page {
-		position: absolute; z-index: 9; right:20px; left: 20px; top: 120px; margin-bottom: 20px; 
+		position: absolute; z-index: 9; width: 960px; left: 50%; margin-left: -480px; top: 120px; margin-bottom: 20px; 
 		@include opacity(0);
 		@include transition(all 300ms ease-in-out);
 		@include transform(translate3d(0, 20px, 0));

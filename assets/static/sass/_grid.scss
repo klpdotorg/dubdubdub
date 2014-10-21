@@ -49,7 +49,8 @@
 .grid_9,
 .grid_10,
 .grid_11,
-.grid_12 {
+.grid_12,
+.grid_one_fifth {
   display:inline;
   float: left;
   position: relative;
@@ -108,6 +109,12 @@
 
 .container .grid_12 {
   width:98.0%;
+}
+
+
+
+.container .grid_one_fifth{
+  width: 16.8%;
 }
 
 /* Prefix Extra Space >> 12 Columns

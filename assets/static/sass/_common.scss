@@ -25,6 +25,11 @@
 		}
 	}
 
+	.header-options{
+		line-height: 18px; margin: 16px 10px;
+		cursor: pointer;
+	}
+
 	&.fixed{
 		position: fixed; z-index: 10;
 	}
@@ -501,7 +506,7 @@
 	.icon{
 		background-color: #3D486C;
 		// /*background-image: url("../images/status_girl.png");*/
-		@include bg-image-2x("../images/status_girl", png, 14px, 30px);
+		@include bg-image-2x("../images/status_total", png, 26px, 30px);
 	}
 }
 
@@ -852,7 +857,7 @@ a.external{
 	}
 }
 .circle{
-	width: 100px; height: 100px;
+	width: 106px; height: 106px;
 	@include border-radius(50%);
 	&.blue{
 		border: 4px solid #3891F3;
@@ -863,7 +868,7 @@ a.external{
 	width: 98%; height: 25px; padding: 0 1%;
 	border: 1px solid #CFCFCF; @include border-radius(3px);
 	&.textarea{
-		width: 98%; height: 80px;
+		width: 98%; height: 80px; color: #000;
 	}
 	&.error{
 		border-color: #eb5055;
@@ -952,6 +957,9 @@ a.external{
 
 .font-20{
 	font-size: 20px;
+}
+.font-18{
+	font-size: 18px;
 }
 .font-16{
 	font-size: 16px;
@@ -1099,6 +1107,9 @@ table.tbl-common{
 	td{
 		padding: 10px 15px; vertical-align: top;
 	}
+	.cell-width-5{
+		width: 5%;
+	}
 	.cell-width-10{
 		width: 10%;
 	}
@@ -1129,6 +1140,16 @@ table.tbl-common{
 	&.cell-pr-10{
 		th, td{
 			padding-right: 10px;
+		}
+	}
+	&.cell-pl-20{
+		th, td{
+			padding-left: 20px;
+		}
+	}
+	&.cell-pr-20{
+		th, td{
+			padding-right: 20px;
 		}
 	}
 
@@ -1217,3 +1238,70 @@ table.tbl-common{
 		font-size: 16px; font-weight: normal;
 	}
 }
+
+.verified{
+	@include bg-image-2x("../images/icon_verified", png, auto, 100%); background-size: auto 100%; background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+.sub-section-heading{
+	padding: 10px 20px;
+	background: #f6f6f6; color: #7B7795;
+	border-top: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8;
+	text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+}
+
+ul.comparison_list {
+	width: 50%; color: #6d6d6d;
+	list-style: none;
+	font-size: 16px; font-weight: bold;
+
+	li{
+		padding: 5px 0; border-bottom: 1px solid #d8d8d8;
+
+		span{
+			color: #393939;
+		}
+	}
+}
+
+.error-page{
+	.error-img{
+		width: 240px;
+	}
+}
+
+.section-donate-icons{
+	img{
+		width: 106px;
+	}
+}
+
+
+/* Tipsy tooltip */
+
+.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 1002; }
+.tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
+
+/* Rounded corners */
+.tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+
+/* Uncomment for shadow */
+/*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+
+.tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+
+/* Rules to colour arrows */
+.tipsy-arrow-n { border-bottom-color: #000; }
+.tipsy-arrow-s { border-top-color: #000; }
+.tipsy-arrow-e { border-left-color: #000; }
+.tipsy-arrow-w { border-right-color: #000; }
+
+.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+.tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+.tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
