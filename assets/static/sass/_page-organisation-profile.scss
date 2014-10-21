@@ -2,6 +2,11 @@
 	&.org-head{
 		border-bottom: 1px solid #D8D8D8;
 	}
+
+	.verified{
+		@include bg-image-2x("../images/icon_verified", png, auto, 100%); background-size: auto 100%; background-repeat: no-repeat;
+		padding-left: 20px;
+	}
 	
 	.required{
 		border-bottom: 1px solid #ddd;

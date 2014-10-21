@@ -1,4 +1,4 @@
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url("html5-doctor-reset.css");
 @import url("fontello.css");
 
@@ -49,7 +49,7 @@ $primary-border-color: #d8d8d8;
 
 //--- CSS UTILS
 $config-paddings: (0 5 10 15 20 25 30 50 60 150);
-$config-margins: (0 5 10 15 20 25 30 40 50 60);
+$config-margins: (0 5 10 15 20 25 30 40 50 60 90);
 
 $config-paddings-use-important: true;
 $config-margins-use-important: true;

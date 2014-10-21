@@ -159,6 +159,29 @@ $modal-height: 600px;
 	}
 }
 
+.modal-login-signup {
+	width: 400px; height:550px; margin-left: -200px; margin-top: -275px;
+
+	.bordered-heading {
+		text-transform: none;
+		font-size: 20px;
+		font-weight: normal;
+		letter-spacing: 0px;
+	}
+
+	.alternate-text {
+		display: inline-block; zoom: 1;
+		color: #9B9B9B;
+		vertical-align: top;
+		line-height: 28px;
+		margin-right: 5px;
+	}
+
+	.error-message {
+		position: absolute;
+	}
+}
+
 .modal-map-filter{
 	width: 800px; height:400px; margin-left: -400px; margin-top: -200px;
 

@@ -138,17 +138,26 @@
 
         <div class="pie-chart-wrapper" id="boygirlChartWrapper">
             <div id="num_students_piechart" class="chart fl"></div>
-            <div class="gender_icons fl">
+            <div class="gender_icons absolute fl">
+                <div class="stats_gender_item no_width total ta-c">
+                    <p class="label">Total</p>
+                    <p class="value">{{ total_students }}</p>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <div class="gender_icons fl ml-40">
                 <div class="stats_gender_item no_width boy">
                     <span class="icon"></span>
                     <p class="label">Boys</p>
-                    <p class="value">{{ percent_boys }}%</p>
+                    <p class="value">{{ num_boys }}</p>
                     <div class="clr"></div>
                 </div>
                 <div class="stats_gender_item no_width girl">
                     <span class="icon"></span>
                     <p class="label">Girls</p>
-                    <p class="value">{{ percent_girls }}%</p>
+                    <p class="value">{{ num_girls }}</p>
                     <div class="clr"></div>
                 </div>
             </div>
@@ -157,11 +166,15 @@
     </div>
     <div class="fr-desktop-tablet">
         <h4>Languages</h4>
-        <div class="bar_graph_hor mar_top_25">
+        <div class="lang-marks fr phn-fn phn-width-full">
             {% for mt, percent in mt_profile_percents %}
             <div class="item">
                 <div class="label fl">{{ mt|capitalize }}</div>
-                <div class="bar fr"><div class="value" style="width:{{ percent }}%;"></div></div>
+                <div class="percent color-gray fl">{{ mt_profile[mt] }}</div>
+                <div class="bar fr">
+                    <div class="bar-value bar-value-{{ percent|int }} qtip" style="width:{{ percent }}%;" original-title="{{ percent }}%">
+                    </div>
+                </div>
                 <div class="clr"></div>
             </div>
             {% endfor %}
@@ -176,18 +189,27 @@
     </div>
     <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
         <div id="num_students_piechart_dise" class="chart fl"></div>
-        <div class="gender_icons fl">
-            <div class="stats_gender_item no_width boy">
-                <span class="icon"></span>
-                <p class="label">Boys</p>
-                <p class="value">{{ dise.percent_boys }}%</p>
+        <div class="gender_icons absolute fl">
+            <div class="stats_gender_item no_width total ta-c">
+                <p class="label">Total</p>
+                <p class="value">{{ dise.total_students }}</p>
                 <div class="clr"></div>
             </div>
-            <div class="stats_gender_item no_width girl">
-                <span class="icon"></span>
-                <p class="label">Girls</p>
-                <p class="value">{{ dise.percent_girls }}%</p>
-                <div class="clr"></div>
+        </div>
+        <div class="gender_icons fl">
+            <div class="gender_icons fl ml-40">
+                <div class="stats_gender_item no_width boy">
+                    <span class="icon"></span>
+                    <p class="label">Boys</p>
+                    <p class="value">{{ num_boys_dise }}</p>
+                    <div class="clr"></div>
+                </div>
+                <div class="stats_gender_item no_width girl">
+                    <span class="icon"></span>
+                    <p class="label">Girls</p>
+                    <p class="value">{{ num_girls_dise }}</p>
+                    <div class="clr"></div>
+                </div>
             </div>
         </div>
         <div class="clr"></div>

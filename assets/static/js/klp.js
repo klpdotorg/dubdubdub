@@ -13,6 +13,9 @@
             }
         });
 
+        //Activates "tipsy" plugin for tooltips
+        $('.qtip').tipsy({live: true});
+
         // Adds easing scrolling to # targets
         $('a[href*=#]:not([href=#])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
