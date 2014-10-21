@@ -359,6 +359,9 @@ class DonationRequirement(models.Model):
     def __unicode__(self):
         return self.description
 
+    def get_items_url(self):
+        return reverse('api_donationitemlist_view', kwargs={'requirement_pk': self.pk})
+
 
 class DonationItemCategory(models.Model):
     name = models.CharField(max_length=128)
