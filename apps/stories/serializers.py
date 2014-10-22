@@ -45,10 +45,12 @@ class StoryImageSerializer(KLPSerializer):
 class StorySerializer(KLPSerializer):
     date = serializers.SerializerMethodField('get_date_string')
     images = StoryImageSerializer(many=True, source='storyimage_set')
+    school_name = serializers.CharField(source='school.name')
+    school_url = serializers.CharField(source='school.get_absolute_url')
 
     class Meta:
         model = Story
-        fields = ('id', 'name', 'date', 'school', 'comments', 'is_verified', 'images')
+        fields = ('id', 'name', 'date', 'school', 'school_name', 'school_url', 'comments', 'is_verified', 'images')
 
     def get_date_string(self, obj):
         return obj.entered_timestamp.strftime('%Y-%m-%d') if obj.entered_timestamp else ''
