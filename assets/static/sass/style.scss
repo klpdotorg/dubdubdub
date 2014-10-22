@@ -40,7 +40,13 @@
 @import "page-assessments";
 @import "page-volunteer-map";
 @import "style-guide";
-@import "dev/sample";
+@import "dev/alerts";
+@import "dev/helpers";
+@import "dev/modals";
+@import "dev/select2";
+@import "dev/sys";
+@import "dev/volunteer-map";
+
 
 .textarea,
 .input-text{
