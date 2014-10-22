@@ -13,6 +13,7 @@ class AnswerInline(admin.StackedInline):
 class StoryImageInline(admin.StackedInline):
     model = StoryImage
     extra = 0
+    readonly_fields = ('image', 'image_tag')
 
 
 class StoryAdmin(admin.ModelAdmin):
