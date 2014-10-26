@@ -1,14 +1,11 @@
 import sys
 import csv
 from django.core.management.base import BaseCommand
-from django.core.cache import cache
-from stories.models import Story
-from stories.models import Answer
-from stories.models import Question
-from stories.models import Questiongroup
-from stories.models import StoryImage
+from django.core.files.images import ImageFile
+from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
 from schools.models import School
 from users.models import User
+
 
 class Command(BaseCommand):
     help = 'Import data from EMS'
@@ -20,7 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for d in self.data:
-            klpid =  d['KLP ID']
+            klpid = d['KLP ID']
             address = d['Address']
             landmark = d['Landmark #1']
             bus = d['Bus Details']
@@ -43,37 +40,44 @@ class Command(BaseCommand):
                         school_address.bus = bus
                     if pincode:
                         school_address.pincode = pincode
+
+                    school.instcoord.coord = coordinates
+
                     school_address.save()
+                    school.save()
 
                     # Story
                     story = {
-                        date: d['Date'],
-                        user: User.objects.get(email='dev@klp.org.in'),
-                        email: 'dev@klp.org.in',
-                        name: 'Team KLP',
-                        school: school
+                        'date': d['Date'],
+                        'user': User.objects.get(email='dev@klp.org.in'),
+                        'email': 'dev@klp.org.in',
+                        'name': 'Team KLP',
+                        'school': school
                         }
 
-                    self.createStory(story)
+                    self.createStory(story, klpid)
 
                 except:
                     self.notfoundfile.write(klpid+'\n')
                     pass
 
         self.notfoundfile.close()
-        self.stdout.write('This works!')
 
-    def createStory(self, story):
+    def createStory(self, story, klpid):
         group = Questiongroup.objects.get(id=1)
-        new_story = Story(user=story.user, school=story.school,group=group,is_verified=True, name=story.name,
-                    email=story.email, date=story.date)
+        new_story = Story(user=story.user, school=story.school, group=group, is_verified=True, name=story.name,
+                          email=story.email, date=story.date)
         playground_question = Question.objects.get(text='Play ground')
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
         playground_answer = Answer(story=new_story, question=playground_question, text=self.d['PlayGround?'])
         fence_answer = Answer(story=new_story, question=fence_question, text=self.d['Fence?'])
 
         # Images
-        # Todo.
+        StoryImage.objects.bulk_create([
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-1.png')), is_verified=True, filename=klpid+'-1.png'),
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-2.png')), is_verified=True, filename=klpid+'-2.png'),
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-3.png')), is_verified=True, filename=klpid+'-3.png')
+        ])
 
         new_story.save()
         playground_answer.save()
