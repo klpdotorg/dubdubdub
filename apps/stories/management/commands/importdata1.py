@@ -29,14 +29,10 @@ class Command(BaseCommand):
             lon = d['LONG']
             coordinates = 'POINT ('+lon+' '+lat+')'
 
-
-            print klpid
             if not (klpid.startswith('5')):
                 try:
                     school = School.objects.get(id=d['KLP ID'])
                     school_address = school.address
-                    # print school_address
-                    print school.instcoord.coord = coordinates
 
                     # Update details.
                     if address:
