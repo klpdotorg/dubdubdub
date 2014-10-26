@@ -15,11 +15,27 @@
 
         //get and show SYS info
         var url = "stories/info/";
-        var sysXHR = klp.api.do(url);
-        var tplSysInfo = swig.compile($('#tpl-sysInfo').html());
+        var sysCountsXHR = klp.api.do(url);
+        var tplSysCounts = swig.compile($('#tpl-sysCounts').html());
+        sysCountsXHR.done(function(data) {
+            var html = tplSysCounts(data);
+            $('#sysCounts').html(html);
+        });
+
+        //get and show recent stories
+        var url = "stories/";
+        var params = {
+            per_page: 8,
+            verified: 'yes'
+        };
+        var sysXHR = klp.api.do(url, params);
+        var tplSys = swig.compile($('#tpl-sysInfo').html());
         sysXHR.done(function(data) {
-            var html = tplSysInfo(data);
-            $('#sysinfo').html(html);
+            var context = {
+                'stories': data.features
+            };
+            var html = tplSys(context);
+            $('#sysInfo').html(html);
         });
 
     };
