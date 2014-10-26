@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
+from common.views import URLConfigView
+
 from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance,
     Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
@@ -30,6 +32,8 @@ urlpatterns = patterns('',
     url(r'^$', 'schools.api_views.api_root', name='api_root'),
 
     url(r'^merge$', MergeEndpoints.as_view(), name='api_merge'),
+
+    url(r'^patterns/$', URLConfigView.as_view(), name='api_urlspatterns'),
 
     url(r'^search$', OmniSearch.as_view(), name='api_omni_search'),
 
