@@ -262,6 +262,9 @@ class VolunteerActivity(models.Model):
     def get_geometry(self):
         return self.school.get_geometry()
 
+    class Meta:
+        verbose_name_plural = 'Volunteer Activities'
+
 # class DonorRequirement(models.Model):
 #     organization = models.ForeignKey('Organization')
 #     type = models.ForeignKey('DonationType')
@@ -277,6 +280,7 @@ class UserVolunteerActivity(models.Model):
 
     class Meta:
         unique_together = ('user', 'activity',)
+        verbose_name_plural = 'User-Volunteer Activities'
 
     def get_emails(self):
         '''

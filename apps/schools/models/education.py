@@ -34,7 +34,7 @@ class Address(BaseModel):
     instidentification2 = models.CharField(max_length=1000, blank=True)
 
     def __unicode__(self):
-        return self.address
+        return self.full
 
     @property
     def full(self):
@@ -54,6 +54,7 @@ class Address(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_address'
+        verbose_name_plural = 'Addresses'
 
 
 class BoundaryHierarchy(BaseModel):
@@ -99,6 +100,7 @@ class Boundary(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_boundary'
+        verbose_name_plural = 'Boundaries'
 
 
 class BoundaryType(BaseModel):
