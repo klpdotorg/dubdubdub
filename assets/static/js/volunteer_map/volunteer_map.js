@@ -5,6 +5,7 @@
     var activitiesLayer;
     var tplVolunteerListItem = swig.compile($('#tplVolunteerListItem').html());
     var tplVolunteerMapPopup = swig.compile($('#tplVolunteerMapPopup').html());
+    var tplVolunteerEmptyList = swig.compile($('#tplVolunteerEmptyList').html());
     t.init = function() {
         load_map();
 
@@ -109,10 +110,16 @@
 
     function loadActivities(data) {
         var activities = data.features;
-        _(activities).each(function(activity) {
-            var html = tplVolunteerListItem(activity.properties);
-            $('#volunteerActivityList').append(html);
-        });
+        if (activities.length > 0) {
+            _(activities).each(function(activity) {
+                var html = tplVolunteerListItem(activity.properties);
+                $('#volunteerActivityList').append(html);
+            });
+        } else {
+            var context = {};
+            var html = tplVolunteerEmptyList(context);
+            $('#volunteerActivityList').html(html);
+        }
         activitiesLayer.addData(activities);
         map.fitBounds(activitiesLayer.getBounds());
     }
