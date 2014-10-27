@@ -541,7 +541,7 @@
     -->
     <!-- Comparison Result ends -->
 
-
+    {% if not comparison_type == 'preschool' %}
     <div class="comparison-result teacher-student-ratio">
       <div class="result-header">
         <div class="heading">Teacher student ratio</div>
@@ -614,7 +614,7 @@
 
       </div>
     </div>
-
+    {% endif %}
 
     <div class="comparison-result infrastructure">
       <div class="result-header">
@@ -660,6 +660,7 @@
     </div>
     <!-- Comparison Result ends -->
 
+    {% if not comparison_type == 'preschool' %}
     <div class="comparison-result basic-infrastructure">
       <div class="result-header">
         <div class="heading">Basic Infrastructure</div>
@@ -749,8 +750,10 @@
 
       </div>
     </div>
+    {% endif %}
     <!-- Comparison Result ends -->
 
+    {% if not comparison_type == 'preschool' %}
     <div class="comparison-result grants-distribution">
       <div class="result-header">
         <div class="heading">Grants Distribution</div>
@@ -809,6 +812,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     <!-- Comparison Result ends -->
   </script>
 

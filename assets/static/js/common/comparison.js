@@ -288,6 +288,7 @@
                 var context = {
                     'school1': school1,
                     'school2': school2,
+                    'comparison_type': klp.utils.getSchoolType(school1.type.id),
                     'mt_profiles': getMTProfiles(school1, school2),
                     'infrastructure': getInfrastructureComparison(school1, school2)
                 };
