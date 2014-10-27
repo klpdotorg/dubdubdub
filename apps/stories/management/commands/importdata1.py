@@ -1,0 +1,84 @@
+import sys
+import csv
+from django.core.management.base import BaseCommand
+from django.core.files.images import ImageFile
+from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
+from schools.models import School
+from users.models import User
+
+
+class Command(BaseCommand):
+    help = 'Import data from EMS'
+
+    filename = sys.argv[2]
+    file = open(filename, 'r')
+    data = csv.DictReader(file)
+    notfoundfile = open('not-in-dubdubdub.txt', 'w')
+
+    def handle(self, *args, **options):
+        for d in self.data:
+            klpid = d['KLP ID']
+            address = d['Address']
+            landmark = d['Landmark #1']
+            bus = d['Bus Details']
+            pincode = d['PIN Code']
+            lat = d['LAT']
+            lon = d['LONG']
+            coordinates = 'POINT ('+lon+' '+lat+')'
+
+            if not (klpid.startswith('5')):
+                try:
+                    school = School.objects.get(id=d['KLP ID'])
+                    school_address = school.address
+
+                    # Update details.
+                    if address:
+                        school_address.address = d['Address']
+                    if landmark:
+                        school_address.landmark = d['Landmark #1']
+                    if bus:
+                        school_address.bus = bus
+                    if pincode:
+                        school_address.pincode = pincode
+
+                    school.instcoord.coord = coordinates
+
+                    school_address.save()
+                    school.save()
+
+                    # Story
+                    story = {
+                        'date': d['Date'],
+                        'user': User.objects.get(email='dev@klp.org.in'),
+                        'email': 'dev@klp.org.in',
+                        'name': 'Team KLP',
+                        'school': school
+                        }
+
+                    self.createStory(story, klpid)
+
+                except:
+                    self.notfoundfile.write(klpid+'\n')
+                    pass
+
+        self.notfoundfile.close()
+
+    def createStory(self, story, klpid):
+        group = Questiongroup.objects.get(id=1)
+        new_story = Story(user=story.user, school=story.school, group=group, is_verified=True, name=story.name,
+                          email=story.email, date=story.date)
+        playground_question = Question.objects.get(text='Play ground')
+        fence_question = Question.objects.get(text='Boundary wall/ Fencing')
+        playground_answer = Answer(story=new_story, question=playground_question, text=self.d['PlayGround?'])
+        fence_answer = Answer(story=new_story, question=fence_question, text=self.d['Fence?'])
+
+        # Images
+        StoryImage.objects.bulk_create([
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-1.png')), is_verified=True, filename=klpid+'-1.png'),
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-2.png')), is_verified=True, filename=klpid+'-2.png'),
+            StoryImage(story=new_story, image=ImageFile(open(klpid+'-3.png')), is_verified=True, filename=klpid+'-3.png')
+        ])
+
+        new_story.save()
+        playground_answer.save()
+        fence_answer.save()

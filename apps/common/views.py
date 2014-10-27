@@ -5,6 +5,7 @@ from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
+from rest_framework.response import Response
 from common.filters import KLPInBBOXFilter
 
 
@@ -61,3 +62,19 @@ class KLPListAPIView(generics.ListAPIView):
 
 class KLPDetailAPIView(generics.RetrieveAPIView):
     pass
+
+
+class URLConfigView(APIView):
+    def get(self, *args, **kwargs):
+        from dubdubdub.api_urls import urlpatterns
+
+        ALLOWED_PATTERNS = (
+            'api_merge', 'api_school_info', 'api_donationuser_view'
+        )
+
+        patterns = []
+        for pattern in urlpatterns:
+            if pattern.name in ALLOWED_PATTERNS:
+                patterns.append(dict(name=pattern.name, pattern=pattern.regex.pattern))
+
+        return Response(dict(patterns=patterns))
