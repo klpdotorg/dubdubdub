@@ -16,9 +16,6 @@
                 e.preventDefault();
                 klp.comparison.open(data.properties);
             });
-            if (data.properties.has_volunteer_activities) {
-                $('#volunteerHereBtn').show();
-            }
             if (data.geometry && data.geometry.coordinates) {
                 var markerLatlng = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
                 var map = L.map('map-canvas', {
