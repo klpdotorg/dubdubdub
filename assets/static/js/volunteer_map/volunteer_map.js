@@ -129,7 +129,7 @@
             northEast = L.latLng(18.45, 78.57),
             bounds = L.latLngBounds(southWest, northEast);
         map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
-        L.tileLayer('https://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
+        L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
