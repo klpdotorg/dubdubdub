@@ -137,12 +137,14 @@
         </div>
 
         <div class="pie-chart-wrapper" id="boygirlChartWrapper">
-            <div id="num_students_piechart" class="chart fl"></div>
-            <div class="gender_icons absolute fl">
-                <div class="stats_gender_item no_width total ta-c">
-                    <p class="label">Total</p>
-                    <p class="value">{{ total_students }}</p>
-                    <div class="clr"></div>
+            <div class="pie-chart-inner fl">
+                <div id="num_students_piechart" class="chart fl"></div>
+                <div class="gender_icons absolute fl">
+                    <div class="stats_gender_item no_width total ta-c">
+                        <p class="label">Total</p>
+                        <p class="value">{{ total_students }}</p>
+                        <div class="clr"></div>
+                    </div>
                 </div>
             </div>
 
@@ -171,8 +173,8 @@
             <div class="item">
                 <div class="label fl">{{ mt|capitalize }}</div>
                 <div class="percent color-gray fl">{{ mt_profile[mt] }}</div>
-                <div class="bar fr">
-                    <div class="bar-value bar-value-{{ percent|int }} qtip" style="width:{{ percent }}%;" original-title="{{ percent }}%">
+                <div class="bar fr qtip" original-title="{{ percent }}%">
+                    <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
                     </div>
                 </div>
                 <div class="clr"></div>
@@ -188,14 +190,17 @@
         <p> No data available </p>
     </div>
     <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
-        <div id="num_students_piechart_dise" class="chart fl"></div>
-        <div class="gender_icons absolute fl">
-            <div class="stats_gender_item no_width total ta-c">
-                <p class="label">Total</p>
-                <p class="value">{{ dise.total_students }}</p>
-                <div class="clr"></div>
+        <div class="pie-chart-inner fl">
+            <div id="num_students_piechart_dise" class="chart fl"></div>
+            <div class="gender_icons absolute fl">
+                <div class="stats_gender_item no_width total ta-c">
+                    <p class="label">Total</p>
+                    <p class="value">{{ dise.total_students }}</p>
+                    <div class="clr"></div>
+                </div>
             </div>
         </div>
+
         <div class="gender_icons fl ml-40">
             <div class="stats_gender_item no_width boy">
                 <span class="icon"></span>

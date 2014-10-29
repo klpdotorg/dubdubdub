@@ -252,13 +252,19 @@
 				width:170px; height:170px; margin-right: 25px;
 				position: absolute; z-index: 0;
 			}
+			.pie-chart-inner{
+				width: 170px; height: 170px; position: relative;
+			}
 			.gender_icons{
 				margin-top: 25px;
 
-				&.absolute{
-					position: relative; z-index: 1;
-					padding-top: 55px; width: 170px;
-					margin-top: 0; margin-left: auto; margin-right: auto;
+				&.total_count{
+					width: 70px; position: relative; z-index: 1;
+					margin-top: 55px; margin-left: 50px;
+
+					.total{
+						min-width: 0;
+					}
 
 					.value{
 						font-size: 22px;
