@@ -32,6 +32,7 @@
 	<script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/lib/klprouter.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/settings.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
@@ -73,7 +74,6 @@
             Sorry, you need Javascript for this site to work. Please enable Javascript in your browser settings or turn off any plugins that maybe blocking Javascript and reload this page. Thank you.
         </span>
     </noscript>
-	{% if not homepage %}
 
 	<header class="main-header {% if header_full_width %}full_width{% endif %} {% if header_fixed %}fixed{% endif %}">
 		<div class="header-content">
@@ -104,13 +104,8 @@
     {% endblock %}
 	</header>
 
-	{% else %}
-
-	<header class="home-header" role="banner">
-		<div class="mobile_header">
-			<a href="/" class="header_mobile_logo"></a>
-			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
-		</div>
+  {% if homepage %}
+	<div class="home-header" role="banner">
 		<div class="blackboard_wrapper">
 			<div class="content png24">
 				<h1 class="disable-text-select png24">Karnataka Learning Partnership</h1>
@@ -122,18 +117,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="main-header full_width">
-			<nav class="top-nav home" role="navigation">
-				{% include "includes/_top_navigation.html" %}
-			</nav>
-		</div>
-	</header>
+	</div>
 
+  
 	{% endif %}
+  
+  <div id="modal_overlay" class="modal-overlay"></div>
 
 	{% block content %} {% endblock %}
 
-    {% include 'includes/_login_modal.html' %}
+  {% include 'includes/_login_modal.html' %}
   {% if not hide_footer %}
   <footer class="main-footer">
     <div class="footer-wrapper">
