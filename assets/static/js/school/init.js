@@ -30,7 +30,7 @@
                     attributionControl: false
                 }).setView(markerLatlng, 15);
 
-                L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
+                L.tileLayer('https://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
                     attribution: 'OpenStreetMap, OSM-Bright'
                 }).addTo(map);
 

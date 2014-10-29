@@ -144,7 +144,7 @@ function load_map() {
     }
     marker_overlay_html = $("#tpl_marker_overlay").html();
     map = L.map('map_canvas').setView([12.9793998, 77.5903608], 14);
-    L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
+    L.tileLayer('https://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '',
         id: 'examples.map-i86knfo3'

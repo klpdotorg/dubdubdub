@@ -95,7 +95,7 @@
                         },
                         {
                             text: "Boundaries",
-                            children: makeResults(data.boundaries.features, 'boundary')   
+                            children: makeResults(data.boundaries.features, 'boundary')
                         },
                         {
                             text: "Parliaments",
@@ -126,7 +126,7 @@
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
-            
+
             selectedLayers.clearLayers();
             // selectedMarkers.clearLayers();
 
@@ -222,7 +222,7 @@
             }
             if (changed.marker.oldVal && !changed.marker.newVal) {
                 map.closePopup();
-                return;            
+                return;
             }
             var urlMarker = queryParams.marker.split('-');
             var entityType = urlMarker[0];
@@ -245,7 +245,7 @@
                 });
             } else if (entityType === 'pincode' || entityType === 'parliament' || entityType === 'assembly') {
                 var urlString = entityType+'/'+entityID;
-                var thisEntityXHR = klp.api.do('boundary/'+urlString, {'geometry': 
+                var thisEntityXHR = klp.api.do('boundary/'+urlString, {'geometry':
                     'yes'});
                 thisEntityXHR.done(function(data) {
                     var thisEntityPolygon = L.geoJson(data);
@@ -408,7 +408,7 @@
             }
 
             var bboxString = map.getBounds().pad(0.5).toBBoxString();
-            mapBbox = bbox.pad(0.5); 
+            mapBbox = bbox.pad(0.5);
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
                 console.log('aborting preschool xhr');
@@ -419,7 +419,7 @@
                 console.log("aborting school xhr");
                 schoolXHR.abort();
             }
-            
+
 
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
@@ -796,7 +796,7 @@
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
         t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
-        L.tileLayer('http://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
+        L.tileLayer('https://geo.klp.org.in/osm/{z}/{x}/{y}.png', {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
         }).addTo(map);
