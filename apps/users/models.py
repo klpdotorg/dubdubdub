@@ -97,6 +97,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name or ''
 
+    def get_full_name(self):
+        return ' '.join(filter(None, [self.first_name, self.last_name])) or self.email
+
     @property
     def is_staff(self):
         return self.is_superuser
