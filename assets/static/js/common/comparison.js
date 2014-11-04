@@ -252,13 +252,10 @@
                 }
             },
             formatResult: function(item) {
-                return item.name;
-                // console.log("item", item);
-                // return {
-                //     id: item.id,
-                //     text: item.name,
-                //     data: item
-                // }
+                var html = '';
+                html += item.name + '<br />';
+                html += '<i>' + item.admin1.name + ', ' + item.admin2.name + ', ' + item.admin3.name + '</i>';
+                return html;
             },
             formatSelection: function(item) {
                 return item.name;
