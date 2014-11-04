@@ -147,6 +147,8 @@
                 var $field = $('#loginPassword');
                 if (errors.detail) {
                     klp.utils.invalidateField($field, errors.detail);
+                } else {
+                    klp.utils.alertMessage("Login failed due to unknown error. Please contact us if this happens again.", "error");
                 }
             });
         }
