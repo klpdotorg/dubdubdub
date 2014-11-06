@@ -652,14 +652,10 @@
 
         // Map Events
         map.on('zoomend', updateLayers);
-        // map.on('movestart', function() {
-        //     currentMapBounds = map.getBounds().toBBoxString();
-        //     console.log(currentMapBounds);
-        // })
-        map.on('moveend', function() {
+        map.on('moveend', _.debounce(function() {
             loadPointsByBbox();
             setURL();
-        });
+        }, 300));
 
         map.on('popupclose', function(e) {
             //If we don't wrap this in a setTimeout, there is some
