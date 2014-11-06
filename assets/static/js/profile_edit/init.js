@@ -2,7 +2,7 @@
     klp.init = function() {
         var $profileXHR = klp.api.authDo("users/profile");
         $profileXHR.done(function(data) {
-            console.log("data", data);
+            // console.log("data", data);
             $('#firstName').val(data.first_name);
             $('#lastName').val(data.last_name);
             $('#email').val(data.email);
@@ -58,24 +58,24 @@
                 };
 
                 var data = klp.utils.getFormData(fields);
-                if (klp.utils.validateRequired(passwordFormID)) {                
+                if (klp.utils.validateRequired(passwordFormID)) {
                     var passXHR = klp.api.authDo("password-change/", data, "POST");
                     passXHR.done(function(response) {
-                        console.log("success", response);
+                        // console.log("success", response);
                         klp.utils.alertMessage("Changed password", "success");
                         klp.utils.clearValidationErrors(passwordFormID);
                     });
                     passXHR.fail(function(err) {
                         var errorsJSON = JSON.parse(err.responseText);
                         var errors = errorsJSON.detail.split(",");
-                        console.log("password errors", errors);
+                        // console.log("password errors", errors);
                         if (errors.indexOf("old_password") !== -1) {
                             klp.utils.invalidateField(fields.old_password, "Incorrect password");
                         }
                         if (errors.indexOf("new_password2") !== -1) {
                             klp.utils.invalidateField(fields.new_password2, "Password 1 and 2 do not match");
                         }
-                        
+
                     });
                 }
             });
@@ -87,7 +87,7 @@
             klp.auth.events.on("logout", function() {
                 location.href = "/profile/" + data.id;
             });
-            
+
         });
     };
 })();

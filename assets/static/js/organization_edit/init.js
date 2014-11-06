@@ -3,7 +3,7 @@
         var apiURL = "organizations/" + ORGANIZATION_ID;
         var $orgXHR = klp.api.authDo(apiURL);
         $orgXHR.done(function(data) {
-            console.log("data", data);
+            // console.log("data", data);
             $('#orgName').val(data.name);
             $('#orgURL').val(data.url);
             $('#orgEmail').val(data.email);
@@ -48,7 +48,7 @@
                 var html = tplVolunteerOpportunity(v);
                 $('#volunteerTable').append(html);
             });
-            
+
             klp.auth.events.on("logout", function() {
                 location.href = "/organisation/" + data.id;
             });

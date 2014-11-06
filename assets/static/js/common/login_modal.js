@@ -10,7 +10,7 @@
 
     t.close = function() {
         //showSignup();
-        console.log("login modal close called");
+        // console.log("login modal close called");
         $('.js-login-modal').removeClass('show');
         klp.utils.clearForm('signupForm');
         klp.utils.clearForm('loginForm');
@@ -79,16 +79,16 @@
                 'last_name': $('#signupLastName'),
                 'mobile_no': $('#signupPhone'),
                 'email': $('#signupEmail'),
-                'password': $('#signupPassword')                
+                'password': $('#signupPassword')
             };
 
             var data = klp.utils.getFormData(fields);
-            
+
             klp.utils.startSubmit(formID);
             var signupXHR = klp.api.signup(data);
-            
+
             signupXHR.done(function(userData) {
-                klp.utils.stopSubmit(formID);           
+                klp.utils.stopSubmit(formID);
                 klp.auth.loginUser(userData);
                 klp.utils.alertMessage("Thanks for signing up!", "success");
                 if (postLoginCallback) {
@@ -99,7 +99,7 @@
 
             signupXHR.fail(function(err) {
                 //FIXME: deal with errors
-                console.log("signup error", err);
+                // console.log("signup error", err);
                 klp.utils.stopSubmit(formID);
                 var errors = JSON.parse(err.responseText);
                 if ('detail' in errors && errors.detail === 'duplicate email') {
@@ -141,7 +141,7 @@
             });
 
             loginXHR.fail(function(err) {
-                console.log("login error", err);
+                // console.log("login error", err);
                 klp.utils.stopSubmit(formID);
                 var errors = JSON.parse(err.responseText);
                 var $field = $('#loginPassword');
@@ -169,7 +169,7 @@
             var url = 'password-reset/request';
             var $xhr = klp.api.do(url, data, 'POST');
             klp.utils.startSubmit(formID);
-            $xhr.done(function() {  
+            $xhr.done(function() {
                 klp.utils.stopSubmit(formID);
                 klp.utils.alertMessage("Please check your email for password reset instructions", "success");
                 t.close();

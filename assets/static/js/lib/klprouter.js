@@ -17,7 +17,7 @@ var KLPRouter = function(routes) {
                 }
             };
         }
-        return queryParams;       
+        return queryParams;
     };
 
     var getURL = function(hash) {
@@ -46,7 +46,7 @@ var KLPRouter = function(routes) {
             var oldHash = oldFullURL.split('#')[1];
             previousQueryParams = getQueryParams(oldHash);
             previousURL = getURL(oldHash);
-            console.log('previous params', previousURL, previousQueryParams);
+            // console.log('previous params', previousURL, previousQueryParams);
             //var previousURL = oldFullURL.
         } else {
             previousQueryParams = {};
@@ -70,7 +70,7 @@ var KLPRouter = function(routes) {
                     return;
                 } else {
                     var oldVal = previousQueryParams[key];
-                }    
+                }
             } else {
                 var oldVal = null;
             }
@@ -97,7 +97,7 @@ var KLPRouter = function(routes) {
         };
         that.events.trigger("hashchange", [paramsObj]);
         _(_(changed).keys()).each(function(key) {
-            console.log("triggering hashchange:" + key, paramsObj);
+            // console.log("triggering hashchange:" + key, paramsObj);
             that.events.trigger("hashchange:" + key, [paramsObj]);
         });
     };
@@ -120,7 +120,7 @@ var KLPRouter = function(routes) {
                         creating event in history
                 replace can be set to true only if trigger is false.
          */
-        console.log("set hash called", url, queryParams, options);
+        // console.log("set hash called", url, queryParams, options);
         var defaults = {
             'trigger': true,
             'replace': false
@@ -135,7 +135,7 @@ var KLPRouter = function(routes) {
         var newParams = $.extend(currentParams, queryParams);
         var queryString = getQueryString(newParams);
         if (queryString !== '') {
-            var newHash = url + '?' + queryString;            
+            var newHash = url + '?' + queryString;
         } else {
             var newHash = url;
         }

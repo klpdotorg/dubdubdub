@@ -6,7 +6,7 @@
         $infoXHR.done(function(data) {
             var detailsHTML = tplActivityDetails(data);
             $('#activityDetails').html(detailsHTML);
-            console.log("data", data);
+            // console.log("data", data);
 
             var userCount = data.users.length;
 
@@ -23,10 +23,10 @@
             $('#date').val(data.date);
             $('#text').val(data.text);
             klp.utils.schoolSelect2($('#school'));
-            
+
             var formID = 'activityForm';
 
-            $('#' + formID).submit(function(e) { 
+            $('#' + formID).submit(function(e) {
                 if (e) {
                     e.preventDefault();
                 }

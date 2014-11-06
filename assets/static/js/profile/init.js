@@ -4,7 +4,7 @@
         var tplVolunteerActivity = swig.compile($('#tpl-userVolunteerActivity').html());
         var tplOrganization = swig.compile($('#tpl-Organization').html());
         $profileXHR.done(function(data) {
-            console.log("data", data);
+            // console.log("data", data);
             var loggedInId = parseInt(klp.auth.getId());
             if (loggedInId === data.id) {
                 $('#editProfileBtn').show();
@@ -13,7 +13,7 @@
             $('#userVolunteerCount').text(volunteerCount);
             if (volunteerCount > 0) {
                 _(data.volunteer_activities).each(function(d) {
-                    console.log("d", d);
+                    // console.log("d", d);
                     var html = tplVolunteerActivity(d);
                     $('#userVolunteeringActivities').append(html);
                 });

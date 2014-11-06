@@ -16,7 +16,7 @@
     };
 
     function init_volunteer_date_filter(){
-        console.log("initting date filter");
+        // console.log("initting date filter");
         var $date_input = $("#vol-date-input");
         var $calender_wrapper = $('.js-volunteer-cal');
         var $datepicker_wrapper = $calender_wrapper.find("#vol-datepicker-wrapper");

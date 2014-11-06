@@ -23,7 +23,7 @@
             var $xhr = klp.api.authDo(url, data, 'POST');
 
             $xhr.done(function(response) {
-                console.log("saved", response);
+                // console.log("saved", response);
                 alert("saved");
                 location.reload();
                 //location.href = "/organisation/" + ORGANIZATION_ID;
@@ -32,7 +32,7 @@
             $xhr.fail(function(err) {
                 var errors = JSON.parse(err.responseText);
                 klp.utils.invalidateErrors(errors);
-                console.log("error", err);
+                // console.log("error", err);
             });
 
         });

@@ -26,7 +26,7 @@
             entity_type : $trigger.data("entity-type") ? $trigger.data("entity-type") : ''
         };
 
-        console.log(ctx);
+        // console.log(ctx);
 
         var content = _tpl.overlay_content(ctx);
         $_map_overlay.find(".content").html(content);
@@ -277,7 +277,7 @@
             }]
         });
 
-        
+
     };
 
     var close_place = function(e) {
@@ -293,7 +293,7 @@
     };
 
     t.close_place = close_place;
-    
+
     function init_place_tabs(){
         $_map_overlay.on("click", ".js-place-tab", function(e){
             var $content = $(this).closest(".content");

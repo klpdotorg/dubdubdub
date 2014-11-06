@@ -9,9 +9,9 @@
             var context = {
                 stories: getTwoStories(data)
             };
-            console.log("context", context);
+            // console.log("context", context);
             var html = tplStories(context);
-            console.log("html", html);
+            // console.log("html", html);
             $('#recentlySharedStories').html(html);
         });
     };

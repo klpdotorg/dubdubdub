@@ -70,7 +70,7 @@
         });
 
         $('#filterOrganization, #filterActivityType').on('change', function(e) {
-            console.log("filter changed");
+            // console.log("filter changed");
             t.applyFilters();
         });
     };
@@ -80,7 +80,7 @@
         params.geometry = 'yes';
         var $activitiesXHR = klp.api.do('volunteer_activities', params);
         $activitiesXHR.done(function(data) {
-            console.log("activities", data);
+            // console.log("activities", data);
             clearActivities();
             loadActivities(data);
         });

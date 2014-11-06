@@ -31,7 +31,7 @@
                     attribution: 'OpenStreetMap, OSM-Bright'
                 }).addTo(map);
 
-                console.log('markerLatlng', markerLatlng);
+                // console.log('markerLatlng', markerLatlng);
                 var marker = L.geoJson(data, {
                     pointToLayer: function(feature, latLng) {
                         return L.marker(latLng, {icon: klp.utils.mapIcon(data.properties.type.name)});

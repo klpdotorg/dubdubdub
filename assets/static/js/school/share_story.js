@@ -1,13 +1,13 @@
 (function() {
 
-   $.extend( true, jQuery.fn, {        
-        imagePreview: function( options ){          
+   $.extend( true, jQuery.fn, {
+        imagePreview: function( options ){
             var defaults = {};
             if( options ){
                 $.extend( true, defaults, options );
             }
             $.each( this, function(){
-                var $this = $( this );              
+                var $this = $( this );
                 $this.bind( 'change', function( evt ){
 
                     var files = evt.target.files; // FileList object
@@ -25,7 +25,7 @@
                                 $this
                                     .parents('.field-container')
                                     .find('.imagePreview')
-                                    .attr('src',e.target.result);                         
+                                    .attr('src',e.target.result);
                             };
                         })(f);
                         // Read in the image file as a data URL.
@@ -34,7 +34,7 @@
 
                 });
             });
-        }   
+        }
     });
 
     var t = klp.share_story = {};
@@ -51,8 +51,8 @@
                 //console.log("oldHtml", oldHtml);
                 $('.tab-content[data-tab=share-story]').html(html);
                 doPostFormRender();
-                
-            });            
+
+            });
         });
     };
 
@@ -70,7 +70,7 @@
             });
             dataObj['images'] = getImagesData();
             var postURL = "stories/" + SCHOOL_ID;
-            console.log("data obj", dataObj);
+            // console.log("data obj", dataObj);
             var $xhr = klp.api.do(postURL, dataObj, 'POST');
             klp.utils.startSubmit('sysForm');
             $xhr.done(function() {
@@ -91,7 +91,7 @@
             var src = $(this).attr('src');
             if (src) {
                 images.push(src);
-            } 
+            }
         });
         return images;
     }

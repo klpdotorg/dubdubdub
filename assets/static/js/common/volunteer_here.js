@@ -5,7 +5,7 @@
     t.init = function() {
         $(document).on("click", ".js-volunteerHereBtn", function(e) {
             e.preventDefault();
-            console.log("clicked volunteer here");
+            // console.log("clicked volunteer here");
             var $this = $(this);
             var activityId = $this.attr("data-id");
             klp.auth.requireLogin(function() {
@@ -18,7 +18,7 @@
     };
 
     //Loops through all volunteer here buttons, checks if user is already registered,
-    //deals with it appropriately. 
+    //deals with it appropriately.
     t.checkSelf = function(activities) {
         var userId = klp.auth.getId();
         if (!userId) {
@@ -39,7 +39,7 @@
         var url = "volunteer_activities/" + activityId + "/users";
         var $xhr = klp.api.authDo(url, {}, "POST");
         $xhr.done(function(data) {
-            console.log("volunteer confirm", data);
+            // console.log("volunteer confirm", data);
             klp.utils.alertMessage("Confirmed. Thanks for volunteering!", "success");
             t.close();
             //showConfirmModal(data);
