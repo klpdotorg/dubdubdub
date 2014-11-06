@@ -10504,10 +10504,7 @@ button.Zebra_DatePicker_Icon_Inside {
     .school-page .page-header .map-canvas {
       width: 100%;
       height: inherit;
-      z-index: -1;
-      background: url(../images/school_map_sample.jpg) no-repeat;
-      background-position: center;
-      background-size: cover; }
+      z-index: -1; }
     .school-page .page-header .school-info {
       position: absolute;
       left: 0;
