@@ -652,10 +652,6 @@
 
         // Map Events
         map.on('zoomend', updateLayers);
-        // map.on('movestart', function() {
-        //     currentMapBounds = map.getBounds().toBBoxString();
-        //     console.log(currentMapBounds);
-        // })
         map.on('moveend', _.debounce(function() {
             loadPointsByBbox();
             setURL();
