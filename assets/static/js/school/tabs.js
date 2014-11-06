@@ -24,7 +24,7 @@
                 },
                 onRender: function(data) {
                     $('a.gallery').colorbox({'rel': 'group1'});
-                    console.log("post render info");
+                    // console.log("post render info");
                 }
             },
             'demographics': {
@@ -78,7 +78,7 @@
                         width: container_width,
                         height: 200,
                         innerSize: '60%'
-                    }; 
+                    };
                     $('#pie_chart_finance').financeChart(chartData, chartOptions);
                 }
             },
@@ -131,10 +131,10 @@
                     // Step 4: Array of languages.
                     data.languages = _.keys(data.lib_lang_agg);
 
-                    console.log('years', data.years);
-                    console.log('klasses', data.klasses);
-                    console.log('levels', data.levels);
-                    console.log('languages', data.languages);
+                    // console.log('years', data.years);
+                    // console.log('klasses', data.klasses);
+                    // console.log('levels', data.levels);
+                    // console.log('languages', data.languages);
                     data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     return data;
                 },
@@ -153,7 +153,7 @@
                     $selectLibraryParam.on('change', drawChart);
                     $selectLibraryYear.on('change', drawChart);
                     $selectLibraryClass.on('change', drawChart);
-                    
+
                     function drawChart() {
                         var libraryParam = $selectLibraryParam.val();
                         var libraryYear = $selectLibraryYear.val();
@@ -296,7 +296,7 @@
                     } else {
                         data.latest_answers = null;
                     }
-                    console.log("sys data", data);
+                    // console.log("sys data", data);
                     return data;
 
                     function getLatestStoryWithAnswers(stories) {
@@ -316,7 +316,7 @@
                                 cleanedAnswers.push(a);
                             }
                         });
-                        console.log("answers", answers, cleanedAnswers);
+                        // console.log("answers", answers, cleanedAnswers);
                         return cleanedAnswers;
                     }
                 },
@@ -367,7 +367,7 @@
 
         //compile templates for tabs
         _(keys).each(function(tabName) {
-            console.log("tab name", tabName);
+            // console.log("tab name", tabName);
             var templateString = $('#tpl-tab-' + tabName).html();
             templates[tabName] = swig.compile(templateString);
         });
@@ -391,7 +391,7 @@
 
         var tabDeferred = t.showTab(firstTab, true);
         klp.router.events.on('hashchange:tab', function(e, params) {
-            console.log("hashchange:tab", params);
+            // console.log("hashchange:tab", params);
             var queryParams = params.queryParams;
             if (queryParams['tab'] in tabs) {
                 t.showTab(queryParams['tab']);
@@ -409,7 +409,7 @@
                 });
             });
         }
-        console.log(templates);
+        // console.log(templates);
 
     };
 

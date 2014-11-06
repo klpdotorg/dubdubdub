@@ -102,7 +102,7 @@
                     $(".home-header .content .info").hide();
                 }
 
-                console.log(header_height);
+                // console.log(header_height);
             }
         } else {
             // Its a mobile or tablet. Reverting to original css.

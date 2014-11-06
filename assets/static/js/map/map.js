@@ -131,7 +131,7 @@
             // selectedMarkers.clearLayers();
 
             if (searchEntityType === 'school') {
-                console.log('searched for schools');
+                // console.log('searched for schools');
                 searchPoint = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
                 var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
@@ -141,7 +141,7 @@
 
             if (searchEntityType === 'boundary') {
                 klp.router.setHash(null, {marker: 'boundary-'+data.properties.id}, {trigger: false});
-                console.log('boundary');
+                // console.log('boundary');
                 var boundaryType = data.properties.type;
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
@@ -169,7 +169,7 @@
             }
             marker.bindPopup(data.properties.name);
             marker.addTo(selectedLayers).openPopup();
-            console.log(boundaryZoomLevels[type]);
+            // console.log(boundaryZoomLevels[type]);
             map.setView(point, boundaryZoomLevels[type]);
         }
 
@@ -257,7 +257,7 @@
                 var thisEntityXHR = klp.api.do('boundary/admin/'+entityID, {'geometry': 'yes'});
                 thisEntityXHR.done(function(data) {
                     var iconType = data.properties.school_type+'_'+data.properties.type;
-                    console.log('iconType', iconType);
+                    // console.log('iconType', iconType);
                     var thisEntityMarker = L.geoJson(data, {
                         pointToLayer: function(feature, latlng) {
                             map.setView(latlng);
@@ -411,12 +411,12 @@
             mapBbox = bbox.pad(0.5);
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
-                console.log('aborting preschool xhr');
+                // console.log('aborting preschool xhr');
                 preschoolXHR.abort();
             }
 
             if (schoolXHR && schoolXHR.state() === 'pending') {
-                console.log("aborting school xhr");
+                // console.log("aborting school xhr");
                 schoolXHR.abort();
             }
 
@@ -527,7 +527,7 @@
         });
 
         function markerPopup(marker, feature) {
-            console.log("marker popup called", marker, feature);
+            // console.log("marker popup called", marker, feature);
             var duplicateMarker;
             if (feature.properties.type.id === 1) {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('school')});

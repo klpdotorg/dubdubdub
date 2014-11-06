@@ -83,7 +83,7 @@
             $download_button.attr('href', '/api/v1/schools/info?admin3='+selected.val+'&format=csv');
             $download_button.removeClass('hide');
             schoolXHR.done(function (data) {
-                console.log('schools', data);
+                // console.log('schools', data);
                 populateSelect($select_school, data);
             });
         });
@@ -93,7 +93,7 @@
             // FIXME: make this a close function. This is Sanjay's fault.
             $('.btn-modal-close').click();
             var schoolType = selected.added.properties.type.name.toLowerCase().replace(' ', '');
-            console.log(schoolType);
+            // console.log(schoolType);
             klp.router.setHash(null, {marker: schoolType+'-'+selected.val}, {trigger:true});
         });
 
@@ -108,13 +108,13 @@
     };
 
     t.setFilter = function(filterName, selectedValue) {
-        console.log("set " + filterName + " to " + selectedValue);
+        // console.log("set " + filterName + " to " + selectedValue);
     };
 
     t.open = function() {
         klp.openModal = t;
         var $modal_overlay = $("#modal_overlay");
-        var $modal = $(".modal-map-filter");      
+        var $modal = $(".modal-map-filter");
         $modal_overlay.addClass("show");
         $modal.addClass("show");
     };
@@ -152,6 +152,6 @@
     //         // $(parent_option_item).find('.value').text($(obj).text());
     //         //return false;
     //     }
-    // } 
+    // }
 
 })();

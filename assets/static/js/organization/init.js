@@ -4,7 +4,7 @@
         var $orgXHR = klp.api.do("organizations/" + ORGANIZATION_ID);
         var tplVolunteer = swig.compile($('#tpl-volunteerActivity').html());
         $orgXHR.done(function(data) {
-            console.log("data", data);
+            // console.log("data", data);
             if (hasEditPermissions(data.users)) {
                 $('#editOrganizationBtn').show();
             }
@@ -24,7 +24,7 @@
                 if (hasEditPermissions(data.users)) {
                     $('#editOrganizationBtn').show();
                 }
-                klp.volunteer_here.checkSelf(data.volunteer_activities);             
+                klp.volunteer_here.checkSelf(data.volunteer_activities);
             });
             klp.auth.events.on("logout", function() {
                 $('#editOrganizationBtn').hide();

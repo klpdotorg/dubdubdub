@@ -7,7 +7,7 @@
     var idKey = "klpUserId";
 
     t.loginUser = function(userData) {
-        console.log("user data", userData);
+        // console.log("user data", userData);
         var token = userData.token;
         var email = userData.email;
         var firstName = userData.first_name;

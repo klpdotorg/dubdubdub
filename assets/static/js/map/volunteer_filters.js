@@ -50,7 +50,7 @@
     };
 
     t.setFilter = function(filterName, selectedValue) {
-        console.log("set " + filterName + " to " + selectedValue);
+        // console.log("set " + filterName + " to " + selectedValue);
     };
 
     t.show = function() {

@@ -48,7 +48,7 @@
     };
 
     var getContext = function(entity) {
-        console.log("get context called with ", entity);
+        // console.log("get context called with ", entity);
         var context = $.extend(entity, klp.utils.getBoyGirlPercents(entity.num_boys, entity.num_girls));
         var mt = klp.utils.getMTProfilePercents(entity.demographics_data.mt_profile);
         context.mt_profile_percents = mt.percents || {};
@@ -65,9 +65,9 @@
     var getMTProfiles = function(entity1, entity2) {
         var mt1 = entity1.mt_profile_percents || {};
         var mt2 = entity2.mt_profile_percents || {};
-        console.log("mt1", mt1, "mt2", mt2);
+        // console.log("mt1", mt1, "mt2", mt2);
         var allLanguages = _(_(mt1).keys().concat(_(mt2).keys())).unique();
-        console.log("all languages", allLanguages);
+        // console.log("all languages", allLanguages);
         var mts = {};
         _(allLanguages).each(function(lang) {
             mts[lang] = {};
@@ -77,10 +77,10 @@
             };
             mts[lang].school2 = {
                 'percent': mt2.hasOwnProperty(lang) ? mt2[lang] : 0,
-                'total': entity2.demographics_data.mt_profile.hasOwnProperty(lang) ? entity2.demographics_data.mt_profile[lang] : 0               
+                'total': entity2.demographics_data.mt_profile.hasOwnProperty(lang) ? entity2.demographics_data.mt_profile[lang] : 0
             };
         });
-        console.log("mts", mts);
+        // console.log("mts", mts);
         return mts;
     };
 
@@ -109,7 +109,7 @@
                 }
             });
         });
-        console.log("infrastructure compare data ", data);
+        // console.log("infrastructure compare data ", data);
         return data;
     };
 
@@ -139,7 +139,7 @@
 
     var open = function(entity1){
         //e.preventDefault();
-        console.log("compare open called with ", entity1);
+        // console.log("compare open called with ", entity1);
         if(klp.map){
             klp.map.closePopup();
         }
@@ -166,7 +166,7 @@
         var $xhr1 = klp.api.do("schools/school/" + entities[0]);
         var $xhr2 = klp.api.do("schools/school/" + entities[1]);
         $.when($xhr1, $xhr2).done(function(school1, school2) {
-            open(school1);    
+            open(school1);
             selectOptionRight(school2);
             $btn_comparison_submit.click();
         });
@@ -278,7 +278,7 @@
             e.preventDefault();
             $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
                 //console.log("compare xhrs done ", data1, data2);
-                console.log("school1", data1, "school2", data2);
+                // console.log("school1", data1, "school2", data2);
                 var school1 = getContext(data1);
                 var school2 = getContext(data2);
 
@@ -302,7 +302,7 @@
                 klp.router.setHash(null, {'compare': urlString}, {trigger: false});
                 setTimeout(function(){
                     init_comparison_charts(context);
-                },100);                
+                },100);
                 //var html = templates['comparison-result'](context);
             });
             $btn_comparison_submit.removeClass("show");
@@ -312,7 +312,7 @@
 
         });
         klp.router.events.on('hashchange:compare', function(e, params) {
-            console.log("change params", params);
+            // console.log("change params", params);
             var changedCompare = params.changed.compare;
             if (changedCompare.newVal) {
                 openFromURL(changedCompare.newVal);
@@ -332,7 +332,7 @@
         var chart_width = 300;
         var s1 = context.school1;
         var s2 = context.school2;
-        console.log("charts init called with ", context);
+        // console.log("charts init called with ", context);
         var chartOptions = {
             innerSize: '85%',
             width: chart_width,
@@ -351,5 +351,5 @@
             $('#comparison_financechart_2').financeChart(s2.finance_percents, chartOptions);
         }
 
-    }    
+    }
 })();

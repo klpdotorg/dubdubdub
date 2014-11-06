@@ -119,8 +119,8 @@
 
     $.fn.libraryChart = function(data, options) {
 
-        console.log('library data', data);
-        console.log('options', options);
+        // console.log('library data', data);
+        // console.log('options', options);
         var chartSeries = [];
 
         var monthMap = {
