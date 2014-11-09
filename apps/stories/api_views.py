@@ -2,16 +2,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
+from django.conf import settings
 from django.db.models import Q
 
 from schools.models import School
 from users.models import User
 from .models import Question,  Story, StoryImage, Answer
-from .serializers import SchoolQuestionsSerializer, StorySerializer, StoryWithAnswersSerializer
+from .serializers import (SchoolQuestionsSerializer, StorySerializer,
+    StoryWithAnswersSerializer)
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
-from rest_framework.exceptions import APIException, PermissionDenied,\
-    ParseError, MethodNotAllowed, AuthenticationFailed
+from rest_framework.exceptions import (APIException, PermissionDenied,
+    ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
 
 import random
@@ -24,9 +26,11 @@ class StoryInfoView(KLPAPIView):
     def get(self, request):
         return Response({
             'total_stories': Story.objects.all().count(),
-            'total_verified_stories': Story.objects.filter(is_verified=True).count(),
+            'total_verified_stories': Story.objects.filter(
+                is_verified=True).count(),
             'total_images': StoryImage.objects.all().count()
         })
+
 
 class StoryQuestionsView(KLPDetailAPIView):
     serializer_class = SchoolQuestionsSerializer
@@ -44,6 +48,7 @@ class StoriesView(KLPListAPIView):
     answers     [yes, no] if answers should be returned
     verified    [yes, no] if only verified or not-verified stories should be
                 returned, if not mentioned, returns all
+    limit       any positive integer, number of results needed
     """
     bbox_filter_field = "school__instcoord__coord"
 
@@ -67,7 +72,13 @@ class StoriesView(KLPListAPIView):
         elif verified == 'no':
             qset = qset.filter(is_verified=False)
 
-        qset = qset.prefetch_related('storyimage_set').select_related('school')
+        try:
+            limit = int(self.request.GET.get('limit', 10))
+        except:
+            limit = 10
+
+        qset = qset.prefetch_related(
+            'storyimage_set').select_related('school')[:limit]
 
         return qset
 
@@ -140,7 +151,8 @@ class ShareYourStoryView(KLPAPIView):
                 pil_image = Image.open(simage.image)
                 pil_image.thumbnail((128, 128), )
 
-                thumb_path = os.path.join(settings.MEDIA_ROOT, 'sys_images', 'thumb', file_name)
+                thumb_path = os.path.join(
+                    settings.MEDIA_ROOT, 'sys_images', 'thumb', file_name)
                 pil_image.save(open(thumb_path, 'w'))
             except Exception as e:
                 print e

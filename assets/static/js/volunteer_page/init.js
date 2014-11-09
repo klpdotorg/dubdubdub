@@ -2,7 +2,9 @@
     klp.init = function() {
         //FIXME: how to get only 10 stories?
         var storiesXHR = klp.api.do("stories", {
-            'verified': 'yes'
+            'verified': 'yes',
+            //FIXEDIT: would this do?
+            'limit': 10
         });
         var tplStories = swig.compile($('#tpl-recentStories').html());
         storiesXHR.done(function(data) {
