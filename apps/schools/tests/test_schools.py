@@ -60,7 +60,7 @@ class SchoolsApiTestCase(TestCase):
         pass
 
     def test_api_schools_info_geometry(self):
-      
+
         base_url = "/api/v1/schools/info?"
         query_url = base_url + "geometry=yes"
         response = self.client.get(query_url)
@@ -114,7 +114,7 @@ class SchoolsApiTestCase(TestCase):
     def test_api_school_info_geometry(self):
 
         #schools_base_url = "/api/v1/schools/school/"
-        query_url = self.schools_base_url + self.school_info_id + "?geometry=yes"
+        query_url = self.schools_base_url + self.school_info_id + "/?geometry=yes"
         print "Testing school info API -- " + query_url
         response = self.client.get(query_url)
         print response.status_code
@@ -149,7 +149,7 @@ class SchoolsApiTestCase(TestCase):
 
     def test_api_school_library_geometry(self):
         pass
-        
+
     def test_api_school_demographics_geometry(self):
         pass
 
@@ -166,10 +166,10 @@ class SchoolsApiTestCase(TestCase):
         school_id = data['id']
         self.assertEqual(school_id, long(self.school_programmes_id), "school id is 25139")
         self.assertTrue('name' in data, "has a property called name")
-    
+
     def test_api_school_programmes_geometry(self):
-        pass   
-    
+        pass
+
     def test_api_school_finance(self):
 
         query_url = self.schools_base_url + self.school_finance_id + "/finance"
@@ -208,7 +208,7 @@ class SchoolsApiTestCase(TestCase):
         self.assertTrue('status' in data, "has a property called status")
         self.assertTrue('dise_books' in data, "has a property called dise_books")
         self.assertTrue('dise_rte' in data, "has a property called dise_rte")
-        self.assertTrue('dise_facility' in data, "has a property called dise_facility")
+        self.assertTrue('facilities' in data, "has a property called facilities")
 
     def test_api_school_infra_geometry(self):
         pass

@@ -53,8 +53,11 @@ class OmniSearch(KLPAPIView):
                 Q(instcoord__coord__isnull=False)
             ).select_related(
                 'instcoord',
-                'schooldetails__type'
-            ).prefetch_related('schooldetails')[:10],
+                'schooldetails__type',
+                'address'
+            ).prefetch_related(
+                'schooldetails'
+            )[:10],
             many=True,
             context=context
         ).data
@@ -64,6 +67,7 @@ class OmniSearch(KLPAPIView):
                 name__icontains=text,
                 boundarycoord__coord__isnull=False
             ).select_related(
+                'boundarycoord',
                 'hierarchy__name',
                 'parent__hierarchy__name'
             ).prefetch_related('parent', 'hierarchy')[:10],
@@ -101,7 +105,6 @@ class OmniSearch(KLPAPIView):
         return Response(response)
 
 
-
 class MergeEndpoints(KLPAPIView):
     def get(self, request, format=None):
         endpoints = request.GET.getlist('endpoints', [])
@@ -130,7 +133,7 @@ class MergeEndpoints(KLPAPIView):
 def api_root(request, format=None):
     return Response({
         'Omni Search': reverse('api_omni_search', request=request,
-                                    format=format) + "?text=pura",
+                               format=format) + "?text=pura",
         'Schools': {
             'Schools List': reverse('api_schools_list', request=request,
                                     format=format),
@@ -155,7 +158,7 @@ def api_root(request, format=None):
                                       format=format, kwargs={'pk': 3573}),
 
             'School Infrastructure': reverse('api_school_infra', request=request,
-                                      format=format, kwargs={'pk': 3573}),
+                                             format=format, kwargs={'pk': 3573}),
 
             'School Library': reverse('api_school_library', request=request,
                                       format=format, kwargs={'pk': 3573}),
