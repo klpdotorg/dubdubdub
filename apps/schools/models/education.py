@@ -206,14 +206,9 @@ class School(GeoBaseModel):
             return None
 
     def get_images(self):
-        images = []
-        for story in self.story_set.filter(is_verified=True):
-            for image in story.storyimage_set.filter(is_verified=True):
-
-                images.append(
-                    image.image.url
-                )
-        return images
+        return [image.image.url for image in StoryImage.objects.filter(
+            is_verified=True, story__is_verified=True, story__school=self
+        )]
 
     @property
     def has_volunteer_activities(self):
