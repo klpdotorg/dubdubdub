@@ -67,6 +67,8 @@ class StoriesView(KLPListAPIView):
         elif verified == 'no':
             qset = qset.filter(is_verified=False)
 
+        qset = qset.prefetch_related('storyimage_set').select_related('school')
+
         return qset
 
 

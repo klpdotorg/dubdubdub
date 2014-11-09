@@ -4,7 +4,6 @@ from common.utils import send_templated_mail
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
 from django.conf import settings
-import json
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.sites.models import Site
@@ -113,6 +112,7 @@ class Story(models.Model):
     def __unicode__(self):
         return "%s: %s" % (self.name, self.entered_timestamp,)
 
+
 @receiver(post_save, sender=Story)
 def story_updated(sender, instance=None, created=False, **kwargs):
     if not created:
@@ -148,4 +148,3 @@ class StoryImage(models.Model):
         return '<img src="{url}" alt="" />'.format(url=self.image.url)
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
-
