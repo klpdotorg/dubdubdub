@@ -41,7 +41,7 @@ class BoundaryCoord(GeoBaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_boundary_coord'
+        db_table = 'mvw_boundary_coord'
 
 
 class Assembly(GeoBaseModel):
