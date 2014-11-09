@@ -44,7 +44,6 @@ class DiseFacilityAgg(BaseModel):
         db_table = 'mvw_dise_facility_agg'
 
 
-
 class AnganwadiDisplayMaster(BaseModel):
     '''
     View table:

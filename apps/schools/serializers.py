@@ -172,7 +172,7 @@ class PrechoolInfraSerializer(KLPSerializer):
 
     def get_ang_facility_details(self, obj):
         data = {}
-        ang_infras = obj.anganwadiinfraagg_set.all().prefetch_related('ai_metric')
+        ang_infras = obj.anganwadiinfraagg_set.all().select_related('ai_metric')
         for infra in ang_infras:
             if infra.ai_group not in data:
                 data[infra.ai_group] = {}

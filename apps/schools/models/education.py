@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
+from common.utils import cached_property
 from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
@@ -210,7 +211,7 @@ class School(GeoBaseModel):
             is_verified=True, story__is_verified=True, story__school=self
         )]
 
-    @property
+    @cached_property
     def has_volunteer_activities(self):
         return self.volunteeractivity_set.all().count() > 0
 
@@ -226,7 +227,7 @@ class School(GeoBaseModel):
             # Need to handle both
             if not self.dise_info:
                 raise Exception('no dise')
-        except Exception, e:
+        except Exception:
             return facilities
 
         for facility in self.dise_info.disefacilityagg_set.all():
