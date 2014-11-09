@@ -1,15 +1,11 @@
 from schools.models import School, DiseInfo, MdmAgg
 from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
-from common.models import SumCase
 from common.mixins import CacheMixin
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolDiseSerializer, SchoolDemographicsSerializer,\
     SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
     SchoolLibrarySerializer, SchoolNutritionSerializer, PrechoolInfraSerializer
-from django.contrib.gis.geos import Polygon
-from django.http import Http404
-import re
 
 
 class SchoolsList(KLPListAPIView, CacheMixin):
@@ -63,14 +59,18 @@ class SchoolsInfo(SchoolsList, CacheMixin):
         # inherit all the filtering from SchoolsList
         qset = super(SchoolsInfo, self).get_queryset()
 
-        qset = qset.select_related('address', 'schooldetails__admin3',
-                            'schooldetails__admin2', 'schooldetails__admin1',
-                            'schooldetails__type', 'schooldetails__assembly',
-                            'schooldetails__parliament', 'electedrep__ward',
-                            'schooldetails__admin1__hierarchy',
-                            'schooldetails__admin2__hierarchy',
-                            'schooldetails__admin3__hierarchy',)\
-            .prefetch_related('dise_info__disefacilityagg_set')
+        qset = qset.select_related(
+            'address', 'schooldetails__admin3',
+            'schooldetails__admin2', 'schooldetails__admin1',
+            'schooldetails__type', 'schooldetails__assembly',
+            'schooldetails__parliament', 'electedrep__ward',
+            'schooldetails__admin1__hierarchy',
+            'schooldetails__admin2__hierarchy',
+            'schooldetails__admin3__hierarchy',
+        ).prefetch_related(
+            'dise_info__disefacilityagg_set',
+            'story_set'
+        )
         return qset
 
 
