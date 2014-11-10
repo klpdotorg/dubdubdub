@@ -145,6 +145,6 @@ class StoryImage(models.Model):
         return "{}: {}".format(self.story.name, self.image)
 
     def image_tag(self):
-        return '<img src="{url}" alt="" />'.format(url=self.image.url)
+        return '<img height="150" width="150" src="{url}" alt="" />'.format(url=self.image.url)
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True

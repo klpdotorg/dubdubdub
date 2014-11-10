@@ -24,7 +24,13 @@ class StoryAdmin(admin.ModelAdmin):
     inlines = [AnswerInline, StoryImageInline]
 
 
+class StoryImageAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'image_tag', 'is_verified',)
+    list_editable = ('is_verified',)
+
+
 admin.site.register([Answer, Question, Questiongroup, QuestiongroupQuestions,
-                    QuestionType, Source, StoryImage])
+                    QuestionType, Source])
 
 admin.site.register(Story, StoryAdmin)
+admin.site.register(StoryImage, StoryImageAdmin)
