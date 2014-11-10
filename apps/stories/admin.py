@@ -17,10 +17,11 @@ class StoryImageInline(admin.StackedInline):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'is_verified',)
+    list_display = ('email', 'entered_timestamp', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
     raw_id_fields = ('school',)
+    ordering = ['-entered_timestamp']
     inlines = [AnswerInline, StoryImageInline]
 
 
