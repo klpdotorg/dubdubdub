@@ -60,7 +60,7 @@ SELECT t7.id,
     t7.neighbours,
     t7.current_elected_rep,
     t7.current_elected_party
-   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
+   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
 
 CREATE MATERIALIZED VIEW mvw_school_electedrep AS
 SELECT t8.sid,
@@ -69,21 +69,21 @@ SELECT t8.sid,
     t8.mp_const_id,
     t8.heirarchy,
     t8.bang_yn
-   FROM dblink('host=localhost dbname=electrep_new user=klp password=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer, bang_yn integer);
+   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select * from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer, bang_yn integer);
 
 CREATE MATERIALIZED VIEW mvw_dise_rte_agg AS
 SELECT t1.dise_code,
     t1.rte_metric,
     t1.status,
     t1.rte_group
-   FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_rte_agg'::text) t1(dise_code character varying(32), rte_metric character varying(36), status character varying(30), rte_group character varying(32));
+   FROM dblink('host=localhost dbname=dise_all user=klp'::text, 'select * from tb_dise_rte_agg'::text) t1(dise_code character varying(32), rte_metric character varying(36), status character varying(30), rte_group character varying(32));
 
 CREATE MATERIALIZED VIEW mvw_dise_facility_agg AS
 SELECT t1.dise_code,
     t1.df_metric,
     t1.score,
     t1.df_group
-   FROM dblink('host=localhost dbname=dise_all user=klp password=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
+   FROM dblink('host=localhost dbname=dise_all user=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
 CREATE INDEX dise_code_idx ON mvw_dise_facility_agg (dise_code);
 ANALYZE mvw_dise_facility_agg;
 
@@ -103,13 +103,13 @@ SELECT sg.sid AS schid,
 CREATE materialized VIEW mvw_inst_coord AS
 SELECT t2.instid,
        t2.coord
-FROM dblink('host=localhost dbname=klp-coord user=klp password=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
-CREATE UNIQUE INDEX udx_instid ON mvw_inst_coord (instid); 
+FROM dblink('host=localhost dbname=klp-coord user=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
+CREATE UNIQUE INDEX udx_instid ON mvw_inst_coord (instid);
 CREATE INDEX idx_inst_geom ON mvw_inst_coord USING gist(coord);
 
 CREATE materialized VIEW mvw_mdm_agg AS
 SELECT id as klpid, mon, wk, indent, attend
-FROM dblink('host=localhost dbname=apmdm user=klp password=klp'::text, 'select * from tb_mdm_agg'::text) t1(id integer, mon character varying(15), wk integer, indent integer, attend integer);
+FROM dblink('host=localhost dbname=apmdm user=klp'::text, 'select * from tb_mdm_agg'::text) t1(id integer, mon character varying(15), wk integer, indent integer, attend integer);
 CREATE INDEX klpid_idx ON mvw_mdm_agg (klpid);
 ANALYZE mvw_mdm_agg;
 
@@ -130,7 +130,7 @@ SELECT t1.school_code as dise_code,
     t1.funds_from_students_expnd AS ffs_expnd,
     t1.books_in_library
 FROM dblink(
-    'host=localhost dbname=klpdise_olap user=klp password=klp'::text,
+    'host=localhost dbname=klpdise_olap user=klp'::text,
     'SELECT
         school_code,
         lowest_class,
@@ -166,21 +166,87 @@ FROM dblink(
     total_girls integer
 );
 
-
-DROP MATERIALIZED VIEW mvw_ang_infra_agg;
 CREATE MATERIALIZED VIEW mvw_ang_infra_agg AS
 SELECT t1.sid,
     t1.ai_metric,
     t1.perc_score,
     t1.ai_group
 FROM dblink(
-   'host=localhost dbname=ang_infra user=klp password=klp'::text,
+   'host=localhost dbname=ang_infra user=klp'::text,
    'select NULLIF(sid, 0)::int as sid, ai_metric, perc_score, ai_group from tb_ang_infra_agg'::text) t1(sid integer, ai_metric character varying(30), perc_score numeric(5,0), ai_group character varying(30));
 CREATE INDEX sid_idx ON mvw_ang_infra_agg (sid);
 ANALYZE mvw_ang_infra_agg;
 
-
 CREATE MATERIALIZED VIEW mvw_ang_display_master AS
 SELECT t1.key,
     t1.value
-   FROM dblink('host=localhost dbname=ang_infra user=klp password=klp'::text, 'select * from tb_display_master'::text) t1(key character varying(32), value character varying(200));
+   FROM dblink('host=localhost dbname=ang_infra user=klp'::text, 'select * from tb_display_master'::text) t1(key character varying(32), value character varying(200));
+
+CREATE MATERIALIZED VIEW mvw_libinfra AS
+SELECT t1.sid,
+    t1.libstatus,
+    t1.handoveryear,
+    t1.libtype,
+    t1.numbooks,
+    t1.numracks,
+    t1.numtables,
+    t1.numchairs,
+    t1.numcomputers,
+    t1.numups
+FROM dblink('host=localhost dbname=libinfra user=klp'::text, 'select * from tb_libinfra'::text) t1(sid integer, libstatus character varying(300), handoveryear integer, libtype character varying(300), numbooks integer, numracks integer, numtables integer, numchairs integer, numcomputers integer, numups integer);
+
+CREATE MATERIALIZED VIEW mvw_lib_borrow AS
+SELECT t1.trans_year,
+    t1.class,
+    t1.issue_date,
+    t1.klp_school_id,
+    t1.school_name,
+    t1.klp_child_id
+FROM dblink('host=localhost dbname=library user=klp'::text, 'select trans_year,class,issue_date,klp_school_id,school_name,klp_child_id from libentry where flag is not null'::text) t1(trans_year character varying(30), class numeric(3,0), issue_date character varying(20), klp_school_id numeric(7,0), school_name character varying(50), klp_child_id character varying(30));
+
+CREATE MATERIALIZED VIEW mvw_lib_lang_agg AS
+SELECT t1.klp_school_id,
+    t1.class,
+    t1.month,
+    t1.year,
+    t1.book_lang,
+    t1.child_count
+FROM dblink('host=localhost dbname=library user=klp'::text, 'select * from lang_agg'::text) t1(klp_school_id integer, class integer, month character varying(10), year character varying(10), book_lang character varying(50), child_count integer);
+
+CREATE MATERIALIZED VIEW mvw_lib_level_agg AS
+SELECT t1.klp_school_id,
+    t1.class,
+    t1.month,
+    t1.year,
+    t1.book_level,
+    t1.child_count
+FROM dblink('host=localhost dbname=library user=klp'::text, 'select * from level_agg'::text) t1(klp_school_id integer, class integer, month character varying(10), year character varying(10), book_level character varying(50), child_count integer);
+
+CREATE MATERIALIZED VIEW mvw_boundary_coord AS SELECT t1.id_bndry,
+    t1.type,
+    t1.coord
+   FROM dblink('host=localhost dbname=klp-coord user=klp'::text, 'select * from boundary_coord'::text) t1(id_bndry integer, type character varying(20), coord geometry);
+
+CREATE MATERIALIZED VIEW mvw_dise_display_master AS SELECT t1.key,
+    t1.value
+   FROM dblink('host=localhost dbname=dise_all user=klp'::text, 'select * from tb_display_master'::text) t1(key character varying(36), value character varying(200));
+
+CREATE MATERIALIZED VIEW mvw_paisa_data AS SELECT t1.grant_type,
+    t1.grant_amount,
+    t1.criteria,
+    t1.operator,
+    t1.factor
+   FROM dblink('host=localhost dbname=dise_all user=klp'::text, 'select * from tb_paisa_data'::text) t1(grant_type character varying(32), grant_amount integer, criteria character varying(32), operator character varying(3), factor character varying(32));
+
+CREATE MATERIALIZED VIEW mvw_school_eval AS SELECT t.sid,
+    t.disecode,
+    t.domain,
+    t.qid,
+    t.value
+   FROM dblink('host=localhost dbname=pratham_mysore user=klp'::text, 'select * from tb_school_eval'::text) t(sid integer, disecode character varying(100), domain character varying(100), qid integer, value character varying(50));
+
+CREATE MATERIALIZED VIEW mvw_anginfra_agg AS SELECT t1.sid,
+    t1.ai_metric,
+    t1.perc_score,
+    t1.ai_group
+   FROM dblink('host=localhost dbname=ang_infra user=klp'::text, 'select * from tb_ang_infra_agg'::text) t1(sid integer, ai_metric character varying(30), perc_score numeric(5,0), ai_group character varying(30));

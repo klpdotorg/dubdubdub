@@ -10,7 +10,10 @@ Use required commands
 Changelog
 ---
 
-Release 0.11:
+Release 0.12:
+  - Replaced all views with materialized views [psql mview.sql]
+
+Release 0.11: 906821fac3c8cb03db7c4c965885d4c182b9a0d3
   - Replaced grapelli with Django Suit [pip install django-suit]
 
 Release 0.10: 5c0fc22cf27a4420893dd14021af3ab0b21e4726

@@ -422,7 +422,7 @@ class SchoolEval(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_school_eval'
+        db_table = 'mvw_school_eval'
 
 
 class AngInfraAgg(BaseModel):
@@ -445,7 +445,7 @@ class AngInfraAgg(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_anginfra_agg'
+        db_table = 'mvw_anginfra_agg'
 
 
 class AngDisplayMaster(BaseModel):
@@ -463,4 +463,4 @@ class AngDisplayMaster(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_ang_display_master'
+        db_table = 'mvw_ang_display_master'

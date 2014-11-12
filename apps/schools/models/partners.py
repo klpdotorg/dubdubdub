@@ -18,7 +18,7 @@ class DiseDisplayMaster(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_dise_display_master'
+        db_table = 'mvw_dise_display_master'
 
 
 class DiseFacilityAgg(BaseModel):
@@ -150,7 +150,7 @@ class PaisaData(BaseModel):
 
     class Meta:
         managed = False
-        db_table = 'vw_paisa_data'
+        db_table = 'mvw_paisa_data'
 
 
 class DiseRteAgg(BaseModel):
