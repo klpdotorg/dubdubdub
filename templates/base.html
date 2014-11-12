@@ -5,7 +5,7 @@
 <html lang="en">
 <head>{% block head %}
 	<!-- META -->
-	<title>{% block page_title %}KLP{% endblock %}</title>
+	<title>{% block page_title %}Home{% endblock %} - Karnataka Learning Partnership</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <link rel="icon" href="/static/images/favicon.ico" />
@@ -95,7 +95,7 @@
 			    	<a href="{{ b.url }}">{{ b.name }}</a>
             {% endfor %}
 			    </div>
-                
+
                 {% include 'includes/_profile_options.html' %}
 
                 <div class="clr"></div>
@@ -119,9 +119,9 @@
 		</div>
 	</div>
 
-  
+
 	{% endif %}
-  
+
   <div id="modal_overlay" class="modal-overlay"></div>
 
 	{% block content %} {% endblock %}
