@@ -11,11 +11,6 @@
             };
             klp.utils.populateForm(fields, data);
 
-            // $('#firstName').val(data.first_name);
-            // $('#lastName').val(data.last_name);
-            // $('#email').val(data.email);
-            // $('#mobileNo').val(data.mobile_no);
-
             var profileFormID = 'userProfileForm';
             $('#' + profileFormID).submit(function(e) {
                 if (e) {
