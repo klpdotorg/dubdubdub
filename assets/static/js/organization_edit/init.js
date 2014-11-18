@@ -8,6 +8,7 @@
             $('#orgURL').val(data.url);
             $('#orgEmail').val(data.email);
             $('#orgContactName').val(data.contact_name);
+            $('#orgAbout').val(data.about);
             $('#orgTwitter').val(data.twitter_handle);
             $('#orgFacebook').val(data.fb_url);
             $('#orgBlog').val(data.blog_url);
@@ -24,6 +25,7 @@
                     'url': $('#orgURL'),
                     'email': $('#orgEmail'),
                     'contact_name': $('#orgContactName'),
+                    'about': $('#orgAbout'),
                     'twitter_handle': $('#orgTwitter'),
                     'fb_url': $('#orgFacebook'),
                     'blog_url': $('#orgBlog'),
