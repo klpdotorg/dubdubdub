@@ -88,7 +88,7 @@
 
         t.events.on('logout', function(e) {
             var $user = $('#authUsername');
-            $user.text("Login / Signup");
+            $user.text("Login");
             $user.data('state', 'anonymous');
         });
 
