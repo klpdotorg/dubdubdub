@@ -145,7 +145,13 @@ class UserSerializer(serializers.ModelSerializer):
             'mobile_no': attrs.get('mobile_no', None),
             'first_name': attrs.get('first_name', None),
             'last_name': attrs.get('last_name', None),
-            'opted_email': False if attrs.get('opted_email', 'false') == 'false' else True
+            'opted_email': False if attrs.get('opted_email', 'false') == 'false' else True,
+            'about': attrs.get('about', ''),
+            'twitter_handle': attrs.get('twitter_handle', ''),
+            'fb_url': attrs.get('fb_url', ''),
+            'website': attrs.get('website', ''),
+            'photos_url': attrs.get('photos_url', ''),
+            'youtube_url': attrs.get('youtube_url', '')
         }
         request = self.context['request']
 
@@ -188,7 +194,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
                   'last_name', 'password', 'opted_email', 'token', 'volunteer_activities',
-                  'organizations')
+                  'organizations', 'about', 'twitter_handle', 'fb_url', 
+                  'website', 'photos_url', 'youtube_url',)
         write_only_fields = ('password',)
 
 
@@ -209,7 +216,9 @@ class OtherUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organizations',)
+        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organizations',
+                  'about', 'twitter_handle', 'fb_url', 
+                  'website', 'photos_url', 'youtube_url',)
 
 
 

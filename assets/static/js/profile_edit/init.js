@@ -7,7 +7,13 @@
                 'first_name': $('#firstName'),
                 'last_name': $('#lastName'),
                 'email': $('#email'),
-                'mobile_no': $('#mobileNo')
+                'mobile_no': $('#mobileNo'),
+                'about': $('#about'),
+                'twitter_handle': $('#twitterHandle'),
+                'fb_url': $('#fbURL'),
+                'website': $('#website'),
+                'photos_url': $('#photosURL'),
+                'youtube_url': $('#youtubeURL')
             };
             klp.utils.populateForm(fields, data);
 
