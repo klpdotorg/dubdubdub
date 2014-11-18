@@ -3,10 +3,18 @@
         var $profileXHR = klp.api.authDo("users/profile");
         $profileXHR.done(function(data) {
             // console.log("data", data);
-            $('#firstName').val(data.first_name);
-            $('#lastName').val(data.last_name);
-            $('#email').val(data.email);
-            $('#mobileNo').val(data.mobile_no);
+            var fields = {
+                'first_name': $('#firstName'),
+                'last_name': $('#lastName'),
+                'email': $('#email'),
+                'mobile_no': $('#mobileNo')
+            };
+            klp.utils.populateForm(fields, data);
+
+            // $('#firstName').val(data.first_name);
+            // $('#lastName').val(data.last_name);
+            // $('#email').val(data.email);
+            // $('#mobileNo').val(data.mobile_no);
 
             var profileFormID = 'userProfileForm';
             $('#' + profileFormID).submit(function(e) {
@@ -15,12 +23,6 @@
                 }
                 klp.utils.clearValidationErrors(profileFormID);
 
-                var fields = {
-                    'first_name': $('#firstName'),
-                    'last_name': $('#lastName'),
-                    'email': $('#email'),
-                    'mobile_no': $('#mobileNo')
-                };
 
                 var data = klp.utils.getFormData(fields);
 
