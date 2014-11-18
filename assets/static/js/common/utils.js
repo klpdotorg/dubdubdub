@@ -137,6 +137,12 @@
             return data;
         },
 
+        populateForm: function(fields, data) {
+            _(_(fields).keys()).each(function(key) {
+                fields[key].val(data[key]);
+            });
+        },
+
         getFormData: function(fields) {
             var data = {};
             _(_(fields).keys()).each(function(key) {

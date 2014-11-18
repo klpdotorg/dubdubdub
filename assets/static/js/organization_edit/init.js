@@ -3,35 +3,25 @@
         var apiURL = "organizations/" + ORGANIZATION_ID;
         var $orgXHR = klp.api.authDo(apiURL);
         $orgXHR.done(function(data) {
-            // console.log("data", data);
-            $('#orgName').val(data.name);
-            $('#orgURL').val(data.url);
-            $('#orgEmail').val(data.email);
-            $('#orgContactName').val(data.contact_name);
-            $('#orgAbout').val(data.about);
-            $('#orgTwitter').val(data.twitter_handle);
-            $('#orgFacebook').val(data.fb_url);
-            $('#orgBlog').val(data.blog_url);
-            $('#orgPhotos').val(data.photos_url);
-            $('#orgYoutube').val(data.youtube_url);
+            var fields = {
+                'name': $('#orgName'),
+                'url': $('#orgURL'),
+                'email': $('#orgEmail'),
+                'contact_name': $('#orgContactName'),
+                'about': $('#orgAbout'),
+                'twitter_handle': $('#orgTwitter'),
+                'fb_url': $('#orgFacebook'),
+                'blog_url': $('#orgBlog'),
+                'photos_url': $('#orgPhotos'),
+                'youtube_url': $('#orgYoutube')
+            };
+            klp.utils.populateForm(fields, data);
             var formID = 'orgForm';
             $('#' + formID).submit(function(e) {
                 if (e) {
                     e.preventDefault();
                 }
                 klp.utils.clearValidationErrors(formID);
-                var fields = {
-                    'name': $('#orgName'),
-                    'url': $('#orgURL'),
-                    'email': $('#orgEmail'),
-                    'contact_name': $('#orgContactName'),
-                    'about': $('#orgAbout'),
-                    'twitter_handle': $('#orgTwitter'),
-                    'fb_url': $('#orgFacebook'),
-                    'blog_url': $('#orgBlog'),
-                    'photos_url': $('#orgPhotos'),
-                    'youtube_url': $('#orgYoutube')
-                };
 
                 if (klp.utils.validateRequired(formID)) {
                     var data = klp.utils.getFormData(fields);
