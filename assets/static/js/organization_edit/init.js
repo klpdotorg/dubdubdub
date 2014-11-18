@@ -8,6 +8,11 @@
             $('#orgURL').val(data.url);
             $('#orgEmail').val(data.email);
             $('#orgContactName').val(data.contact_name);
+            $('#orgTwitter').val(data.twitter_handle);
+            $('#orgFacebook').val(data.fb_url);
+            $('#orgBlog').val(data.blog_url);
+            $('#orgPhotos').val(data.photos_url);
+            $('#orgYoutube').val(data.youtube_url);
             var formID = 'orgForm';
             $('#' + formID).submit(function(e) {
                 if (e) {
@@ -18,7 +23,12 @@
                     'name': $('#orgName'),
                     'url': $('#orgURL'),
                     'email': $('#orgEmail'),
-                    'contact_name': $('#orgContactName')
+                    'contact_name': $('#orgContactName'),
+                    'twitter_handle': $('#orgTwitter'),
+                    'fb_url': $('#orgFacebook'),
+                    'blog_url': $('#orgBlog'),
+                    'photos_url': $('#orgPhotos'),
+                    'youtube_url': $('#orgYoutube')
                 };
 
                 if (klp.utils.validateRequired(formID)) {

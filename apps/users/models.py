@@ -163,7 +163,7 @@ class Organization(models.Model):
     twitter_handle = models.CharField(max_length=255, blank=True)
     fb_url = models.URLField(blank=True)
     blog_url = models.URLField(blank=True)
-    website = models.URLField(blank=True)
+    #website = models.URLField(blank=True)
     photos_url = models.URLField(blank=True)
     youtube_url = models.URLField(blank=True)    
 
