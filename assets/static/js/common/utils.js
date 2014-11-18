@@ -146,7 +146,12 @@
         getFormData: function(fields) {
             var data = {};
             _(_(fields).keys()).each(function(key) {
-                data[key] = fields[key].val();
+                var $field = fields[key];
+                if ($field.attr('type') === 'checkbox') {
+                    data[key] = $field.is(":checked");
+                } else {
+                    data[key] = fields[key].val();
+                }
             });
             return data;
         },

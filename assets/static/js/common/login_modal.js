@@ -79,7 +79,8 @@
                 'last_name': $('#signupLastName'),
                 'mobile_no': $('#signupPhone'),
                 'email': $('#signupEmail'),
-                'password': $('#signupPassword')
+                'password': $('#signupPassword'),
+                'opted_email': $('#signupOptedEmail')
             };
 
             var data = klp.utils.getFormData(fields);

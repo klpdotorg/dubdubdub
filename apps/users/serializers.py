@@ -144,7 +144,8 @@ class UserSerializer(serializers.ModelSerializer):
         extras = {
             'mobile_no': attrs.get('mobile_no', None),
             'first_name': attrs.get('first_name', None),
-            'last_name': attrs.get('last_name', None)
+            'last_name': attrs.get('last_name', None),
+            'opted_email': False if attrs.get('opted_email', 'false') == 'false' else True
         }
         request = self.context['request']
 
@@ -186,7 +187,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
-                  'last_name', 'password', 'token', 'volunteer_activities',
+                  'last_name', 'password', 'opted_email', 'token', 'volunteer_activities',
                   'organizations')
         write_only_fields = ('password',)
 
