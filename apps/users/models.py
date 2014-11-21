@@ -69,7 +69,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('active', default=True,
         help_text='Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.')
-
+    opted_email = models.BooleanField(default=False, help_text="Opted in to receive emails")
+    image = models.ImageField(upload_to='profile_pics', blank=True)
+    about = models.TextField(blank=True, help_text="Short blurb / about text")
+    twitter_handle = models.CharField(max_length=255, blank=True)
+    fb_url = models.URLField(blank=True)
+    website = models.URLField(blank=True)
+    photos_url = models.URLField(blank=True)
+    youtube_url = models.URLField(blank=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
@@ -152,6 +159,13 @@ class Organization(models.Model):
     address = models.TextField(blank=True)
     contact_name = models.CharField(max_length=256)
     users = models.ManyToManyField('User', through='UserOrganization')
+    about = models.TextField(blank=True, help_text="Short blurb / about text")
+    twitter_handle = models.CharField(max_length=255, blank=True)
+    fb_url = models.URLField(blank=True)
+    blog_url = models.URLField(blank=True)
+    website = models.URLField(blank=True)
+    photos_url = models.URLField(blank=True)
+    youtube_url = models.URLField(blank=True)    
 
     def generate_slug(self, regenerate=False):
         if not self.slug or regenerate:
