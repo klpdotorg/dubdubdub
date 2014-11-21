@@ -35,7 +35,7 @@ SELECT tbs.id as id,
     SUM(CASE tb_institution_agg.sex WHEN 'female' THEN tb_institution_agg.num ELSE 0 END) as num_girls
     FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs
         LEFT JOIN tb_institution_agg ON tb_institution_agg.id=tbs.id
-        LEFT JOIN (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, vw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly
+        LEFT JOIN (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, mvw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly
     ON assembly.instid=tbs.id
     WHERE tbs.bid=tb1.id AND
     tb1.parent=tb2.id AND
@@ -96,8 +96,8 @@ SELECT sg.sid AS schid,
     tb_class sg,
     tb_student stu,
     tb_academic_year acyear
-  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT vw_lib_level_agg.year
-           FROM vw_lib_level_agg))
+  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT mvw_lib_level_agg.year
+           FROM mvw_lib_level_agg))
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
 
 CREATE materialized VIEW mvw_inst_coord AS
