@@ -13,9 +13,11 @@
                 'fb_url': $('#orgFacebook'),
                 'blog_url': $('#orgBlog'),
                 'photos_url': $('#orgPhotos'),
-                'youtube_url': $('#orgYoutube')
+                'youtube_url': $('#orgYoutube'),
+                'logo': $('#logo')
             };
             klp.utils.populateForm(fields, data);
+            $('#logo').imagePreview();
             var formID = 'orgForm';
             $('#' + formID).submit(function(e) {
                 if (e) {
