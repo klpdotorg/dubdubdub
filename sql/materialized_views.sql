@@ -2,6 +2,14 @@
 -- list of cluster ids with block and districts
 -- Only for primary schools
 
+CREATE materialized VIEW mvw_postal AS
+ SELECT postal.gid,
+    postal.pin_id,
+    postal.pincode,
+    postal.the_geom
+   FROM dblink('host=localhost dbname=spatial user=klp'::text, 'select gid, pin_id, pincode, the_geom from postal'::text) postal(gid integer, pin_id integer, pincode character varying(35), the_geom geometry);
+
+
 CREATE materialized VIEW mvw_boundary_primary AS
 SELECT tb1.id AS cluster_id,
        tb2.id AS block_id,
