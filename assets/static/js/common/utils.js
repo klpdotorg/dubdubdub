@@ -139,7 +139,15 @@
 
         populateForm: function(fields, data) {
             _(_(fields).keys()).each(function(key) {
-                fields[key].val(data[key]);
+                var $field = fields[key];
+                if ($field.is('[data-type=image]')) {
+                    if (data[key]) {
+                        var $imagePreview = $field.parent().find('.imagePreview');
+                        $imagePreview.attr("src", data[key]);
+                    }
+                } else {    
+                    $field.val(data[key]);
+                }
             });
         },
 
@@ -149,6 +157,9 @@
                 var $field = fields[key];
                 if ($field.attr('type') === 'checkbox') {
                     data[key] = $field.is(":checked");
+                } else if ($field.is('[data-type=image]')) {
+                    var imageData = $field.parent().find('.imagePreview').attr('src');
+                    data[key] = imageData;
                 } else {
                     data[key] = fields[key].val();
                 }

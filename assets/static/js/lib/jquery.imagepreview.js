@@ -22,7 +22,7 @@
                             return function(e) {
                                 // Render thumbnail.
                                 $this
-                                    .parents('.field-container')
+                                    .parent()
                                     .find('.imagePreview')
                                     .attr('src',e.target.result);
                             };

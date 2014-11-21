@@ -13,8 +13,10 @@
                 'fb_url': $('#fbURL'),
                 'website': $('#website'),
                 'photos_url': $('#photosURL'),
-                'youtube_url': $('#youtubeURL')
+                'youtube_url': $('#youtubeURL'),
+                'image': $('#image')
             };
+            $('#image').imagePreview();
             klp.utils.populateForm(fields, data);
 
             var profileFormID = 'userProfileForm';
