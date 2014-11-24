@@ -3,6 +3,7 @@ import sys
 import csv
 from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
+from django.db import transaction
 from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
 from schools.models import School
 from users.models import User
@@ -67,18 +68,24 @@ class Command(BaseCommand):
 
         self.notfoundfile.close()
 
+    @transaction.atomic
     def createStory(self, story, klpid):
         group = Questiongroup.objects.get(id=1)
         new_story = Story(user=story.user, school=story.school,
                           group=group, is_verified=True, name=story.name,
                           email=story.email, date=story.date)
+        new_story.save()
+
         playground_question = Question.objects.get(text='Play ground')
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
         playground_answer = Answer(story=new_story,
                                    question=playground_question,
                                    text=self.d['PlayGround?'])
+        playground_answer.save()
+
         fence_answer = Answer(story=new_story, question=fence_question,
                               text=self.d['Fence?'])
+        fence_answer.save()
 
         # Images
         images = []
@@ -94,7 +101,3 @@ class Command(BaseCommand):
                     )
                 )
         StoryImage.objects.bulk_create(images)
-
-        new_story.save()
-        playground_answer.save()
-        fence_answer.save()
