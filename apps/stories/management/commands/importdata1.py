@@ -1,6 +1,7 @@
 import os
 import sys
 import csv
+import psycopg2
 from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
 from django.db import transaction
@@ -29,6 +30,11 @@ class Command(BaseCommand):
             landmark = d['Landmark #1']
             bus = d['Bus Details']
             pincode = d['PIN Code']
+            lat = d['LAT_spotways']
+            lon = d['LONG_spotways']
+            coordinates = 'POINT ('+lon+' '+lat+')'
+
+            connection, cursor = connectKlpCoord()
 
             if not (klpid.startswith('5')):
                 try:
@@ -65,9 +71,14 @@ class Command(BaseCommand):
 
                     self.createStory(story, klpid, d)
 
+                    updateCoord(klpid, coordinates)
+
                 except Exception as e:
                     print(e)
                     self.notfoundfile.write(klpid+'\n')
+
+            cursor.close()
+            connection.close()
 
         self.notfoundfile.close()
 
@@ -103,3 +114,12 @@ class Command(BaseCommand):
                     )
                 )
         StoryImage.objects.bulk_create(images)
+
+    def connectKlpCoord(self):
+        connection = psycopg2.connect("dbname=klp-coord user=klp")
+        cursor = connection.cursor()
+        return connection, cursor
+
+    def updateCoord(self, klpid, coordinates):
+        query = "UPDATE inst_coord SET coord=%(coordinates)s WHERE instid=%(klpid)s;"
+        cursor.execute(query, {'coordinates': coordinates, 'klpid': klpid})
