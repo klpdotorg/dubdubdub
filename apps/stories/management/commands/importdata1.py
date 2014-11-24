@@ -63,7 +63,7 @@ class Command(BaseCommand):
                         'school': school
                     }
 
-                    self.createStory(story, klpid)
+                    self.createStory(story, klpid, d)
 
                 except Exception as e:
                     print(e)
@@ -71,7 +71,7 @@ class Command(BaseCommand):
 
         self.notfoundfile.close()
 
-    def createStory(self, story, klpid):
+    def createStory(self, story, klpid, d):
         group = Questiongroup.objects.get(id=1)
         new_story = Story(user=story['user'], school=story['school'],
                           group=group, is_verified=True, name=story['name'],
@@ -82,11 +82,11 @@ class Command(BaseCommand):
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
         playground_answer = Answer(story=new_story,
                                    question=playground_question,
-                                   text=self.d['PlayGround?'])
+                                   text=d['PlayGround?'])
         playground_answer.save()
 
         fence_answer = Answer(story=new_story, question=fence_question,
-                              text=self.d['Fence?'])
+                              text=d['Fence?'])
         fence_answer.save()
 
         # Images
