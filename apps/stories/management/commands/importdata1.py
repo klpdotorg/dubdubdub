@@ -21,7 +21,7 @@ class Command(BaseCommand):
         self.data = csv.DictReader(file, delimiter='|', quotechar="'")
         self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
 
-        for d in self.data[1:]:
+        for d in self.data:
             klpid = d['KLP ID']
             address = d['Address']
             landmark = d['Landmark #1']
