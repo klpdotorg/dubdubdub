@@ -92,8 +92,8 @@ class Command(BaseCommand):
         # Images
         images = []
         for i in xrange(1, 4):
-            image_filename = '%d-%d.png' % (klpid, i)
-            image_path = sys.path.join(self.image_location, image_filename)
+            image_filename = '%d-%d.png' % (int(klpid), i)
+            image_path = os.path.join(self.image_location, image_filename)
             if os.path.isfile(image_path):
                 images.append(
                     StoryImage(
