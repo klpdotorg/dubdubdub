@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
 from django.db import transaction
 from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
-from schools.models import School
+from schools.models import School, Address, InstCoord
 from users.models import User
 
 
@@ -15,10 +15,11 @@ class Command(BaseCommand):
 
     ./manage.py importdata1 foobar.csv /path/to/images/"""
 
+    @transaction.atomic
     def handle(self, *args, **options):
         filename, self.image_location = args
         file = open(filename, 'r')
-        self.data = csv.DictReader(file, delimiter='|', quotechar="'")
+        self.data = csv.DictReader(file)
         self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
 
         for d in self.data:
@@ -27,26 +28,37 @@ class Command(BaseCommand):
             landmark = d['Landmark #1']
             bus = d['Bus Details']
             pincode = d['PIN Code']
-            lat = d['LAT']
-            lon = d['LONG']
+            lat = d['LAT_spotways']
+            lon = d['LONG_spotways']
             coordinates = 'POINT ('+lon+' '+lat+')'
 
             if not (klpid.startswith('5')):
                 try:
                     school = School.objects.get(id=d['KLP ID'])
-                    school_address = school.address
-
-                    # Update details.
                     if address:
-                        school_address.address = d['Address']
+                        if school.address:
+                            school_address = school.address
+                            school_address.address = address
+                        else:
+                            school_address = Address.objects.create(
+                                address=address
+                            )
+                            school.address = school_address
+
+                    # Update address details.
                     if landmark:
-                        school_address.landmark = d['Landmark #1']
+                        school_address.landmark = landmark
                     if bus:
                         school_address.bus = bus
                     if pincode:
                         school_address.pincode = pincode
 
-                    school.instcoord.coord = coordinates
+                    # Update coordinates details
+                    instcoord, created = InstCoord.objects.get_or_create(
+                        school=school
+                    )
+                    instcoord.coord = coordinates
+                    instcoord.save()
 
                     school_address.save()
                     school.save()
@@ -58,17 +70,16 @@ class Command(BaseCommand):
                         'email': 'dev@klp.org.in',
                         'name': 'Team KLP',
                         'school': school
-                        }
+                    }
 
                     self.createStory(story, klpid)
 
-                except:
+                except Exception as e:
+                    print(e)
                     self.notfoundfile.write(klpid+'\n')
-                    pass
 
         self.notfoundfile.close()
 
-    @transaction.atomic
     def createStory(self, story, klpid):
         group = Questiongroup.objects.get(id=1)
         new_story = Story(user=story.user, school=story.school,
