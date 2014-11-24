@@ -18,10 +18,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         filename, self.image_location = args
         file = open(filename, 'r')
-        self.data = csv.DictReader(file)
+        self.data = csv.DictReader(file, delimiter='|', quotechar="'")
         self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
 
-        for d in self.data:
+        for d in self.data[1:]:
             klpid = d['KLP ID']
             address = d['Address']
             landmark = d['Landmark #1']
