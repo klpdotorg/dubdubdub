@@ -25,7 +25,6 @@ class AcademicYear(BaseModel):
 
 
 class Address(BaseModel):
-    id = models.IntegerField(primary_key=True)
     address = models.CharField(max_length=1000, blank=True)
     area = models.CharField(max_length=1000, blank=True)
     pincode = models.CharField(max_length=20, blank=True)
