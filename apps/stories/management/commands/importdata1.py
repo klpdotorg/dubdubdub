@@ -8,17 +8,17 @@ from users.models import User
 
 
 class Command(BaseCommand):
+    args = "<csvname imagepath>"
     help = """Import data from EMS
 
     ./manage.py importdata1 foobar.csv /path/to/images/"""
 
-    filename = sys.argv[2]
-    image_location = sys.argv[3]
-    file = open(filename, 'r')
-    data = csv.DictReader(file)
-    notfoundfile = open('not-in-dubdubdub.txt', 'w')
-
     def handle(self, *args, **options):
+        filename, self.image_location = args
+        file = open(filename, 'r')
+        self.data = csv.DictReader(file)
+        self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
+
         for d in self.data:
             klpid = d['KLP ID']
             address = d['Address']
