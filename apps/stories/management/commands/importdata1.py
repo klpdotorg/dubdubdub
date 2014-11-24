@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
 from django.db import transaction
 from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
-from schools.models import School, Address, InstCoord
+from schools.models import School, Address
 from users.models import User
 
 
@@ -28,9 +28,6 @@ class Command(BaseCommand):
             landmark = d['Landmark #1']
             bus = d['Bus Details']
             pincode = d['PIN Code']
-            lat = d['LAT_spotways']
-            lon = d['LONG_spotways']
-            coordinates = 'POINT ('+lon+' '+lat+')'
 
             if not (klpid.startswith('5')):
                 try:
@@ -52,13 +49,6 @@ class Command(BaseCommand):
                         school_address.bus = bus
                     if pincode:
                         school_address.pincode = pincode
-
-                    # Update coordinates details
-                    instcoord, created = InstCoord.objects.get_or_create(
-                        school=school
-                    )
-                    instcoord.coord = coordinates
-                    instcoord.save()
 
                     school_address.save()
                     school.save()
