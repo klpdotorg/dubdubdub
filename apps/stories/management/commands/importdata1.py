@@ -1,3 +1,4 @@
+import os
 import sys
 import csv
 from django.core.management.base import BaseCommand
@@ -80,20 +81,19 @@ class Command(BaseCommand):
                               text=self.d['Fence?'])
 
         # Images
-        StoryImage.objects.bulk_create([
-            StoryImage(
-                story=new_story, image=ImageFile(
-                    open(sys.path.join(self.image_location, klpid+'-1.png'))
-                ), is_verified=True, filename=klpid+'-1.png'),
-            StoryImage(
-                story=new_story, image=ImageFile(
-                    open(sys.path.join(self.image_location, klpid+'-2.png'))
-                ), is_verified=True, filename=klpid+'-2.png'),
-            StoryImage(
-                story=new_story, image=ImageFile(
-                    open(sys.path.join(self.image_location, klpid+'-3.png'))
-                ), is_verified=True, filename=klpid+'-3.png')
-        ])
+        images = []
+        for i in xrange(1, 4):
+            image_filename = '%d-%d.png' % (klpid, i)
+            image_path = sys.path.join(self.image_location, image_filename)
+            if os.path.isfile(image_path):
+                images.append(
+                    StoryImage(
+                        story=new_story, image=ImageFile(
+                            open(image_path)
+                        ), is_verified=True, filename=image_filename
+                    )
+                )
+        StoryImage.objects.bulk_create(images)
 
         new_story.save()
         playground_answer.save()
