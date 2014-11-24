@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
             if not (klpid.startswith('5')):
                 try:
-                    school = School.objects.get(id=d['KLP ID'])
+                    school = School.objects.get(id=klpid)
                     if address:
                         if school.address:
                             school_address = school.address
