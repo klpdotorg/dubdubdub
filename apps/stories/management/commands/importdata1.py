@@ -21,6 +21,7 @@ class Command(BaseCommand):
         file = open(filename, 'r')
         self.data = csv.DictReader(file)
         self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
+        dev_user = User.objects.get(email='dev@klp.org.in')
 
         for d in self.data:
             klpid = d['KLP ID']
@@ -56,7 +57,7 @@ class Command(BaseCommand):
                     # Story
                     story = {
                         'date': d['Date'],
-                        'user': User.objects.get(email='dev@klp.org.in'),
+                        'user': dev_user,
                         'email': 'dev@klp.org.in',
                         'name': 'Team KLP',
                         'school': school
@@ -72,9 +73,9 @@ class Command(BaseCommand):
 
     def createStory(self, story, klpid):
         group = Questiongroup.objects.get(id=1)
-        new_story = Story(user=story.user, school=story.school,
-                          group=group, is_verified=True, name=story.name,
-                          email=story.email, date=story.date)
+        new_story = Story(user=story['user'], school=story['school'],
+                          group=group, is_verified=True, name=story['name'],
+                          email=story['email'], date=story['date'])
         new_story.save()
 
         playground_question = Question.objects.get(text='Play ground')
