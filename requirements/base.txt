@@ -12,6 +12,7 @@ sqlparse==0.1.10
 wsgiref==0.1.2
 django_extensions==1.3.3
 Pillow
+newrelic==2.32.0.28
 
 #pygments, markdown and django-filter are optional dependencies for djangorestfamework
 djangorestframework==2.3.14
