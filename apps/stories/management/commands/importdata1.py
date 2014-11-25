@@ -40,7 +40,7 @@ class Command(BaseCommand):
                 try:
                     school = School.objects.get(id=klpid)
                     if address:
-                        if school.address:
+                        if school.address and (not school.address == address):
                             school_address = school.address
                             school_address.address = address
                         else:
@@ -78,33 +78,42 @@ class Command(BaseCommand):
                     self.notfoundfile.write(klpid+'\n')
 
             cursor.close()
+            connection.commit()
             connection.close()
 
         self.notfoundfile.close()
 
     def createStory(self, story, klpid, d):
         group = Questiongroup.objects.get(id=1)
-        new_story = Story(user=story['user'], school=story['school'],
-                          group=group, is_verified=True, name=story['name'],
-                          email=story['email'], date=story['date'])
-        new_story.save()
-        print 'Created new story for school id: %s' % klpid
+        new_story, created = Story.objects.get_or_create(
+            user=story['user'], school=story['school'],
+            group=group, is_verified=True, name=story['name'],
+            email=story['email'], date=story['date']
+        )
+        if created:
+            print 'Created new story for school id: %s' % klpid
 
         playground_question = Question.objects.get(text='Play ground')
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
-        playground_answer = Answer(story=new_story,
-                                   question=playground_question,
-                                   text=d['PlayGround?'])
-        playground_answer.save()
+        playground_answer, created = Answer.objects.get_or_create(
+            story=new_story,
+            question=playground_question,
+            text=d['PlayGround?']
+        )
 
-        fence_answer = Answer(story=new_story, question=fence_question,
-                              text=d['Fence?'])
-        fence_answer.save()
+        fence_answer, crerated = Answer.objects.get_or_create(
+            story=new_story, question=fence_question, text=d['Fence?']
+        )
 
         # Images
         images = []
         for i in xrange(1, 4):
             image_filename = '%d-%d.png' % (int(klpid), i)
+
+            if StoryImage.objects.filter(story=new_story,
+                                         filename=image_filename).count() > 0:
+                continue
+
             image_path = os.path.join(self.image_location, image_filename)
             if os.path.isfile(image_path):
                 images.append(
@@ -115,7 +124,9 @@ class Command(BaseCommand):
                     )
                 )
                 print 'Added image for school id: %d' % int(klpid)
-        StoryImage.objects.bulk_create(images)
+
+        if images:
+            StoryImage.objects.bulk_create(images)
 
     def connectKlpCoord(self):
         connection = psycopg2.connect("dbname=klp-coord user=klp")
