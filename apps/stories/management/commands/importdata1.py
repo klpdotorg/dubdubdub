@@ -34,7 +34,7 @@ class Command(BaseCommand):
             lon = d['LONG_spotways']
             coordinates = 'POINT ('+lon+' '+lat+')'
 
-            connection, cursor = connectKlpCoord()
+            connection, cursor = self.connectKlpCoord()
 
             if not (klpid.startswith('5')):
                 try:
@@ -71,7 +71,7 @@ class Command(BaseCommand):
 
                     self.createStory(story, klpid, d)
 
-                    updateCoord(klpid, coordinates)
+                    self.updateCoord(cursor, klpid, coordinates)
 
                 except Exception as e:
                     print(e)
@@ -120,6 +120,6 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         return connection, cursor
 
-    def updateCoord(self, klpid, coordinates):
+    def updateCoord(self, cursor, klpid, coordinates):
         query = "UPDATE inst_coord SET coord=%(coordinates)s WHERE instid=%(klpid)s;"
         cursor.execute(query, {'coordinates': coordinates, 'klpid': klpid})
