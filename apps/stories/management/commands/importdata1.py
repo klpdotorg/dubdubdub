@@ -136,4 +136,6 @@ class Command(BaseCommand):
     def updateCoord(self, cursor, klpid, coordinates):
         query = "UPDATE inst_coord SET coord=ST_PointFromText(%(coordinates)s, 4326) WHERE instid=%(klpid)s;"
         cursor.execute(query, {'coordinates': coordinates, 'klpid': klpid})
-        print 'Added coordinates for school id: %s' % klpid
+
+        if cursor.rowcount > 0:
+            print 'Added coordinates for school id: %s' % klpid
