@@ -20,6 +20,7 @@ class StoryAdmin(admin.ModelAdmin):
     list_display = ('email', 'entered_timestamp', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
+    search_fields = ('school', 'school_id')
     raw_id_fields = ('school',)
     ordering = ['-entered_timestamp']
     inlines = [AnswerInline, StoryImageInline]
