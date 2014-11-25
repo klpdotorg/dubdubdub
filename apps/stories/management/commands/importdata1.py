@@ -88,6 +88,7 @@ class Command(BaseCommand):
                           group=group, is_verified=True, name=story['name'],
                           email=story['email'], date=story['date'])
         new_story.save()
+        print 'Created new story for school id: %s' % klpid
 
         playground_question = Question.objects.get(text='Play ground')
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
@@ -113,6 +114,7 @@ class Command(BaseCommand):
                         ), is_verified=True, filename=image_filename
                     )
                 )
+                print 'Added image for school id: %d' % int(klpid)
         StoryImage.objects.bulk_create(images)
 
     def connectKlpCoord(self):
@@ -121,5 +123,6 @@ class Command(BaseCommand):
         return connection, cursor
 
     def updateCoord(self, cursor, klpid, coordinates):
-        query = "UPDATE inst_coord SET coord=%(coordinates)s WHERE instid=%(klpid)s;"
+        query = "UPDATE inst_coord SET coord=ST_PointFromText(%(coordinates)s, 4326) WHERE instid=%(klpid)s;"
         cursor.execute(query, {'coordinates': coordinates, 'klpid': klpid})
+        print 'Added coordinates for school id: %s' % klpid
