@@ -239,7 +239,7 @@ CACHE_TIMEOUT = 60 * 60 * 24 * 10
 # Should cache be used or not? A: Yes
 CACHE_ENABLED = True
 
-#REST Framework config options:
+# REST Framework config options:
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'common.renderers.KLPJSONRenderer',
@@ -248,7 +248,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.DjangoFilterBackend',
@@ -257,13 +257,13 @@ REST_FRAMEWORK = {
 }
 
 TESTS_SCHOOLS_INPUT = {
-'SCHOOLS_LIB_ID': '33312',
-'SCHOOLS_LIB_ID2': '33313',
-'SCHOOL_INFO_ID' : '33312',
-'SCHOOL_DEMOGRAPHICS_ID' : '33312',
-'SCHOOL_PROGRAMMES_ID' : '25139',
-'SCHOOL_FINANCE_ID' : '4708',
-'SCHOOL_INFRA_ID' : '24594',
+    'SCHOOLS_LIB_ID': '33312',
+    'SCHOOLS_LIB_ID2': '33313',
+    'SCHOOL_INFO_ID': '33312',
+    'SCHOOL_DEMOGRAPHICS_ID': '33312',
+    'SCHOOL_PROGRAMMES_ID': '25139',
+    'SCHOOL_FINANCE_ID': '4708',
+    'SCHOOL_INFRA_ID': '24594',
 }
 
 BLOG_FEED_URL = 'http://blog.klp.org.in/feeds/posts/default?alt=json'
