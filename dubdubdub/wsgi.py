@@ -21,10 +21,11 @@ sys.path.append(PROJECT_ROOT)
 
 try:
     import newrelic.agent
-    from local_settings import NEWRELIC_ENABLED, NEWRELIC_ENV
+    from dubdubdub.local_settings import NEWRELIC_ENABLED, NEWRELIC_ENV
 
     if NEWRELIC_ENABLED:
-        newrelic.agent.initialize(os.path.join(PROJECT_ROOT, 'newrelic.ini'), NEWRELIC_ENV)
+        newrelic.agent.initialize(
+            os.path.join(PROJECT_ROOT, 'newrelic.ini'), NEWRELIC_ENV)
 except Exception, e:
     print e
 
@@ -39,10 +40,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dubdubdub.settings")
 # setting points here.
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
-
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
-
-#import dise_dashboard.monitor
-#dise_dashboard.monitor.start(interval=1.0)
