@@ -134,8 +134,17 @@ class Command(BaseCommand):
         return connection, cursor
 
     def updateCoord(self, cursor, klpid, coordinates):
-        query = "UPDATE inst_coord SET coord=ST_PointFromText(%(coordinates)s, 4326) WHERE instid=%(klpid)s;"
-        cursor.execute(query, {'coordinates': coordinates, 'klpid': klpid})
+        query = {
+            'check': "SELECT instid from inst_coord WHERE instid=%(klpid)s;",
+            'insert': "INSERT INTO inst_coord VALUES (%(klpid)s, ST_PointFromText(%(coordinates)s));",
+            'update': "UPDATE inst_coord SET coord=ST_PointFromText(%(coordinates)s, 4326) WHERE instid=%(klpid)s;"
+        }
+
+        cursor.execute(query['check'], {'klpid': klpid})
 
         if cursor.rowcount > 0:
-            print 'Added coordinates for school id: %s' % klpid
+            cursor.execute(query['update'], {'coordinates': coordinates, 'klpid': klpid})
+            print 'Updated coordinates for school id: %s' % klpid
+        else:
+            cursor.execute(query['insert'], {'coordinates': coordinates, 'klpid': klpid})
+            print 'Inserted coordinates for school id: %s' % klpid
