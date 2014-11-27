@@ -70,7 +70,6 @@ class BoundaryHierarchy(BaseModel):
 
 
 class Boundary(BaseModel):
-    id = models.IntegerField(primary_key=True)
     parent = models.ForeignKey("Boundary", blank=True, null=True,
                                db_column='parent', on_delete=models.SET_NULL)
     name = models.CharField(max_length=300)
@@ -104,7 +103,6 @@ class Boundary(BaseModel):
 
 
 class BoundaryType(BaseModel):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
 
     def __unicode__(self):
@@ -173,8 +171,6 @@ class StudentGroup(BaseModel):
 
 
 class School(GeoBaseModel):
-    id = models.IntegerField(primary_key=True)
-
     admin3 = models.ForeignKey('Boundary', db_column='bid')
 
     # TODO: check if address should be ForeignKey or OneToOneField
