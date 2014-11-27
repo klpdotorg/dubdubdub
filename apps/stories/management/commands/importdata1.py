@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
 from django.db import transaction
 from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
-from schools.models import School, Address
+from schools.models import School, Address, Boundary, BoundaryType, BoundaryHierarchy
 from users.models import User
 
 
@@ -25,6 +25,12 @@ class Command(BaseCommand):
         dev_user = User.objects.get(email='dev@klp.org.in')
 
         for d in self.data:
+            # ,Unnamed: 0_x,S No_x,Date,Block,Cluster,School Name_spotways,
+            # KLP ID,Address,PIN Code,PlayGround?,Fence?,Landmark #1,
+            # Landmark #2,Route to School,Bus Details,
+            # LAT_spotways,LONG_spotways,Unnamed: 0_y,S No_y,klp_district,
+            # klp_block,klp_cluster,dise_code,School Name_ems,category,
+            # management,LAT_ems,LONG_ems,institution_gender,hierarchy,moi
             klpid = d['KLP ID']
             address = d['Address']
             landmark = d['Landmark #1']
@@ -36,52 +42,131 @@ class Command(BaseCommand):
 
             connection, cursor = self.connectKlpCoord()
 
-            if not (klpid.startswith('5')):
-                try:
-                    school = School.objects.get(id=klpid)
-                    if address:
-                        if school.address and (not school.address == address):
-                            school_address = school.address
-                            school_address.address = address
-                        else:
-                            school_address = Address.objects.create(
-                                address=address
-                            )
-                            school.address = school_address
+            if klpid.startswith('5'):
+                continue
 
-                    # Update address details.
-                    if landmark:
-                        school_address.landmark = landmark
-                    if bus:
-                        school_address.bus = bus
-                    if pincode:
-                        school_address.pincode = pincode
+            try:
+                school = School.objects.get(id=klpid)
+            except School.DoesNotExist:
+                # School doesn't exist
+                school = School(
+                    id=klpid,
+                    name=d.get('Name_ems'),
+                    cat=d.get('category'),
+                    sex=d.get('institution_gender', 'co-ed'),
+                    moi=d.get('moi', 'kannada'),
+                    mgmt=d.get('management', 'ed')
+                )
+                school.admin3 = self.get_or_create_admin3(d)
 
-                    school_address.save()
-                    school.save()
+            if address:
+                if school.address and (not school.address == address):
+                    school_address = school.address
+                    school_address.address = address
+                else:
+                    school_address = Address.objects.create(
+                        address=address
+                    )
+                    school.address = school_address
 
-                    # Story
-                    story = {
-                        'date': d['Date'],
-                        'user': dev_user,
-                        'email': 'dev@klp.org.in',
-                        'name': 'Team KLP',
-                        'school': school
-                    }
+            # Update address details.
+            if landmark:
+                school_address.landmark = landmark
+            if bus:
+                school_address.bus = bus
+            if pincode:
+                school_address.pincode = pincode
 
-                    self.createStory(story, klpid, d)
+            school_address.save()
+            school.save()
 
-                    self.updateCoord(cursor, klpid, coordinates)
+            # Story
+            story = {
+                'date': d['Date'],
+                'user': dev_user,
+                'email': 'dev@klp.org.in',
+                'name': 'Team KLP',
+                'school': school
+            }
 
-                except Exception as e:
-                    print(e)
-                    self.notfoundfile.write(klpid+'\n')
+            self.createStory(story, klpid, d)
+
+            self.updateCoord(cursor, klpid, coordinates)
 
             cursor.close()
             connection.commit()
             connection.close()
 
         self.notfoundfile.close()
+
+    def school_exists(self, klpid):
+        return School.objects.filter(id=klpid).count() > 0
+
+    def get_or_create_admin3(self, data):
+        hierarchy = data.get('hierarchy')
+        hierarchies = {
+            'project': 14,
+            'circle': 15,
+            'district': 13,
+            'cluster': 11,
+            'district': 9,
+            'block': 10,
+            'school': 12,
+        }
+
+        if hierarchy == 'Dist/Proj/Circ':
+            type_id = 2
+        elif hierarchy == 'Dist/Blck/Clst':
+            type_id = 1
+        else:
+            raise Exception('Invalid hierarchy "%s"' % hierarchy)
+
+        # create or get district
+        try:
+            district = Boundary.objects.get(
+                name__iexact=data.get('klp_district'))
+        except Boundary.DoesNotExist:
+            district = Boundary(
+                name=data.get('klp_district'),
+                hierarchy_id=13 if type_id == 2 else 9,
+                type_id=type_id
+            )
+            district.save()
+
+        # create or get project/block
+        try:
+            admin2 = Boundary.objects.get(
+                name__iexact=data.get('klp_block'),
+                hierarchy_id=hierarchies['block' if type_id == 1 else 'project'],
+                type_id=type_id
+            )
+        except Boundary.DoesNotExist:
+            admin2 = Boundary(
+                name=data.get('klp_block'),
+                hierarchy_id=hierarchies['block' if type_id == 1 else 'project'],
+                type_id=type_id,
+                parent=district
+            )
+            admin2.save()
+
+        # create or get circle/cluster
+        try:
+            admin3 = Boundary.objects.get(
+                name__iexact=data.get('klp_cluster'),
+                hierarchy_id=hierarchies['cluster' if type_id == 1 else 'circle'],
+                type_id=type_id
+            )
+        except Boundary.DoesNotExist:
+            admin3 = Boundary(
+                name=data.get('klp_cluster'),
+                hierarchy_id=hierarchies['cluster' if type_id == 1 else 'circle'],
+                type_id=type_id,
+                parent=admin2
+            )
+            admin3.save()
+
+        return admin3
+
 
     def createStory(self, story, klpid, d):
         group = Questiongroup.objects.get(id=1)
