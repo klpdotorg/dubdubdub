@@ -175,40 +175,17 @@ class Command(BaseCommand):
 
         return admin3
 
-    def split_data(self, data):
-        exists = []
-        notexists = []
-        for d in data:
-            klpid = d.get('KLP ID')
-            if School.objects.filter(id=klpid).count() > 0:
-                exists.append(d)
-            else:
-                notexists.append(d)
-
-        existwriter = csv.DictWriter(
-            open('merged_exist.csv', 'w'),
-            fieldnames=exists[0].keys()
-        )
-        existwriter.writeheader()
-        existwriter.writerows(exists)
-
-        notexistwriter = csv.DictWriter(
-            open('merged_notexist.csv', 'w'),
-            fieldnames=exists[0].keys()
-        )
-        notexistwriter.writeheader()
-        existwriter.writerows(exists)
-
-
     def createStory(self, story, klpid, d):
         group = Questiongroup.objects.get(id=1)
         new_story, created = Story.objects.get_or_create(
             user=story['user'], school=story['school'],
             group=group, is_verified=True, name=story['name'],
-            email=story['email'], date=story['date']
+            email=story['email']
         )
         if created:
             print 'Created new story for school id: %s' % klpid
+            new_story.date = story['date']
+            new_story.save()
 
         playground_question = Question.objects.get(text='Play ground')
         fence_question = Question.objects.get(text='Boundary wall/ Fencing')
@@ -265,3 +242,27 @@ class Command(BaseCommand):
         else:
             cursor.execute(query['insert'], {'coordinates': coordinates, 'klpid': klpid})
             print 'Inserted coordinates for school id: %s' % klpid
+
+    def split_data(self, data):
+        exists = []
+        notexists = []
+        for d in data:
+            klpid = d.get('KLP ID')
+            if School.objects.filter(id=klpid).count() > 0:
+                exists.append(d)
+            else:
+                notexists.append(d)
+
+        existwriter = csv.DictWriter(
+            open('merged_exist.csv', 'w'),
+            fieldnames=exists[0].keys()
+        )
+        existwriter.writeheader()
+        existwriter.writerows(exists)
+
+        notexistwriter = csv.DictWriter(
+            open('merged_notexist.csv', 'w'),
+            fieldnames=exists[0].keys()
+        )
+        notexistwriter.writeheader()
+        notexistwriter.writerows(notexists)
