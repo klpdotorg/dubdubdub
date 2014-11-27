@@ -45,10 +45,13 @@ class Command(BaseCommand):
             if klpid.startswith('5'):
                 continue
 
+            print '='*20
+
             try:
                 school = School.objects.get(id=klpid)
             except School.DoesNotExist:
                 # School doesn't exist
+                print 'Creating new school with id: %s' % klpid
                 school = School(
                     id=klpid,
                     name=d.get('Name_ems'),
@@ -64,6 +67,7 @@ class Command(BaseCommand):
                     school_address = school.address
                     school_address.address = address
                 else:
+                    print 'Creating new address for klpid: %s' % klpid
                     school_address = Address.objects.create(
                         address=address
                     )
@@ -121,11 +125,13 @@ class Command(BaseCommand):
         else:
             raise Exception('Invalid hierarchy "%s"' % hierarchy)
 
+        print hierarchy
         # create or get district
         try:
             district = Boundary.objects.get(
                 name__iexact=data.get('klp_district'))
         except Boundary.DoesNotExist:
+            print 'Creating new district: %s' % data.get('klp_district')
             district = Boundary(
                 name=data.get('klp_district'),
                 hierarchy_id=13 if type_id == 2 else 9,
@@ -141,6 +147,7 @@ class Command(BaseCommand):
                 type_id=type_id
             )
         except Boundary.DoesNotExist:
+            print 'Creating new block: %s' % data.get('klp_block')
             admin2 = Boundary(
                 name=data.get('klp_block'),
                 hierarchy_id=hierarchies['block' if type_id == 1 else 'project'],
@@ -157,6 +164,7 @@ class Command(BaseCommand):
                 type_id=type_id
             )
         except Boundary.DoesNotExist:
+            print 'Creating new cluster: %s' % data.get('klp_cluster')
             admin3 = Boundary(
                 name=data.get('klp_cluster'),
                 hierarchy_id=hierarchies['cluster' if type_id == 1 else 'circle'],
@@ -166,7 +174,6 @@ class Command(BaseCommand):
             admin3.save()
 
         return admin3
-
 
     def createStory(self, story, klpid, d):
         group = Questiongroup.objects.get(id=1)
