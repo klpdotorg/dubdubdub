@@ -125,6 +125,9 @@
                         return String(klass);
                     })).sort();
 
+                    // Step 2.1: Remove unfortunate null values from the klass array.
+                    data.klasses = _.without(data.klasses, 'null');
+
                     // Step 3: Array of levels.
                     data.levels = _.keys(data.lib_level_agg);
 
