@@ -21,7 +21,6 @@ class Command(BaseCommand):
         filename, self.image_location = args
         file = open(filename, 'r')
         self.data = csv.DictReader(file)
-        self.notfoundfile = open('not-in-dubdubdub.txt', 'w')
         dev_user = User.objects.get(email='dev@klp.org.in')
 
         for d in self.data:
@@ -103,8 +102,6 @@ class Command(BaseCommand):
             cursor.close()
             connection.commit()
             connection.close()
-
-        self.notfoundfile.close()
 
     def school_exists(self, klpid):
         return School.objects.filter(id=klpid).count() > 0
