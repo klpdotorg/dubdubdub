@@ -52,13 +52,15 @@ class Command(BaseCommand):
             except School.DoesNotExist:
                 # School doesn't exist
                 print 'Creating new school with id: %s' % klpid
+                print d
                 school = School(
                     id=klpid,
-                    name=d.get('Name_ems'),
+                    name=d.get('School Name_ems'),
                     cat=d.get('category'),
                     sex=d.get('institution_gender', 'co-ed'),
-                    moi=d.get('moi', 'kannada'),
-                    mgmt=d.get('management', 'ed')
+                    moi=d.get('moi', 'kannada') or 'kannada',
+                    mgmt=d.get('management', 'ed'),
+                    status=2
                 )
                 school.admin3 = self.get_or_create_admin3(d)
 
@@ -95,7 +97,8 @@ class Command(BaseCommand):
 
             self.createStory(story, klpid, d)
 
-            self.updateCoord(cursor, klpid, coordinates)
+            if lat.strip() and lon.strip():
+                self.updateCoord(cursor, klpid, coordinates)
 
             cursor.close()
             connection.commit()
@@ -129,7 +132,10 @@ class Command(BaseCommand):
         # create or get district
         try:
             district = Boundary.objects.get(
-                name__iexact=data.get('klp_district'))
+                name__iexact=data.get('klp_district'),
+                hierarchy_id=13 if type_id == 2 else 9,
+                type_id=type_id
+            )
         except Boundary.DoesNotExist:
             print 'Creating new district: %s' % data.get('klp_district')
             district = Boundary(
@@ -144,7 +150,8 @@ class Command(BaseCommand):
             admin2 = Boundary.objects.get(
                 name__iexact=data.get('klp_block'),
                 hierarchy_id=hierarchies['block' if type_id == 1 else 'project'],
-                type_id=type_id
+                type_id=type_id,
+                parent=district
             )
         except Boundary.DoesNotExist:
             print 'Creating new block: %s' % data.get('klp_block')
@@ -161,7 +168,8 @@ class Command(BaseCommand):
             admin3 = Boundary.objects.get(
                 name__iexact=data.get('klp_cluster'),
                 hierarchy_id=hierarchies['cluster' if type_id == 1 else 'circle'],
-                type_id=type_id
+                type_id=type_id,
+                parent=admin2
             )
         except Boundary.DoesNotExist:
             print 'Creating new cluster: %s' % data.get('klp_cluster')
@@ -230,7 +238,7 @@ class Command(BaseCommand):
     def updateCoord(self, cursor, klpid, coordinates):
         query = {
             'check': "SELECT instid from inst_coord WHERE instid=%(klpid)s;",
-            'insert': "INSERT INTO inst_coord VALUES (%(klpid)s, ST_PointFromText(%(coordinates)s), 4326);",
+            'insert': "INSERT INTO inst_coord VALUES (%(klpid)s, ST_PointFromText(%(coordinates)s, 4326));",
             'update': "UPDATE inst_coord SET coord=ST_PointFromText(%(coordinates)s, 4326) WHERE instid=%(klpid)s;"
         }
 
@@ -248,6 +256,9 @@ class Command(BaseCommand):
         notexists = []
         for d in data:
             klpid = d.get('KLP ID')
+            if klpid.startswith('5'):
+                continue
+
             if School.objects.filter(id=klpid).count() > 0:
                 exists.append(d)
             else:

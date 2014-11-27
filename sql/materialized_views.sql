@@ -1,7 +1,3 @@
-
--- list of cluster ids with block and districts
--- Only for primary schools
-
 -- View for Assembly table.
 CREATE MATERIALIZED VIEW mvw_assembly AS
  SELECT gid, ac_id,
