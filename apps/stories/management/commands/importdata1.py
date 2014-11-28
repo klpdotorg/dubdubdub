@@ -208,7 +208,7 @@ class Command(BaseCommand):
         # Images
         images = []
         for i in xrange(1, 4):
-            image_filename = '%d-%d.png' % (int(klpid), i)
+            image_filename = '%d-%d.jpg' % (int(klpid), i)
 
             if StoryImage.objects.filter(story=new_story,
                                          filename=image_filename).count() > 0:
