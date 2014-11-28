@@ -14,9 +14,10 @@ class Command(BaseCommand):
             pass
         else:
             today = timezone.now().date().strftime("%m/%d/%Y")
-            json = fetch_data(today)
+            json = self.fetch_data(today)
+            print json
         
-    def fetch_data(date):
+    def fetch_data(self, date):
         url = "http://89.145.83.72/akshara/json_feeds.php?fromdate=%s&enddate=%s" \
               % (date, date)
         response = requests.get(url)
