@@ -5,6 +5,7 @@ import psycopg2
 from django.core.management.base import BaseCommand
 from django.core.files.images import ImageFile
 from django.db import transaction
+from django.conf import settings
 from stories.models import (Story, Answer, Question, Questiongroup, StoryImage)
 from schools.models import School, Address, Boundary, BoundaryType, BoundaryHierarchy
 from users.models import User
@@ -214,14 +215,23 @@ class Command(BaseCommand):
                 continue
 
             image_path = os.path.join(self.image_location, image_filename)
+            destination_path = os.path.join(settings.MEDIA_ROOT, 'sys_images', image_filename)
             if os.path.isfile(image_path):
-                images.append(
-                    StoryImage(
-                        story=new_story, image=ImageFile(
-                            open(image_path)
-                        ), is_verified=True, filename=image_filename
+                if not os.path.isfile(destination_path):
+                    images.append(
+                        StoryImage(
+                            story=new_story, image=ImageFile(
+                                open(image_path)
+                            ), is_verified=True, filename=image_filename
+                        )
                     )
-                )
+                else:
+                    images.append(
+                        StoryImage(
+                            story=new_story, image=destination_path,
+                            is_verified=True, filename=image_filename
+                        )
+                    )
                 print 'Added image for school id: %d' % int(klpid)
 
         if images:
