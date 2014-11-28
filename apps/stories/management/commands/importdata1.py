@@ -225,6 +225,7 @@ class Command(BaseCommand):
                             ), is_verified=True, filename=image_filename
                         )
                     )
+                    print 'Added image for school id: %d' % int(klpid)
                 else:
                     images.append(
                         StoryImage(
@@ -232,7 +233,7 @@ class Command(BaseCommand):
                             is_verified=True, filename=image_filename
                         )
                     )
-                print 'Added image for school id: %d' % int(klpid)
+                    print 'Image already exists for school id: %d' % int(klpid)
 
         if images:
             StoryImage.objects.bulk_create(images)
