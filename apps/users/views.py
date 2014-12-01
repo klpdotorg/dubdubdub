@@ -4,7 +4,8 @@ from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404
 from common.views import StaticPageView
 from django.core.urlresolvers import reverse
-from models import User, Organization, VolunteerActivity, VolunteerActivityType
+from models import (User, Organization, VolunteerActivity, VolunteerActivityType,
+    DonationItemCategory)
 
 class ProfilePageView(DetailView):
     model = User
@@ -173,5 +174,14 @@ class VolunteerMapPageView(StaticPageView):
     def get_context_data(self, **kwargs):
         context = super(VolunteerMapPageView, self).get_context_data(**kwargs)
         context['activity_types'] = VolunteerActivityType.objects.all()
+        context['organizations'] = Organization.objects.all()
+        return context
+
+
+class DonatePageView(StaticPageView):
+
+    def get_context_data(self, **kwargs):
+        context = super(DonatePageView, self).get_context_data(**kwargs)
+        context['categories'] = DonationItemCategory.objects.all()
         context['organizations'] = Organization.objects.all()
         return context

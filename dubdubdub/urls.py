@@ -9,7 +9,7 @@ from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
-    EmailVerificationView, VolunteerMapPageView)
+    EmailVerificationView, VolunteerMapPageView, DonatePageView)
 
 urlpatterns = patterns('',
 
@@ -220,6 +220,17 @@ urlpatterns = patterns('',
                 }
             ]
         }), name='volunteer_map'),
+
+    url('^donate$', DonatePageView.as_view(
+        template_name = 'donate.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/donate',
+                    'name': 'Donate'
+                }
+            ]
+        }), name='donate'),
 
     url(r'^school/(?P<pk>[0-9]+)/$', SchoolPageView.as_view(), name='school_page'),
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$$', RedirectView.as_view(
