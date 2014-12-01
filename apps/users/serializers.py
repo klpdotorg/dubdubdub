@@ -108,6 +108,7 @@ class UserVolunteerActivityNestedSerializer(serializers.ModelSerializer):
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
+    logo = Base64ImageField(required=False)
     volunteer_activities = VolunteerActivitySerializer(
         source='volunteeractivity_set',
         read_only=True,
