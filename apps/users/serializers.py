@@ -139,44 +139,10 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     def restore_object(self, attrs, instance=None):
-        email = attrs.get('email', None)
-        password = attrs.get('password', None)
-        extras = {
-            'mobile_no': attrs.get('mobile_no', None),
-            'first_name': attrs.get('first_name', None),
-            'last_name': attrs.get('last_name', None),
-            'opted_email': False if attrs.get('opted_email', 'false') == 'false' else True,
-            'about': attrs.get('about', ''),
-            'twitter_handle': attrs.get('twitter_handle', ''),
-            'fb_url': attrs.get('fb_url', ''),
-            'website': attrs.get('website', ''),
-            'photos_url': attrs.get('photos_url', ''),
-            'youtube_url': attrs.get('youtube_url', '')
-        }
-        request = self.context['request']
-
-        #create new user
-        if not instance:
-            user = User.objects.create_user(email, password, **extras)
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            user = authenticate(username=email, password=password)
-            login(request, user)
-            return user
-        else:
-            if request.user.id != instance.id \
-                    and not request.user.is_superuser:
-                raise PermissionDenied()
-            for key in extras.keys():
-                if extras[key] is not None:
-                    setattr(instance, key, extras[key])
-            if password and password != '':
-                instance.set_password(password)
-            instance.save()
-            return instance
-
-    def save_object(self, *args, **kwargs):
-        pass
+        user = super(UserSerializer, self).restore_object(attrs, instance)
+        if attrs.has_key('password'):
+            user.set_password(attrs['password'])
+        return user
 
     def validate_mobile_no(self, attrs, source):
         value = attrs[source]
