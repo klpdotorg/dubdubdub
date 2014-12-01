@@ -16,6 +16,7 @@
                 'youtube_url': $('#youtubeURL'),
                 'image': $('#image')
             };
+
             $('#image').imagePreview();
             klp.utils.populateForm(fields, data);
 

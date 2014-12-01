@@ -143,7 +143,10 @@
                 if ($field.is('[data-type=image]')) {
                     if (data[key]) {
                         var $imagePreview = $field.parent().find('.imagePreview');
-                        $imagePreview.attr("src", data[key]);
+
+                        //FIXME: avoid hard-coding "/media/", get from settings or so
+                        var imageSrc = "/media/" + data[key];
+                        $imagePreview.attr("src", imageSrc);
                     }
                 } else {    
                     $field.val(data[key]);
@@ -159,7 +162,10 @@
                     data[key] = $field.is(":checked");
                 } else if ($field.is('[data-type=image]')) {
                     var imageData = $field.parent().find('.imagePreview').attr('src');
-                    data[key] = imageData;
+
+                    //remove first part of b64data
+                    var fileData = imageData.split(",")[1];
+                    data[key] = fileData;
                 } else {
                     data[key] = fields[key].val();
                 }

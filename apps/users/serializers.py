@@ -6,6 +6,7 @@ from .models import User, Organization, UserOrganization, VolunteerActivity,\
 from schools.serializers import SchoolListSerializer
 from django.contrib.auth import login, authenticate, logout
 from common.serializers import KLPSerializer
+from drf_extra_fields.fields import Base64ImageField
 
 
 class OrganizationBasicSerializer(serializers.ModelSerializer):
@@ -125,7 +126,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    image = Base64ImageField(required=False)
     token = serializers.Field(source='get_token')
     volunteer_activities = UserVolunteerActivityNestedSerializer(
         source='uservolunteeractivity_set',
@@ -160,7 +161,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
                   'last_name', 'password', 'opted_email', 'token', 'volunteer_activities',
-                  'organizations', 'about', 'twitter_handle', 'fb_url', 
+                  'image', 'organizations', 'about', 'twitter_handle', 'fb_url', 
                   'website', 'photos_url', 'youtube_url',)
         write_only_fields = ('password',)
 
