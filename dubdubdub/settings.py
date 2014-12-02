@@ -24,7 +24,7 @@ DATABASES = {
 EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
-#TEST_RUNNER='django.test.runner.DiscoverRunner'
+# TEST_RUNNER='django.test.runner.DiscoverRunner'
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.klp.org.in']
@@ -84,9 +84,9 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 
-    #compressor finder:
+    # compressor finder:
     'compressor.finders.CompressorFinder',
 )
 
@@ -120,7 +120,7 @@ except NameError:
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
@@ -154,13 +154,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # third party
-    #'south',
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
-    # 'debug_toolbar',
-    #'raven.contrib.django.raven_compat',
 
     # in-project
     'schools',
@@ -174,19 +171,17 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-#DATADUMP_ROOT = os.path.join(PROJECT_ROOT, 'data')
-
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 
 AUTH_USER_MODEL = 'users.User'
-#AUTHENTICATION_BACKENDS = ('account.backends.ModelEmailBackend', )
-#LOGIN_URL = '/login/'
-#LOGIN_REDIRECT_URL = '/'
+# AUTHENTICATION_BACKENDS = ('account.backends.ModelEmailBackend', )
+# LOGIN_URL = '/login/'
+# LOGIN_REDIRECT_URL = '/'
 
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -267,6 +262,10 @@ TESTS_SCHOOLS_INPUT = {
 }
 
 BLOG_FEED_URL = 'http://blog.klp.org.in/feeds/posts/default?alt=json'
+
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'KLP Admin',
+}
 
 try:
     from local_settings import *
