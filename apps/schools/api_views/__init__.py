@@ -26,7 +26,8 @@ class OmniSearch(KLPAPIView):
 
     def get(self, request, format=None):
         response = {
-            'schools': [],
+            'pre_schools': [],
+            'primary_schools': [],
             'boundaries': [],
             'assemblies': [],
             'parliaments': [],
@@ -46,21 +47,31 @@ class OmniSearch(KLPAPIView):
                 'error': 'A text must be provided to search'
             }, status=404)
 
-        response['schools'] = SchoolListSerializer(
+        schools = SchoolListSerializer(
             School.objects.filter(
-                Q(name__icontains=text) | Q(id__contains=text) | Q(dise_info__dise_code__contains=text),
+                (Q(name__icontains=text) | Q(id__contains=text)
+                    | Q(dise_info__dise_code__contains=text)),
                 Q(status=2),
-                Q(instcoord__coord__isnull=False)
+                Q(instcoord__coord__isnull=False),
             ).select_related(
                 'instcoord',
                 'schooldetails__type',
                 'address'
             ).prefetch_related(
                 'schooldetails'
-            )[:10],
+            )[:20],
             many=True,
             context=context
         ).data
+
+        response['pre_schools'] = []
+        response['primary_schools'] = []
+
+        for school in schools:
+            if school['type']['name'] == 'PreSchool':
+                response['pre_schools'].append(school)
+            elif school['type']['name'] == 'Primary School':
+                response['primary_schools'].append(school)
 
         response['boundaries'] = BoundarySerializer(
             Boundary.objects.filter(
