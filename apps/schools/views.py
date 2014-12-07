@@ -19,7 +19,7 @@ class SchoolPageView(DetailView):
 
         #FIXME: there really should be a better way of handling school / preschool
         #Ideally, this would be better naming of "Boundary Type" and then just use that
-        school_type = 'School' if school.schooldetails.type.id == 1 else 'Preschool'
+        school_type = school.schooldetails.type.name
         context['breadcrumbs'] = [
             {
                 'url': reverse('map'),
@@ -37,4 +37,3 @@ def blog_feed(request):
     url = settings.BLOG_FEED_URL
     json = urllib2.urlopen(url).read()
     return HttpResponse(json)
-
