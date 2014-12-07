@@ -1,3 +1,6 @@
+DROP MATERIALIZED VIEW mvw_assembly;
+DROP MATERIALIZED VIEW mvw_parliament;
+DROP MATERIALIZED VIEW mvw_postal;
 DROP MATERIALIZED VIEW mvw_boundary_primary;
 DROP MATERIALIZED VIEW mvw_school_details;
 DROP MATERIALIZED VIEW mvw_electedrep_master;

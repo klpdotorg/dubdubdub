@@ -152,7 +152,7 @@ class Command(BaseCommand):
                 parent=district
             )
         except Boundary.DoesNotExist:
-            print 'Creating new block: %s' % data.get('klp_block')
+            print 'Creating new admin2: %s' % data.get('klp_block')
             admin2 = Boundary(
                 name=data.get('klp_block'),
                 hierarchy_id=hierarchies['block' if type_id == 1 else 'project'],
@@ -170,7 +170,7 @@ class Command(BaseCommand):
                 parent=admin2
             )
         except Boundary.DoesNotExist:
-            print 'Creating new cluster: %s' % data.get('klp_cluster')
+            print 'Creating new admin3: %s' % data.get('klp_cluster')
             admin3 = Boundary(
                 name=data.get('klp_cluster'),
                 hierarchy_id=hierarchies['cluster' if type_id == 1 else 'circle'],

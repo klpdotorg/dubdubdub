@@ -11,12 +11,14 @@ class ElectedrepMaster(BaseModel):
     The view is from the db electrep_new
     '''
     id = models.IntegerField(primary_key=True)
-    parent = models.ForeignKey('ElectedrepMaster', db_column='parent',
-                               blank=True, null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey(
+        'ElectedrepMaster', db_column='parent',
+        blank=True, null=True, on_delete=models.SET_NULL
+    )
     elec_comm_code = models.IntegerField(blank=True, null=True)
     const_ward_name = models.CharField(max_length=300, blank=True)
 
-    #This field type is a guess.
+    # This field type is a guess.
     const_ward_type = models.TextField(blank=True)
     neighbours = models.CharField(max_length=100, blank=True)
     current_elected_rep = models.CharField(max_length=300, blank=True)
