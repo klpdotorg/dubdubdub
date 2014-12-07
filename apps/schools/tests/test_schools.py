@@ -74,7 +74,13 @@ class SchoolsApiTestCase(TestCase):
     '''
 
     def test_api_schools_info(self):
-        pass
+        query_url = "/api/v1/schools/info"
+        response = self.client.get(query_url)
+        status_code = response.status_code
+        self.assertEqual(
+            status_code, 200,
+            "schools info status code is %s" % status_code
+        )
 
     def test_api_schools_info_geometry(self):
 
@@ -130,7 +136,7 @@ class SchoolsApiTestCase(TestCase):
 
     def test_api_school_info_geometry(self):
 
-        #schools_base_url = "/api/v1/schools/school/"
+        # schools_base_url = "/api/v1/schools/school/"
         query_url = self.schools_base_url + self.school_info_id + "/?geometry=yes"
         # print "Testing school info API -- " + query_url
         response = self.client.get(query_url)
@@ -143,7 +149,7 @@ class SchoolsApiTestCase(TestCase):
         self.assertTrue('geometry' in data)
 
     def test_api_school_demographics(self):
-        #schools_base_url = "/api/v1/schools/school/"
+        # schools_base_url = "/api/v1/schools/school/"
         query_url = self.schools_base_url + self.school_demographics_id + "/demographics"
         # print "Testing school demographics API -- " + query_url
         response = self.client.get(query_url)
