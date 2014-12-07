@@ -16,14 +16,22 @@ class SchoolsApiTestCase(TestCase):
         self.schools_lib_id = settings.TESTS_SCHOOLS_INPUT['SCHOOLS_LIB_ID']
         self.schools_lib_id2 = settings.TESTS_SCHOOLS_INPUT['SCHOOLS_LIB_ID2']
         self.school_info_id = settings.TESTS_SCHOOLS_INPUT['SCHOOL_INFO_ID']
-        self.school_demographics_id=settings.TESTS_SCHOOLS_INPUT['SCHOOL_DEMOGRAPHICS_ID']
+        self.school_demographics_id = settings.TESTS_SCHOOLS_INPUT['SCHOOL_DEMOGRAPHICS_ID']
         self.school_programmes_id = settings.TESTS_SCHOOLS_INPUT['SCHOOL_PROGRAMMES_ID']
         self.school_finance_id = settings.TESTS_SCHOOLS_INPUT['SCHOOL_FINANCE_ID']
         self.school_infra_id = settings.TESTS_SCHOOLS_INPUT['SCHOOL_INFRA_ID']
 
     def test_passing_test(self):
         x = 2
-        self.assertEquals(x, 2, "2 is equal to 2")
+        self.assertEquals(x, 2, "2 is not equal to 2")
+
+    def test_omni_search(self):
+        query_url = '/api/v1/search?text=pura&geometry=yes'
+        response = self.client.get(query_url)
+        self.assertEqual(
+            response.status_code, 200,
+            "Omni search returned %s" % response.status_code
+        )
 
     def test_api_schools_list_geometry(self):
 
@@ -31,22 +39,31 @@ class SchoolsApiTestCase(TestCase):
         query_url = base_url + '''bbox=77.54537736775214,12.950457093960514,
             77.61934126017755,13.022529216896507&geometry=yes'''
         response = self.client.get(query_url)
-        self.assertEqual(response.status_code, 200,
-                         "schools list status code is 200")
+
+        self.assertEqual(
+            response.status_code, 200,
+            "schools list status code is %s" % response.status_code
+        )
+
         results = json.loads(response.content)
-        self.assertEqual(len(results['features']), 50,
-                         "got 50 schools as first page")
-        sample_school = results['features'][0]
-        self.assertTrue('id' in sample_school['properties'],
-                        "has a property called id")
-        self.assertTrue('name' in sample_school['properties'],
-                        "has a property called name")
+        result_length = len(results['features'])
+        self.assertEqual(
+            result_length, 50,
+            "got %s schools as first page" % result_length)
+
+        if result_length > 0:
+            sample_school = results['features'][0]
+            self.assertTrue('id' in sample_school['properties'],
+                            "has no a property called id")
+            self.assertTrue('name' in sample_school['properties'],
+                            "has no a property called name")
+
         base_response = self.client.get(base_url)
         base_results = json.loads(base_response.content)
         base_count = base_results['count']
         query_count = results['count']
         self.assertTrue(base_count > query_count,
-                        "Total results > results within bbox")
+                        "Total results less than results within bbox")
 
     '''
     def test_api_schools_list_csv(self):
@@ -105,9 +122,9 @@ class SchoolsApiTestCase(TestCase):
 
     def test_api_school_info_badid(self):
         query_url = self.schools_base_url + "badidea" + "?geometry=yes"
-        print "Testing school info API -- " + query_url
+        # print "Testing school info API -- " + query_url
         response = self.client.get(query_url)
-        print response.status_code
+        # print response.status_code
         self.assertEqual(response.status_code, 404,
                          "school info status code is 404")
 
@@ -115,9 +132,9 @@ class SchoolsApiTestCase(TestCase):
 
         #schools_base_url = "/api/v1/schools/school/"
         query_url = self.schools_base_url + self.school_info_id + "/?geometry=yes"
-        print "Testing school info API -- " + query_url
+        # print "Testing school info API -- " + query_url
         response = self.client.get(query_url)
-        print response.status_code
+        # print response.status_code
         self.assertEqual(response.status_code, 200,
                          "school info status code is 200")
         data = json.loads(response.content)
@@ -128,9 +145,9 @@ class SchoolsApiTestCase(TestCase):
     def test_api_school_demographics(self):
         #schools_base_url = "/api/v1/schools/school/"
         query_url = self.schools_base_url + self.school_demographics_id + "/demographics"
-        print "Testing school demographics API -- " + query_url
+        # print "Testing school demographics API -- " + query_url
         response = self.client.get(query_url)
-        print response.status_code
+        # print response.status_code
         self.assertEqual(response.status_code, 200,
                          "school demographics status code is 200")
         data = json.loads(response.content)
@@ -157,9 +174,9 @@ class SchoolsApiTestCase(TestCase):
     def test_api_school_programmes(self):
 
         query_url = self.schools_base_url + self.school_programmes_id + "/programmes"
-        print "Testing school programmes API -- " + query_url
+        # print "Testing school programmes API -- " + query_url
         response = self.client.get(query_url)
-        print response.status_code
+        # print response.status_code
         self.assertEqual(response.status_code, 200,
                          "school programmes status code is 200")
         data = json.loads(response.content)
@@ -174,9 +191,9 @@ class SchoolsApiTestCase(TestCase):
 
         query_url = self.schools_base_url + self.school_finance_id + "/finance"
 
-        print "Testing schools finance API -- " + query_url
+        # print "Testing schools finance API -- " + query_url
         response=self.client.get(query_url)
-        print response.status_code
+        # print response.status_code
         self.assertEqual(response.status_code,200,"school finance status code is 200")
         data = json.loads(response.content)
         self.assertEqual(data['id'],long(self.school_finance_id),"school id is 4708")
@@ -193,7 +210,7 @@ class SchoolsApiTestCase(TestCase):
     def test_api_school_infra(self):
 
         query_url = self.schools_base_url + self.school_infra_id + "/infrastructure"
-        print "Testing schools infrastructure API -- " + query_url
+        # print "Testing schools infrastructure API -- " + query_url
         response=self.client.get(query_url)
         self.assertEqual(response.status_code,200,"school infra status code is 200")
         data = json.loads(response.content)
