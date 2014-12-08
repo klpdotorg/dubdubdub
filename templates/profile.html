@@ -23,11 +23,52 @@
 					<a href="/profile/{{ object.id }}/edit" class="button-hollow mt-0" id="editProfileBtn" style="display:none;">Edit Profile</a>
 				</div>
 				<div class="clr"></div>
-				<!--
 				<p class="profile-description">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+					{{ about }}
+					{% if object.has_links %}
+					<div>
+						<span class="bold">Links:</span>
+						<ul>
+							{% if object.twitter_handle %}
+							<li>
+								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank">
+									Twitter
+								</a>
+							</li>
+							{% endif %}
+							{% if object.fb_url %}
+							<li>
+								<a href="{{ object.fb_url }}" target="_blank">
+									Facebook
+								</a>
+							</li>
+							{% endif %}
+							{% if object.website %}
+							<li>
+								<a href="{{ object.website }}" target="_blank">
+									Website
+								</a>
+							</li>
+							{% endif %}
+							{% if object.photos_url %}
+							<li>
+								<a href="{{ object.photos_url }}" target="_blank">
+									Photos
+								</a>
+							</li>
+							{% endif %}
+							{% if object.youtube_url %}
+							<li>
+								<a href="{{ object.youtube_url }}" target="_blank">
+									Youtube
+								</a>
+							</li>
+							{% endif %}
+						</ul>
+
+					</div>
+					{% endif %}
 				</p>
-				-->
 			</div>
 			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
 				<div class="profile-title bold uppercase">Activities</div>
