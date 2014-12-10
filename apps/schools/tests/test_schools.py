@@ -135,34 +135,51 @@ class SchoolsApiTestCase(TestCase):
                          "school info status code is 404")
 
     def test_api_school_info_geometry(self):
-
         # schools_base_url = "/api/v1/schools/school/"
-        query_url = self.schools_base_url + self.school_info_id + "/?geometry=yes"
+        query_url = ''.join([
+            self.schools_base_url, self.school_info_id, "/?geometry=yes"
+        ])
         # print "Testing school info API -- " + query_url
         response = self.client.get(query_url)
         # print response.status_code
-        self.assertEqual(response.status_code, 200,
-                         "school info status code is 200")
+        self.assertEqual(
+            response.status_code, 200,
+            "school info status code is %d" % response.status_code
+        )
         data = json.loads(response.content)
         school_id = data['properties']['id']
-        self.assertEqual(school_id, long(self.school_info_id), "school id is 33312")
+        self.assertEqual(
+            school_id, int(self.school_info_id),
+            "school id is not %s" % self.school_info_id
+        )
         self.assertTrue('geometry' in data)
 
     def test_api_school_demographics(self):
         # schools_base_url = "/api/v1/schools/school/"
-        query_url = self.schools_base_url + self.school_demographics_id + "/demographics"
+        query_url = ''.join([
+            self.schools_base_url, self.school_demographics_id,
+            "/demographics"
+        ])
         # print "Testing school demographics API -- " + query_url
         response = self.client.get(query_url)
+
         # print response.status_code
-        self.assertEqual(response.status_code, 200,
-                         "school demographics status code is 200")
+        self.assertEqual(
+            response.status_code, 200,
+            "school demographics status code is %d" % response.status_code
+        )
+
         data = json.loads(response.content)
         school_id = data['id']
-        self.assertEqual(school_id, long(self.school_demographics_id), "school id is 33312")
-        num_boys=data['num_boys']
+        self.assertEqual(
+            school_id, int(self.school_demographics_id),
+            "school id is not %s" % self.school_demographics_id
+        )
+
+        num_boys = data['num_boys']
         self.assertFalse('geometry' in data)
         self.assertTrue('num_boys' in data, "has a property called num_boys")
-        #Assert that we have some value being returned for num_boys and it is not null
+        # Assert that we have some value being returned for num_boys and it is not null
         self.assertTrue(num_boys > 0)
         self.assertTrue('num_girls' in data, "has a property called num_girls")
         self.assertTrue(data['num_girls'] > 0)

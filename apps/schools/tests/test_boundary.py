@@ -22,11 +22,11 @@ class BoundaryApiTestCase(TestCase):
         self.assertTrue('geometry' in sample_district,
                         "has geometry key")
         self.assertTrue('id' in sample_district['properties'],
-                        "has a property called id")
+                        "has no property called id")
         self.assertTrue('name' in sample_district['properties'],
-                        "has a property called name")
+                        "has no property called name")
         self.assertTrue('type' in sample_district['properties'],
-                        "has a property called type")
+                        "has no property called type")
 
     def test_api_blocks_schools(self):
         # print "Testing blocks within districts..."
@@ -43,8 +43,8 @@ class BoundaryApiTestCase(TestCase):
         self.assertTrue('geometry' in sample_district,
                         "has geometry key")
         self.assertTrue('id' in sample_district['properties'],
-                        "has a property called id")
+                        "has no property called id")
         self.assertTrue('name' in sample_district['properties'],
-                        "has a property called name")
+                        "has no property called name")
         self.assertTrue('type' in sample_district['properties'],
-                        "has a property called type")
+                        "has no property called type")
