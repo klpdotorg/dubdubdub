@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
 
     # in-project
+    'common',
     'schools',
     'users',
     'stories',
