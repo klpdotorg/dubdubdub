@@ -20,29 +20,38 @@ class Command(BaseCommand):
             sane, message = self.sanity_check(args)
             if sane:
                 print message
-                dates = get_dates(args)
+                dates = self.get_dates(args)
             else:
                 print message
                 return
         else:
-            today = timezone.now().date().strftime("%m/%d/%Y")
-            source = Source.objects.get(name = "ivrs")
-            success, json_list = self.fetch_data(today)
+            dates = [timezone.now().date().strftime("%m/%d/%Y")]
+
+        source = Source.objects.get(name = "ivrs")
+        for date in dates:
+            success, json_list = self.fetch_data(date)
             if success:
                 for json in json_list:
                     self.process_json(source, json)
             else:
                 return
 
+    def get_dates(self, args):
+        days = args[0].split(",")
+        month = args[1]
+        year = args[2]
+        dates = [month+"/"+day+"/"+year for day in days]
+        return dates
+
     def sanity_check(self, args):
         if len(args) < 3:
             return (False, "Usage is $./manage.py fetchivrs [date,date,date month year]")
         else:
 
-            dates = args[0].split(",")
-            for date in dates:
-                if int(date) not in range(1,32):
-                    return (False, "Please enter a valid date in between 1 and 31")
+            days = args[0].split(",")
+            for day in days:
+                if int(day) not in range(1,32):
+                    return (False, "Please enter a valid day in between 1 and 31")
 
             month = args[1]
             if int(month) not in range(1,13):
@@ -55,7 +64,6 @@ class Command(BaseCommand):
                 return (False, "Please enter a valid year. Not the future")
 
         return (True, "Parameters accepted. Commencing data fetch")
-
 
     def process_json(self, source, json):
         date = json['Date & Time']
