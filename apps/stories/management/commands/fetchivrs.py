@@ -22,6 +22,7 @@ class Command(BaseCommand):
             today = timezone.now().date().strftime("%m/%d/%Y")
             source = Source.objects.get(name = "ivrs")
             json_list = self.fetch_data(today)
+            print json_list
             for json in json_list:
                 self.process_json(source, json)
 
@@ -31,23 +32,29 @@ class Command(BaseCommand):
         telephone = json['Mobile Number']
         school = School.objects.get(id = school_id)
         question_group = Questiongroup.objects.get(source__name = "ivrs")
+
         story, created = Story.objects.get_or_create(
             school = school,
             group = question_group,
             date = date,
             telephone = telephone,
         )
-        for i in range(1, 7):
-            question = Question.objects.get(
-                school_type = school.admin3.type,
-                questiongroup__source = source,
-                questiongroupquestions__sequence = i
-            )
-            answer = Answer.objects.get_or_create(
-                story = story,
-                question = question,
-                text = json[str(i)]
-            )
+
+        if created:
+            for i in range(1, 7):
+                question = Question.objects.get(
+                    school_type = school.admin3.type,
+                    questiongroup__source = source,
+                    questiongroupquestions__sequence = i
+                )
+                answer = Answer.objects.get_or_create(
+                    story = story,
+                    question = question,
+                    text = json[str(i)]
+                )
+        else:
+            print "Date %s for school %s already processed" % (date, school)
+            return
 
     def fetch_data(self, date):
         url = "http://89.145.83.72/akshara/json_feeds.php?fromdate=%s&enddate=%s" \
