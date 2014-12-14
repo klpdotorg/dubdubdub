@@ -65,6 +65,7 @@ class Command(BaseCommand):
 
         return (True, "Parameters accepted. Commencing data fetch")
 
+
     def process_json(self, source, json):
         date = json['Date & Time']
         school_id = json['School ID']
