@@ -20,17 +20,19 @@ class Command(BaseCommand):
             sane, message = self.sanity_check(args)
             if sane:
                 print message
-                #dates = get_dates(args)
+                dates = get_dates(args)
             else:
                 print message
                 return
         else:
             today = timezone.now().date().strftime("%m/%d/%Y")
             source = Source.objects.get(name = "ivrs")
-            json_list = self.fetch_data(today)
-            print json_list
-            for json in json_list:
-                self.process_json(source, json)
+            success, json_list = self.fetch_data(today)
+            if success:
+                for json in json_list:
+                    self.process_json(source, json)
+            else:
+                return
 
     def sanity_check(self, args):
         if len(args) < 3:
@@ -88,5 +90,9 @@ class Command(BaseCommand):
     def fetch_data(self, date):
         url = "http://89.145.83.72/akshara/json_feeds.php?fromdate=%s&enddate=%s" \
               % (date, date)
-        response = requests.get(url)
-        return response.json()
+        try:
+            response = requests.get(url)
+            return (True, response.json())
+        except Exception as ex:
+            print ex, type(ex)
+            return (False, None)
