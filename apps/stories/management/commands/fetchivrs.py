@@ -17,7 +17,13 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         if args:
-            pass
+            sane, message = self.sanity_check(args)
+            if sane:
+                print message
+                #dates = get_dates(args)
+            else:
+                print message
+                return
         else:
             today = timezone.now().date().strftime("%m/%d/%Y")
             source = Source.objects.get(name = "ivrs")
@@ -25,6 +31,29 @@ class Command(BaseCommand):
             print json_list
             for json in json_list:
                 self.process_json(source, json)
+
+    def sanity_check(self, args):
+        if len(args) < 3:
+            return (False, "Usage is $./manage.py fetchivrs [date,date,date month year]")
+        else:
+
+            dates = args[0].split(",")
+            for date in dates:
+                if int(date) not in range(1,32):
+                    return (False, "Please enter a valid date in between 1 and 31")
+
+            month = args[1]
+            if int(month) not in range(1,13):
+                return (False, "Please enter a valid month in between 1 and 12")
+
+            year = args[2]
+            if len(year) != 4:
+                return (False, "Please enter a valid date of the format 2014")
+            elif int(year) > timezone.now().year:
+                return (False, "Please enter a valid year. Not the future")
+
+        return (True, "Parameters accepted. Commencing data fetch")
+
 
     def process_json(self, source, json):
         date = json['Date & Time']
