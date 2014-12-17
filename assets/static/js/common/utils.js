@@ -162,10 +162,13 @@
                     data[key] = $field.is(":checked");
                 } else if ($field.is('[data-type=image]')) {
                     var imageData = $field.parent().find('.imagePreview').attr('src');
-
-                    //remove first part of b64data
-                    var fileData = imageData.split(",")[1];
-                    data[key] = fileData;
+                    if (imageData) {
+                        //remove first part of b64data
+                        var fileData = imageData.split(",")[1];
+                        data[key] = fileData;
+                    } else {
+                        data[key] = ''; //FIXME: UGLY!!
+                    }
                 } else {
                     data[key] = fields[key].val();
                 }
