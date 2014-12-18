@@ -6,6 +6,8 @@ from schools.serializers import SchoolDetailsSerializer, BoundarySerializer,\
 
 
 class Admin1OfSchool(KLPDetailAPIView):
+    """Returns the district for the given school
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -15,6 +17,8 @@ class Admin1OfSchool(KLPDetailAPIView):
 
 
 class Admin2OfSchool(KLPDetailAPIView):
+    """Returns the block/project for the given school
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -24,6 +28,8 @@ class Admin2OfSchool(KLPDetailAPIView):
 
 
 class Admin3OfSchool(KLPDetailAPIView):
+    """Returns the cluster/circle for the given school
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -33,6 +39,8 @@ class Admin3OfSchool(KLPDetailAPIView):
 
 
 class PincodeOfSchool(KLPDetailAPIView):
+    """Returns the pincode for the given school
+    """
     serializer_class = PincodeSerializer
 
     def get_object(self):
@@ -41,6 +49,8 @@ class PincodeOfSchool(KLPDetailAPIView):
 
 
 class AssemblyOfSchool(KLPDetailAPIView):
+    """Returns the assembly level for the given school
+    """
     serializer_class = AssemblySerializer
 
     def get_object(self):
@@ -49,6 +59,8 @@ class AssemblyOfSchool(KLPDetailAPIView):
 
 
 class ParliamentOfSchool(KLPDetailAPIView):
+    """Returns the parliamentary level for the given school
+    """
     serializer_class = ParliamentSerializer
 
     def get_object(self):
