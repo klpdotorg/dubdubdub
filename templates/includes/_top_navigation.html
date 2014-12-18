@@ -31,7 +31,7 @@
     -->
 
     <li class="database">
-        <a href="/listFiles/2" title="">Data</a>
+        <a href="{% url 'data' %}" title="">Data</a>
         <ul>
             <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
             <li><a href="{% url 'data' %}" title=""><span></span>Data</a></li>
@@ -40,13 +40,13 @@
         </ul>
     </li>
     <li class="reports">
-        <a href="/reports" title="">Reports</a>
+        <a href="{% url 'reports' %}" title="">Reports</a>
         <ul>
             <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
             <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
             <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
             <li><a href="http://ivrs.klp.org.in/" target="_blank" title=""><span></span>IVRS</a></li>
-            <li><a href="/text/reports" title=""><span></span>Other Reports</a></li>
+            <li><a href="{% url 'reports' %}" title=""><span></span>Other Reports</a></li>
         </ul>
     </li>
     <li class="about">
