@@ -19,7 +19,10 @@
 
 		li{
 			display:block; float: left;
-			margin: 0; padding: 0; width: 137px; height:50px;
+			margin: 0; padding: 0; 
+			width: 137px; //fallback
+			//width: calc(100% / 7);
+			height:50px;
 
 			a{
 				display:block; text-align: center; line-height: 45px;
