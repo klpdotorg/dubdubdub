@@ -18,7 +18,9 @@
 		width:100%; margin: 0; padding: 0;
 
 		li{
-			display:block; float: left;
+			display: inline-block; 
+			vertical-align: top;
+			//float: left;
 			margin: 0; padding: 0; 
 			width: 137px; //fallback
 			//width: calc(100% / 7);
@@ -226,6 +228,16 @@
 	}
 }
 
+#navigation {
+	text-align: center;
+}
+
+@include if-device(phone-tablet) {
+	#navigation {
+		text-align: left;
+	}
+}
+
 @mixin phone-tablet-top-nav_ul_li($color) {
 	color:$color; border-left: 3px solid $color;
 }
@@ -242,7 +254,7 @@
 			@include box-shadow(0 2px 2px 0, rgba(77,77,77,0.30));
 
 			li{
-				float: none;  padding: 0; width: auto !important; height: auto;
+				float: none;  padding: 0; width: auto !important; height: auto; display: block;
 				padding-left: 15px; margin: 10px 0; 
 
 				&:hover a{
