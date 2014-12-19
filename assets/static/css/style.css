@@ -2733,8 +2733,8 @@ a {
     .top-nav ul:after {
       clear: both; }
     .top-nav ul li {
-      display: block;
-      float: left;
+      display: inline-block;
+      vertical-align: top;
       margin: 0;
       padding: 0;
       width: 137px;
@@ -2846,7 +2846,7 @@ a {
     .top-nav ul li.database ul li:hover a span {
       border-left: 2px solid #25b3b6; }
     .top-nav ul li.reports ul li:hover a span {
-      border-left: 2px solid #25b3b6; }
+      border-left: 2px solid #7676bc; }
     .top-nav ul li.about ul li:hover a span {
       border-left: 2px solid #cb0012; }
 
@@ -2914,6 +2914,12 @@ a {
   .top-nav.home ul li.about ul li:hover a span {
     border-left: 2px solid #cb0012; }
 
+#navigation {
+  text-align: center; }
+
+@media screen and (max-width: 979px), screen and (max-width: 979px) and (-webkit-min-device-pixel-ratio: 1.3) {
+  #navigation {
+    text-align: left; } }
 @media screen and (max-width: 979px), screen and (max-width: 979px) and (-webkit-min-device-pixel-ratio: 1.3) {
   .top-nav.home {
     position: absolute;
@@ -2941,6 +2947,7 @@ a {
       padding: 0;
       width: auto !important;
       height: auto;
+      display: block;
       padding-left: 15px;
       margin: 10px 0; }
       .top-nav ul li:hover a, .top-nav.home ul li:hover a {

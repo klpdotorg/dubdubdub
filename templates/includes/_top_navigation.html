@@ -4,26 +4,21 @@
         <a href="/">
             <h1>Karnataka Learning Partnership</h1>
         </a>
-    </li>
     {% endif %}
     <li class="school_map">
         <a href="{% url 'map' %}" title="">School Map</a>
-    </li>
     <li class="programmes">
         <a href="{% url 'reading_programme' %}" title="">Programmes</a>
         <ul>
             <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
             <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
         </ul>
-    </li>
     <li class="volunteer phn-tab-hide">
         <!-- REFER to dubdubdub-skin template before adding donate link -->
         <a href="{% url 'volunteer' %}" title="">Volunteer</a>
-    </li>
 
     <li class="volunteer hide phn-tab-block">
         <a href="{% url 'volunteer' %}" title="">Volunteer</a>
-    </li>
     <!--
     <li class="volunteer hide phn-tab-block">
         <a href="donation.php" title="">Donate</a>
@@ -38,7 +33,6 @@
             <li><a href="{% url 'django.swagger.base.view' %}" title=""><span></span>API</a></li>
             <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
         </ul>
-    </li>
     <li class="reports">
         <a href="{% url 'reports' %}" title="">Reports</a>
         <ul>
@@ -48,7 +42,6 @@
             <li><a href="http://ivrs.klp.org.in/" target="_blank" title=""><span></span>IVRS</a></li>
             <li><a href="{% url 'reports' %}" title=""><span></span>Other Reports</a></li>
         </ul>
-    </li>
     <li class="about">
         <a href="{% url 'aboutus' %}" title="">About</a>
         <ul>
@@ -56,5 +49,4 @@
             <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
             <li><a href="{% url 'disclaimer' %}" title=""><span></span>Disclaimer</a></li>
         </ul>
-    </li>
 </ul>
