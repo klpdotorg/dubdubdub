@@ -86,6 +86,17 @@ class UsersApiTestCase(APITestCase):
         print 'Status code:' + str(response.status_code) + '; Expected: ' + str(status.HTTP_200_OK)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+        # Edit Profile, POST shouldn't work
+        response = self.client.post(self.profilesUrl, {'about': 'foobar'})
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code)
+        # Patch should work
+        response = self.client.patch(self.profilesUrl, {'about': 'foobar'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.status_code)
+        # verify edit
+        response = self.client.get(self.profilesUrl)
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.status_code)
+        self.assertEqual(response.data['about'], 'foobar', response.data)
+
         # Test logout
         response = self.client.get(self.logoutUrl)
         print 'GET ' + self.logoutUrl

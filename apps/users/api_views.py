@@ -76,17 +76,12 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     '''
         View to get and update currently logged in user's profile.
     '''
+    allowed_methods = ['GET', 'PATCH']
     serializer_class = UserSerializer
     permission_classes = (IsAdminOrIsSelf, permissions.IsAuthenticated)
 
     def get_object(self):
         return User.objects.get(id=self.request.user.id)
-
-    def post(self, request):
-        '''
-            PATCH requests are made to edit user profile, disallow POST.
-        '''
-        raise MethodNotAllowed("POST")
 
 
 class OtherUserProfileView(generics.RetrieveAPIView):
