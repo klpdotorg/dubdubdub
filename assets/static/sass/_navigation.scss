@@ -128,7 +128,7 @@
 			@include top-nav_ul_li_ul_li_hover($color_database);
 		}
 		li.reports ul li:hover a span {
-			@include top-nav_ul_li_ul_li_hover($color_database);
+			@include top-nav_ul_li_ul_li_hover($color_reports);
 		}
 		li.about ul li:hover a span {
 			@include top-nav_ul_li_ul_li_hover($color_about);
