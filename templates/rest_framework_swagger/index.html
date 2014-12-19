@@ -31,6 +31,14 @@
           console.log("Loaded SwaggerUI")
         }
         $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+
+        // deleting not-allowed methods from UI
+        http_methods = ['get', 'post', 'patch', 'put', 'delete']
+        for (var i = http_methods.length - 1; i >= 0; i--) {
+            if (window.swaggerUi.options.supportedSubmitMethods.indexOf(http_methods[i]) == -1) {
+                $('.' + http_methods[i]).remove();
+            }
+        };
       },
       onFailure: function(data) {
         if(console) {
@@ -84,6 +92,8 @@
 
 </div>
 
+<script type="text/javascript">
+</script>
 </body>
 
 </html>

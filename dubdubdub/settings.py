@@ -268,6 +268,10 @@ SUIT_CONFIG = {
     'ADMIN_NAME': 'KLP Admin',
 }
 
+SWAGGER_SETTINGS = {
+    'enabled_methods': ['get', ]
+}
+
 try:
     from local_settings import *
 except ImportError:
