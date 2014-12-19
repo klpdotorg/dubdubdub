@@ -22,6 +22,11 @@ import urlparse
 
 
 class OmniSearch(KLPAPIView):
+    """Omni-search endpoint for plain text search of all the entities
+
+    Keyword arguments:
+    text -- A string to search all kinds of entities for
+    """
     is_omni = True
 
     def get(self, request, format=None):
@@ -127,6 +132,14 @@ class OmniSearch(KLPAPIView):
 
 
 class MergeEndpoints(KLPAPIView):
+    """Merges multiple endpoint outputs
+    E.g. - /merge?endpoints=/schools/school/33312/infrastructure&endpoints=/schools/school/33312/library
+    merges output of both infrastructure and library endpoints and returns a single JSON.
+
+    Keyword arguments:
+    endpoints -- first endpoint
+    endpoints -- second endpoint
+    """
     def get(self, request, format=None):
         endpoints = request.GET.getlist('endpoints', [])
         data = {}
@@ -152,6 +165,8 @@ class MergeEndpoints(KLPAPIView):
 
 @api_view(('GET',))
 def api_root(request, format=None):
+    """Root of all evil
+    """
     return Response({
         'Omni Search': reverse('api_omni_search', request=request,
                                format=format) + "?text=pura",
