@@ -45,6 +45,8 @@ class StoryMetaView(KLPAPIView):
         NO = '0'
         YES = '1'
 
+        source = "ivrs"
+        
         A = '1'
         B = '2'
         C = '3'
