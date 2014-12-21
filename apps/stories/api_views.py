@@ -38,8 +38,6 @@ class StoryMetaView(KLPAPIView):
         source = self.request.QUERY_PARAMS.get('source', None)
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
-
-        source = "ivrs"
         
         A = '1'
         B = '2'
