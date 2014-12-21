@@ -39,6 +39,8 @@ class StoryMetaView(KLPAPIView):
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
 
+        source = "ivrs"
+        
         A = '1'
         B = '2'
         C = '3'
@@ -76,7 +78,7 @@ class StoryMetaView(KLPAPIView):
             [date.split()[0].split("-")[1] for date in pre_school_story_dates]))
         
         response_json['Primary School']['per_month_responses'] = per_month_primary_response
-        response_json['PreSchool']['total_responses'] = per_month_pre_response
+        response_json['PreSchool']['per_month_responses'] = per_month_pre_response
 
         # List of questions and their answer counts
         questions = Question.objects.filter(
@@ -108,10 +110,7 @@ class StoryMetaView(KLPAPIView):
                 j['answers']['C'] = Counter(
                     question.answer_set.all().values_list('text', flat=True))[C]
 
-            if question.school_type.name == "Primary School":
-                response_json['Primary School']['questions'].append(j)
-            else:
-                response_json['PreSchool']['questions'].append(j)
+            response_json[question.school_type.name]['questions'].append(j)
 
         return Response(response_json)
 
