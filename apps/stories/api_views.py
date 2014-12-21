@@ -39,7 +39,6 @@ class StoryMetaView(KLPAPIView):
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
         response_json = {}
-        source = "ivrs"
         question_group = Questiongroup.objects.get(
             source__name=source)
 
