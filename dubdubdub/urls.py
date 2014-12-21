@@ -223,7 +223,7 @@ urlpatterns = patterns('',
         }), name='volunteer_map'),
 
     url('^donate$', DonatePageView.as_view(
-        template_name = 'donate.html',
+        template_name = 'donate/donate.html',
         extra_context={
             'breadcrumbs': [
                 {
@@ -234,7 +234,7 @@ urlpatterns = patterns('',
         }), name='donate'),
 
     url('^donate/requests/', DonateRequestsView.as_view(
-        template_name = 'donate_requests.html'
+        template_name = 'donate/donate_requests.html'
         ), name='donate_requests'),
 
     url(r'^school/(?P<pk>[0-9]+)/$', SchoolPageView.as_view(), name='school_page'),
