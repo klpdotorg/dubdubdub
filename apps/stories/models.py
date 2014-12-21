@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from common.models import BaseModel, GeoBaseModel
+from common.models import BaseModel, GeoBaseModel, TimestampedBaseModel
 from common.utils import send_templated_mail
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.sites.models import Site
-
+from django.utils import timezone
 
 class Answer(models.Model):
     story = models.ForeignKey('Story')
@@ -94,14 +94,20 @@ class Story(models.Model):
     is_verified = models.BooleanField(default=False)
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
+
+    # adding date_of_visit to replace date in future
     date = models.CharField(max_length=50, blank=True)
+    # date_of_visit = models.DateField(auto_now_add=True, default=timezone.now)
+
     telephone = models.CharField(max_length=50, blank=True)
+
+    # inheriting TimestampedBaseModel to deprecate this field in future
     entered_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
     comments = models.CharField(max_length=2000, blank=True)
     sysid = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'stories_story'
         verbose_name_plural = 'Stories'
         ordering = ['-entered_timestamp']
