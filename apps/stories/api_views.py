@@ -172,6 +172,22 @@ class StoriesView(KLPListAPIView):
         elif verified == 'no':
             qset = qset.filter(is_verified=False)
 
+        source = self.request.GET.get('source', '')
+        if source:
+            qset = qset.filter(group__source__name=source)
+
+        admin1 = self.request.GET.get('admin1', '')
+        if admin1:
+            qset = qset.filter(school__schooldetails__admin1=admin1)
+
+        admin2 = self.request.GET.get('admin2', '')
+        if admin2:
+            qset = qset.filter(school__schooldetails__admin2=admin2)
+
+        admin3 = self.request.GET.get('admin3', '')
+        if admin3:
+            qset = qset.filter(school__schooldetails__admin3=admin3)
+
         try:
             limit = int(self.request.GET.get('limit', 10))
         except:
