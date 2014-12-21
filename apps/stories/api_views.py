@@ -97,8 +97,7 @@ class StoryMetaView(KLPAPIView):
             else:
                 response_json['PreSchool'].append(j)
 
-        print response_json
-        return Response("Hello!")
+        return Response(response_json)
 
     def get_count(self, answers, start=None, end=None):
         count = 0
