@@ -38,7 +38,11 @@ class StoryMetaView(KLPAPIView):
         source = self.request.QUERY_PARAMS.get('source', None)
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
+
         response_json = {}
+        response_json['Primary School'] = {}
+        response_json['PreSchool'] = {}
+
         question_group = Questiongroup.objects.get(
             source__name=source)
 
@@ -49,6 +53,9 @@ class StoryMetaView(KLPAPIView):
             group=question_group, school__admin3__type__name="PreSchool").count()
         total_responses = Story.objects.filter(
             group=question_group).count()
+
+        response_json['Primary School']['total_responses'] = total_response_primary
+        response_json['PreSchool']['total_responses'] = total_response_pre
 
         # Number of Responses per month
         primary_school_story_dates = Story.objects.filter(
@@ -61,14 +68,17 @@ class StoryMetaView(KLPAPIView):
             [date.split()[0].split("-")[1] for date in primary_school_story_dates]))
         per_month_pre_response = json.dumps(Counter(
             [date.split()[0].split("-")[1] for date in pre_school_story_dates]))
+        
+        response_json['Primary School']['per_month_responses'] = per_month_primary_response
+        response_json['PreSchool']['total_responses'] = per_month_pre_response
 
         # List of questions and their answer counts
         questions = Question.objects.filter(
             questiongroup__source__name="ivrs"
         )
 
-        response_json['Primary School'] = []
-        response_json['PreSchool'] = []
+        response_json['Primary School']['questions'] = []
+        response_json['PreSchool']['questions'] = []
 
         for question in questions:
             j = {}
@@ -93,9 +103,9 @@ class StoryMetaView(KLPAPIView):
                     question.answer_set.all().values_list('text', flat=True))['3']
 
             if question.school_type.name == "Primary School":
-                response_json['Primary School'].append(j)
+                response_json['Primary School']['questions'].append(j)
             else:
-                response_json['PreSchool'].append(j)
+                response_json['PreSchool']['questions'].append(j)
 
         return Response(response_json)
 
