@@ -44,6 +44,8 @@ class TestAuthenticatedView(APIView):
 
 
 class UsersView(generics.ListCreateAPIView):
+    """Return list of users (available only to admin users)
+    """
     serializer_class = UserSerializer
     paginate_by = 50
     permission_classes = (UserListPermission,)
@@ -73,9 +75,8 @@ class UsersView(generics.ListCreateAPIView):
 
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
-    '''
-        View to get and update currently logged in user's profile.
-    '''
+    """Return profile fields for user matching token provided
+    """
     allowed_methods = ['GET', 'PATCH']
     serializer_class = UserSerializer
     permission_classes = (IsAdminOrIsSelf, permissions.IsAuthenticated)
@@ -85,16 +86,16 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
 
 class OtherUserProfileView(generics.RetrieveAPIView):
-    '''
-        Get basic profile data for other users
-        (To be able to view their profile page, for eg.)
-    '''
+    """Get public profile info for a user, identified by id
+    """
     serializer_class = OtherUserSerializer
     model = User
 
 
 @api_view(['GET'])
 def logout(request):
+    """Logout user, if using session-based auth
+    """
     auth_logout(request)
     return Response({'success': 'User logged out'})
 
@@ -162,14 +163,15 @@ class PasswordChangeView(APIView):
 
 
 class OrganizationsView(generics.ListCreateAPIView):
+    """List organisations in the system
+    """
     serializer_class = OrganizationSerializer
     paginate_by = 50
     permission_classes = (OrganizationsPermission,)
 
     def create(self, request):
-        '''
-            Only allows superusers to create new organizations.
-        '''
+        """Only superusers can create new organisations
+        """
         if not request.user.is_superuser:
             raise PermissionDenied()
         return super(OrganizationsView, self).create(request)
@@ -202,12 +204,16 @@ class OrganizationsView(generics.ListCreateAPIView):
 
 
 class OrganizationView(generics.RetrieveUpdateAPIView):
+    """Details about a single organization
+    """
     serializer_class = OrganizationSerializer
     permission_classes = (OrganizationPermission,)
     model = Organization
 
 
 class OrganizationUsersView(generics.ListCreateAPIView):
+    """List all users associated with an organization
+    """
     serializer_class = OrganizationUserSerializer
     paginate_by = 50
     permission_classes = (OrganizationUsersPermission,)
@@ -234,6 +240,15 @@ class OrganizationUserView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class VolunteerActivitiesView(generics.ListCreateAPIView, KLPListAPIView):
+    """List available volunteer activities
+
+    organization -- organization to filter by (id)
+    type -- type of activity (id)
+    date -- date of activity (YYYY-MM-DD)
+    school -- school where activity is (id)
+    users -- filter by user associated with activity (id)
+    bbox -- bbox filter 
+    """
     serializer_class = VolunteerActivitySerializer
     permission_classes = (VolunteerActivitiesPermission,)
     filter_class = VolunteerActivityFilter
@@ -245,9 +260,14 @@ class VolunteerActivitiesView(generics.ListCreateAPIView, KLPListAPIView):
 
 @api_view(['GET'])
 def volunteer_activity_dates(request):
-    '''
-        Fetches valid volunteer dates, accepts some filters
-    '''
+    """Get valid volunteer activity dates
+
+    school -- school id to filter by
+    type -- type of volunteer activity to filter by
+    organization -- organization to filter by
+
+    Returns an array of valid dates in YYYY-MM-DD format
+    """
     now = datetime.datetime.now()
     #qset = VolunteerActivity.objects.all()
     qset = VolunteerActivity.objects.filter(date__gte=now)
@@ -266,12 +286,16 @@ def volunteer_activity_dates(request):
 
 
 class VolunteerActivityView(generics.RetrieveUpdateDestroyAPIView):
+    """Return details for a single volunteer activity
+    """
     serializer_class = VolunteerActivitySerializer
     permission_classes = (VolunteerActivitiesPermission,)
     model = VolunteerActivity
 
 
 class VolunteerActivityTypesView(generics.ListCreateAPIView):
+    """Return list of volunteer activity types
+    """
     serializer_class = VolunteerActivityTypeSerializer
     paginate_by = 50
     permission_classes = (IsAdminToWrite,)
@@ -287,6 +311,8 @@ class VolunteerActivityTypeView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class VolunteerActivityUsersView(generics.ListCreateAPIView):
+    """List users associated with a volunteer activity
+    """
     serializer_class = UserVolunteerActivitySerializer
     paginate_by = 50
     permission_classes = (permissions.IsAuthenticated,)
@@ -307,13 +333,12 @@ class VolunteerActivityUsersView(generics.ListCreateAPIView):
 
 
 class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
-    '''
-        View to update status of user volunteer activities as well
-        as delete them.
-        Only users with write perms on organization who owns the activity
-        can change status.
-        Only volunteer user can delete.
-    '''
+    """View to update status of user volunteer activities as well 
+    as delete them.
+    Only users with write perms on organization who owns the activity 
+    can change status.
+    Only volunteer user can delete.
+    """
     serializer_class = UserVolunteerActivitySerializer
     #permission_classes = (UserVolunteerActivityPermission,)
 
