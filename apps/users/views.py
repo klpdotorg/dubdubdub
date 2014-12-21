@@ -213,3 +213,29 @@ class DonateRequestsView(StaticPageView):
         else:
             s = "Donate"
         return s
+
+
+class DonationRequestAddPageView(DetailView):
+    model = Organization
+    template_name = 'donate/add.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DonationRequestAddPageView, self).get_context_data(**kwargs)
+        context['action'] = 'Add'
+        context['item_categories'] = DonationItemCategory.objects.all()
+        org = context['object']
+        context['breadcrumbs'] = [
+            {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            },
+            {
+                'url': '/organisation/%d/edit' % (org.id,),
+                'name': 'Edit'
+            },
+            {
+                'url': '/organisation/%d/donation_request' % (org.id,),
+                'name': 'Add Donation Request'
+            },
+        ]
+        return context
