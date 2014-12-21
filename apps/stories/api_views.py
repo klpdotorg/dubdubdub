@@ -5,9 +5,9 @@ from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
 from django.db.models import Q
 
-from schools.models import School
+from schools.models import School, SchoolDetails
 from users.models import User
-from .models import Question,  Story, StoryImage, Answer
+from .models import Question, Story, StoryImage, Answer, Questiongroup
 from .serializers import (SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer)
 
@@ -16,8 +16,10 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
     ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
 
+import json
 import random
 from base64 import b64decode
+from collections import Counter
 from django.core.files.base import ContentFile
 from PIL import Image
 
@@ -31,6 +33,85 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
+class StoryMetaView(KLPAPIView):
+    def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
+        district_id = self.request.QUERY_PARAMS.get('district', None)
+        block_id = self.request.QUERY_PARAMS.get('block', None)
+        response_json = {}
+        source = "ivrs"
+        question_group = Questiongroup.objects.get(
+            source__name=source)
+
+        # Number of Responses
+        total_response_primary = Story.objects.filter(
+            group=question_group, school__admin3__type__name="Primary School").count()
+        total_response_pre = Story.objects.filter(
+            group=question_group, school__admin3__type__name="PreSchool").count()
+        total_responses = Story.objects.filter(
+            group=question_group).count()
+
+        # Number of Responses per month
+        primary_school_story_dates = Story.objects.filter(
+            group=question_group, school__admin3__type__name="Primary School"
+        ).values_list('date', flat=True)
+        pre_school_story_dates = Story.objects.filter(
+            group=question_group, school__admin3__type__name="PreSchool"
+        ).values_list('date', flat=True)
+        per_month_primary_response = json.dumps(Counter(
+            [date.split()[0].split("-")[1] for date in primary_school_story_dates]))
+        per_month_pre_response = json.dumps(Counter(
+            [date.split()[0].split("-")[1] for date in pre_school_story_dates]))
+
+        # List of questions and their answer counts
+        questions = Question.objects.filter(
+            questiongroup__source__name="ivrs"
+        )
+
+        response_json['Primary School'] = []
+        response_json['PreSchool'] = []
+
+        for question in questions:
+            j = {}
+            j['question'] = question.text
+            j['answers'] = {}
+            if question.question_type.name == "checkbox":
+                j['answers']['Yes'] = Counter(
+                    question.answer_set.all().values_list('text', flat=True))['1']
+                j['answers']['No'] = Counter(
+                    question.answer_set.all().values_list('text', flat=True))['0']
+            elif "Approximately how many" in question.text:
+                answers = question.answer_set.all().values_list('text', flat=True)
+                j['answers']['1-30'] = self.get_count(answers, start=0, end=30)
+                j['answers']['31-60'] = self.get_count(answers, start=31, end=60)
+                j['answers']['61+'] = self.get_count(answers, start=61)
+            else:
+                j['answers']['A'] = Counter(
+                    question.answer_set.all().values_list('text', flat=True))['1']
+                j['answers']['B'] = Counter(
+                    question.answer_set.all().values_list('text', flat=True))['2']
+                j['answers']['C'] = Counter(
+                    question.answer_set.all().values_list('text', flat=True))['3']
+
+            if question.school_type.name == "Primary School":
+                response_json['Primary School'].append(j)
+            else:
+                response_json['PreSchool'].append(j)
+
+        print response_json
+        return Response("Hello!")
+
+    def get_count(self, answers, start=None, end=None):
+        count = 0
+        if end:
+            for answer in answers:
+                if int(answer) in range(start, end):
+                    count += 1
+        else:
+            for answer in answers:
+                if int(answer) > start:
+                    count += 1
+        return count
 
 class StoryQuestionsView(KLPDetailAPIView):
     serializer_class = SchoolQuestionsSerializer
