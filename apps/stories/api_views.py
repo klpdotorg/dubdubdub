@@ -45,6 +45,12 @@ class StoryMetaView(KLPAPIView):
         NO = '0'
         YES = '1'
 
+        A = '1'
+        B = '2'
+        C = '3'
+        NO = '0'
+        YES = '1'
+
         response_json = {}
         response_json['Primary School'] = {}
         response_json['PreSchool'] = {}
