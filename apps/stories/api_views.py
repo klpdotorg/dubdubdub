@@ -39,6 +39,12 @@ class StoryMetaView(KLPAPIView):
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
 
+        A = '1'
+        B = '2'
+        C = '3'
+        NO = '0'
+        YES = '1'
+
         response_json = {}
         response_json['Primary School'] = {}
         response_json['PreSchool'] = {}
@@ -86,9 +92,9 @@ class StoryMetaView(KLPAPIView):
             j['answers'] = {}
             if question.question_type.name == "checkbox":
                 j['answers']['Yes'] = Counter(
-                    question.answer_set.all().values_list('text', flat=True))['1']
+                    question.answer_set.all().values_list('text', flat=True))[YES]
                 j['answers']['No'] = Counter(
-                    question.answer_set.all().values_list('text', flat=True))['0']
+                    question.answer_set.all().values_list('text', flat=True))[NO]
             elif "Approximately how many" in question.text:
                 answers = question.answer_set.all().values_list('text', flat=True)
                 j['answers']['1-30'] = self.get_count(answers, start=0, end=30)
@@ -96,11 +102,11 @@ class StoryMetaView(KLPAPIView):
                 j['answers']['61+'] = self.get_count(answers, start=61)
             else:
                 j['answers']['A'] = Counter(
-                    question.answer_set.all().values_list('text', flat=True))['1']
+                    question.answer_set.all().values_list('text', flat=True))[A]
                 j['answers']['B'] = Counter(
-                    question.answer_set.all().values_list('text', flat=True))['2']
+                    question.answer_set.all().values_list('text', flat=True))[B]
                 j['answers']['C'] = Counter(
-                    question.answer_set.all().values_list('text', flat=True))['3']
+                    question.answer_set.all().values_list('text', flat=True))[C]
 
             if question.school_type.name == "Primary School":
                 response_json['Primary School']['questions'].append(j)
