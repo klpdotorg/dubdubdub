@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         s = Source.objects.get(name = "ivrs")
-        q = Questiongroup.objects.get(source__name = "ivrs")
+        q = Questiongroup.objects.get_or_create(source__name = "ivrs")
         b = BoundaryType.objects.all()
         QuestionType.objects.get_or_create(name = "numeric")
         qtypes = QuestionType.objects.all()
