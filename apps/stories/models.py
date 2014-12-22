@@ -87,7 +87,7 @@ class Source(models.Model):
         db_table = 'stories_source'
 
 
-class Story(models.Model):
+class Story(TimestampedBaseModel):
     user = models.ForeignKey('users.User', blank=True, null=True)
     school = models.ForeignKey('schools.School')
     group = models.ForeignKey('Questiongroup')
