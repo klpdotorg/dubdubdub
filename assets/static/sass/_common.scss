@@ -818,6 +818,26 @@ a.external{
 	}
 }
 
+.icon-button-round {
+	color: $color_blue;
+	font-size: 18px;
+	line-height: 1;
+	padding: 5px;
+	border-radius: 50%;
+	border: 2px solid;
+	width: 36px;
+	height: 36px;
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	@include border-box;
+	margin-right: 5px;
+
+	.fa:before {
+		@include dead-center;
+	}
+}
+
 .tabs{
 	margin: 25px 0;
 
