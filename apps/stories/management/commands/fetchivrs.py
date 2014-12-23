@@ -1,5 +1,6 @@
 import json
 import requests
+import datetime
 
 from django.utils import timezone
 from django.db import transaction
@@ -97,11 +98,16 @@ class Command(BaseCommand):
 
         school = School.objects.get(id=school_id)
         question_group = Questiongroup.objects.get(source__name="ivrs")
+        date = datetime.datetime.strptime(
+            date, '%Y-%m-%d %H:%M:%S'
+        )
 
         story, created = Story.objects.get_or_create(
             school=school,
             group=question_group,
-            date=date,
+            date_of_visit=timezone.make_aware(
+                date, timezone.get_current_timezone()
+            ),
             telephone=telephone,
         )
 

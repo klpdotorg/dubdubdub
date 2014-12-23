@@ -97,7 +97,7 @@ class Story(TimestampedBaseModel):
 
     # adding date_of_visit to replace date in future
     date = models.CharField(max_length=50, blank=True)
-    # date_of_visit = models.DateField(auto_now_add=True, default=timezone.now)
+    date_of_visit = models.DateField(auto_now_add=True, default=timezone.now)
 
     telephone = models.CharField(max_length=50, blank=True)
 
