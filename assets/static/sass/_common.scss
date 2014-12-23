@@ -867,6 +867,8 @@ a.external{
 .input{
 	width: 98%; height: 25px; padding: 0 1%;
 	border: 1px solid #CFCFCF; @include border-radius(3px);
+	font-family: $base-font-family;
+
 	&.textarea{
 		width: 98%; height: 80px; color: #000;
 	}

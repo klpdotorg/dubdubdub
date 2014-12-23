@@ -4023,7 +4023,8 @@ a.external {
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
-  border-radius: 3px; }
+  border-radius: 3px;
+  font-family: "Lato", sans-serif; }
   .input.textarea {
     width: 98%;
     height: 80px;
