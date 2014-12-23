@@ -4,6 +4,7 @@
     t.open = function(callback) {
         postLoginCallback = callback;
         klp.openModal = t;
+        $('.modal-overlay').addClass('show');
         $('.js-login-modal').addClass('show');
         showSignup();
     };
