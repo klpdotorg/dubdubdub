@@ -833,6 +833,10 @@ a.external{
 	@include border-box;
 	margin-right: 5px;
 
+	&:hover {
+		color: $color_grey_platinum;
+	}
+
 	.fa:before {
 		@include dead-center;
 	}

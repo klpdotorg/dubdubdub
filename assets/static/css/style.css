@@ -3978,6 +3978,8 @@ a.external {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin-right: 5px; }
+  .icon-button-round:hover {
+    color: #AAA; }
   .icon-button-round .fa:before {
     position: absolute;
     left: 50%;
