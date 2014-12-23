@@ -1,3 +1,4 @@
+import json
 import requests
 
 from django.utils import timezone
@@ -32,7 +33,12 @@ class Command(BaseCommand):
             success, json_list = self.fetch_data(date)
             if success:
                 for json in json_list:
-                    self.process_json(source, json)
+                    sane, message = self.sanity_check_json(json)
+                    if sane:
+                        self.process_json(source, json)
+                    else:
+                        print message
+                        continue
             else:
                 return
 
@@ -43,11 +49,30 @@ class Command(BaseCommand):
         dates = [month+"/"+day+"/"+year for day in days]
         return dates
 
+    def sanity_check_json(self, json):
+        if not json.get('Date & Time', None):
+            return (False, "Date & Time not present in the json response.")
+        elif not json.get('School ID', None):
+            return (False, "School not present in the json response.")
+        elif not json.get('Mobile Number', None):
+            return (False, "Mobile Number not present in the json response.")
+        elif any(str(question_number) not in json for question_number in range(1, 7)):
+            return (
+                False,
+                "Questions missing in json for school ID %s." % json['School ID'])
+        else:
+            try:
+                school = School.objects.get(id=json['School ID'])
+            except Exception as ex:
+                print ex, type(ex)
+                return (False, "School id: %s does not exist in the DB." % json['School ID'])
+
+        return (True, "Json is sane. Proceeding with dissection.")
+
     def sanity_check(self, args):
         if len(args) < 3:
             return (False, "Usage is $./manage.py fetchivrs [date,date,date month year]")
         else:
-
             days = args[0].split(",")
             for day in days:
                 if int(day) not in range(1,32):
@@ -69,27 +94,28 @@ class Command(BaseCommand):
         date = json['Date & Time']
         school_id = json['School ID']
         telephone = json['Mobile Number']
-        school = School.objects.get(id = school_id)
-        question_group = Questiongroup.objects.get(source__name = "ivrs")
+
+        school = School.objects.get(id=school_id)
+        question_group = Questiongroup.objects.get(source__name="ivrs")
 
         story, created = Story.objects.get_or_create(
-            school = school,
-            group = question_group,
-            date = date,
-            telephone = telephone,
+            school=school,
+            group=question_group,
+            date=date,
+            telephone=telephone,
         )
 
         if created:
             for i in range(1, 7):
                 question = Question.objects.get(
-                    school_type = school.admin3.type,
-                    questiongroup__source = source,
-                    questiongroupquestions__sequence = i
+                    school_type=school.admin3.type,
+                    questiongroup__source=source,
+                    questiongroupquestions__sequence=i
                 )
                 answer = Answer.objects.get_or_create(
-                    story = story,
-                    question = question,
-                    text = json[str(i)]
+                    story=story,
+                    question=question,
+                    text=json[str(i)]
                 )
         else:
             print "Date %s for school %s already processed" % (date, school)
