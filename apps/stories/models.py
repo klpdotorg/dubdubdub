@@ -110,13 +110,13 @@ class Story(TimestampedBaseModel):
     class Meta:
         db_table = 'stories_story'
         verbose_name_plural = 'Stories'
-        ordering = ['-entered_timestamp']
+        ordering = ['-created_at']
 
     def get_geometry(self):
         return self.school.get_geometry() or None
 
     def __unicode__(self):
-        return "%s: %s" % (self.name, self.entered_timestamp,)
+        return "%s: %s" % (self.email, self.school.name, self.created_at,)
 
 
 @receiver(post_save, sender=Story)

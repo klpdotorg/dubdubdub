@@ -34,6 +34,7 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
+
 class StoryMetaView(KLPAPIView):
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
@@ -132,6 +133,7 @@ class StoryMetaView(KLPAPIView):
                 if int(answer) > start:
                     count += 1
         return count
+
 
 class StoryQuestionsView(KLPDetailAPIView):
     serializer_class = SchoolQuestionsSerializer
