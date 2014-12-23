@@ -22,6 +22,7 @@ from base64 import b64decode
 from collections import Counter
 from django.core.files.base import ContentFile
 from PIL import Image
+from dateutil.parser import parse as date_parse
 
 
 class StoryInfoView(KLPAPIView):
@@ -38,7 +39,7 @@ class StoryMetaView(KLPAPIView):
         source = self.request.QUERY_PARAMS.get('source', None)
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
-        
+
         A = '1'
         B = '2'
         C = '3'
@@ -46,7 +47,7 @@ class StoryMetaView(KLPAPIView):
         YES = '1'
 
         source = "ivrs"
-        
+
         A = '1'
         B = '2'
         C = '3'
@@ -82,7 +83,7 @@ class StoryMetaView(KLPAPIView):
             [date.split()[0].split("-")[1] for date in primary_school_story_dates]))
         per_month_pre_response = json.dumps(Counter(
             [date.split()[0].split("-")[1] for date in pre_school_story_dates]))
-        
+
         response_json['Primary School']['per_month_responses'] = per_month_primary_response
         response_json['PreSchool']['per_month_responses'] = per_month_pre_response
 
@@ -205,7 +206,7 @@ class ShareYourStoryView(KLPAPIView):
         email = request.POST.get('email', '')
         comments = request.POST.get('comments', '')
         telephone = request.POST.get('telephone', '')
-        date = request.POST.get('date', '')
+        date_of_visit = date_parse(request.POST.get('date_of_visit', ''), yearfirst=True)
 
         try:
             school = School.objects.get(pk=pk)
@@ -219,7 +220,7 @@ class ShareYourStoryView(KLPAPIView):
             name=name,
             school=school,
             telephone=telephone,
-            date=date,
+            date_of_visit=date_of_visit,
             group_id=1,
             comments=comments.strip()
         )
