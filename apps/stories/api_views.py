@@ -40,6 +40,9 @@ class StoryMetaView(KLPAPIView):
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
 
+        if not source:
+            raise APIException("Source (ivrs, web) not mentioned")
+
         response_json = {}
         response_json['Primary School'] = {}
         response_json['PreSchool'] = {}
