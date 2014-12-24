@@ -52,9 +52,11 @@ class StoryMetaView(KLPAPIView):
 
         # Number of Responses
         total_response_primary = Story.objects.filter(
-            group=question_group, school__admin3__type__name="Primary School").count()
+            group=question_group, school__admin3__type__name="Primary School"
+        ).count()
         total_response_pre = Story.objects.filter(
-            group=question_group, school__admin3__type__name="PreSchool").count()
+            group=question_group, school__admin3__type__name="PreSchool"
+        ).count()
         total_responses = Story.objects.filter(
             group=question_group).count()
 
@@ -79,7 +81,9 @@ class StoryMetaView(KLPAPIView):
         # List of questions and their answer counts
         questions = Question.objects.filter(
             questiongroup=question_group,
-        )
+        ).select_related(
+            'question_type', 'school_type'
+        ).prefetch_related('answer_set')
 
         response_json['Primary School']['questions'] = []
         response_json['PreSchool']['questions'] = []
@@ -89,12 +93,14 @@ class StoryMetaView(KLPAPIView):
             j['question'] = question.text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
-            j['answers']['options'] = dict(Counter(
-                question.answer_set.all().values_list('text', flat=True)))
+            j['answers']['options'] = dict(
+                Counter([a.text for a in question.answer_set.all()])
+            )
 
             response_json[question.school_type.name]['questions'].append(j)
 
         return Response(response_json)
+
 
 class StoryQuestionsView(KLPDetailAPIView):
     serializer_class = SchoolQuestionsSerializer
