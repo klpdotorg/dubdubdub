@@ -76,21 +76,21 @@ class StoryMetaView(KLPAPIView):
         # Number of Responses per month
         primary_school_story_dates = Story.objects.filter(
             group=question_group, school__admin3__type__name="Primary School"
-        ).values_list('date', flat=True)
+        ).values_list('date_of_visit', flat=True)
         pre_school_story_dates = Story.objects.filter(
             group=question_group, school__admin3__type__name="PreSchool"
-        ).values_list('date', flat=True)
+        ).values_list('date_of_visit', flat=True)
         per_month_primary_response = json.dumps(Counter(
-            [date.split()[0].split("-")[1] for date in primary_school_story_dates]))
+            [date.month for date in primary_school_story_dates]))
         per_month_pre_response = json.dumps(Counter(
-            [date.split()[0].split("-")[1] for date in pre_school_story_dates]))
+            [date.month for date in pre_school_story_dates]))
 
         response_json['Primary School']['per_month_responses'] = per_month_primary_response
         response_json['PreSchool']['per_month_responses'] = per_month_pre_response
 
         # List of questions and their answer counts
         questions = Question.objects.filter(
-            questiongroup__source__name="ivrs"
+            questiongroup=question_group,
         )
 
         response_json['Primary School']['questions'] = []
