@@ -16,7 +16,6 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
     ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
 
-import json
 import random
 from base64 import b64decode
 from collections import Counter
@@ -40,14 +39,6 @@ class StoryMetaView(KLPAPIView):
         source = self.request.QUERY_PARAMS.get('source', None)
         district_id = self.request.QUERY_PARAMS.get('district', None)
         block_id = self.request.QUERY_PARAMS.get('block', None)
-
-        A = '1'
-        B = '2'
-        C = '3'
-        NO = '0'
-        YES = '1'
-
-        source = "ivrs"
 
         A = '1'
         B = '2'
@@ -80,9 +71,9 @@ class StoryMetaView(KLPAPIView):
         pre_school_story_dates = Story.objects.filter(
             group=question_group, school__admin3__type__name="PreSchool"
         ).values_list('date_of_visit', flat=True)
-        per_month_primary_response = json.dumps(Counter(
+        per_month_primary_response = dict(Counter(
             [date.month for date in primary_school_story_dates]))
-        per_month_pre_response = json.dumps(Counter(
+        per_month_pre_response = dict(Counter(
             [date.month for date in pre_school_story_dates]))
 
         response_json['Primary School']['per_month_responses'] = per_month_primary_response
