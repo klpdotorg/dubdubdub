@@ -5,7 +5,7 @@ from django.shortcuts import redirect, get_object_or_404
 from common.views import StaticPageView
 from django.core.urlresolvers import reverse
 from models import (User, Organization, VolunteerActivity, VolunteerActivityType,
-    DonationItemCategory)
+    DonationItemCategory, DonationRequirement)
 
 class ProfilePageView(DetailView):
     model = User
@@ -258,4 +258,4 @@ class DonationRequestAddEditPageView(StaticPageView):
         if not self.kwargs.has_key('org_pk'):
             return None
         donation_request_id = self.kwargs['pk']
-        return get_object_or_404(DonationRequest, pk=donation_request_id)
+        return get_object_or_404(DonationRequirement, pk=donation_request_id)

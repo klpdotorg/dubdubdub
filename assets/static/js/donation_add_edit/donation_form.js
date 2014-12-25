@@ -3,17 +3,27 @@
     var mainFormID = 'donationForm',
         $mainForm,
         $submitBtn,
-        urlBase = 'donation_requirements/'
+        mainFormFields,
+        urlBase = 'donation_requirements/';
 
     klp.donation_form.init = function() {
         //console.log("initting donation form");
         klp.data = klp.data || {};
         $mainForm = $('#' + mainFormID);
         $submitBtn = $('#donationFormSubmitBtn');
+        mainFormFields = {
+            'title': $('#donationTitle'),
+            'school': $('#donationSchool'),
+            'organization': $('#donationOrganization'),
+            'end_date': $('#donationEndDate'),
+            'description': $('#donationText')
+        };
         var donationID = getDonationID();
         if (donationID) {
-            loadDonationData(donationID);
+            loadDonationItems(donationID);
         }
+
+        klp.utils.schoolSelect2(mainFormFields.school);
         $submitBtn.click(function(e) {
             doLoading();
             var hasDonationID = getDonationID();
@@ -34,18 +44,21 @@
         }
     }
 
-    function loadDonationData(donationID) {
-        doLoading();
-        var url = urlBase + donationID;
-        var $xhr = klp.api.authDo(url);
-        $xhr.done(function(data) {
-            stopLoading();
-        });
+    function loadDonationItems(donationID) {
 
     }
 
     function saveEdit() {
-
+        doLoading();
+        var data = getMainFormData();
+        var url = urlBase + getDonationID();
+        var $xhr = klp.api.authDo(url, data, "PUT");
+        $xhr.done(function(data) {
+            klp.utils.alertMessage("Saved successfully.", "success");
+        });
+        $xhr.fail(function(err) {
+            klp.utils.alertMessage("Error while saving.", "error");
+        });
     }
 
     function saveNew() {
@@ -55,6 +68,8 @@
         $xhr.done(function(data) {
             klp.utils.alertMessage("Saved. Please add items required below", "success");
             stopLoading();
+            var newDonationID = data.id;
+            $mainForm.attr("data-id", newDonationID);
         });
         $xhr.fail(function(err) {
             klp.utils.alertMessage("An error occurred while saving", "error");
@@ -64,14 +79,7 @@
     }
 
     function getMainFormData() {
-        var data = {
-            'title': $('#donationTitle').val(),
-            'school': $('#donationSchool').val(),
-            'organization': $('#donationOrganization').val(),
-            'end_date': $('#donationEndDate').val(),
-            'text': $('#donationText').val()
-        };
-        return data;
+        return klp.utils.getFormData(mainFormFields);
     }
 
     function doLoading() {
@@ -81,5 +89,6 @@
     function stopLoading() {
         $mainForm.find('input, textarea').removeAttr("disabled");
     }
+
 
 })();

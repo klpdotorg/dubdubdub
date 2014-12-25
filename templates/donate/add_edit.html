@@ -28,23 +28,26 @@
 					<input type="hidden" name="organization" id="donationOrganization" value="{{ org.id }}" />
 					<div class="mb-30">
 						<label class="block bold mb-5">Title</label>
-						<input type="text" name="title" id="donationTitle" class="input">
+						<input type="text" name="title" id="donationTitle" class="input" value="{{ donation_request.title }}">
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">School</label>
+						<input id="donationSchool" class="select2 width-full" value="{{ donation_request.school.id }}"/>
+						<!--
 						<select id="donationSchool" class="select2 width-full">
 							<option value="3537">Gian Jyoti Public School</option>
 							<option value="3662">Manav Mangal School</option>
 							<option value="3537">Dav Public School</option>
 						</select>
+						-->
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">End Date</label>
-						<input type="text" id="donationEndDate" class="input">
+						<input type="date" id="donationEndDate" class="input" value="{{ donation_request.end_date|date:"Y-m-d" }}">
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">Text</label>
-						<textarea class="input textarea" id="donationText"></textarea>
+						<textarea class="input textarea" id="donationText">{{ donation_request.description }}</textarea>
 					</div>
 					<div class="ta-c mb-30">
 						<input type="submit" value="Submit" class="button blue" id="donationFormSubmitBtn">
