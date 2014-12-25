@@ -10,7 +10,7 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
     EmailVerificationView, VolunteerMapPageView, DonatePageView,
-    DonateRequestsView, DonationRequestAddEditPageView)
+    DonationRequirementsView, DonationRequirementAddEditPageView)
 
 urlpatterns = patterns(
     '',
@@ -226,20 +226,20 @@ urlpatterns = patterns(
             ]
         }), name='donate'),
 
-    url('^donate/requests/', DonateRequestsView.as_view(
+    url('^donate/requests/', DonationRequirementsView.as_view(
         template_name = 'donate/donate_requests.html'
         ), name='donate_requests'),
 
-    url(r'^organisation/(?P<pk>[0-9]+)/donation_request$',
-        DonationRequestAddEditPageView.as_view(
+    url(r'^organisation/(?P<pk>[0-9]+)/donation_requirement$',
+        DonationRequirementAddEditPageView.as_view(
             extra_context = {
                 'action': 'Add'
             }
         ),
         name='donationrequest_add_page'),
 
-    url(r'^organisation/(?P<org_pk>[0-9]+)/donation_request/(?P<pk>[0-9]+)$',
-        DonationRequestAddEditPageView.as_view(
+    url(r'^organisation/(?P<org_pk>[0-9]+)/donation_requirement/(?P<pk>[0-9]+)$',
+        DonationRequirementAddEditPageView.as_view(
             extra_context = {
                 'action': 'Edit'
             }
