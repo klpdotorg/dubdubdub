@@ -215,15 +215,22 @@ class DonateRequestsView(StaticPageView):
         return s
 
 
-class DonationRequestAddPageView(DetailView):
-    model = Organization
-    template_name = 'donate/add.html'
+class DonationRequestAddEditPageView(StaticPageView):
+    """View to render template for donation add and edit.
+    
+    The same view handles both "add" and "edit" urls,
+    populating context accordingly. Both use the same template to render.
+    """
+    template_name = 'donate/add_edit.html'
 
     def get_context_data(self, **kwargs):
-        context = super(DonationRequestAddPageView, self).get_context_data(**kwargs)
-        context['action'] = 'Add'
+        context = super(DonationRequestAddEditPageView, self).get_context_data(**kwargs)
+        org = self._get_org()
+        context['org'] = org
+        donation_request = self._get_donation_request()
+        if donation_request:
+            context['donation_request'] = donation_request
         context['item_categories'] = DonationItemCategory.objects.all()
-        org = context['object']
         context['breadcrumbs'] = [
             {
                 'url': '/organisation/%d' % (org.id,),
@@ -239,3 +246,16 @@ class DonationRequestAddPageView(DetailView):
             },
         ]
         return context
+
+    def _get_org(self):
+        if self.kwargs.has_key('org_pk'):
+            org_id = self.kwargs['org_pk']
+        else:
+            org_id = self.kwargs['pk']
+        return get_object_or_404(Organization, pk=org_id)
+
+    def _get_donation_request(self):
+        if not self.kwargs.has_key('org_pk'):
+            return None
+        donation_request_id = self.kwargs['pk']
+        return get_object_or_404(DonationRequest, pk=donation_request_id)

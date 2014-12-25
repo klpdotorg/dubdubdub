@@ -10,7 +10,7 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
     EmailVerificationView, VolunteerMapPageView, DonatePageView,
-    DonateRequestsView, DonationRequestAddPageView)
+    DonateRequestsView, DonationRequestAddEditPageView)
 
 urlpatterns = patterns(
     '',
@@ -231,8 +231,20 @@ urlpatterns = patterns(
         ), name='donate_requests'),
 
     url(r'^organisation/(?P<pk>[0-9]+)/donation_request$',
-        DonationRequestAddPageView.as_view(),
+        DonationRequestAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Add'
+            }
+        ),
         name='donationrequest_add_page'),
+
+    url(r'^organisation/(?P<org_pk>[0-9]+)/donation_request/(?P<pk>[0-9]+)$',
+        DonationRequestAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Edit'
+            }
+        ),
+        name='volunteeractivity_edit_page'),
 
     url(r'^school/(?P<pk>[0-9]+)/$',
         SchoolPageView.as_view(), name='school_page'),
