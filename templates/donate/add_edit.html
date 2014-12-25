@@ -1,9 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
+{% load compress %}
 
 {% block page_title %}{{ action }} Donation Request{% endblock %}
 
 {% block endbody %}
-
+	{% compress js %}
+	<script src="{% static 'js/donation_add_edit/init.js' %}"></script>
+	<script src="{% static 'js/donation_add_edit/donation_form.js' %}"></script>
+	{% endcompress %}
 
 {% endblock %}
 
@@ -20,29 +25,29 @@
 		<div class="container">
 			<div class="width-400 ma">
 				<form id="donationForm" class="" data-id="{{ donation_request.id }}">
-					<input type="hidden" name="organization" id="organization" value="{{ org.id }}" />
+					<input type="hidden" name="organization" id="donationOrganization" value="{{ org.id }}" />
 					<div class="mb-30">
 						<label class="block bold mb-5">Title</label>
-						<input type="text" class="input">
+						<input type="text" name="title" id="donationTitle" class="input">
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">School</label>
-						<select class="select2 width-full">
-							<option>Gian Jyoti Public School</option>
-							<option>Manav Mangal School</option>
-							<option>Dav Public School</option>
+						<select id="donationSchool" class="select2 width-full">
+							<option value="3537">Gian Jyoti Public School</option>
+							<option value="3662">Manav Mangal School</option>
+							<option value="3537">Dav Public School</option>
 						</select>
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">End Date</label>
-						<input type="text" class="input">
+						<input type="text" id="donationEndDate" class="input">
 					</div>
 					<div class="mb-30">
 						<label class="block bold mb-5">Text</label>
-						<textarea class="input textarea"></textarea>
+						<textarea class="input textarea" id="donationText"></textarea>
 					</div>
 					<div class="ta-c mb-30">
-						<input type="submit" value="Submit" class="button blue">
+						<input type="submit" value="Submit" class="button blue" id="donationFormSubmitBtn">
 					</div>
 				</form>
 			</div>
@@ -70,28 +75,5 @@
 			<div class="clr"></div>
 		</div>
 	</section>
-
-	<script type="text/javascript">
-
-		$(function() {
-				$(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
-					if($(document).width() < 768){
-			            return true;
-			        }
-
-			        e.preventDefault();
-
-			        var $trigger = $(this).closest(".action-dropdown");
-
-			        if(!$trigger.hasClass("show-drop")) {
-			        	$trigger.addClass("show-drop");
-			        } else {
-			        	$trigger.removeClass("show-drop");
-			        }
-				});
-    		}
-    	});
-
-    </script>
 
 {% endblock %}
