@@ -9,9 +9,15 @@ from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
 
 
 class SchoolsList(KLPListAPIView, CacheMixin):
-    '''
-        Returns list of schools with id and name.
-    '''
+    """Returns list of schools with id and name.
+
+    geometry -- yes/[no] - Whether to return geojson or not
+    type -- [all]/preschools/primaryschools - school types to return
+    admin1 -- ID of the District to search inside
+    admin2 -- ID of the Block/Project to search inside
+    admin3 -- ID of the Cluster/Circle to search inside
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
     filter_class = SchoolFilter
@@ -47,10 +53,15 @@ class SchoolsList(KLPListAPIView, CacheMixin):
 
 
 class SchoolsInfo(SchoolsList, CacheMixin):
-    '''
-        Returns list of schools with more info about each school
-        for /schools/info
-    '''
+    """Returns list of schools with more info about each school for /schools/info,
+    this is an detailed version of /schools/list
+
+    geometry -- yes/[no] - Whether to return geojson or not
+    stype -- [all]/preschools/primaryschools - school types to return
+    admin1 -- ID of the District to search inside
+    admin2 -- ID of the Block/Project to search inside
+    admin3 -- ID of the Cluster/Circle to search inside
+    """
     serializer_class = SchoolInfoSerializer
     filter_class = SchoolFilter
     search_fields = ('name', 'id', 'dise_info__dise_code',)
@@ -75,11 +86,12 @@ class SchoolsInfo(SchoolsList, CacheMixin):
 
 
 class SchoolsDiseInfo(KLPListAPIView):
-    '''
-        Returns list of schools with DISE data
-    '''
+    """Returns list of schools with DISE data
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     # test url:
-    # http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=77.349415,12.822471,77.904224,14.130930
+    # http://localhost:8001/api/v1/schools/dise/2011-12?in_bbox=
     serializer_class = SchoolDiseSerializer
     bbox_filter_field = "school__instcoord__coord"
 
@@ -92,9 +104,8 @@ class SchoolsDiseInfo(KLPListAPIView):
 
 
 class SchoolInfo(KLPDetailAPIView, CacheMixin):
-    '''
-        Returns info for a single school. for /school/:id
-    '''
+    """Returns info for a single school.
+    """
     serializer_class = SchoolInfoSerializer
 
     def get_queryset(self):
@@ -109,6 +120,8 @@ class SchoolInfo(KLPDetailAPIView, CacheMixin):
 
 
 class SchoolDemographics(KLPDetailAPIView):
+    """Returns demographic info for a single school.
+    """
     serializer_class = SchoolDemographicsSerializer
 
     def get_queryset(self):
@@ -117,6 +130,8 @@ class SchoolDemographics(KLPDetailAPIView):
 
 
 class SchoolInfra(KLPDetailAPIView, CacheMixin):
+    """Returns infrastructure info for a single school.
+    """
     def get_serializer_class(self):
         sid = self.kwargs.get('pk') if hasattr(self, 'kwargs') else None
 
@@ -141,6 +156,8 @@ class SchoolInfra(KLPDetailAPIView, CacheMixin):
 
 
 class SchoolLibrary(KLPDetailAPIView, CacheMixin):
+    """Returns library info for a single school.
+    """
     serializer_class = SchoolLibrarySerializer
 
     def get_queryset(self):
@@ -155,6 +172,8 @@ class SchoolLibrary(KLPDetailAPIView, CacheMixin):
 
 
 class SchoolNutrition(KLPDetailAPIView):
+    """Returns nutrition info for a single school.
+    """
     serializer_class = SchoolNutritionSerializer
 
     def get_queryset(self):
@@ -163,6 +182,8 @@ class SchoolNutrition(KLPDetailAPIView):
 
 
 class SchoolProgrammes(KLPDetailAPIView):
+    """Returns programmes info for a single school.
+    """
     serializer_class = SchoolProgrammesSerializer
 
     def get_queryset(self):
@@ -171,7 +192,8 @@ class SchoolProgrammes(KLPDetailAPIView):
 
 
 class SchoolFinance(KLPDetailAPIView):
-
+    """Returns finance info for a single school.
+    """
     # DISE data is yearly. Needs year as param or send list maybe
     serializer_class = SchoolFinanceSerializer
 

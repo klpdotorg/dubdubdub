@@ -818,6 +818,30 @@ a.external{
 	}
 }
 
+.icon-button-round {
+	color: $color_blue;
+	font-size: 18px;
+	line-height: 1;
+	padding: 5px;
+	border-radius: 50%;
+	border: 2px solid;
+	width: 36px;
+	height: 36px;
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	@include border-box;
+	margin-right: 5px;
+
+	&:hover {
+		color: $color_grey_platinum;
+	}
+
+	.fa:before {
+		@include dead-center;
+	}
+}
+
 .tabs{
 	margin: 25px 0;
 
@@ -867,6 +891,8 @@ a.external{
 .input{
 	width: 98%; height: 25px; padding: 0 1%;
 	border: 1px solid #CFCFCF; @include border-radius(3px);
+	font-family: $base-font-family;
+
 	&.textarea{
 		width: 98%; height: 80px; color: #000;
 	}

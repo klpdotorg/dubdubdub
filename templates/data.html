@@ -8,7 +8,7 @@
         <div class="container">
             <h1 class="bordered color-green">Data</h1>
             <p class="below-head ta-c">
-                <b>Data:</b> The KLP Data made available below is under the <a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Any rights in individual contents of the database are licensed under the <a href="http://opendatacommons.org/licenses/dbcl/1.0/" target="_blank"> Database Contents License</a>. Please also see the <a href="/disclaimer" target="_blank">KLP Data Disclaimer</a>.
+                <b>Data:</b> The KLP Data made available below is under the <a href="http://opendatacommons.org/licenses/odbl/1.0/" target="_blank">Open Database License</a>. Any rights in individual contents of the database are licensed under the <a href="http://opendatacommons.org/licenses/dbcl/1.0/" target="_blank"> Database Contents License</a>. Please also see the <a href="{% url 'disclaimer' %}" target="_blank">KLP Data Disclaimer</a>.
             </p>
         </div>
         <div class="page-section-heading">
@@ -47,7 +47,7 @@
             <div class="mb-30">
                 <h3>KLP APIs</h3>
                 <p>
-                The site is powered by APIs. You can browse the <a href="/api/v1" target="_blank">KLP API</a> and the <a href="http://dise.klp.org.in/" target="_blank">DISE API</a>. Documentation is spotty but we will improve this over the next few months.
+                The site is powered by APIs. You can browse the <a href="{% url 'django.swagger.base.view' %}" target="_blank">KLP API</a> and the <a href="http://dise.klp.org.in/" target="_blank">DISE API</a>. Documentation is spotty but we will improve this over the next few months.
                 </p>
             </div>
     </section>

@@ -32,6 +32,10 @@ We use Vagrant for development. Here's everything you need to know about setting
 
     $ cp dubdubdub/local_settings.py{.sample,}
 
+When developing locally, add the following line to local_settings.py to output emails to console and not attempt to actually send them:
+
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 #### Run:
 
     $ runserver

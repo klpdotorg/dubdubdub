@@ -31,9 +31,50 @@
 			<div class="clr"></div>
 			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
 				<p class="profile-description mt-0">
-					<!--
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. -->
+					{{ object.about }}
 				</p>
+				{% if object.has_links %}
+				<div>
+					<span class="bold">Links:</span>
+					<ul>
+						{% if object.twitter_handle %}
+						<li>
+							<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank">
+								Twitter
+							</a>
+						</li>
+						{% endif %}
+						{% if object.fb_url %}
+						<li>
+							<a href="{{ object.fb_url }}" target="_blank">
+								Facebook
+							</a>
+						</li>
+						{% endif %}
+						{% if object.blog_url %}
+						<li>
+							<a href="{{ object.blog_url }}" target="_blank">
+								Blog
+							</a>
+						</li>
+						{% endif %}
+						{% if object.photos_url %}
+						<li>
+							<a href="{{ object.photos_url }}" target="_blank">
+								Photos
+							</a>
+						</li>
+						{% endif %}
+						{% if object.youtube_url %}
+						<li>
+							<a href="{{ object.youtube_url }}" target="_blank">
+								Youtube
+							</a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+				{% endif %}
 			</div>
 			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
 				<div class="profile-title bold uppercase">Total Opportunties</div>

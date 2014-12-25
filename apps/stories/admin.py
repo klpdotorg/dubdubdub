@@ -45,8 +45,25 @@ class StoryImageAdmin(admin.ModelAdmin):
     list_editable = ('is_verified',)
 
 
-admin.site.register([Answer, Question, Questiongroup, QuestiongroupQuestions,
+class QuestionAdmin(admin.ModelAdmin):
+    search_fields = ('text',)
+    list_display = ('text', 'question_type', 'is_active')
+    list_editable = ('is_active',)
+
+
+class QuestionInline(admin.TabularInline):
+    model = QuestiongroupQuestions
+    readonly_fields = ('question',)
+
+class QuestiongroupAdmin(admin.ModelAdmin):
+    list_display = ('source', 'version')
+    inlines = [QuestionInline, ]
+    readonly_fields = ('source', 'version',)
+
+admin.site.register([Answer,
                     QuestionType, Source])
 
 admin.site.register(Story, StoryAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Questiongroup, QuestiongroupAdmin)
 admin.site.register(StoryImage, StoryImageAdmin)

@@ -90,8 +90,12 @@
                     var searchResponse = {
                         results: [
                         {
-                            text: "Schools",
-                            children: makeResults(data.schools.features, 'school')
+                            text: "Pre-Schools",
+                            children: makeResults(data.pre_schools.features, 'school')
+                        },
+                        {
+                            text: "Primary Schools",
+                            children: makeResults(data.primary_schools.features, 'school')
                         },
                         {
                             text: "Boundaries",

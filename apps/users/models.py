@@ -90,6 +90,13 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.created = self.changed
         return super(User, self).save(*args, **kwargs)
 
+    def has_links(self):
+        if self.twitter_handle or self.fb_url or self.website \
+            or self.photos_url or self.youtube_url:
+            return True
+        else:
+            return False
+
     def generate_email_token(self):
         token = uuid.uuid4().get_hex()
         self.email_verification_code = token
@@ -185,6 +192,13 @@ class Organization(models.Model):
         org_email = self.email
         users_emails = [u.email for u in self.users.all()]
         return [org_email] + users_emails
+
+    def has_links(self):
+        if self.twitter_handle or self.fb_url or self.blog_url \
+            or self.photos_url or self.youtube_url:
+            return True
+        else:
+            return False
 
     def has_read_perms(self, user):
         '''

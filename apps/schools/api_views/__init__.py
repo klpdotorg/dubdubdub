@@ -22,11 +22,17 @@ import urlparse
 
 
 class OmniSearch(KLPAPIView):
+    """Omni-search endpoint for plain text search of all the entities
+
+    Keyword arguments:
+    text -- A string to search all kinds of entities for
+    """
     is_omni = True
 
     def get(self, request, format=None):
         response = {
-            'schools': [],
+            'pre_schools': [],
+            'primary_schools': [],
             'boundaries': [],
             'assemblies': [],
             'parliaments': [],
@@ -46,18 +52,38 @@ class OmniSearch(KLPAPIView):
                 'error': 'A text must be provided to search'
             }, status=404)
 
-        response['schools'] = SchoolListSerializer(
+        response['pre_schools'] = SchoolListSerializer(
             School.objects.filter(
-                Q(name__icontains=text) | Q(id__contains=text) | Q(dise_info__dise_code__contains=text),
+                (Q(name__icontains=text) | Q(id__contains=text)
+                    | Q(dise_info__dise_code__contains=text)),
                 Q(status=2),
-                Q(instcoord__coord__isnull=False)
+                Q(instcoord__coord__isnull=False),
+                Q(schooldetails__type__name='PreSchool')
             ).select_related(
                 'instcoord',
                 'schooldetails__type',
                 'address'
             ).prefetch_related(
                 'schooldetails'
-            )[:10],
+            )[:3],
+            many=True,
+            context=context
+        ).data
+
+        response['primary_schools'] = SchoolListSerializer(
+            School.objects.filter(
+                (Q(name__icontains=text) | Q(id__contains=text)
+                    | Q(dise_info__dise_code__contains=text)),
+                Q(status=2),
+                Q(instcoord__coord__isnull=False),
+                Q(schooldetails__type__name='Primary School')
+            ).select_related(
+                'instcoord',
+                'schooldetails__type',
+                'address'
+            ).prefetch_related(
+                'schooldetails'
+            )[:3],
             many=True,
             context=context
         ).data
@@ -106,6 +132,14 @@ class OmniSearch(KLPAPIView):
 
 
 class MergeEndpoints(KLPAPIView):
+    """Merges multiple endpoint outputs
+    E.g. - /merge?endpoints=/schools/school/33312/infrastructure&endpoints=/schools/school/33312/library
+    merges output of both infrastructure and library endpoints and returns a single JSON.
+
+    Keyword arguments:
+    endpoints -- first endpoint
+    endpoints -- second endpoint
+    """
     def get(self, request, format=None):
         endpoints = request.GET.getlist('endpoints', [])
         data = {}
@@ -131,6 +165,8 @@ class MergeEndpoints(KLPAPIView):
 
 @api_view(('GET',))
 def api_root(request, format=None):
+    """Root of all evil
+    """
     return Response({
         'Omni Search': reverse('api_omni_search', request=request,
                                format=format) + "?text=pura",

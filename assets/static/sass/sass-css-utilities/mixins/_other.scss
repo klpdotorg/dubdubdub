@@ -61,3 +61,9 @@
 	box-sizing: border-box;
 }
 
+@mixin dead-center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	@include transform(translateX(-50%) translateY(-50%));
+}
