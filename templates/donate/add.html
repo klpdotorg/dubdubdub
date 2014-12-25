@@ -13,9 +13,9 @@
 	<section class="page-donation pt-30 pb-60 phn-pt-0">
 		<div class="container">
 			<div class="width-400 ma">
-				<form class="">
+				<form id="donationForm" class="">
 					<div class="mb-30">
-						<label class="block bold mb-5">Titles</label>
+						<label class="block bold mb-5">Title</label>
 						<input type="text" class="input">
 					</div>
 					<div class="mb-30">
@@ -43,9 +43,9 @@
 			<div class="hr mt-60 mb-60"></div>
 
 			<div class="ma">
-				<form class="add-req-form">
+				<form id="donationItemsForm" class="add-req-form">
 					<h2 class="tile-head blue mb-30">Donation Items</h2>
-					<table class="tbl-common ta-l cell-pl-10 cell-pr-10">
+					<table id="donationItemsTable" class="tbl-common ta-l cell-pl-10 cell-pr-10">
 						<tr>
 							<th class="cell-width-5">S.No.</th>
 							<th class="cell-width-25">Item Name</th>
@@ -55,124 +55,8 @@
 							<th class="cell-width-25">Item Description</th>
 							<th class="cell-width-5"></th>
 						</tr>
-						<tr>
-							<td>
-								#1
-							</td>
-							<td>
-								<input type="text" class="input" value="Chairs">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10" value="15">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10" value="">
-							</td>
-							<td>
-								<select name="partner" class="dropdown large">
-									<option>Furniture</option>
-									<option>Books</option>
-									<option>Toys</option>
-									<option>Stationary</option>
-									<option>Computers &amp; Peripherals</option>
-								</select>
-							</td>
-							<td>
-								<textarea class="input textarea pad-h-10"></textarea>
-							</td>
-							<td>
-								<a href="#" class="cross small">x</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								#2
-							</td>
-							<td>
-								<input type="text" class="input">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<select name="partner" class="dropdown large">
-									<option>Furniture</option>
-									<option>Books</option>
-									<option>Toys</option>
-									<option>Stationary</option>
-									<option>Computers &amp; Peripherals</option>
-								</select>
-							</td>
-							<td>
-								<textarea class="input textarea pad-h-10"></textarea>
-							</td>
-							<td>
-								<a href="#" class="cross small">x</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								#3
-							</td>
-							<td>
-								<input type="text" class="input">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<select name="partner" class="dropdown large">
-									<option>Furniture</option>
-									<option>Books</option>
-									<option>Toys</option>
-									<option>Stationary</option>
-									<option>Computers &amp; Peripherals</option>
-								</select>
-							</td>
-							<td>
-								<textarea class="input textarea pad-h-10"></textarea>
-							</td>
-							<td>
-								<a href="#" class="cross small">x</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								#4
-							</td>
-							<td>
-								<input type="text" class="input">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<input type="text" class="input pad-h-10">
-							</td>
-							<td>
-								<select name="partner" class="dropdown large">
-									<option>Furniture</option>
-									<option>Books</option>
-									<option>Toys</option>
-									<option>Stationary</option>
-									<option>Computers &amp; Peripherals</option>
-								</select>
-							</td>
-							<td>
-								<textarea class="input textarea pad-h-10"></textarea>
-							</td>
-							<td>
-								<a href="#" class="cross small">x</a>
-							</td>
-						</tr>
 					</table>
-					<input type="submit" value="Add another" class="button-hollow fr mt-10 mr-10">
+					<input type="submit" id="addDonationItemBtn" value="Add another" class="button-hollow fr mt-10 mr-10">
 					<div class="clr"></div>
 				</form>
 			</div>
@@ -182,40 +66,24 @@
 
 	<script type="text/javascript">
 
-		function init_tabs(){
-    		$(document).on("click", ".js-tab-link", function(e){
-    			var $wrapper = $(".js-tabs-wrapper");
-				var $trigger = $(this).closest(".js-tab-link");
-				var tab_id = $trigger.attr('data-tab');
+		$(function() {
+				$(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
+					if($(document).width() < 768){
+			            return true;
+			        }
 
-				// Change current tab link
-				$trigger.parent().find("li.current").removeClass('current');
-				$trigger.addClass("current");
+			        e.preventDefault();
 
-				// Change current tab content
-				$wrapper.find(".tab-content.current").removeClass('current');
-				$wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
-			});
-			$(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
-				if($(document).width() < 768){
-		            return true;
-		        }
+			        var $trigger = $(this).closest(".action-dropdown");
 
-		        e.preventDefault();
-
-		        var $trigger = $(this).closest(".action-dropdown");
-
-		        if(!$trigger.hasClass("show-drop")) {
-		        	$trigger.addClass("show-drop");
-		        } else {
-		        	$trigger.removeClass("show-drop");
-		        }
-			});
-    	}
-
-    	$(document).ready(function(){
-			init_tabs();
-		});
+			        if(!$trigger.hasClass("show-drop")) {
+			        	$trigger.addClass("show-drop");
+			        } else {
+			        	$trigger.removeClass("show-drop");
+			        }
+				});
+    		}
+    	});
 
     </script>
 
