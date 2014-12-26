@@ -211,25 +211,32 @@ class LibBorrow(BaseModel):
         db_table = 'mvw_lib_borrow'
 
 
-class LibLangAgg(BaseModel):
+class LibAggBase(BaseModel):
+    """
+    Base model for aggregating LibLevel and LibLang
+    """
+    # Field renamed because it was a Python reserved word.
+    class_name = models.IntegerField(db_column='class', blank=True, null=True)
+    month = models.CharField(max_length=10, blank=True)
+    year = models.CharField(max_length=10, blank=True)
+    # FIXME: this should be defined as choices somewhere?
+    book_level = models.CharField(max_length=50, blank=True)
+    child_count = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class LibLangAgg(LibAggBase):
     '''
     View table:
     View from library that a school level aggregates
     how many children borrowed books in a given month
     in a given language in an Akshara library
     '''
-    #school is not unique
+    # school is not unique, but we set primary key=True to keep django happy
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
-
-    #Field renamed because it was a Python reserved word.
-    class_name = models.IntegerField(db_column='class',
-                                     blank=True, null=True)
-    month = models.CharField(max_length=10, blank=True)
-    year = models.CharField(max_length=10, blank=True)
-    #Does this map to MT_CHOICES?
-    book_lang = models.CharField(max_length=50, blank=True)
-    child_count = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %d" % (self.school, self.class_name,)
@@ -239,23 +246,15 @@ class LibLangAgg(BaseModel):
         db_table = 'mvw_lib_lang_agg'
 
 
-class LibLevelAgg(BaseModel):
+class LibLevelAgg(LibAggBase):
     '''
     View from library that a school level aggregates
     how many children borrowed books in a given month
     in a given difficulty level in an Akshara library
     '''
-    #school is not unique, but we set primary key=True to keep django happy
+    # school is not unique, but we set primary key=True to keep django happy
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
-
-    # Field renamed because it was a Python reserved word.
-    class_name = models.IntegerField(db_column='class', blank=True, null=True)
-    month = models.CharField(max_length=10, blank=True)
-    year = models.CharField(max_length=10, blank=True)
-    #FIXME: this should be defined as choices somewhere?
-    book_level = models.CharField(max_length=50, blank=True)
-    child_count = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %d" % (self.school, self.class_name,)
@@ -263,6 +262,8 @@ class LibLevelAgg(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_lib_level_agg'
+
+
 
 
 class Libinfra(BaseModel):
