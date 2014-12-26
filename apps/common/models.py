@@ -4,6 +4,7 @@ from django.contrib.gis.geos import Point
 from django.forms.models import model_to_dict
 from .managers import BaseManager, BaseGeoManager
 
+
 class BaseModel(models.Model):
     # things that *all* models will have in common
     def get_dict(self, fields=None, exclude=None):
