@@ -13,6 +13,7 @@
         //showSignup();
         // console.log("login modal close called");
         $('.js-login-modal').removeClass('show');
+        $(".modal-overlay").removeClass("show");
         klp.utils.clearForm('signupForm');
         klp.utils.clearForm('loginForm');
         klp.utils.clearForm('forgotPasswordForm');
