@@ -10204,7 +10204,11 @@ button.Zebra_DatePicker_Icon_Inside {
     text-align: right; }
     .school-comparison-flow .info.right-align .item {
       float: right;
-      margin-left: 50px; }
+      padding-left: 40px;
+      width: 33.33%;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
 .school-comparison-flow .dropdown-wrapper {
   position: absolute;
   right: 0;
