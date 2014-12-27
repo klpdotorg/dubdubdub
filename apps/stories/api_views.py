@@ -208,7 +208,11 @@ class ShareYourStoryView(KLPAPIView):
 
             _, qid = key.split('_')
             try:
-                question = Question.objects.get(qid=qid)
+                question = Question.objects.get(
+                    qid=qid,
+                    school_type=school.schooldetails.type,
+                    is_active=True
+                )
                 print question
                 answer = Answer(
                     story=story,

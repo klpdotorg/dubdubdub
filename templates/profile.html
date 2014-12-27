@@ -27,44 +27,44 @@
 					{{ about }}
 					{% if object.has_links %}
 					<div>
-						<span class="bold">Links:</span>
-						<ul>
+						<div class="profile-title uppercase mb-5"><strong>Links:</strong></div>
+						<div>
 							{% if object.twitter_handle %}
-							<li>
-								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank">
-									Twitter
+							<span>
+								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
+									<span class="fa fa-twitter"></span>
 								</a>
-							</li>
+							</span>
 							{% endif %}
 							{% if object.fb_url %}
-							<li>
-								<a href="{{ object.fb_url }}" target="_blank">
-									Facebook
+							<span>
+								<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
+									<span class="fa fa-facebook"></span>
 								</a>
-							</li>
+							</span>
 							{% endif %}
 							{% if object.website %}
-							<li>
-								<a href="{{ object.website }}" target="_blank">
-									Website
+							<span>
+								<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
+									<span class="fa fa-laptop"></span>
 								</a>
-							</li>
+							</span>
 							{% endif %}
 							{% if object.photos_url %}
-							<li>
-								<a href="{{ object.photos_url }}" target="_blank">
-									Photos
+							<span>
+								<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
+									<span class="fa fa-image"></span>
 								</a>
-							</li>
+							</span>
 							{% endif %}
 							{% if object.youtube_url %}
-							<li>
-								<a href="{{ object.youtube_url }}" target="_blank">
-									Youtube
+							<span>
+								<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
+									<span class="fa fa-video-camera"></span>
 								</a>
-							</li>
+							</span>
 							{% endif %}
-						</ul>
+						</div>
 
 					</div>
 					{% endif %}

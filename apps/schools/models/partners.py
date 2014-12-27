@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 from common.models import BaseModel
-from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
 
@@ -31,7 +30,7 @@ class DiseFacilityAgg(BaseModel):
     dise_info = models.ForeignKey('DiseInfo', db_column='dise_code',
                                   primary_key=True)
     df_metric = models.ForeignKey('DiseDisplayMaster',
-                                   db_column='df_metric', blank=True)
+                                  db_column='df_metric', blank=True)
     score = models.DecimalField(max_digits=5, decimal_places=0, blank=True,
                                 null=True)
     df_group = models.CharField(max_length=30, blank=True)
@@ -70,11 +69,11 @@ class AnganwadiInfraAgg(BaseModel):
     The view is from ang_infra.
     '''
     school = models.ForeignKey('School', db_column='sid',
-                                  primary_key=True)
+                               primary_key=True)
     ai_metric = models.ForeignKey('AnganwadiDisplayMaster',
-                                   db_column='ai_metric', blank=True)
-    perc_score = models.DecimalField(max_digits=5, decimal_places=0, blank=True,
-                                null=True)
+                                  db_column='ai_metric', blank=True)
+    perc_score = models.DecimalField(max_digits=5, decimal_places=0,
+                                     blank=True, null=True)
     ai_group = models.CharField(max_length=30, blank=True)
 
     def __unicode__(self):
@@ -189,7 +188,7 @@ class LibBorrow(BaseModel):
                                      decimal_places=0, blank=True,
                                      null=True)
     issue_date = models.CharField(max_length=20, blank=True)
-    #school not unique, but we set primary key to true
+    # school not unique, but we set primary key to true
     school = models.ForeignKey("School", db_column='klp_school_id',
                                primary_key=True)
     school_name = models.CharField(max_length=50, blank=True)
@@ -211,25 +210,33 @@ class LibBorrow(BaseModel):
         db_table = 'mvw_lib_borrow'
 
 
-class LibLangAgg(BaseModel):
+class LibAggBase(BaseModel):
+    """
+    Base model for Library aggregations
+    """
+    # Field renamed because it was a Python reserved word.
+    class_name = models.IntegerField(db_column='class', blank=True, null=True)
+    month = models.CharField(max_length=10, blank=True)
+    year = models.CharField(max_length=10, blank=True)
+    child_count = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class LibLangAgg(LibAggBase):
     '''
     View table:
     View from library that a school level aggregates
     how many children borrowed books in a given month
     in a given language in an Akshara library
     '''
-    #school is not unique
+    # school is not unique
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
 
-    #Field renamed because it was a Python reserved word.
-    class_name = models.IntegerField(db_column='class',
-                                     blank=True, null=True)
-    month = models.CharField(max_length=10, blank=True)
-    year = models.CharField(max_length=10, blank=True)
-    #Does this map to MT_CHOICES?
+    # Does this map to MT_CHOICES?
     book_lang = models.CharField(max_length=50, blank=True)
-    child_count = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %d" % (self.school, self.class_name,)
@@ -239,23 +246,18 @@ class LibLangAgg(BaseModel):
         db_table = 'mvw_lib_lang_agg'
 
 
-class LibLevelAgg(BaseModel):
+class LibLevelAgg(LibAggBase):
     '''
     View from library that a school level aggregates
     how many children borrowed books in a given month
     in a given difficulty level in an Akshara library
     '''
-    #school is not unique, but we set primary key=True to keep django happy
+    # school is not unique, but we set primary key=True to keep django happy
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
 
-    # Field renamed because it was a Python reserved word.
-    class_name = models.IntegerField(db_column='class', blank=True, null=True)
-    month = models.CharField(max_length=10, blank=True)
-    year = models.CharField(max_length=10, blank=True)
-    #FIXME: this should be defined as choices somewhere?
+    # FIXME: this should be defined as choices somewhere?
     book_level = models.CharField(max_length=50, blank=True)
-    child_count = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %d" % (self.school, self.class_name,)
