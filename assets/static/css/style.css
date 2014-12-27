@@ -1,6 +1,4 @@
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url("html5-doctor-reset.css");
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url("html5-doctor-reset.css");
 .pad-0 {
   padding: 0px !important; }
@@ -2173,6 +2171,24 @@
   -o-border-radius: 3px;
   border-radius: 3px; }
 
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Reg-webfont.eot");
+  src: url("../fonts/Lato/Lato-Reg-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Reg-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Reg-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Bol-webfont.eot");
+  src: url("../fonts/Lato/Lato-Bol-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Bol-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Bol-webfont.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Lig-webfont.eot");
+  src: url("../fonts/Lato/Lato-Lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Lig-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Lig-webfont.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
 body {
   font-family: "Lato", sans-serif;
   background: #fff;
