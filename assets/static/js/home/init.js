@@ -25,7 +25,7 @@
         //get and show recent stories
         var url = "stories/";
         var params = {
-            per_page: 8,
+            per_page: 6,
             verified: 'yes'
         };
         var sysXHR = klp.api.do(url, params);
