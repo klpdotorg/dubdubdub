@@ -2395,6 +2395,36 @@ a {
   a:hover {
     text-decoration: underline; }
 
+ul.levels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  zoom: 1; }
+  ul.levels:before, ul.levels:after {
+    content: "";
+    display: table; }
+  ul.levels:after {
+    clear: both; }
+  ul.levels li {
+    margin: 0;
+    padding: 0 0 0 25px;
+    font-size: 16px;
+    line-height: 28px;
+    background-repeat: no-repeat;
+    background-position: left center; }
+    ul.levels li span {
+      font-weight: 700; }
+  ul.levels li.red {
+    background-image: url("../images/bullet_red.png"); }
+  ul.levels li.orange {
+    background-image: url("../images/bullet_orange.png"); }
+  ul.levels li.yellow {
+    background-image: url("../images/bullet_yellow.png"); }
+  ul.levels li.light_green {
+    background-image: url("../images/bullet_light_green.png"); }
+  ul.levels li.dark_green {
+    background-image: url("../images/bullet_dark_green.png"); }
+
 .ta_l, .ta-l {
   text-align: left; }
 
@@ -6688,6 +6718,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
       .home-section.come-volunteer p {
         padding-top: 80px; } }
 
+.stories-list-each {
+  padding: 0 0 5px 0; }
+
 .page-volunteer .volunteer-header {
   width: 100%;
   height: 600px;
@@ -7269,35 +7302,6 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
     font-size: 18px;
     font-weight: 700;
     margin: 50px 0 25px; }
-  .page-programme-details ul.levels {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    zoom: 1; }
-    .page-programme-details ul.levels:before, .page-programme-details ul.levels:after {
-      content: "";
-      display: table; }
-    .page-programme-details ul.levels:after {
-      clear: both; }
-    .page-programme-details ul.levels li {
-      margin: 0;
-      padding: 0 0 0 25px;
-      font-size: 16px;
-      line-height: 28px;
-      background-repeat: no-repeat;
-      background-position: left center; }
-      .page-programme-details ul.levels li span {
-        font-weight: 700; }
-    .page-programme-details ul.levels li.red {
-      background-image: url("../images/bullet_red.png"); }
-    .page-programme-details ul.levels li.orange {
-      background-image: url("../images/bullet_orange.png"); }
-    .page-programme-details ul.levels li.yellow {
-      background-image: url("../images/bullet_yellow.png"); }
-    .page-programme-details ul.levels li.light_green {
-      background-image: url("../images/bullet_light_green.png"); }
-    .page-programme-details ul.levels li.dark_green {
-      background-image: url("../images/bullet_dark_green.png"); }
   .page-programme-details ul.general {
     list-style: disc;
     margin: 0 0 0 20px;
