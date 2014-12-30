@@ -218,7 +218,7 @@
         <div class="clr"></div>
     </div>
     {% endif %}
-    
+
     <br /><br />
     <table class="info_data_table label_small">
         <tr>
@@ -591,8 +591,8 @@
                 {% if story.comments %}
                     <p class="text">{{ story.comments }}</p>
                 {% endif %}
-                {% if story.date %}
-                <div class="timestamp">Shared on : {{ story.date|date('jS F, Y') }}</div>
+                {% if story.date_of_visit %}
+                <div class="timestamp">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
                 {% endif %}
             </div>
             {% endfor %}
@@ -664,9 +664,9 @@
             <input type='tel' name="telephone" id="telephone" />
         </div>
         <div class="field-container">
-            <label for="date">Date:</label>
-            <input type='date' name="date" id="date" />
-        </div>        
+            <label for="date">Date of Visit:</label>
+            <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD"/>
+        </div>
         <div class="field-container">
             <label for="comments_id">Comments:</label>
             <textarea name="comments" id="comments_id" />

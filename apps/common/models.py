@@ -2,6 +2,7 @@ import json
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.forms.models import model_to_dict
+from django.utils import timezone
 from .managers import BaseManager, BaseGeoManager
 
 
@@ -20,6 +21,14 @@ class BaseModel(models.Model):
 
     class Meta:
         # This isn't a real model
+        abstract = True
+
+
+class TimestampedBaseModel(BaseModel):
+    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True, default=timezone.now)
+
+    class Meta:
         abstract = True
 
 

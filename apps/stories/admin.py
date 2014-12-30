@@ -17,12 +17,12 @@ class StoryImageInline(admin.StackedInline):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'entered_timestamp', 'school', 'is_verified',)
+    list_display = ('email', 'created_at', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
     search_fields = ('school__name',)
     raw_id_fields = ('school',)
-    ordering = ['-entered_timestamp']
+    ordering = ['-created_at']
     inlines = [AnswerInline, StoryImageInline]
 
     def get_search_results(self, request, queryset, search_term):
