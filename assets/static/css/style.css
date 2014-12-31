@@ -10026,62 +10026,101 @@ button.Zebra_DatePicker_Icon_Inside {
   z-index: -1;
   display: -webkit-flex;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.rbox_overlay img {
+  max-width: 100%;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .rbox_show {
   opacity: 1;
   z-index: 10000;
   -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out; }
+  transition: all 0.2s ease-in-out;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .rbox_lightBoxBlock {
+  max-width: 90%;
   margin: 0 auto;
   margin-top: 5%;
   margin-bottom: 5%;
   position: relative;
   text-align: center;
-  display: inline-block; }
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .rbox_lightBox {
   padding: 10px;
-  position: relative; }
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .nextLightBox, .prevLightBox, .closeLightBox {
-  color: #777; }
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .nextLightBox.fa, .prevLightBox.fa, .closeLightBox.fa {
+    font-size: 25px; }
+  .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover {
+    color: #fff;
+    transition: all 0.4s ease-in-out; }
 
 .openLightBox {
-  position: relative; }
-
-.nextLightBox, .prevLightBox, .closeLightBox {
-  text-decoration: none; }
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .closeLightBox {
   position: absolute;
   right: -14px;
   top: -26px;
-  padding: 4px;
-  font-size: 220%; }
+  padding: 4px; }
 
 .nextLightBox, .prevLightBox {
   position: absolute;
-  top: 44%;
-  font-size: 300%; }
+  top: 44%; }
 
 .nextLightBox {
-  right: -30px; }
+  right: 15px; }
 
 .prevLightBox {
-  left: -30px; }
+  left: 15px; }
 
 .rbox_lightBoxContent iframe {
   display: block;
   margin: 0 auto;
-  max-width: 100%; }
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .rbox_inline {
   background: #fff;
-  padding: 20px; }
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
+@media only screen and (min-width: 600px) {
+  .nextLightBox {
+    right: -20px; }
+
+  .prevLightBox {
+    left: -20px; } }
 .school-comparison-flow.is-map-page {
   position: absolute;
   z-index: 9;
@@ -10870,6 +10909,7 @@ button.Zebra_DatePicker_Icon_Inside {
     width: 60px;
     height: 60px;
     border: none;
+    cursor: pointer;
     margin: 0 0 10px 10px;
     float: left; }
 .school-details .share-your-story {

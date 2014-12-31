@@ -27,8 +27,6 @@
                         'type': 'image',
                         'series': 'image_gallery'
                     }); 
-                    //$('a.gallery').colorbox({'rel': 'group1'});
-                    // console.log("post render info");
                 }
             },
             'demographics': {

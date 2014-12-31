@@ -14,6 +14,13 @@
 	display: -webkit-flex;
 	display: flex;
 	align-items: center;
+	@include box-sizing(border-box);
+}
+
+.rbox_overlay img {
+	max-width: 100%;
+	height: auto;
+	@include box-sizing(border-box);
 }
 
 .rbox_show {
@@ -21,32 +28,44 @@
   z-index: 10000;
 	-webkit-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
+	@include box-sizing(border-box);
 }
 
 .rbox_lightBoxBlock {
+	max-width: 90%;
 	margin: 0 auto;
   margin-top: 5%;
   margin-bottom: 5%;
   position: relative;
 	text-align: center;
 	display: inline-block;
+	@include box-sizing(border-box);
 }
 
 .rbox_lightBox {
   padding: 10px;
   position: relative;
+	@include box-sizing(border-box);
 }
 
 .nextLightBox, .prevLightBox, .closeLightBox {
-	color: #777;
+	color: rgba(255,255,255,0.7);
+	cursor: pointer;
+	@include box-sizing(border-box);
+
+	&.fa {
+		font-size: 25px;
+	}
+
+	&:hover {
+		color: #fff;
+		transition: all 0.4s ease-in-out;
+	}
 }
 
 .openLightBox {
 	position: relative;
-}
-
-.nextLightBox, .prevLightBox, .closeLightBox {
-	text-decoration: none;
+	@include box-sizing(border-box);
 }
 
 .closeLightBox {
@@ -54,30 +73,40 @@
 	right: -14px;
 	top:-26px;
 	padding: 4px;
-	font-size: 220%;
 }
 
 .nextLightBox, .prevLightBox {
 	position: absolute;
 	top: 44%;
-	font-size: 300%;
 }
 
 .nextLightBox {
-	right: -30px;	
+	right: 15px;
 }
 
 .prevLightBox {
-	left: -30px;	
+	left: 15px;
 }
 
 .rbox_lightBoxContent iframe {
 	display: block;
 	margin: 0 auto;
 	max-width: 100%;
+	@include box-sizing(border-box);
 }
 
 .rbox_inline {
 	background: #fff;
 	padding: 20px;
+	@include box-sizing(border-box);
+}
+
+@media only screen and (min-width: 600px) {
+	.nextLightBox {
+		right: -20px;	
+	}
+
+	.prevLightBox {
+		left: -20px;	
+	}
 }
