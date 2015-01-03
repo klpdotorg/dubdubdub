@@ -8,6 +8,7 @@
 	{% compress js %}
 	<script src="{% static 'js/donation_add_edit/init.js' %}"></script>
 	<script src="{% static 'js/donation_add_edit/donation_form.js' %}"></script>
+	<script src="{% static 'js/donation_add_edit/donation_items.js' %}"></script>
 	{% endcompress %}
 
 {% endblock %}
@@ -78,5 +79,5 @@
 			<div class="clr"></div>
 		</div>
 	</section>
-
+	{% include 'frontend_templates/donation_form.html' %}
 {% endblock %}

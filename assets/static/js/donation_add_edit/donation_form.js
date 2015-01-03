@@ -1,14 +1,15 @@
 (function() {
-    klp.donation_form = {};
+    var t = klp.donation_form = {};
     var mainFormID = 'donationForm',
         $mainForm,
         $submitBtn,
         mainFormFields,
         urlBase = 'donation_requirements/';
 
-    klp.donation_form.init = function() {
+    t.init = function() {
         //console.log("initting donation form");
         klp.data = klp.data || {};
+        klp.donation_items.init();
         $mainForm = $('#' + mainFormID);
         $submitBtn = $('#donationFormSubmitBtn');
         mainFormFields = {
@@ -18,7 +19,7 @@
             'end_date': $('#donationEndDate'),
             'description': $('#donationText')
         };
-        var donationID = getDonationID();
+        var donationID = t.getDonationID();
         if (donationID) {
             loadDonationItems(donationID);
         }
@@ -26,7 +27,7 @@
         klp.utils.schoolSelect2(mainFormFields.school);
         $submitBtn.click(function(e) {
             doLoading();
-            var hasDonationID = getDonationID();
+            var hasDonationID = t.getDonationID();
             if (hasDonationID) {
                 saveEdit();
             } else {
@@ -35,14 +36,14 @@
         });
     };
 
-    function getDonationID() {
+    t.getDonationID = function() {
         var donationID = $mainForm.attr("data-id");
         if (donationID) {
             return donationID;
         } else {
             return null;
         }
-    }
+    };
 
     function loadDonationItems(donationID) {
 
@@ -51,7 +52,7 @@
     function saveEdit() {
         doLoading();
         var data = getMainFormData();
-        var url = urlBase + getDonationID();
+        var url = urlBase + t.getDonationID();
         var $xhr = klp.api.authDo(url, data, "PUT");
         $xhr.done(function(data) {
             klp.utils.alertMessage("Saved successfully.", "success");
