@@ -55,9 +55,11 @@
         var $xhr = klp.api.authDo(url, data, "PUT");
         $xhr.done(function(data) {
             klp.utils.alertMessage("Saved successfully.", "success");
+            stopLoading();
         });
         $xhr.fail(function(err) {
             klp.utils.alertMessage("Error while saving.", "error");
+            stopLoading();
         });
     }
 
