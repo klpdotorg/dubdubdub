@@ -1,3 +1,35 @@
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato/Lato-Reg-webfont.eot');
+  src: url('../fonts/Lato/Lato-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Lato/Lato-Reg-webfont.woff') format('woff'),
+       url('../fonts/Lato/Lato-Reg-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato/Lato-Bol-webfont.eot');
+  src: url('../fonts/Lato/Lato-Bol-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Lato/Lato-Bol-webfont.woff') format('woff'),
+       url('../fonts/Lato/Lato-Bol-webfont.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato/Lato-Lig-webfont.eot');
+  src: url('../fonts/Lato/Lato-Lig-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Lato/Lato-Lig-webfont.woff') format('woff'),
+       url('../fonts/Lato/Lato-Lig-webfont.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+
 body{
 	font-family: $base-font-family;
 	background:#fff;
@@ -160,6 +192,41 @@ a{
 
 	&:hover{
 		text-decoration:underline;
+	}
+}
+
+ul.levels{
+	list-style:none;  margin: 0; padding: 0; zoom:1; 
+
+	&:before, &:after{
+		content:"";
+		display: table;
+	}
+	&:after{
+		clear: both;
+	}
+	li{
+		margin:0; padding: 0 0 0 25px;
+		font-size: 16px; line-height: 28px;
+		background-repeat: no-repeat; background-position: left center;
+		span{
+			font-weight: $bold;
+		}
+	}
+	li.red{
+		background-image: url("../images/bullet_red.png");
+	}
+	li.orange{
+		background-image: url("../images/bullet_orange.png");
+	}
+	li.yellow{
+		background-image: url("../images/bullet_yellow.png");
+	}
+	li.light_green{
+		background-image: url("../images/bullet_light_green.png");
+	}
+	li.dark_green{
+		background-image: url("../images/bullet_dark_green.png");
 	}
 }
 

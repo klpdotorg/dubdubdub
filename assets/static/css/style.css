@@ -1,9 +1,5 @@
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url("html5-doctor-reset.css");
-@import url("fontello.css");
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
 @import url("html5-doctor-reset.css");
-@import url("fontello.css");
 .pad-0 {
   padding: 0px !important; }
 
@@ -2175,6 +2171,24 @@
   -o-border-radius: 3px;
   border-radius: 3px; }
 
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Reg-webfont.eot");
+  src: url("../fonts/Lato/Lato-Reg-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Reg-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Reg-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Bol-webfont.eot");
+  src: url("../fonts/Lato/Lato-Bol-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Bol-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Bol-webfont.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato/Lato-Lig-webfont.eot");
+  src: url("../fonts/Lato/Lato-Lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/Lato/Lato-Lig-webfont.woff") format("woff"), url("../fonts/Lato/Lato-Lig-webfont.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
 body {
   font-family: "Lato", sans-serif;
   background: #fff;
@@ -2380,6 +2394,36 @@ a {
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
+
+ul.levels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  zoom: 1; }
+  ul.levels:before, ul.levels:after {
+    content: "";
+    display: table; }
+  ul.levels:after {
+    clear: both; }
+  ul.levels li {
+    margin: 0;
+    padding: 0 0 0 25px;
+    font-size: 16px;
+    line-height: 28px;
+    background-repeat: no-repeat;
+    background-position: left center; }
+    ul.levels li span {
+      font-weight: 700; }
+  ul.levels li.red {
+    background-image: url("../images/bullet_red.png"); }
+  ul.levels li.orange {
+    background-image: url("../images/bullet_orange.png"); }
+  ul.levels li.yellow {
+    background-image: url("../images/bullet_yellow.png"); }
+  ul.levels li.light_green {
+    background-image: url("../images/bullet_light_green.png"); }
+  ul.levels li.dark_green {
+    background-image: url("../images/bullet_dark_green.png"); }
 
 .ta_l, .ta-l {
   text-align: left; }
@@ -6674,6 +6718,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
       .home-section.come-volunteer p {
         padding-top: 80px; } }
 
+.stories-list-each {
+  padding: 0 0 5px 0; }
+
 .page-volunteer .volunteer-header {
   width: 100%;
   height: 600px;
@@ -7255,35 +7302,6 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
     font-size: 18px;
     font-weight: 700;
     margin: 50px 0 25px; }
-  .page-programme-details ul.levels {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    zoom: 1; }
-    .page-programme-details ul.levels:before, .page-programme-details ul.levels:after {
-      content: "";
-      display: table; }
-    .page-programme-details ul.levels:after {
-      clear: both; }
-    .page-programme-details ul.levels li {
-      margin: 0;
-      padding: 0 0 0 25px;
-      font-size: 16px;
-      line-height: 28px;
-      background-repeat: no-repeat;
-      background-position: left center; }
-      .page-programme-details ul.levels li span {
-        font-weight: 700; }
-    .page-programme-details ul.levels li.red {
-      background-image: url("../images/bullet_red.png"); }
-    .page-programme-details ul.levels li.orange {
-      background-image: url("../images/bullet_orange.png"); }
-    .page-programme-details ul.levels li.yellow {
-      background-image: url("../images/bullet_yellow.png"); }
-    .page-programme-details ul.levels li.light_green {
-      background-image: url("../images/bullet_light_green.png"); }
-    .page-programme-details ul.levels li.dark_green {
-      background-image: url("../images/bullet_dark_green.png"); }
   .page-programme-details ul.general {
     list-style: disc;
     margin: 0 0 0 20px;
@@ -10204,7 +10222,11 @@ button.Zebra_DatePicker_Icon_Inside {
     text-align: right; }
     .school-comparison-flow .info.right-align .item {
       float: right;
-      margin-left: 50px; }
+      padding-left: 40px;
+      width: 33.33%;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
 .school-comparison-flow .dropdown-wrapper {
   position: absolute;
   right: 0;
