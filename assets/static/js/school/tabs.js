@@ -23,8 +23,10 @@
                     return data;
                 },
                 onRender: function(data) {
-                    $('a.gallery').colorbox({'rel': 'group1'});
-                    // console.log("post render info");
+                    $('.rbox_img_gal').rbox({
+                        'type': 'image',
+                        'series': 'image_gallery'
+                    }); 
                 }
             },
             'demographics': {

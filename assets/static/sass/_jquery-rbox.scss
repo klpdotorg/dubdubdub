@@ -1,0 +1,112 @@
+.rbox_overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+	bottom: 0;
+	right: 0;
+  background: #000;
+  background: rgba(0,0,0,0.8);
+	opacity: 0;
+	text-align: center;
+	z-index: -1;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	@include box-sizing(border-box);
+}
+
+.rbox_overlay img {
+	max-width: 100%;
+	height: auto;
+	@include box-sizing(border-box);
+}
+
+.rbox_show {
+	opacity: 1;
+  z-index: 10000;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	@include box-sizing(border-box);
+}
+
+.rbox_lightBoxBlock {
+	max-width: 90%;
+	margin: 0 auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  position: relative;
+	text-align: center;
+	display: inline-block;
+	@include box-sizing(border-box);
+}
+
+.rbox_lightBox {
+  padding: 10px;
+  position: relative;
+	@include box-sizing(border-box);
+}
+
+.nextLightBox, .prevLightBox, .closeLightBox {
+	color: rgba(255,255,255,0.7);
+	cursor: pointer;
+	@include box-sizing(border-box);
+
+	&.fa {
+		font-size: 25px;
+	}
+
+	&:hover {
+		color: #fff;
+		transition: all 0.4s ease-in-out;
+	}
+}
+
+.openLightBox {
+	position: relative;
+	@include box-sizing(border-box);
+}
+
+.closeLightBox {
+	position: absolute;
+	right: -14px;
+	top:-26px;
+	padding: 4px;
+}
+
+.nextLightBox, .prevLightBox {
+	position: absolute;
+	top: 44%;
+}
+
+.nextLightBox {
+	right: 15px;
+}
+
+.prevLightBox {
+	left: 15px;
+}
+
+.rbox_lightBoxContent iframe {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	@include box-sizing(border-box);
+}
+
+.rbox_inline {
+	background: #fff;
+	padding: 20px;
+	@include box-sizing(border-box);
+}
+
+@media only screen and (min-width: 600px) {
+	.nextLightBox {
+		right: -20px;	
+	}
+
+	.prevLightBox {
+		left: -20px;	
+	}
+}

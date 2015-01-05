@@ -8,7 +8,7 @@
     <script src="{% static 'js/highcharts/highcharts.js' %}"></script>
     <script src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
     <script src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
-    <script src="{% static 'js/lib/colorbox-1.5.14/jquery.colorbox-min.js' %}"></script>
+    <script src="{% static 'js/lib/jquery-rbox.js' %}"></script>
     <script src="{% static 'js/common/charts.js' %}"></script>
     <script src="{% static 'js/common/comparison.js' %}"></script>
     <script src="{% static 'js/common/volunteer_here.js' %}"></script>
@@ -19,7 +19,7 @@
 
     <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
     <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
-    <link rel="stylesheet" href="{% static 'js/lib/colorbox-1.5.14/colorbox 2.css' %}" />
+   
     <script>
         SCHOOL_ID = {{ object.id }};
         SCHOOL_TYPE_ID = {{ object.schooldetails.type.id }};
