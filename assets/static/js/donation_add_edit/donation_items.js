@@ -9,7 +9,7 @@
             - a "model" class for items
      */
     t.Item = function(data) {
-        GLOB = this;
+        //GLOB = this;
 
         this.init = function() {
             this.data = data || {};
@@ -25,7 +25,8 @@
             this.$name = this.$.find('.js-name');
             this.$quantity = this.$.find('.js-quantity');
             this.$unit = this.$.find('.js-unit');
-            this.$description = this.$.find('js-description');           
+            this.$category = this.$.find('.js-category');
+            this.$description = this.$.find('.js-description');           
             this.onRender();
         };
 
@@ -33,7 +34,7 @@
             this.data.name = this.$name.val();
             this.data.quantity = this.$quantity.val();
             this.data.unit = this.$unit.val();
-            this.data.category = this.$unit.val();
+            this.data.category = this.$category.val();
             this.data.description = this.$description.val();
             if (this.savingXHR && this.savingXHR.state() === 'pending') {
                 this.savingXHR.abort();
@@ -84,16 +85,17 @@
         };
 
         this.isValid = function() {
-            if (this.data.name && this.data.quantity) {
-                return false;
-            } else {
+            if (this.data.name && this.data.quantity && this.data.category) {
                 return true;
+            } else {
+                return false;
             }
         };
 
         this.onRender = function() {
             var that = this;
             this.$.find('.js-name, .js-quantity, .js-unit, .js-description').on("blur", function() {
+                console.log("blur event");
                 that.save();
             });
             this.$.find('.js-category').on("change", function() {
@@ -110,6 +112,10 @@
     t.init = function() {
         template = swig.compile($('#tplDonationItem').html());
         $table = $('#donationItemsTable');
+        $('#addDonationItemBtn').click(function(e) {
+            e.preventDefault();
+            var item = new t.Item();
+        });
     };
 
 })();

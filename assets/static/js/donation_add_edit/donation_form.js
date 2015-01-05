@@ -46,7 +46,14 @@
     };
 
     function loadDonationItems(donationID) {
-
+        var url = urlBase + donationID + "/items/";
+        var $xhr = klp.api.do(url);
+        $xhr.done(function(data) {
+            var items = data.results;
+            _(items).each(function(item) {
+                var thisItem = new klp.donation_items.Item(item);
+            });
+        });
     }
 
     function saveEdit() {

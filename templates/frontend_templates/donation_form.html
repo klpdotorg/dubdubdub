@@ -14,13 +14,13 @@
             <input type="text" class="input pad-h-10 js-unit" value="{{ unit }}">
         </td>
         <td>
+{% endverbatim %}
             <select name="partner" class="js-category dropdown large">
-                <option>Furniture</option>
-                <option>Books</option>
-                <option>Toys</option>
-                <option>Stationary</option>
-                <option>Computers &amp; Peripherals</option>
+                {% for i in item_categories %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
             </select>
+{% verbatim %}
         </td>
         <td>
             <textarea class="input textarea pad-h-10 js-description">{{ description }}</textarea>

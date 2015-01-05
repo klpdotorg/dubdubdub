@@ -201,6 +201,7 @@ class DonationItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DonationItem
+        read_only_fields = ('requirement',)
 
 
 class DonationRequirementSerializer(serializers.ModelSerializer):
