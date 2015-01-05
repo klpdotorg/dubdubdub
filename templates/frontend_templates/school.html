@@ -114,7 +114,7 @@
         {% if images.length > 0 %}
         <h4>Photos</h4>
             {% for image in images %}
-            <a href="{{ image }}" class="gallery"><img src="{{ image }}" alt=""></a>
+              <span data-rbox-image="{{ image }}" class="rbox_img_gal"><img src="{{ image }}"></span>
             {% endfor %}
         {% endif %}
         <div class="clr"></div>
