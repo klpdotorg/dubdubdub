@@ -36,9 +36,10 @@ class StoryInfoView(KLPAPIView):
 
 class StoryMetaView(KLPAPIView):
     def get(self, request):
+        qset = Story.objects.filter()
         source = self.request.QUERY_PARAMS.get('source', None)
-        district_id = self.request.QUERY_PARAMS.get('district', None)
-        block_id = self.request.QUERY_PARAMS.get('block', None)
+        admin1_id = self.request.QUERY_PARAMS.get('district', None)
+        admin2_id = self.request.QUERY_PARAMS.get('block', None)
 
         if not source:
             raise APIException("Source (ivrs, web) not mentioned")
@@ -51,25 +52,34 @@ class StoryMetaView(KLPAPIView):
             source__name=source)
 
         # Number of Responses
-        total_response_primary = Story.objects.filter(
+        total_response_primary = qset.filter(
             group=question_group, school__admin3__type__name="Primary School"
         ).count()
-        total_response_pre = Story.objects.filter(
+
+        total_response_pre = qset.filter(
             group=question_group, school__admin3__type__name="PreSchool"
         ).count()
-        total_responses = Story.objects.filter(
+
+        total_responses = qset.filter(
             group=question_group).count()
 
         response_json['Primary School']['total_responses'] = total_response_primary
         response_json['PreSchool']['total_responses'] = total_response_pre
 
+        if admin1_id:
+            qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
+
+        if admin2_id:
+            qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
+
         # Number of Responses per month
-        primary_school_story_dates = Story.objects.filter(
+        primary_school_story_dates = qset.filter(
             group=question_group, school__admin3__type__name="Primary School"
         ).values_list('date_of_visit', flat=True)
-        pre_school_story_dates = Story.objects.filter(
+        pre_school_story_dates = qset.filter(
             group=question_group, school__admin3__type__name="PreSchool"
         ).values_list('date_of_visit', flat=True)
+
         per_month_primary_response = dict(Counter(
             [date.month for date in primary_school_story_dates]))
         per_month_pre_response = dict(Counter(
@@ -94,7 +104,7 @@ class StoryMetaView(KLPAPIView):
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
-                Counter([a.text for a in question.answer_set.all()])
+                Counter([a.text for a in question.answer_set.filter(story__in=qset)])
             )
 
             response_json[question.school_type.name]['questions'].append(j)
