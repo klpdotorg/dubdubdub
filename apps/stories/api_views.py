@@ -35,11 +35,23 @@ class StoryInfoView(KLPAPIView):
 
 
 class StoryMetaView(KLPAPIView):
+    """Returns:
+    1. Total number of Stories for both Primary/Pre schools for a
+    given source.
+    2. Number of responses per month for both Primary/Pre schools
+    for a given source, for a given Block/Project and/or
+    Cluster/Circle
+
+    source -- Source of data [web/ivrs].
+    admin2 -- ID of the Block/Project to search inside
+    admin3 -- ID of the Cluster/Circle to search inside
+    """
+
     def get(self, request):
         qset = Story.objects.filter()
         source = self.request.QUERY_PARAMS.get('source', None)
-        admin1_id = self.request.QUERY_PARAMS.get('district', None)
         admin2_id = self.request.QUERY_PARAMS.get('block', None)
+        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
 
         if not source:
             raise APIException("Source (ivrs, web) not mentioned")
@@ -66,11 +78,11 @@ class StoryMetaView(KLPAPIView):
         response_json['Primary School']['total_responses'] = total_response_primary
         response_json['PreSchool']['total_responses'] = total_response_pre
 
-        if admin1_id:
-            qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
-
         if admin2_id:
             qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
+
+        if admin3_id:
+            qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
 
         # Number of Responses per month
         primary_school_story_dates = qset.filter(
