@@ -210,21 +210,7 @@ class LibBorrow(BaseModel):
         db_table = 'mvw_lib_borrow'
 
 
-class LibAggBase(BaseModel):
-    """
-    Base model for Library aggregations
-    """
-    # Field renamed because it was a Python reserved word.
-    class_name = models.IntegerField(db_column='class', blank=True, null=True)
-    month = models.CharField(max_length=10, blank=True)
-    year = models.CharField(max_length=10, blank=True)
-    child_count = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        abstract = True
-
-
-class LibLangAgg(LibAggBase):
+class LibLangAgg(BaseModel):
     '''
     View table:
     View from library that a school level aggregates
@@ -234,6 +220,10 @@ class LibLangAgg(LibAggBase):
     # school is not unique
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
+    class_name = models.IntegerField(db_column='class', blank=True, null=True)
+    month = models.CharField(max_length=10, blank=True)
+    year = models.CharField(max_length=10, blank=True)
+    child_count = models.IntegerField(blank=True, null=True)
 
     # Does this map to MT_CHOICES?
     book_lang = models.CharField(max_length=50, blank=True)
@@ -246,7 +236,7 @@ class LibLangAgg(LibAggBase):
         db_table = 'mvw_lib_lang_agg'
 
 
-class LibLevelAgg(LibAggBase):
+class LibLevelAgg(BaseModel):
     '''
     View from library that a school level aggregates
     how many children borrowed books in a given month
@@ -255,6 +245,10 @@ class LibLevelAgg(LibAggBase):
     # school is not unique, but we set primary key=True to keep django happy
     school = models.ForeignKey('School', db_column='klp_school_id',
                                primary_key=True)
+    class_name = models.IntegerField(db_column='class', blank=True, null=True)
+    month = models.CharField(max_length=10, blank=True)
+    year = models.CharField(max_length=10, blank=True)
+    child_count = models.IntegerField(blank=True, null=True)
 
     # FIXME: this should be defined as choices somewhere?
     book_level = models.CharField(max_length=50, blank=True)
