@@ -18,7 +18,7 @@ from .assessments import (Assessment, InstitutionAgg, InstitutionAssessmentAgg,
 from .coords import (InstCoord, BoundaryCoord, Assembly, Parliament, Postal)
 
 from .partners import (DiseDisplayMaster, DiseFacilityAgg, DiseInfo, PaisaData,
-    DiseRteAgg, LibBorrow, LibAggBase, LibLangAgg, LibLevelAgg, Libinfra,
+    DiseRteAgg, LibBorrow, LibLangAgg, LibLevelAgg, Libinfra,
     MdmAgg)
 
 from .elected_reps import (ElectedrepMaster, SchoolElectedrep)
