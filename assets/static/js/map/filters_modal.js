@@ -6,7 +6,7 @@
     t.init = function() {
         $_filter_button = $("#filter-button");
         $_filter_button.on("click", t.open);
-        // $('.filters-dropdown').select2();
+        // $('.js-filters-dropdown').select2();
 
         var $select_type = $("#select-type");
         var $select_district = $("#select-district");
@@ -120,7 +120,7 @@
     };
 
     t.close = function() {
-        var $filter_toggle = $(".filter-tool");
+        var $filter_toggle = $(".js-filter-tool");
         $filter_toggle.removeClass('active');
     };
 

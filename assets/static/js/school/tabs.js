@@ -42,14 +42,14 @@
                 onRender: function(data) {
                     if (!data.num_boys && !data.num_girls) {
                         //console.log("no boy-girl data!");
-                        $('.no-data.klp').show();
+                        $('.no-data.js-klp').show();
                         $('#boygirlChartWrapper').hide();
                     } else {
                         $('#num_students_piechart').boyGirlChart(data);
                     }
 
                     if (!data.num_boys_dise && !data.num_girls_dise) {
-                        $('.no-data.dise').show();
+                        $('.no-data.js-dise').show();
                         $('#boygirlChartWrapperDISE').hide();
                     } else {
                         $('#num_students_piechart_dise').boyGirlChart(data.dise);
@@ -150,7 +150,7 @@
                         $('.no-data').removeClass('hide');
                         return;
                     }
-                    $(".apply-selectboxit").selectBoxIt();
+                    $(".js-apply-selectboxit").selectBoxIt();
                     var $selectLibraryParam = $("#select_library_browse");
                     var $selectLibraryYear = $("#select_library_year");
                     var $selectLibraryClass = $("#select_library_class");

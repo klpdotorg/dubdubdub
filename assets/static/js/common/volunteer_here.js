@@ -71,7 +71,7 @@
             'visibility': 'inherit',
             'opacity': '1'
         });
-        $('.confirmVolunteerBtn').click(function(e) {
+        $('.jsConfirmVolunteerBtn').click(function(e) {
             e.preventDefault();
             doConfirm(activityId);
         });
