@@ -89,7 +89,12 @@
     }
 
     function getMainFormData() {
-        return klp.utils.getFormData(mainFormFields);
+        //FIXME: ideally, handle not returning 'end_date' key in utils func
+        var data = klp.utils.getFormData(mainFormFields);
+        if (!data.end_date) {
+            delete(data.end_date);
+        }
+        return data;
     }
 
     function doLoading() {
