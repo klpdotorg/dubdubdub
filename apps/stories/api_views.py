@@ -40,7 +40,10 @@ class StoryMetaView(KLPAPIView):
     given source.
     2. Number of responses per month for both Primary/Pre schools
     for a given source, for a given Block/Project and/or
-    Cluster/Circle
+    Cluster/Circle.
+    3. Questions and their corresponsing answers for both 
+    Primary/Pre schools for a given source, for a given 
+    Block/Project and/or Cluster/Circle.
 
     source -- Source of data [web/ivrs].
     admin2 -- ID of the Block/Project to search inside
