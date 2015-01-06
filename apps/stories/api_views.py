@@ -75,9 +75,6 @@ class StoryMetaView(KLPAPIView):
             group=question_group, school__admin3__type__name="PreSchool"
         ).count()
 
-        total_responses = qset.filter(
-            group=question_group).count()
-
         response_json['Primary School']['total_responses'] = total_response_primary
         response_json['PreSchool']['total_responses'] = total_response_pre
 
