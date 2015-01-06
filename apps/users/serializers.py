@@ -216,6 +216,10 @@ class DonationRequirementSerializer(serializers.ModelSerializer):
         source='school',
         read_only=True
     )
+    items = DonationItemSerializer(
+        source='items',
+        read_only=True
+    )
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(DonationRequirementSerializer, self).get_validation_exclusions(*args, **kwargs)
