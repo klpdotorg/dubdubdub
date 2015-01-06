@@ -36,18 +36,20 @@ class StoryInfoView(KLPAPIView):
 
 class StoryMetaView(KLPAPIView):
     """Returns:
-    1. Total number of Stories for both Primary/Pre schools for a
+    1. Total number of Stories for Primary or Pre school for a
     given source.
-    2. Number of responses per month for both Primary/Pre schools
+    2. Number of responses per month for Primary or Pre school
     for a given source, for a given Block/Project and/or
     Cluster/Circle.
-    3. Questions and their corresponsing answers for both 
-    Primary/Pre schools for a given source, for a given 
+    3. Questions and their corresponsing answers for
+    Primary or Pre schools for a given source, for a given
     Block/Project and/or Cluster/Circle.
 
     source -- Source of data [web/ivrs].
-    admin2 -- ID of the Block/Project to search inside
-    admin3 -- ID of the Cluster/Circle to search inside
+    admin1 -- ID of the District to search inside.
+    admin2 -- ID of the Block/Project to search inside.
+    admin3 -- ID of the Cluster/Circle to search inside.
+    school_type -- Type of School [Primary School/PreSchool].
     """
 
     def get(self, request):
