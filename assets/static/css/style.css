@@ -4109,7 +4109,8 @@ a.external {
     box-shadow: none; }
 
 .error-message {
-  color: #eb5055; }
+  color: #eb5055;
+  margin-top: 5px; }
 
 .edit-profile-form {
   width: 90%; }

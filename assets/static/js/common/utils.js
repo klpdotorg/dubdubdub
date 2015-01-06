@@ -142,7 +142,7 @@
                 var $field = fields[key];
                 if ($field.is('[data-type=image]')) {
                     if (data[key]) {
-                        var $imagePreview = $field.parent().find('.imagePreview');
+                        var $imagePreview = $field.parent().find('.js-image-preview');
 
                         //FIXME: avoid hard-coding "/media/", get from settings or so
                         var imageSrc = "/media/" + data[key];
@@ -161,7 +161,7 @@
                 if ($field.attr('type') === 'checkbox') {
                     data[key] = $field.is(":checked");
                 } else if ($field.is('[data-type=image]')) {
-                    var imageData = $field.parent().find('.imagePreview').attr('src');
+                    var imageData = $field.parent().find('.js-image-preview').attr('src');
                     if (imageData) {
                         //remove first part of b64data
                         var fileData = imageData.split(",")[1];
@@ -178,7 +178,7 @@
 
         invalidateField: function($field, message) {
             $field.addClass('error');
-            var $error = $('<div />').addClass('error-message mt-5');
+            var $error = $('<div />').addClass('js-error-message error-message');
             $error.text(message);
             $field.after($error);
         },
@@ -207,7 +207,7 @@
         clearValidationErrors: function(formID) {
             var $form = $('#' + formID);
             $form.find('.error').removeClass('error');
-            $form.find('.error-message').remove();
+            $form.find('.js-error-message .error-message').remove();
         },
 
         clearForm: function(formID) {

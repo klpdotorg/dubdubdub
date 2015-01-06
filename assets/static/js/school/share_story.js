@@ -50,7 +50,7 @@
 
     function getImagesData() {
         var images = [];
-        $('.imagePreview').each(function() {
+        $('.js-image-preview').each(function() {
             var src = $(this).attr('src');
             if (src) {
                 images.push(src);
