@@ -10024,9 +10024,6 @@ button.Zebra_DatePicker_Icon_Inside {
   opacity: 0;
   text-align: center;
   z-index: -1;
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -10120,7 +10117,10 @@ button.Zebra_DatePicker_Icon_Inside {
     right: -20px; }
 
   .prevLightBox {
-    left: -20px; } }
+    left: -20px; }
+
+  .rbox_lightBoxBlock {
+    max-width: 60%; } }
 .school-comparison-flow.is-map-page {
   position: absolute;
   z-index: 9;

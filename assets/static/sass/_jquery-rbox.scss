@@ -11,9 +11,6 @@
 	opacity: 0;
 	text-align: center;
 	z-index: -1;
-	display: -webkit-flex;
-	display: flex;
-	align-items: center;
 	@include box-sizing(border-box);
 }
 
@@ -108,5 +105,9 @@
 
 	.prevLightBox {
 		left: -20px;	
+	}
+
+	.rbox_lightBoxBlock {
+		max-width: 60%;
 	}
 }
