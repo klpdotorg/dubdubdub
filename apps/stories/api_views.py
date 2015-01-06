@@ -56,29 +56,28 @@ class StoryMetaView(KLPAPIView):
         admin1_id = self.request.QUERY_PARAMS.get('district', None)
         admin2_id = self.request.QUERY_PARAMS.get('block', None)
         admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
+        school_type = self.request.QUERY_PARAMS.get('school_type', None)
 
         if not source:
             raise APIException("Source (ivrs, web) not mentioned")
 
+        if not school_type:
+            raise APIException("School Type (Primary School, PreSchool) not mentioned")
+
         response_json = {}
-        response_json['Primary School'] = {}
-        response_json['PreSchool'] = {}
+        response_json['school_type'] = school_type
 
         question_group = Questiongroup.objects.get(
             source__name=source)
 
         # Number of Responses
-        total_response_primary = qset.filter(
-            group=question_group, school__admin3__type__name="Primary School"
+        total_responses = qset.filter(
+            group=question_group, school__admin3__type__name=school_type
         ).count()
 
-        total_response_pre = qset.filter(
-            group=question_group, school__admin3__type__name="PreSchool"
-        ).count()
+        response_json['total_responses'] = total_responses
 
-        response_json['Primary School']['total_responses'] = total_response_primary
-        response_json['PreSchool']['total_responses'] = total_response_pre
-
+        # Number of Responses per month
         if admin1_id:
             qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
 
@@ -88,31 +87,24 @@ class StoryMetaView(KLPAPIView):
         if admin3_id:
             qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
 
-        # Number of Responses per month
-        primary_school_story_dates = qset.filter(
-            group=question_group, school__admin3__type__name="Primary School"
-        ).values_list('date_of_visit', flat=True)
-        pre_school_story_dates = qset.filter(
-            group=question_group, school__admin3__type__name="PreSchool"
+        story_dates = qset.filter(
+            group=question_group, school__admin3__type__name=school_type
         ).values_list('date_of_visit', flat=True)
 
-        per_month_primary_response = dict(Counter(
-            [date.month for date in primary_school_story_dates]))
-        per_month_pre_response = dict(Counter(
-            [date.month for date in pre_school_story_dates]))
+        per_month_responses = dict(Counter(
+            [date.month for date in story_dates]))
 
-        response_json['Primary School']['per_month_responses'] = per_month_primary_response
-        response_json['PreSchool']['per_month_responses'] = per_month_pre_response
+        response_json['per_month_responses'] = per_month_responses
 
         # List of questions and their answer counts
         questions = Question.objects.filter(
             questiongroup=question_group,
+            school_type__name=school_type,
         ).select_related(
             'question_type', 'school_type'
         ).prefetch_related('answer_set')
 
-        response_json['Primary School']['questions'] = []
-        response_json['PreSchool']['questions'] = []
+        response_json['questions'] = []
 
         for question in questions:
             j = {}
@@ -123,7 +115,7 @@ class StoryMetaView(KLPAPIView):
                 Counter([a.text for a in question.answer_set.filter(story__in=qset)])
             )
 
-            response_json[question.school_type.name]['questions'].append(j)
+            response_json['questions'].append(j)
 
         return Response(response_json)
 
