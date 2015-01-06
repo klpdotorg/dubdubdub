@@ -92,6 +92,20 @@
             }
         };
 
+        this.deleteItem = function() {
+            var that = this;
+            if (this.data.hasOwnProperty('id')) {
+                var url = this.getSaveURL();
+                var $xhr = klp.api.authDo(url, {}, "DELETE");
+                $xhr.done(function(data) {
+                    console.log("deleted", data);
+                });
+            }
+            this.$.slideUp(500, function() {
+                that.$.destroy();
+            });
+        };
+
         this.onRender = function() {
             var that = this;
             this.$.find('.js-name, .js-quantity, .js-unit, .js-description').on("blur", function() {
@@ -100,6 +114,12 @@
             });
             this.$.find('.js-category').on("change", function() {
                 that.save();
+            });
+            this.$.find('.js-deleteItem').click(function(e) {
+                e.preventDefault();
+                if (confirm("Delete item?")) {
+                    that.deleteItem();
+                }
             });
         };
         
