@@ -207,7 +207,6 @@ class DonationItemSerializer(serializers.ModelSerializer):
 class DonationRequirementSerializer(serializers.ModelSerializer):
     items_count = serializers.IntegerField(source='items.count', read_only=True)
     items_url = serializers.CharField(source='get_items_url', read_only=True)
-    end_date = serializers.DateField(required=False, source='end_date')
     organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
@@ -220,10 +219,6 @@ class DonationRequirementSerializer(serializers.ModelSerializer):
         source='items',
         read_only=True
     )
-
-    def get_validation_exclusions(self, *args, **kwargs):
-        exclusions = super(DonationRequirementSerializer, self).get_validation_exclusions(*args, **kwargs)
-        return exclusions + ['end_date']
 
     class Meta:
         model = DonationRequirement

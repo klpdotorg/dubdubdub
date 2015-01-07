@@ -389,7 +389,7 @@ class DonationRequirement(models.Model):
     organization = models.ForeignKey('Organization')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    end_date = models.DateField(null=True)
+    end_date = models.DateField(null=True, blank=True)
 
     def __unicode__(self):
         return self.description

@@ -187,6 +187,9 @@ class DonatePageView(StaticPageView):
         return context
 
 
+class DonationRequirementView(DetailView):
+    model = DonationRequirement
+
 
 class DonationRequirementsView(StaticPageView):
 
