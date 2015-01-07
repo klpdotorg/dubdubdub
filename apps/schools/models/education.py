@@ -15,12 +15,13 @@ import json
 class AcademicYear(BaseModel):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True)
+    to_year = models.IntegerField(null=True, blank=True)
+    from_year = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return "%(to_year)d-%(from_year)d" % self
 
     class Meta:
-        managed = False
         db_table = 'tb_academic_year'
 
 
