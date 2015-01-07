@@ -21,7 +21,7 @@ class Assessment(BaseModel):
 
 
 class InstitutionAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='id', primary_key=True)
+    school = models.ForeignKey('School', db_column='sid', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
     bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
