@@ -23,7 +23,7 @@
                                 // Render thumbnail.
                                 $this
                                     .parent()
-                                    .find('.imagePreview')
+                                    .find('.js-image-preview')
                                     .attr('src',e.target.result);
                             };
                         })(f);

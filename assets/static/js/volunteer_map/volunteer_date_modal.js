@@ -3,7 +3,7 @@
     var datepicker;
     var $datepicker_input;
     t.init = function() {
-        var $modal = $('.volunteerDateModal');
+        var $modal = $('.jsVolunteerDateModal');
         $datepicker_input = $modal.find('#datepicker-modal-input');
         var $datesXHR = klp.api.do('volunteer_activity_dates');
         $datesXHR.done(function(data) {
@@ -23,12 +23,12 @@
     };
 
     t.open = function() {
-        $('.volunteerDateModal').addClass('show');
+        $('.jsVolunteerDateModal').addClass('show');
         klp.openModal = t;
     };
 
     t.close = function() {
-        $('.volunteerDateModal').removeClass('show').remove(); //FIXME
+        $('.jsVolunteerDateModal').removeClass('show').remove(); //FIXME
         //^ we remove this from the DOM because otherwise there's some 
         //weirdo visible child that remains clickable
         //ideally, fix this properly.
