@@ -1,0 +1,354 @@
+/* global SITE styles */
+//MIXINS: VENDOR PREFIXES only
+//box-sizing
+@mixin box-sizing($box-model: border-box) {
+    -webkit-box-sizing:   $box-model;
+    -moz-box-sizing:      $box-model;
+    box-sizing:           $box-model;
+}
+
+//placeholders for inputs
+@mixin placeholder {
+  &.placeholder{
+    @content;
+  }
+
+  &::-moz-placeholder{
+    @content;
+  }
+    
+  &::-webkit-input-placeholder{
+    @content;
+  }
+
+  &:-ms-input-placeholder{
+    @content;
+  }
+}
+
+//transitions
+@mixin transition($tr-values...) {
+    -webkit-transition: $tr-values;
+    transition: $tr-values;
+}
+
+/*-------------------------------------*/
+/*-------------------------------------*/
+/*-------------------------------------*/
+
+
+//CLASSES, PLACEHOLDERS AND MIXINS
+//mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
+
+/* COLORS */
+
+//site colors
+
+//red
+.brand-1-color, %brand-1-color {
+    color: $brand-1;
+}
+
+.brand-1-bgcolor, %brand-1-bgcolor {
+    background-color: $brand-1;
+}
+
+//white
+.brand-2-color, %brand-2-color {
+    color: $brand-2;
+}
+
+.brand-2-bgcolor, %brand-2-bgcolor {
+    background-color: $brand-2;
+}
+
+//black
+.brand-3-color, %brand-3-color {
+    color: $brand-3;
+}
+
+.brand-3-bgcolor, %brand-3-bgcolor {
+    background-color: $brand-3;
+}
+
+//link colors
+
+.link-color, %link-color {
+    color: $link-color;
+}
+
+.link-hover-color, %link-hover-color {
+    color: $link-hover-color;
+}
+
+/*-------------------------------------*/
+
+//SPACING CLASSES
+
+.base-spacing, %base-spacing {
+    padding: $base-spacing 0;
+}
+
+.base-spacing-sm, %base-spacing-sm {
+    padding: $base-spacing-sm 0;
+}
+
+.base-spacing-mid, %base-spacing-mid {
+    padding: $base-spacing-mid 0;
+}
+
+.base-spacing-lg, %base-spacing-lg {
+    padding: $base-spacing-lg 0;
+}
+
+/*-------------------------------------*/
+
+/* BORDER-RADIUS */
+
+.border-radius, %border-radius {
+    border-radius: $border-radius;
+}
+
+.border-radius-sm, %border-radius-sm {
+    border-radius: $border-radius-sm;
+}
+
+.border-radius-circle, %border-radius-circle {
+    border-radius: $border-radius-circle;
+}
+
+/*-------------------------------------*/
+
+//LINKS
+a {
+  text-decoration: none;
+  @extend %link-color;
+
+    &:hover, &:focus, &:active {
+      @extend %link-hover-color;
+    }
+    
+    &:focus {
+    	outline: none;        
+    }
+}
+
+/*-------------------------------------*/
+
+//IMAGES, VIDEOS, IFRAMES
+img, video {
+	max-width: 100%;
+	height: auto;
+}
+
+//use this when you need the image to span the full width of container, beyond its natural width
+.img-fullwidth, %img-fullwidth {
+  width: 100%;
+}
+
+//BOX-SHADOW
+/*.box-shadow-base, %box-shadow-base {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}*/
+
+/* end global SITE styles */
+
+/* GLOBAL HELPER classes */
+/* includes helpful site-agnostic classes and placeholders */
+
+//to use a placeholder, you can simply extend it inside a selector:
+//e.g. selector {@extend %clearfix};
+//NOTE: placeholders don't work inside media queries unless mentioned once again inside that media query scope
+
+//ALIGNMENT
+
+.align-right, %align-right {
+  text-align: right;
+}
+
+.float-left, %float-left {
+  float: left;
+}
+
+@mixin float-left {
+  float: left;
+}
+
+.float-right, %float-right {
+  float: right;
+}
+
+@mixin float-right {
+  float: left;
+}
+
+//clearing floats
+.clear {
+    clear: both;
+}
+
+.clearfix, %clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+//centering things
+.center-text, %center-text {
+    text-align: center;
+}
+
+@mixin center-text {
+    text-align: center;
+}
+
+.center-element, %center-element {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin center-element {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-element-inline, %center-element-inline {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin center-element-inline {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vertical-center, %vertical-center {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@mixin vertical-center {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.dead-center, %dead-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+} /* add this to the parent of the element you want to vertically and horizontally center */
+
+@mixin dead-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+//vertical-alignment
+.vertical-align-top, %vertical-align-top {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.vertical-inline-middle, %vertical-inline-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+//text-truncation
+.text-truncate, %text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+//cursor-pointer
+%cursor-pointer {
+  cursor: pointer;
+}
+
+@mixin cursor-pointer {
+  cursor: pointer;
+}
+
+//transitions
+%transition-linear {
+  @include transition(all 0.3s linear);
+}
+
+%transition-ease-in {
+  @include transition(all 0.3s ease-in);
+}
+
+/*-------------------------------------*/
+//BUTTONS
+.button {
+  @extend %brand-2-color;
+  @extend %brand-2-bgcolor;
+  @extend %font-bold;
+  @extend %base-spacing;
+  @extend %center-text;
+  @extend %vertical-inline-middle;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    @extend %transition-ease-in;
+  }
+}
+
+/*-------------------------------------*/
+
+/* CMS DEFAULT STYLES */
+.cms-default-styles {
+  ul, ol {
+    list-style-position: inside;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+  
+  ol {
+    list-style-type: decimal;
+  }
+
+  a {
+    @extend %brand-1-color;
+
+    &:hover {
+    }
+  }
+}
+
+/* end CMS DEFAULT STYLES */
+
+/* end GLOBAL HELPER classes */

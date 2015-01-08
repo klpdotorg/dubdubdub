@@ -1,0 +1,89 @@
+/* default FORM styles */
+
+input[type="submit"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+}
+
+textarea {
+  vertical-align: top;
+}
+
+input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
+  border: none;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+
+//form styles for default forms; wrap your form with class of form-base
+.form-base {
+  input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
+    @extend %brand-2-bgcolor;
+    @extend %base-spacing-sm;
+
+    &:focus {
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);  
+    }
+  }
+    
+  label {
+    padding: $base-spacing 0;
+  }
+
+  input[type="checkbox"].form-checkbox {
+    opacity: 0;
+    position: absolute;
+  }
+
+  input[type="checkbox"] + .form-checkbox-label:before {
+    content: '';
+    font-family: 'icomoon';
+    border: none;
+    @extend %brand-2-bgcolor;
+    @extend %vertical-inline-middle;
+    width: 20px;
+    height: 20px;
+    margin-right: $base-spacing;
+    @extend %center-text;
+    cursor: pointer;
+    padding: 4px 2px 2px 2px;
+  }
+
+    input[type="checkbox"]:checked + .form-checkbox-label:before {
+    //add your styles here
+    }
+
+    .form-checkbox-label {
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      padding: $base-spacing;        
+    }
+
+    .submit-style {
+//      background-color: $grey-dark;
+        @extend %brand-2-color;
+        padding: $base-spacing;        
+        font-family: inherit;
+        line-height: 1;
+
+        &:hover {
+            @extend %brand-3-bgcolor;
+//            @extend %transition-linear;
+        }
+    }
+}
+
+
+.form-field-wrap {
+    padding: 0 0 $base-spacing 0;
+}
+
+/* end default FORM styles */

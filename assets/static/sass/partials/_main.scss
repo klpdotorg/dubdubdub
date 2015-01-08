@@ -1,0 +1,40 @@
+* {
+    @include box-sizing;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+//    background-color: $grey-lightest;
+//    @extend %brand-2-bgcolor;
+    @extend %font-base-size;
+    line-height: 1.5;
+//    font-weight: 400;
+}
+
+
+/*-------------------------------------*/
+//HEADER
+
+.header {
+}
+
+.nav {
+}
+
+
+/*-------------------------------------*/
+//MAIN
+
+.main {
+}
+
+/*-------------------------------------*/
+//FOOTER
+
+.footer {
+}
+

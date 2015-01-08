@@ -1,0 +1,136 @@
+/* FONTS + TYPOGRAPHY */
+
+//default font: regular
+
+//default font: bold
+
+//default font: light
+
+//font families
+.font-base-family, %font-base-family {
+  font-family: $font-base-family;
+}
+
+//font-styles
+.font-italic, %font-italic {
+  font-style: italic;
+}
+
+.font-bold, %font-bold {
+  font-weight: $font-bold;
+}
+
+//font-sizing
+.font-base-size, %font-base-size {
+  font-size: $font-base-size;
+}
+
+@mixin font-base-size {
+  font-size: $font-base-size;  
+}
+
+.font-small, %font-small {
+  font-size: 90%;
+}
+
+@mixin font-small {
+  font-size: 90%;  
+}
+
+.font-smaller, %font-smaller {
+  font-size: 80%;
+}
+
+@mixin font-smaller {
+  font-size: 80%;  
+}
+
+.font-smallest, %font-smallest {
+  font-size: 70%;
+}
+
+@mixin font-smallest {
+  font-size: 70%;  
+}
+
+.font-large, %font-large {
+    font-size: 110%;
+}
+
+@mixin font-large {
+  font-size: 110%;  
+}
+
+.font-larger, %font-larger {
+    font-size: 120%;
+}
+
+@mixin font-larger {
+  font-size: 120%;  
+}
+
+.font-largest, %font-largest {
+  font-size: 130%;
+}
+
+@mixin font-largest {
+  font-size: 130%;  
+}
+
+strong, b {
+  @extend %font-bold; 
+}
+
+em, i {
+  @extend %font-italic; 
+}
+
+h6, .h6 {
+  font-size: 90%;
+}
+
+h5, .h5 {
+  font-size: 120%;
+}
+
+h4, .h4 {
+  font-size: 130%;
+}
+
+h3, .h3 {
+  font-size: 140%;
+}
+
+h2, .h2 {
+	font-size: 150%;
+}
+
+h1, .h1 {
+	font-size: 170%;
+}
+
+h6, h5, h4, h3, h2, h1 {
+  margin: 0 0 $base-spacing 0;
+}
+
+p {
+    margin: 0 0 $base-spacing 0;
+}
+
+sub, sup {
+    font-size: 65%;
+    position: relative;
+    line-height: 0;
+} //check if these are fine; test
+
+sup {
+    top: -8px;
+}
+
+sub {
+    bottom: -8px;
+}
+
+
+/*-------------------------------------*/
+

@@ -1,0 +1,60 @@
+//VARIABLES
+
+//grid gutters
+$grid-padding: 7.5px;
+
+/*-------------------------------------*/
+
+//header height variable: used for height and width of header and icons
+//$header-height: 60px;
+
+/*-------------------------------------*/
+
+//colors
+$font-base-color: #4f4f4f;
+
+$brand-1: red;
+$brand-2: red;
+$brand-3: red;
+$brand-4: red;
+
+$blue-slate: #3c749f;
+$blue-fb: #43609c;
+$blue-tw: #15c3ff;
+$orange-dull: #ff8a00;
+$orange-bright: #ff0000;
+$yellow-yolk: #ffc600;
+$red-googleplus: #ea061d;
+$pink-hot: #fd00bb;
+
+//colors - links
+$link-color: $brand-1;
+$link-hover-color: lighten($brand-1, 15%);
+
+/*-------------------------------------*/
+
+//spacing, padding, margins
+$base-spacing: 10px;
+$base-spacing-mid: $base-spacing * 1.5;
+$base-spacing-lg: $base-spacing * 2;
+$base-spacing-lg-x: $base-spacing * 2.5;
+$base-spacing-sm: $base-spacing / 2;
+
+/*-------------------------------------*/
+
+//font base styles
+
+$font-base-size: 16px;
+$font-base-family: sans-serif;
+$font-2: sans-serif;
+$font-3: sans-serif;
+$font-italic: sans-serif;
+$font-bold: sans-serif;
+//$font-slender: sans-serif;
+
+/*-------------------------------------*/
+
+//border-radius
+$border-radius: 10px;
+$border-radius-sm: $border-radius / 2;
+$border-radius-circle: 50%;
