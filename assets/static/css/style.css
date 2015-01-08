@@ -49,14 +49,41 @@ q:before, q:after {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /* FONTS + TYPOGRAPHY */
-.font-base-family {
-  font-family: sans-serif; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/lato/Lato-Reg-webfont.eot");
+  src: url("../fonts/lato/Lato-Reg-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Reg-webfont.woff") format("woff"), url("../fonts/lato/Lato-Reg-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/lato/Lato-RegIta-webfont.eot");
+  src: url("../fonts/lato/Lato-RegIta-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-RegIta-webfont.woff") format("woff"), url("../fonts/lato/Lato-RegIta-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/lato/Lato-Bol-webfont.eot");
+  src: url("../fonts/lato/Lato-Bol-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Bol-webfont.woff") format("woff"), url("../fonts/lato/Lato-Bol-webfont.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal; }
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/lato/Lato-Lig-webfont.eot");
+  src: url("../fonts/lato/Lato-Lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Lig-webfont.woff") format("woff"), url("../fonts/lato/Lato-Lig-webfont.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
+.font-base-family, body {
+  font-family: "Lato", sans-serif; }
 
 .font-italic, em, i {
   font-style: italic; }
 
 .font-bold, strong, b, .button {
-  font-weight: sans-serif; }
+  font-weight: 700; }
+
+.font-light {
+  font-weight: 300; }
 
 .font-base-size, body {
   font-size: 16px; }
@@ -120,29 +147,53 @@ sub {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /* COLORS */
-.brand-1-color, .cms-default-styles a {
-  color: red; }
+.brand-orange {
+  color: #ec6608; }
 
-.brand-1-bgcolor {
-  background-color: red; }
+.brand-orange-bg {
+  background-color: #ec6608; }
 
-.brand-2-color, .button, .form-base .submit-style {
-  color: red; }
+.brand-green {
+  color: #26b262; }
 
-.brand-2-bgcolor, .button, .form-base input[type="text"], .form-base input[type="email"], .form-base input[type="number"], .form-base input[type="password"], .form-base textarea, .form-base select, .form-base input[type="checkbox"] + .form-checkbox-label:before {
-  background-color: red; }
+.brand-green-bg {
+  background-color: #26b262; }
 
-.brand-3-color {
-  color: red; }
+.brand-blue {
+  color: #3891e3; }
 
-.brand-3-bgcolor, .form-base .submit-style:hover {
-  background-color: red; }
+.brand-blue-bg, .button {
+  background-color: #3891e3; }
+
+.brand-turquoise {
+  color: #24b2b6; }
+
+.brand-turquoise-bg {
+  background-color: #24b2b6; }
+
+.brand-purple {
+  color: #7575bc; }
+
+.brand-purple-bg {
+  background-color: #7575bc; }
+
+.brand-red {
+  color: #cb0012; }
+
+.brand-red-bg {
+  background-color: #cb0012; }
+
+.white, .button, .form-base .submit-style {
+  color: #fff; }
+
+.white-bg, body {
+  background-color: #fff; }
 
 .link-color, a {
-  color: red; }
+  color: #3891e3; }
 
 .link-hover-color, a:hover, a:focus, a:active {
-  color: #ff4d4d; }
+  color: #7bb6ec; }
 
 /*-------------------------------------*/
 .base-spacing, .button {
@@ -248,6 +299,10 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
+.form-base .submit-style:hover {
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear; }
+
 .button:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in; }
@@ -259,13 +314,26 @@ img, video {
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
-.cms-default-styles ul, .cms-default-styles ol {
-  list-style-position: inside; }
-.cms-default-styles ul {
-  list-style-type: disc; }
-.cms-default-styles ol {
-  list-style-type: decimal; }
+/*.cms-default-styles {
+  ul, ol {
+    list-style-position: inside;
+  }
 
+  ul {
+    list-style-type: disc;
+  }
+  
+  ol {
+    list-style-type: decimal;
+  }
+
+  a {
+    @extend %brand-1-color;
+
+    &:hover {
+    }
+  }
+}*/
 /* end CMS DEFAULT STYLES */
 /* end GLOBAL HELPER classes */
 /* GRID STYLING */
@@ -339,7 +407,9 @@ html, body {
   height: 100%; }
 
 body {
-  line-height: 1.5; }
+  color: #5F5F5F;
+  line-height: 1.5;
+  font-weight: 400; }
 
 /*-------------------------------------*/
 /*-------------------------------------*/

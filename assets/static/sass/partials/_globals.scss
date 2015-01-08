@@ -44,32 +44,70 @@
 
 //site colors
 
-//red
-.brand-1-color, %brand-1-color {
-    color: $brand-1;
+//orange
+.brand-orange, %brand-orange {
+    color: $brand-orange;
 }
 
-.brand-1-bgcolor, %brand-1-bgcolor {
-    background-color: $brand-1;
+.brand-orange-bg, %brand-orange-bg {
+    background-color: $brand-orange;
+}
+
+//green
+.brand-green, %brand-green {
+    color: $brand-green;
+}
+
+.brand-green-bg, %brand-green-bg {
+    background-color: $brand-green;
+}
+
+//blue
+.brand-blue, %brand-blue {
+    color: $brand-blue;
+}
+
+.brand-blue-bg, %brand-blue-bg {
+    background-color: $brand-blue;
+}
+
+//turquoise
+.brand-turquoise, %brand-turquoise {
+    color: $brand-turquoise;
+}
+
+.brand-turquoise-bg, %brand-turquoise-bg {
+    background-color: $brand-turquoise;
+}
+
+//purple
+.brand-purple, %brand-purple {
+    color: $brand-purple;
+}
+
+.brand-purple-bg, %brand-purple-bg {
+    background-color: $brand-purple;
+}
+
+
+//red
+.brand-red, %brand-red {
+    color: $brand-red;
+}
+
+.brand-red-bg, %brand-red-bg {
+    background-color: $brand-red;
 }
 
 //white
-.brand-2-color, %brand-2-color {
-    color: $brand-2;
+.white, %white {
+    color: $white;
 }
 
-.brand-2-bgcolor, %brand-2-bgcolor {
-    background-color: $brand-2;
+.white-bg, %white-bg {
+    background-color: $white;
 }
 
-//black
-.brand-3-color, %brand-3-color {
-    color: $brand-3;
-}
-
-.brand-3-bgcolor, %brand-3-bgcolor {
-    background-color: $brand-3;
-}
 
 //link colors
 
@@ -311,8 +349,8 @@ img, video {
 /*-------------------------------------*/
 //BUTTONS
 .button {
-  @extend %brand-2-color;
-  @extend %brand-2-bgcolor;
+  @extend %brand-blue-bg;
+  @extend %white;
   @extend %font-bold;
   @extend %base-spacing;
   @extend %center-text;
@@ -328,7 +366,7 @@ img, video {
 /*-------------------------------------*/
 
 /* CMS DEFAULT STYLES */
-.cms-default-styles {
+/*.cms-default-styles {
   ul, ol {
     list-style-position: inside;
   }
@@ -347,7 +385,7 @@ img, video {
     &:hover {
     }
   }
-}
+}*/
 
 /* end CMS DEFAULT STYLES */
 

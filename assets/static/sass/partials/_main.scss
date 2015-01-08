@@ -8,11 +8,13 @@ html, body {
 }
 
 body {
-//    background-color: $grey-lightest;
-//    @extend %brand-2-bgcolor;
-    @extend %font-base-size;
-    line-height: 1.5;
-//    font-weight: 400;
+
+  @extend %white-bg;
+  color: $font-base-color;
+  @extend %font-base-family;
+  @extend %font-base-size;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 

@@ -24,7 +24,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 //form styles for default forms; wrap your form with class of form-base
 .form-base {
   input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
-    @extend %brand-2-bgcolor;
+    //@extend %brand-2-bgcolor;
     @extend %base-spacing-sm;
 
     &:focus {
@@ -45,7 +45,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
     content: '';
     font-family: 'icomoon';
     border: none;
-    @extend %brand-2-bgcolor;
+    //@extend %brand-2-bgcolor;
     @extend %vertical-inline-middle;
     width: 20px;
     height: 20px;
@@ -69,14 +69,14 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 
     .submit-style {
 //      background-color: $grey-dark;
-        @extend %brand-2-color;
+        @extend %white;
         padding: $base-spacing;        
         font-family: inherit;
         line-height: 1;
 
         &:hover {
-            @extend %brand-3-bgcolor;
-//            @extend %transition-linear;
+//            @extend %brand-3-bgcolor;
+            @extend %transition-linear;
         }
     }
 }
