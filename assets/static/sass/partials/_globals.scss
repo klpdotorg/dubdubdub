@@ -179,8 +179,8 @@ img, video {
 	height: auto;
 }
 
-//use this when you need the image to span the full width of container, beyond its natural width
-.img-fullwidth, %img-fullwidth {
+//use this when you need a full-width container
+.full-width, %img-fullwidth {
   width: 100%;
 }
 
@@ -421,3 +421,5 @@ img, video {
 /* end CMS DEFAULT STYLES */
 
 /* end GLOBAL HELPER classes */
+
+/*  */

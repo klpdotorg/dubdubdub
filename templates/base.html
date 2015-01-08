@@ -78,80 +78,81 @@
         </span>
     </noscript>
 
-	<header class="main-header {% if header_full_width %}full_width{% endif %} {% if header_fixed %}fixed{% endif %}">
+	<header class="main-header">
 		<div class="header-content">
-			<a href="/" class="header_mobile_logo"></a>
+			<a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
 			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
 			<nav class="top-nav" role="navigation">
 				{% include "includes/_top_navigation.html" %}
 			</nav>
-			<div class="clr"></div>
+      {% include 'includes/_profile_options.html' %}
 		</div>
 
 	</header>
-  {% block subheader %}
-  <div class="subheader-wrapper">
-    <div class="subheader-content">
-      <div class="breadcrumb fl">
-          <a href="/">Home</a>
-          {% for b in breadcrumbs %}
-          <span></span>
-          <a href="{{ b.url }}">{{ b.name }}</a>
-          {% endfor %}
-        </div>
+  
+  <main class="main">
+    {% block subheader %}
 
-              {% include 'includes/_profile_options.html' %}
+    <div class="subheader-wrapper">
+      <div class="container">
+        <div class="breadcrumb fl">
+            <a href="/">Home</a>
+            {% for b in breadcrumbs %}
+            <span></span>
+            <a href="{{ b.url }}">{{ b.name }}</a>
+            {% endfor %}
+          </div>
+        <div class="clr"></div>
+      </div>
+    </div> <!-- /subheader-wrapper -->
+    {% endblock %}
 
-              <div class="clr"></div>
-    </div>
-  </div>
-  {% endblock %}
-
-  {% if homepage %}
-	<div class="home-header" role="banner">
-		<div class="blackboard_wrapper">
-			<div class="content png24">
-				<h1 class="disable-text-select png24">Karnataka Learning Partnership</h1>
-				<div class="headline-text disable-text-select png24">Come Engage With Us And Help Us Make Our Schools Better For Our Children.</div>
-				<div class="headline-text-mobile"><img src="/static/images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
-				<div class="info">
-					<p>The Karnataka Learning Partnership is a public platform where all stakeholders involved in public education participate and help ensure better schools and education for all children in Karnataka.</p>
-					<p><a href="{% url 'aboutus' %}">Read more</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
+    {% if homepage %}
+  	<div class="home-header" role="banner">
+  		<div class="blackboard_wrapper">
+  			<div class="content png24">
+  				<h1 class="disable-text-select png24">Karnataka Learning Partnership</h1>
+  				<div class="headline-text disable-text-select png24">Come Engage With Us And Help Us Make Our Schools Better For Our Children.</div>
+  				<div class="headline-text-mobile"><img src="/static/images/home_headline_text_mobile@2x.png" alt="Come Engage With Us And Help Us Make Our Schools Better For Our Children." /></div>
+  				<div class="info">
+  					<p>The Karnataka Learning Partnership is a public platform where all stakeholders involved in public education participate and help ensure better schools and education for all children in Karnataka.</p>
+  					<p><a href="{% url 'aboutus' %}">Read more</a></p>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
 
 
-	{% endif %}
+  	{% endif %}
 
-  <div id="modal_overlay" class="modal-overlay"></div>
+    <div id="modal_overlay" class="modal-overlay"></div>
 
-	{% block content %} {% endblock %}
+  	{% block content %} {% endblock %}
 
-  {% include 'includes/_login_modal.html' %}
-  {% if not hide_footer %}
-  <footer class="main-footer">
-    <div class="footer-wrapper">
-      <nav class="nav">
-        <ul>
-          <li><a href="{% url 'aboutus' %}" title="">About</a></li>
-          <li><a href="mailto:team@klp.org.in" title="">Contact</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="http://www.facebook.com/klpdotorg" target="_blank">Facebook</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank">RSS Feed</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="http://www.youtube.com/user/klpdotorg" target="_blank">You Tube</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="/map" title="">School Map</a></li>
-          <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
-          <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
-          <div class="clr"></div>
-        </ul>
-      </nav>
-      <div class="copyright">Copyright 2014. All Rights Reserved.</div>
-    </div>
-  </footer>
-  {% endif %}
+    {% include 'includes/_login_modal.html' %}
+    {% if not hide_footer %}
+    <footer class="main-footer">
+      <div class="footer-wrapper">
+        <nav class="nav">
+          <ul>
+            <li><a href="{% url 'aboutus' %}" title="">About</a></li>
+            <li><a href="mailto:team@klp.org.in" title="">Contact</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="http://www.facebook.com/klpdotorg" target="_blank">Facebook</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="https://twitter.com/KLPsays" target="_blank">Twitter</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank">RSS Feed</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="http://www.youtube.com/user/klpdotorg" target="_blank">You Tube</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="/map" title="">School Map</a></li>
+            <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
+            <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
+            <div class="clr"></div>
+          </ul>
+        </nav>
+        <div class="copyright">Copyright 2014. All Rights Reserved.</div>
+      </div>
+    </footer>
+    {% endif %}
+</main>
 
 	<script type="text/javascript">
         //$(document).pngFix();

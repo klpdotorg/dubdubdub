@@ -1,9 +1,10 @@
 /*
-//remove main.js if not using
 
-function toggle_mobile_nav(){
+// in urls.py.function toggle_mobile_nav(){
    46  	$("#navigation").slideToggle();
    47  }
+
+//check small jump on mobile when clicking a dropdown   
 
 */
 
@@ -29,14 +30,31 @@ body {
 
 /*-------------------------------------*/
 //HEADER
-
-.header-content {
-	border-bottom: 1px solid $grey-cloud;
+.main-header {
+  @extend %white-bg;
+  border-bottom: 1px solid $grey-cloud;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
 }
 
+.header-content {
+  @extend %container;
+}
+
+.logo, .top-nav {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.logo {
+  padding: ($base-spacing-sm + 1) $base-spacing-lg 0 0;
+}
 
 .nav, .nav-trigger {
-	position: fixed;
+  position: fixed;
 }
 
 .nav-trigger {
@@ -164,11 +182,77 @@ body {
 //MAIN
 
 .main {
+  margin-top: $header-height;
 }
 
 /*-------------------------------------*/
 //FOOTER
 
 .footer {
+}
+
+.profile-login-block {
+  float: right;
+}
+
+.profile-options-wrapper{
+  position: relative;
+
+  &.show-drop{
+    .profile-options{
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .options-list{
+      display: block;
+    }
+  }
+}
+
+.profile-options{
+  font-size: 70%; //EXTEND NOT WORKING FIX
+  padding: $base-spacing-sm $base-spacing;
+  margin: $base-spacing 0 0 0;
+}
+
+.options-list{
+  display: none;
+  position: absolute; top: 32px; left: 0; right: 0; z-index: 2;
+  border-left: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; border-right: 1px solid #d8d8d8;
+  border-radius: 3px;
+  background-color: #fff;
+
+  li{
+  
+    a{
+      display: block; color: #5f5f5f; padding: 10px;
+
+      &:hover{
+        text-decoration: none; 
+      }
+    }
+
+    &:hover{
+      background-color: #F6F6F6; 
+    }
+  }
+}
+
+//BREADCRUMB
+.subheader-wrapper {
+  background: $grey-mist;
+  padding: $base-spacing 0;
+  text-transform: uppercase;
+  @extend %font-smallest;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
+  
+  a {
+    color: $grey-steel;
+    @extend %transition-linear;
+
+    &:hover {
+      color: $link-hover-color;
+      text-decoration: underline;
+    }
+  }
 }
 

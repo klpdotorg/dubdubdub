@@ -94,7 +94,7 @@ q:before, q:after {
 .font-smaller, .button, .button-grey, .button-orange, .button-hollow {
   font-size: 80%; }
 
-.font-smallest, .nav li li, .nav > li > a {
+.font-smallest, .nav li li, .nav > li > a, .subheader-wrapper {
   font-size: 70%; }
 
 .font-large {
@@ -186,7 +186,7 @@ sub {
 .white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .form-base .submit-style {
   color: #fff; }
 
-.white-bg, body, .nav, .nav ul {
+.white-bg, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .link-color, a {
@@ -230,7 +230,7 @@ img, video {
   max-width: 100%;
   height: auto; }
 
-.img-fullwidth {
+.full-width {
   width: 100%; }
 
 /*.box-shadow-base, %box-shadow-base {
@@ -299,7 +299,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.form-base .submit-style:hover, .nav {
+.form-base .submit-style:hover, .nav, .subheader-wrapper a {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -355,10 +355,13 @@ img, video {
 }*/
 /* end CMS DEFAULT STYLES */
 /* end GLOBAL HELPER classes */
+/*  */
 /* GRID STYLING */
-/*.site-width-max, %site-width-max {
-    max-width: 1800px;
-}*/
+.container, .header-content {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto; }
+
 .grid-parent {
   margin-left: -7.5px;
   margin-right: -7.5px; }
@@ -420,11 +423,12 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 
 /* end default FORM styles */
 /*
-//remove main.js if not using
 
-function toggle_mobile_nav(){
+// in urls.py.function toggle_mobile_nav(){
    46  	$("#navigation").slideToggle();
    47  }
+
+//check small jump on mobile when clicking a dropdown   
 
 */
 * {
@@ -442,8 +446,20 @@ body {
   font-weight: 400; }
 
 /*-------------------------------------*/
-.header-content {
-  border-bottom: 1px solid #d8d8d8; }
+.main-header {
+  border-bottom: 1px solid #d8d8d8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42px; }
+
+.logo, .top-nav {
+  display: inline-block;
+  vertical-align: top; }
+
+.logo {
+  padding: 6px 20px 0 0; }
 
 .nav, .nav-trigger {
   position: fixed; }
@@ -459,7 +475,7 @@ body {
   list-style-type: none;
   width: 220px;
   right: -220px;
-  top: 40px;
+  top: 42px;
   bottom: 0;
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
@@ -527,6 +543,55 @@ body {
       .nav li li {
         text-align: left; } }
 /*-------------------------------------*/
+.main {
+  margin-top: 42px; }
+
 /*-------------------------------------*/
+.profile-login-block {
+  float: right; }
+
+.profile-options-wrapper {
+  position: relative; }
+  .profile-options-wrapper.show-drop .profile-options {
+    background-color: rgba(0, 0, 0, 0.05); }
+  .profile-options-wrapper.show-drop .options-list {
+    display: block; }
+
+.profile-options {
+  font-size: 70%;
+  padding: 5px 10px;
+  margin: 10px 0 0 0; }
+
+.options-list {
+  display: none;
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-left: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  border-right: 1px solid #d8d8d8;
+  border-radius: 3px;
+  background-color: #fff; }
+  .options-list li a {
+    display: block;
+    color: #5f5f5f;
+    padding: 10px; }
+    .options-list li a:hover {
+      text-decoration: none; }
+  .options-list li:hover {
+    background-color: #F6F6F6; }
+
+.subheader-wrapper {
+  background: #f6f6f6;
+  padding: 10px 0;
+  text-transform: uppercase;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05); }
+  .subheader-wrapper a {
+    color: #898989; }
+    .subheader-wrapper a:hover {
+      color: #7bb6ec;
+      text-decoration: underline; }
 
 /*# sourceMappingURL=style.css.map */
