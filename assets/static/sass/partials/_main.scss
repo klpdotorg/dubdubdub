@@ -50,12 +50,15 @@ body {
 .nav {
 	list-style-type: none;
 	@extend %white-bg;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: -500px;
+  width: $nav-width;
+  right: -($nav-width);
+  top: $header-height;
+  bottom: 0;
   overflow: auto;
-
+	box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
+	border: 1px solid $grey-cloud;
+  @extend %transition-linear;
+  
   ul {
   	display: none;
   	@extend %white-bg;
@@ -106,10 +109,7 @@ body {
 } //ends nav
 
 .nav-open {
-  top: $header-height;
-}
-
-.nav, .nav-open {
+  right: 0;
   transition: all 0.35s ease-in;
 }
 
@@ -120,9 +120,12 @@ body {
 
   .nav {
     position: static;
-    left: 0;
+    right: auto;
+    bottom: auto;
     width: auto;
 	  overflow: visible;
+	  border: none;
+	  box-shadow: none;
 
     ul {
 			position: absolute;

@@ -299,7 +299,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.form-base .submit-style:hover {
+.form-base .submit-style:hover, .nav {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -457,11 +457,13 @@ body {
 
 .nav {
   list-style-type: none;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: -500px;
-  overflow: auto; }
+  width: 220px;
+  right: -220px;
+  top: 40px;
+  bottom: 0;
+  overflow: auto;
+  box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
+  border: 1px solid #d8d8d8; }
   .nav ul {
     display: none; }
   .nav li {
@@ -489,9 +491,7 @@ body {
     display: block; }
 
 .nav-open {
-  top: 40px; }
-
-.nav, .nav-open {
+  right: 0;
   transition: all 0.35s ease-in; }
 
 @media only screen and (min-width: 700px) {
@@ -500,9 +500,12 @@ body {
 
   .nav {
     position: static;
-    left: 0;
+    right: auto;
+    bottom: auto;
     width: auto;
-    overflow: visible; }
+    overflow: visible;
+    border: none;
+    box-shadow: none; }
     .nav ul {
       position: absolute;
       left: 0;
