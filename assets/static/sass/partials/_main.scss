@@ -131,52 +131,60 @@ body {
   transition: all 0.35s ease-in;
 }
 
-@media only screen and (min-width: 700px) {
-  .nav-trigger {
-    display: none;
-  }
+/*-------------------------------------*/
+//FOOTER
 
-  .nav {
-    position: static;
-    right: auto;
-    bottom: auto;
-    width: auto;
-	  overflow: visible;
-	  border: none;
-	  box-shadow: none;
+.main-footer {
+  background: $grey-gravel;
+  border-top: 10px solid darken($grey-gravel, 10%);
+  @extend %white;
+  @extend %grid-child;
 
-    ul {
-			position: absolute;
-			left: 0;
-  		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
-			border: 1px solid $grey-cloud;
-			border-top: none;  
-  }
-
-    > li {
-    	border-top: 5px solid;
-
-    	> a {
-    		border-left: none;
-    	}
-    }
-
-    li {
-    	border-left: none;    	
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 3px;
-  		text-align: center;
-  		position: relative;
-			min-width: 125px; // adapt as per largest li width
-
-  		li {
-  			text-align: left;
-  		}
-    }
+  a {
+    @extend %white;
   }
 }
 
+.footer-wrapper {
+  @extend %container;
+  @extend %clearfix;
+  padding: $base-spacing-lg 0;
+
+  a {
+    @extend %transition-linear;
+  }
+}
+
+.nav-footer {
+  margin-bottom: $base-spacing;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 $base-spacing-mid 0 0;
+  }
+
+  .k-icon {
+    @extend %font-small;
+    vertical-align: top;
+  }
+}
+
+.nav-footer-menu-links {
+  @extend %font-bold;
+  text-transform: uppercase;
+  @extend %font-smallest;
+}
+
+.footer-copyright {
+  @extend %font-smallest;
+}
+
+.copyright {
+  color: $grey-cloud;
+  padding-top: $base-spacing-sm;
+  clear: both; //CLEARFIX EXTEND FAILING SILENTLY
+}
 
 /*-------------------------------------*/
 //MAIN
@@ -185,11 +193,10 @@ body {
   margin-top: $header-height;
 }
 
-/*-------------------------------------*/
-//FOOTER
 
-.footer {
-}
+
+/*-------------------------------------*/
+//LOGIN
 
 .profile-login-block {
   float: right;
@@ -237,6 +244,8 @@ body {
   }
 }
 
+
+/*-------------------------------------*/
 //BREADCRUMB
 .subheader-wrapper {
   background: $grey-mist;
