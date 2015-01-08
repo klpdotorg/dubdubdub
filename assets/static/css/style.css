@@ -94,7 +94,7 @@ q:before, q:after {
 .font-smaller, .button, .button-grey, .button-orange, .button-hollow {
   font-size: 80%; }
 
-.font-smallest, .nav li {
+.font-smallest, .nav li li, .nav > li > a {
   font-size: 70%; }
 
 .font-large {
@@ -186,7 +186,7 @@ sub {
 .white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .form-base .submit-style {
   color: #fff; }
 
-.white-bg, body, .nav {
+.white-bg, body, .nav, .nav ul {
   background-color: #fff; }
 
 .link-color, a {
@@ -442,12 +442,17 @@ body {
   font-weight: 400; }
 
 /*-------------------------------------*/
+.header-content {
+  border-bottom: 1px solid #d8d8d8; }
+
 .nav, .nav-trigger {
   position: fixed; }
 
 .nav-trigger {
+  font-size: 22px;
+  color: #000;
   right: 10px;
-  top: 0;
+  top: 5px;
   cursor: pointer; }
 
 .nav {
@@ -460,14 +465,28 @@ body {
   .nav ul {
     display: none; }
   .nav li {
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    padding: 0 15px; }
     .nav li li {
-      text-transform: lowercase;
-      display: block; }
+      text-transform: capitalize;
+      display: block;
+      font-weight: normal; }
+      .nav li li a {
+        line-height: 1;
+        padding: 0 10px;
+        margin: 20px 0;
+        border-left: 2px solid;
+        border-color: transparent; }
+      .nav li li:hover a {
+        border-color: inherit; }
     .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
       color: inherit; }
   .nav > li > a {
-    border-left: 3px solid; }
+    border-left: 3px solid;
+    padding: 0 10px;
+    margin: 10px 0; }
+  .nav a {
+    display: block; }
 
 .nav-open {
   top: 40px; }
@@ -482,9 +501,14 @@ body {
   .nav {
     position: static;
     left: 0;
-    width: auto; }
+    width: auto;
+    overflow: visible; }
     .nav ul {
-      position: absolute; }
+      position: absolute;
+      left: 0;
+      box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
+      border: 1px solid #d8d8d8;
+      border-top: none; }
     .nav > li {
       border-top: 5px solid; }
       .nav > li > a {
@@ -494,9 +518,9 @@ body {
       display: inline-block;
       vertical-align: top;
       margin: 0 3px;
-      min-width: 100px;
-      /* adapt as per your content width */
-      text-align: center; }
+      text-align: center;
+      position: relative;
+      min-width: 125px; }
       .nav li li {
         text-align: left; } }
 /*-------------------------------------*/

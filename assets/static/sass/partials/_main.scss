@@ -30,7 +30,8 @@ body {
 /*-------------------------------------*/
 //HEADER
 
-.header {
+.header-content {
+	border-bottom: 1px solid $grey-cloud;
 }
 
 
@@ -39,8 +40,10 @@ body {
 }
 
 .nav-trigger {
+	font-size: 22px;
+	color: #000;
   right: $base-spacing;
-  top: 0;
+  top: $base-spacing-sm;
   cursor: pointer;
 }
 
@@ -55,16 +58,31 @@ body {
 
   ul {
   	display: none;
-  }
+  	@extend %white-bg;
+	}
 
 	li {
 		@extend %font-bold;
-		@extend %font-smallest;
 		text-transform: uppercase;
+		padding: 0 $base-spacing-mid;
 
 		li {
-			text-transform: lowercase;
+			text-transform: capitalize;
 			display: block;
+			@extend %font-smallest;
+			font-weight: normal;
+
+			a {
+				line-height: 1;
+				padding: 0 $base-spacing;
+				margin: $base-spacing-lg 0;
+				border-left: 2px solid;
+				border-color: transparent;
+			}
+
+			&:hover a {
+				border-color: inherit;
+			}
 		}
 
 		&.brand-orange, &.brand-green, &.brand-blue, &.brand-turquoise, &.brand-purple, &.brand-red {
@@ -76,6 +94,13 @@ body {
 
 	> li > a {
 		border-left: 3px solid;
+		@extend %font-smallest;
+		padding: 0 $base-spacing;
+		margin: $base-spacing 0;
+	}
+
+	a {
+		display: block;
 	}
 
 } //ends nav
@@ -97,10 +122,15 @@ body {
     position: static;
     left: 0;
     width: auto;
+	  overflow: visible;
 
     ul {
 			position: absolute;
-    }
+			left: 0;
+  		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
+			border: 1px solid $grey-cloud;
+			border-top: none;  
+  }
 
     > li {
     	border-top: 5px solid;
@@ -115,8 +145,9 @@ body {
       display: inline-block;
       vertical-align: top;
       margin: 0 3px;
-			min-width: 100px; /* adapt as per your content width */
   		text-align: center;
+  		position: relative;
+			min-width: 125px; // adapt as per largest li width
 
   		li {
   			text-align: left;
