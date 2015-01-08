@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow {
+.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow, .nav li {
   font-weight: 700; }
 
 .font-light {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-smaller, .button, .button-grey, .button-orange, .button-hollow {
   font-size: 80%; }
 
-.font-smallest {
+.font-smallest, .nav li {
   font-size: 70%; }
 
 .font-large {
@@ -435,6 +435,16 @@ body {
   font-weight: 400; }
 
 /*-------------------------------------*/
+.nav {
+  list-style-type: none; }
+  .nav li {
+    text-transform: uppercase;
+    border-top-width: 4px; }
+    .nav li li {
+      text-transform: lowercase; }
+    .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
+      color: inherit; }
+
 /*-------------------------------------*/
 /*-------------------------------------*/
 

@@ -1,31 +1,22 @@
-<ul id="navigation">
+<nav class="js-nav nav">
     {% if not homepage %}
     <li class="home">
         <a href="/">
             <h1>Karnataka Learning Partnership</h1>
         </a>
     {% endif %}
-    <li class="school_map">
+    <li class="brand-orange">
         <a href="{% url 'map' %}" title="">School Map</a>
-    <li class="programmes">
+    <li class="brand-green">
         <a href="{% url 'reading_programme' %}" title="">Programmes</a>
         <ul>
             <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
             <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
         </ul>
-    <li class="volunteer phn-tab-hide">
-        <!-- REFER to dubdubdub-skin template before adding donate link -->
+    <li class="brand-blue">
         <a href="{% url 'volunteer' %}" title="">Volunteer</a>
 
-    <li class="volunteer hide phn-tab-block">
-        <a href="{% url 'volunteer' %}" title="">Volunteer</a>
-    <!--
-    <li class="volunteer hide phn-tab-block">
-        <a href="donation.php" title="">Donate</a>
-    </li>
-    -->
-
-    <li class="database">
+    <li class="brand-turquoise">
         <a href="{% url 'data' %}" title="">Data</a>
         <ul>
             <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
@@ -33,7 +24,7 @@
             <li><a href="{% url 'django.swagger.base.view' %}#!/v1/" title=""><span></span>API</a></li>
             <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
         </ul>
-    <li class="reports">
+    <li class="brand-purple">
         <a href="{% url 'reports' %}" title="">Reports</a>
         <ul>
             <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
@@ -42,11 +33,11 @@
             <li><a href="http://ivrs.klp.org.in/" target="_blank" title=""><span></span>IVRS</a></li>
             <li><a href="{% url 'reports' %}" title=""><span></span>Other Reports</a></li>
         </ul>
-    <li class="about">
+    <li class="brand-red">
         <a href="{% url 'aboutus' %}" title="">About</a>
         <ul>
             <li><a href="{% url 'aboutus' %}" title=""><span></span>About</a></li>
             <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
             <li><a href="{% url 'disclaimer' %}" title=""><span></span>Disclaimer</a></li>
         </ul>
-</ul>
+</nav>

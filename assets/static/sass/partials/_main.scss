@@ -30,6 +30,26 @@ body {
 }
 
 .nav {
+	list-style-type: none;
+
+	li {
+		@extend %font-bold;
+		@extend %font-smallest;
+		text-transform: uppercase;
+		border-top-width: 4px;
+
+		li {
+			text-transform: lowercase;
+		}
+
+	&.brand-orange, &.brand-green, &.brand-blue, &.brand-turquoise, &.brand-purple, &.brand-red {
+		a {
+			color: inherit;
+		}
+	}	
+	}
+
+
 }
 
 
