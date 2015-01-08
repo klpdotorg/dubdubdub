@@ -348,19 +348,50 @@ img, video {
 
 /*-------------------------------------*/
 //BUTTONS
-.button {
-  @extend %brand-blue-bg;
-  @extend %white;
+%button-base {
   @extend %font-bold;
-  @extend %base-spacing;
+  @extend %font-smaller;
   @extend %center-text;
+  @extend %border-radius-sm;
   @extend %vertical-inline-middle;
+  text-transform: uppercase;
+  padding: $base-spacing;
   line-height: 1;
   cursor: pointer;
+  outline: none;
+}
+
+.button, %button {
+  @extend %button-base;
+  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
+  position: relative;
+  @extend %brand-blue-bg;
+  @extend %white;
+  border: none;
 
   &:hover {
-    @extend %transition-ease-in;
+    @extend %white;
+    box-shadow: none;
+    top: 1px;
   }
+}
+
+.button-grey {
+  @extend %button;
+  background-color: $grey-steel;
+}
+
+.button-orange {
+  @extend %button;
+  background-color: $brand-orange;
+}
+
+.button-hollow {
+  @extend %button-base;
+  background-color: transparent;
+  color: $grey-steel;
+  border: 1px solid
 }
 
 /*-------------------------------------*/

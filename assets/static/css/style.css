@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .button {
+.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow {
   font-weight: 700; }
 
 .font-light {
@@ -91,7 +91,7 @@ q:before, q:after {
 .font-small {
   font-size: 90%; }
 
-.font-smaller {
+.font-smaller, .button, .button-grey, .button-orange, .button-hollow {
   font-size: 80%; }
 
 .font-smallest {
@@ -162,7 +162,7 @@ sub {
 .brand-blue {
   color: #3891e3; }
 
-.brand-blue-bg, .button {
+.brand-blue-bg, .button, .button-grey, .button-orange {
   background-color: #3891e3; }
 
 .brand-turquoise {
@@ -183,7 +183,7 @@ sub {
 .brand-red-bg {
   background-color: #cb0012; }
 
-.white, .button, .form-base .submit-style {
+.white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .form-base .submit-style {
   color: #fff; }
 
 .white-bg, body {
@@ -196,7 +196,7 @@ sub {
   color: #7bb6ec; }
 
 /*-------------------------------------*/
-.base-spacing, .button {
+.base-spacing {
   padding: 10px 0; }
 
 .base-spacing-sm, .form-base input[type="text"], .form-base input[type="email"], .form-base input[type="number"], .form-base input[type="password"], .form-base textarea, .form-base select {
@@ -211,10 +211,10 @@ sub {
 /*-------------------------------------*/
 /* BORDER-RADIUS */
 .border-radius {
-  border-radius: 10px; }
+  border-radius: 6px; }
 
-.border-radius-sm {
-  border-radius: 5px; }
+.border-radius-sm, .button, .button-grey, .button-orange, .button-hollow {
+  border-radius: 3px; }
 
 .border-radius-circle {
   border-radius: 50%; }
@@ -256,7 +256,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .button, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.center-text, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
   text-align: center; }
 
 .center-element {
@@ -290,7 +290,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
   display: inline-block;
   vertical-align: middle; }
 
@@ -303,14 +303,33 @@ img, video {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
-.button:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in; }
-
 /*-------------------------------------*/
-.button {
+.button, .button-grey, .button-orange, .button-hollow {
+  text-transform: uppercase;
+  padding: 10px;
   line-height: 1;
-  cursor: pointer; }
+  cursor: pointer;
+  outline: none; }
+
+.button, .button-grey, .button-orange {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
+  position: relative;
+  border: none; }
+  .button:hover, .button-grey:hover, .button-orange:hover {
+    box-shadow: none;
+    top: 1px; }
+
+.button-grey {
+  background-color: #898989; }
+
+.button-orange {
+  background-color: #ec6608; }
+
+.button-hollow {
+  background-color: transparent;
+  color: #898989;
+  border: 1px solid; }
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
