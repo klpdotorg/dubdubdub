@@ -13,8 +13,26 @@
             }
         });
 
+        //dropdown navigation
+        $(".js-dropdown li:has(ul)").click(function(event){
+            event.stopPropagation();
+            var thisNav = $(this).closest(".nav").find('ul');
+            $(".js-dropdown ul").not(thisNav).slideUp().closest('.nav').children('li:has(ul)').removeClass('clicked');
+            if (this == event.target || this == $(event.target).parent()[0]) {
+                $(this).toggleClass('clicked').children('ul').slideToggle();
+                $(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();
+                $(this).siblings().removeClass('clicked').find("ul").slideUp();
+                return false;
+            }
+        }).addClass('has_ul');
+    
+        $(window).click(function(){        
+           $(".js-dropdown ul").slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
+        });
 
-        //top navigation    
+
+
+        //menu on mobile navigation    
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
             $('.js-nav').toggleClass('nav-open');

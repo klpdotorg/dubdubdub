@@ -46,29 +46,38 @@ body {
 
 .nav {
 	list-style-type: none;
-  background: #fff;
+	@extend %white-bg;
   width: 100%;
   left: 0;
   right: 0;
   top: -500px;
   overflow: auto;
 
+  ul {
+  	display: none;
+  }
+
 	li {
 		@extend %font-bold;
 		@extend %font-smallest;
 		text-transform: uppercase;
-		border-top-width: 4px;
 
 		li {
 			text-transform: lowercase;
+			display: block;
 		}
 
-	&.brand-orange, &.brand-green, &.brand-blue, &.brand-turquoise, &.brand-purple, &.brand-red {
-		a {
-			color: inherit;
-		}
-	}	
+		&.brand-orange, &.brand-green, &.brand-blue, &.brand-turquoise, &.brand-purple, &.brand-red {
+			a {
+				color: inherit;
+			}
+		}	
 	}
+
+	> li > a {
+		border-left: 3px solid;
+	}
+
 } //ends nav
 
 .nav-open {
@@ -88,11 +97,31 @@ body {
     position: static;
     left: 0;
     width: auto;
-  }
 
-  .nav li {
-    display: inline-block;
-    float: left;
+    ul {
+			position: absolute;
+    }
+
+    > li {
+    	border-top: 5px solid;
+
+    	> a {
+    		border-left: none;
+    	}
+    }
+
+    li {
+    	border-left: none;    	
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 3px;
+			min-width: 100px; /* adapt as per your content width */
+  		text-align: center;
+
+  		li {
+  			text-align: left;
+  		}
+    }
   }
 }
 
