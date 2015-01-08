@@ -314,7 +314,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.form-base .submit-style:hover, .nav, .footer-wrapper a, .subheader-wrapper a {
+.form-base .submit-style:hover, .nav, .footer-wrapper a, .breadcrumb a {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -597,11 +597,19 @@ body {
   padding: 10px 0;
   text-transform: uppercase;
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05); }
-  .subheader-wrapper a {
-    color: #898989; }
-    .subheader-wrapper a:hover {
-      color: #7bb6ec;
-      text-decoration: underline; }
+
+.breadcrumb a {
+  color: #898989;
+  padding: 0 10px 0 0;
+  position: relative; }
+  .breadcrumb a:after {
+    content: "\f105";
+    font-family: 'FontAwesome';
+    padding-left: 10px; }
+  .breadcrumb a:last-of-type:after {
+    content: ""; }
+  .breadcrumb a:hover {
+    color: #7bb6ec; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {

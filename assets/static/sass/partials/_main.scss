@@ -252,16 +252,28 @@ body {
   padding: $base-spacing 0;
   text-transform: uppercase;
   @extend %font-smallest;
-  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
-  
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);  
+}
+
+.breadcrumb {
   a {
-    color: $grey-steel;
-    @extend %transition-linear;
+  color: $grey-steel;
+  padding: 0 $base-spacing 0 0;
+  @extend %transition-linear;
+  position: relative;
+
+    &:after {
+      content: "\f105";
+      font-family: 'FontAwesome';
+      padding-left: $base-spacing;
+    }
+
+    &:last-of-type:after {
+      content: "";
+    }
 
     &:hover {
       color: $link-hover-color;
-      text-decoration: underline;
     }
   }
 }
-
