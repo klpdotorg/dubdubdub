@@ -141,6 +141,21 @@ sup {
 sub {
   bottom: -8px; }
 
+.heading-border, .heading-primary:after {
+  content: '';
+  display: block;
+  margin: 10px auto 0;
+  width: 80px;
+  height: 5px;
+  background: currentColor; }
+
+.heading-primary {
+  font-size: 220%;
+  line-height: 1.5;
+  margin: 50px 0;
+  letter-spacing: 1px;
+  text-transform: uppercase; }
+
 /*-------------------------------------*/
 /* global SITE styles */
 /*-------------------------------------*/
@@ -256,7 +271,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.center-text, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
   text-align: center; }
 
 .center-element {
