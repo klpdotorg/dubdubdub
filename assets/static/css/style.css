@@ -416,6 +416,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
   padding: 0 0 10px 0; }
 
 /* end default FORM styles */
+/*
+//remove main.js if not using
+
+*/
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
