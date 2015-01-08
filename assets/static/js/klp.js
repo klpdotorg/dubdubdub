@@ -13,6 +13,21 @@
             }
         });
 
+
+        //top navigation    
+        $('.js-nav-trigger').click(function(event){
+            event.stopPropagation();
+            $('.js-nav').toggleClass('nav-open');
+        });
+
+        $('.js-nav').click(function(event){
+            event.stopPropagation();
+        });
+
+        $(window).click(function(){
+            $('.js-nav').removeClass("nav-open");
+        });
+
         //Activates "tipsy" plugin for tooltips
         $('.qtip').tipsy({live: true});
 
@@ -31,24 +46,6 @@
               }
             }
         });
-
-        // Re-display top navigation if it gets hidden.
-        /*$(window).resize(function() {
-            if($(window).width() >=980){
-                $("#navigation").show();
-            } else {
-                $("#navigation").hide();
-            }
-        });*/
-
-        // Top navigation show dropdown on hover
-        /*$(".top-nav ul li" ).hover(
-          function() {
-            $( this ).find('ul').show();
-          }, function() {
-            $( this ).find('ul').hide();
-          }
-        );*/
 
         $("#page_sticky_nav").stickOnScroll({
             topOffset: 0,

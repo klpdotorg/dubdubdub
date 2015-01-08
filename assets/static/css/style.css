@@ -371,6 +371,9 @@ img, video {
   padding-left: 7.5px;
   padding-right: 7.5px; }
 
+.nav, .nav-trigger {
+  z-index: 3000; }
+
 /* default FORM styles */
 input[type="submit"] {
   -moz-appearance: none;
@@ -419,6 +422,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 /*
 //remove main.js if not using
 
+function toggle_mobile_nav(){
+   46  	$("#navigation").slideToggle();
+   47  }
+
 */
 * {
   -webkit-box-sizing: border-box;
@@ -435,8 +442,22 @@ body {
   font-weight: 400; }
 
 /*-------------------------------------*/
+.nav, .nav-trigger {
+  position: fixed; }
+
+.nav-trigger {
+  right: 10px;
+  top: 0;
+  cursor: pointer; }
+
 .nav {
-  list-style-type: none; }
+  list-style-type: none;
+  background: #fff;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: -500px;
+  overflow: auto; }
   .nav li {
     text-transform: uppercase;
     border-top-width: 4px; }
@@ -445,6 +466,24 @@ body {
     .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
       color: inherit; }
 
+.nav-open {
+  top: 40px; }
+
+.nav, .nav-open {
+  transition: all 0.35s ease-in; }
+
+@media only screen and (min-width: 700px) {
+  .nav-trigger {
+    display: none; }
+
+  .nav {
+    position: static;
+    left: 0;
+    width: auto; }
+
+  .nav li {
+    display: inline-block;
+    float: left; } }
 /*-------------------------------------*/
 /*-------------------------------------*/
 

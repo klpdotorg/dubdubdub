@@ -81,7 +81,7 @@
 	<header class="main-header {% if header_full_width %}full_width{% endif %} {% if header_fixed %}fixed{% endif %}">
 		<div class="header-content">
 			<a href="/" class="header_mobile_logo"></a>
-			<a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
+			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
 			<nav class="top-nav" role="navigation">
 				{% include "includes/_top_navigation.html" %}
 			</nav>

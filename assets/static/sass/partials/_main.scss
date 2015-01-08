@@ -1,6 +1,10 @@
 /*
 //remove main.js if not using
 
+function toggle_mobile_nav(){
+   46  	$("#navigation").slideToggle();
+   47  }
+
 */
 
 * {
@@ -29,8 +33,25 @@ body {
 .header {
 }
 
+
+.nav, .nav-trigger {
+	position: fixed;
+}
+
+.nav-trigger {
+  right: $base-spacing;
+  top: 0;
+  cursor: pointer;
+}
+
 .nav {
 	list-style-type: none;
+  background: #fff;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: -500px;
+  overflow: auto;
 
 	li {
 		@extend %font-bold;
@@ -48,8 +69,31 @@ body {
 		}
 	}	
 	}
+} //ends nav
 
+.nav-open {
+  top: $header-height;
+}
 
+.nav, .nav-open {
+  transition: all 0.35s ease-in;
+}
+
+@media only screen and (min-width: 700px) {
+  .nav-trigger {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    left: 0;
+    width: auto;
+  }
+
+  .nav li {
+    display: inline-block;
+    float: left;
+  }
 }
 
 
