@@ -94,7 +94,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
   font-size: 80%; }
 
-.font-smallest, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .heading-section-links {
+.font-smallest, .heading-section-links, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
   font-size: 70%; }
 
 .font-large, .alert {
@@ -162,6 +162,41 @@ sub {
 .heading-tiny {
   color: #898989; }
 
+.heading-section {
+  display: inline-block;
+  text-transform: uppercase;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0px 1px 1px 0px #d8d8d8;
+  padding: 5px 20px;
+  margin: 50px 0 0 0; }
+
+.heading-section-links {
+  background: #f6f6f6;
+  padding: 15px 10px 10px 10px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #d8d8d8;
+  margin: -10px 0 50px 0; }
+  .heading-section-links li {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 20px 0 5px;
+    position: relative; }
+    .heading-section-links li:before {
+      content: "\f10c";
+      font-family: "FontAwesome";
+      font-size: 5px;
+      position: absolute;
+      left: -5px;
+      top: 5px; }
+  .heading-section-links a {
+    display: block; }
+    .heading-section-links a:hover {
+      color: #7bb6ec; }
+
+.heading-section-links, .heading-section-links a {
+  color: #898989; }
+
 .text-bordered {
   border: 1px solid #d8d8d8;
   padding: 10px 15px; }
@@ -211,7 +246,7 @@ sub {
 .white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
-.white-bg, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul, .heading-section {
+.white-bg, .heading-section, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .link-color, a {
@@ -244,7 +279,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .heading-section {
+.border-radius-sm, .heading-section, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
   border-radius: 3px; }
 
 .border-radius-circle, .input-radio + .input-radio-label:before, .about-map-image {
@@ -282,12 +317,12 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .footer-wrapper:after, .heading-section-links:after {
+.clearfix:after, .heading-section-links:after, .footer-wrapper:after {
   content: "";
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .heading-section {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
   text-align: center; }
 
 .center-element {
@@ -330,9 +365,15 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.nav, .footer-wrapper a, .breadcrumb a, .heading-section-links a:hover {
+.heading-section-links a:hover, .nav, .footer-wrapper a, .breadcrumb a {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
+
+hr {
+  display: block;
+  height: 1px;
+  border-top: 1px solid #d8d8d8;
+  margin: 15px 0; }
 
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
@@ -443,9 +484,6 @@ img, video {
 .grid-child, .main-footer {
   padding-left: 10px;
   padding-right: 10px; }
-
-.heading-section-links {
-  z-index: -1; }
 
 .main-header, .nav, .nav-trigger {
   z-index: 3000; }
@@ -739,42 +777,6 @@ body {
 .logo-wrapper > img {
   padding: 25px;
   max-width: 140px; }
-
-.heading-section {
-  display: inline-block;
-  text-transform: uppercase;
-  border: 1px solid #d8d8d8;
-  box-shadow: 0px 1px 1px 0px #d8d8d8;
-  padding: 5px 20px;
-  margin: 0; }
-
-.heading-section-links {
-  background: #f6f6f6;
-  padding: 15px 10px 10px 10px;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-color: #d8d8d8;
-  position: relative;
-  top: -10px; }
-  .heading-section-links li {
-    display: inline-block;
-    vertical-align: top;
-    padding: 0 20px 0 5px;
-    position: relative; }
-    .heading-section-links li:before {
-      content: "\f10c";
-      font-family: "FontAwesome";
-      font-size: 5px;
-      position: absolute;
-      left: -5px;
-      top: 5px; }
-  .heading-section-links a {
-    display: block; }
-    .heading-section-links a:hover {
-      color: #7bb6ec; }
-
-.heading-section-links, .heading-section-links a {
-  color: #898989; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {

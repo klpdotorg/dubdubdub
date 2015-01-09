@@ -365,6 +365,15 @@ img, video {
   @include transition(all 0.3s ease-in);
 }
 
+
+//HR
+hr {
+  display: block;
+  height: 1px;
+  border-top: 1px solid $grey-cloud;
+  margin: $base-spacing-mid 0;
+}
+
 /*-------------------------------------*/
 //BUTTONS
 %button-base {

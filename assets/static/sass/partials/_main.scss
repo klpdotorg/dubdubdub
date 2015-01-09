@@ -337,59 +337,6 @@ body {
 }
 
 //PAGE: REPORTS
-.heading-section {
-  display: inline-block;
-  @extend %white-bg;
-  @extend %h4;
-  @extend %center-text;
-  @extend %border-radius-sm;
-  text-transform: uppercase;
-  border: 1px solid $grey-cloud;
-  box-shadow: 0px 1px 1px 0px $grey-cloud;
-  padding: $base-spacing-sm $base-spacing-lg;
-  margin: 0;
-}
-
-.heading-section-links {
-  @extend %font-smallest;
-  background: $grey-mist;
-  padding: $base-spacing-mid $base-spacing $base-spacing $base-spacing;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-color: $grey-cloud;
-  position: relative;
-  top: -($base-spacing);
-  @extend %clearfix;
-
-  li {
-    display: inline-block;
-    vertical-align: top;
-    padding: 0 $base-spacing-lg 0 $base-spacing-sm;
-    position: relative;
-
-    &:before {
-      content: "\f10c";
-      font-family: "FontAwesome";
-      font-size: 5px;
-      position: absolute;
-      left: -($base-spacing-sm);
-      top: $base-spacing-sm;
-    }
-  }
-
-  a {
-    display: block;
-
-    &:hover {
-      color: $link-hover-color;
-      @extend %transition-linear;
-    }
-  }
-}
-
-.heading-section-links, .heading-section-links a {
-  color: $grey-steel; 
-}
 
 
 
