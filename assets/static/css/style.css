@@ -79,11 +79,14 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
+.font-bold, strong, b, .heading-tertiary, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .about-map {
   font-weight: 300; }
+
+.font-uppercase, .heading-tertiary {
+  text-transform: uppercase; }
 
 .font-base-size, body {
   font-size: 16px; }
@@ -94,7 +97,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
   font-size: 80%; }
 
-.font-smallest, .heading-section-links, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
+.font-smallest, .heading-section-block, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
   font-size: 70%; }
 
 .font-large, .alert {
@@ -109,7 +112,7 @@ q:before, q:after {
 h6, .h6 {
   font-size: 90%; }
 
-h5, .h5 {
+h5, .h5, .heading-tertiary {
   font-size: 120%; }
 
 h4, .h4, .heading-section {
@@ -159,42 +162,47 @@ sub {
 .heading-secondary {
   text-transform: uppercase; }
 
+.heading-tertiary {
+  color: #4d4d4d;
+  margin-bottom: 25px; }
+
 .heading-tiny {
   color: #898989; }
 
 .heading-section {
   display: inline-block;
+  color: #898989;
   text-transform: uppercase;
   border: 1px solid #d8d8d8;
   box-shadow: 0px 1px 1px 0px #d8d8d8;
   padding: 5px 20px;
   margin: 50px 0 0 0; }
 
-.heading-section-links {
+.heading-section-block {
   background: #f6f6f6;
   padding: 15px 10px 10px 10px;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: #d8d8d8;
   margin: -10px 0 50px 0; }
-  .heading-section-links li {
+  .heading-section-block li {
     display: inline-block;
     vertical-align: top;
     padding: 0 20px 0 5px;
     position: relative; }
-    .heading-section-links li:before {
+    .heading-section-block li:before {
       content: "\f10c";
       font-family: "FontAwesome";
       font-size: 5px;
       position: absolute;
       left: -5px;
       top: 5px; }
-  .heading-section-links a {
+  .heading-section-block a {
     display: block; }
-    .heading-section-links a:hover {
+    .heading-section-block a:hover {
       color: #7bb6ec; }
 
-.heading-section-links, .heading-section-links a {
+.heading-section-block, .heading-section-block a {
   color: #898989; }
 
 .text-bordered {
@@ -243,7 +251,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
+.white, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
 .white-bg, .heading-section, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -268,7 +276,7 @@ sub {
 .base-spacing-lg {
   padding: 20px 0; }
 
-.base-spacing-lg-x {
+.base-spacing-lg-x, .data-each {
   padding: 25px 0; }
 
 .base-spacing-lg-2x {
@@ -317,7 +325,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-links:after, .footer-wrapper:after {
+.clearfix:after, .heading-section-block:after, .footer-wrapper:after {
   content: "";
   display: table;
   clear: both; }
@@ -365,7 +373,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.heading-section-links a:hover, .nav, .footer-wrapper a, .breadcrumb a {
+.heading-section-block a:hover, .nav, .footer-wrapper a, .breadcrumb a {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -378,7 +386,7 @@ hr {
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
   text-transform: uppercase;
-  padding: 10px;
+  padding: 10px 20px;
   line-height: 1;
   cursor: pointer;
   outline: none; }
@@ -388,7 +396,7 @@ hr {
   box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
   position: relative;
   border: none; }
-  .button:hover, .button-grey:hover, .button-orange:hover {
+  .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus {
     box-shadow: none;
     top: 1px; }
 
@@ -466,7 +474,7 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .header-content, .footer-wrapper {
+.container, .heading-section-block > ul, .header-content, .footer-wrapper {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -581,6 +589,7 @@ input.error {
 // ask batpad if we can remove the checked="", disabled, equal part, HTML5 style
 // speak to batpad about checked + disabled input radio styling, right now clicking another removes the checked state on the checked + disabled
 //what is this reports at the top of reports?
+//was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
 
 
 //MY Learnings for boilerplate;
@@ -778,6 +787,9 @@ body {
 .logo-wrapper > img {
   padding: 25px;
   max-width: 140px; }
+
+.data-each:first-of-type {
+  padding-top: 0; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {

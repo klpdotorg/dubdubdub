@@ -62,6 +62,10 @@
   font-weight: 300;
 }
 
+.font-uppercase, %font-uppercase {
+  text-transform: uppercase;
+}
+
 //font-sizing
 .font-base-size, %font-base-size {
   font-size: $font-base-size;
@@ -207,6 +211,14 @@ sub {
   @extend %font-light;
 }
 
+.heading-tertiary {
+  @extend %font-bold;
+  @extend %h5;
+  @extend %font-uppercase;
+  color: $grey-gravel;
+  margin-bottom: $base-spacing-lg-x;
+}
+
 .heading-tiny {
   color: $grey-steel;
   @extend %font-smaller;
@@ -215,6 +227,7 @@ sub {
 .heading-section {
   display: inline-block;
   @extend %white-bg;
+  color: $grey-steel;
   @extend %h4;
   @extend %center-text;
   @extend %border-radius-sm;
@@ -225,7 +238,7 @@ sub {
   margin: $base-spacing-lg-2x 0 0 0;
 }
 
-.heading-section-links {
+.heading-section-block {
   @extend %font-smallest;
   background: $grey-mist;
   padding: $base-spacing-mid $base-spacing $base-spacing $base-spacing;
@@ -234,6 +247,10 @@ sub {
   border-color: $grey-cloud;
   margin: -($base-spacing) 0 $base-spacing-lg-2x 0;
   @extend %clearfix;
+
+  > ul {
+    @extend %container;
+  }
 
   li {
     display: inline-block;
@@ -261,7 +278,7 @@ sub {
   }
 }
 
-.heading-section-links, .heading-section-links a {
+.heading-section-block, .heading-section-block a {
   color: $grey-steel; 
 }
 

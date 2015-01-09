@@ -383,7 +383,7 @@ hr {
   @extend %border-radius-sm;
   @extend %vertical-inline-middle;
   text-transform: uppercase;
-  padding: $base-spacing;
+  padding: $base-spacing $base-spacing-lg;
   line-height: 1;
   cursor: pointer;
   outline: none;
@@ -398,7 +398,7 @@ hr {
   @extend %white;
   border: none;
 
-  &:hover {
+  &:hover, &:focus {
     @extend %white;
     box-shadow: none;
     top: 1px;
