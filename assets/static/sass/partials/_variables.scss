@@ -39,10 +39,11 @@ $link-hover-color: lighten($brand-blue, 15%);
 
 //spacing, padding, margins
 $base-spacing: 10px;
-$base-spacing-mid: $base-spacing * 1.5;
-$base-spacing-lg: $base-spacing * 2;
-$base-spacing-lg-x: $base-spacing * 2.5;
-$base-spacing-sm: $base-spacing / 2;
+$base-spacing-mid: $base-spacing * 1.5;				//15px
+$base-spacing-lg: $base-spacing * 2;					//20px
+$base-spacing-lg-x: $base-spacing * 2.5;			//25px
+$base-spacing-lg-2x: $base-spacing * 5;				//50px
+$base-spacing-sm: $base-spacing / 2;					//5px
 
 /*-------------------------------------*/
 

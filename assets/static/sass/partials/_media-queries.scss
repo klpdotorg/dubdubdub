@@ -45,12 +45,15 @@
 }
 
 @media only screen and (min-width: 600px) {
+	//alerts
+
 	.alert {
 		left: 20%;
 		right: 20%;
 		@include container;
 	}
 	
+	//navigation: top
 	.nav-footer {
 	  float: left;
 	  margin-bottom: 0;
@@ -63,6 +66,13 @@
 	  img {
 	    float: right;
 	  }
+  }
+
+  //page: about
+  .about-map {
+  	img {
+  		max-width: none;
+  	}
   }
 }
 

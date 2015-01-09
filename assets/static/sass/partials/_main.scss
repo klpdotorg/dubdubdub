@@ -293,3 +293,36 @@ body {
     margin-bottom: $base-spacing-lg * 2;
   }
 }
+
+
+/*-------------------------------------*/
+//PAGE: ABOUT
+
+.about-map {
+  background: $grey-mist;
+  @extend %font-light;
+  @extend %h2;
+  max-height: 140px;
+  @extend %center-text;
+  margin: $base-spacing-lg-2x 0;
+
+  > a {
+    position: relative;
+    top: -22px;
+  }
+
+  img {
+    margin-right: $base-spacing-mid;
+    max-width: 120px;
+  }
+
+  span {
+    @extend %brand-red;
+  }
+}
+
+.about-map-image {
+  @extend %border-radius-circle;
+  @extend %vertical-inline-middle;
+  border: 1px solid $brand-red;
+}

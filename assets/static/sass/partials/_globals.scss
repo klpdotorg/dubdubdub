@@ -139,6 +139,14 @@
     padding: $base-spacing-lg 0;
 }
 
+.base-spacing-lg-x, %base-spacing-lg-x {
+    padding: $base-spacing-lg-x 0;
+}
+
+.base-spacing-lg-2x, %base-spacing-lg-2x {
+    padding: $base-spacing-lg-2x 0;
+}
+
 /*-------------------------------------*/
 
 /* BORDER-RADIUS */
@@ -457,7 +465,7 @@ img, video {
 /* VIDEO RESPONSIVE */
 
 .video-wrapper {
-  margin-bottom: 50px;
+  margin-bottom: $base-spacing-lg-2x;
   
   iframe {
     max-width: 100%;
