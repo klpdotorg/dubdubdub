@@ -380,6 +380,11 @@ img, video {
   content: "\f057"; }
 
 /*-------------------------------------*/
+/* VIDEO RESPONSIVE */
+.video-wrapper iframe {
+  max-width: 100%; }
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 /*.cms-default-styles {
   ul, ol {
