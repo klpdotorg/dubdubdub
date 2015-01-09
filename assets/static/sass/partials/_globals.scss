@@ -401,6 +401,40 @@ img, video {
 
 /*-------------------------------------*/
 
+/* NOTIFICATIONS AND ALERTS */
+
+.alert {
+  position: fixed;
+  top: $header-height;
+  left: 20%;
+  right: 20%;
+  @extend %brand-blue-bg;
+  @extend %center-text;
+  @extend %font-bold;
+  @extend %font-large;
+  opacity: 0.9;
+  @extend %border-radius;
+  padding: $base-spacing;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.alert.success {
+  @extend %brand-green-bg;
+}
+
+.alert.warning {
+  @extend %brand-orange-bg;
+}
+
+.alert.error {
+  @extend %brand-red-bg;
+}
+
+
+/*-------------------------------------*/
+
 /* CMS DEFAULT STYLES */
 /*.cms-default-styles {
   ul, ol {

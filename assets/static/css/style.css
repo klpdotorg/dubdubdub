@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow, .nav li, .nav-footer-menu-links {
+.font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
 .font-light {
@@ -97,7 +97,7 @@ q:before, q:after {
 .font-smallest, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
   font-size: 70%; }
 
-.font-large {
+.font-large, .alert {
   font-size: 110%; }
 
 .font-larger {
@@ -168,19 +168,19 @@ sub {
 .brand-orange {
   color: #ec6608; }
 
-.brand-orange-bg {
+.brand-orange-bg, .alert.warning {
   background-color: #ec6608; }
 
 .brand-green {
   color: #26b262; }
 
-.brand-green-bg {
+.brand-green-bg, .alert.success {
   background-color: #26b262; }
 
 .brand-blue, .modal .heading-border {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert {
   background-color: #3891e3; }
 
 .brand-turquoise {
@@ -198,7 +198,7 @@ sub {
 .brand-red, .error-message {
   color: #cb0012; }
 
-.brand-red-bg {
+.brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
 .white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
@@ -228,7 +228,7 @@ sub {
 
 /*-------------------------------------*/
 /* BORDER-RADIUS */
-.border-radius {
+.border-radius, .alert {
   border-radius: 6px; }
 
 .border-radius-sm, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
@@ -274,7 +274,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   text-align: center; }
 
 .center-element {
@@ -353,6 +353,19 @@ img, video {
   padding: 5px 10px; }
 
 /*-------------------------------------*/
+/* NOTIFICATIONS AND ALERTS */
+.alert {
+  position: fixed;
+  top: 42px;
+  left: 20%;
+  right: 20%;
+  opacity: 0.9;
+  padding: 10px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 /*.cms-default-styles {
   ul, ol {
@@ -397,6 +410,9 @@ img, video {
 
 .nav, .nav-trigger {
   z-index: 3000; }
+
+.alert {
+  z-index: 5000; }
 
 /*-------------------------------------*/
 input[type="submit"] {
