@@ -201,10 +201,10 @@ sub {
 .brand-red-bg {
   background-color: #cb0012; }
 
-.white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .form-base .submit-style, .main-footer, .main-footer a {
+.white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
-.white-bg, body, .main-header, .nav, .nav ul {
+.white-bg, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .link-color, a {
@@ -231,10 +231,10 @@ sub {
 .border-radius {
   border-radius: 6px; }
 
-.border-radius-sm, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select {
+.border-radius-sm, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
   border-radius: 3px; }
 
-.border-radius-circle {
+.border-radius-circle, .input-radio + .input-radio-label:before {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -274,7 +274,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   text-align: center; }
 
 .center-element {
@@ -308,7 +308,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   display: inline-block;
   vertical-align: middle; }
 
@@ -317,7 +317,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.form-base .submit-style:hover, .nav, .footer-wrapper a, .breadcrumb a {
+.nav, .footer-wrapper a, .breadcrumb a {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -428,29 +428,50 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
     border-color: #3891e3; }
 .form-base label {
   padding: 10px 0; }
-.form-base input[type="checkbox"].form-checkbox {
+
+.input-checkbox, .input-radio {
   opacity: 0;
   position: absolute; }
-.form-base input[type="checkbox"] + .form-checkbox-label:before {
-  content: '';
-  font-family: 'icomoon';
-  border: none;
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  cursor: pointer;
-  padding: 4px 2px 2px 2px; }
-.form-base .form-checkbox-label {
+
+.input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label {
   cursor: pointer; }
-.form-base input[type="submit"] {
-  padding: 10px; }
-.form-base .submit-style {
-  padding: 10px;
-  font-family: inherit;
-  line-height: 1; }
+
+.input-checkbox-label, .input-radio-label {
+  position: relative;
+  cursor: pointer; }
+
+.input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+  border: 2px solid #bbb;
+  content: "";
+  font-size: 12px;
+  line-height: 1.1;
+  width: 12px;
+  height: 12px;
+  padding: 2px;
+  margin-right: 5px; }
+
+.input-checkbox:checked + .input-checkbox-label:before {
+  content: "\f00c";
+  font-family: 'FontAwesome';
+  background: #bbb; }
+
+.input-radio:checked + .input-radio-label:before {
+  background: #bbb;
+  box-shadow: inset 0px 0px 0px 4px #fff; }
 
 .form-field-wrap {
   padding: 0 0 20px 0; }
+
+/*-------------------------------------*/
+input[disabled], input[disabled] + .input-checkbox-label, input[disabled] + .input-radio-label {
+  cursor: not-allowed; }
+
+input[disabled], .input-checkbox[disabled] + .input-checkbox-label:before, .input-radio[disabled] + .input-radio-label:before {
+  border-color: #e9e9e9; }
+
+input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before {
+  background: #e9e9e9;
+  border-color: #e9e9e9; }
 
 /*-------------------------------------*/
 .error-message {
@@ -464,6 +485,15 @@ input.error {
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 // remove all extra classes in _login_modal.html if they're not being used later
 //check small jump on mobile when clicking a dropdown   
+// ask batpad if we can remove the checked="", disabled, equal part, HTML5 style
+// speak to batpad about checked + disabled input radio styling, right now clicking another removes the checked state on the checked + disabled
+
+
+//MY Learnings for boilerplate;
+-- add better custom radio checkbox styling
+-- add disabled styling for radio, checks and inputs
+-- change img-fullwidth class to simply full-width
+--- give classes to inputs; enough of these attribute selectors
 
 */
 * {
