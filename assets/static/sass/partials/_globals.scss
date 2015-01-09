@@ -324,7 +324,18 @@ img, video {
   vertical-align: top;
 }
 
+@mixin vertical-inline-top {
+  display: inline-block;
+  vertical-align: top;
+
+}
+
 .vertical-inline-middle, %vertical-inline-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin vertical-inline-middle {
   display: inline-block;
   vertical-align: middle;
 }

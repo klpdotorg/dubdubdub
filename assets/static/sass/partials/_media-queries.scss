@@ -69,10 +69,9 @@
   }
 
   //page: about
-  .about-map {
-  	img {
-  		max-width: none;
-  	}
-  }
+  .about-map-image {
+		max-width: none;
+	  @include vertical-inline-middle;
+	}
 }
 

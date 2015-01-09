@@ -306,23 +306,20 @@ body {
   @extend %center-text;
   margin: $base-spacing-lg-2x 0;
 
-  > a {
-    position: relative;
-    top: -22px;
-  }
-
-  img {
-    margin-right: $base-spacing-mid;
-    max-width: 120px;
-  }
-
   span {
     @extend %brand-red;
   }
 }
 
+.about-map-link {
+    position: relative;
+    top: -22px;
+    display: block;
+}
+
 .about-map-image {
   @extend %border-radius-circle;
-  @extend %vertical-inline-middle;
   border: 1px solid $brand-red;
+  margin-right: $base-spacing-mid;
+  max-width: 120px;
 }

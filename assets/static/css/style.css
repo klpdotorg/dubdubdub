@@ -318,7 +318,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map-image {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   display: inline-block;
   vertical-align: middle; }
 
@@ -441,7 +441,7 @@ img, video {
   padding-left: 10px;
   padding-right: 10px; }
 
-.nav, .nav-trigger {
+.main-header, .nav, .nav-trigger {
   z-index: 3000; }
 
 .alert {
@@ -718,15 +718,16 @@ body {
   background: #f6f6f6;
   max-height: 140px;
   margin: 50px 0; }
-  .about-map > a {
-    position: relative;
-    top: -22px; }
-  .about-map img {
-    margin-right: 15px;
-    max-width: 120px; }
+
+.about-map-link {
+  position: relative;
+  top: -22px;
+  display: block; }
 
 .about-map-image {
-  border: 1px solid #cb0012; }
+  border: 1px solid #cb0012;
+  margin-right: 15px;
+  max-width: 120px; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {
@@ -780,7 +781,9 @@ body {
     .footer-copyright img {
       float: right; }
 
-  .about-map img {
-    max-width: none; } }
+  .about-map-image {
+    max-width: none;
+    display: inline-block;
+    vertical-align: middle; } }
 
 /*# sourceMappingURL=style.css.map */
