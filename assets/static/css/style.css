@@ -600,8 +600,7 @@ body {
 
 .breadcrumb a {
   color: #898989;
-  padding: 0 10px 0 0;
-  position: relative; }
+  padding: 0 10px 0 0; }
   .breadcrumb a:after {
     content: "\f105";
     font-family: 'FontAwesome';

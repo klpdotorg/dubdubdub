@@ -260,7 +260,6 @@ body {
   color: $grey-steel;
   padding: 0 $base-spacing 0 0;
   @extend %transition-linear;
-  position: relative;
 
     &:after {
       content: "\f105";
