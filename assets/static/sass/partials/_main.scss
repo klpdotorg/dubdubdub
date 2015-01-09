@@ -323,3 +323,18 @@ body {
   margin-right: $base-spacing-mid;
   max-width: 120px;
 }
+
+
+/*-------------------------------------*/
+//PAGE: PARTNERS
+.logo-wrapper {
+  @extend %center-text;
+
+  > img {
+    padding: $base-spacing-lg-x;
+    max-width: 140px;
+  }
+}
+
+
+

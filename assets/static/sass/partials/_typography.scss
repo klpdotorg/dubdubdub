@@ -201,6 +201,8 @@ sub {
 }
 
 .heading-secondary, %heading-secondary {
+  @extend %h2;
+  text-transform: uppercase;
 }
 
 .heading-tiny {

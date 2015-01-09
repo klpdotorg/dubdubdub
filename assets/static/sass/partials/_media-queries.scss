@@ -73,5 +73,12 @@
 		max-width: none;
 	  @include vertical-inline-middle;
 	}
+
+	//page: partners
+	.logo-wrapper {
+		> img {
+			max-width: none;
+		}
+	}
 }
 

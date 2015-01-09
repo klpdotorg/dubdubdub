@@ -118,7 +118,7 @@ h4, .h4 {
 h3, .h3 {
   font-size: 140%; }
 
-h2, .h2, .about-map {
+h2, .h2, .heading-secondary, .about-map {
   font-size: 150%; }
 
 h1, .h1 {
@@ -154,6 +154,9 @@ sub {
   line-height: 1.5;
   margin: 50px 0;
   letter-spacing: 1px;
+  text-transform: uppercase; }
+
+.heading-secondary {
   text-transform: uppercase; }
 
 .heading-tiny {
@@ -284,7 +287,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
   text-align: center; }
 
 .center-element {
@@ -729,6 +732,11 @@ body {
   margin-right: 15px;
   max-width: 120px; }
 
+/*-------------------------------------*/
+.logo-wrapper > img {
+  padding: 25px;
+  max-width: 140px; }
+
 @media only screen and (min-width: 800px) {
   .nav-trigger {
     display: none; }
@@ -784,6 +792,9 @@ body {
   .about-map-image {
     max-width: none;
     display: inline-block;
-    vertical-align: middle; } }
+    vertical-align: middle; }
+
+  .logo-wrapper > img {
+    max-width: none; } }
 
 /*# sourceMappingURL=style.css.map */
