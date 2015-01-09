@@ -7,6 +7,12 @@
   margin-right: auto;
 }
 
+@mixin container {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 //Gutters inner
 .grid-parent, %grid-parent {
   margin-left: -$grid-padding;

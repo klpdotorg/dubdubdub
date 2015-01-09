@@ -16,8 +16,8 @@
         //dropdown navigation
         $(".js-dropdown li:has(ul)").click(function(event){
             event.stopPropagation();
-            var thisNav = $(this).closest(".nav").find('ul');
-            $(".js-dropdown ul").not(thisNav).slideUp().closest('.nav').children('li:has(ul)').removeClass('clicked');
+            var thisNav = $(this).closest(".js-nav").find('ul');
+            $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-nav').children('li:has(ul)').removeClass('clicked');
             if (this == event.target || this == $(event.target).parent()[0]) {
                 $(this).toggleClass('clicked').children('ul').slideToggle(300);
                 $(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();

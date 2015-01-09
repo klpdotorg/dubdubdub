@@ -357,13 +357,27 @@ img, video {
 .alert {
   position: fixed;
   top: 42px;
-  left: 20%;
-  right: 20%;
+  left: 5%;
+  right: 5%;
   opacity: 0.9;
-  padding: 10px;
+  padding: 10px 30px 10px;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
+  .alert:after {
+    font-family: 'FontAwesome';
+    position: absolute;
+    top: 10px;
+    right: 10px; }
+
+.alert.success:after {
+  content: "\f14a"; }
+
+.alert.warning:after {
+  content: "\f071"; }
+
+.alert.error:after {
+  content: "\f057"; }
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
@@ -412,7 +426,7 @@ img, video {
   z-index: 3000; }
 
 .alert {
-  z-index: 5000; }
+  z-index: 2500; }
 
 /*-------------------------------------*/
 input[type="submit"] {
@@ -711,6 +725,13 @@ body {
       .nav li li {
         text-align: left; } }
 @media only screen and (min-width: 600px) {
+  .alert {
+    left: 20%;
+    right: 20%;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto; }
+
   .nav-footer {
     float: left;
     margin-bottom: 0;
