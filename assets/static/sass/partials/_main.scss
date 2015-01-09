@@ -29,7 +29,7 @@ body {
   color: $font-base-color;
   @extend %font-base-family;
   @extend %font-base-size;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
 }
 
@@ -92,6 +92,7 @@ body {
 		@extend %font-bold;
 		text-transform: uppercase;
 		padding: 0 $base-spacing-mid;
+    cursor: pointer;
 
 		li {
 			text-transform: capitalize;
@@ -123,7 +124,7 @@ body {
 		border-left: 3px solid;
 		@extend %font-smallest;
 		padding: 0 $base-spacing;
-		margin: $base-spacing 0;
+		margin: ($base-spacing - 3) 0;
 	}
 
 	a {
@@ -154,7 +155,8 @@ body {
 .footer-wrapper {
   @extend %container;
   @extend %clearfix;
-  padding: $base-spacing-lg 0;
+  padding-top: $base-spacing-lg;
+  padding-bottom: $base-spacing-lg;
 
   a {
     @extend %transition-linear;
