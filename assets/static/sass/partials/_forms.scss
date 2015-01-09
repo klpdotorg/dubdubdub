@@ -1,4 +1,5 @@
-/* default FORM styles */
+/*-------------------------------------*/
+//FORM: DEFAULT STYLES
 
 input[type="submit"] {
   -moz-appearance: none;
@@ -12,8 +13,12 @@ textarea {
   vertical-align: top;
 }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
-  border: none;
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], textarea, select {
+  border: 1px solid $grey-cloud;
+
+  @include placeholder {
+    color: $grey-silver;
+  }
 
   &:focus {
     outline: 0;
@@ -23,12 +28,13 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 
 //form styles for default forms; wrap your form with class of form-base
 .form-base {
-  input[type="text"], input[type="email"], input[type="number"], input[type="password"], textarea, select {
-    //@extend %brand-2-bgcolor;
-    @extend %base-spacing-sm;
+  .input-text, textarea, select {
+    padding: $base-spacing - 2;
+    @extend %border-radius-sm;
+    @extend %font-base-family;
 
     &:focus {
-        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);  
+      border-color: $brand-blue;
     }
   }
     
@@ -83,7 +89,14 @@ input[type="text"], input[type="email"], input[type="number"], input[type="passw
 
 
 .form-field-wrap {
-    padding: 0 0 $base-spacing 0;
+    padding: 0 0 $base-spacing-lg 0;
 }
 
-/* end default FORM styles */
+/*-------------------------------------*/
+//FORM: LOGIN
+.form-signup {
+  .input-text {
+    @extend %full-width;
+  }
+}
+

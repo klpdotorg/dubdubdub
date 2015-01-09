@@ -199,6 +199,11 @@ sub {
 .heading-secondary, %heading-secondary {
 }
 
+.heading-tiny {
+  color: $grey-steel;
+  @extend %font-smaller;
+}
+
 
 /*-------------------------------------*/
 

@@ -180,7 +180,7 @@ img, video {
 }
 
 //use this when you need a full-width container
-.full-width, %img-fullwidth {
+.full-width, %full-width {
   width: 100%;
 }
 
@@ -392,6 +392,11 @@ img, video {
   background-color: transparent;
   color: $grey-steel;
   border: 1px solid
+}
+
+.button-sm {
+  @extend %font-smallest;
+  padding: $base-spacing-sm $base-spacing;
 }
 
 /*-------------------------------------*/
