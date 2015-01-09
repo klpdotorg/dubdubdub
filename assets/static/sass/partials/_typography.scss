@@ -203,6 +203,8 @@ sub {
 .heading-secondary, %heading-secondary {
   @extend %h2;
   text-transform: uppercase;
+  @extend %center-text;
+  @extend %font-light;
 }
 
 .heading-tiny {

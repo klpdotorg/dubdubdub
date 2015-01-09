@@ -82,7 +82,7 @@ q:before, q:after {
 .font-bold, strong, b, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
-.font-light, .about-map {
+.font-light, .heading-secondary, .about-map {
   font-weight: 300; }
 
 .font-base-size, body {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
   font-size: 80%; }
 
-.font-smallest, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
+.font-smallest, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .heading-section-links {
   font-size: 70%; }
 
 .font-large, .alert {
@@ -112,7 +112,7 @@ h6, .h6 {
 h5, .h5 {
   font-size: 120%; }
 
-h4, .h4 {
+h4, .h4, .heading-section {
   font-size: 130%; }
 
 h3, .h3 {
@@ -211,7 +211,7 @@ sub {
 .white, .button, .button-grey, .button-orange, .button:hover, .button-grey:hover, .button-orange:hover, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
-.white-bg, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
+.white-bg, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul, .heading-section {
   background-color: #fff; }
 
 .link-color, a {
@@ -244,7 +244,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
+.border-radius-sm, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .heading-section {
   border-radius: 3px; }
 
 .border-radius-circle, .input-radio + .input-radio-label:before, .about-map-image {
@@ -282,12 +282,12 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .footer-wrapper:after {
+.clearfix:after, .footer-wrapper:after, .heading-section-links:after {
   content: "";
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .heading-section {
   text-align: center; }
 
 .center-element {
@@ -330,7 +330,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.nav, .footer-wrapper a, .breadcrumb a {
+.nav, .footer-wrapper a, .breadcrumb a, .heading-section-links a:hover {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -443,6 +443,9 @@ img, video {
 .grid-child, .main-footer {
   padding-left: 10px;
   padding-right: 10px; }
+
+.heading-section-links {
+  z-index: -1; }
 
 .main-header, .nav, .nav-trigger {
   z-index: 3000; }
@@ -736,6 +739,42 @@ body {
 .logo-wrapper > img {
   padding: 25px;
   max-width: 140px; }
+
+.heading-section {
+  display: inline-block;
+  text-transform: uppercase;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0px 1px 1px 0px #d8d8d8;
+  padding: 5px 20px;
+  margin: 0; }
+
+.heading-section-links {
+  background: #f6f6f6;
+  padding: 15px 10px 10px 10px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #d8d8d8;
+  position: relative;
+  top: -10px; }
+  .heading-section-links li {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 20px 0 5px;
+    position: relative; }
+    .heading-section-links li:before {
+      content: "\f10c";
+      font-family: "FontAwesome";
+      font-size: 5px;
+      position: absolute;
+      left: -5px;
+      top: 5px; }
+  .heading-section-links a {
+    display: block; }
+    .heading-section-links a:hover {
+      color: #7bb6ec; }
+
+.heading-section-links, .heading-section-links a {
+  color: #898989; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {
