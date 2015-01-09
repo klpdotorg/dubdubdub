@@ -92,6 +92,19 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
     padding: 0 0 $base-spacing-lg 0;
 }
 
+
+/*-------------------------------------*/
+//FORM: ERRORS
+.error-message {
+  @extend %brand-red;
+  @extend %font-smaller;
+  padding-top: $base-spacing-sm;
+}
+
+input.error {
+  border-color: $brand-red;
+}
+
 /*-------------------------------------*/
 //FORM: LOGIN
 .form-signup {

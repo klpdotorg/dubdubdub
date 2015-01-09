@@ -91,7 +91,7 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow {
+.font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
   font-size: 80%; }
 
 .font-smallest, .button-sm, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
@@ -195,7 +195,7 @@ sub {
 .brand-purple-bg {
   background-color: #7575bc; }
 
-.brand-red {
+.brand-red, .error-message {
   color: #cb0012; }
 
 .brand-red-bg {
@@ -453,11 +453,15 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   padding: 0 0 20px 0; }
 
 /*-------------------------------------*/
-/*
+.error-message {
+  padding-top: 5px; }
 
-// in urls.py.function toggle_mobile_nav(){
-   46  	$("#navigation").slideToggle();
-   47  }
+input.error {
+  border-color: #cb0012; }
+
+/*-------------------------------------*/
+/*
+// currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 
 //check small jump on mobile when clicking a dropdown   
 
