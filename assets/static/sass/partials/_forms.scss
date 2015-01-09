@@ -107,9 +107,8 @@ input.error {
 
 /*-------------------------------------*/
 //FORM: LOGIN
-.form-signup {
+.form-signup, .form-login {
   .input-text {
     @extend %full-width;
   }
 }
-

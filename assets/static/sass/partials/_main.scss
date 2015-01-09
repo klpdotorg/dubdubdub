@@ -1,6 +1,6 @@
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
-
+// remove all extra classes in _login_modal.html if they're not being used later
 //check small jump on mobile when clicking a dropdown   
 
 */
@@ -242,6 +242,7 @@ body {
 
 /*-------------------------------------*/
 //BREADCRUMB
+
 .subheader-wrapper {
   background: $grey-mist;
   padding: $base-spacing 0;
@@ -269,5 +270,15 @@ body {
     &:hover {
       color: $link-hover-color;
     }
+  }
+}
+
+/*-------------------------------------*/
+//MODALS: INNER ELEMENT STYLES
+
+.modal {
+  .heading-border {
+    @extend %brand-blue;
+    margin-bottom: $base-spacing-lg * 2;
   }
 }

@@ -4,7 +4,7 @@
         <div class="steps-wrapper">
             <div class="step-item login-step-item" id="signupContainer" data-step-name="signup">
                 <div class="step-details">
-                    <h3 class="bordered-heading blue">Signup<span></span></h3>
+                    <h3 class="heading-border">Signup<span></span></h3>
                     <form id="signupForm" class="form-base form-signup">
                         <div class="form-field-wrap">
                             <input type="text" id="signupFirstName" data-required="true" placeholder="First Name" class="input-text">                       
@@ -22,7 +22,7 @@
                             <input type="password" id="signupPassword" data-required="true" placeholder="Password" class="input-text">
                         </div>
                         <div class="form-field-wrap">
-                            <input type="checkbox" name="opted_email" id="signupOptedEmail" checked="" class="fl mar-0">
+                            <input type="checkbox" name="opted_email" id="signupOptedEmail" checked="" class="">
                             <div class="fl ml-10">Receive updates from KLP and its partners</div>
                         </div>
                         <div class="form-field-wrap">
@@ -37,37 +37,46 @@
                         <span class="heading-tiny">Already a registered user?</span>
                         <a class="button-grey button-sm btn-next-step-login js-showLogin">Login</a>
                     </div>
-                </div>
+                </div>  
             </div> <!-- Step End -->
 
             <div class="step-item login-step-item" id="loginContainer" data-step-name="login" style="display:none;">
                 <div class="step-details">
-                    <h3 class="bordered-heading blue">Login<span></span></h3>
-                    <form id="loginForm">
-                        <input type="text" id="loginEmail" data-required="true" class="input-text width-100p mar_top_100" placeholder="Email">
-                        <input type="password" id="loginPassword" data-required="true" class="input-text width-100p mar_top_25" placeholder="Password">
-                        <div class="ta-c mar_top_20">
+                    <h3 class="heading-border">Login<span></span></h3>
+                    <form id="loginForm" class="form-base form-login">
+                        <div class="form-field-wrap">
+                            <input type="email" id="loginEmail" data-required="true" class="input-text" placeholder="Email">
+                        </div>
+
+                        <div class="form-field-wrap">
+                            <input type="password" id="loginPassword" data-required="true" class="input-text" placeholder="Password">
+                        </div>
+
+                        <div class="form-field-wrap">
                             <input type="submit" value="Submit" class="button blue btn-next-step-confirmation js-submit-btn" id="loginFormSubmit" />
                             <div class="js-submit-loading" style="display:none;">
                                 Sending...
                             </div>
                         </div>
                     </form>
-                    <div class="ta-c mar_top_20">
-                        <a class="button no-mar filled-shadow small clickable dark_grey btn-next-step js-showForgotPassword">Forgot Password?</a>
+                    <div class="form-field-wrap">
+                        <a class="button-grey button-sm js-showForgotPassword">Forgot Password?</a>
                     </div>
-                    <div class="ta-c mar_top_20">
-                        <a class="button no-mar filled-shadow small clickable dark_grey btn-next-step js-showSignup">Back to Signup</a>
+                    <div class="form-field-wrap">
+                        <a class="button-grey button-sm js-showSignup">Back to Signup</a>
                     </div>
                 </div>
             </div> <!-- Step End -->
+
             <div class="step-item login-step-item" id="forgotPasswordContainer" data-step-name="forgot_password" style="display:none;">
                 <div class="step-details">
-                    <h3 class="bordered-heading blue">Forgot Password<span></span></h3>
-                    <form id="forgotPasswordForm">
-                        <input type="text" id="forgotPasswordEmail" data-required="true" class="input-text width-100p mar_top_100" placeholder="Email">
-                        <div class="ta-c mar_top_20">
-                            <a class="button blue btn-next-step-confirmation js-submit-btn" id="forgotPasswordFormSubmit">Reset Password</a>
+                    <h3 class="heading-border">Forgot Password<span></span></h3>
+                    <form id="forgotPasswordForm" class="form-base form-login">
+                        <div class="form-field-wrap">
+                            <input type="text" id="forgotPasswordEmail" data-required="true" class="input-text" placeholder="Email">                        
+                        </div>
+                        <div class="form-field-wrap">
+                            <a class="button btn-next-step-confirmation js-submit-btn" id="forgotPasswordFormSubmit">Reset Password</a>
                             <div class="js-submit-loading" style="display:none;">
                                 Sending...
                             </div>

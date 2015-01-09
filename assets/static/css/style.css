@@ -141,7 +141,7 @@ sup {
 sub {
   bottom: -8px; }
 
-.heading-border, .heading-primary:after {
+.heading-border:after, .heading-primary:after {
   content: '';
   display: block;
   margin: 10px auto 0;
@@ -177,7 +177,7 @@ sub {
 .brand-green-bg {
   background-color: #26b262; }
 
-.brand-blue {
+.brand-blue, .modal .heading-border {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange {
@@ -248,7 +248,7 @@ img, video {
   max-width: 100%;
   height: auto; }
 
-.full-width, .form-signup .input-text {
+.full-width, .form-signup .input-text, .form-login .input-text {
   width: 100%; }
 
 /*.box-shadow-base, %box-shadow-base {
@@ -274,7 +274,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .button, .button-grey, .button-orange, .button-hollow, .form-base input[type="checkbox"] + .form-checkbox-label:before {
   text-align: center; }
 
 .center-element {
@@ -462,7 +462,7 @@ input.error {
 /*-------------------------------------*/
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
-
+// remove all extra classes in _login_modal.html if they're not being used later
 //check small jump on mobile when clicking a dropdown   
 
 */
@@ -627,6 +627,10 @@ body {
     content: ""; }
   .breadcrumb a:hover {
     color: #7bb6ec; }
+
+/*-------------------------------------*/
+.modal .heading-border {
+  margin-bottom: 40px; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {
