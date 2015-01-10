@@ -500,7 +500,7 @@ hr {
   max-width: 1000px; }
 
 .container-sm, .banner-caption {
-  max-width: 600px; }
+  max-width: 520px; }
 
 .grid-parent {
   margin-left: -10px;
@@ -813,7 +813,7 @@ body {
 .data-each:first-of-type {
   padding-top: 0; }
 
-.banner-reading {
+.banner-reading, .banner-sikshana {
   background-image: url("/static/images/bg_header_reading_programme.jpg"); }
 
 @media only screen and (min-width: 800px) {
