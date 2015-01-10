@@ -159,7 +159,7 @@ h6, h5, h4, h3, h2, h1 {
   margin: 0 0 $base-spacing-mid 0;
 }
 
-p {
+p, ul, ol {
     margin: 0 0 $base-spacing-mid 0;
 }
 
@@ -299,6 +299,7 @@ sub {
 
 //list: with colored bullets
 .list-bullet-colored {
+
   li {
     &:before {
       content: "\f111";

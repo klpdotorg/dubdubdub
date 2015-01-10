@@ -130,7 +130,7 @@ h1, .h1 {
 h6, h5, h4, h3, h2, h1 {
   margin: 0 0 15px 0; }
 
-p {
+p, ul, ol {
   margin: 0 0 15px 0; }
 
 sub, sup {
