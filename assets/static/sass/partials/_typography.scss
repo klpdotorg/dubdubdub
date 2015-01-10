@@ -242,7 +242,7 @@ sub {
 .heading-section-block {
   @extend %font-smallest;
   background: $grey-mist;
-  padding: $base-spacing-mid $base-spacing $base-spacing $base-spacing;
+  padding: $base-spacing-mid $base-spacing;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: $grey-cloud;
@@ -287,6 +287,7 @@ sub {
   @extend %font-uppercase;
   letter-spacing: 1px;
   @extend %font-bold;
+  margin-bottom: 0;
 
   li:before {
     content: "";

@@ -185,6 +185,32 @@ a {
     }
 }
 
+
+//links: external 
+.link-external {
+  color: inherit;
+  display: inline-block;
+  @extend %transition-linear;
+
+  &:after {
+    content: "\f064";
+    font-family: 'FontAwesome';
+    font-size: 9px;
+    @extend %white;
+    background: $grey-steel;
+    padding: ($base-spacing-sm)-2;
+    margin: 0 $base-spacing-sm;
+    line-height: 1;
+    @extend %border-radius-circle;
+  }
+}
+
+.link-external:hover, .link-external:focus {
+  &:after {
+    background: $link-hover-color;
+  }
+}
+
 /*-------------------------------------*/
 
 //IMAGES, VIDEOS, IFRAMES
@@ -543,6 +569,7 @@ hr {
 
 .scroll-smooth-links {
   @extend %container;
+  margin-bottom: 0;
 
   li {
     display: inline-block;
