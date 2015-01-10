@@ -540,7 +540,7 @@ hr {
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
-  margin: 25px 0;
+  margin: 25px auto;
   display: block; }
 
 /*.cms-default-styles {
@@ -949,11 +949,11 @@ body {
 
   .float-left-padding {
     float: left;
-    margin: 0 25px 0 0; }
+    margin: 10px 25px 10px 0; }
 
   .float-right-padding {
     float: right;
-    margin: 0 0 0 25px; }
+    margin: 10px 0 10px 25px; }
 
   .nav-footer {
     float: left;

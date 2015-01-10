@@ -605,7 +605,7 @@ hr {
 
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
-  margin: $base-spacing-lg-x 0;
+  margin: $base-spacing-lg-x auto;
   display: block;
 }
 

@@ -62,12 +62,12 @@
 
 	.float-left-padding {
 	  @include float-left;
-	  margin: 0 $base-spacing-lg-x 0 0;
+	  margin: $base-spacing $base-spacing-lg-x $base-spacing 0;
 	}
 
 	.float-right-padding {
 	  @include float-right;
-	  margin: 0 0 0 $base-spacing-lg-x;
+	  margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
 	}
 	
 	//navigation: top
