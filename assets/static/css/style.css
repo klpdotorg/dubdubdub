@@ -454,7 +454,7 @@ hr {
   padding: 25px 20px 50px;
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: #d8d8d8;
+  background-color: #898989;
   background-size: cover; }
 
 .banner-full-caption {
@@ -821,6 +821,9 @@ body {
 
 .banner-library {
   background-image: url("/static/images/bg_header_library_programme.jpg"); }
+
+.banner-preschool {
+  background-image: url("/static/images/bg_header_preschool_programme.jpg"); }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {
