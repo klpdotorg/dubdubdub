@@ -6,12 +6,13 @@
 
 <div class="page-programme-details">
 
-    <section class="programmes-header maths_programme">
-        <div class="content">
-            <h1>Maths Programme<span></span></h1>
-            <p class="text_1">
+    <section class="banner-full banner-maths">
+        <h1 class="heading-primary white">Maths Programme</h1>
+        <div class="banner-caption">
+            <p>
                 The Mathematics Support Programme makes math fun for children. Simple concepts like numbers, place value, mathematical functions are taught using an activity based method with tools like a counting board and number grids, which help children comprehend mathematics.
             </p>
+            <div class="base-spacing-lg-2x"></div>
         </div>
     </section>
 
@@ -113,36 +114,4 @@
     </section>
 
 </div>
-
-<script type="text/javascript">
-
-    $(document).ready(function(){
-        resizeProgrammesHeader();
-        $(window).resize(function() {
-            resizeProgrammesHeader();
-        });
-    });
-
-    function resizeProgrammesHeader(){
-
-        if($(window).width() >=980){
-            // Its a desktop device
-
-            if($(window).height() <725){
-                var header_height = $(window).height() - (125);
-                $(".programmes-header").css({
-                    'height': header_height + 'px',
-                });
-                $(".programmes-header").addClass('desktop_smaller_height');
-            } else {
-                $(".programmes-header").removeClass('desktop_smaller_height');
-                $(".programmes-header").css({
-                    'height': 600 + 'px',
-                });
-            }
-        }
-    }
-
-</script>
-    
 {% endblock %}

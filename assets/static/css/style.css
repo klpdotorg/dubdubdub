@@ -816,6 +816,9 @@ body {
 .banner-reading, .banner-sikshana {
   background-image: url("/static/images/bg_header_reading_programme.jpg"); }
 
+.banner-maths {
+  background-image: url("/static/images/bg_header_maths_programme.jpg"); }
+
 @media only screen and (min-width: 800px) {
   .nav-trigger {
     display: none; }
