@@ -567,24 +567,24 @@ hr {
   @extend %font-uppercase;
   @extend %font-smallest;
   @extend %center-text;
-  @extend %base-spacing;
   letter-spacing: 1px;
 }
 
 .scroll-smooth-links {
   @extend %container;
   margin-bottom: 0;
-
-  li {
+  
+  li, a {
     display: inline-block;
     vertical-align: top;
   }
 
   a {
-    padding: 0 $base-spacing-mid;
+    padding: $base-spacing $base-spacing-mid;
 
     &:hover, &:focus {
-      color: $link-hover-color;
+      background-color: $grey-mist;
+      @extend %transition-ease-in;
     }
   }
 }

@@ -251,6 +251,7 @@ sub {
 
   > ul {
     @extend %container;
+    margin-bottom: 0;
   }
 
   li {
