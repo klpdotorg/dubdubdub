@@ -236,6 +236,7 @@ sub {
   box-shadow: 0px 1px 1px 0px $grey-cloud;
   padding: $base-spacing-sm $base-spacing-lg;
   margin: $base-spacing-lg-2x 0 0 0;
+  letter-spacing: 1px;
 }
 
 .heading-section-block {
@@ -280,6 +281,50 @@ sub {
 
 .heading-section-block, .heading-section-block a {
   color: $grey-steel; 
+}
+
+.heading-section-ul-alt {
+  @extend %font-uppercase;
+  letter-spacing: 1px;
+  @extend %font-bold;
+
+  li:before {
+    content: "";
+  }
+
+  a {
+    color: $grey-gravel;
+  }
+}
+
+//list: with colored bullets
+.list-bullet-colored {
+  li {
+    &:before {
+      content: "\f111";
+      font-family: "FontAwesome"; 
+      margin-right: $base-spacing;           
+    } 
+
+    &:first-of-type:before {
+      color: $brand-orange;    
+    }
+
+    &:nth-of-type(2):before {
+      color: lighten($brand-orange, 20%);    
+    }
+
+    &:nth-of-type(3):before {
+      color: #ffeda0;    
+    }
+
+    &:nth-of-type(4):before {
+      color: #addd8e;    
+    }
+    &:nth-of-type(5):before {
+      color: $brand-green;    
+    }
+  }
 }
 
 //text-styles

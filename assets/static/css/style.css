@@ -79,13 +79,13 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
+.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .scroll-smooth-block {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -176,7 +176,8 @@ sub {
   border: 1px solid #d8d8d8;
   box-shadow: 0px 1px 1px 0px #d8d8d8;
   padding: 5px 20px;
-  margin: 50px 0 0 0; }
+  margin: 50px 0 0 0;
+  letter-spacing: 1px; }
 
 .heading-section-block {
   background: #f6f6f6;
@@ -204,6 +205,28 @@ sub {
 
 .heading-section-block, .heading-section-block a {
   color: #898989; }
+
+.heading-section-ul-alt {
+  letter-spacing: 1px; }
+  .heading-section-ul-alt li:before {
+    content: ""; }
+  .heading-section-ul-alt a {
+    color: #4d4d4d; }
+
+.list-bullet-colored li:before {
+  content: "\f111";
+  font-family: "FontAwesome";
+  margin-right: 10px; }
+.list-bullet-colored li:first-of-type:before {
+  color: #ec6608; }
+.list-bullet-colored li:nth-of-type(2):before {
+  color: #faa060; }
+.list-bullet-colored li:nth-of-type(3):before {
+  color: #ffeda0; }
+.list-bullet-colored li:nth-of-type(4):before {
+  color: #addd8e; }
+.list-bullet-colored li:nth-of-type(5):before {
+  color: #26b262; }
 
 .text-bordered {
   border: 1px solid #d8d8d8;
@@ -482,7 +505,16 @@ hr {
   color: #4d4d4d; }
 
 /*-------------------------------------*/
+/* BORDERS */
+.border-grey-cloud {
+  border: 1px solid #d8d8d8; }
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
+.float-left-padding, .float-right-padding {
+  margin: 25px 0;
+  display: block; }
+
 /*.cms-default-styles {
   ul, ol {
     list-style-position: inside;
@@ -886,6 +918,14 @@ body {
 
   .banner-full-caption {
     padding-bottom: 100px; }
+
+  .float-left-padding {
+    float: left;
+    margin: 0 25px 0 0; }
+
+  .float-right-padding {
+    float: right;
+    margin: 0 0 0 25px; }
 
   .nav-footer {
     float: left;

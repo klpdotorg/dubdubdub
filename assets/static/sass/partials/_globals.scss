@@ -231,7 +231,7 @@ img, video {
 }
 
 @mixin float-right {
-  float: left;
+  float: right;
 }
 
 //clearing floats
@@ -562,9 +562,24 @@ hr {
   color: $grey-gravel;
 }
 
+
+/*-------------------------------------*/
+
+/* BORDERS */
+.border-grey-cloud {
+  border: 1px solid $grey-cloud;
+}
+
 /*-------------------------------------*/
 
 /* CMS DEFAULT STYLES */
+.float-left-padding, .float-right-padding {
+  margin: $base-spacing-lg-x 0;
+  display: block;
+}
+
+
+
 /*.cms-default-styles {
   ul, ol {
     list-style-position: inside;

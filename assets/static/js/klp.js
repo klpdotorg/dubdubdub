@@ -65,11 +65,11 @@
             }
         });
 
-        $("#page_sticky_nav").stickOnScroll({
+       /* $("#page_sticky_nav").stickOnScroll({
             topOffset: 0,
             setParentOnStick:   true,
             setWidthOnStick:    true
-        });
+        });*/
 
 
         

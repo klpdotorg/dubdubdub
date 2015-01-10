@@ -57,6 +57,18 @@
 	.banner-full-caption { 
 	  padding-bottom: ($base-spacing-lg-2x) * 2;
 	}
+
+	//float-left and float-right for images in content areas
+
+	.float-left-padding {
+	  @include float-left;
+	  margin: 0 $base-spacing-lg-x 0 0;
+	}
+
+	.float-right-padding {
+	  @include float-right;
+	  margin: 0 0 0 $base-spacing-lg-x;
+	}
 	
 	//navigation: top
 	.nav-footer {
