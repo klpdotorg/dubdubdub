@@ -82,7 +82,7 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .banner-caption, .about-map {
+.font-light, .heading-secondary, .banner-full-caption, .about-map {
   font-weight: 300; }
 
 .font-uppercase, .heading-tertiary {
@@ -251,7 +251,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .banner-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
+.white, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
 .white-bg, .heading-section, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -364,7 +364,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .banner-caption span.h1, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .banner-full-caption span.h1, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   display: inline-block;
   vertical-align: middle; }
 
@@ -457,9 +457,9 @@ hr {
   background-color: #d8d8d8;
   background-size: cover; }
 
-.banner-caption {
+.banner-full-caption {
   padding-bottom: 25px; }
-  .banner-caption span.h1 {
+  .banner-full-caption span.h1 {
     font-size: 220%;
     line-height: inherit;
     padding-right: 5px; }
@@ -490,7 +490,7 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .header-content, .footer-wrapper, .container-sm, .banner-caption {
+.container, .heading-section-block > ul, .header-content, .footer-wrapper, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto;
   padding-left: 10px;
@@ -499,7 +499,7 @@ hr {
 .container, .heading-section-block > ul, .header-content, .footer-wrapper {
   max-width: 1000px; }
 
-.container-sm, .banner-caption {
+.container-sm, .banner-full-caption {
   max-width: 520px; }
 
 .grid-parent {
@@ -819,6 +819,9 @@ body {
 .banner-maths {
   background-image: url("/static/images/bg_header_maths_programme.jpg"); }
 
+.banner-library {
+  background-image: url("/static/images/bg_header_library_programme.jpg"); }
+
 @media only screen and (min-width: 800px) {
   .nav-trigger {
     display: none; }
@@ -861,7 +864,7 @@ body {
     padding-left: 10px;
     padding-right: 10px; }
 
-  .banner-caption {
+  .banner-full-caption {
     padding-bottom: 100px; }
 
   .nav-footer {
