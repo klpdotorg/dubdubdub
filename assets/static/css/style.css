@@ -333,10 +333,14 @@ a {
     background: #898989;
     padding: 3px;
     margin: 0 5px;
-    line-height: 1; }
+    line-height: 1;
+    display: inline-block;
+    text-decoration: none; }
 
-.link-external:hover:after, .link-external:focus:after {
-  background: #7bb6ec; }
+.link-external:hover, .link-external:focus {
+  text-decoration: underline; }
+  .link-external:hover:after, .link-external:focus:after {
+    background: #7bb6ec; }
 
 /*-------------------------------------*/
 img, video {

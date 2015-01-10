@@ -202,10 +202,14 @@ a {
     margin: 0 $base-spacing-sm;
     line-height: 1;
     @extend %border-radius-circle;
+    display: inline-block;
+    text-decoration: none;
   }
 }
 
 .link-external:hover, .link-external:focus {
+  text-decoration: underline;
+
   &:after {
     background: $link-hover-color;
   }
