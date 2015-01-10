@@ -52,6 +52,11 @@
 		right: 20%;
 		@include container;
 	}
+
+	//banner full-width
+	.banner-caption { 
+	  padding-bottom: ($base-spacing-lg-2x) * 2;
+	}
 	
 	//navigation: top
 	.nav-footer {

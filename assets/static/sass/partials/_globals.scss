@@ -499,6 +499,33 @@ hr {
 }
 
 
+/*-------------------------------------*/
+
+/* BANNERS: FULLWIDTH; */
+
+.banner-full { 
+  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: $grey-cloud;
+  background-size: cover;
+  @extend %center-text;
+}
+
+.banner-caption {
+  @extend %white;
+  @extend %font-light;
+  @extend %container-sm;
+  padding-bottom: $base-spacing-lg-x;
+
+  span.h1 {
+    font-size: 220%;
+    line-height: inherit;
+    @extend %vertical-inline-middle;
+    padding-right: $base-spacing-sm;
+  }
+}
+
 
 /*-------------------------------------*/
 

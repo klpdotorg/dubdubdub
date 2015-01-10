@@ -82,7 +82,7 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .about-map {
+.font-light, .heading-secondary, .banner-caption, .about-map {
   font-weight: 300; }
 
 .font-uppercase, .heading-tertiary {
@@ -251,7 +251,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
+.white, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .banner-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
 .white-bg, .heading-section, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -330,7 +330,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
   text-align: center; }
 
 .center-element {
@@ -364,7 +364,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .banner-caption span.h1, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
   display: inline-block;
   vertical-align: middle; }
 
@@ -449,6 +449,22 @@ hr {
     max-width: 100%; }
 
 /*-------------------------------------*/
+/* BANNERS: FULLWIDTH; */
+.banner-full {
+  padding: 25px 20px 50px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #d8d8d8;
+  background-size: cover; }
+
+.banner-caption {
+  padding-bottom: 25px; }
+  .banner-caption span.h1 {
+    font-size: 220%;
+    line-height: inherit;
+    padding-right: 5px; }
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 /*.cms-default-styles {
   ul, ol {
@@ -474,12 +490,17 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .header-content, .footer-wrapper {
-  max-width: 1000px;
+.container, .heading-section-block > ul, .header-content, .footer-wrapper, .container-sm, .banner-caption {
   margin-left: auto;
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px; }
+
+.container, .heading-section-block > ul, .header-content, .footer-wrapper {
+  max-width: 1000px; }
+
+.container-sm, .banner-caption {
+  max-width: 600px; }
 
 .grid-parent {
   margin-left: -10px;
@@ -792,6 +813,9 @@ body {
 .data-each:first-of-type {
   padding-top: 0; }
 
+.banner-reading {
+  background-image: url("/static/images/bg_header_reading_programme.jpg"); }
+
 @media only screen and (min-width: 800px) {
   .nav-trigger {
     display: none; }
@@ -833,6 +857,9 @@ body {
     margin-right: auto;
     padding-left: 10px;
     padding-right: 10px; }
+
+  .banner-caption {
+    padding-bottom: 100px; }
 
   .nav-footer {
     float: left;
