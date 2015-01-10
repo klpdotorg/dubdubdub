@@ -299,7 +299,17 @@ sub {
   }
 }
 
-//list: with colored bullets
+//list: ul default
+.ul-base {
+  list-style-type: disc;
+  margin-left: $base-spacing-lg;
+  
+  li {
+    padding-left: $base-spacing;
+  }
+}
+
+/*//list: with colored bullets
 .list-bullet-colored {
 
   li {
@@ -314,22 +324,22 @@ sub {
     }
 
     &:nth-of-type(2):before {
-      color: lighten($brand-orange, 20%);    
+      color: $orange-mild;    
     }
 
     &:nth-of-type(3):before {
-      color: #ffeda0;    
+      color: $yellow-mild;    
     }
 
     &:nth-of-type(4):before {
-      color: #addd8e;    
+      color: $green-pista;    
     }
     &:nth-of-type(5):before {
       color: $brand-green;    
     }
   }
 }
-
+*/
 //text-styles
 .text-bordered {
   border: 1px solid $grey-cloud;

@@ -114,6 +114,33 @@
     background-color: $white;
 }
 
+//yellow
+.yellow-mild, %yellow-mild {
+  color: $yellow-mild;
+}
+
+.yellow-mild-bg, %yellow-mild-bg {
+  background-color: $yellow-mild;
+}
+
+//orange
+.orange-mild, %orange-mild {
+  color: $orange-mild;
+}
+
+.orange-mild-bg, %orange-mild-bg {
+  background-color: $orange-mild;
+}
+
+//pista
+.green-pista, %green-pista {
+  color: $green-pista;
+}
+
+.green-pista-bg, %green-pista-bg {
+  background-color: $green-pista;
+}
+
 
 //link colors
 
@@ -597,12 +624,58 @@ hr {
 /*-------------------------------------*/
 
 /* BORDERS */
-.border-grey-cloud {
+.border-grey-cloud, %border-grey-cloud {
   border: 1px solid $grey-cloud;
 }
 
 /*-------------------------------------*/
+/* CIRCULAR BULLETS */
 
+.circle-bullet {
+  color: inherit;
+  padding-bottom: ($base-spacing-sm) + 2;
+  
+  &:before {
+    content: "\f111";
+    font-family: "FontAwesome"; 
+    margin-right: $base-spacing;           
+  }
+
+  &.brand-green:before {
+    color: $brand-green;
+  }
+
+  &.brand-blue:before {
+    color: $brand-blue;
+  }
+
+  &.green-pista:before {
+    color: $green-pista;
+  }
+
+  &.brand-orange:before {
+    color: $brand-orange;
+  }
+
+  &.orange-mild:before {
+    color: $orange-mild;
+  }
+
+  &.yellow-mild:before {
+    color: $yellow-mild;
+  }
+
+  &.white {
+    color: $grey-cloud;
+
+    &:before {
+      content: "\f1db";
+    }
+  }
+}
+
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;

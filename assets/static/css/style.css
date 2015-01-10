@@ -216,21 +216,43 @@ sub {
   .heading-section-ul-alt a {
     color: #4d4d4d; }
 
-.list-bullet-colored li:before {
-  content: "\f111";
-  font-family: "FontAwesome";
-  margin-right: 10px; }
-.list-bullet-colored li:first-of-type:before {
-  color: #ec6608; }
-.list-bullet-colored li:nth-of-type(2):before {
-  color: #faa060; }
-.list-bullet-colored li:nth-of-type(3):before {
-  color: #ffeda0; }
-.list-bullet-colored li:nth-of-type(4):before {
-  color: #addd8e; }
-.list-bullet-colored li:nth-of-type(5):before {
-  color: #26b262; }
+.ul-base {
+  list-style-type: disc;
+  margin-left: 20px; }
+  .ul-base li {
+    padding-left: 10px; }
 
+/*//list: with colored bullets
+.list-bullet-colored {
+
+  li {
+    &:before {
+      content: "\f111";
+      font-family: "FontAwesome"; 
+      margin-right: $base-spacing;           
+    } 
+
+    &:first-of-type:before {
+      color: $brand-orange;    
+    }
+
+    &:nth-of-type(2):before {
+      color: $orange-mild;    
+    }
+
+    &:nth-of-type(3):before {
+      color: $yellow-mild;    
+    }
+
+    &:nth-of-type(4):before {
+      color: $green-pista;    
+    }
+    &:nth-of-type(5):before {
+      color: $brand-green;    
+    }
+  }
+}
+*/
 .text-bordered {
   border: 1px solid #d8d8d8;
   padding: 10px 15px; }
@@ -282,6 +304,24 @@ sub {
 
 .white-bg, .heading-section, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
+
+.yellow-mild {
+  color: #ffeda0; }
+
+.yellow-mild-bg {
+  background-color: #ffeda0; }
+
+.orange-mild {
+  color: #faa060; }
+
+.orange-mild-bg {
+  background-color: #faa060; }
+
+.green-pista {
+  color: #addd8e; }
+
+.green-pista-bg {
+  background-color: #addd8e; }
 
 .link-color, a {
   color: #3891e3; }
@@ -538,6 +578,32 @@ hr {
   border: 1px solid #d8d8d8; }
 
 /*-------------------------------------*/
+/* CIRCULAR BULLETS */
+.circle-bullet {
+  color: inherit;
+  padding-bottom: 7px; }
+  .circle-bullet:before {
+    content: "\f111";
+    font-family: "FontAwesome";
+    margin-right: 10px; }
+  .circle-bullet.brand-green:before {
+    color: #26b262; }
+  .circle-bullet.brand-blue:before {
+    color: #3891e3; }
+  .circle-bullet.green-pista:before {
+    color: #addd8e; }
+  .circle-bullet.brand-orange:before {
+    color: #ec6608; }
+  .circle-bullet.orange-mild:before {
+    color: #faa060; }
+  .circle-bullet.yellow-mild:before {
+    color: #ffeda0; }
+  .circle-bullet.white {
+    color: #d8d8d8; }
+    .circle-bullet.white:before {
+      content: "\f1db"; }
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: 25px auto;
@@ -689,6 +755,8 @@ input.error {
 //what is this reports at the top of reports?
 //was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
 //background size used without webkit prefix needed only for android 2.3
+//on library page, both blue and yellow show 9-10 sentences
+//on library, fix the colored list to look like a table
 
 
 //MY Learnings for boilerplate;
@@ -901,6 +969,12 @@ body {
 
 .banner-preschool {
   background-image: url("/static/images/bg_header_preschool_programme.jpg"); }
+
+.library-grade-levels li span {
+  display: inline-block; }
+.library-grade-levels li > span:first-of-type {
+  padding-right: 20px;
+  min-width: 180px; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {

@@ -7,6 +7,8 @@
 //what is this reports at the top of reports?
 //was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
 //background size used without webkit prefix needed only for android 2.3
+//on library page, both blue and yellow show 9-10 sentences
+//on library, fix the colored list to look like a table
 
 
 //MY Learnings for boilerplate;
@@ -364,5 +366,18 @@ body {
 
 .banner-preschool {
   background-image: url('/static/images/bg_header_preschool_programme.jpg');
+}
+
+.library-grade-levels {
+  li {
+    span {
+      display: inline-block;
+    }
+
+    > span:first-of-type {
+      padding-right: $base-spacing-lg;
+      min-width: 180px;
+    }
+  }
 }
 
