@@ -155,35 +155,4 @@
         </section>
     </div>
 
-    <script type="text/javascript">
-
-        $(document).ready(function(){
-            resizeProgrammesHeader();
-            $(window).resize(function() {
-                resizeProgrammesHeader();
-            });
-        });
-
-        function resizeProgrammesHeader(){
-
-            if($(window).width() >=980){
-                // Its a desktop device
-
-                if($(window).height() <725){
-                    var header_height = $(window).height() - (125);
-                    $(".programmes-header").css({
-                        'height': header_height + 'px',
-                    });
-                    $(".programmes-header").addClass('desktop_smaller_height');
-                } else {
-                    $(".programmes-header").removeClass('desktop_smaller_height');
-                    $(".programmes-header").css({
-                        'height': 600 + 'px',
-                    });
-                }
-            }
-        }
-
-    </script>
-
 {% endblock %}
