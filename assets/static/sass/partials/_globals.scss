@@ -527,6 +527,41 @@ hr {
 }
 
 
+
+/*-------------------------------------*/
+
+/* NAVIGATION: SMOOTH-SCROLL */
+.scroll-smooth-block {
+  border-bottom: 1px solid $grey-cloud;
+  @extend %white-bg;
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  @extend %center-text;
+  @extend %base-spacing;
+  letter-spacing: 1px;
+}
+
+.scroll-smooth-links {
+  @extend %container;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  a {
+    padding: 0 $base-spacing-mid;
+
+    &:hover, &:focus {
+      color: $link-hover-color;
+    }
+  }
+}
+
+.scroll-smooth-links, .scroll-smooth-links a {
+  color: $grey-gravel;
+}
+
 /*-------------------------------------*/
 
 /* CMS DEFAULT STYLES */
