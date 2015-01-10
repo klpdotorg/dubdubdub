@@ -341,6 +341,16 @@ body {
   }
 }
 
+.partners-list-block {
+  margin: $base-spacing-lg-2x 0; 
+  @extend %center-text;
+
+  ul {
+    @extend %font-small;
+    line-height: 1.8;
+  }
+}
+
 //PAGE: DATA
 
 .data-each {

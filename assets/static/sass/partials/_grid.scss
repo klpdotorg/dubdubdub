@@ -34,8 +34,8 @@
 
 @mixin grid-parent {
   margin-left: -$grid-padding;
-    margin-right: -$grid-padding;   
-    @include clearfix;
+  margin-right: -$grid-padding;   
+  @include clearfix;
 }
 
 .grid-child, %grid-child {

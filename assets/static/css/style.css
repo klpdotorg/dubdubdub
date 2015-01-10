@@ -91,7 +91,7 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .nav-footer .k-icon {
+.font-small, .nav-footer .k-icon, .partners-list-block ul {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
@@ -415,7 +415,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block {
   text-align: center; }
 
 .center-element {
@@ -955,6 +955,11 @@ body {
   padding: 25px;
   max-width: 140px; }
 
+.partners-list-block {
+  margin: 50px 0; }
+  .partners-list-block ul {
+    line-height: 1.8; }
+
 .data-each:first-of-type {
   padding-top: 0; }
 
@@ -1007,7 +1012,21 @@ body {
       position: relative;
       min-width: 125px; }
       .nav li li {
-        text-align: left; } }
+        text-align: left; }
+
+  .partners-list-block {
+    margin-left: -10px;
+    margin-right: -10px; }
+    .partners-list-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .partners-list {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 50%;
+    float: left; } }
 @media only screen and (min-width: 600px) {
   .alert {
     left: 20%;
