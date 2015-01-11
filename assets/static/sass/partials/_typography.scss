@@ -348,7 +348,18 @@ sub {
 
 }
 
-
+//step-number
+.step-number {
+  @extend %white-bg;
+  @extend %font-bold;
+  @extend %font-smaller;
+  border: 1px solid;
+  display: inline-block;
+  padding: ($base-spacing - 3) $base-spacing;
+  @extend %center-text;
+  @extend %border-radius-circle;
+  line-height: 1;
+}
 
 /*-------------------------------------*/
 

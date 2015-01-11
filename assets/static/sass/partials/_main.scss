@@ -419,3 +419,47 @@ body {
 .banner-volunteer-girl, .banner-volunteer-boy {
   display: none;
 }
+
+.volunteer-works-block {
+  background-color: lighten($brand-blue, 32%);
+  @extend %base-spacing-lg-2x;
+}
+
+.volunteer-works-each {
+  @extend %center-text;
+}
+
+.volunteer-works-each {
+  width: 33.33%;
+  @include vertical-inline-middle;
+}
+
+.volunteer-works-img {
+  width: 180px;
+  height: 180px;
+  @extend %border-radius-circle;
+  @extend %center-element;
+  position: relative;
+
+  img {
+    @extend %dead-center;
+  }  
+}
+
+.volunteer-works-locate {
+  .volunteer-works-img {
+    background-color: #E17E5B;
+  }
+}
+
+.volunteer-works-teach {
+  .volunteer-works-img {
+    @extend %brand-blue-bg;
+  }
+}
+
+.volunteer-works-share {
+  .volunteer-works-img {
+    @extend %brand-turquoise-bg;    
+  }
+}

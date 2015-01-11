@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
+.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .about-map {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon, .partners-list-block ul {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .error-message, .heading-volunteer-box {
+.font-smaller, .heading-tiny, .step-number, .error-message, .heading-volunteer-box {
   font-size: 80%; }
 
 .font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
@@ -257,6 +257,12 @@ sub {
   border: 1px solid #d8d8d8;
   padding: 10px 15px; }
 
+.step-number {
+  border: 1px solid;
+  display: inline-block;
+  padding: 7px 10px;
+  line-height: 1; }
+
 /*-------------------------------------*/
 /* global SITE styles */
 /*-------------------------------------*/
@@ -278,13 +284,13 @@ sub {
 .brand-blue, .modal .heading-border {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .volunteer-works-teach .volunteer-works-img {
   background-color: #3891e3; }
 
 .brand-turquoise {
   color: #24b2b6; }
 
-.brand-turquoise-bg {
+.brand-turquoise-bg, .volunteer-works-share .volunteer-works-img {
   background-color: #24b2b6; }
 
 .brand-purple {
@@ -302,7 +308,7 @@ sub {
 .white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
-.white-bg, .heading-section, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .yellow-mild {
@@ -345,7 +351,7 @@ sub {
 .base-spacing-lg-x, .data-each {
   padding: 25px 0; }
 
-.base-spacing-lg-2x {
+.base-spacing-lg-2x, .volunteer-works-block {
   padding: 50px 0; }
 
 /*-------------------------------------*/
@@ -356,7 +362,7 @@ sub {
 .border-radius-sm, .heading-section, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
   border-radius: 3px; }
 
-.border-radius-circle, .link-external:after, .input-radio + .input-radio-label:before, .about-map-image {
+.border-radius-circle, .step-number, .link-external:after, .input-radio + .input-radio-label:before, .about-map-image, .volunteer-works-img {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -415,10 +421,10 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block, .volunteer-works-each {
   text-align: center; }
 
-.center-element, .box-info {
+.center-element, .box-info, .volunteer-works-img {
   margin-left: auto;
   margin-right: auto; }
 
@@ -436,7 +442,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center {
+.dead-center, .volunteer-works-img img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1003,6 +1009,22 @@ body {
 
 .banner-volunteer-girl, .banner-volunteer-boy {
   display: none; }
+
+.volunteer-works-block {
+  background-color: #c7e0f7; }
+
+.volunteer-works-each {
+  width: 33.33%;
+  display: inline-block;
+  vertical-align: middle; }
+
+.volunteer-works-img {
+  width: 180px;
+  height: 180px;
+  position: relative; }
+
+.volunteer-works-locate .volunteer-works-img {
+  background-color: #E17E5B; }
 
 @media only screen and (min-width: 950px) {
   .banner-volunteer-girl, .banner-volunteer-boy {
