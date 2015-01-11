@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
+.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links, .volunteer-story-link {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .about-map, .volunteer-works-each h3:first-of-type {
@@ -94,13 +94,13 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon, .partners-list-block ul {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .step-number, .error-message, .heading-volunteer-box {
+.font-smaller, .heading-tiny, .step-number, .error-message, .heading-volunteer-box, .volunteer-story-link {
   font-size: 80%; }
 
 .font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
   font-size: 70%; }
 
-.font-large, .alert {
+.font-large, .alert, .volunteer-story-heading {
   font-size: 110%; }
 
 .font-larger {
@@ -287,7 +287,7 @@ sub {
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .volunteer-works-teach .volunteer-works-img {
   background-color: #3891e3; }
 
-.brand-turquoise, .volunteer-works-share h3:first-of-type {
+.brand-turquoise, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
   color: #24b2b6; }
 
 .brand-turquoise-bg, .volunteer-works-share .volunteer-works-img {
@@ -348,7 +348,7 @@ sub {
 .base-spacing-lg {
   padding: 20px 0; }
 
-.base-spacing-lg-x, .data-each {
+.base-spacing-lg-x, .data-each, .volunteer-story-each {
   padding: 25px 0; }
 
 .base-spacing-lg-2x, .volunteer-works-block {
@@ -464,7 +464,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.heading-section-block a:hover, .link-external, .nav, .footer-wrapper a, .breadcrumb a {
+.heading-section-block a:hover, .link-external, .nav, .footer-wrapper a, .breadcrumb a, .volunteer-story-link:hover {
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear; }
 
@@ -771,6 +771,7 @@ input.error {
 //background size used without webkit prefix needed only for android 2.3
 //on library page, both blue and yellow show 9-10 sentences
 //on library, fix the colored list to look like a table
+//ask sanj if there's an error with volunteer page recently share stories.
 
 
 //MY Learnings for boilerplate;
@@ -1031,6 +1032,19 @@ body {
   background-color: #e17e5b; }
 .volunteer-works-locate h3:first-of-type {
   color: #e17e5b; }
+
+.volunteer-stories {
+  background-color: #f6f6f6; }
+  .volunteer-stories .heading-tiny {
+    color: #bbb; }
+
+.volunteer-story-each {
+  border-bottom: 1px solid #d8d8d8; }
+
+.volunteer-story-link {
+  color: #5F5F5F; }
+  .volunteer-story-link:hover {
+    text-decoration: underline; }
 
 @media only screen and (min-width: 950px) {
   .banner-volunteer-girl, .banner-volunteer-boy {

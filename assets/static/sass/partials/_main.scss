@@ -9,6 +9,7 @@
 //background size used without webkit prefix needed only for android 2.3
 //on library page, both blue and yellow show 9-10 sentences
 //on library, fix the colored list to look like a table
+//ask sanj if there's an error with volunteer page recently share stories.
 
 
 //MY Learnings for boilerplate;
@@ -485,5 +486,35 @@ body {
 
   h3:first-of-type {
       @extend %brand-turquoise;
+  }
+}
+
+.volunteer-stories {
+  background-color: $grey-mist;
+
+  .heading-tiny {
+    color: $grey-silver;
+  }
+}
+
+.volunteer-story-each {
+  @extend %base-spacing-lg-x;
+  border-bottom: 1px solid $grey-cloud;
+}
+
+
+.volunteer-story-heading {
+  @extend %brand-turquoise;
+  @extend %font-large;
+}
+
+.volunteer-story-link {
+  @extend %font-smaller;
+  color: $font-base-color;
+  @extend %font-bold;
+
+  &:hover {
+    text-decoration: underline;
+    @extend %transition-linear;
   }
 }
