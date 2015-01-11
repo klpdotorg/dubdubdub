@@ -427,11 +427,22 @@ body {
 
 .volunteer-works-each {
   @extend %center-text;
+
+  .step-number {
+    position: relative;
+    top: $base-spacing;
+    z-index: 1;
+  }
 }
 
 .volunteer-works-each {
-  width: 33.33%;
-  @include vertical-inline-middle;
+  max-width: 500px;
+  @extend %center-element;
+
+  h3:first-of-type {
+    @extend %font-light;
+    @extend %font-uppercase;
+  }
 }
 
 .volunteer-works-img {
@@ -440,6 +451,7 @@ body {
   @extend %border-radius-circle;
   @extend %center-element;
   position: relative;
+  margin-bottom: $base-spacing-lg-x;
 
   img {
     @extend %dead-center;
@@ -448,7 +460,11 @@ body {
 
 .volunteer-works-locate {
   .volunteer-works-img {
-    background-color: #E17E5B;
+    background-color: $red-mild;
+  }
+
+  h3:first-of-type {
+      color: $red-mild;
   }
 }
 
@@ -456,10 +472,18 @@ body {
   .volunteer-works-img {
     @extend %brand-blue-bg;
   }
+
+  h3:first-of-type {
+      @extend %brand-blue;
+  }
 }
 
 .volunteer-works-share {
   .volunteer-works-img {
     @extend %brand-turquoise-bg;    
+  }
+
+  h3:first-of-type {
+      @extend %brand-turquoise;
   }
 }

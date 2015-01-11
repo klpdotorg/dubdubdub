@@ -72,6 +72,21 @@
   	width: 50%;
   	@include float-left;
   }
+
+  //page: volunteer
+  .volunteer-works-each {
+	  width: 33.33%;
+	  padding-right: $base-spacing-lg;
+	  @include vertical-inline-top;
+
+	  h3:first-of-type {
+	    padding: $base-spacing 0;
+	  }
+
+	  &:last-of-type {
+	    padding-right: 0;
+	  }
+	}
 }
 
 @media only screen and (min-width: 600px) {

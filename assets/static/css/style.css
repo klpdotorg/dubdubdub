@@ -82,10 +82,10 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .banner-full-caption, .about-map {
+.font-light, .heading-secondary, .banner-full-caption, .about-map, .volunteer-works-each h3:first-of-type {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .heading-volunteer-box {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .heading-volunteer-box, .volunteer-works-each h3:first-of-type {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -281,13 +281,13 @@ sub {
 .brand-green-bg, .alert.success, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .modal .heading-border {
+.brand-blue, .modal .heading-border, .volunteer-works-teach h3:first-of-type {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .volunteer-works-teach .volunteer-works-img {
   background-color: #3891e3; }
 
-.brand-turquoise {
+.brand-turquoise, .volunteer-works-share h3:first-of-type {
   color: #24b2b6; }
 
 .brand-turquoise-bg, .volunteer-works-share .volunteer-works-img {
@@ -424,7 +424,7 @@ img, video {
 .center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block, .volunteer-works-each {
   text-align: center; }
 
-.center-element, .box-info, .volunteer-works-img {
+.center-element, .box-info, .volunteer-works-each, .volunteer-works-img {
   margin-left: auto;
   margin-right: auto; }
 
@@ -1013,18 +1013,24 @@ body {
 .volunteer-works-block {
   background-color: #c7e0f7; }
 
+.volunteer-works-each .step-number {
+  position: relative;
+  top: 10px;
+  z-index: 1; }
+
 .volunteer-works-each {
-  width: 33.33%;
-  display: inline-block;
-  vertical-align: middle; }
+  max-width: 500px; }
 
 .volunteer-works-img {
   width: 180px;
   height: 180px;
-  position: relative; }
+  position: relative;
+  margin-bottom: 25px; }
 
 .volunteer-works-locate .volunteer-works-img {
-  background-color: #E17E5B; }
+  background-color: #e17e5b; }
+.volunteer-works-locate h3:first-of-type {
+  color: #e17e5b; }
 
 @media only screen and (min-width: 950px) {
   .banner-volunteer-girl, .banner-volunteer-boy {
@@ -1082,7 +1088,17 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     width: 50%;
-    float: left; } }
+    float: left; }
+
+  .volunteer-works-each {
+    width: 33.33%;
+    padding-right: 20px;
+    display: inline-block;
+    vertical-align: top; }
+    .volunteer-works-each h3:first-of-type {
+      padding: 10px 0; }
+    .volunteer-works-each:last-of-type {
+      padding-right: 0; } }
 @media only screen and (min-width: 600px) {
   .alert {
     left: 20%;
