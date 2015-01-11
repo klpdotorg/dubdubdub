@@ -23,21 +23,21 @@
         <div class="details">
           <div  class="detail-item">
             <h4 class="purple-heading">Students</h4>
-            <div class="gender_icons">
-              <div class="stats_gender_item no_width boy">
-                <span class="icon"></span>
+            <div class="gender-icons">
+              <div class="gender_item boy">
+                <span class="k-icon"></span>
                 <p class="label">Boys</p>
                 <p class="value">{{ num_boys }}</p>
                 <div class="clr"></div>
               </div>
-              <div class="stats_gender_item no_width girl">
-                <span class="icon"></span>
+              <div class="gender-item girl">
+                <span class="k-icon"></span>
                 <p class="label">Girls</p>
                 <p class="value">{{ num_girls }}</p>
                 <div class="clr"></div>
               </div>
-              <div class="stats_gender_item no_width total last">
-                <span class="icon"></span>
+              <div class="gender-item total">
+                <span class="k-icon"></span>
                 <p class="label">Total</p>
                 <p class="value">{{ num_boys+num_girls }}</p>
                 <div class="clr"></div>
@@ -71,68 +71,61 @@
 
   <script type="text/template" id="tpl-map-popup">
   <div class="map-pin-details">
-    <div class="content">
-      <div class="info school">
-        <div class="icon fr">{% if type.id==1 %} S {% else %} P {% endif %}</div>
-        <h2 class="name">{{ name }}</h2>
-        <div class="item">
-          <div class="label">District</div>
-          <div class="value">{{ admin1.name|capitalize }}</div>
-        </div>
-        <div class="item">
-          <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-          <div class="value">{{ admin2.name|capitalize }}</div>
-        </div>
-        <div class="item">
-          <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-          <div class="value">{{ admin3.name|capitalize }}</div>
-        </div>
-        <div class="clr"></div>
-      </div>
-      <div class="details">
-        <div class="triangle2"></div>
-        <div  class="detail-item">
-          <h4 class="purple-heading">Students</h4>
-          <div class="gender_icons">
-            <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ num_boys }}</p>
-              <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ num_girls }}</p>
-              <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width total last">
-              <span class="icon"></span>
-              <p class="label">Total</p>
-              <p class="value">{{ num_boys+num_girls }}</p>
-              <div class="clr"></div>
-            </div>
+    <div class="info school">
+      <div class="step-number">{% if type.id==1 %} S {% else %} P {% endif %}</div>
+      <h2 class="brand-green font-uppercase">{{ name }}</h2>
+      <ul class="map-location-labels">  
+        <li class="map-label-each">
+          <div class="map-label-title">District</div>
+          <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+        <li class="map-label-each">
+          <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+          <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+        <li class="map-label-each">
+          <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+          <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+      </ul>
+    </div>
+    <div class="details">
+      <div class="detail-item">
+        <h4 class="">Students</h4>
+        <div class="gender-icons">
+          <div class="gender-item gender-item-boy">
+            <div class="k-icon"></div>
+            <p class="label">Boys</p>
+            <p class="value">{{ num_boys }}</p>
+            <div class="clr"></div>
           </div>
-        </div>
-        <div  class="detail-item mar_top_20">
-          <h4 class="purple-heading">Facilities</h4>
-          <div class="facility-items ta-c">
-            {% if basic_facilities.computer_lab %}<div class="icon computer" title="Has Computers"></div>{% endif %}
-            {% if basic_facilities.library %}<div class="icon books" title="Has a Library"></div>{% endif %}
-            {% if has_volunteer_activities %}<div class="icon events" title="Needs Volunteers"></div>{% endif %}
-            {% if basic_facilities.playground %}<div class="icon football last" title="Has a Playground"></div>{% endif %}
+          <div class="gender-item gender-item-girl">
+            <div class="k-icon"></div>
+            <p class="label">Girls</p>
+            <p class="value">{{ num_girls }}</p>
+            <div class="clr"></div>
+          </div>
+          <div class="gender-item gender-item-total">
+            <div class="k-icon"></div>
+            <p class="label">Total</p>
+            <p class="value">{{ num_boys+num_girls }}</p>
             <div class="clr"></div>
           </div>
         </div>
-        {% if has_volunteer_activities %}
-        <a class="button blue mar_top_20 js-trigger-volunteer-map" href="/school/{{ id }}/#?tab=volunteer">Volunteer here</a>
-        {% endif %}
-        <div class="mar_top_10">
-          <a class="button dark_grey fl js-trigger-compare" href="">Compare to</a>
-          <a class="button dark_grey last fr Xjs-trigger-info" href="/school/{{ id }}/">More Information</a>
-          <div class="clr"></div>
+      </div>
+      <div class="detail-item mar_top_20">
+        <h4 class="purple-heading">Facilities</h4>
+        <div class="facility-items">
+          {% if basic_facilities.computer_lab %}<div class="k-icon computer" title="Has Computers"></div>{% endif %}
+          {% if basic_facilities.library %}<div class="k-icon books" title="Has a Library"></div>{% endif %}
+          {% if has_volunteer_activities %}<div class="k-icon events" title="Needs Volunteers"></div>{% endif %}
+          {% if basic_facilities.playground %}<div class="k-icon football" title="Has a Playground"></div>{% endif %}
         </div>
-
+      </div>
+      {% if has_volunteer_activities %}
+      <a class="button blue mar_top_20 js-trigger-volunteer-map" href="/school/{{ id }}/#?tab=volunteer">Volunteer here</a>
+      {% endif %}
+      <div class="center-text">
+        <a class="button-grey fl js-trigger-compare" href="">Compare to</a>
+        <a class="button-grey Xjs-trigger-info" href="/school/{{ id }}/">More Info</a>
+        <a class="button-grey" href="#close">Close</a>
       </div>
     </div>
   </div>

@@ -469,6 +469,11 @@ hr {
   }
 }
 
+a.button {
+  @extend %white;
+}
+
+
 .button-grey {
   @extend %button;
   background-color: $grey-steel;
