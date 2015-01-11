@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon, .partners-list-block ul {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message, .heading-volunteer-box {
+.font-smaller, .heading-tiny, .error-message, .heading-volunteer-box {
   font-size: 80%; }
 
 .font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
@@ -474,9 +474,11 @@ hr {
 
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
+  font-size: 75%;
   text-transform: uppercase;
-  padding: 10px 20px;
   line-height: 1;
+  letter-spacing: 1px;
+  padding: 10px 20px;
   cursor: pointer;
   outline: none; }
 
@@ -606,7 +608,8 @@ hr {
 /*-------------------------------------*/
 /* BOX INFO */
 .box-info {
-  padding: 25px; }
+  padding: 25px;
+  line-height: 1.3; }
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */

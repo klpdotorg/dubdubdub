@@ -441,13 +441,14 @@ hr {
 //BUTTONS
 %button-base {
   @extend %font-bold;
-  @extend %font-smaller;
+  font-size: 75%;
   @extend %center-text;
   @extend %border-radius-sm;
   @extend %vertical-inline-middle;
   text-transform: uppercase;
-  padding: $base-spacing $base-spacing-lg;
   line-height: 1;
+  letter-spacing: 1px;
+  padding: $base-spacing $base-spacing-lg;
   cursor: pointer;
   outline: none;
 }
@@ -682,6 +683,7 @@ hr {
   @extend %border-radius-sm;
   padding: $base-spacing-lg-x;
   @extend %center-element;
+  line-height: 1.3;
 }
 
 
