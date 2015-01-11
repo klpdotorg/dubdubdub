@@ -416,7 +416,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .footer-wrapper:after {
+.clearfix:after, .heading-section-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -647,29 +647,29 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .footer-wrapper, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto;
-  padding-left: 10px;
-  padding-right: 10px; }
+  padding-left: 20px;
+  padding-right: 20px; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .footer-wrapper {
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content {
   max-width: 1000px; }
 
 .container-sm, .banner-full-caption {
   max-width: 520px; }
 
-.grid-parent {
-  margin-left: -10px;
-  margin-right: -10px; }
-  .grid-parent:after {
+.grid-parent, .footer-wrapper {
+  margin-left: -20px;
+  margin-right: -20px; }
+  .grid-parent:after, .footer-wrapper:after {
     content: "";
     display: table;
     clear: both; }
 
 .grid-child, .main-footer {
-  padding-left: 10px;
-  padding-right: 10px; }
+  padding-left: 20px;
+  padding-right: 20px; }
 
 .main-header, .nav, .nav-trigger, .scroll-smooth-block {
   z-index: 3000; }
@@ -1091,24 +1091,33 @@ body {
         text-align: left; }
 
   .partners-list-block {
-    margin-left: -10px;
-    margin-right: -10px; }
+    margin-left: -20px;
+    margin-right: -20px; }
     .partners-list-block:after {
       content: "";
       display: table;
       clear: both; }
 
   .partners-list {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     width: 50%;
     float: left; }
 
+  .volunteer-works {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .volunteer-works:after {
+      content: "";
+      display: table;
+      clear: both; }
+
   .volunteer-works-each {
     width: 33.33%;
-    padding-right: 20px;
     display: inline-block;
-    vertical-align: top; }
+    vertical-align: top;
+    padding-left: 20px;
+    padding-right: 20px; }
     .volunteer-works-each h3:first-of-type {
       padding: 10px 0; }
     .volunteer-works-each:last-of-type {
@@ -1120,8 +1129,8 @@ body {
     max-width: 980px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 10px;
-    padding-right: 10px; }
+    padding-left: 20px;
+    padding-right: 20px; }
 
   .banner-full-caption {
     padding-bottom: 100px; }

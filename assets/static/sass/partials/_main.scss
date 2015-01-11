@@ -159,8 +159,7 @@ body {
 }
 
 .footer-wrapper {
-  @extend %container;
-  @extend %clearfix;
+  @extend %grid-parent;
   padding-top: $base-spacing-lg;
   padding-bottom: $base-spacing-lg;
 

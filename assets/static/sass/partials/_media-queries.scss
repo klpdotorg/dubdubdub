@@ -74,10 +74,14 @@
   }
 
   //page: volunteer
+  .volunteer-works {
+  	@include grid-parent;
+  }
+
   .volunteer-works-each {
 	  width: 33.33%;
-	  padding-right: $base-spacing-lg;
 	  @include vertical-inline-top;
+	  @include grid-child;
 
 	  h3:first-of-type {
 	    padding: $base-spacing 0;
