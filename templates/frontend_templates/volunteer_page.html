@@ -2,7 +2,7 @@
 <script type="text/html" id="tpl-recentStories">
   <div class="container">
       <h2 class="heading-secondary heading-border">Recently shared stories<span></span></h2>
-      <ul>  
+      <ul class="volunteer-story-block">  
       {% for story in stories %}
         <li class="volunteer-story-each">
 
@@ -18,7 +18,6 @@
                 {{ story.comments }}
             </p>
             <a href="/schoolpage/school/{{ story.school }}#?tab=share-story" class="volunteer-story-link">Read more</a>
-        </li>
       {% endfor %}
       </ul>
   </div>

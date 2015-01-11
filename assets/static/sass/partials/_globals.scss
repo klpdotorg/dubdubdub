@@ -421,7 +421,7 @@ img, video {
 
 //transitions
 %transition-linear {
-  @include transition(all 0.3s linear);
+  @include transition(all 0.2s linear);
 }
 
 %transition-ease-in {

@@ -146,5 +146,16 @@
 			max-width: none;
 		}
 	}
+
+	//page: volunteer
+	.volunteer-story-block {
+		@include grid-parent;
+	}
+
+	.volunteer-story-each {
+		@include grid-child;
+		width: 50%;
+		@include vertical-inline-top;
+	}
 }
 
