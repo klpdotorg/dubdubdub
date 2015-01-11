@@ -346,8 +346,6 @@ img, video {
 .vertical-center, %vertical-center {
   position: absolute;
   top: 50%;
-  width: 100%;
-  text-align: center;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -356,8 +354,6 @@ img, video {
 @mixin vertical-center {
   position: absolute;
   top: 50%;
-  width: 100%;
-  text-align: center;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);

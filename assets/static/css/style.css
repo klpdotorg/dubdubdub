@@ -305,7 +305,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .gender-item .k-icon:before {
+.white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -433,16 +433,14 @@ img, video {
   margin-left: auto;
   margin-right: auto; }
 
-.vertical-center, .gender-item .k-icon:before {
+.vertical-center, .gender-item-total .k-icon:before, .gender-item-total .k-icon:after {
   position: absolute;
   top: 50%;
-  width: 100%;
-  text-align: center;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .volunteer-works-img img {
+.dead-center, .volunteer-works-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1084,10 +1082,9 @@ body {
   width: 40px;
   height: 40px;
   position: relative; }
-  .gender-item .k-icon:before {
+  .gender-item .k-icon:before, .gender-item .k-icon:after {
     font-family: "FontAwesome";
-    display: block;
-    font-size: 16px; }
+    font-size: 18px; }
 
 .gender-item-boy .k-icon {
   background-color: #e17e5b; }
@@ -1102,10 +1099,11 @@ body {
 .gender-item-total .k-icon {
   background-color: #3891e3; }
   .gender-item-total .k-icon:before {
-    content: "\f182"; }
+    content: "\f182";
+    margin-left: 20px; }
   .gender-item-total .k-icon:after {
     content: "\f183";
-    font-family: "FontAwesome"; }
+    margin-left: 9px; }
 
 .marker-cluster-school {
   background-color: rgba(38, 178, 98, 0.6); }
