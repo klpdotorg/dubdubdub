@@ -516,3 +516,17 @@ body {
     @extend %transition-linear;
   }
 }
+
+//page: school map
+.map_canvas_full {
+  position:fixed; 
+  top: $header-height; 
+  left: 0; 
+  right:0; 
+  bottom: 0;
+  //z-index: 1;
+
+  > div{
+    height: 100%;
+  }
+}

@@ -1043,6 +1043,15 @@ body {
   .volunteer-story-link:hover {
     text-decoration: underline; }
 
+.map_canvas_full {
+  position: fixed;
+  top: 42px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  .map_canvas_full > div {
+    height: 100%; }
+
 @media only screen and (min-width: 950px) {
   .banner-volunteer-girl, .banner-volunteer-boy {
     display: block;
