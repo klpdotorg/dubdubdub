@@ -395,4 +395,19 @@ body {
 .banner-volunteer {
   background-image: url('/static/images/bg_blackboard_big.jpg');
   padding: $base-spacing-lg-2x 0;
+
+  .box-info {
+    max-width: 400px;
+  }
+}
+
+.heading-volunteer-box {
+  @extend %brand-orange;
+  @extend %font-uppercase;
+  @extend %font-smaller;
+  letter-spacing: 1px;
+
+  &:after {
+    @extend %brand-green-bg;
+  }
 }

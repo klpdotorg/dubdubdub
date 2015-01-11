@@ -85,7 +85,7 @@ q:before, q:after {
 .font-light, .heading-secondary, .banner-full-caption, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .heading-volunteer-box {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon, .partners-list-block ul {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message {
+.font-smaller, .heading-tiny, .button, .button-grey, .button-orange, .button-hollow, .error-message, .heading-volunteer-box {
   font-size: 80%; }
 
 .font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
@@ -150,7 +150,7 @@ sub {
   margin: 10px auto 0;
   width: 80px;
   height: 5px;
-  background: currentColor; }
+  background-color: currentColor; }
 
 .heading-primary {
   font-size: 220%;
@@ -263,7 +263,7 @@ sub {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /* COLORS */
-.brand-orange {
+.brand-orange, .heading-volunteer-box {
   color: #ec6608; }
 
 .brand-orange-bg, .alert.warning {
@@ -272,7 +272,7 @@ sub {
 .brand-green {
   color: #26b262; }
 
-.brand-green-bg, .alert.success {
+.brand-green-bg, .alert.success, .heading-volunteer-box:after {
   background-color: #26b262; }
 
 .brand-blue, .modal .heading-border {
@@ -302,7 +302,7 @@ sub {
 .white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a {
   color: #fff; }
 
-.white-bg, .heading-section, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
+.white-bg, .heading-section, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .yellow-mild {
@@ -353,7 +353,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
+.border-radius-sm, .heading-section, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
   border-radius: 3px; }
 
 .border-radius-circle, .link-external:after, .input-radio + .input-radio-label:before, .about-map-image {
@@ -418,7 +418,7 @@ img, video {
 .center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block {
   text-align: center; }
 
-.center-element {
+.center-element, .box-info {
   margin-left: auto;
   margin-right: auto; }
 
@@ -602,6 +602,11 @@ hr {
     color: #d8d8d8; }
     .circle-bullet.white:before {
       content: "\f1db"; }
+
+/*-------------------------------------*/
+/* BOX INFO */
+.box-info {
+  padding: 25px; }
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
@@ -984,6 +989,11 @@ body {
 .banner-volunteer {
   background-image: url("/static/images/bg_blackboard_big.jpg");
   padding: 50px 0; }
+  .banner-volunteer .box-info {
+    max-width: 400px; }
+
+.heading-volunteer-box {
+  letter-spacing: 1px; }
 
 @media only screen and (min-width: 800px) {
   .nav-trigger {

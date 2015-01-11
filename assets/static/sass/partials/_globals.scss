@@ -676,6 +676,16 @@ hr {
 
 
 /*-------------------------------------*/
+/* BOX INFO */
+.box-info {
+  @extend %white-bg;
+  @extend %border-radius-sm;
+  padding: $base-spacing-lg-x;
+  @extend %center-element;
+}
+
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;
