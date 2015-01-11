@@ -401,6 +401,10 @@ body {
   }
 }
 
+.banner-volunteer-info {
+  position: relative;
+}
+
 .heading-volunteer-box {
   @extend %brand-orange;
   @extend %font-uppercase;
@@ -410,4 +414,8 @@ body {
   &:after {
     @extend %brand-green-bg;
   }
+}
+
+.banner-volunteer-girl, .banner-volunteer-boy {
+  display: none;
 }

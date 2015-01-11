@@ -995,9 +995,26 @@ body {
   .banner-volunteer .box-info {
     max-width: 400px; }
 
+.banner-volunteer-info {
+  position: relative; }
+
 .heading-volunteer-box {
   letter-spacing: 1px; }
 
+.banner-volunteer-girl, .banner-volunteer-boy {
+  display: none; }
+
+@media only screen and (min-width: 950px) {
+  .banner-volunteer-girl, .banner-volunteer-boy {
+    display: block;
+    position: absolute;
+    top: 0; }
+
+  .banner-volunteer-girl {
+    left: 10px; }
+
+  .banner-volunteer-boy {
+    right: 10px; } }
 @media only screen and (min-width: 800px) {
   .nav-trigger {
     display: none; }

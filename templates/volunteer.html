@@ -14,20 +14,22 @@
   <div class="page-volunteer">
 
     <section class="banner-full banner-volunteer">
-      <div class="banner-full-caption">
-        <div class="headline_text_mobile"><img src="{% static 'images/volunteer_header_text.png' %}" alt="Got some free time? Teach kids in nearby schools" /></div>
-      </div>  <!-- /banner-full-caption -->     
+      <div class="container base-spacing-lg">  
+        <img src="{% static 'images/volunteer_header_text.png' %}" alt="Got some free time? Teach kids in nearby schools">
+        <div class="base-spacing-lg"></div>
 
-
-      <div class="fl child_1 png24"></div>
-      <div class="fr child_2 png24"></div>
-      <div class="box-info">
-        <div class="heading-border heading-volunteer-box">Volunteer to help</div>
-        <div class="base-spacing-lg">    
-          <p class="h2 font-light">You can make a difference. Find volunteering opportunities where you can make a difference.</p>
-        </div>    
-        <a href="/volunteer-map" class="button js-trigger-volunteer">Volunteer Now</a>
-      </div>
+        <div class="banner-volunteer-info">
+          <img src="/static/images/volunteer_child_1_left@2x.png" width="180" class="banner-volunteer-girl">
+          <img src="/static/images/volunteer_child_2_right@2x.png" width="155" class="banner-volunteer-boy">
+          <div class="box-info">
+            <div class="heading-border heading-volunteer-box">Volunteer to help</div>
+            <div class="base-spacing-lg">    
+              <p class="h2 font-light">You can make a difference. Find volunteering opportunities where you can make a difference.</p>
+            </div>    
+            <a href="/volunteer-map" class="button js-trigger-volunteer">Volunteer Now</a>
+          </div>
+        </div> <!-- /base-spacing-lg -->
+      </div> <!-- /banner-volunteer-info -->
     </section>
 
     <section class="volunteer-section how-volunteering-works">

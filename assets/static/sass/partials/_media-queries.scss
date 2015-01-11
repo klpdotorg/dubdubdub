@@ -1,3 +1,20 @@
+@media only screen and (min-width: 950px) {
+  //page: volunteer
+  .banner-volunteer-girl, .banner-volunteer-boy {
+		display: block;
+		position: absolute;
+		top: 0;  	
+  }
+
+  .banner-volunteer-girl {
+  	left: $base-spacing;
+  }
+
+  .banner-volunteer-boy {
+  	right: $base-spacing;
+  }
+}
+
 @media only screen and (min-width: 800px) {
 	//navigation
 
@@ -55,7 +72,6 @@
   	width: 50%;
   	@include float-left;
   }
-
 }
 
 @media only screen and (min-width: 600px) {
