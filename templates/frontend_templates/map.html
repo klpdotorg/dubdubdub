@@ -88,25 +88,28 @@
     </div>
     <div class="details">
       <div class="detail-item">
-        <h4 class="">Students</h4>
+        <h4 class="gender-icons-title">Students</h4>
         <div class="gender-icons">
           <div class="gender-item gender-item-boy">
             <div class="k-icon"></div>
-            <p class="label">Boys</p>
-            <p class="value">{{ num_boys }}</p>
-            <div class="clr"></div>
+            <div class="center-text">
+              <div class="gender-item-count">{{ num_boys }}</div>
+              <div class="font-uppercase font-light">Boys</div>
+            </div> 
           </div>
           <div class="gender-item gender-item-girl">
             <div class="k-icon"></div>
-            <p class="label">Girls</p>
-            <p class="value">{{ num_girls }}</p>
-            <div class="clr"></div>
+            <div class="center-text">
+              <div class="gender-item-count">{{ num_girls }}</div>
+              <div class="font-uppercase font-light">Girls</div>
+            </div>
           </div>
           <div class="gender-item gender-item-total">
             <div class="k-icon"></div>
-            <p class="label">Total</p>
-            <p class="value">{{ num_boys+num_girls }}</p>
-            <div class="clr"></div>
+            <div class="center-text">
+              <div class="gender-item-count">{{ num_boys+num_girls }}</div>
+              <div class="font-uppercase font-light">Total</div>
+            </div>
           </div>
         </div>
       </div>

@@ -553,7 +553,7 @@
                 t.stopLoading();
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 if (!isMobile) {
-                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 } else {
                     // Its a phone
                     //marker.closePopup(); // Close popup
