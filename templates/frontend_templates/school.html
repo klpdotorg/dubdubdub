@@ -36,34 +36,34 @@
         <h4 class="heading-tiny-uppercase">School Information</h4>
         <table class="info_data_table">
             <tr>
-                <td>Category</td>
+                <td class="font-bold">Category</td>
                 <td>{{ cat }}</td>
             </tr>
             {% if buses %}
             <tr>
-                <td>Buses</td>
+                <td class="font-bold">Buses</td>
                 <td>{{ buses }}</td>
             </tr>
             {% endif %}
             {% if identifiers %}
             <tr>
-                <td>Identifiers</td>
+                <td class="font-bold">Identifiers</td>
                 <td>{{ identifiers }}</td>
             </tr>
             {% endif %}
             <tr>
-                <td>Gender</td>
+                <td class="font-bold">Gender</td>
                 <td>{{ sex|capitalize }}</td>
             </tr>
 
             {% if type.id == 1 %}
             <tr>
-                <td>Medium</td>
+                <td class="font-bold">Medium</td>
                 <td>{{ moi|capitalize }}</td>
             </tr>
                 {% if dise_code %}
             <tr>
-                <td>DISE</td>
+                <td class="font-bold">DISE</td>
                 <td>{{ dise_code }}</td>
             </tr>
                 {% endif %}

@@ -226,10 +226,11 @@ sub {
 
 .heading-tiny-uppercase {
   color: $grey-steel;
-  @extend %font-smallest;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  @extend %font-bold
+  @extend %font-bold;
+  margin-bottom: $base-spacing-sm;
 }
 
 .heading-section {

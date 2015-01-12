@@ -23,6 +23,8 @@
     <script>
         SCHOOL_ID = {{ object.id }};
         SCHOOL_TYPE_ID = {{ object.schooldetails.type.id }};
+
+
     </script>
 
 {% endblock %}
@@ -93,7 +95,7 @@
                     </div>
                     <div class="clr"></div>
 
-                    <ul class="tabs">
+                    <!-- <ul class="tabs">
                         <li data-tab="info" class="current js-tab-link">Info</li>
                         <li data-tab="demographics" class="js-tab-link">Demographics</li>
                         <li data-tab="programmes" class="js-tab-link">Programmes</li>
@@ -103,58 +105,74 @@
                         <li data-tab="nutrition" class="js-tab-link">Nutrition</li>
                         <li data-tab="share-story" class="js-tab-link">Share your story</li>
                         <li data-tab="volunteer" class="js-tab-link">Volunteer</li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
 
-        <div class="school-details js-tabs-wrapper">
+        <div class="school-details js-tabs-wrapper tab-wrapper">
+            <div class="tab-each">
+                <li data-tab="info" class="tab-heading tab-heading-active js-tab-link">Info</li>
+                <div class="tab-content" data-tab="info">
+                    Loading...
+                </div>  <!-- Info Tab END -->            
+            </div>
 
-            <div class="tab-heading">Info</div>
-            <div class="tab-content container" data-tab="info">
+            <div class="tab-each">
+                <li data-tab="demographics" class="tab-heading js-tab-link">Demographics</li>
+                <div class="tab-content" data-tab="demographics">
+                    Loading...
+                </div>  <!-- Demographics Tab END -->
+            </div>
+
+            <div class="tab-each">
+                <li data-tab="programmes" class="tab-heading js-tab-link">Programmes</li>
+                <div class="tab-content" data-tab="programmes">
+                    Loading...
+                </div>  <!-- Programme Tab END -->
+            </div>
+
+            <div class="tab-each">
+                <li data-tab="finances" class="tab-heading js-tab-link">Finances</li>
+                <div class="tab-content" data-tab="finances">
                 Loading...
-            </div>  <!-- Info Tab END -->
+                </div>  <!-- Finances Tab END -->
+            </div>
 
-            <div class="tab-heading">Demographics</div>
-            <div class="tab-content container" data-tab="demographics">
+            <div class="tab-each">
+                 <li data-tab="infrastructure" class="tab-heading js-tab-link">Infrastructure</li>
+                <div class="tab-content" data-tab="infrastructure">
                 Loading...
-            </div>  <!-- Demographics Tab END -->
+                </div>  <!-- Infrastructure Tab END -->
+            </div>
 
-            <div class="tab-heading">Programmes</div>
-            <div class="tab-content container" data-tab="programmes">
+            <div class="tab-each">
+                <li data-tab="library" class="tab-heading js-tab-link">Library</li>
+                <div class="tab-content" data-tab="library">
                 Loading...
-            </div>  <!-- Programme Tab END -->
+                </div>  <!-- Library Tab END -->
+            </div>
 
-            <div class="tab-heading">Finances</div>
-            <div class="tab-content container" data-tab="finances">
+            <div class="tab-each">
+                <li data-tab="nutrition" class="tab-heading js-tab-link">Nutrition</li>
+                <div class="tab-content" data-tab="nutrition">
                 Loading...
-            </div>  <!-- Finances Tab END -->
+                </div>  <!-- Nutrition Tab END -->
+            </div>
 
-            <div class="tab-heading">Infrastructure</div>
-            <div class="tab-content container" data-tab="infrastructure">
+            <div class="tab-each">
+                <li data-tab="share-story" class="tab-heading js-tab-link">Share your story</li>
+                <div class="tab-content" data-tab="share-story">
                 Loading...
-            </div>  <!-- Infrastructure Tab END -->
+                </div>  <!-- Share your story Tab END -->
+            </div>
 
-            <div class="tab-heading">Library</div>
-            <div class="tab-content container" data-tab="library">
+            <div class="tab-each">
+                <li data-tab="volunteer" class="tab-heading js-tab-link">Volunteer</li>
+                <div class="tab-content" data-tab="volunteer">
                 Loading...
-            </div>  <!-- Library Tab END -->
-
-            <div class="tab-heading">Nutrition</div>
-            <div class="tab-content container" data-tab="nutrition">
-                Loading...
-            </div>  <!-- Nutrition Tab END -->
-
-            <div class="tab-heading">Share your story</div>
-            <div class="tab-content container" data-tab="share-story">
-                Loading...
-            </div>  <!-- Share your story Tab END -->
-
-            <div class="tab-heading">Volunteer</div>
-            <div class="tab-content container" data-tab="volunteer">
-                Loading...
-            </div>  <!-- Share your story Tab END -->
-
+                </div>  <!-- Share your story Tab END -->
+            </div>
         </div>
 
     </section>

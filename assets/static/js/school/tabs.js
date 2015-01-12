@@ -434,16 +434,16 @@
         if (typeof(replaceState) === 'undefined') {
             replaceState = false;
         }
-        $('.tab-content.current').removeClass('current');
+        $('.tab-content.tab-active').removeClass('tab-active');
         var queryParams = klp.router.getHash().queryParams;
         if (!(queryParams.hasOwnProperty('tab') && queryParams['tab'] === tabName)) {
             klp.router.setHash(null, {'tab': tabName}, {trigger: false, replace: replaceState});
         }
         currentTab = tabName;
         var $tabButton = $('.js-tab-link[data-tab=' + tabName + ']');
-        $tabButton.parent().find("li.current").removeClass('current');
-        $tabButton.addClass("current");
-        $('div[data-tab=' + tabName + ']').addClass('current');
+        $tabButton.parent().find("tab-heading-active").removeClass('tab-heading-active');
+        $tabButton.addClass("tab-heading-active");
+        $('div[data-tab=' + tabName + ']').addClass('tab-active');
         var $deferred = $.Deferred();
         getData(tabName, function(data) {
             if (tabs[tabName].hasOwnProperty('getContext')) {
