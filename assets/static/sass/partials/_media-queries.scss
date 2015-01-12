@@ -1,18 +1,81 @@
-@media only screen and (min-width: 950px) {
-  //page: volunteer
-  .banner-volunteer-girl, .banner-volunteer-boy {
+@media only screen and (min-width: 600px) {
+	//alerts
+
+	.alert {
+		left: 20%;
+		right: 20%;
+		@include container;
+	}
+
+	//banner full-width
+	.banner-full-caption { 
+	  padding-bottom: ($base-spacing-lg-2x) * 2;
+	}
+
+	//float-left and float-right for images in content areas
+
+	.float-left-padding {
+	  @include float-left;
+	  margin: $base-spacing $base-spacing-lg-x $base-spacing 0;
+	}
+
+	.float-right-padding {
+	  @include float-right;
+	  margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
+	}
+	
+	//navigation: top
+	.nav-footer {
+	  float: left;
+	  margin-bottom: 0;
+	  margin-top: $base-spacing-mid + 2;
+	}
+	
+	.footer-copyright {
+	  float: right;
+
+	  img {
+	    float: right;
+	  }
+  }
+
+  //page: home
+
+  .banner-home {
+	  padding-bottom: 0;
+	
+	  .banner-caption-klp, .banner-full-caption {
+			max-width: 340px;
+	  } 
+  }
+
+	.banner-home-student {
 		display: block;
-		position: absolute;
-		top: 0;  	
-  }
+	}
 
-  .banner-volunteer-girl {
-  	left: $base-spacing;
-  }
+  //page: about
+  .about-map-image {
+		max-width: none;
+	  @include vertical-inline-middle;
+	}
 
-  .banner-volunteer-boy {
-  	right: $base-spacing;
-  }
+	//page: partners
+	.logo-wrapper {
+		> img {
+			max-width: none;
+		}
+	}
+
+	//page: volunteer
+	.volunteer-story-block {
+		@include grid-parent;
+	}
+
+	.volunteer-story-each {
+		@include grid-child;
+		width: 50%;
+		@include vertical-inline-top;
+	}
 }
 
 @media only screen and (min-width: 750px) {
@@ -62,22 +125,12 @@
     }
   }
 
-  //page: home
-  .banner-logo-klp {
-  	width: 170px;
+	//page: home
+	.banner-home {
+  	.banner-full-caption {
+  		max-width: 480px;
+  	}
 	}
-
-	.banner-caption-klp {
-	}
-
-	.banner-home-container {
-	  background-image: url('/static/images/hp_student.png');
-	  background-repeat: no-repeat;
-	  background-position: right top;
-	}
-
-
-	
 	//page: partners
   .partners-list-block {
 		@include grid-parent;
@@ -109,69 +162,29 @@
 	}
 }
 
-@media only screen and (min-width: 600px) {
-	//alerts
+@media only screen and (min-width: 950px) {
 
-	.alert {
-		left: 20%;
-		right: 20%;
-		@include container;
+  //page: home
+  .banner-logo-klp {
+  	width: 170px;
 	}
 
-	//banner full-width
-	.banner-full-caption { 
-	  padding-bottom: ($base-spacing-lg-2x) * 2;
+	.banner-home-student {
+		max-width: none;
 	}
 
-	//float-left and float-right for images in content areas
-
-	.float-left-padding {
-	  @include float-left;
-	  margin: $base-spacing $base-spacing-lg-x $base-spacing 0;
-	}
-
-	.float-right-padding {
-	  @include float-right;
-	  margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
-	}
-	
-	//navigation: top
-	.nav-footer {
-	  float: left;
-	  margin-bottom: 0;
-	  margin-top: $base-spacing-mid + 2;
-	}
-	
-	.footer-copyright {
-	  float: right;
-
-	  img {
-	    float: right;
-	  }
+  //page: volunteer
+  .banner-volunteer-girl, .banner-volunteer-boy {
+		display: block;
+		position: absolute;
+		top: 0;  	
   }
 
-  //page: about
-  .about-map-image {
-		max-width: none;
-	  @include vertical-inline-middle;
-	}
+  .banner-volunteer-girl {
+  	left: $base-spacing;
+  }
 
-	//page: partners
-	.logo-wrapper {
-		> img {
-			max-width: none;
-		}
-	}
-
-	//page: volunteer
-	.volunteer-story-block {
-		@include grid-parent;
-	}
-
-	.volunteer-story-each {
-		@include grid-child;
-		width: 50%;
-		@include vertical-inline-top;
-	}
+  .banner-volunteer-boy {
+  	right: $base-spacing;
+  }
 }
-

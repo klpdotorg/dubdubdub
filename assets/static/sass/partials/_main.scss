@@ -305,9 +305,36 @@ body {
 //PAGE: HOME
 .banner-home {
   background-image: url('/static/images/bg_blackboard_big.jpg');
+
+  .banner-full-caption {
+    margin-left: 0;
+  }
 }
+
 .banner-home-container {
   @extend %container;
+  text-align: left;
+  position: relative;
+
+  a {
+    color: $grey-silver;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+}
+
+.banner-home-student {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 200px;
+  display: none;
+}
+
+.banner-caption-klp {
+  margin-top: $base-spacing-lg;
 }
 
 .home-help-block {

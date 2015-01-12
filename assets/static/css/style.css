@@ -971,6 +971,26 @@ body {
 /*-------------------------------------*/
 .banner-home {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
+  .banner-home .banner-full-caption {
+    margin-left: 0; }
+
+.banner-home-container {
+  text-align: left;
+  position: relative; }
+  .banner-home-container a {
+    color: #bbb; }
+    .banner-home-container a:hover {
+      color: #7bb6ec; }
+
+.banner-home-student {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 200px;
+  display: none; }
+
+.banner-caption-klp {
+  margin-top: 20px; }
 
 .home-help-block {
   background-color: #2c3e50; }
@@ -1280,17 +1300,67 @@ body {
 @media (max-width: 768px) {
   .leaflet-control-container {
     display: none; } }
-@media only screen and (min-width: 950px) {
-  .banner-volunteer-girl, .banner-volunteer-boy {
-    display: block;
-    position: absolute;
-    top: 0; }
+@media only screen and (min-width: 600px) {
+  .alert {
+    left: 20%;
+    right: 20%;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px; }
 
-  .banner-volunteer-girl {
-    left: 10px; }
+  .banner-full-caption {
+    padding-bottom: 100px; }
 
-  .banner-volunteer-boy {
-    right: 10px; } }
+  .float-left-padding {
+    float: left;
+    margin: 10px 25px 10px 0; }
+
+  .float-right-padding {
+    float: right;
+    margin: 10px 0 10px 25px; }
+
+  .nav-footer {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 17px; }
+
+  .footer-copyright {
+    float: right; }
+    .footer-copyright img {
+      float: right; }
+
+  .banner-home {
+    padding-bottom: 0; }
+    .banner-home .banner-caption-klp, .banner-home .banner-full-caption {
+      max-width: 340px; }
+
+  .banner-home-student {
+    display: block; }
+
+  .about-map-image {
+    max-width: none;
+    display: inline-block;
+    vertical-align: middle; }
+
+  .logo-wrapper > img {
+    max-width: none; }
+
+  .volunteer-story-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .volunteer-story-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .volunteer-story-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 50%;
+    display: inline-block;
+    vertical-align: top; } }
 @media only screen and (min-width: 750px) {
   .nav-trigger {
     display: none; }
@@ -1324,13 +1394,8 @@ body {
       .nav li li {
         text-align: left; }
 
-  .banner-logo-klp {
-    width: 170px; }
-
-  .banner-home-container {
-    background-image: url("/static/images/hp_student.png");
-    background-repeat: no-repeat;
-    background-position: right top; }
+  .banner-home .banner-full-caption {
+    max-width: 480px; }
 
   .partners-list-block {
     margin-left: -20px;
@@ -1364,58 +1429,22 @@ body {
       padding: 10px 0; }
     .module-img-each:last-of-type {
       padding-right: 0; } }
-@media only screen and (min-width: 600px) {
-  .alert {
-    left: 20%;
-    right: 20%;
-    max-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px; }
+@media only screen and (min-width: 950px) {
+  .banner-logo-klp {
+    width: 170px; }
 
-  .banner-full-caption {
-    padding-bottom: 100px; }
-
-  .float-left-padding {
-    float: left;
-    margin: 10px 25px 10px 0; }
-
-  .float-right-padding {
-    float: right;
-    margin: 10px 0 10px 25px; }
-
-  .nav-footer {
-    float: left;
-    margin-bottom: 0;
-    margin-top: 17px; }
-
-  .footer-copyright {
-    float: right; }
-    .footer-copyright img {
-      float: right; }
-
-  .about-map-image {
-    max-width: none;
-    display: inline-block;
-    vertical-align: middle; }
-
-  .logo-wrapper > img {
+  .banner-home-student {
     max-width: none; }
 
-  .volunteer-story-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .volunteer-story-block:after {
-      content: "";
-      display: table;
-      clear: both; }
+  .banner-volunteer-girl, .banner-volunteer-boy {
+    display: block;
+    position: absolute;
+    top: 0; }
 
-  .volunteer-story-each {
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 50%;
-    display: inline-block;
-    vertical-align: top; } }
+  .banner-volunteer-girl {
+    left: 10px; }
+
+  .banner-volunteer-boy {
+    right: 10px; } }
 
 /*# sourceMappingURL=style.css.map */
