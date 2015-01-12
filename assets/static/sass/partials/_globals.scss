@@ -701,6 +701,11 @@ a.button {
 .module-img-each {
   @extend %center-text;
   @extend %font-light;
+  margin-bottom: $base-spacing-lg-2x;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 
   .step-number {
     position: relative;

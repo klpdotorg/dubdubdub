@@ -379,6 +379,10 @@ body {
   h3:first-of-type {
     @extend %h2;
   }
+
+  .module-img {
+    border: 1px solid $font-base-color;
+  }
 }
 
 .home-current-stories {
@@ -399,10 +403,20 @@ body {
   }
 }
 
+.home-current-subheading {
+  @extend %font-bold;
+  margin-bottom: $base-spacing-lg;
+}
+
 .stories-list-each, .home-blog-list {
   @extend %font-smaller;
   text-align: left;
   margin: $base-spacing 0 0 0;
+}
+
+.home-volunteer-request {
+  @extend %base-spacing-lg-2x;
+  background-color: $blue-sky;
 }
 
 /*-------------------------------------*/
@@ -526,7 +540,7 @@ body {
 }
 
 .volunteer-works-block {
-  background-color: lighten($brand-blue, 32%);
+  background-color: $blue-sky;
   @extend %base-spacing-lg-2x;
 }
 

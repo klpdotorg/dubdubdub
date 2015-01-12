@@ -125,6 +125,22 @@
     }
   }
 
+  //Module: Image block
+  .module-img-block {
+  	@include grid-parent;
+  }
+
+  .module-img-each {
+	  width: 33.33%;
+	  @include vertical-inline-top;
+	  @include grid-child;
+	  margin-bottom: 0;
+
+	  h3:first-of-type {
+	    padding: $base-spacing 0;
+	  }
+	}
+
 	//page: home
 	.banner-home {
   	.banner-full-caption {
@@ -141,25 +157,6 @@
   	width: 50%;
   	@include float-left;
   }
-
-  //page: volunteer
-  .module-img-block {
-  	@include grid-parent;
-  }
-
-  .module-img-each {
-	  width: 33.33%;
-	  @include vertical-inline-top;
-	  @include grid-child;
-
-	  h3:first-of-type {
-	    padding: $base-spacing 0;
-	  }
-
-	  &:last-of-type {
-	    padding-right: 0;
-	  }
-	}
 }
 
 @media only screen and (min-width: 950px) {
