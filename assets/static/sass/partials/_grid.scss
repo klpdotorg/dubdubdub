@@ -5,12 +5,12 @@
 .container, %container, .container-sm, %container-sm {
   margin-left: auto;
   margin-right: auto;
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
 }
 
 .container, %container {
   max-width: 1000px;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
 }
 
 .container-sm, %container-sm {

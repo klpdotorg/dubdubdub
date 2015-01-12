@@ -645,14 +645,14 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .container-sm, .banner-full-caption {
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; }
+
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container {
+  max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
-
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content {
-  max-width: 1000px; }
 
 .container-sm, .banner-full-caption {
   max-width: 520px; }
@@ -947,6 +947,10 @@ body {
 /*-------------------------------------*/
 .modal .heading-border {
   margin-bottom: 40px; }
+
+/*-------------------------------------*/
+.banner-home {
+  background-image: url("/static/images/bg_blackboard_big.jpg"); }
 
 /*-------------------------------------*/
 .about-map {
@@ -1278,7 +1282,7 @@ body {
 
   .banner-volunteer-boy {
     right: 10px; } }
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 750px) {
   .nav-trigger {
     display: none; }
 
@@ -1310,6 +1314,14 @@ body {
       min-width: 125px; }
       .nav li li {
         text-align: left; }
+
+  .banner-logo-klp {
+    width: 170px; }
+
+  .banner-home-container {
+    background-image: url("/static/images/hp_student.png");
+    background-repeat: no-repeat;
+    background-position: right top; }
 
   .partners-list-block {
     margin-left: -20px;

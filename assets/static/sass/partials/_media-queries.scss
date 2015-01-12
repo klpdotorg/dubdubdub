@@ -15,7 +15,7 @@
   }
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 750px) {
 	//navigation
 
   .nav-trigger {
@@ -61,6 +61,22 @@
   		}
     }
   }
+
+  //page: home
+  .banner-logo-klp {
+  	width: 170px;
+	}
+
+	.banner-caption-klp {
+	}
+
+	.banner-home-container {
+	  background-image: url('/static/images/hp_student.png');
+	  background-repeat: no-repeat;
+	  background-position: right top;
+	}
+
+
 	
 	//page: partners
   .partners-list-block {

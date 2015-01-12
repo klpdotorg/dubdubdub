@@ -22,7 +22,7 @@ the css in the head of map.html
 */
 
 * {
-    @include box-sizing;
+  @include box-sizing;
 }
 
 html, body {
@@ -298,6 +298,16 @@ body {
     @extend %brand-blue;
     margin-bottom: $base-spacing-lg * 2;
   }
+}
+
+
+/*-------------------------------------*/
+//PAGE: HOME
+.banner-home {
+  background-image: url('/static/images/bg_blackboard_big.jpg');
+}
+.banner-home-container {
+  @extend %container;
 }
 
 
