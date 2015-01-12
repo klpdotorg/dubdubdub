@@ -4,7 +4,8 @@ from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404
 from common.views import StaticPageView
 from django.core.urlresolvers import reverse
-from models import User, Organization, VolunteerActivity, VolunteerActivityType
+from models import (User, Organization, VolunteerActivity, VolunteerActivityType,
+    DonationItemCategory, DonationRequirement)
 
 class ProfilePageView(DetailView):
     model = User
@@ -175,3 +176,89 @@ class VolunteerMapPageView(StaticPageView):
         context['activity_types'] = VolunteerActivityType.objects.all()
         context['organizations'] = Organization.objects.all()
         return context
+
+
+class DonatePageView(StaticPageView):
+
+    def get_context_data(self, **kwargs):
+        context = super(DonatePageView, self).get_context_data(**kwargs)
+        context['categories'] = DonationItemCategory.objects.all()
+        context['organizations'] = Organization.objects.all()
+        return context
+
+
+class DonationRequirementView(DetailView):
+    model = DonationRequirement
+
+
+class DonationRequirementsView(StaticPageView):
+
+    def get_context_data(self, **kwargs):
+        context = super(DonationRequirementsView, self).get_context_data(**kwargs)
+        category_id = self.request.GET.get('category', None)
+        organization_id = self.request.GET.get('org', None)
+        if category_id:
+            context['category'] = get_object_or_404(DonationItemCategory, pk=category_id)
+        if organization_id:
+            context['organization'] = get_object_or_404(Organization, pk=organization_id)
+        context['heading'] = self._get_heading_string(context)
+        return context
+
+
+    def _get_heading_string(self, context):
+        """Get heading string for page based on filters selected"""
+        if context.has_key('category') and context.has_key('organization'):
+            s = "Donate %s to %s" % (context['category'].name, context['organization'].name)
+        elif context.has_key('category'):
+            s = "Donate %s" % context['category'].name
+        elif context.has_key('organization'):
+            s = "Donate to %s" % context['organization'].name
+        else:
+            s = "Donate"
+        return s
+
+
+class DonationRequirementAddEditPageView(StaticPageView):
+    """View to render template for donation add and edit.
+    
+    The same view handles both "add" and "edit" urls,
+    populating context accordingly. Both use the same template to render.
+    """
+    template_name = 'donate/add_edit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DonationRequirementAddEditPageView, self).get_context_data(**kwargs)
+        org = self._get_org()
+        context['org'] = org
+        donation_requirement = self._get_donation_requirement()
+        if donation_requirement:
+            context['donation_requirement'] = donation_requirement
+        context['item_categories'] = DonationItemCategory.objects.all()
+        context['breadcrumbs'] = [
+            {
+                'url': '/organisation/%d' % (org.id,),
+                'name': 'Organisation: %s' % (org.name,)
+            },
+            {
+                'url': '/organisation/%d/edit' % (org.id,),
+                'name': 'Edit'
+            },
+            {
+                'url': '/organisation/%d/donation_requirement' % (org.id,),
+                'name': 'Add Donation Requirement'
+            },
+        ]
+        return context
+
+    def _get_org(self):
+        if self.kwargs.has_key('org_pk'):
+            org_id = self.kwargs['org_pk']
+        else:
+            org_id = self.kwargs['pk']
+        return get_object_or_404(Organization, pk=org_id)
+
+    def _get_donation_requirement(self):
+        if not self.kwargs.has_key('org_pk'):
+            return None
+        donation_requirement_id = self.kwargs['pk']
+        return get_object_or_404(DonationRequirement, pk=donation_requirement_id)

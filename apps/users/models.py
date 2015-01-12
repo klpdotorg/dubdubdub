@@ -389,7 +389,7 @@ class DonationRequirement(models.Model):
     organization = models.ForeignKey('Organization')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    end_date = models.DateField(null=True)
+    end_date = models.DateField(null=True, blank=True)
 
     def __unicode__(self):
         return self.description
@@ -400,6 +400,8 @@ class DonationRequirement(models.Model):
 
 class DonationItemCategory(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128, blank=True, null=True)
+    image = models.ImageField(upload_to='donation_type_images', blank=True)
     #add slug
 
     def __unicode__(self):

@@ -3,6 +3,7 @@
         klp.volunteer_here.init();
         var $orgXHR = klp.api.do("organizations/" + ORGANIZATION_ID);
         var tplVolunteer = swig.compile($('#tpl-volunteerActivity').html());
+        var tplDonation = swig.compile($('#tpl-donationRequirement').html());
         $orgXHR.done(function(data) {
             // console.log("data", data);
             if (hasEditPermissions(data.users)) {
@@ -20,6 +21,21 @@
                 var html = $('#tpl-emptyVolunteerActivities').html();
                 $('#volunteerActivitiesList').append(html);
             }
+            var donationsURL = "donation_requirements/";
+            var params = {
+                'organization': ORGANIZATION_ID
+            };
+            var $donationsXHR = klp.api.authDo(donationsURL, params);
+
+            $donationsXHR.done(function(data) {
+                var requirements = data.results;
+                $('#donationCount').text(requirements.length);
+                _(requirements).each(function(r) {
+                    var html = tplDonation(r);
+                    $('#donationRequirementsList').append(html);
+                });
+            });
+
             klp.auth.events.on("login", function() {
                 if (hasEditPermissions(data.users)) {
                     $('#editOrganizationBtn').show();

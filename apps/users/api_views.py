@@ -420,6 +420,9 @@ class DonationItemListView(generics.ListCreateAPIView):
     #permission_classes = (DonationRequirementsPermission,)
     #filter_class = DonationRequirementFilter
 
+    def pre_save(self, obj):
+        obj.requirement_id = self.kwargs['requirement_pk']
+
     def get_queryset(self):
         requirement_id = self.kwargs['requirement_pk']
         return DonationItem.objects.filter(requirement=requirement_id)

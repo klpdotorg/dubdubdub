@@ -36,4 +36,35 @@
         <div class="clr">
     </div>
 </script>
+
+<script type="text/html" id="tpl-donationRequirement">
+    <div class="required pb-20">
+        <div class="fl phn-fn">
+            <div class="desc-title mb-5">{{ name }}</div>
+            <span class="color-grey-light-2">For </span>
+            <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
+        </div>
+        <div class="fr ta-r phn-fn phn-ta-l phn-mb-10">
+            <div class="desc-title color-green">{{ school_details.name }}</div>
+            <div class="color-grey-light-2 mb-5">{{ school_details.address_full }}</div>
+        </div>
+        <div class="clr"></div>
+        <p class="mar-0 mt-10">
+            {{ description }}
+        </p>
+        <div class="fl phn-fn">
+            <div class="color-black bold mt-10">
+                Needed Items:
+            </div>
+            {% for item in  items %}
+            <div class="items fl mr-10">
+                <span class="color-blue bold">{{ item.name }} </span> x {{ quantity }}{{ unit }},
+            </div>
+            {% endfor %}
+            <div class="clr"></div>
+        </div>
+        <a class="button fr mt-10 phn-fn phn-mt-10" href="{{ }}">Donate Now</a>
+        <div class="clr"></div>
+    </div>
+</script>
 {% endverbatim %}

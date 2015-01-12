@@ -53,6 +53,20 @@
                 $('#volunteerTable').append(html);
             });
 
+            var tplDonationRequirement = swig.compile($('#tpl-donationRequirement').html());
+            var donationsURL = "donation_requirements/";
+            var params = {
+                'organization': ORGANIZATION_ID
+            };
+            var $donationsXHR = klp.api.authDo(donationsURL, params);
+            $donationsXHR.done(function(data) {
+                var requirements = data.results;
+                _(requirements).each(function(r) {
+                    var html = tplDonationRequirement(r);
+                    $('#donationTable').append(html);
+                });
+            });
+
             klp.auth.events.on("logout", function() {
                 location.href = "/organisation/" + data.id;
             });

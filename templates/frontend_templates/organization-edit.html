@@ -40,5 +40,57 @@
     </tr>
 </script>
 
+<script type="text/html" id="tpl-donationRequirement">
+    <tr>
+        <td>
+            <div class="bold">{{ title }}</div>
+            <div class="color-grey-light-2 mt-5">
+                {{ description }}
+            </div>
+        </td>
+        <td>
+            <div class="color-green bold">
+                {{ school_details.name }}
+            </div>
+            <div class="color-grey-light-2 mt-5">
+                {{ school_details.address_full }}
+            </div>
+        </td>
+        <td class="font-14">
+            {% for item in items %}
+            <div>
+                {{ item.quantity }}{{ item.unit }} X 
+                <span class="color-blue">{{ item.name }}</span>
+            </div>
+            {% endfor %}
+        </td>
+        <td class="ta-r">
+            <div class="action-dropdown fr">
+                <a href="#" class="dropdown-trigger small"></a>
+                <ul class="action-dropdown-list ta-l">
+                    <li>
+                        <a href="#">Option 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 3</a>
+                    </li>
+                    <li>
+                        <a href="#">Option 4</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="/organisation/{{ organization_details.id }}/donation_requirement/{{ id }}" class="button-hollow fr mt-0 mr-10">
+                Edit
+            </a>
+            <div class="clr"></div>
+        </td>
+    </tr>
+
+
+</script>
+
 
 {% endverbatim %}

@@ -201,17 +201,22 @@ class DonationItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DonationItem
+        read_only_fields = ('requirement',)
 
 
 class DonationRequirementSerializer(serializers.ModelSerializer):
-    items_count = serializers.IntegerField(source='items.count')
-    items_url = serializers.CharField(source='get_items_url')
+    items_count = serializers.IntegerField(source='items.count', read_only=True)
+    items_url = serializers.CharField(source='get_items_url', read_only=True)
     organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
     )
     school_details = SchoolListSerializer(
         source='school',
+        read_only=True
+    )
+    items = DonationItemSerializer(
+        source='items',
         read_only=True
     )
 
