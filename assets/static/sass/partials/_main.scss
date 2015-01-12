@@ -399,6 +399,12 @@ body {
   }
 }
 
+.stories-list-each, .home-blog-list {
+  @extend %font-smaller;
+  text-align: left;
+  margin: $base-spacing 0 0 0;
+}
+
 /*-------------------------------------*/
 //PAGE: ABOUT
 

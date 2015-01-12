@@ -38,7 +38,7 @@
 
     function processRequest(feed) {
         var entries = feed.entry || [];
-        var html = ['<ul>'];
+        var html = ['<div>'];
 
         for (var i = 0; i < 2; ++i) {
             var entry = entries[i];
@@ -61,9 +61,9 @@
                     break;
                 }
             }
-            html.push(months[month],' ',date,',',year,'<br>','<b><a href="',link,'">',title,'</a></b>','<br>',content,'...','<br>','<br>');
+            html.push('<div>', months[month],' ', date,',',year,'</div><div><strong><a href="',link,'">',title,'</a></strong></div>','<p>',content,'...','</p>');
         }
-      html.push('</ul>');
+      html.push('</div>');
       document.getElementById("js-blog").innerHTML = html.join("");
     }
 
