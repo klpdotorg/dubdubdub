@@ -90,11 +90,11 @@
   }
 
   //page: volunteer
-  .volunteer-works {
+  .module-img-block {
   	@include grid-parent;
   }
 
-  .volunteer-works-each {
+  .module-img-each {
 	  width: 33.33%;
 	  @include vertical-inline-top;
 	  @include grid-child;

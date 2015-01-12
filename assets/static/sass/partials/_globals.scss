@@ -689,6 +689,44 @@ a.button {
 
 
 /*-------------------------------------*/
+/* MODULE: IMG */
+// e.g. home page and volunteer page
+
+.module-img-each {
+  @extend %center-text;
+
+  .step-number {
+    position: relative;
+    top: $base-spacing;
+    z-index: 1;
+  }
+}
+
+.module-img-each {
+  max-width: 500px;
+  @extend %center-element;
+
+  h3:first-of-type {
+    @extend %font-light;
+    @extend %font-uppercase;
+  }
+}
+
+.module-img {
+  width: 180px;
+  height: 180px;
+  @extend %border-radius-circle;
+  @extend %center-element;
+  position: relative;
+  margin-bottom: $base-spacing-lg-x;
+
+  img {
+    @extend %dead-center;
+  }  
+}
+
+
+/*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;

@@ -310,6 +310,43 @@ body {
   @extend %container;
 }
 
+.home-help-block {
+  background-color: $blue-ink;
+  @extend %base-spacing-lg-2x;
+  @extend %white;
+}
+
+.home-help-visit {
+  .volunteer-works-img {
+    @extend %brand-green-bg;
+  }
+
+  h3:first-of-type {
+    @extend %brand-green;
+  }
+}
+
+.home-help-volunteer {
+  .volunteer-works-img {
+    @extend %brand-blue-bg;
+  }
+
+  h3:first-of-type {
+      @extend %brand-blue;
+  }
+}
+
+.home-help-donate {
+  .volunteer-works-img {
+    @extend %brand-turquoise-bg;    
+  }
+
+  h3:first-of-type {
+      @extend %brand-turquoise;
+  }
+}
+
+
 
 /*-------------------------------------*/
 //PAGE: ABOUT
@@ -434,39 +471,6 @@ body {
 .volunteer-works-block {
   background-color: lighten($brand-blue, 32%);
   @extend %base-spacing-lg-2x;
-}
-
-.volunteer-works-each {
-  @extend %center-text;
-
-  .step-number {
-    position: relative;
-    top: $base-spacing;
-    z-index: 1;
-  }
-}
-
-.volunteer-works-each {
-  max-width: 500px;
-  @extend %center-element;
-
-  h3:first-of-type {
-    @extend %font-light;
-    @extend %font-uppercase;
-  }
-}
-
-.volunteer-works-img {
-  width: 180px;
-  height: 180px;
-  @extend %border-radius-circle;
-  @extend %center-element;
-  position: relative;
-  margin-bottom: $base-spacing-lg-x;
-
-  img {
-    @extend %dead-center;
-  }  
 }
 
 .volunteer-works-locate {
