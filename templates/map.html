@@ -44,7 +44,9 @@
     <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
+
 {% block subheader %}
+  {% include 'includes/_breadcrumb.html' %}
   <div class="map-subheader-wrapper">
     <div class="subheader-content">
       <input type="text" name="search" placeholder="Search" class="search-input fl"/>
