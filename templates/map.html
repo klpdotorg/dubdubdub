@@ -44,6 +44,17 @@
     <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
+{% block css_extra %}
+<style>
+  .subheader-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 42px; /* must match sass variable $header height */
+    z-index: 1;
+  }
+</style>
+{% endblock %}
 
 {% block subheader %}
   {% include 'includes/_breadcrumb.html' %}

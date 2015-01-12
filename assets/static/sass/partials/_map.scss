@@ -2,7 +2,7 @@
 //page: school map
 .map_canvas_full {
   position:fixed; 
-  top: $header-height; 
+  top: $header-height + 37; //match height of breadcrumb 
   left: 0; 
   right:0; 
   bottom: 0;
