@@ -344,7 +344,7 @@ body {
 }
 
 .home-help-visit {
-  .volunteer-works-img {
+  .module-img {
     @extend %brand-green-bg;
   }
 
@@ -354,7 +354,7 @@ body {
 }
 
 .home-help-volunteer {
-  .volunteer-works-img {
+  .module-img {
     @extend %brand-blue-bg;
   }
 
@@ -364,7 +364,7 @@ body {
 }
 
 .home-help-donate {
-  .volunteer-works-img {
+  .module-img {
     @extend %brand-turquoise-bg;    
   }
 

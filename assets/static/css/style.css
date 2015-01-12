@@ -278,19 +278,19 @@ sub {
 .brand-green, .home-help-visit h3:first-of-type, .map-pin-details .step-number, .map-heading-main {
   color: #26b262; }
 
-.brand-green-bg, .alert.success, .home-help-visit .volunteer-works-img, .heading-volunteer-box:after {
+.brand-green-bg, .alert.success, .home-help-visit .module-img, .heading-volunteer-box:after {
   background-color: #26b262; }
 
 .brand-blue, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .volunteer-works-img, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
   color: #24b2b6; }
 
-.brand-turquoise-bg, .home-help-donate .volunteer-works-img, .volunteer-works-share .module-img {
+.brand-turquoise-bg, .home-help-donate .module-img, .volunteer-works-share .module-img {
   background-color: #24b2b6; }
 
 .brand-purple {

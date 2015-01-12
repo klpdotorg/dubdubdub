@@ -64,7 +64,7 @@
             html.push(months[month],' ',date,',',year,'<br>','<b><a href="',link,'">',title,'</a></b>','<br>',content,'...','<br>','<br>');
         }
       html.push('</ul>');
-      document.getElementById("blog").innerHTML = html.join("");
+      document.getElementById("js-blog").innerHTML = html.join("");
     }
 
 })();
