@@ -1,0 +1,343 @@
+
+//page: school map
+.map_canvas_full {
+  position:fixed; 
+  top: $header-height; 
+  left: 0; 
+  right:0; 
+  bottom: 0;
+  //z-index: 1;
+
+  > div{
+    height: 100%;
+  }
+}
+
+//map: popup
+.map-pin-details {
+  .step-number {
+    @extend %font-small;
+    padding: $base-spacing-sm 7px;
+    @extend %brand-green;
+    position: absolute;
+    right: $base-spacing-lg;
+  }    
+}
+
+.map-heading-main {
+  @extend %brand-green;
+  @extend %font-uppercase;
+  padding-right: $base-spacing-lg * 2;
+  word-wrap: break-word;
+  margin: 0 0 $base-spacing-sm 0;
+}
+
+.map-location-labels {
+  @extend %font-small;
+  @extend %font-bold;
+  word-wrap: break-word;
+}
+
+.map-label-each {
+  display: inline-block;
+  vertical-align: top;
+  width: 33.33%;
+  padding-right: $base-spacing;
+
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.leaflet-container a.button-grey, .leaflet-container a.button  {
+  color: white;
+  font-size: 85%;
+  padding: $base-spacing;
+}
+
+.map-label-title {
+  color: $grey-steel;
+  @extend %font-uppercase;
+  letter-spacing: 1px;
+}
+
+.facility-items {
+  @extend %center-text;
+
+  .k-icon {
+    @extend %brand-blue;
+    display: inline-block;
+    vertical-align: top;
+    font-family: 'FontAwesome';
+    font-size: 18px;
+    margin: 0 0 $base-spacing-mid 0;
+
+    &:before {
+      margin: $base-spacing-sm;
+    }
+  }
+
+  .computer:before {
+    content: "\f109";
+  }
+
+  .book:before {
+    content: "\f02d";
+  }
+
+  .events:before {
+    content: "\f073";
+  }
+
+  .football:before {
+    content: "\f1e3";
+  }
+}
+
+.gender-icons-title, .facility-icons-title {
+  @extend %font-uppercase;
+  @extend %font-small;
+  @extend %font-bold;
+  @extend %center-text;
+  letter-spacing: 1px;
+  color: $grey-steel;
+  margin-top: $base-spacing-mid;
+}
+
+.gender-icons {
+  @extend %grid-parent;
+  margin-bottom: $base-spacing;
+}
+
+.gender-item {
+  @extend %grid-child;
+  width: 33.33%;
+  float: left;
+
+  .k-icon {
+    width: 44px;
+    height: 44px;
+    @extend %border-radius-circle;
+    position: relative;
+    margin-left: $base-spacing-mid;
+    
+    &:before, &:after {
+      font-family: "FontAwesome";
+      @extend %white;
+      font-size: 20px;
+    }
+  }
+}
+
+.gender-item-count { 
+    @extend %font-bold;
+    @extend %h2;
+    padding: $base-spacing-sm 0 0 0;
+}
+
+.gender-item-boy {
+  .k-icon {
+    @extend %brand-blue-bg;
+
+    &:before {
+      content: "\f183";
+      @extend %dead-center;
+    }
+  }
+
+  .gender-item-count {
+    @extend %brand-blue;
+  }
+}
+
+.gender-item-girl {
+  .k-icon {
+    background-color: $pink-salmon;
+  
+    &:before {
+      content: "\f182";
+      @extend %dead-center;
+    }
+  }
+
+  .gender-item-count {
+    color: $pink-salmon;
+  }
+}
+
+.gender-item-total {
+  .k-icon {
+    background-color: $blue-ink;
+  
+    &:before {
+      content: "\f182";
+      @extend %vertical-center;
+      margin-left: 22px;
+    }
+
+    &:after {
+      content: "\f183";
+      @extend %vertical-center;
+      margin-left: 9px;
+    }
+  }
+
+  .gender-item-count {
+    color: $blue-ink;
+  }
+}
+
+//leaflet map overrides
+.marker-cluster-school {
+    background-color: rgba($brand-green, 0.6);
+}
+.marker-cluster-school div {
+    background-color: rgba(38, 178, 98, 0.6);
+} //WHERE DOES THIS SHOW??????
+
+.marker-cluster-preschool {
+    background-color: rgba(133, 100, 216, 0.6);
+}  //WHERE DOES THIS SHOW??????
+.marker-cluster-preschool div {
+    background-color: rgba(133, 100, 216, 0.6);
+}  //WHERE DOES THIS SHOW??????
+
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+    margin-left: -20px !important;
+    margin-top: -20px !important;
+    width: 40px !important;
+    height: 40px !important;
+} //DO WE NEED ALL THIS?
+
+.marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+} //DO WE NEED ALL THIS?
+.marker-cluster span {
+    line-height: 30px;
+}  //DO WE NEED ALL THIS?
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border: none;
+}  //DO WE NEED ALL THIS?
+
+.leaflet-control-layers-toggle {
+    background-image: url("../images/map/layers.png");
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.en-icon {
+    display: inline-block;
+}
+
+.leaflet-control-layers {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.leaflet-control-layers label {
+    font-size: 12px;
+    line-height: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #CCC;
+}
+
+.leaflet-control-layers label:last-of-type {
+    border-bottom: none;
+}
+
+.leaflet-control-layers.leaflet-control-layers-expanded {
+    box-shadow: 0px 3px 3px 0px rgba(77, 77, 77, 0.3);
+    width: 220px;
+    border-radius: 0px;
+    background: none repeat scroll 0% 0% #F4F4F4;
+}
+
+.leaflet-container {
+    font-family: "Lato",sans-serif;
+}
+
+.leaflet-control-layers input {
+    float: right;
+}
+
+.filter-control {
+    margin-top: 0px !important;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-tool {
+    background-color: white;
+    background-position: 50% 50%;
+    background-image: url('../images/map/filters.png');
+    background-repeat: no-repeat;
+    width: 36px;
+    height: 36px;
+    display: block;
+}
+
+.filter-tool.active {
+    background-image: url('../images/map/filters_active.png');
+}
+
+.search-input {
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.leaflet-draw {
+    margin-top: 0 !important;
+}
+
+.leaflet-bar {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.leaflet-draw-draw-circle {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.leaflet-draw-draw-circle {
+    background-position: 0 0 !important; 
+}
+
+.leaflet-draw-toolbar a {
+    background-image: url('../images/map/radius.png');
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat;
+}
+
+.leaflet-draw-toolbar a.active {
+    background-image: url('../images/map/radius_active.png');
+}
+
+.leaflet-bar a:last-child {
+    border-radius: 0px 0px 5px 5px !important;
+}
+
+.leaflet-right .leaflet-draw-actions {
+    right: 36px;
+}
+
+/* Hide map controls on small devices. */
+@media (max-width: 768px) {
+    .leaflet-control-container {
+        display: none;
+    }
+}
