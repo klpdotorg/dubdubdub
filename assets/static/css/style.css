@@ -121,7 +121,7 @@ h4, .h4, .heading-section {
 h3, .h3 {
   font-size: 140%; }
 
-h2, .h2, .heading-secondary, .about-map, .gender-item-count {
+h2, .h2, .heading-secondary, .home-current-block h3:first-of-type, .about-map, .gender-item-count {
   font-size: 150%; }
 
 h1, .h1 {
@@ -272,19 +272,19 @@ sub {
 .brand-orange, .heading-volunteer-box {
   color: #ec6608; }
 
-.brand-orange-bg, .alert.warning {
+.brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
 .brand-green, .home-help-visit h3:first-of-type, .map-pin-details .step-number, .map-heading-main {
   color: #26b262; }
 
-.brand-green-bg, .alert.success, .home-help-visit .module-img, .heading-volunteer-box:after {
+.brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
 .brand-blue, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
@@ -351,7 +351,7 @@ sub {
 .base-spacing-lg-x, .data-each, .volunteer-story-each {
   padding: 25px 0; }
 
-.base-spacing-lg-2x, .home-help-block, .volunteer-works-block {
+.base-spacing-lg-2x, .home-help-block, .home-current-block, .volunteer-works-block {
   padding: 50px 0; }
 
 /*-------------------------------------*/

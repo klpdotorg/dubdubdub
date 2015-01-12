@@ -373,7 +373,31 @@ body {
   }
 }
 
+.home-current-block {
+  @extend %base-spacing-lg-2x;
 
+  h3:first-of-type {
+    @extend %h2;
+  }
+}
+
+.home-current-stories {
+  h3:first-of-type:after {
+    @extend %brand-blue-bg;
+  }
+}
+
+.home-current-updates {
+  h3:first-of-type:after {
+    @extend %brand-green-bg;
+  }
+}
+
+.home-current-community {
+  h3:first-of-type:after {
+    @extend %brand-orange-bg;
+  }
+}
 
 /*-------------------------------------*/
 //PAGE: ABOUT
