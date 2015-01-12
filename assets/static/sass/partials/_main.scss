@@ -474,32 +474,32 @@ body {
 }
 
 .volunteer-works-locate {
-  .volunteer-works-img {
+  .module-img {
     background-color: $red-mild;
   }
 
   h3:first-of-type {
-      color: $red-mild;
+    color: $red-mild;
   }
 }
 
 .volunteer-works-teach {
-  .volunteer-works-img {
+  .module-img {
     @extend %brand-blue-bg;
   }
 
   h3:first-of-type {
-      @extend %brand-blue;
+    @extend %brand-blue;
   }
 }
 
 .volunteer-works-share {
-  .volunteer-works-img {
+  .module-img {
     @extend %brand-turquoise-bg;    
   }
 
   h3:first-of-type {
-      @extend %brand-turquoise;
+    @extend %brand-turquoise;
   }
 }
 

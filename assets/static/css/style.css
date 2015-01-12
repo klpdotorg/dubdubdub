@@ -82,7 +82,7 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .banner-full-caption, .module-img-each h3:first-of-type, .about-map {
+.font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
   font-weight: 300; }
 
 .font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .module-img-each h3:first-of-type, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
@@ -284,13 +284,13 @@ sub {
 .brand-blue, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .volunteer-works-img, .volunteer-works-teach .volunteer-works-img, .gender-item-boy .k-icon {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .volunteer-works-img, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
   color: #24b2b6; }
 
-.brand-turquoise-bg, .home-help-donate .volunteer-works-img, .volunteer-works-share .volunteer-works-img {
+.brand-turquoise-bg, .home-help-donate .volunteer-works-img, .volunteer-works-share .module-img {
   background-color: #24b2b6; }
 
 .brand-purple {
@@ -617,6 +617,9 @@ hr {
 
 /*-------------------------------------*/
 /* MODULE: IMG */
+.module-img-wrapper .heading-secondary {
+  margin-bottom: 50px; }
+
 .module-img-each .step-number {
   position: relative;
   top: 10px;
@@ -629,7 +632,8 @@ hr {
   width: 180px;
   height: 180px;
   position: relative;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  overflow: hidden; }
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
@@ -1036,7 +1040,7 @@ body {
 .volunteer-works-block {
   background-color: #c7e0f7; }
 
-.volunteer-works-locate .volunteer-works-img {
+.volunteer-works-locate .module-img {
   background-color: #e17e5b; }
 .volunteer-works-locate h3:first-of-type {
   color: #e17e5b; }

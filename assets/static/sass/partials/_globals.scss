@@ -692,8 +692,15 @@ a.button {
 /* MODULE: IMG */
 // e.g. home page and volunteer page
 
+.module-img-wrapper {
+  .heading-secondary {
+    margin-bottom: $base-spacing-lg-2x;
+  }  
+}
+
 .module-img-each {
   @extend %center-text;
+  @extend %font-light;
 
   .step-number {
     position: relative;
@@ -707,7 +714,6 @@ a.button {
   @extend %center-element;
 
   h3:first-of-type {
-    @extend %font-light;
     @extend %font-uppercase;
   }
 }
@@ -719,6 +725,7 @@ a.button {
   @extend %center-element;
   position: relative;
   margin-bottom: $base-spacing-lg-x;
+  overflow: hidden;
 
   img {
     @extend %dead-center;
