@@ -224,6 +224,14 @@ sub {
   @extend %font-smaller;
 }
 
+.heading-tiny-uppercase {
+  color: $grey-steel;
+  @extend %font-smallest;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  @extend %font-bold
+}
+
 .heading-section {
   display: inline-block;
   @extend %white-bg;

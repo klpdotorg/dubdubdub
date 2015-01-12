@@ -1,43 +1,39 @@
 {% verbatim %}
 
 <script type="text/html" id="tpl-school-info">
-    <div class="en-icon big en-{{ type_name }} school-entity-icon">
-        {% if type_name == 'school' %} S {% else %} P {% endif %}
-    </div>
-    <h2 class="en-{{ type_name }}">{{ name }}</h2>
+    <h4 class="school-type-{{ type_name }}">
+    <span class="step-number">
+            {% if type_name == 'school' %} S {% else %} P {% endif %}
+        </span>
+    {{ name }}
+    </h4>
 
-    <div class="address-block">
-        <div class="info-item">
-            <div class="label">District</div>
-            <div class="value">{{ admin1.name|capitalize }}</div>
-        </div>
-        <div class="info-item">
-            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-            <div class="value">{{ admin2.name|capitalize }}</div>
-        </div>
-        <div class="info-item">
-            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-            <div class="value">{{ admin3.name|capitalize }}</div>
-        </div>
-        <div class="clr"></div>
-    </div>
-
-
+    <ul class="map-location-labels">  
+      <li class="map-label-each">
+        <div class="map-label-title">District</div>
+        <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+        <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+        <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+    </ul>
 </script>
 
 <script type="text/html" id="tpl-tab-info">
     <div class="fl-desktop">
         {% if address_full %}
-        <h4>Address</h4>
+        <h4 class="heading-tiny-uppercase">Address</h4>
         <p>{{ address_full }}</p>
         {% endif %}
 
         {% if landmark %}
-        <h4 class="mar_top_25">Landmark</h4>
+        <h4 class="heading-tiny-uppercase">Landmark</h4>
         <p>{{ landmark }}</p>
         {% endif %}
 
-        <h4 class="mar_top_25">School Information</h4>
+        <h4 class="heading-tiny-uppercase">School Information</h4>
         <table class="info_data_table">
             <tr>
                 <td>Category</td>
@@ -74,7 +70,7 @@
             {% endif %}
         </table>
 
-        <h4 class="mar_top_25">Constituency Information</h4>
+        <h4 class="heading-tiny-uppercase">Constituency Information</h4>
         <table class="info_data_table">
             <tr>
                 <td>MLA Constituency</td>
@@ -112,7 +108,7 @@
     </div>
     <div class="photos-block fr-desktop">
         {% if images.length > 0 %}
-        <h4>Photos</h4>
+        <h4 class="heading-tiny-uppercase">Photos</h4>
             {% for image in images %}
               <span data-rbox-image="{{ image }}" class="rbox_img_gal"><img src="{{ image }}"></span>
             {% endfor %}
@@ -131,7 +127,7 @@
 
 <script type="text/html" id="tpl-tab-demographics">
     <div class="fl-desktop-tablet">
-        <h4>Student Information</h4>
+        <h4 class="heading-tiny-uppercase">Student Information</h4>
         <div class="no-data js-klp" style="display:none;">
             <p> No data available </p>
         </div>
@@ -167,7 +163,7 @@
         </div>
     </div>
     <div class="fr-desktop-tablet">
-        <h4>Languages</h4>
+        <h4 class="heading-tiny-uppercase">Languages</h4>
         <div class="lang-marks fr phn-fn phn-width-full">
             {% for mt, percent in mt_profile_percents %}
             <div class="item">
@@ -185,7 +181,7 @@
     <div class="clr"></div>
 
     {% if type_name != 'preschool' %}
-    <h4 class="mar_top_25">DISE Student Profile</h4>
+    <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
     <div class="no-data js-dise" style="display:none;">
         <p> No data available </p>
     </div>
@@ -231,7 +227,7 @@
 
 <script type="text/html" id="tpl-tab-programmes">
     Coming soon.
-    <!-- <h4>Programme Information</h4>
+    <!-- <h4 class="heading-tiny-uppercase">Programme Information</h4>
     <a href="" class="black external"><b>Akshara Foundation-Reading (2006)</b></a><br/>
     <a href="" class="black external"><b>Akshara Foundation-Remedial_Math_Level2 (2008)</b></a>
 
@@ -244,7 +240,7 @@
 </script>
 
 <script type="text/html" id="tpl-tab-finances">
-    <h4>SSA GRANTS ALLOCATION</h4>
+    <h4 class="heading-tiny-uppercase">SSA GRANTS ALLOCATION</h4>
 
     <div class="ta_c" id="pie_chart_finance">{ Chart here }</div>
 
@@ -282,7 +278,7 @@
 </script>
 
 <script type="text/html" id="tpl-tab-infrastructure">
-    <h4>Infrastructure</h4>
+    <h4 class="heading-tiny-uppercase">Infrastructure</h4>
 
     <table class="infra_data_table mar_btm_25 fl-desktop">
         {% for title, facs in facilities %}
@@ -465,7 +461,7 @@
         </tr>
     </table>
 
-    <h4 class="mar_top_25">Akshara Library Details</h4>
+    <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
 
     <table class="info_data_table label_long mar_top_25 mar_btm_25">
         {% for value in lib_infra %}
@@ -514,7 +510,7 @@
 </script>
 
 <script type="text/html" id="tpl-tab-nutrition">
-    <h4>Mid-day Meal Summary</h4>
+    <h4 class="heading-tiny-uppercase">Mid-day Meal Summary</h4>
     <div class="hide no-data">
         <p> No data available </p>
     </div>
@@ -532,7 +528,7 @@
 
 <script type="text/html" id="tpl-tab-share-story">
     <div class="fl-desktop-tablet width-48p-desktop-tablet">
-        <h4>Information from schools visits</h4>
+        <h4 class="heading-tiny-uppercase">Information from schools visits</h4>
 
         <p>
             This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:
@@ -578,7 +574,7 @@
     <div class="fr-desktop-tablet width-48p-desktop-tablet">
 
         <div class="comments mar_top_25">
-            <h4>Visitor Comments</h4>
+            <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
             {% for story in features %}
             <div class="comment-item first">
                 <div class="name">

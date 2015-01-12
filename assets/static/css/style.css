@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -97,7 +97,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .step-number, .error-message, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link {
   font-size: 80%; }
 
-.font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper {
+.font-smallest, .heading-tiny-uppercase, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -168,6 +168,11 @@ sub {
 
 .heading-tiny {
   color: #898989; }
+
+.heading-tiny-uppercase {
+  color: #898989;
+  text-transform: uppercase;
+  letter-spacing: 1px; }
 
 .heading-section {
   display: inline-block;
@@ -275,7 +280,7 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .home-help-visit h3:first-of-type, .map-pin-details .step-number, .map-heading-main {
+.brand-green, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main {
   color: #26b262; }
 
 .brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
@@ -293,7 +298,7 @@ sub {
 .brand-turquoise-bg, .home-help-donate .module-img, .volunteer-works-share .module-img {
   background-color: #24b2b6; }
 
-.brand-purple {
+.brand-purple, .school-type-preschool {
   color: #7575bc; }
 
 .brand-purple-bg {
@@ -699,6 +704,9 @@ hr {
 .alert {
   z-index: 2500; }
 
+.school-map-info {
+  z-index: 1; }
+
 /*-------------------------------------*/
 input[type="submit"] {
   -moz-appearance: none;
@@ -1091,6 +1099,34 @@ body {
   color: #5F5F5F; }
   .volunteer-story-link:hover {
     text-decoration: underline; }
+
+.school-map-wrapper {
+  height: 300px;
+  position: relative; }
+  .school-map-wrapper .map-canvas {
+    width: 100%;
+    height: inherit; }
+
+.school-map-info {
+  position: relative;
+  top: -160px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 0 0;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8); }
+
+.school-type-preschool, .school-type-school {
+  letter-spacing: 1px;
+  line-height: 1; }
+  .school-type-preschool .step-number, .school-type-school .step-number {
+    line-height: 1;
+    position: relative;
+    top: -2px; }
+
+.school-details {
+  margin-top: 160px; }
 
 .map_canvas_full {
   position: fixed;

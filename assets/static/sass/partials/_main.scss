@@ -602,3 +602,51 @@ body {
     @extend %transition-linear;
   }
 }
+
+
+//page: school
+.school-map-wrapper {
+  height: 300px;
+  //margin-bottom: 25px; 
+  position: relative;
+
+  .map-canvas {
+    width: 100%;
+    height: inherit;
+  }  
+}
+
+.school-map-info {
+  position: relative;
+  top: -($school-map-spacing);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 0 0;
+  background-color: $white;
+  background-color: rgba($white, 0.8);
+}
+
+.school-type-preschool, .school-type-school {
+  letter-spacing: 1px;
+  line-height: 1;
+
+  .step-number {
+    @extend %font-smallest;
+    line-height: 1;
+    position: relative;
+    top: -2px;
+  }
+}
+
+.school-type-preschool {
+  @extend %brand-purple;
+}
+
+.school-type-school {
+  @extend %brand-green;
+}
+
+.school-details {
+  margin-top: $school-map-spacing;
+}
