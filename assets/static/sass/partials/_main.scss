@@ -426,7 +426,7 @@ body {
 .about-map {
   background: $grey-mist;
   @extend %font-light;
-  @extend %h2;
+  @extend %h3;
   max-height: 140px;
   @extend %center-text;
   margin: $base-spacing-lg-2x 0;
@@ -446,7 +446,11 @@ body {
   @extend %border-radius-circle;
   border: 1px solid $brand-red;
   margin-right: $base-spacing-mid;
-  max-width: 120px;
+  max-width: 100px;
+}
+
+.about-map-url {
+  display: block;
 }
 
 

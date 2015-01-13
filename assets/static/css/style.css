@@ -118,10 +118,10 @@ h5, .h5, .heading-tertiary {
 h4, .h4, .heading-section {
   font-size: 130%; }
 
-h3, .h3 {
+h3, .h3, .about-map {
   font-size: 140%; }
 
-h2, .h2, .heading-secondary, .home-current-block h3:first-of-type, .about-map, .gender-item-count {
+h2, .h2, .heading-secondary, .home-current-block h3:first-of-type, .gender-item-count {
   font-size: 150%; }
 
 h1, .h1 {
@@ -1100,7 +1100,10 @@ body {
 .about-map-image {
   border: 1px solid #cb0012;
   margin-right: 15px;
-  max-width: 120px; }
+  max-width: 100px; }
+
+.about-map-url {
+  display: block; }
 
 /*-------------------------------------*/
 .logo-wrapper > img {
@@ -1465,6 +1468,9 @@ body {
     max-width: none;
     display: inline-block;
     vertical-align: middle; }
+
+  .about-map-url {
+    display: inline-block; }
 
   .logo-wrapper > img {
     max-width: none; }
