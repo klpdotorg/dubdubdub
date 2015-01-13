@@ -13,8 +13,9 @@
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 //sanj: form file preview replace with our kh js?;
-//sanj on organization edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
+//sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 //globals: tipsy, figure out how to remove that opacity 1;
+//maybe a class for border-color
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -734,4 +735,9 @@ body {
 
 .table-volunteer-heading {
   @extend %heading-tiny-uppercase;
+}
+
+//Page: Profile
+.form-edit-password {
+  margin-top: $base-spacing-lg-x;
 }

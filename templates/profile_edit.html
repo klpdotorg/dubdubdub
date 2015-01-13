@@ -12,78 +12,78 @@
 
 {% block content %}
 
-	<section class="pb-30">
+	<section>
 		<div class="container">
-			<h1 class="bordered blue">Edit Profile</h1>
-			<div>
-				<div class="grid_6 alpha">
-					<form class="edit-profile-form" id="userProfileForm">
-						<div class="mb-30">
-							<label class="block bold mb-5">First Name</label>
-							<input class="input" id="firstName" data-required="true" type="text">
+			<h1 class="heading-primary brand-blue">Edit Profile</h1>
+			<div class="edit-profile-block">
+				<div class="edit-profile-each">
+					<form class="form-base form-edit-profile" id="userProfileForm">
+						<div class="form-field-wrap">
+							<label>First Name</label>
+							<input class="input-text" id="firstName" data-required="true" type="text">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">Last Name</label>
-							<input class="input" id="lastName" type="text">
+						<div class="form-field-wrap">
+							<label>Last Name</label>
+							<input class="input-text" id="lastName" type="text">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">Email</label>
-							<input class="input" id="email" data-required="true" type="text">
+						<div class="form-field-wrap">
+							<label>Email</label>
+							<input class="input-text" id="email" data-required="true" type="email">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">Mobile</label>
-							<input class="input" id="mobileNo" data-required="true" type="text">
+						<div class="form-field-wrap">
+							<label>Mobile</label>
+							<input class="input-text" id="mobileNo" data-required="true" type="tel">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
+						<div class="form-field-wrap">
+							<label>
 								Image
-								<span class="color-grey-light">(optional)</span>
+								<span class="grey-silver">(optional)</span>
 							</label>
 							<input type="file" id="image" data-type="image">
-							<img class="imagePreview js-image-preview" width="100">
+							<img class="form-file-preview js-image-preview" width="100">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
+						<div class="form-field-wrap">
+							<label>
 								About Me
-								<span class="color-grey-light">(optional)</span>
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<textarea class="input textarea" id="about"></textarea>
+							<textarea class="input-text" id="about"></textarea>
 						</div>
 						
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Twitter Handle
-								<span class="color-grey-light">(optional)</span>
+						<div class="form-field-wrap">
+							<label>
+								<span class="fa fa-twitter icon-left"></span>Twitter Handle
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<input class="input" id="twitterHandle" type="text">
+							<input class="input-text" id="twitterHandle" type="text">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Facebook URL
-								<span class="color-grey-light">(optional)</span>
+						<div class="form-field-wrap">
+							<label>
+								<span class="fa fa-facebook icon-left"></span>Facebook URL
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<input class="input" id="fbURL" type="text">
+							<input class="input-text" id="fbURL" type="url">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Website URL
-								<span class="color-grey-light">(optional)</span>
+						<div class="form-field-wrap">
+							<label>
+								<span class="fa fa-laptop icon-left"></span>Website URL
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<input class="input" id="website" type="text">
+							<input class="input-text" id="website" type="url">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								FlickR / Photo Site URL
-								<span class="color-grey-light">(optional)</span>
+						<div class="form-field-wrap">
+							<label>
+								<span class="fa fa-flickr icon-left"></span>Flickr / Photo Site URL
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<input class="input" id="photosURL" type="text">
+							<input class="input-text" id="photosURL" type="url">
 						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Youtube URL
-								<span class="color-grey-light">(optional)</span>
+						<div class="form-field-wrap">
+							<label>
+								<span class="fa fa-youtube icon-left"></span>Youtube URL
+								<span class="grey-silver">(optional)</span>
 							</label>
-							<input class="input" id="youtubeURL" type="text">
+							<input class="input-text" id="youtubeURL" type="url">
 						</div>
 						<!--
 						<div class="mb-30">
@@ -101,12 +101,13 @@
 							</select>
 						</div>
 						-->
-						<div class="ta-c">
-							<a class="button blue mt-30 phn-mt-10" id="submitBtn" href="#">Submit</a>
+						<div class="form-field-wrap center-text">
+							<a class="button" id="submitBtn" href="#">Submit</a>
 						</div>
 					</form>
-				</div>
-				<div class="grid_6 omega">
+				</div> <!-- /edit-profile-each -->
+
+				<div class="edit-profile-each">
 					<!--
 					<form class="edit-profile-form grey-bg ma mb-20">
 						<div class="pad-30">
@@ -119,30 +120,26 @@
 						</div>
 					</form>
 					-->
-					<form class="edit-profile-form grey-bg ma" id="changePasswordForm">
-						<div class="pad-30">
-							<h2 class="tile-head blue mb-30">Change password</h2>
-							<div class="mb-30">
-								<label class="block bold mb-5">Old Password</label>
-								<input class="input" id="oldPassword" type="Password" data-required="true">
-							</div>							
-							<div class="mb-30">
-								<label class="block bold mb-5">New Password</label>
-								<input class="input" id="newPassword1" type="Password" data-required="true">
-							</div>
-							<div class="mb-30">
-								<label class="block bold mb-5">Confirm New Password</label>
-								<input class="input" id="newPassword2" type="Password" data-required="true">
-							</div>
-							<div class="ta-c">
-								<a class="button blue mt-30 phn-mt-10" id="submitPassword" href="#">Submit</a>
-							</div>
+					<form class="form-base form-edit-profile form-edit-password" id="changePasswordForm">
+						<h2 class="form-edit-heading">Change password</h2>
+						<div class="form-field-wrap">
+							<label>Old Password</label>
+							<input class="input-text" id="oldPassword" type="Password" data-required="true">
+						</div>							
+						<div class="form-field-wrap">
+							<label>New Password</label>
+							<input class="input-text" id="newPassword1" type="Password" data-required="true">
+						</div>
+						<div class="form-field-wrap">
+							<label>Confirm New Password</label>
+							<input class="input-text" id="newPassword2" type="Password" data-required="true">
+						</div>
+						<div class="form-field-wrap center-text">
+							<a class="button" id="submitPassword" href="#">Submit</a>
 						</div>
 					</form>
-				</div>
-				<div class="clr"></div>
-			</div>
-			
+				</div>  <!-- /edit-profile-each -->
+			</div> <!-- /edit-profile-block -->			
 		</div> <!-- /container -->
 	</section>
 

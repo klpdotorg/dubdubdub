@@ -229,6 +229,7 @@
   		max-width: 480px;
   	}
 	}
+
 	//page: partners
   .partners-list-block {
 		@include grid-parent;
@@ -251,7 +252,24 @@
 	  text-align: right;
 	  width: 60%;
   }
+
+	//profile edit
+	.edit-profile-block {
+		@include grid-parent;
+	}
+
+	.edit-profile-each {
+  	@include grid-child;
+  	width: 50%;
+  	@include float-left;
+	}
+
+	.form-edit-password {
+	  margin-top: 0;
+	}
 }
+
+
 
 @media only screen and (min-width: 950px) {
 

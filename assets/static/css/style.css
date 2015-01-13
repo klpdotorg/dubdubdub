@@ -85,13 +85,13 @@ q:before, q:after {
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .module-img-each h3:first-of-type, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
@@ -289,7 +289,7 @@ sub {
 .brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .icon-button-round, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .icon-button-round, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
@@ -385,7 +385,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .gender-item .k-icon {
@@ -447,7 +447,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
@@ -961,6 +961,15 @@ input.error {
   display: block;
   padding-bottom: 5px; }
 
+/*-------------------------------------*/
+.form-edit-password {
+  background-color: #f6f6f6;
+  padding: 25px;
+  border: 1px solid #d8d8d8; }
+
+.form-edit-heading {
+  letter-spacing: 1px; }
+
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 // remove all extra classes in _login_modal.html if they're not being used later
@@ -976,8 +985,9 @@ input.error {
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 //sanj: form file preview replace with our kh js?;
-//sanj on organization edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
+//sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 //globals: tipsy, figure out how to remove that opacity 1;
+//maybe a class for border-color
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1339,6 +1349,9 @@ body {
   width: 40%; }
 .table-volunteer tr td:nth-of-type(2) {
   width: 30%; }
+
+.form-edit-password {
+  margin-top: 25px; }
 
 .map_canvas_full {
   position: fixed;
@@ -1750,7 +1763,24 @@ body {
   .org-tab-school {
     float: right;
     text-align: right;
-    width: 60%; } }
+    width: 60%; }
+
+  .edit-profile-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .edit-profile-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .edit-profile-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 50%;
+    float: left; }
+
+  .form-edit-password {
+    margin-top: 0; } }
 @media only screen and (min-width: 950px) {
   .banner-logo-klp {
     width: 170px; }

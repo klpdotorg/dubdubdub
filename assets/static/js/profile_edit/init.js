@@ -35,7 +35,7 @@
                     editXHR.done(function(response) {
                         //console.log("saved", response);
                         //klp.utils.clearValidationErrors(profileFormID);
-                        klp.utils.alertMessage("Changes saved succesfully", "success");
+                        klp.utils.alertMessage("Changes saved successfully", "success");
                         klp.auth.loginUser(response);
                     });
                     editXHR.fail(function(err) {

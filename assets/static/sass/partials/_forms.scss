@@ -120,6 +120,7 @@ input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-lab
 .form-file-preview {
   display: block;
   margin: $base-spacing 0 0 0;
+  @extend %border-radius-sm;
 }
 
 /*-------------------------------------*/
@@ -142,9 +143,8 @@ input.error {
   }
 }
 
-
 /*-------------------------------------*/
-//FORM: ORGANIZATION EDIT PROFILE
+//FORM: ORGANIZATION, PROFILE EDIT PROFILE
 .form-edit-profile {
   label {
     display: block;
@@ -156,4 +156,21 @@ input.error {
   .input-text {
     @extend %full-width;
   }
+}
+
+/*-------------------------------------*/
+//FORM: PROFILE EDIT PASSWORD
+.form-edit-password {
+  background-color: $grey-mist;
+  padding: $base-spacing-lg-x;
+  border: 1px solid $grey-cloud;
+  @extend %border-radius-sm;
+}
+
+.form-edit-heading {
+  @extend %font-uppercase; 
+  @extend %brand-blue;
+  @extend %center-text;
+  @extend %font-small;
+  letter-spacing: 1px;
 }
