@@ -8,8 +8,8 @@
 //was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
 //background size used without webkit prefix needed only for android 2.3
 //on library page, both blue and yellow show 9-10 sentences
-//on library, fix the colored list to look like a table
 //ask sanj if there's an error with volunteer page recently share stories.
+//add a class for link-hover-underline for all those sorta links later
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
@@ -309,6 +309,14 @@ body {
 
   .banner-full-caption {
     margin-left: 0;  
+    
+    a {
+      @extend %transition-linear;
+
+      &:hover, &:focus {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -682,4 +690,10 @@ body {
   .heading-tiny-uppercase {
     margin-top: $base-spacing-lg;
   }
+}
+
+//page: organization
+.org-volunteer-content {
+  @extend %base-spacing-lg-x;
+  border-bottom: 1px solid $grey-cloud;
 }

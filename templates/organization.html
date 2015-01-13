@@ -14,16 +14,16 @@
 
 {% block content %}
 
-	<section class="page-organisation-profile org-head pt-30 phn-pb-30">
+	<section class="page-organisation-profile org-head">
 		<div class="container">
-			<div class="grid_8 alpha phn-width-full phn-mar-0 phn-mb-20">
-				<h3 class="desc-title green2">{{ object.name }}</h3>
+			<div class="org-link">
+				<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
 				{% if object.url %}
-				<a class="color-grey" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
+				<a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
 				{% endif %}
 				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn" style="display:none;">Edit Profile</a>
 			</div>
-			<div class="grid_4 omega phn-width-full phn-mar-0">
+			<div class="org-volunteer">
 				{% if object.logo %}
 				<img class="mb-20" src="{{ object.logo.url }}">
 				{% endif %}
@@ -104,7 +104,7 @@
 	<section class="page-organisation-profile pt-30 pb-30 phn-pt-0">
 		<div class="js-tabs-wrapper">
 			<div class="tab-heading">Volunteer</div>
-			<div class="tab-content container current" data-tab="volunteer">
+			<div class="tab-content container current" data-tab="volunteer" style="display:block">
 				<div class="grid_3 omega fr phn-width-full phn-mar-0 phn-mb-40">
 					<!--
 					<div class="profile-title bold uppercase mb-20">Filters</div>
@@ -129,7 +129,7 @@
 					-->
 				</div>
 				<div class="grid_9 alpha phn-width-full phn-mar-0" id="volunteerActivitiesList">
-					<div class="profile-title bold uppercase">Volunteering opportunties</div>
+					<div class="heading-tiny-uppercase">Volunteering opportunties</div>
 				</div>
 				<div class="clr"></div>
 			</div>	<!-- Volunteer Tab END -->

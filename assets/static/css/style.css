@@ -337,6 +337,12 @@ sub {
 .green-pista-bg {
   background-color: #addd8e; }
 
+.black {
+  color: #000; }
+
+.black-bg {
+  color: #000; }
+
 .link-color, a {
   color: #3891e3; }
 
@@ -356,7 +362,7 @@ sub {
 .base-spacing-lg {
   padding: 20px 0; }
 
-.base-spacing-lg-x, .data-each, .volunteer-story-each {
+.base-spacing-lg-x, .data-each, .volunteer-story-each, .org-volunteer-content {
   padding: 25px 0; }
 
 .base-spacing-lg-2x, .home-help-block, .home-current-block, .home-volunteer-request, .volunteer-works-block {
@@ -470,7 +476,7 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.heading-section-block a:hover, .link-external, .nav, .footer-wrapper a, .breadcrumb a, .volunteer-story-link:hover {
+.heading-section-block a:hover, .link-external, .nav, .footer-wrapper a, .breadcrumb a, .banner-home .banner-full-caption a, .volunteer-story-link:hover {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear; }
 
@@ -880,8 +886,8 @@ input.error {
 //was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
 //background size used without webkit prefix needed only for android 2.3
 //on library page, both blue and yellow show 9-10 sentences
-//on library, fix the colored list to look like a table
 //ask sanj if there's an error with volunteer page recently share stories.
+//add a class for link-hover-underline for all those sorta links later
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
@@ -1066,6 +1072,8 @@ body {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
   .banner-home .banner-full-caption {
     margin-left: 0; }
+    .banner-home .banner-full-caption a:hover, .banner-home .banner-full-caption a:focus {
+      text-decoration: underline; }
 
 .banner-home-container {
   text-align: left;
@@ -1224,6 +1232,9 @@ body {
   font-size: 85%; }
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
+
+.org-volunteer-content {
+  border-bottom: 1px solid #d8d8d8; }
 
 .map_canvas_full {
   position: fixed;

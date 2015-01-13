@@ -1,31 +1,33 @@
 {% verbatim %}
 <script type="text/html" id="tpl-volunteerActivity">
-  <div class="required pb-20">
+  <div class="org-volunteer-content">
     <div class="fl phn-fn mt-5 mb-5">
-      <div class="font-20 color-red">{{ activity_type_details.name }}</div>
-      <span class="color-grey-light-2">For </span>
-      <span class="color-green-2 uppercase"> {{ organization_details.name }} </span>
+      <div class="h5 brand-red">{{ activity_type_details.name }}</div>
+      <span class="font-smallest"> 
+        <span>For </span>
+        <span class="font-uppercase brand-turquoise"> {{ organization_details.name }} </span>
+      </span>
     </div>
     <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-      <a href="/schoolpage/school/{{ school_details.id }}" class="font-20 color-green">{{ school_details.name }}</a>
-      <br/>
+      <p><a href="/schoolpage/school/{{ school_details.id }}" class="brand-green font-larger font-uppercase">{{ school_details.name }}</a></p>
+
       {% if school_details.address_full %}
-      <div class="color-grey-light-2">{{ school_details.address_full }}</div>
+      <[p class="font-small">{{ school_details.address_full }}</p>
       {% endif %}
     </div>
     <div class="clr"></div>
-    <p class="mt-10 mb-10">
+    <p>
       {{ text|striptags|nl2br|autolink|safe }}
     </p>
     <div class="fl phn-fn">
-      <div class="color-black bold">
-        Date:
+      <div class="font-smallest black">
+        <strong>Date:</strong>
       </div>
-      <div class="font-16 color-blue bold">{{ date|date('jS F, Y') }}</div>
+      <div class="brand-blue"><strong>{{ date|date('jS F, Y') }}</strong></div>
     </div>
-    <a class="button fr mt-5 phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ id }}" href="#">Volunteer Now</a>
+    <a class="button js-volunteerHereBtn" data-id="{{ id }}" href="#">Volunteer Now</a>
     <div class="clr"></div>
-  </div>
+  </div> <!-- /org-volunteer-content -->
 </script>
 <script type="text/html" id="tpl-emptyVolunteerActivities">
   <div class="required pb-20">
