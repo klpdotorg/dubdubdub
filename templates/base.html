@@ -3,137 +3,136 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>{% block head %}
-	<!-- META -->
-	<title>{% block page_title %}Home{% endblock %} - Karnataka Learning Partnership</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <head>{% block head %}
+  	<!-- META -->
+  	<title>{% block page_title %}Home{% endblock %} - Karnataka Learning Partnership</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <link rel="icon" href="/static/images/favicon.ico" />
-	<meta name="description" content="" />
+  	<meta name="description" content="" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     {% compress css %}
-	  <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all"/>
-
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'js/lib/iCheck/skins/minimal/minimal.css' %}" media="all"/>
+      <link type="text/css" rel="stylesheet" href="{% static 'js/lib/select2-3.5.1/select2.css' %}" media="all"/>
     {% endcompress %}
     {% block css_extra %}{% endblock %}
     <script>
         window.klp = {};
     </script>
     {% compress js %}
-	<script type="text/javascript" src="{% static 'js/lib/jquery-1.9.1.min.js' %}"></script>
-    <!--<script type="text/javascript" src="{% static 'js/libs.combined.js' %}"></script>-->
-	<script type="text/javascript" src="{% static 'js/lib/underscore-min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/select2-3.5.1/select2.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/jquery.tipsy.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/jquery.imagepreview.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/Autolinker.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/klprouter.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/settings.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
-
+      <script type="text/javascript" src="{% static 'js/lib/jquery-1.9.1.min.js' %}"></script>
+      <!--<script type="text/javascript" src="{% static 'js/libs.combined.js' %}"></script>-->
+  	  <script type="text/javascript" src="{% static 'js/lib/underscore-min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/select2-3.5.1/select2.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/jquery.tipsy.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/jquery.imagepreview.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/Autolinker.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  	  <script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/klprouter.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/settings.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
     {% endcompress %}
+    
     {% if not settings.DEBUG %}
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-          ga('create', 'UA-3982320-11', 'auto');
-          ga('send', 'pageview');
+        ga('create', 'UA-3982320-11', 'auto');
+        ga('send', 'pageview');
 
-        </script>
+      </script>
     {% endif %}
 
-	<!--[if lt IE 9]>
-	<script src="{% static 'js/lib/html5shiv.js' %}"></script>
-	<![endif]-->
+  	<!--[if lt IE 9]>
+  	<script src="{% static 'js/lib/html5shiv.js' %}"></script>
+  	<![endif]-->
 
-	<!--[if IE 6]>
-	<script src="{% static 'js/lib/DD_belatedPNG_0.0.8a-min.js' %}"></script>
-	<script>
-	  DD_belatedPNG.fix('.nav, a ,img, .png24');
-	</script>
-	<![endif]-->
-	{% endblock %}
+  	<!--[if IE 6]>
+  	<script src="{% static 'js/lib/DD_belatedPNG_0.0.8a-min.js' %}"></script>
+  	<script>
+  	  DD_belatedPNG.fix('.nav, a ,img, .png24');
+  	</script>
+  	<![endif]-->
+  	{% endblock %}
 
-  {% block endhead %}
-  {% endblock %}
-</head>
+    {% block endhead %}
+    {% endblock %}
+  </head>
 
-<body>
+  <body>
     <noscript>
-        <span class="alert error">
-            Sorry, you need Javascript for this site to work. Please enable Javascript in your browser settings or turn off any plugins that maybe blocking Javascript and reload this page. Thank you.
-        </span>
+      <span class="alert error">
+        Sorry, you need Javascript for this site to work. Please enable Javascript in your browser settings or turn off any plugins that maybe blocking Javascript and reload this page. Thank you.
+      </span>
     </noscript>
 
-	<header class="main-header">
-		<div class="header-content">
-			<a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
-			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
-			<nav class="top-nav" role="navigation">
-				{% include "includes/_top_navigation.html" %}
-			</nav>
-      {% include 'includes/_profile_options.html' %}
-		</div>
+  	<header class="main-header">
+  		<div class="header-content">
+  			<a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+  			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
+  			<nav class="top-nav" role="navigation">
+  				{% include "includes/_top_navigation.html" %}
+  			</nav>
+        {% include 'includes/_profile_options.html' %}
+  		</div>
 
-	</header>
-  
-  <main class="main">
-    {% block subheader %}
-    {% endblock %}
+  	</header>
+    
+    <main class="main">
+      {% block subheader %}
+      {% endblock %}
 
-    <div id="modal_overlay" class="modal-overlay"></div>
+      <div id="modal_overlay" class="modal-overlay"></div>
 
-  	{% block content %} {% endblock %}
+    	{% block content %} {% endblock %}
 
-    {% include 'includes/_login_modal.html' %}
-    {% if not hide_footer %}
-    <footer class="main-footer">
-      <div class="container">  
-        <div class="footer-wrapper">
-          <nav class="nav-footer">
-            <ul>
-              <li class="nav-footer-menu-links"><a href="{% url 'aboutus' %}" title="">About</a></li>
-              <li class="nav-footer-menu-links"><a href="mailto:team@klp.org.in" title="">Contact</a></li>
-              <li><a href="http://www.facebook.com/klpdotorg" target="_blank" title="Facebook"><span class="fa fa-facebook k-icon"></span></a></li>
-              <li><a href="https://twitter.com/KLPsays" target="_blank" title="Twitter"><span class="fa fa-twitter k-icon"></a></li>
-              <li><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank" title="RSS"><span class="fa fa-rss k-icon"></a></li>
-              <li><a href="http://www.youtube.com/user/klpdotorg" target="_blank" title="YouTube"><span class="fa fa-youtube k-icon"></a></li>
-              <li><a href="/map" title="School Map"><span class="fa fa-map-marker k-icon"></a></li>
-              <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
-              <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
-              <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
-            </ul>
-          </nav>
-          <div class="footer-copyright">
-            <img src="/static/images/KLP_logo_footer@2x.png" alt="logo-klp" width="55">
-            <div class="copyright">Copyright 2014. All Rights Reserved.</div>          
-          </div>
-        </div> <!-- /footer-wrapper -->
-      </div> <!-- /container -->
-    </footer>
-    {% endif %}
-</main>
+      {% include 'includes/_login_modal.html' %}
+      {% if not hide_footer %}
+      <footer class="main-footer">
+        <div class="container">  
+          <div class="footer-wrapper">
+            <nav class="nav-footer">
+              <ul>
+                <li class="nav-footer-menu-links"><a href="{% url 'aboutus' %}" title="">About</a></li>
+                <li class="nav-footer-menu-links"><a href="mailto:team@klp.org.in" title="">Contact</a></li>
+                <li><a href="http://www.facebook.com/klpdotorg" target="_blank" title="Facebook"><span class="fa fa-facebook k-icon"></span></a></li>
+                <li><a href="https://twitter.com/KLPsays" target="_blank" title="Twitter"><span class="fa fa-twitter k-icon"></a></li>
+                <li><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank" title="RSS"><span class="fa fa-rss k-icon"></a></li>
+                <li><a href="http://www.youtube.com/user/klpdotorg" target="_blank" title="YouTube"><span class="fa fa-youtube k-icon"></a></li>
+                <li><a href="/map" title="School Map"><span class="fa fa-map-marker k-icon"></a></li>
+                <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
+                <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
+                <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
+              </ul>
+            </nav>
+            <div class="footer-copyright">
+              <img src="/static/images/KLP_logo_footer@2x.png" alt="logo-klp" width="55">
+              <div class="copyright">Copyright 2014. All Rights Reserved.</div>          
+            </div>
+          </div> <!-- /footer-wrapper -->
+        </div> <!-- /container -->
+      </footer>
+      {% endif %}
+  </main>
 
-	<script type="text/javascript">
-        //$(document).pngFix();
+  	<script type="text/javascript">
+      //$(document).pngFix();
     </script>
 
-  {% block endbody %}
-  {% endblock %}
+    {% block endbody %}
+    {% endblock %}
 
-</body>
+  </body>
 </html>

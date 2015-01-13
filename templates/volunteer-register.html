@@ -1,221 +1,208 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
 {% block page_title %}Volunteer{% endblock %}
-
 {% block endhead %}
-    <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
-
-    <script type="text/javascript">
-    (function(){
-      var init_modal = function($modal){
-        var $input_data_location = $modal.find( "input[name=data_location]" );
-        var $input_data_date = $modal.find( "input[name=data_date]" );
-        var $input_data_type = $modal.find( "input[name=data_type]" );
-
-        var $btn_back = $modal.find(".btn-modal-back");
-        var $btn_next_step_cal = $modal.find('.btn-next-step-cal');
-        var $datepicker_input = $modal.find('#datepicker-input');
-        var $select_location = $modal.find('#select-location');
-
-        $select_location.selectBoxIt({
-          autoWidth: true
-        });
-
-        $select_location.change(function(e){
-          $input_data_location.val( $select_location.val() );
-        });
-
-        $datepicker_input.Zebra_DatePicker({
-            always_visible: $modal.find('#datepicker-wrapper'),
-            first_day_of_week: 0,
-            show_clear_date: false,
-            show_select_today: false,
-            disabled_dates: ['1,3,4,5,12,13,14,22,24'],
-            onSelect: onDateSelect,
-            onClear: onDateClear
-        });
-        var datepicker = $datepicker_input.data('Zebra_DatePicker');
-
-        function onDateSelect(date){
-          $input_data_date.val(date);
-          $btn_next_step_cal.show();
-        }
-        function onDateClear(){
-          $input_data_date.val("");
-          $btn_next_step_cal.hide();
-        }
-
-        $btn_next_step_cal.on("click", function(e){
-          e.preventDefault();
-
-          show_next_step($modal, "opportunities");
-          $btn_back.show();
-        });
-
-        $btn_back.on("click", function(e){
-          e.preventDefault();
-          show_prev_step($modal, "date");
-          $btn_back.hide();
-        });
-
-        $modal.on('click', ".js-open-map", open_map);
-
-        function open_map(e){
-          e.preventDefault();
-          var location = $input_data_location.val();
-          var date = $input_data_date.val();
-          var type = $(this).data("type");
-          var url = "map?location="+location+"&date="+date+"&type="+type;
-          window.location.href = url;
-        }
-      };
-
-      var show_prev_step = function($modal, step_name){
-        var $step_current = $modal.find(".step-item.visible");
-        var $step_prev = $modal.find(".step-item[data-step-name='" + step_name +"']");
-
-        $step_current.removeClass("fadein").addClass("move-right fadeout");
-            $step_prev.removeClass("fadeut").addClass("move-left visible");
-
-            // Hide current step
-            setTimeout(function(){
-                $step_current.removeClass("visible");
-            },300);
-
-            setTimeout(function(){
-                $step_prev.addClass("fadein").removeClass("move-left");
-            },10);
-        };
-
-      var show_next_step = function($modal, step_name){
-        var $step_current = $modal.find(".step-item.visible");
-        var $step_next = $modal.find(".step-item[data-step-name='" + step_name +"']");
-
-        // Hide current step
-          $step_current.removeClass("move-right fadein").addClass("fadeout move-left");
-            setTimeout(function(){
-                $step_current.removeClass("visible");
-            },300);
-
-            // Show next step
-            $step_next.addClass("move-right visible");
-            setTimeout(function(){
-                $step_next.addClass("fadein").removeClass("move-right");
-            },10);
-      };
-
-      $(document).ready(function(){
-        var $modal = $(".page-volunteer-register").find(".volunteer-flow");
-        init_modal($modal);
+<script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
+<script type="text/javascript">
+  (function(){
+    var init_modal = function($modal){
+      var $input_data_location = $modal.find( "input[name=data_location]" );
+      var $input_data_date = $modal.find( "input[name=data_date]" );
+      var $input_data_type = $modal.find( "input[name=data_type]" );
+  
+      var $btn_back = $modal.find(".btn-modal-back");
+      var $btn_next_step_cal = $modal.find('.btn-next-step-cal');
+      var $datepicker_input = $modal.find('#datepicker-input');
+      var $select_location = $modal.find('#select-location');
+  
+      $select_location.selectBoxIt({
+        autoWidth: true
       });
-
-    })();
-  </script>
-
+  
+      $select_location.change(function(e){
+        $input_data_location.val( $select_location.val() );
+      });
+  
+      $datepicker_input.Zebra_DatePicker({
+          always_visible: $modal.find('#datepicker-wrapper'),
+          first_day_of_week: 0,
+          show_clear_date: false,
+          show_select_today: false,
+          disabled_dates: ['1,3,4,5,12,13,14,22,24'],
+          onSelect: onDateSelect,
+          onClear: onDateClear
+      });
+      var datepicker = $datepicker_input.data('Zebra_DatePicker');
+  
+      function onDateSelect(date){
+        $input_data_date.val(date);
+        $btn_next_step_cal.show();
+      }
+      function onDateClear(){
+        $input_data_date.val("");
+        $btn_next_step_cal.hide();
+      }
+  
+      $btn_next_step_cal.on("click", function(e){
+        e.preventDefault();
+  
+        show_next_step($modal, "opportunities");
+        $btn_back.show();
+      });
+  
+      $btn_back.on("click", function(e){
+        e.preventDefault();
+        show_prev_step($modal, "date");
+        $btn_back.hide();
+      });
+  
+      $modal.on('click', ".js-open-map", open_map);
+  
+      function open_map(e){
+        e.preventDefault();
+        var location = $input_data_location.val();
+        var date = $input_data_date.val();
+        var type = $(this).data("type");
+        var url = "map?location="+location+"&date="+date+"&type="+type;
+        window.location.href = url;
+      }
+    };
+  
+    var show_prev_step = function($modal, step_name){
+      var $step_current = $modal.find(".step-item.visible");
+      var $step_prev = $modal.find(".step-item[data-step-name='" + step_name +"']");
+  
+      $step_current.removeClass("fadein").addClass("move-right fadeout");
+          $step_prev.removeClass("fadeut").addClass("move-left visible");
+  
+          // Hide current step
+          setTimeout(function(){
+              $step_current.removeClass("visible");
+          },300);
+  
+          setTimeout(function(){
+              $step_prev.addClass("fadein").removeClass("move-left");
+          },10);
+      };
+  
+    var show_next_step = function($modal, step_name){
+      var $step_current = $modal.find(".step-item.visible");
+      var $step_next = $modal.find(".step-item[data-step-name='" + step_name +"']");
+  
+      // Hide current step
+        $step_current.removeClass("move-right fadein").addClass("fadeout move-left");
+          setTimeout(function(){
+              $step_current.removeClass("visible");
+          },300);
+  
+          // Show next step
+          $step_next.addClass("move-right visible");
+          setTimeout(function(){
+              $step_next.addClass("fadein").removeClass("move-right");
+          },10);
+    };
+  
+    $(document).ready(function(){
+      var $modal = $(".page-volunteer-register").find(".volunteer-flow");
+      init_modal($modal);
+    });
+  
+  })();
+</script>
 {% endblock %}
-
 {% block content %}
-
-  <div class="page-volunteer-register">
-
-    <div class="volunteer-flow">
-      <input type="hidden" name="data_location" value="Banasawadi" />
-      <input type="hidden" name="data_date" value="" />
-      <a class="button-back btn-modal-back"></a>
-        <div class="content" style="height:inherit;">
-          <h1 class="bordered blue">Volunteer</h1>
-
-          <div class="steps-wrapper">
-            <div class="step-item fadein visible" data-step-name="date">
-              <div class="step-date">
-                <h3 class="bordered-heading blue">Select Location & Date<span></span></h3>
-                <div class="input-wrapper" style="z-index:101;">
-                  <select id="select-location" placeholder="Select a location..." style="width:100%;">
-                  <option value="">Select a location...</option>
-                  <option value="Banasawadi" selected>Banasawadi</option>
-                  <option value="Malleswaram">Malleswaram</option>
-                  <option value="Banasawadi2">Banasawadi</option>
-                  <option value="Malleswaram2">Malleswaram</option>
-                  <option value="Banasawadi3">Banasawadi</option>
-                </select>
-                </div>
-                <div class="cal">
-                  <input class="js-datepicker-input" id="datepicker-input" type="hidden" readonly="readonly">
-                  <div id="datepicker-wrapper"></div>
-                </div>
-                <div class="ta-c">
-                  <a href="" class="button blue clickable btn-next-step-cal" style="display:none;">Next</a>
-                </div>
-              </div>
-            </div> <!-- Step End -->
-
-            <div class="step-item" data-step-name="opportunities">
-              <div class="step-opportunities">
-              <h3 class="bordered-heading blue">Opportunities Available <span></span></h3>
-              <div class="opportunities-list">
-                <a href="map" class="list-item teaching js-open-map" data-type="teaching">
-                  <div class="available fr">
-                    Available
-                    <span class="count">26</span>
-                  </div>
-                  <div class="left-col">
-                    <div class="title">Teaching Based</div>
-                    <div class="detail">
-                      Truffaut occupy Vice you probably have not heard of them, selfies roof.
-                    </div>
-                  </div>
-                  <div class="clr"></div>
-                </a>
-
-                <a href="map" class="list-item activity js-open-map" data-type="activity">
-                  <div class="available fr">
-                    Available
-                    <span class="count">17</span>
-                  </div>
-                  <div class="left-col">
-                    <div class="title">Activity Based</div>
-                    <div class="detail">
-                      Truffaut occupy Vice you probably have not heard of them, selfies roof.
-                    </div>
-                  </div>
-                  <div class="clr"></div>
-                </a>
-
-                <a href="map" class="list-item skill js-open-map" data-type="skill">
-                  <div class="available fr">
-                    Available
-                    <span class="count">14</span>
-                  </div>
-                  <div class="left-col">
-                    <div class="title">Skill Based</div>
-                    <div class="detail">
-                      Truffaut occupy Vice you probably have not heard of them, selfies roof.
-                    </div>
-                  </div>
-                  <div class="clr"></div>
-                </a>
-
-                <p class="or-text">or</p>
-
-                <a href="map" class="list-item show-all js-open-map" data-type="all">Show all</a>
-
-                <!--<div class="ta-c">
-                  <a href="" class="button blue js-volunteer-next-step">Show Selected</a>
-                </div>
-                -->
-              </div>
-              </div>
-            </div> <!-- Step End -->
-
+<div class="page-volunteer-register">
+  <div class="volunteer-flow">
+    <input type="hidden" name="data_location" value="Banasawadi" />
+    <input type="hidden" name="data_date" value="" />
+    <a class="button-back btn-modal-back"></a>
+    <div class="content" style="height:inherit;">
+      <h1 class="bordered blue">Volunteer</h1>
+      <div class="steps-wrapper">
+        <div class="step-item fadein visible" data-step-name="date">
+          <div class="step-date">
+            <h3 class="bordered-heading blue">Select Location & Date<span></span></h3>
+            <div class="input-wrapper" style="z-index:101;">
+              <select id="select-location" placeholder="Select a location..." style="width:100%;">
+                <option value="">Select a location...</option>
+                <option value="Banasawadi" selected>Banasawadi</option>
+                <option value="Malleswaram">Malleswaram</option>
+                <option value="Banasawadi2">Banasawadi</option>
+                <option value="Malleswaram2">Malleswaram</option>
+                <option value="Banasawadi3">Banasawadi</option>
+              </select>
+            </div>
+            <div class="cal">
+              <input class="js-datepicker-input" id="datepicker-input" type="hidden" readonly="readonly">
+              <div id="datepicker-wrapper"></div>
+            </div>
+            <div class="ta-c">
+              <a href="" class="button blue clickable btn-next-step-cal" style="display:none;">Next</a>
+            </div>
           </div>
         </div>
+        <!-- Step End -->
+        <div class="step-item" data-step-name="opportunities">
+          <div class="step-opportunities">
+            <h3 class="bordered-heading blue">Opportunities Available <span></span></h3>
+            <div class="opportunities-list">
+              <a href="map" class="list-item teaching js-open-map" data-type="teaching">
+                <div class="available fr">
+                  Available
+                  <span class="count">26</span>
+                </div>
+                <div class="left-col">
+                  <div class="title">Teaching Based</div>
+                  <div class="detail">
+                    Truffaut occupy Vice you probably have not heard of them, selfies roof.
+                  </div>
+                </div>
+                <div class="clr"></div>
+              </a>
+              <a href="map" class="list-item activity js-open-map" data-type="activity">
+                <div class="available fr">
+                  Available
+                  <span class="count">17</span>
+                </div>
+                <div class="left-col">
+                  <div class="title">Activity Based</div>
+                  <div class="detail">
+                    Truffaut occupy Vice you probably have not heard of them, selfies roof.
+                  </div>
+                </div>
+                <div class="clr"></div>
+              </a>
+              <a href="map" class="list-item skill js-open-map" data-type="skill">
+                <div class="available fr">
+                  Available
+                  <span class="count">14</span>
+                </div>
+                <div class="left-col">
+                  <div class="title">Skill Based</div>
+                  <div class="detail">
+                    Truffaut occupy Vice you probably have not heard of them, selfies roof.
+                  </div>
+                </div>
+                <div class="clr"></div>
+              </a>
+              <p class="or-text">or</p>
+              <a href="map" class="list-item show-all js-open-map" data-type="all">Show all</a>
+              <!--<div class="ta-c">
+                <a href="" class="button blue js-volunteer-next-step">Show Selected</a>
+                </div>
+                -->
+            </div>
+          </div>
+        </div>
+        <!-- Step End -->
       </div>
+    </div>
   </div>
-  {% include 'frontend_templates/volunteer.html' %}
+</div>
+{% include 'frontend_templates/volunteer.html' %}
 {% endblock %}

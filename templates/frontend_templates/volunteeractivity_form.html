@@ -1,64 +1,62 @@
 {% verbatim %}
 <script type="text/html" id="tpl-activityDetails">
-    <div class="fl">
-        <div class="font-20 color-red">{{ activity_type_details.name }}</div>
-        <div>
-            <span class="color-grey-light-2">For </span>
-            <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
-        </div>
+  <div class="fl">
+    <div class="font-20 color-red">{{ activity_type_details.name }}</div>
+    <div>
+      <span class="color-grey-light-2">For </span>
+      <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
     </div>
-    <div class="fr ta-r">
-        <div class="font-20 color-green">{{ school_details.name }}</div>
-        {% if school_details.address_full %}
-            <div>{{ school_details.address_full }}</div>
-        {% endif %}
-    </div>
-    <div class="clr"></div>
+  </div>
+  <div class="fr ta-r">
+    <div class="font-20 color-green">{{ school_details.name }}</div>
+    {% if school_details.address_full %}
+      <div>{{ school_details.address_full }}</div>
+    {% endif %}
+  </div>
+  <div class="clr"></div>
 </script>
-
 <script type="text/html" id="tpl-volunteerDetails">
-    <tr class="js-volunteerTR" data-id="{{ user_details.id }}">
-        <td>
-            <!-- <img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg"> -->
-            <a href="/profile/{{ user_details.id }}" class="user-name color-blue bold">
-                {{ user_details.first_name }} {{ user_details.last_name }} 
-            </a>
-            <div class="clr"></div>
-        </td>
-        <td>
-            Status:
-            {% if status == 1 %}
-            Verified / Complete
-            {% else %}
-            Unverified
-            {% endif %}
-            <!-- <div class="bold uppercase">Mohali, Punjab, India</div> -->
-        </td>
-        <td class="ta-r">
-            <a class="button js-volunteerVerify" data-status="{{ status }}" href="#">
-                {% if status == 1 %}Cancel{% else %}Attended{% endif %}
-            </a>
-            <!--
-            <div class="action-dropdown">
-                <a href="#" class="dropdown-trigger"></a>
-                <ul class="action-dropdown-list ta-l">
-                    <li>
-                        <a href="#">Option 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Option 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Option 3</a>
-                    </li>
-                    <li>
-                        <a href="#">Option 4</a>
-                    </li>
-                </ul>
-            </div>
-            -->
-        </td>
-    </tr>
+  <tr class="js-volunteerTR" data-id="{{ user_details.id }}">
+    <td>
+      <!-- <img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg"> -->
+      <a href="/profile/{{ user_details.id }}" class="user-name color-blue bold">
+        {{ user_details.first_name }} {{ user_details.last_name }} 
+      </a>
+      <div class="clr"></div>
+    </td>
+    <td>
+      Status:
+      {% if status == 1 %}
+      Verified / Complete
+      {% else %}
+      Unverified
+      {% endif %}
+      <!-- <div class="bold uppercase">Mohali, Punjab, India</div> -->
+    </td>
+    <td class="ta-r">
+      <a class="button js-volunteerVerify" data-status="{{ status }}" href="#">
+        {% if status == 1 %}Cancel{% else %}Attended{% endif %}
+      </a>
+          <!--
+      <div class="action-dropdown">
+        <a href="#" class="dropdown-trigger"></a>
+        <ul class="action-dropdown-list ta-l">
+          <li>
+            <a href="#">Option 1</a>
+          </li>
+          <li>
+            <a href="#">Option 2</a>
+          </li>
+          <li>
+            <a href="#">Option 3</a>
+          </li>
+          <li>
+            <a href="#">Option 4</a>
+          </li>
+        </ul>
+      </div>
+    -->
+    </td>
+  </tr>
 </script>
-
 {% endverbatim %}

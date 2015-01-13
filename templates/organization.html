@@ -3,13 +3,13 @@
 
 {% block page_title %}Organisation Profile: {{ object.name }}{% endblock %}
 {% block endbody %}
-    <script type="text/javascript" src="/static/js/lib/jquery.easydropdown.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/organization/init.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/volunteer_here.js' %}"></script>
+  <script type="text/javascript" src="/static/js/lib/jquery.easydropdown.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/organization/init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/volunteer_here.js' %}"></script>
 
-    <script>
-    	ORGANIZATION_ID = {{ object.id }};
-    </script>
+  <script>
+  	ORGANIZATION_ID = {{ object.id }};
+  </script>
 {% endblock %}
 
 {% block content %}
@@ -130,11 +130,9 @@
 				</div>
 				<div class="grid_9 alpha phn-width-full phn-mar-0" id="volunteerActivitiesList">
 					<div class="profile-title bold uppercase">Volunteering opportunties</div>
-
 				</div>
 				<div class="clr"></div>
 			</div>	<!-- Volunteer Tab END -->
-
 			
 			<div class="tab-heading">Donation</div>
 			<div class="tab-content container" data-tab="donation" id="donationRequirementsList">
@@ -148,8 +146,8 @@
 	<script type="text/javascript">
 
 		function init_tabs(){
-    		$(document).on("click", ".js-tab-link", function(e){
-    			var $wrapper = $(".js-tabs-wrapper");
+  		$(document).on("click", ".js-tab-link", function(e){
+  			var $wrapper = $(".js-tabs-wrapper");
 				var $trigger = $(this).closest(".js-tab-link");
 				var tab_id = $trigger.attr('data-tab');
 
@@ -161,12 +159,12 @@
 				$wrapper.find(".tab-content.current").removeClass('current');
 				$wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
 			});
-    	}
+  	}
 
-    	$(document).ready(function(){
-			init_tabs();
-		});
+  	$(document).ready(function(){
+		init_tabs();
+	});
 
-    </script>
+  </script>
 
 {% endblock %}

@@ -1,25 +1,25 @@
 {% verbatim %}
-    <script type="text/html" id="tpl-compare-option">
-        <div class="en-icon big en-{{ type_name }} fl">
-            {% if type.id==1 %} S {% else %} P {% endif %}
-        </div>
-        <div class="ml">
-          <h2 class="name en-{{ type_name }}">{{ name }}</h2>
-        </div>
-        <div class="item">
-            <div class="label">District</div>
-            <div class="value">{{ admin1.name|capitalize }}</div>
-        </div>
-        <div class="item">
-            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-            <div class="value">{{ admin2.name|capitalize }}</div>
-        </div>
-        <div class="item">
-            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-            <div class="value">{{ admin3.name|capitalize }}</div>
-        </div>
-        <div class="clr"></div>
-    </script>
+  <script type="text/html" id="tpl-compare-option">
+    <div class="en-icon big en-{{ type_name }} fl">
+      {% if type.id==1 %} S {% else %} P {% endif %}
+    </div>
+    <div class="ml">
+      <h2 class="name en-{{ type_name }}">{{ name }}</h2>
+    </div>
+    <div class="item">
+      <div class="label">District</div>
+      <div class="value">{{ admin1.name|capitalize }}</div>
+    </div>
+    <div class="item">
+      <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+      <div class="value">{{ admin2.name|capitalize }}</div>
+    </div>
+    <div class="item">
+      <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+      <div class="value">{{ admin3.name|capitalize }}</div>
+    </div>
+    <div class="clr"></div>
+  </script>
 
 
   <script type="text/template" class="tpl-raw" id="tpl-comparison-result" data-tpl="comparison_result">
@@ -28,9 +28,9 @@
         <div class="heading">Gender Distribution</div>
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
         <div class="clr"></div>
@@ -146,9 +146,9 @@
         <div class="heading">Language Distribution</div>
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
         <div class="clr"></div>
@@ -246,9 +246,9 @@
         <div class="heading">Score Distribution</div>
         
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         
         <div class="clr"></div>
@@ -405,9 +405,7 @@
           <div class="clr"></div>
         </div>
 
-
         <div class="comparison-item">
-
           <div class="comparison-heading average">
             <div class="heading-text with-sub-text">
               Grade C
@@ -443,9 +441,7 @@
           <div class="clr"></div>
         </div>
 
-
         <div class="comparison-item">
-
           <div class="comparison-heading bad">
             <div class="heading-text with-sub-text">
               Grade D
@@ -483,7 +479,6 @@
 
 
         <div class="comparison-item">
-
           <div class="comparison-heading very-bad">
             <div class="heading-text with-sub-text">
               Grade E
@@ -759,9 +754,9 @@
         <div class="heading">Grants Distribution</div>
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
         <div class="clr"></div>

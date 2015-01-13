@@ -1,24 +1,24 @@
 {% verbatim %}
 <script type="text/html" id="tpl-recentStories">
   <div class="container">
-      <h2 class="heading-secondary heading-border">Recently shared stories<span></span></h2>
-      <ul class="volunteer-story-block">  
-      {% for story in stories %}
-        <li class="volunteer-story-each">
-          <div class="volunteer-story-heading">
-            {% if story.name %}
-                {{ story.name }}
-            {% else %}
-                Anonymous
-            {% endif %}
-          </div>
-          <p class="heading-tiny">{{ story.date|date('jS F, Y') }}</p>
-          <p>
-              {{ story.comments }}
-          </p>
-          <a href="/schoolpage/school/{{ story.school }}#?tab=share-story" class="volunteer-story-link">Read more</a>
-      {% endfor %}
-      </ul>
+    <h2 class="heading-secondary heading-border">Recently shared stories<span></span></h2>
+    <ul class="volunteer-story-block">  
+    {% for story in stories %}
+      <li class="volunteer-story-each">
+        <div class="volunteer-story-heading">
+          {% if story.name %}
+              {{ story.name }}
+          {% else %}
+              Anonymous
+          {% endif %}
+        </div>
+        <p class="heading-tiny">{{ story.date|date('jS F, Y') }}</p>
+        <p>
+            {{ story.comments }}
+        </p>
+        <a href="/schoolpage/school/{{ story.school }}#?tab=share-story" class="volunteer-story-link">Read more</a>
+    {% endfor %}
+    </ul>
   </div>
 </script>
 {% endverbatim %}

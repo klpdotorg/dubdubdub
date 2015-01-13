@@ -1,38 +1,35 @@
 {% verbatim %}
 <script type="text/html" id="tpl-userVolunteerActivity">
-    <div class="column-sections mt-30 mb-30 pb-15">
-        <div class="column-content mb-10">
-            <a class="desc-title green" href="/schoolpage/school/{{ activity.school_details.id }}">{{ activity.school_details.name }}</a> 
-                {% if activity.school_details.address_full %}
-                    in <span class="desc-title">{{ activity.school_details.address_full }}</span>
-                {% endif %}
-        </div>
-        <div class="mb-10">
-            For <a class="uppercase color-green-2" href="/organisation/{{ activity.organization_details.id }}">{{ activity.organization_details.name }}</a>
-        </div>
-        <div class="color-grey-light fl">{{ activity.date|date('jS F, Y') }}</div>
-        {% if status == 1 %}
-        <div class="verified color-green uppercase bold fr">Verified</div>
-        {% endif %}
-        <div class="clr"></div>
+  <div class="column-sections mt-30 mb-30 pb-15">
+    <div class="column-content mb-10">
+      <a class="desc-title green" href="/schoolpage/school/{{ activity.school_details.id }}">{{ activity.school_details.name }}</a> 
+          {% if activity.school_details.address_full %}
+              in <span class="desc-title">{{ activity.school_details.address_full }}</span>
+          {% endif %}
     </div>
+    <div class="mb-10">
+      For <a class="uppercase color-green-2" href="/organisation/{{ activity.organization_details.id }}">{{ activity.organization_details.name }}</a>
+    </div>
+    <div class="color-grey-light fl">{{ activity.date|date('jS F, Y') }}</div>
+    {% if status == 1 %}
+    <div class="verified color-green uppercase bold fr">Verified</div>
+    {% endif %}
+    <div class="clr"></div>
+  </div>
 </script>
-
 <script type="text/html" id="tpl-emptyUserVolunteerActivity">
-    <div class="column-sections mt-30 mb-30 pb-15">
-        This user has no volunteer activities yet.
-    </div>
+  <div class="column-sections mt-30 mb-30 pb-15">
+    This user has no volunteer activities yet.
+  </div>
 </script>
-
 <script type="text/html" id="tpl-Organization">
-    <div class="userOrganization">
-        <a class="desc-title" href="/organisation/{{ id }}">{{ name }}</a>
-    </div>
+  <div class="userOrganization">
+    <a class="desc-title" href="/organisation/{{ id }}">{{ name }}</a>
+  </div>
 </script>
-
 <script type="text/html" id="tpl-emptyOrganizations">
-    <div class="no-data">
-        None
-    </div>
+  <div class="no-data">
+    None
+  </div>
 </script>
 {% endverbatim %}

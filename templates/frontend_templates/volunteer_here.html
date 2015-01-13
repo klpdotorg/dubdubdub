@@ -1,85 +1,85 @@
 {% verbatim %}
 <script type="text/html" id="tpl-volunteerHereModal">
-    <div class="modal volunteer-flow modal-volunteer second-step js-volunteerHereModal">
-        <a class="button-close btn-modal-close"></a>
-        <div class="content">
-            <h2 class="modal-heading">Volunteer</h2>
-            <div class="steps-wrapper">
-                <div class="step-item confirmationStep" data-step-name="confirmation">
-                    <div class="step-confirmation ta-c">
-                        <h3 class="bordered-heading blue">Confirm Details<span></span></h3>
-                        <div class="address en-school">
-                            <div class="en-icon bigger en-school">s</div>
-                            <div class="name">{{ school_details.name }}</div>
-                            <div class="details">
-                                {% if school_details.address_full %}
-                                    {{ school_details.address_full }}
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="date">
-                            <div class="icon-cal"></div>
-                            <div class="value">{{ date|date('jS F, Y') }}</div>
-                        </div>
-                        <div class="confirm-org">
-                            <div class="confirm-org-1 fl">
-                                <div class="org-head">Organisation</div>
-                                <div class="text color-green-2">{{ organization_details.name }}</div>
-                            </div>
-                            <div class="confirm-org-2 fr">
-                                <div class="org-head">Opportunity</div>
-                                <div class="text color-{{ activity_type_details.color }}">
-                                    {{ activity_type_details.name }}
-                                </div>
-                            </div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="mar_top_40">
-                            <a class="button dark_grey btn-modal-close">Cancel</a>
-                            <a class="button blue btn-next-step-submit jsConfirmVolunteerBtn">Confirm</a>
-                        </div>
+  <div class="modal volunteer-flow modal-volunteer second-step js-volunteerHereModal">
+      <a class="button-close btn-modal-close"></a>
+      <div class="content">
+          <h2 class="modal-heading">Volunteer</h2>
+          <div class="steps-wrapper">
+            <div class="step-item confirmationStep" data-step-name="confirmation">
+                <div class="step-confirmation ta-c">
+                    <h3 class="bordered-heading blue">Confirm Details<span></span></h3>
+                    <div class="address en-school">
+                      <div class="en-icon bigger en-school">s</div>
+                      <div class="name">{{ school_details.name }}</div>
+                      <div class="details">
+                          {% if school_details.address_full %}
+                              {{ school_details.address_full }}
+                          {% endif %}
+                      </div>
                     </div>
-                </div> <!-- Step End -->
-
-                <div class="step-item confirmedStep" data-step-name="submit">
-                    <div class="step-submit ta-c">
-                        <h3 class="bordered-heading blue mb-40">Details<span></span></h3>
-                        <div class="address en-school">
-                            <div class="tick ma mb-10"></div>
-                        <div class="message mt-10">
-                            Thank You for Volunteering at
-                        </div>
-                            <div class="name mb-5">{{ school_details.name }}</div>
-                            <div class="details">
-                                {% if school_details.address_full %}
-                                    {{ school_details.address_full }}
-                                {% endif %}                                
-                            </div>
-                        </div>
-                        <div class="date mt-40 mb-40">
-                            <div class="icon-cal"></div>
-                            <div class="value">{{ date|date('jS F, Y') }}</div>
-                        </div>
-                        <div class="confirm-org mt-0">
-                            <div class="confirm-org-1 fl">
-                                <div class="org-head">Organisation</div>
-                                <div class="text color-green-2">{{ organization_details.name }}</div>
-                            </div>
-                            <div class="confirm-org-2 fr">
-                                <div class="org-head">Opportunity</div>
-                                <div class="text color-{{ activity_type_details.color }}">
-                                    {{ activity_type_details.name }}
-                                </div>
-                            </div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="mt-20">
-                            <a class="button blue btn-modal-close">Close</a>
-                        </div>
+                    <div class="date">
+                      <div class="icon-cal"></div>
+                      <div class="value">{{ date|date('jS F, Y') }}</div>
                     </div>
-                </div> <!-- Step End -->
-            </div>
-        </div>
-    </div>
+                    <div class="confirm-org">
+                      <div class="confirm-org-1 fl">
+                          <div class="org-head">Organisation</div>
+                          <div class="text color-green-2">{{ organization_details.name }}</div>
+                      </div>
+                      <div class="confirm-org-2 fr">
+                          <div class="org-head">Opportunity</div>
+                          <div class="text color-{{ activity_type_details.color }}">
+                              {{ activity_type_details.name }}
+                          </div>
+                      </div>
+                      <div class="clr"></div>
+                    </div>
+                    <div class="mar_top_40">
+                      <a class="button dark_grey btn-modal-close">Cancel</a>
+                      <a class="button blue btn-next-step-submit jsConfirmVolunteerBtn">Confirm</a>
+                    </div>
+                </div>
+              </div> <!-- Step End -->
+  
+              <div class="step-item confirmedStep" data-step-name="submit">
+                <div class="step-submit ta-c">
+                  <h3 class="bordered-heading blue mb-40">Details<span></span></h3>
+                  <div class="address en-school">
+                    <div class="tick ma mb-10"></div>
+                  <div class="message mt-10">
+                    Thank You for Volunteering at
+                  </div>
+                      <div class="name mb-5">{{ school_details.name }}</div>
+                      <div class="details">
+                        {% if school_details.address_full %}
+                          {{ school_details.address_full }}
+                        {% endif %}                                
+                      </div>
+                    </div>
+                    <div class="date mt-40 mb-40">
+                      <div class="icon-cal"></div>
+                      <div class="value">{{ date|date('jS F, Y') }}</div>
+                    </div>
+                    <div class="confirm-org mt-0">
+                        <div class="confirm-org-1 fl">
+                          <div class="org-head">Organisation</div>
+                          <div class="text color-green-2">{{ organization_details.name }}</div>
+                        </div>
+                        <div class="confirm-org-2 fr">
+                          <div class="org-head">Opportunity</div>
+                          <div class="text color-{{ activity_type_details.color }}">
+                              {{ activity_type_details.name }}
+                          </div>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="mt-20">
+                      <a class="button blue btn-modal-close">Close</a>
+                    </div>
+                </div>
+              </div> <!-- Step End -->
+          </div>
+      </div>
+  </div>
 </script>
 {% endverbatim %}

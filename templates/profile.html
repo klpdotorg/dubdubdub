@@ -4,9 +4,9 @@
 {% block page_title %}Profile: {{ object.first_name }} {{ object.last_name }}{% endblock %}
 {% block endbody %}
 	<script type="text/javascript" src="{% static 'js/profile/init.js' %}"></script>
-    <script>
-    	USER_ID = {{ object.id }}
-    </script>
+  <script>
+  	USER_ID = {{ object.id }}
+  </script>
 {% endblock %}
 
 {% block content %}
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 			<div class="clr"></div>
-		</div>
+		</div> <!-- /container -->
 	</section>
 
 	<section class="page-profile profile-content">
@@ -127,7 +127,7 @@
 			-->
 			<div class="clr"></div>
 
-		</div>
+		</div> <!-- /container -->
 	</section>
 
 	{% include 'frontend_templates/profile.html' %}

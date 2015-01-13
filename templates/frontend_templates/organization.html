@@ -1,70 +1,68 @@
 {% verbatim %}
 <script type="text/html" id="tpl-volunteerActivity">
-    <div class="required pb-20">
-        <div class="fl phn-fn mt-5 mb-5">
-            <div class="font-20 color-red">{{ activity_type_details.name }}</div>
-            <span class="color-grey-light-2">For </span>
-            <span class="color-green-2 uppercase"> {{ organization_details.name }} </span>
-        </div>
-        <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-            <a href="/schoolpage/school/{{ school_details.id }}" class="font-20 color-green">{{ school_details.name }}</a>
-            <br/>
-            {% if school_details.address_full %}
-            <div class="color-grey-light-2">{{ school_details.address_full }}</div>
-            {% endif %}
-        </div>
-        <div class="clr"></div>
-        <p class="mt-10 mb-10">
-            {{ text|striptags|nl2br|autolink|safe }}
-        </p>
-        <div class="fl phn-fn">
-            <div class="color-black bold">
-                Date:
-            </div>
-            <div class="font-16 color-blue bold">{{ date|date('jS F, Y') }}</div>
-        </div>
-        <a class="button fr mt-5 phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ id }}" href="#">Volunteer Now</a>
-        <div class="clr"></div>
+  <div class="required pb-20">
+    <div class="fl phn-fn mt-5 mb-5">
+      <div class="font-20 color-red">{{ activity_type_details.name }}</div>
+      <span class="color-grey-light-2">For </span>
+      <span class="color-green-2 uppercase"> {{ organization_details.name }} </span>
     </div>
+    <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
+      <a href="/schoolpage/school/{{ school_details.id }}" class="font-20 color-green">{{ school_details.name }}</a>
+      <br/>
+      {% if school_details.address_full %}
+      <div class="color-grey-light-2">{{ school_details.address_full }}</div>
+      {% endif %}
+    </div>
+    <div class="clr"></div>
+    <p class="mt-10 mb-10">
+      {{ text|striptags|nl2br|autolink|safe }}
+    </p>
+    <div class="fl phn-fn">
+      <div class="color-black bold">
+        Date:
+      </div>
+      <div class="font-16 color-blue bold">{{ date|date('jS F, Y') }}</div>
+    </div>
+    <a class="button fr mt-5 phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ id }}" href="#">Volunteer Now</a>
+    <div class="clr"></div>
+  </div>
 </script>
-
 <script type="text/html" id="tpl-emptyVolunteerActivities">
-    <div class="required pb-20">
-        <div class="no-data">
-            This organisation does not have any volunteer activities.
-        </div>
-        <div class="clr">
+  <div class="required pb-20">
+    <div class="no-data">
+      This organisation does not have any volunteer activities.
     </div>
+    <div class="clr">
+  </div>
 </script>
-
 <script type="text/html" id="tpl-donationRequirement">
-    <div class="required pb-20">
-        <div class="fl phn-fn">
-            <div class="desc-title mb-5">{{ name }}</div>
-            <span class="color-grey-light-2">For </span>
-            <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
+  <div class="required pb-20">
+    <div class="fl phn-fn">
+      <div class="desc-title mb-5">{{ name }}</div>
+      <span class="color-grey-light-2">For </span>
+      <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
+    </div>
+    <div class="fr ta-r phn-fn phn-ta-l phn-mb-10">
+      <div class="desc-title color-green">{{ school_details.name }}</div>
+      <div class="color-grey-light-2 mb-5">{{ school_details.address_full }}</div>
+    </div>
+    <div class="clr"></div>
+      <p class="mar-0 mt-10">
+        {{ description }}
+      </p>
+      <div class="fl phn-fn">
+        <div class="color-black bold mt-10">
+          Needed Items:
         </div>
-        <div class="fr ta-r phn-fn phn-ta-l phn-mb-10">
-            <div class="desc-title color-green">{{ school_details.name }}</div>
-            <div class="color-grey-light-2 mb-5">{{ school_details.address_full }}</div>
+        {% for item in  items %}
+        <div class="items fl mr-10">
+          <span class="color-blue bold">{{ item.name }} </span> x {{ quantity }}{{ unit }},
         </div>
-        <div class="clr"></div>
-        <p class="mar-0 mt-10">
-            {{ description }}
-        </p>
-        <div class="fl phn-fn">
-            <div class="color-black bold mt-10">
-                Needed Items:
-            </div>
-            {% for item in  items %}
-            <div class="items fl mr-10">
-                <span class="color-blue bold">{{ item.name }} </span> x {{ quantity }}{{ unit }},
-            </div>
-            {% endfor %}
-            <div class="clr"></div>
-        </div>
-        <a class="button fr mt-10 phn-fn phn-mt-10" href="{{ }}">Donate Now</a>
+        {% endfor %}
         <div class="clr"></div>
     </div>
+    <a class="button fr mt-10 phn-fn phn-mt-10" href="{{ }}">Donate Now</a>
+    <div class="clr"></div>
+  </div>
 </script>
 {% endverbatim %}
