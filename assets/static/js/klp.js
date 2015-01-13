@@ -46,6 +46,10 @@
             $('.js-nav').removeClass("nav-open");
         });
 
+        //iframe videos: responsive
+        
+        $(".video-iframe-responsive").fitVids();
+
         //Activates "tipsy" plugin for tooltips
         $('.qtip').tipsy({live: true});
 

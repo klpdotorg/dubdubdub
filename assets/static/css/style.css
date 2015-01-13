@@ -545,10 +545,8 @@ hr {
 
 /*-------------------------------------*/
 /* VIDEO RESPONSIVE */
-.video-wrapper {
+.video-iframe-responsive {
   margin-bottom: 50px; }
-  .video-wrapper iframe {
-    max-width: 100%; }
 
 /*-------------------------------------*/
 /* BANNERS: FULLWIDTH; */
