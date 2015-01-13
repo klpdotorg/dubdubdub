@@ -18,6 +18,7 @@
 		<div class="container">
 			<div class="org-link">
 				<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
+				<p><a class="heading-tiny" href="{{ object.url }}" target="_blank">{foo{ object.url }}</a></p>
 				{% if object.url %}
 				<a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
 				{% endif %}
@@ -25,7 +26,7 @@
 			</div>
 			<div class="org-volunteer">
 				{% if object.logo %}
-				<img class="mb-20" src="{{ object.logo.url }}">
+				<img src="{{ object.logo.url }}">
 				{% endif %}
 			</div>
 			<div class="clr"></div>

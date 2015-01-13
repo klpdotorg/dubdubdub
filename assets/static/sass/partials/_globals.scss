@@ -150,6 +150,15 @@
 }
 
 //grey-silver
+.grey-silver, %grey-silver {
+  color: $grey-silver;
+}
+
+.grey-silver-bg, %grey-silver-bg {
+  background-color: $grey-silver;
+}
+
+//grey-steel
 .grey-steel, %grey-steel {
   color: $grey-steel;
 }
@@ -441,6 +450,21 @@ img, video {
   @include transition(all 0.3s ease-in);
 }
 
+//table
+.table-base {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+
+  th, td {
+    border-bottom: 1px solid $grey-cloud;
+    padding: $base-spacing;
+  }
+
+  th {
+    text-align: left;
+  }
+}
 
 //HR
 hr {
@@ -448,6 +472,16 @@ hr {
   height: 1px;
   border-top: 1px solid $grey-cloud;
   margin: $base-spacing-lg-x 0;
+}
+
+
+//ICONS
+.icon-right {
+  margin-left: $base-spacing-sm;
+}
+
+.icon-left {
+  margin-right: $base-spacing-sm;
 }
 
 /*-------------------------------------*/

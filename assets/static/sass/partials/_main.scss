@@ -12,6 +12,8 @@
 //add a class for link-hover-underline for all those sorta links later
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
+//sanj: form file preview replace with our kh js?;
+//sanj on organization edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -693,6 +695,14 @@ body {
 }
 
 //page: organization
+.org-link {
+  padding: $base-spacing-lg-2x 0 0 0;
+
+  .heading-tertiary {
+    margin-bottom: 0;
+  }
+}
+
 .org-tab-content {
   border-bottom: 1px solid $grey-cloud;
 }
@@ -703,4 +713,24 @@ body {
 
 .org-tab-button {
   margin: $base-spacing 0 0 0;
+}
+
+.table-volunteer {
+  @extend %font-smaller;
+
+  tr {
+    td {
+      &:nth-of-type(1) {
+        width: 40%;
+      }
+
+      &:nth-of-type(2) {
+        width: 30%;
+      }
+    }
+  }
+}
+
+.table-volunteer-heading {
+  @extend %heading-tiny-uppercase;
 }

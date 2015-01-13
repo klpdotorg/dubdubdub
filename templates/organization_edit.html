@@ -8,11 +8,12 @@
 </script>
 {% endblock %}
 {% block content %}
-<section class="phn-pb-30">
+<section>
   <div class="container">
-    <h1 class="bordered blue">Manage Organisation</h1>
-    <div class="font-20">
-      Editing <span class="color-green-2" id="displayOrgName"> {{ object.name }}</span>
+    <h1 class="heading-primary brand-blue">Manage Organisation</h1>
+    <div class="h5">
+      Editing 
+      <span class="brand-turquoise" id="displayOrgName"> {{ object.name }}</span>
     </div>
     <ul class="tabs phn-hide">
       <li data-tab="details" class="js-tab-link current">Edit Details</li>
@@ -28,75 +29,76 @@
     <div class="tab-heading">Edit Details</div>
     <div class="tab-content container current" data-tab="details">
       <div class="grid_6 alpha">
-        <form class="edit-profile-form" id="orgForm">
-          <div class="mb-30">
-            <label class="block bold mb-5">Name</label>
-            <input class="input" data-required="true" id="orgName" type="text">
+        <form class="form-base form-edit-profile" id="orgForm">
+          <div class="form-field-wrap">
+            <label>Name</label>
+            <input class="input-text" data-required="true" id="orgName" type="text">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
+          <div class="form-field-wrap">
+            <label>
             URL
-            <span class="color-grey-light">(optional)</span>
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgURL" type="text">
+            <input class="input-text" id="orgURL" type="url">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">Email</label>
-            <input class="input" data-required="true" id="orgEmail" type="text">
+          <div class="form-field-wrap">
+            <label>Email</label>
+            <input class="input-text" data-required="true" id="orgEmail" type="email">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">Contact Person</label>
-            <input class="input" id="orgContactName" type="text">
+          <div class="form-field-wrap">
+            <label>Contact Person</label>
+            <input class="input-text" id="orgContactName" type="text">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
+          <div class="form-field-wrap">
+            <label>
             Logo
-            <span class="color-grey-light">(optional)</span>
+            <span class="grey-silver">(optional)</span>
             </label>
             <input type="file" id="logo" data-type="image">
-            <img class="imagePreview js-image-preview" width="100">
+
+            <img class="form-file-preview js-image-preview" width="100">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
+          <div class="form-field-wrap">
+            <label>
             About the Organization
-            <span class="color-grey-light">(optional)</span>
+            <span class="grey-silver">(optional)</span>
             </label>
-            <textarea class="input textarea" id="orgAbout"></textarea>
+            <textarea class="input-text" id="orgAbout"></textarea>
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
-            Twitter Handle
-            <span class="color-grey-light">(optional)</span>
+          <div class="form-field-wrap">
+            <label>
+            <span class="fa fa-twitter icon-left"></span>Twitter Handle
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgTwitter" type="text">
+            <input class="input-text" id="orgTwitter" type="text">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
-            Facebook URL
-            <span class="color-grey-light">(optional)</span>
+          <div class="form-field-wrap">
+            <label>
+            <span class="fa fa-facebook icon-left"></span>Facebook URL
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgFacebook" type="text">
+            <input class="input-text" id="orgFacebook" type="url">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
-            Blog URL
-            <span class="color-grey-light">(optional)</span>
+          <div class="form-field-wrap">
+            <label>
+            <span class="fa fa-book icon-left"></span>Blog URL
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgBlog" type="text">
+            <input class="input-text" id="orgBlog" type="url">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
-            FlickR / Photo Site URL
-            <span class="color-grey-light">(optional)</span>
+          <div class="form-field-wrap">
+            <label>
+            <span class="fa fa-flickr icon-left"></span>Flickr / Photo Site URL
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgPhotos" type="text">
+            <input class="input-text" id="orgPhotos" type="url">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">
-            Youtube URL
-            <span class="color-grey-light">(optional)</span>
+          <div class="form-field-wrap">
+            <label>
+            <span class="fa fa-youtube icon-left"></span>Youtube URL
+            <span class="grey-silver">(optional)</span>
             </label>
-            <input class="input" id="orgYoutube" type="text">
+            <input class="input-text" id="orgYoutube" type="url">
           </div>
           <!--
             <div class="mb-30">
@@ -104,8 +106,8 @@
             	<textarea class="input textarea" id="orgAddress"></textarea>
             </div>
             -->
-          <div class="ta-c">
-            <a class="button blue mt-30 phn-mt-10" href="#" id="submitBtn">Submit</a>
+          <div class="center-text">
+            <a class="button blue" href="#" id="submitBtn">Submit</a>
           </div>
         </form>
       </div>
@@ -210,12 +212,12 @@
         <a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
         Add Volunteer Activity
         </a>
-        <table class="tbl-common ta-l" id="volunteerTable">
-          <tr>
-            <th class="cell-width-40">Title</th>
-            <th class="cell-width-25">School</th>
-            <th class="cell-width-15">Volunteers</th>
-            <th class="cell-width-20 ta-r">Action</th>
+        <table class="table-base table-volunteer" id="jsVolunteerTable">
+          <tr class="table-volunteer-heading">
+            <th>Title</th>
+            <th>School</th>
+            <th>Volunteers</th>
+            <th>Action</th>
           </tr>
         </table>
       </div>

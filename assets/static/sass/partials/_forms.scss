@@ -11,9 +11,10 @@ input[type="submit"] {
 
 textarea {
   vertical-align: top;
+  height: 120px;
 }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], textarea, select {
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
   border: 1px solid $grey-cloud;
 
   @include placeholder {
@@ -114,6 +115,12 @@ input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-lab
   border-color: darken($grey-mist, 5%);  
 }
 
+/*-------------------------------------*/
+//FORM: INPUT FILE PREVIEW
+.form-file-preview {
+  display: block;
+  margin: $base-spacing 0 0 0;
+}
 
 /*-------------------------------------*/
 //FORM: ERRORS
@@ -130,6 +137,22 @@ input.error {
 /*-------------------------------------*/
 //FORM: LOGIN
 .form-signup, .form-login {
+  .input-text {
+    @extend %full-width;
+  }
+}
+
+
+/*-------------------------------------*/
+//FORM: ORGANIZATION EDIT PROFILE
+.form-edit-profile {
+  label {
+    display: block;
+    @extend %font-bold;
+    @extend %font-smaller;
+    padding-bottom: $base-spacing-sm;
+  }
+
   .input-text {
     @extend %full-width;
   }

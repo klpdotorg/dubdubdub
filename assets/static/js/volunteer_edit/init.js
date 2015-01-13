@@ -13,7 +13,7 @@
             if (userCount > 0) {
                 _(data.users).each(function(user) {
                     var userHTML = tplVolunteerDetails(user);
-                    $('#volunteerTable').append(userHTML);
+                    $('#jsVolunteerTable').append(userHTML);
                 });
             }
 

@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link {
+.font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
@@ -169,7 +169,7 @@ sub {
 .heading-tiny {
   color: #898989; }
 
-.heading-tiny-uppercase {
+.heading-tiny-uppercase, .table-volunteer-heading {
   color: #898989;
   font-size: 12px;
   text-transform: uppercase;
@@ -343,6 +343,12 @@ sub {
 .black-bg {
   background-color: #000; }
 
+.grey-silver {
+  color: #bbb; }
+
+.grey-silver-bg {
+  background-color: #bbb; }
+
 .grey-steel {
   color: #898989; }
 
@@ -415,7 +421,7 @@ img, video {
   max-width: 100%;
   height: auto; }
 
-.full-width, .form-signup .input-text, .form-login .input-text {
+.full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text {
   width: 100%; }
 
 /*.box-shadow-base, %box-shadow-base {
@@ -490,11 +496,27 @@ img, video {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in; }
 
+.table-base {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%; }
+  .table-base th, .table-base td {
+    border-bottom: 1px solid #d8d8d8;
+    padding: 10px; }
+  .table-base th {
+    text-align: left; }
+
 hr {
   display: block;
   height: 1px;
   border-top: 1px solid #d8d8d8;
   margin: 25px 0; }
+
+.icon-right {
+  margin-left: 5px; }
+
+.icon-left {
+  margin-right: 5px; }
 
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
@@ -823,19 +845,20 @@ input[type="submit"] {
   border: none; }
 
 textarea {
-  vertical-align: top; }
+  vertical-align: top;
+  height: 120px; }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], textarea, select {
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
   border: 1px solid #d8d8d8; }
-  input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, textarea.placeholder, select.placeholder {
+  input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
     color: #bbb; }
-  input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
     color: #bbb; }
-  input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
     color: #bbb; }
-  input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
+  input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
     color: #bbb; }
-  input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+  input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
     outline: 0; }
 
 .form-base .input-text, .form-base textarea, .form-base select {
@@ -890,6 +913,11 @@ input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-lab
   border-color: #e9e9e9; }
 
 /*-------------------------------------*/
+.form-file-preview {
+  display: block;
+  margin: 10px 0 0 0; }
+
+/*-------------------------------------*/
 .error-message {
   padding-top: 5px; }
 
@@ -897,6 +925,11 @@ input.error {
   border-color: #cb0012; }
 
 /*-------------------------------------*/
+/*-------------------------------------*/
+.form-edit-profile label {
+  display: block;
+  padding-bottom: 5px; }
+
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 // remove all extra classes in _login_modal.html if they're not being used later
@@ -911,6 +944,8 @@ input.error {
 //add a class for link-hover-underline for all those sorta links later
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
+//sanj: form file preview replace with our kh js?;
+//sanj on organization edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1254,6 +1289,11 @@ body {
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
 
+.org-link {
+  padding: 50px 0 0 0; }
+  .org-link .heading-tertiary {
+    margin-bottom: 0; }
+
 .org-tab-content {
   border-bottom: 1px solid #d8d8d8; }
 
@@ -1262,6 +1302,11 @@ body {
 
 .org-tab-button {
   margin: 10px 0 0 0; }
+
+.table-volunteer tr td:nth-of-type(1) {
+  width: 40%; }
+.table-volunteer tr td:nth-of-type(2) {
+  width: 30%; }
 
 .map_canvas_full {
   position: fixed;
@@ -1494,6 +1539,27 @@ body {
     .banner-full .heading-primary {
       margin: 25px 0;
       font-size: 140%; } }
+@media only screen and (max-width: 799px) {
+  .table-volunteer {
+    display: block; }
+    .table-volunteer .table-volunteer-heading {
+      display: none; }
+    .table-volunteer tr, .table-volunteer td, .table-volunteer th {
+      display: block;
+      width: 100%;
+      padding: 5px 0; }
+    .table-volunteer tr td:nth-of-type(1), .table-volunteer tr td:nth-of-type(2) {
+      width: 100%; }
+    .table-volunteer td {
+      border-bottom: none; }
+    .table-volunteer tr {
+      border-bottom: 1px solid #d8d8d8;
+      padding: 15px 10px; }
+
+  .table-volunteer-school:before {
+    content: "School";
+    margin-right: 5px;
+    color: #bbb; } }
 @media only screen and (min-width: 600px) {
   .alert {
     left: 20%;

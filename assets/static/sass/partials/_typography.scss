@@ -224,7 +224,7 @@ sub {
   @extend %font-smaller;
 }
 
-.heading-tiny-uppercase {
+.heading-tiny-uppercase, %heading-tiny-uppercase {
   color: $grey-steel;
   font-size: 12px;
   text-transform: uppercase;

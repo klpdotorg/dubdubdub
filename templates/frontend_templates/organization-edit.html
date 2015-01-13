@@ -2,17 +2,17 @@
 <script type="text/html" id="tpl-volunteerOpportunity">
   <tr>
     <td>
-      <div class="color-red bold">{{ activity_type_details.name }}</div>
+      <div class="brand-red font-bold">{{ activity_type_details.name }}</div>
       <div class="color-grey-light-2 mt-5">{{ text }}</div>
     </td>
     <td>
-      <div class="color-green bold">{{ school_details.name }}</div>
+      <div class="brand-green table-volunteer-school"><strong>{{ school_details.name }}</strong></div>
       {% if school_details.address_full %}
-      <div class="color-grey-light-2 mt-5">{{ school_details.address_full }}</div>
+      <div class="color-grey-light-2 mt-5"><strong>{{ school_details.address_full }}</strong></div>
       {% endif %}
     </td>
     <td>
-      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="font-14 color-blue">{{ users.length }} volunteers</a>
+      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="font-14 brand-blue">{{ users.length }} volunteers</a>
     </td>
     <td class="ta-r">
           <!--
@@ -34,7 +34,7 @@
           </ul>
       </div>
     -->
-      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="button-hollow fr mt-0 mr-10">Edit</a>
+      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="button-sm button-hollow fr">Edit</a>
       <div class="clr"></div>
     </td>
   </tr>
