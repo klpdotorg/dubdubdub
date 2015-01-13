@@ -198,8 +198,9 @@ sub {
   .heading-section-block li {
     display: inline-block;
     vertical-align: top;
-    padding: 0 20px 0 5px;
-    position: relative; }
+    padding: 2px 20px 2px 5px;
+    position: relative;
+    top: 2px; }
     .heading-section-block li:before {
       content: "\f10c";
       font-family: "FontAwesome";

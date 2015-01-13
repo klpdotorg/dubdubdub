@@ -266,8 +266,9 @@ sub {
   li {
     display: inline-block;
     vertical-align: top;
-    padding: 0 $base-spacing-lg 0 $base-spacing-sm;
+    padding: 2px $base-spacing-lg 2px $base-spacing-sm;
     position: relative;
+    top: 2px;
 
     &:before {
       content: "\f10c";
