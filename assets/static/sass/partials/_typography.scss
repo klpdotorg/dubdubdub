@@ -298,6 +298,7 @@ sub {
   @extend %font-uppercase;
   letter-spacing: 1px;
   @extend %font-bold;
+  @extend %font-small;
   margin-bottom: 0;
 
   li:before {

@@ -91,7 +91,7 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link {
