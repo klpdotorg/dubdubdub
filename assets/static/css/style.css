@@ -1467,7 +1467,8 @@ body {
     padding-right: 20px; }
 
   .banner-full-caption {
-    padding-bottom: 100px; }
+    padding-bottom: 100px;
+    font-size: 110%; }
 
   .module-img {
     width: 180px;
