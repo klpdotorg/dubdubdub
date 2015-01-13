@@ -308,7 +308,7 @@ body {
   background-image: url('/static/images/bg_blackboard_big.jpg');
 
   .banner-full-caption {
-    margin-left: 0;
+    margin-left: 0;  
   }
 }
 
@@ -496,6 +496,17 @@ body {
 //PAGE: PROGRAMMES
 .banner-reading, .banner-sikshana { 
   background-image: url('/static/images/bg_header_reading_programme.jpg');
+}
+
+.banner-reading {
+  .banner-full-caption {
+      span.h1 {
+      font-size: 200%;
+      line-height: inherit;
+      @extend %vertical-inline-middle;
+      padding-right: $base-spacing-sm;
+    }
+  }
 }
 
 .banner-maths {

@@ -565,20 +565,30 @@ a.button {
   background-color: $grey-steel;
   background-size: cover;
   @extend %center-text;
+  position: relative;
 }
+
+.banner-content {
+  position: relative;
+}
+
+.banner-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
+  width: 100%;
+  height: 100%;
+}
+
 
 .banner-full-caption {
   @extend %white;
   @extend %font-light;
   @extend %container-sm;
   padding-bottom: $base-spacing-lg-x;
-
-  span.h1 {
-    font-size: 220%;
-    line-height: inherit;
-    @extend %vertical-inline-middle;
-    padding-right: $base-spacing-sm;
-  }
 }
 
 

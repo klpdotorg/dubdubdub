@@ -461,7 +461,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .banner-full-caption span.h1, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -556,14 +556,24 @@ hr {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #898989;
-  background-size: cover; }
+  background-size: cover;
+  position: relative; }
+
+.banner-content {
+  position: relative; }
+
+.banner-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%; }
 
 .banner-full-caption {
   padding-bottom: 25px; }
-  .banner-full-caption span.h1 {
-    font-size: 220%;
-    line-height: inherit;
-    padding-right: 5px; }
 
 /*-------------------------------------*/
 /* NAVIGATION: SMOOTH-SCROLL */
@@ -771,6 +781,9 @@ hr {
 
 .alert {
   z-index: 2500; }
+
+.banner-content {
+  z-index: 1; }
 
 .school-map-info {
   z-index: 1; }
@@ -1128,6 +1141,11 @@ body {
 .banner-reading, .banner-sikshana {
   background-image: url("/static/images/bg_header_reading_programme.jpg"); }
 
+.banner-reading .banner-full-caption span.h1 {
+  font-size: 200%;
+  line-height: inherit;
+  padding-right: 5px; }
+
 .banner-maths {
   background-image: url("/static/images/bg_header_maths_programme.jpg"); }
 
@@ -1432,6 +1450,12 @@ body {
 @media (max-width: 768px) {
   .leaflet-control-container {
     display: none; } }
+@media only screen and (max-width: 599px) {
+  .banner-full {
+    padding-bottom: 25px; }
+    .banner-full .heading-primary {
+      margin: 25px 0;
+      font-size: 140%; } }
 @media only screen and (min-width: 600px) {
   .alert {
     left: 20%;
