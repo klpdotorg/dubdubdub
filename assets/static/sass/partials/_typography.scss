@@ -249,7 +249,7 @@ sub {
 }
 
 .heading-section-block {
-  @extend %font-smallest;
+  @extend %font-smaller;
   background: $grey-mist;
   padding: $base-spacing-mid $base-spacing;
   border-top: 1px solid;

@@ -94,10 +94,10 @@ q:before, q:after {
 .font-small, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .step-number, .error-message, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link {
+.font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link {
   font-size: 80%; }
 
-.font-smallest, .heading-section-block, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
+.font-smallest, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -1114,6 +1114,10 @@ body {
   margin: 50px 0; }
   .partners-list-block ul {
     line-height: 1.8; }
+  .partners-list-block .partners-list {
+    padding-bottom: 20px; }
+    .partners-list-block .partners-list:last-of-type {
+      padding-bottom: 0; }
 
 .data-each:first-of-type {
   padding-top: 0; }
@@ -1556,7 +1560,8 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     width: 50%;
-    float: left; } }
+    float: left;
+    padding-bottom: 0; } }
 @media only screen and (min-width: 950px) {
   .banner-logo-klp {
     width: 170px; }

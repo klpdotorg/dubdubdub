@@ -473,6 +473,14 @@ body {
     @extend %font-small;
     line-height: 1.8;
   }
+
+  .partners-list {
+    padding-bottom: $base-spacing-lg;
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
 }
 
 //PAGE: DATA
