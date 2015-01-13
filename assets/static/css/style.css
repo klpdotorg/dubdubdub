@@ -183,7 +183,7 @@ sub {
   border: 1px solid #d8d8d8;
   box-shadow: 0px 1px 1px 0px #d8d8d8;
   padding: 5px 20px;
-  margin: 50px 0 0 0;
+  margin: 50px 20px 0;
   letter-spacing: 1px; }
 
 .heading-section-block {
@@ -620,10 +620,9 @@ hr {
     color: #faa060; }
   .circle-bullet.yellow-mild:before {
     color: #ffeda0; }
-  .circle-bullet.white {
-    color: #d8d8d8; }
-    .circle-bullet.white:before {
-      content: "\f1db"; }
+  .circle-bullet.white:before {
+    color: #d8d8d8;
+    content: "\f1db"; }
 
 /*-------------------------------------*/
 /* BOX INFO */
@@ -1158,8 +1157,9 @@ body {
 .library-grade-levels li span {
   display: inline-block; }
 .library-grade-levels li > span:first-of-type {
-  padding-right: 20px;
-  min-width: 180px; }
+  min-width: 120px; }
+.library-grade-levels li > span:last-of-type {
+  padding-left: 25px; }
 
 .banner-volunteer {
   background-image: url("/static/images/bg_blackboard_big.jpg");

@@ -528,8 +528,11 @@ body {
     }
 
     > span:first-of-type {
-      padding-right: $base-spacing-lg;
-      min-width: 180px;
+      min-width: 120px;
+    }
+
+    > span:last-of-type {
+      padding-left: $base-spacing-lg-x;
     }
   }
 }

@@ -673,12 +673,9 @@ a.button {
     color: $yellow-mild;
   }
 
-  &.white {
+  &.white:before {
     color: $grey-cloud;
-
-    &:before {
-      content: "\f1db";
-    }
+    content: "\f1db";
   }
 }
 
