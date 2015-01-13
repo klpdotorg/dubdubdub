@@ -219,7 +219,7 @@ sub {
   margin-bottom: $base-spacing-lg-x;
 }
 
-.heading-tiny {
+.heading-tiny, %heading-tiny {
   color: $grey-steel;
   @extend %font-smaller;
 }

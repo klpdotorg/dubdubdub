@@ -16,6 +16,7 @@ the css in the head of map.html
 //sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
+//on profile, is there a visibility class on his image for a reason?:affecting the grid padding;
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -738,6 +739,15 @@ body {
 }
 
 //Page: Profile
+.profile-meta-each {
+  .heading-tiny-uppercase {
+    margin-top: $base-spacing-lg-x;
+  }
+}
+  
+
+//Page: Profile: Edit
 .form-edit-password {
   margin-top: $base-spacing-lg-x;
 }
+

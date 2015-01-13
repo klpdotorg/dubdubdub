@@ -253,6 +253,24 @@
 	  width: 60%;
   }
 
+  //profile
+	.profile-meta-block {
+		@include grid-parent;
+	}
+
+  .profile-meta-each {
+  	@include grid-child;
+  	@include float-left;
+  }
+
+	.profile-meta-edit {
+  	width: 70%;
+	}
+
+	.profile-meta-activities {
+		width: 30%;
+	}
+
 	//profile edit
 	.edit-profile-block {
 		@include grid-parent;

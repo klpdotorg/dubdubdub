@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .alert, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
@@ -118,7 +118,7 @@ h5, .h5, .heading-tertiary {
 h4, .h4, .heading-section {
   font-size: 130%; }
 
-h3, .h3, .about-map {
+h3, .h3, .module-stats-label, .about-map {
   font-size: 140%; }
 
 h2, .h2, .heading-secondary, .home-current-block h3:first-of-type, .gender-item-count {
@@ -166,7 +166,7 @@ sub {
   color: #4d4d4d;
   margin-bottom: 25px; }
 
-.heading-tiny {
+.heading-tiny, .no-data {
   color: #898989; }
 
 .heading-tiny-uppercase, .table-volunteer-heading {
@@ -289,7 +289,7 @@ sub {
 .brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .icon-button-round, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .icon-button-round, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
@@ -479,7 +479,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -545,7 +545,6 @@ hr {
   border: 2px solid;
   width: 36px;
   height: 36px;
-  display: inline-block;
   position: relative;
   margin-right: 5px; }
 
@@ -696,6 +695,8 @@ hr {
   line-height: 1.3; }
 
 /*-------------------------------------*/
+/* NO DATA */
+/*-------------------------------------*/
 /* MODULE: IMG */
 .module-img-wrapper .heading-secondary {
   margin-bottom: 50px; }
@@ -720,6 +721,16 @@ hr {
   overflow: hidden; }
   .module-img img {
     max-width: 85%; }
+
+/*-------------------------------------*/
+/* MODULE: STATS ICON */
+.module-stats-label {
+  line-height: 1; }
+
+.module-stats-info {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 0 0 5px; }
 
 /*-------------------------------------*/
 /* TABS */
@@ -988,6 +999,7 @@ the css in the head of map.html
 //sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
+//on profile, is there a visibility class on his image for a reason?:affecting the grid padding;
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1349,6 +1361,9 @@ body {
   width: 40%; }
 .table-volunteer tr td:nth-of-type(2) {
   width: 30%; }
+
+.profile-meta-each .heading-tiny-uppercase {
+  margin-top: 25px; }
 
 .form-edit-password {
   margin-top: 25px; }
@@ -1764,6 +1779,25 @@ body {
     float: right;
     text-align: right;
     width: 60%; }
+
+  .profile-meta-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .profile-meta-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .profile-meta-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    float: left; }
+
+  .profile-meta-edit {
+    width: 70%; }
+
+  .profile-meta-activities {
+    width: 30%; }
 
   .edit-profile-block {
     margin-left: -20px;
