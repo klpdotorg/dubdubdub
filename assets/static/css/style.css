@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .alert, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -289,7 +289,7 @@ sub {
 .brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .icon-button-round, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
@@ -313,7 +313,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.white, .link-external:after, .tipsy, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -385,10 +385,10 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .gender-item .k-icon {
+.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -447,10 +447,10 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
-.center-element, .box-info, .module-img-each, .module-img {
+.center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
   margin-left: auto;
   margin-right: auto; }
 
@@ -466,7 +466,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
+.dead-center, .icon-button-round .fa, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -512,10 +512,41 @@ hr {
   border-top: 1px solid #d8d8d8;
   margin: 25px 0; }
 
+.tipsy {
+  font-size: 10px;
+  position: absolute;
+  padding: 5px;
+  background-color: #000;
+  letter-spacing: 1px;
+  opacity: 1 !important;
+  z-index: 1; }
+  .tipsy:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 5px 7px 5px;
+    border-color: transparent transparent #000 transparent;
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0; }
+
 .icon-right {
   margin-left: 5px; }
 
 .icon-left {
+  margin-right: 5px; }
+
+.icon-button-round {
+  font-size: 18px;
+  line-height: 1;
+  padding: 5px;
+  border: 2px solid;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  position: relative;
   margin-right: 5px; }
 
 /*-------------------------------------*/
@@ -946,6 +977,7 @@ input.error {
 the css in the head of map.html
 //sanj: form file preview replace with our kh js?;
 //sanj on organization edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
+//globals: tipsy, figure out how to remove that opacity 1;
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling

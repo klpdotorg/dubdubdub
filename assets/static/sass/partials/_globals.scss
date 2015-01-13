@@ -474,6 +474,33 @@ hr {
   margin: $base-spacing-lg-x 0;
 }
 
+//TOOLTIPS
+.tipsy { 
+  font-size: 10px; 
+  position: absolute; 
+  padding: $base-spacing-sm;
+  background-color: $black;
+  @extend %white;
+  @extend %border-radius-sm;
+  letter-spacing: 1px;
+  @extend %font-bold;
+  opacity: 1 !important;
+  z-index: 1;
+
+  &:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 5px 7px 5px;
+    border-color: transparent transparent $black transparent;    
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    @extend %center-element;
+  }
+}
 
 //ICONS
 .icon-right {
@@ -482,6 +509,25 @@ hr {
 
 .icon-left {
   margin-right: $base-spacing-sm;
+}
+
+.icon-button-round {
+  @extend %brand-blue;
+  font-size: 18px;
+  line-height: 1;
+  padding: $base-spacing-sm;
+  @extend %border-radius-circle;
+  border: 2px solid;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  @extend %center-text;
+  position: relative;
+  margin-right: $base-spacing-sm;
+
+  .fa {
+    @extend %dead-center;
+  }
 }
 
 /*-------------------------------------*/

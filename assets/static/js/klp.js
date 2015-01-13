@@ -51,7 +51,12 @@
         $(".video-iframe-responsive").fitVids();
 
         //Activates "tipsy" plugin for tooltips
-        $('.qtip').tipsy({live: true});
+        $('.qtip').tipsy({
+            live: true,
+            css: {
+                opacity: 1.0
+            }
+        });
 
         // Adds easing scrolling to # targets
         $('a[href*=#]:not([href=#])').click(function() {
