@@ -987,7 +987,8 @@ body {
 
 /*-------------------------------------*/
 .main {
-  margin-top: 42px; }
+  position: relative;
+  top: 42px; }
 
 /*-------------------------------------*/
 .profile-login-block {
