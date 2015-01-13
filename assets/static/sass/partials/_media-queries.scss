@@ -12,6 +12,17 @@
 	  padding-bottom: ($base-spacing-lg-2x) * 2;
 	}
 
+	//module img
+	.module-img {
+	  width: 180px;
+	  height: 180px;
+
+	  img {
+	    max-width: none;
+	  }  
+	}
+
+
 	//float-left and float-right for images in content areas
 
 	.float-left-padding {

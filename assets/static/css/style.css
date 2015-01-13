@@ -639,11 +639,13 @@ hr {
   max-width: 500px; }
 
 .module-img {
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   position: relative;
   margin-bottom: 25px;
   overflow: hidden; }
+  .module-img img {
+    max-width: 85%; }
 
 /*-------------------------------------*/
 /* TABS */
@@ -1442,6 +1444,12 @@ body {
 
   .banner-full-caption {
     padding-bottom: 100px; }
+
+  .module-img {
+    width: 180px;
+    height: 180px; }
+    .module-img img {
+      max-width: none; }
 
   .float-left-padding {
     float: left;

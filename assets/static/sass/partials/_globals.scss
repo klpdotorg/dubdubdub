@@ -720,8 +720,8 @@ a.button {
 }
 
 .module-img {
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   @extend %border-radius-circle;
   @extend %center-element;
   position: relative;
@@ -730,6 +730,7 @@ a.button {
 
   img {
     @extend %dead-center;
+    max-width: 85%;
   }  
 }
 
