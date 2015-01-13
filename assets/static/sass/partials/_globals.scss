@@ -52,66 +52,65 @@
 
 //orange
 .brand-orange, %brand-orange {
-    color: $brand-orange;
+  color: $brand-orange;
 }
 
 .brand-orange-bg, %brand-orange-bg {
-    background-color: $brand-orange;
+  background-color: $brand-orange;
 }
 
 //green
 .brand-green, %brand-green {
-    color: $brand-green;
+  color: $brand-green;
 }
 
 .brand-green-bg, %brand-green-bg {
-    background-color: $brand-green;
+  background-color: $brand-green;
 }
 
 //blue
 .brand-blue, %brand-blue {
-    color: $brand-blue;
+  color: $brand-blue;
 }
 
 .brand-blue-bg, %brand-blue-bg {
-    background-color: $brand-blue;
+  background-color: $brand-blue;
 }
 
 //turquoise
 .brand-turquoise, %brand-turquoise {
-    color: $brand-turquoise;
+  color: $brand-turquoise;
 }
 
 .brand-turquoise-bg, %brand-turquoise-bg {
-    background-color: $brand-turquoise;
+  background-color: $brand-turquoise;
 }
 
 //purple
 .brand-purple, %brand-purple {
-    color: $brand-purple;
+  color: $brand-purple;
 }
 
 .brand-purple-bg, %brand-purple-bg {
-    background-color: $brand-purple;
+  background-color: $brand-purple;
 }
-
 
 //red
 .brand-red, %brand-red {
-    color: $brand-red;
+  color: $brand-red;
 }
 
 .brand-red-bg, %brand-red-bg {
-    background-color: $brand-red;
+  background-color: $brand-red;
 }
 
 //white
 .white, %white {
-    color: $white;
+  color: $white;
 }
 
 .white-bg, %white-bg {
-    background-color: $white;
+  background-color: $white;
 }
 
 //yellow
@@ -147,8 +146,18 @@
 }
 
 .black-bg, %black-bg {
-  color: $black;
+  background-color: $black;
 }
+
+//grey-silver
+.grey-steel, %grey-steel {
+  color: $grey-steel;
+}
+
+.grey-steel-bg, %grey-steel-bg {
+  background-color: $grey-steel;
+}
+
 
 //link colors
 
@@ -752,7 +761,7 @@ a.button {
 /*-------------------------------------*/
 /* TABS */
 
-  .tab-wrapper {
+/*  .tab-wrapper {
     border: 1px solid $grey-cloud;
   }
 
@@ -805,7 +814,6 @@ a.button {
     }
 
     .tab-each {
-      /*flex: 1;*/ /*Use this if you want tabs to be of equal widths*/
       display: inline-block;
       vertical-align: top;
     }
@@ -814,7 +822,7 @@ a.button {
       border-bottom: none;
       position: relative;
       top: 1px;
-      background: #fff; /* match color of tab-content div when pushing down by 1px */
+      background: #fff;
     }
 
     .tab-content {
@@ -830,7 +838,7 @@ a.button {
       border-bottom: none;
     }
   }
-
+*/
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */

@@ -316,7 +316,7 @@ sub {
 .white, .link-external:after, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .tab-content, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .yellow-mild {
@@ -341,7 +341,13 @@ sub {
   color: #000; }
 
 .black-bg {
-  color: #000; }
+  background-color: #000; }
+
+.grey-steel {
+  color: #898989; }
+
+.grey-steel-bg {
+  background-color: #898989; }
 
 .link-color, a {
   color: #3891e3; }
@@ -362,7 +368,7 @@ sub {
 .base-spacing-lg {
   padding: 20px 0; }
 
-.base-spacing-lg-x, .data-each, .volunteer-story-each, .org-volunteer-content {
+.base-spacing-lg-x, .data-each, .volunteer-story-each {
   padding: 25px 0; }
 
 .base-spacing-lg-2x, .home-help-block, .home-current-block, .home-volunteer-request, .volunteer-works-block {
@@ -664,69 +670,84 @@ hr {
 
 /*-------------------------------------*/
 /* TABS */
-.tab-wrapper {
-  border: 1px solid #d8d8d8; }
-
-.tab-heading {
-  text-decoration: none;
-  display: block;
-  padding: 5px 10px;
-  color: inherit;
-  text-transform: uppercase;
-  border-bottom: 1px solid; }
-
-.tab-each:last-of-type .tab-heading {
-  border-bottom: none; }
-
-.tab-each:first-of-type .tab-content {
-  display: block; }
-
-.tab-heading, .tab-heading-active {
-  border-color: #d8d8d8; }
-
-.tab-heading.tab-heading-active {
-  background: #f6f6f6; }
-
-.tab-content {
-  display: none;
-  padding: 10px;
-  border-bottom: 1px solid #d8d8d8; }
-  .tab-content.tab-active {
-    display: block; }
-
-@media only screen and (min-width: 600px) {
-  .tab-wrap {
-    position: relative;
-    max-width: 700px;
-    border: none;
-    border-bottom: 1px solid #d8d8d8; }
-
-  .tab-heading.tab-heading-active {
-    background: #fff; }
-
-  .tab-each {
-    /*flex: 1;*/
-    /*Use this if you want tabs to be of equal widths*/
-    display: inline-block;
-    vertical-align: top; }
+/*  .tab-wrapper {
+    border: 1px solid $grey-cloud;
+  }
 
   .tab-heading {
+    text-decoration: none;
+    display: block;
+    padding: $base-spacing-sm $base-spacing;
+    color: inherit;
+    text-transform: uppercase;
+    border-bottom: 1px solid;
+  }
+
+  .tab-each:last-of-type .tab-heading {
     border-bottom: none;
-    position: relative;
-    top: 1px;
-    background: #fff;
-    /* match color of tab-content div when pushing down by 1px */ }
+  }
+
+  .tab-each:first-of-type .tab-content {
+    display: block;
+  }
+
+  .tab-heading, .tab-heading-active {
+    border-color: $grey-cloud;
+  }
+
+  .tab-heading.tab-heading-active {
+    background: $grey-mist;
+  }
 
   .tab-content {
-    position: absolute;
-    left: 0;
-    right: 0;
-    border: 1px solid #d8d8d8;
-    border-top: none; }
+    display: none;
+    padding: 10px;
+    border-bottom: 1px solid $grey-cloud;
+    @extend %white-bg;
+    
+    &.tab-active {
+      display: block;
+    }
+  }
 
-  .tab-heading-active {
-    border: 1px solid #d8d8d8;
-    border-bottom: none; } }
+  @media only screen and (min-width: 600px) {
+    .tab-wrap {
+      position: relative;
+      max-width: 700px;
+      border: none;
+      border-bottom: 1px solid $grey-cloud;
+    }
+
+    .tab-heading.tab-heading-active {
+      background: #fff;
+    }
+
+    .tab-each {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .tab-heading {
+      border-bottom: none;
+      position: relative;
+      top: 1px;
+      background: #fff;
+    }
+
+    .tab-content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border: 1px solid $grey-cloud;
+      border-top: none;
+    }
+
+    .tab-heading-active {
+      border: 1px solid $grey-cloud;
+      border-bottom: none;
+    }
+  }
+*/
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
@@ -1233,8 +1254,14 @@ body {
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
 
-.org-volunteer-content {
+.org-tab-content {
   border-bottom: 1px solid #d8d8d8; }
+
+.org-tab-date-block {
+  padding: 0 0 20px 0; }
+
+.org-tab-button {
+  margin: 10px 0 0 0; }
 
 .map_canvas_full {
   position: fixed;
@@ -1538,7 +1565,18 @@ body {
     padding-right: 20px;
     width: 50%;
     display: inline-block;
-    vertical-align: top; } }
+    vertical-align: top; }
+
+  .org-tab-date-block:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+  .org-tab-date {
+    float: left; }
+
+  .org-tab-button {
+    float: right; } }
 @media only screen and (min-width: 750px) {
   .nav-trigger {
     display: none; }
@@ -1606,7 +1644,15 @@ body {
     padding-right: 20px;
     width: 50%;
     float: left;
-    padding-bottom: 0; } }
+    padding-bottom: 0; }
+
+  .org-tab-org {
+    float: left; }
+
+  .org-tab-school {
+    float: right;
+    text-align: right;
+    width: 60%; } }
 @media only screen and (min-width: 950px) {
   .banner-logo-klp {
     width: 170px; }

@@ -693,7 +693,14 @@ body {
 }
 
 //page: organization
-.org-volunteer-content {
-  @extend %base-spacing-lg-x;
+.org-tab-content {
   border-bottom: 1px solid $grey-cloud;
+}
+
+.org-tab-date-block {
+  padding: 0 0 $base-spacing-lg 0;
+}
+
+.org-tab-button {
+  margin: $base-spacing 0 0 0;
 }

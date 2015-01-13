@@ -14,14 +14,14 @@
 
 {% block content %}
 
-	<section class="page-organisation-profile org-head">
+	<section class="page-organisation-profile">
 		<div class="container">
 			<div class="org-link">
 				<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
 				{% if object.url %}
 				<a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
 				{% endif %}
-				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn" style="display:none;">Edit Profile</a>
+				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn">Edit Profile</a>
 			</div>
 			<div class="org-volunteer">
 				{% if object.logo %}
@@ -104,7 +104,7 @@
 	<section class="page-organisation-profile pt-30 pb-30 phn-pt-0">
 		<div class="js-tabs-wrapper">
 			<div class="tab-heading">Volunteer</div>
-			<div class="tab-content container current" data-tab="volunteer" style="display:block">
+			<div class="tab-content container current" data-tab="volunteer">
 				<div class="grid_3 omega fr phn-width-full phn-mar-0 phn-mb-40">
 					<!--
 					<div class="profile-title bold uppercase mb-20">Filters</div>
