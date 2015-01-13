@@ -66,6 +66,7 @@
 	//page: partners
 	.logo-wrapper {
 		> img {
+	    padding: $base-spacing-lg-x;
 			max-width: none;
 		}
 	}

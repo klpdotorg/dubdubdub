@@ -460,8 +460,8 @@ body {
   @extend %center-text;
 
   > img {
-    padding: $base-spacing-lg-x;
-    max-width: 140px;
+    padding: $base-spacing-lg;
+    max-width: 130px;
   }
 }
 
