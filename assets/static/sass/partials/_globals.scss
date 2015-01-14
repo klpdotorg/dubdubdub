@@ -513,13 +513,13 @@ hr {
 
 .icon-button-round {
   @extend %brand-blue;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   padding: $base-spacing-sm;
   @extend %border-radius-circle;
   border: 2px solid;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   @extend %vertical-inline-middle;
   @extend %center-text;
   position: relative;
@@ -865,6 +865,17 @@ a.button {
 
 /*-------------------------------------*/
 /* MODULE: STATS ICON */
+
+.module-stats-icon {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 $base-spacing 0 0;
+
+  &:last-of-type {
+    margin: 0;
+  }
+}
+
 .module-stats-label {
   @extend %brand-blue;
   @extend %font-bold;

@@ -14,87 +14,95 @@
 
 {% block content %}
 
-	<section class="page-organisation-profile">
+	<section class="page-org-profile">
 		<div class="container">
-			<div class="org-link">
-				<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
-				<p><a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a></p>
-				{% if object.url %}
-				<a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
-				{% endif %}
-				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn">Edit Profile</a>
-			</div>
-			<div class="org-volunteer">
-				{% if object.logo %}
-				<img src="{{ object.logo.url }}">
-				{% endif %}
-			</div>
-			<div class="clr"></div>
-			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
-				<p class="profile-description mt-0">
-					{{ object.about }}
-				</p>
-					{% if object.has_links %}
-					<div>
-						<div class="profile-title uppercase mb-5"><strong>Links:</strong></div>
-						<div>
-							{% if object.twitter_handle %}
-							<span>
-								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
-									<span class="fa fa-twitter"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.fb_url %}
-							<span>
-								<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
-									<span class="fa fa-facebook"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.website %}
-							<span>
-								<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
-									<span class="fa fa-laptop"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.photos_url %}
-							<span>
-								<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
-									<span class="fa fa-image"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.youtube_url %}
-							<span>
-								<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
-									<span class="fa fa-video-camera"></span>
-								</a>
-							</span>
-							{% endif %}
-						</div>
-
-					</div>
+			<div class="org-meta-block">
+				<div class="org-meta-each org-meta-edit">
+					<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
+					{% if object.url %}
+					<p><a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a></p>
 					{% endif %}
-			</div>
-			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
-				<div class="heading-tiny-uppercase">Total Opportunties</div>
+					<div>
+						<a href="/organisation/{{ object.id }}/edit" class="button-hollow button-sm" id="editOrganizationBtn">Edit Profile</a>				
+					</div>
+
+					<div>
+						<p>
+							{{ object.about }}
+						</p>
+							{% if object.has_links %}
+							<div>
+								<div class="heading-tiny-uppercase">Links</div>
+								<div>
+									{% if object.twitter_handle %}
+									<span>
+										<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
+											<span class="fa fa-twitter"></span>
+										</a>
+									</span>
+									{% endif %}
+									{% if object.fb_url %}
+									<span>
+										<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
+											<span class="fa fa-facebook"></span>
+										</a>
+									</span>
+									{% endif %}
+									{% if object.website %}
+									<span>
+										<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
+											<span class="fa fa-laptop"></span>
+										</a>
+									</span>
+									{% endif %}
+									{% if object.photos_url %}
+									<span>
+										<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
+											<span class="fa fa-image"></span>
+										</a>
+									</span>
+									{% endif %}
+									{% if object.youtube_url %}
+									<span>
+										<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
+											<span class="fa fa-video-camera"></span>
+										</a>
+									</span>
+									{% endif %}
+								</div>
+
+							</div>
+							{% endif %}
+					</div>
+				</div> <!-- /org-meta-edit -->
+
+			  <div class="org-meta-each org-meta-activities">
+					{% if object.logo %}
+					<div><img src="{{ object.logo.url }}" class="org-profile-img"></div>				
+					{% endif %}
+
+					<div class="heading-tiny-uppercase">Total Opportunities</div>
+					
+					<div class="module-stats-icon">
+						<img src="/static/images/icon_donation@2x.png" width="50">
+						<div class="module-stats-info">
+							<div>Donation</div>
+							<p class="module-stats-label" id="donationCount"></p>
+						</div>
+					</div>
+					
+					<div class="module-stats-icon">
+						<img src="/static/images/icon_volunteer@2x.png" width="50">
+						<div class="module-stats-info">
+							<div>Volunteer</div>
+							<p class="module-stats-label" id="volunteerCount"></p>
+						</div>
+					</div>
+
+			  </div> <!--/org-meta-activities -->
 				
-				<div class="stats_opportunities fl">
-					<span class="icon donation"></span>
-					<p class="label">Donation</p>
-					<p class="value" id="donationCount"></p>
-				</div>
-				
-				<div class="stats_opportunities fl">
-					<span class="icon volunteer"></span>
-					<p class="label">Volunteer</p>
-					<p class="value" id="volunteerCount"></p>
-				</div>
-				<div class="clr"></div>
-			</div>
-			<div class="clr"></div>
+			</div> <!-- /org-meta-block -->
+
 			<ul class="tabs phn-hide">
 				<li data-tab="volunteer" class="js-tab-link current">Volunteer</li>
 				<li data-tab="donation" class="js-tab-link">Donation</li>

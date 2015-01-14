@@ -539,12 +539,12 @@ hr {
   margin-right: 5px; }
 
 .icon-button-round {
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   padding: 5px;
   border: 2px solid;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   position: relative;
   margin-right: 5px; }
 
@@ -733,6 +733,13 @@ hr {
 
 /*-------------------------------------*/
 /* MODULE: STATS ICON */
+.module-stats-icon {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px 0 0; }
+  .module-stats-icon:last-of-type {
+    margin: 0; }
+
 .module-stats-label {
   line-height: 1; }
 
@@ -1009,6 +1016,7 @@ the css in the head of map.html
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
+//tab code is repeated in too many places
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1352,10 +1360,19 @@ body {
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
 
-.org-link {
-  padding: 50px 0 0 0; }
-  .org-link .heading-tertiary {
-    margin-bottom: 0; }
+.page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
+  margin-top: 25px; }
+
+.profile-meta-edit .heading-tertiary:first-of-type, .page-org-profile .heading-tertiary:first-of-type {
+  margin: 0; }
+
+.profile-meta-block, .org-meta-block {
+  margin: 50px 0 0 0; }
+
+.org-profile-img {
+  max-width: 200px;
+  display: block;
+  margin: 30px 0 0 0; }
 
 .org-tab-content {
   border-bottom: 1px solid #d8d8d8; }
@@ -1370,15 +1387,6 @@ body {
   width: 40%; }
 .table-volunteer tr td:nth-of-type(2) {
   width: 30%; }
-
-.page-profile .heading-tiny-uppercase {
-  margin-top: 25px; }
-
-.profile-meta-block {
-  margin: 50px 0 0 0; }
-
-.profile-meta-edit .heading-tertiary:first-of-type {
-  margin: 0; }
 
 .profile-meta-img {
   max-width: 80px;
@@ -1791,8 +1799,26 @@ body {
     float: left;
     padding-bottom: 0; }
 
-  .org-tab-org {
+  .profile-meta-block, .org-meta-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .profile-meta-block:after, .org-meta-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .profile-meta-each, .org-meta-each {
+    padding-left: 20px;
+    padding-right: 20px;
     float: left; }
+
+  .profile-meta-edit, .org-meta-edit {
+    width: 65%; }
+
+  .profile-meta-activities, .org-meta-activities {
+    width: 35%; }
+    .profile-meta-activities .heading-tiny-uppercase:first-of-type, .org-meta-activities .heading-tiny-uppercase:first-of-type {
+      margin-top: 0; }
 
   .org-tab-school {
     float: right;
@@ -1802,26 +1828,8 @@ body {
   .form-edit-profile-tab {
     max-width: 50%; }
 
-  .profile-meta-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .profile-meta-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .profile-meta-each {
-    padding-left: 20px;
-    padding-right: 20px;
-    float: left; }
-
-  .profile-meta-edit {
-    width: 70%; }
-
-  .profile-meta-activities {
-    width: 30%; }
-    .profile-meta-activities .heading-tiny-uppercase:first-of-type {
-      margin-top: 0; }
+  .org-profile-img {
+    margin: 0; }
 
   .edit-profile-block {
     margin-left: -20px;

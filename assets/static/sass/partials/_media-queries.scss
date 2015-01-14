@@ -242,10 +242,32 @@
   	padding-bottom: 0;
   }
 
-  //page: organization
-  .org-tab-org {
-  	float: left;
+  //page: Profile and Org Profile
+
+	.profile-meta-block, .org-meta-block {
+		@include grid-parent;
+	}
+
+  .profile-meta-each, .org-meta-each {
+  	@include grid-child;
+  	@include float-left;
   }
+
+	.profile-meta-edit, .org-meta-edit {
+  	width: 65%;
+	}
+
+	.profile-meta-activities, .org-meta-activities {
+		width: 35%;
+		
+	  .heading-tiny-uppercase {
+	    &:first-of-type {
+	      margin-top: 0;
+	    }
+	  }
+	}
+
+  //page: organization
 
   .org-tab-school {
   	float: right;
@@ -258,32 +280,11 @@
   	max-width: 50%;
 	}
 
-  //page: profile
-
-	.profile-meta-block {
-		@include grid-parent;
+	.org-profile-img {
+		margin: 0;
 	}
 
-  .profile-meta-each {
-  	@include grid-child;
-  	@include float-left;
-  }
-
-	.profile-meta-edit {
-  	width: 70%;
-	}
-
-	.profile-meta-activities {
-		width: 30%;
-		
-	  .heading-tiny-uppercase {
-	    &:first-of-type {
-	      margin-top: 0;
-	    }
-	  }
-	}
-
-	//profile edit
+	//page: Profile edit
 	.edit-profile-block {
 		@include grid-parent;
 	}

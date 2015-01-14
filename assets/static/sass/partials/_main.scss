@@ -17,6 +17,7 @@ the css in the head of map.html
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
+//tab code is repeated in too many places
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -697,13 +698,29 @@ body {
   }
 }
 
-//page: organization
-.org-link {
-  padding: $base-spacing-lg-2x 0 0 0;
-
-  .heading-tertiary {
-    margin-bottom: 0;
+//Page: Profile and Org Profile
+.page-profile, .page-org-profile {
+  .heading-tiny-uppercase {
+    margin-top: $base-spacing-lg-x;
   }
+}
+
+.profile-meta-edit, .page-org-profile {
+  .heading-tertiary:first-of-type {
+    margin: 0;
+  }
+}
+
+.profile-meta-block, .org-meta-block {
+  margin: $base-spacing-lg-2x 0 0 0;
+}
+
+//page: organization
+
+.org-profile-img {
+  max-width: 200px;
+  display: block;
+  margin: ($base-spacing-lg-x + 5) 0 0 0;
 }
 
 .org-tab-content {
@@ -739,21 +756,6 @@ body {
 }
 
 //Page: Profile
-.page-profile {
-  .heading-tiny-uppercase {
-    margin-top: $base-spacing-lg-x;
-  }
-}
-
-.profile-meta-block {
-  margin: $base-spacing-lg-2x 0 0 0;
-}
-
-.profile-meta-edit {
-  .heading-tertiary:first-of-type {
-    margin: 0;
-  }
-}
 
 .profile-meta-img {
   max-width: 80px;
