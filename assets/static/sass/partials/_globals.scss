@@ -530,6 +530,26 @@ hr {
   }
 }
 
+//ICONS: VERIFIED
+.verified {
+  @extend %brand-green;
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  @extend %font-bold;
+  letter-spacing: 1px;
+
+  &:before {
+    content: "\f00c";
+    font-family: "FontAwesome";
+    @extend %brand-green-bg;
+    @extend %white;
+    padding: 2px;
+    font-size: 12px;
+    @extend %border-radius-sm;
+    margin-right: $base-spacing-sm;
+  }
+}
+
 /*-------------------------------------*/
 //BUTTONS
 %button-base {

@@ -254,6 +254,10 @@
   }
 
   //profile
+  .page-profile {
+
+  }
+  
 	.profile-meta-block {
 		@include grid-parent;
 	}
@@ -269,6 +273,12 @@
 
 	.profile-meta-activities {
 		width: 30%;
+		
+	  .heading-tiny-uppercase {
+	    &:first-of-type {
+	      margin-top: 0;
+	    }
+	  }
 	}
 
 	//profile edit

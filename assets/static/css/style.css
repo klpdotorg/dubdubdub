@@ -79,13 +79,13 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -94,10 +94,10 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
-.font-smallest, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
+.font-smallest, .verified, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -166,7 +166,7 @@ sub {
   color: #4d4d4d;
   margin-bottom: 25px; }
 
-.heading-tiny, .no-data {
+.heading-tiny, .no-data, .profile-volunteer-date {
   color: #898989; }
 
 .heading-tiny-uppercase, .table-volunteer-heading {
@@ -283,10 +283,10 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main {
+.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main {
   color: #26b262; }
 
-.brand-green-bg, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
+.brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
 .brand-blue, .icon-button-round, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
@@ -313,7 +313,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .tipsy, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -343,7 +343,7 @@ sub {
 .black-bg {
   background-color: #000; }
 
-.grey-silver {
+.grey-silver, .profile-volunteer-date {
   color: #bbb; }
 
 .grey-silver-bg {
@@ -385,10 +385,10 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .gender-item .k-icon {
+.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -433,16 +433,16 @@ img, video {
 .align-right {
   text-align: right; }
 
-.float-left {
+.float-left, .profile-volunteer-date {
   float: left; }
 
-.float-right {
+.float-right, .profile-volunteer-verified {
   float: right; }
 
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after {
+.clearfix:after, .heading-section-block:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -547,6 +547,15 @@ hr {
   height: 36px;
   position: relative;
   margin-right: 5px; }
+
+.verified {
+  letter-spacing: 1px; }
+  .verified:before {
+    content: "\f00c";
+    font-family: "FontAwesome";
+    padding: 2px;
+    font-size: 12px;
+    margin-right: 5px; }
 
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
@@ -999,7 +1008,7 @@ the css in the head of map.html
 //sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
-//on profile, is there a visibility class on his image for a reason?:affecting the grid padding;
+//on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1362,8 +1371,18 @@ body {
 .table-volunteer tr td:nth-of-type(2) {
   width: 30%; }
 
-.profile-meta-each .heading-tiny-uppercase {
+.page-profile .heading-tiny-uppercase {
   margin-top: 25px; }
+
+.profile-meta-block {
+  margin: 50px 0 0 0; }
+
+.profile-meta-edit .heading-tertiary:first-of-type {
+  margin: 0; }
+
+.profile-meta-img {
+  max-width: 80px;
+  border: 2px solid #d8d8d8; }
 
 .form-edit-password {
   margin-top: 25px; }
@@ -1798,6 +1817,8 @@ body {
 
   .profile-meta-activities {
     width: 30%; }
+    .profile-meta-activities .heading-tiny-uppercase:first-of-type {
+      margin-top: 0; }
 
   .edit-profile-block {
     margin-left: -20px;
