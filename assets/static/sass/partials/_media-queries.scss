@@ -253,11 +253,13 @@
 	  width: 60%;
   }
 
-  //profile
-  .page-profile {
+	//page: organization-edit
+	.form-edit-profile-tab {
+  	max-width: 50%;
+	}
 
-  }
-  
+  //page: profile
+
 	.profile-meta-block {
 		@include grid-parent;
 	}
