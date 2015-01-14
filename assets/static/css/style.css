@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -292,7 +292,7 @@ sub {
 .brand-blue, .icon-button-round, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .school-demo-tab .icon-boy, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
@@ -313,7 +313,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
@@ -355,6 +355,12 @@ sub {
 .grey-steel-bg {
   background-color: #898989; }
 
+.grey-gravel {
+  color: #4d4d4d; }
+
+.grey-gravel-bg {
+  background-color: #4d4d4d; }
+
 .link-color, a {
   color: #3891e3; }
 
@@ -388,7 +394,7 @@ sub {
 .border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
+.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -466,7 +472,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
+.dead-center, .icon-button-round .fa, .module-img img, .school-demo-tab .icon-boy:before, .school-demo-tab .icon-girl:before, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1089,6 +1095,8 @@ the css in the head of map.html
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
 //tab code is repeated in too many places
 //can we have a conditional for object about description for profile edit and organisation edit?
+//horizontal scroll bar on info tab in school on desktop also
+//pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1436,6 +1444,36 @@ body {
   font-size: 85%; }
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
+
+.table-data tr td:first-of-type {
+  color: #4d4d4d; }
+
+.school-photos {
+  margin: -5px; }
+
+.image-preview-gallery {
+  max-width: 60px;
+  margin: 5px; }
+
+.school-demo-tab .module-stats-icon {
+  display: block; }
+.school-demo-tab .icon-boy, .school-demo-tab .icon-girl {
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  display: inline-block;
+  position: relative; }
+  .school-demo-tab .icon-boy:before, .school-demo-tab .icon-girl:before {
+    font-family: "FontAwesome";
+    font-size: 25px; }
+.school-demo-tab .icon-boy:before {
+  content: "\f183"; }
+.school-demo-tab .icon-girl {
+  background-color: #f87c84; }
+  .school-demo-tab .icon-girl:before {
+    content: "\f183"; }
+.school-demo-tab .module-stats-girl .module-stats-label {
+  color: #f87c84; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }
@@ -1891,7 +1929,27 @@ body {
     float: left; }
 
   .form-edit-password {
-    margin-top: 0; } }
+    margin-top: 0; }
+
+  .school-data-wrap {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .school-data-wrap:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .school-data-block, .school-photos-block {
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .school-data-block {
+    float: left;
+    width: 60%; }
+
+  .school-photos-block {
+    float: right;
+    width: 40%; } }
 @media only screen and (min-width: 990px) {
   .nav-trigger {
     display: none; }

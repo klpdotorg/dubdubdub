@@ -19,6 +19,8 @@ the css in the head of map.html
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
 //tab code is repeated in too many places
 //can we have a conditional for object about description for profile edit and organisation edit?
+//horizontal scroll bar on info tab in school on desktop also
+//pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -705,6 +707,66 @@ body {
 
   .heading-tiny-uppercase {
     margin-top: $base-spacing-lg;
+  }
+}
+
+.table-data {
+  tr {
+    td:first-of-type {
+      @extend %font-bold;
+      color: $grey-gravel;
+    }
+  }
+}
+
+.school-photos {
+  margin: 0 -$base-spacing-sm; //tied to margin of image-preview-gallery
+}
+
+.image-preview-gallery {
+  max-width: 60px;
+  margin: $base-spacing-sm;
+}
+
+.school-demo-tab {
+  .module-stats-icon {
+    display: block;
+  }
+
+  .icon-boy, .icon-girl {
+    width: 48px;
+    height: 48px;
+    @extend %white;
+    padding: $base-spacing;
+    display: inline-block;
+    @extend %border-radius-circle;
+    position: relative;
+
+    &:before {
+      font-family: "FontAwesome";
+      @extend %dead-center;
+      font-size: 25px;
+    }
+  }
+
+  .icon-boy {
+    @extend %brand-blue-bg;    
+    &:before {
+      content: "\f183";
+    }
+  }
+
+  .icon-girl {
+    background-color: $pink-salmon;        
+    &:before {
+      content: "\f183";
+    }
+  }
+
+  .module-stats-girl {
+    .module-stats-label {
+      color: $pink-salmon;
+    }
   }
 }
 

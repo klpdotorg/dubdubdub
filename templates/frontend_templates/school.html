@@ -20,145 +20,151 @@
   </ul>
 </script>
 <script type="text/html" id="tpl-tab-info">
-  <div class="fl-desktop">
-      {% if address_full %}
-      <h4 class="heading-tiny-uppercase">Address</h4>
-      <p>{{ address_full }}</p>
-      {% endif %}
-  
-      {% if landmark %}
-      <h4 class="heading-tiny-uppercase">Landmark</h4>
-      <p>{{ landmark }}</p>
-      {% endif %}
-  
-      <h4 class="heading-tiny-uppercase">School Information</h4>
-      <table class="info_data_table">
-          <tr>
-              <td class="font-bold">Category</td>
-              <td>{{ cat }}</td>
-          </tr>
-          {% if buses %}
-          <tr>
-              <td class="font-bold">Buses</td>
-              <td>{{ buses }}</td>
-          </tr>
-          {% endif %}
-          {% if identifiers %}
-          <tr>
-              <td class="font-bold">Identifiers</td>
-              <td>{{ identifiers }}</td>
-          </tr>
-          {% endif %}
-          <tr>
-              <td class="font-bold">Gender</td>
-              <td>{{ sex|capitalize }}</td>
-          </tr>
-  
-          {% if type.id == 1 %}
-          <tr>
-              <td class="font-bold">Medium</td>
-              <td>{{ moi|capitalize }}</td>
-          </tr>
-              {% if dise_code %}
-          <tr>
-              <td class="font-bold">DISE</td>
-              <td>{{ dise_code }}</td>
-          </tr>
-              {% endif %}
-          {% endif %}
-      </table>
-  
-      <h4 class="heading-tiny-uppercase">Constituency Information</h4>
-      <table class="info_data_table">
-          <tr>
-              <td>MLA Constituency</td>
-              <td>
-                  {% if assembly %}
-                      {{ assembly.name }}
-                  {% else %}
-                      Data unavailable.
-                  {% endif %}
-              </td>
-          </tr>
-          <!--
-    <tr>
-        <td>MLA Details</td>
-        <td>Dr. Ashwath Narayan (BJP)</td>
-    </tr>
-    -->
-          <tr>
-              <td>MP Constituency</td>
-              <td>
-                  {% if parliament %}
-                      {{ parliament.name }}
-                  {% else %}
-                      Data unavailable.
-                  {% endif %}
-              </td>
-          </tr>
-          <!--
-    <tr>
-        <td>MLA Details</td>
-        <td>DB Chandre Gowada (BJP)</td>
-    </tr>
-    -->
-      </table>
-  </div>
-  <div class="photos-block fr-desktop">
-      {% if images.length > 0 %}
-      <h4 class="heading-tiny-uppercase">Photos</h4>
-          {% for image in images %}
-            <span data-rbox-image="{{ image }}" class="rbox_img_gal"><img src="{{ image }}"></span>
-          {% endfor %}
-      {% endif %}
-      <div class="clr"></div>
-  </div>
-  <div class="clr"></div>
-  <br /><br />
-  <table class="info_data_table label_small">
+  <div class="school-data-wrap">
+    <div class="school-data-block">
+        {% if address_full %}
+        <h4 class="heading-tiny-uppercase">Address</h4>
+        <p>{{ address_full }}</p>
+        {% endif %}
+    
+        {% if landmark %}
+        <h4 class="heading-tiny-uppercase">Landmark</h4>
+        <p>{{ landmark }}</p>
+        {% endif %}
+    
+        <h4 class="heading-tiny-uppercase">School Information</h4>
+        <table class="table-data">
+            <tr>
+                <td>Category</td>
+                <td>{{ cat }}</td>
+            </tr>
+            {% if buses %}
+            <tr>
+                <td>Buses</td>
+                <td>{{ buses }}</td>
+            </tr>
+            {% endif %}
+            {% if identifiers %}
+            <tr>
+                <td>Identifiers</td>
+                <td>{{ identifiers }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Gender</td>
+                <td>{{ sex|capitalize }}</td>
+            </tr>
+    
+            {% if type.id == 1 %}
+            <tr>
+                <td>Medium</td>
+                <td>{{ moi|capitalize }}</td>
+            </tr>
+                {% if dise_code %}
+            <tr>
+                <td>DISE</td>
+                <td>{{ dise_code }}</td>
+            </tr>
+                {% endif %}
+            {% endif %}
+        </table>
+    
+        <h4 class="heading-tiny-uppercase">Constituency Information</h4>
+        <table class="table-data">
+            <tr>
+                <td>MLA Constituency</td>
+                <td>
+                    {% if assembly %}
+                        {{ assembly.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
+            </tr>
+            <!--
       <tr>
-          <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+          <td>MLA Details</td>
+          <td>Dr. Ashwath Narayan (BJP)</td>
       </tr>
+      -->
+            <tr>
+                <td>MP Constituency</td>
+                <td>
+                    {% if parliament %}
+                        {{ parliament.name }}
+                    {% else %}
+                        Data unavailable.
+                    {% endif %}
+                </td>
+            </tr>
+            <!--
+      <tr>
+          <td>MLA Details</td>
+          <td>DB Chandre Gowada (BJP)</td>
+      </tr>
+      -->
+        </table>
+    </div> <!-- school-data-block -->
+
+    <div class="school-photos-block">
+        {% if images.length > 0 %}
+        <h4 class="heading-tiny-uppercase">Photos</h4>
+        <div class="school-photos">
+          {% for image in images %}
+            <span data-rbox-image="{{ image }}" class="rbox_img_gal image-preview-gallery"><img src="{{ image }}"></span>
+          {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+  </div> <!-- school-data-wrap -->
+
+  <div class="base-spacing"></div> 
+  <table class="table-data">
+    <tr>
+      <td>Source</td>
+      <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+    </tr>
   </table>
 </script>
 <script type="text/html" id="tpl-tab-demographics">
   <div class="fl-desktop-tablet">
-      <h4 class="heading-tiny-uppercase">Student Information</h4>
-      <div class="no-data js-klp" style="display:none;">
-          <p> No data available </p>
+    <h4 class="heading-tiny-uppercase">Student Information</h4>
+    <div class="no-data js-klp" style="display:none;">
+        <p> No data available </p>
+    </div>
+  
+    <div class="pie-chart-wrapper" id="boygirlChartWrapper">
+      <div class="pie-chart-inner">
+        <div id="num_students_piechart" class="chart"></div>
+        <div class="gender_icons absolute fl">
+          <div class="stats_gender_item no_width total ta-c">
+            <p class="label">Total</p>
+            <p class="value">{{ total_students }}</p>
+            <div class="clr"></div>
+          </div>
+        </div>
       </div>
   
-      <div class="pie-chart-wrapper" id="boygirlChartWrapper">
-          <div class="pie-chart-inner fl">
-              <div id="num_students_piechart" class="chart fl"></div>
-              <div class="gender_icons absolute fl">
-                  <div class="stats_gender_item no_width total ta-c">
-                      <p class="label">Total</p>
-                      <p class="value">{{ total_students }}</p>
-                      <div class="clr"></div>
-                  </div>
-              </div>
+      <div class="school-demo-tab">
+        <div class="module-stats-icon">
+          <span class="icon-boy"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Boys</div>
+            <p class="module-stats-label">{{ num_boys }}</p>
           </div>
-  
-  
-          <div class="gender_icons fl ml-40">
-              <div class="stats_gender_item no_width boy">
-                  <span class="icon"></span>
-                  <p class="label">Boys</p>
-                  <p class="value">{{ num_boys }}</p>
-                  <div class="clr"></div>
-              </div>
-              <div class="stats_gender_item no_width girl">
-                  <span class="icon"></span>
-                  <p class="label">Girls</p>
-                  <p class="value">{{ num_girls }}</p>
-                  <div class="clr"></div>
-              </div>
+        </div>
+
+        <div class="module-stats-icon module-stats-girl">
+          <span class="icon-girl"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Girls</div>
+            <p class="module-stats-label">{{ num_girls }}</p>
           </div>
-          <div class="clr"></div>
+        </div>
       </div>
-  </div>
+    </div> <!-- /school-demo-tab -->
+  </div> <!--/pie-chart-wrapper -->
+  
   <div class="fr-desktop-tablet">
       <h4 class="heading-tiny-uppercase">Languages</h4>
       <div class="lang-marks fr phn-fn phn-width-full">

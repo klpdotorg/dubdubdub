@@ -253,6 +253,25 @@
 	.form-edit-password {
 	  margin-top: 0;
 	}
+
+	//Page: School
+	.school-data-wrap {
+		@include grid-parent;
+	}
+
+	.school-data-block, .school-photos-block {
+		@include grid-child;
+	}
+
+	.school-data-block {
+		float: left;
+		width: 60%;
+	}
+
+	.school-photos-block {
+		float: right;
+		width: 40%;
+	}
 }
 
 
