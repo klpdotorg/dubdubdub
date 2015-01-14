@@ -1803,38 +1803,6 @@ body {
   .org-tab-button {
     float: right; } }
 @media only screen and (min-width: 750px) {
-  .nav-trigger {
-    display: none; }
-
-  .nav {
-    position: static;
-    right: auto;
-    bottom: auto;
-    width: auto;
-    overflow: visible;
-    border: none;
-    box-shadow: none; }
-    .nav ul {
-      position: absolute;
-      left: 0;
-      box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
-      border: 1px solid #d8d8d8;
-      border-top: none; }
-    .nav > li {
-      border-top: 5px solid; }
-      .nav > li > a {
-        border-left: none; }
-    .nav li {
-      border-left: none;
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 3px;
-      text-align: center;
-      position: relative;
-      min-width: 125px; }
-      .nav li li {
-        text-align: left; }
-
   .module-img-block {
     margin-left: -20px;
     margin-right: -20px; }
@@ -1919,7 +1887,39 @@ body {
 
   .form-edit-password {
     margin-top: 0; } }
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 990px) {
+  .nav-trigger {
+    display: none; }
+
+  .nav {
+    position: static;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    overflow: visible;
+    border: none;
+    box-shadow: none; }
+    .nav ul {
+      position: absolute;
+      left: 0;
+      box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
+      border: 1px solid #d8d8d8;
+      border-top: none; }
+    .nav > li {
+      border-top: 5px solid; }
+      .nav > li > a {
+        border-left: none; }
+    .nav li {
+      border-left: none;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 3px;
+      text-align: center;
+      position: relative;
+      min-width: 115px; }
+      .nav li li {
+        text-align: left; }
+
   .banner-logo-klp {
     width: 170px; }
 
