@@ -96,6 +96,7 @@ body {
 	box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
 	border: 1px solid $grey-cloud;
   @extend %transition-linear;
+  height: 100%;
   
   ul {
   	display: none;
@@ -234,6 +235,14 @@ body {
     .options-list{
       display: block;
     }
+  }
+}
+
+.profile-options {
+  &:before {
+    content: "\f013";
+    font-family: 'FontAwesome';
+    @extend %icon-left;
   }
 }
 

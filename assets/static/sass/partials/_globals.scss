@@ -503,11 +503,11 @@ hr {
 }
 
 //ICONS
-.icon-right {
+.icon-right, %icon-right {
   margin-left: $base-spacing-sm;
 }
 
-.icon-left {
+.icon-left, %icon-left {
   margin-right: $base-spacing-sm;
 }
 

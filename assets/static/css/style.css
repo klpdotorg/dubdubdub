@@ -535,7 +535,7 @@ hr {
 .icon-right {
   margin-left: 5px; }
 
-.icon-left {
+.icon-left, .profile-options:before {
   margin-right: 5px; }
 
 .icon-button-round {
@@ -1145,7 +1145,8 @@ body {
   bottom: 0;
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
-  border: 1px solid #d8d8d8; }
+  border: 1px solid #d8d8d8;
+  height: 100%; }
   .nav ul {
     display: none; }
   .nav li {
@@ -1218,6 +1219,10 @@ body {
     background-color: rgba(0, 0, 0, 0.05); }
   .profile-options-wrapper.show-drop .options-list {
     display: block; }
+
+.profile-options:before {
+  content: "\f013";
+  font-family: 'FontAwesome'; }
 
 .profile-options {
   margin: 10px 0 0 0; }
