@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
 from django.db.models import Q
+from django.utils import timezone
 
 from schools.models import School, SchoolDetails
 from users.models import User
@@ -17,12 +18,12 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
 from rest_framework import authentication, permissions
 
 import random
+import datetime
 from base64 import b64decode
 from collections import Counter
 from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
-
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -77,7 +78,16 @@ class StoryMetaView(KLPAPIView):
             group=question_group, school__admin3__type__name=school_type
         ).count()
 
+        yesterday = timezone.now().date() - datetime.timedelta(days=1)
+
+        responses_yesterday = qset.filter(
+            group=question_group,
+            school__admin3__type__name=school_type,
+            date_of_visit=yesterday
+        ).count()
+
         response_json['total_responses'] = total_responses
+        response_json['responses_yesterday'] = responses_yesterday
 
         # Number of Responses per month
         if admin1_id:
