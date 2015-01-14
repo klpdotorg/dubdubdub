@@ -447,7 +447,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
@@ -492,7 +492,7 @@ img, video {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear; }
 
-.scroll-smooth-links a:hover, .scroll-smooth-links a:focus {
+.scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .rbox_show, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in; }
 
@@ -997,6 +997,77 @@ input.error {
 .form-edit-heading {
   letter-spacing: 1px; }
 
+.rbox_overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: #000;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  z-index: -1; }
+
+.rbox_show {
+  opacity: 1;
+  z-index: 10000; }
+
+.rbox_lightBoxBlock {
+  max-width: 80%;
+  margin: 5% auto;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle; }
+
+.rbox_lightBox {
+  padding: 10px;
+  position: relative; }
+
+.nextLightBox, .prevLightBox, .closeLightBox {
+  color: #fff;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 25px; }
+  .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover {
+    color: #fff; }
+
+.openLightBox {
+  position: relative; }
+
+.closeLightBox {
+  position: absolute;
+  right: -14px;
+  top: -26px;
+  padding: 4px; }
+
+.nextLightBox, .prevLightBox {
+  position: absolute;
+  top: 44%; }
+
+.nextLightBox {
+  right: 15px; }
+
+.prevLightBox {
+  left: 15px; }
+
+.rbox_lightBoxContent iframe {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%; }
+
+.rbox_inline {
+  background: #fff;
+  padding: 20px; }
+
+@media only screen and (min-width: 600px) {
+  .nextLightBox {
+    right: -20px; }
+
+  .prevLightBox {
+    left: -20px; } }
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 // remove all extra classes in _login_modal.html if they're not being used later
@@ -1017,6 +1088,7 @@ the css in the head of map.html
 //maybe a class for border-color
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
 //tab code is repeated in too many places
+//can we have a conditional for object about description for profile edit and organisation edit?
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling

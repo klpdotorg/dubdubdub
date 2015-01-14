@@ -17,16 +17,15 @@
 				<div class="profile-meta-block">
 					<div class="profile-meta-each profile-meta-edit">
 						<img class="profile-meta-img" src="/static/images/thumb_reading_programme.jpg">
-						<div class="fl mt-5 mr-10">
-							<h3 class="heading-tertiary">{{ object.first_name }} {{ object.last_name }}</h3>
+						<h3 class="heading-tertiary">{{ object.first_name }} {{ object.last_name }}</h3>
 							<!-- <p class="location mb-5">
 								Malleswaram, Bangalore, India
 							</p> -->
-							<a href="/profile/{{ object.id }}/edit" class="button-hollow button-sm" id="editProfileBtn" style="display:none;">Edit Profile</a>
-						</div>
-						<div class="clr"></div>
-						<p class="profile-description">
-							{{ about }}
+						<a href="/profile/{{ object.id }}/edit" class="button-hollow button-sm" id="editProfileBtn" style="display:none;">Edit Profile</a>
+						<div class="base-spacing"></div>
+						<p class="font-small">
+						{{ about }}
+						</p>
 							{% if object.has_links %}
 							<div>
 								<div class="heading-tiny-uppercase"><strong>Links:</strong></div>
