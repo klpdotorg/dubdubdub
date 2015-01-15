@@ -823,9 +823,6 @@ body {
   }
 }
 
-.table-volunteer-heading {
-  @extend %heading-tiny-uppercase;
-}
 
 //Page: Profile
 
@@ -852,4 +849,22 @@ body {
 //Page: Profile: Edit
 .form-edit-password {
   margin-top: $base-spacing-lg-x;
+}
+
+
+//Page: Volunteer Opportunities
+.table-volunteer-oppor {
+  @extend %font-small;
+  
+  tr {
+    td {
+      &:nth-of-type(1) {
+        width: 30%;
+      }
+
+      &:nth-of-type(2) {
+        width: 45%;
+      }
+    }
+  }
 }

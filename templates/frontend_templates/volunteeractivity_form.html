@@ -18,13 +18,12 @@
 <script type="text/html" id="tpl-volunteerDetails">
   <tr class="js-volunteerTR" data-id="{{ user_details.id }}">
     <td>
-      <!-- <img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg"> -->
-      <a href="/profile/{{ user_details.id }}" class="user-name color-blue bold">
+      <!-- <img class="profile-img" src="images/thumb_reading_programme.jpg"> -->
+      <a href="/profile/{{ user_details.id }}" class="font-bold">
         {{ user_details.first_name }} {{ user_details.last_name }} 
       </a>
-      <div class="clr"></div>
     </td>
-    <td>
+    <td class="font-small">
       Status:
       {% if status == 1 %}
       Verified / Complete

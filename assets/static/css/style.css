@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -91,7 +91,7 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
@@ -169,7 +169,7 @@ sub {
 .heading-tiny, .no-data, .profile-volunteer-date {
   color: #898989; }
 
-.heading-tiny-uppercase, .table-volunteer-heading {
+.heading-tiny-uppercase, .table-base-heading {
   color: #898989;
   font-size: 12px;
   text-transform: uppercase;
@@ -1513,6 +1513,11 @@ body {
 .form-edit-password {
   margin-top: 25px; }
 
+.table-volunteer-oppor tr td:nth-of-type(1) {
+  width: 30%; }
+.table-volunteer-oppor tr td:nth-of-type(2) {
+  width: 45%; }
+
 .map_canvas_full {
   position: fixed;
   top: 79px;
@@ -1743,11 +1748,15 @@ body {
     padding-bottom: 25px; }
     .banner-full .heading-primary {
       margin: 25px 0;
-      font-size: 140%; } }
+      font-size: 140%; }
+
+  .table-volunteer-oppor .button {
+    padding-left: 10px;
+    padding-right: 10px; } }
 @media only screen and (max-width: 799px) {
   .table-volunteer {
     display: block; }
-    .table-volunteer .table-volunteer-heading {
+    .table-volunteer .table-base-heading {
       display: none; }
     .table-volunteer tr, .table-volunteer td, .table-volunteer th {
       display: block;

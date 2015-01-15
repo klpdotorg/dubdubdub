@@ -474,6 +474,11 @@ img, video {
   }
 }
 
+.table-base-heading {
+  @extend %heading-tiny-uppercase;
+}
+
+
 //HR
 hr {
   display: block;
