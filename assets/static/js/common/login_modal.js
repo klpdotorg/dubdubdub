@@ -7,7 +7,6 @@
         $('#signupModalTrigger').click();
         // $('.modal-overlay').addClass('show');
         // $('.js-login-modal').addClass('show');
-        showSignup();
     };
 
     t.close = function() {
@@ -58,6 +57,7 @@
             $('#forgotPasswordForm').submit();
         });
         $('.js-showForgotPassword').click(showForgotPassword);
+        showLogin();
     }
 
     function showSignup(e) {
@@ -80,7 +80,9 @@
     }
 
     function showLogin(e) {
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
         $('#signupContainer').hide();
         $('#loginContainer').show();
     }
