@@ -4,16 +4,22 @@
     t.open = function(callback) {
         postLoginCallback = callback;
         klp.openModal = t;
-        $('.modal-overlay').addClass('show');
-        $('.js-login-modal').addClass('show');
+        $('#signupModalTrigger').click();
+        // $('.modal-overlay').addClass('show');
+        // $('.js-login-modal').addClass('show');
         showSignup();
     };
 
     t.close = function() {
         //showSignup();
-        // console.log("login modal close called");
-        $('.js-login-modal').removeClass('show');
-        $(".modal-overlay").removeClass("show");
+        $('.closeLightBox').click();
+        console.log("login modal close called");
+        //$('.js-login-modal').removeClass('show');
+        //$(".modal-overlay").removeClass("show");
+
+    };
+
+    t.afterClose = function() {
         klp.utils.clearForm('signupForm');
         klp.utils.clearForm('loginForm');
         klp.utils.clearForm('forgotPasswordForm');
@@ -21,6 +27,17 @@
     };
 
     t.init = function() {
+        $('#signupModalTrigger').rbox({
+            'type': 'inline',
+            inline: '#loginModalTemplate',
+            onopen: initModal,
+            onclose: t.afterClose
+        });
+
+    };
+
+    function initModal() {
+        console.log("modal init");
         $('#signupForm').submit(submitSignup);
         $('#signupFormSubmit').click(function(e) {
             e.preventDefault();
@@ -41,7 +58,7 @@
             $('#forgotPasswordForm').submit();
         });
         $('.js-showForgotPassword').click(showForgotPassword);
-    };
+    }
 
     function showSignup(e) {
         if (e) {
