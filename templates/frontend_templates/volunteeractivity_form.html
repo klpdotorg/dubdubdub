@@ -1,14 +1,14 @@
 {% verbatim %}
 <script type="text/html" id="tpl-activityDetails">
   <div class="fl">
-    <div class="font-20 color-red">{{ activity_type_details.name }}</div>
-    <div>
-      <span class="color-grey-light-2">For </span>
-      <span class="color-green-2 uppercase"> {{ organization_details.name }}</span>
+    <div class="h5 brand-red">{{ activity_type_details.name }}</div>
+    <div class="font-smallest">
+      <span class="grey-silver">For </span>
+      <span class="font-uppercase brand-turquoise"> {{ organization_details.name }}</span>
     </div>
   </div>
   <div class="fr ta-r">
-    <div class="font-20 color-green">{{ school_details.name }}</div>
+    <div class="brand-green font-uppercase font-larger">{{ school_details.name }}</div>
     {% if school_details.address_full %}
       <div>{{ school_details.address_full }}</div>
     {% endif %}

@@ -5,12 +5,12 @@
 {% block endbody_extra %} {% endblock %}
 {% endblock %}
 {% block content %}
-<section class="phn-pb-30">
+<section>
   <div class="container">
-    <h1 class="bordered blue">Volunteer Opportunities {{ action }}</h1>
+    <h1 class="heading-primary brand-blue">Volunteer Opportunities {{ action }}</h1>
     <div class="mb-30" id="activityDetails">
     </div>
-    <ul class="tabs phn-hide">
+    <ul>
       <li data-tab="details" class="js-tab-link current">{{ action }} Details</li>
       {% if action != 'Add' %}
       <li data-tab="volunteers" class="js-tab-link">Volunteers</li>
@@ -24,31 +24,31 @@
     <div class="tab-heading">{{ action }} Details</div>
     <div class="tab-content container current" data-tab="details">
       <div>
-        <form class="width-400" id="activityForm">
-          <div class="mb-30">
-            <label class="block bold mb-5">Activity Type</label>
-            <select class="select2 width-full" id="activityType">
+        <form class="form-base form-volunteer-oppor-edit" id="activityForm">
+          <div class="form-field-wrap">
+            <label>Activity Type</label>
+            <select class="input-text" id="activityType">
               <option value="">Please select an activity type</option>
               {% for typ in activity_types %}
               <option value="{{ typ.id }}">{{ typ.name }}</option>
               {% endfor %}
             </select>
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">School</label>
-            <input id="school" class="select2 width-full" />
+          <div class="form-field-wrap">
+            <label>School</label>
+            <input id="school" class="select2" />
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">Date</label>
-            <input type="date" id="date" data-required="true" class="input">
+          <div class="form-field-wrap">
+            <label>Date</label>
+            <input type="date" id="date" data-required="true" class="input-text">
           </div>
-          <div class="mb-30">
-            <label class="block bold mb-5">Text</label>
-            <textarea id="text" class="input textarea"></textarea>
+          <div class="form-field-wrap">
+            <label>Text</label>
+            <textarea id="text" class="input-text"></textarea>
           </div>
           <input type="hidden" id="organization" />
-          <div class="mb-30">
-            <input type="submit" value="Submit" class="button blue">
+          <div class="form-field-wrap center-text">
+            <input type="submit" value="Submit" class="button">
           </div>
         </form>
       </div>

@@ -79,7 +79,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-volunteer-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
@@ -94,7 +94,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
@@ -316,7 +316,7 @@ sub {
 .white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .yellow-mild {
@@ -427,7 +427,7 @@ img, video {
   max-width: 100%;
   height: auto; }
 
-.full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text {
+.full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text, .form-volunteer-oppor-edit .input-text {
   width: 100%; }
 
 /*.box-shadow-base, %box-shadow-base {
@@ -990,7 +990,7 @@ input.error {
 
 /*-------------------------------------*/
 /*-------------------------------------*/
-.form-edit-profile label {
+.form-edit-profile label, .form-volunteer-oppor-edit label {
   display: block;
   padding-bottom: 5px; }
 
@@ -1002,6 +1002,9 @@ input.error {
 
 .form-edit-heading {
   letter-spacing: 1px; }
+
+.form-volunteer-oppor-edit .select2 {
+  width: 100%; }
 
 .rbox_overlay {
   width: 100%;
@@ -1089,7 +1092,7 @@ input.error {
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 //sanj: form file preview replace with our kh js?;
-//sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??)
+//sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??) and many pages, is it ok
 //globals: tipsy, figure out how to remove that opacity 1;
 //maybe a class for border-color
 //on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out

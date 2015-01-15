@@ -16,6 +16,7 @@ textarea {
 
 input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
   border: 1px solid $grey-cloud;
+  @extend %white-bg;
 
   @include placeholder {
     color: $grey-silver;
@@ -144,8 +145,8 @@ input.error {
 }
 
 /*-------------------------------------*/
-//FORM: ORGANIZATION, PROFILE EDIT PROFILE
-.form-edit-profile {
+//FORM: ORGANIZATION, PROFILE EDIT, VOLUNTEER OPPORTUNITIES EDIT
+.form-edit-profile, .form-volunteer-oppor-edit {
   label {
     display: block;
     @extend %font-bold;
@@ -173,4 +174,11 @@ input.error {
   @extend %center-text;
   @extend %font-small;
   letter-spacing: 1px;
+}
+
+//FORM: VOLUNTEER OPPORTUNITIES EDIT
+.form-volunteer-oppor-edit {
+  .select2 {
+    width: 100%;
+  }    
 }
