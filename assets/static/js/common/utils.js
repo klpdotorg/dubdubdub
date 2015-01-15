@@ -177,6 +177,9 @@
         },
 
         invalidateField: function($field, message) {
+            //remove existing errors
+            $field.parent().find('.error-message').remove();
+
             $field.addClass('error');
             var $error = $('<div />').addClass('js-error-message error-message');
             $error.text(message);
