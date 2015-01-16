@@ -2310,8 +2310,8 @@ body {
 .school-photos {
   margin: -5px; }
 
-.image-preview-gallery {
-  max-width: 60px;
+.image-preview-gallery img {
+  width: 60px;
   margin: 5px; }
 
 .school-demo-tab .module-stats-icon {

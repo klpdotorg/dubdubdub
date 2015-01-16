@@ -726,8 +726,10 @@ body {
 }
 
 .image-preview-gallery {
-  max-width: 60px;
-  margin: $base-spacing-sm;
+  img {
+    width: 60px;
+    margin: $base-spacing-sm;    
+  }
 }
 
 .school-demo-tab {
