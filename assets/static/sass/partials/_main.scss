@@ -712,15 +712,6 @@ body {
   }
 }
 
-.table-data {
-  tr {
-    td:first-of-type {
-      @extend %font-bold;
-      color: $grey-gravel;
-    }
-  }
-}
-
 .school-photos {
   margin: 0 -$base-spacing-sm; //tied to margin of image-preview-gallery
 }
@@ -754,6 +745,14 @@ body {
 
 .pie-chart-inner, .school-demo-tab {
   @extend %vertical-inline-top;
+}
+
+.table-data-finances {
+  tr {
+    td:first-of-type {
+      width: 40%;
+    }
+  }
 }
 
 //Page: Profile and Org Profile

@@ -80,10 +80,10 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .picker__day, .about-map {
@@ -525,6 +525,11 @@ img, video {
   .table-base th {
     text-align: left; }
 
+.table-data td {
+  padding: 2.5px 10px; }
+.table-data tr td:first-of-type {
+  color: #4d4d4d; }
+
 hr {
   display: block;
   height: 1px;
@@ -580,11 +585,12 @@ hr {
   width: 45px;
   height: 45px;
   padding: 10px;
+  line-height: 1;
   display: inline-block;
   position: relative; }
   .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after {
     font-family: "FontAwesome";
-    font-size: 20px; }
+    font-size: 22px; }
 
 .icon-boy:before {
   content: "\f183"; }
@@ -2340,9 +2346,6 @@ body {
   .school-details .heading-tiny-uppercase {
     margin-top: 20px; }
 
-.table-data tr td:first-of-type {
-  color: #4d4d4d; }
-
 .school-photos {
   margin: -5px; }
 
@@ -2357,6 +2360,9 @@ body {
   color: #f87c84; }
 .school-demo-tab .module-stats-boygirl .module-stats-label {
   color: #2c3e50; }
+
+.table-data-finances tr td:first-of-type {
+  width: 40%; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }

@@ -478,6 +478,21 @@ img, video {
   @extend %heading-tiny-uppercase;
 }
 
+//table-data
+.table-data {
+  td {
+    padding: $base-spacing-sm/2 $base-spacing;
+  }
+
+  tr {
+    td:first-of-type {
+      @extend %font-bold;
+      color: $grey-gravel;
+    }
+  }
+}
+
+
 
 //HR
 hr {
@@ -568,13 +583,14 @@ hr {
     height: 45px;
     @extend %white;
     padding: $base-spacing;
+    line-height: 1;
     display: inline-block;
     @extend %border-radius-circle;
     position: relative;
 
     &:before, &:after {
       font-family: "FontAwesome";
-      font-size: 20px;
+      font-size: 22px;
     }
   }
 
