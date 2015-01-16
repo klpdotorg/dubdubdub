@@ -21,6 +21,8 @@ the css in the head of map.html
 //can we have a conditional for object about description for profile edit and organisation edit?
 //horizontal scroll bar on info tab in school on desktop also
 //pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
+//school demographics: what is this total that's showing up on the page? can't see on dev
+//modularize icon boy girl and total later, add same classes to the map popup
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -731,38 +733,10 @@ body {
 }
 
 .school-demo-tab {
+
   .module-stats-icon {
     display: block;
-  }
-
-  .icon-boy, .icon-girl {
-    width: 48px;
-    height: 48px;
-    @extend %white;
-    padding: $base-spacing;
-    display: inline-block;
-    @extend %border-radius-circle;
-    position: relative;
-
-    &:before {
-      font-family: "FontAwesome";
-      @extend %dead-center;
-      font-size: 25px;
-    }
-  }
-
-  .icon-boy {
-    @extend %brand-blue-bg;    
-    &:before {
-      content: "\f183";
-    }
-  }
-
-  .icon-girl {
-    background-color: $pink-salmon;        
-    &:before {
-      content: "\f183";
-    }
+    margin-left: $base-spacing;
   }
 
   .module-stats-girl {
@@ -770,6 +744,16 @@ body {
       color: $pink-salmon;
     }
   }
+
+  .module-stats-boygirl {
+    .module-stats-label {
+      color: $blue-ink;
+    }    
+  }
+}
+
+.pie-chart-inner, .school-demo-tab {
+  @extend %vertical-inline-top;
 }
 
 //Page: Profile and Org Profile
@@ -788,6 +772,13 @@ body {
 .profile-meta-block, .org-meta-block {
   margin: $base-spacing-lg-2x 0 0 0;
 }
+
+.org-meta-each, .profile-meta-each {
+  .module-stats-label {
+    @extend %h4; 
+  }
+}  
+
 
 //page: organization
 

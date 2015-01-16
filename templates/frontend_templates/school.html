@@ -127,7 +127,7 @@
   </table>
 </script>
 <script type="text/html" id="tpl-tab-demographics">
-  <div class="fl-desktop-tablet">
+  <div class="">
     <h4 class="heading-tiny-uppercase">Student Information</h4>
     <div class="no-data js-klp" style="display:none;">
         <p> No data available </p>
@@ -136,13 +136,6 @@
     <div class="pie-chart-wrapper" id="boygirlChartWrapper">
       <div class="pie-chart-inner">
         <div id="num_students_piechart" class="chart"></div>
-        <div class="gender_icons absolute fl">
-          <div class="stats_gender_item no_width total ta-c">
-            <p class="label">Total</p>
-            <p class="value">{{ total_students }}</p>
-            <div class="clr"></div>
-          </div>
-        </div>
       </div>
   
       <div class="school-demo-tab">
@@ -161,28 +154,35 @@
             <p class="module-stats-label">{{ num_girls }}</p>
           </div>
         </div>
-      </div>
-    </div> <!-- /school-demo-tab -->
-  </div> <!--/pie-chart-wrapper -->
+
+        <div class="module-stats-icon module-stats-boygirl">
+          <span class="icon-boy-girl"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Total</div>
+            <p class="module-stats-label">{{ total_students }}</p>
+          </div>
+        </div>
+      </div> <!-- /school-demo-tab -->
+    </div> <!--/pie-chart-wrapper --> 
+  </div> 
   
   <div class="fr-desktop-tablet">
       <h4 class="heading-tiny-uppercase">Languages</h4>
-      <div class="lang-marks fr phn-fn phn-width-full">
+      <div>
           {% for mt, percent in mt_profile_percents %}
           <div class="bar-graph-wrap">
-              <div class="bar-label font-uppercase grey-gravel">{{ mt|capitalize }}</div>
+              <div class="bar-label">{{ mt|capitalize }}</div>
               <div class="bar-graph">
                 <div class="bar-percent">{{ mt_profile[mt] }}</div>
                 <div class="bar-custom qtip" original-title="{{ percent }}%">
                     <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
                     </div>
                 </div>
-              </div>
-          </div>
+              </div> <!-- /bar-graph -->
+          </div> <!-- /bar-graph-wrap -->
           {% endfor %}
       </div>
   </div>
-  <div class="clr"></div>
   
   {% if type_name != 'preschool' %}
   <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
@@ -191,31 +191,34 @@
   </div>
   <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
       <div class="pie-chart-inner fl">
-          <div id="num_students_piechart_dise" class="chart fl"></div>
-          <div class="gender_icons absolute fl">
-              <div class="stats_gender_item no_width total ta-c">
-                  <p class="label">Total</p>
-                  <p class="value">{{ dise.total_students }}</p>
-                  <div class="clr"></div>
-              </div>
-          </div>
+        <div id="num_students_piechart_dise" class="chart fl"></div>
       </div>
   
-      <div class="gender_icons fl ml-40">
-          <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ num_boys_dise }}</p>
-              <div class="clr"></div>
+      <div class="school-demo-tab">
+        <div class="module-stats-icon">
+          <span class="icon-boy"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Boys</div>
+            <p class="module-stats-label">{{ num_boys_dise }}</p>
           </div>
-          <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ num_girls_dise }}</p>
-              <div class="clr"></div>
+        </div>
+
+        <div class="module-stats-icon module-stats-girl">
+          <span class="icon-girl"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Girls</div>
+            <p class="module-stats-label">{{ num_girls_dise }}</p>
           </div>
+        </div>
+
+        <div class="module-stats-icon">
+          <span class="icon-boy-girl"></span>
+          <div class="module-stats-info">
+            <div class="font-uppercase">Total</div>
+            <p class="module-stats-label">{{ dise.total_students }}</p>
+          </div>
+        </div>
       </div>
-      <div class="clr"></div>
   </div>
   {% endif %}
   

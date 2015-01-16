@@ -562,6 +562,58 @@ hr {
   }
 }
 
+//ICONS: BOY, GIRL, BOTH
+  .icon-boy, .icon-girl, .icon-boy-girl {
+    width: 45px;
+    height: 45px;
+    @extend %white;
+    padding: $base-spacing;
+    display: inline-block;
+    @extend %border-radius-circle;
+    position: relative;
+
+    &:before, &:after {
+      font-family: "FontAwesome";
+      font-size: 20px;
+    }
+  }
+
+  .icon-boy {
+    @extend %brand-blue-bg;    
+    &:before {
+      content: "\f183";
+      @extend %dead-center;
+    }
+  }
+
+  .icon-girl {
+    background-color: $pink-salmon;        
+    &:before {
+      content: "\f182";
+      @extend %dead-center;
+    }
+  }
+
+  .icon-boy-girl {
+    background-color: $blue-ink;        
+
+    &:before, &:after {
+      @extend %vertical-center;
+    }
+    
+    &:before {
+      content: "\f183";
+      left: 8px;
+    }
+
+    &:after {
+      content: "\f182";
+      right: 7px;
+    }
+  }
+
+
+
 /*-------------------------------------*/
 //BUTTONS
 %button-base {
@@ -889,7 +941,6 @@ a.button {
 .module-stats-label {
   @extend %brand-blue;
   @extend %font-bold;
-  @extend %h3;
   line-height: 1;
 }
 
@@ -939,6 +990,8 @@ a.button {
   width: $base-spacing-lg-2x;
   padding-right: $base-spacing-sm;
   text-align: right;
+  @extend %font-small;
+  @extend %font-bold;
 }
 
 /*-------------------------------------*/

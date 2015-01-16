@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -95,7 +95,7 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .bar-label, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
@@ -119,10 +119,10 @@ h6, .h6 {
 h5, .h5, .heading-tertiary {
   font-size: 120%; }
 
-h4, .h4, .heading-section {
+h4, .h4, .heading-section, .org-meta-each .module-stats-label, .profile-meta-each .module-stats-label {
   font-size: 130%; }
 
-h3, .h3, .module-stats-label, .about-map {
+h3, .h3, .about-map {
   font-size: 140%; }
 
 h2, .h2, .heading-secondary, .home-current-block h3:first-of-type, .gender-item-count {
@@ -294,10 +294,10 @@ sub {
 .brand-blue, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
+.brand-blue-bg, .icon-boy, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
-.picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .school-demo-tab .icon-boy, .gender-item-boy .k-icon {
+.picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
@@ -318,10 +318,10 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .tipsy, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
-.picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .picker__box, .picker__button--today,
@@ -407,7 +407,7 @@ sub {
 .border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .profile-meta-img, .gender-item .k-icon {
+.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -478,14 +478,14 @@ img, video {
   margin-left: auto;
   margin-right: auto; }
 
-.vertical-center, .gender-item-total .k-icon:before, .gender-item-total .k-icon:after {
+.vertical-center, .icon-boy-girl:before, .icon-boy-girl:after, .gender-item-total .k-icon:before, .gender-item-total .k-icon:after {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .module-img img, .school-demo-tab .icon-boy:before, .school-demo-tab .icon-girl:before, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
+.dead-center, .icon-button-round .fa, .icon-boy:before, .icon-girl:before, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -494,7 +494,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -575,6 +575,33 @@ hr {
     padding: 2px;
     font-size: 12px;
     margin-right: 5px; }
+
+.icon-boy, .icon-girl, .icon-boy-girl {
+  width: 45px;
+  height: 45px;
+  padding: 10px;
+  display: inline-block;
+  position: relative; }
+  .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after {
+    font-family: "FontAwesome";
+    font-size: 20px; }
+
+.icon-boy:before {
+  content: "\f183"; }
+
+.icon-girl {
+  background-color: #f87c84; }
+  .icon-girl:before {
+    content: "\f182"; }
+
+.icon-boy-girl {
+  background-color: #2c3e50; }
+  .icon-boy-girl:before {
+    content: "\f183";
+    left: 8px; }
+  .icon-boy-girl:after {
+    content: "\f182";
+    right: 7px; }
 
 /*-------------------------------------*/
 .button, .button-grey, .button-orange, .button-hollow {
@@ -1969,6 +1996,8 @@ the css in the head of map.html
 //can we have a conditional for object about description for profile edit and organisation edit?
 //horizontal scroll bar on info tab in school on desktop also
 //pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
+//school demographics: what is this total that's showing up on the page? can't see on dev
+//modularize icon boy girl and total later, add same classes to the map popup
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2322,24 +2351,12 @@ body {
   margin: 5px; }
 
 .school-demo-tab .module-stats-icon {
-  display: block; }
-.school-demo-tab .icon-boy, .school-demo-tab .icon-girl {
-  width: 48px;
-  height: 48px;
-  padding: 10px;
-  display: inline-block;
-  position: relative; }
-  .school-demo-tab .icon-boy:before, .school-demo-tab .icon-girl:before {
-    font-family: "FontAwesome";
-    font-size: 25px; }
-.school-demo-tab .icon-boy:before {
-  content: "\f183"; }
-.school-demo-tab .icon-girl {
-  background-color: #f87c84; }
-  .school-demo-tab .icon-girl:before {
-    content: "\f183"; }
+  display: block;
+  margin-left: 10px; }
 .school-demo-tab .module-stats-girl .module-stats-label {
   color: #f87c84; }
+.school-demo-tab .module-stats-boygirl .module-stats-label {
+  color: #2c3e50; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }
