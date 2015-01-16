@@ -404,7 +404,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -466,7 +466,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
@@ -2004,6 +2004,7 @@ the css in the head of map.html
 //pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
 //school demographics: what is this total that's showing up on the page? can't see on dev
 //modularize icon boy girl and total later, add same classes to the map popup
+//let's only show the legend on infrastructure tab if left column info is present?
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2363,6 +2364,27 @@ body {
 
 .table-data-finances tr td:first-of-type {
   width: 40%; }
+
+.table-infra-key-color {
+  padding-right: 25px;
+  position: relative; }
+  .table-infra-key-color:after {
+    content: "";
+    font-family: "FontAwesome";
+    font-size: 10px;
+    position: absolute;
+    right: 0;
+    border: 1px solid #d8d8d8;
+    width: 15px;
+    height: 15px; }
+  .table-infra-key-color.brand-green:after {
+    content: "\f00c"; }
+  .table-infra-key-color.brand-red:after {
+    content: "\f00d"; }
+  .table-infra-key-color.brand-grey:after {
+    content: "\f111";
+    font-size: 8px;
+    line-height: 14px; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }
