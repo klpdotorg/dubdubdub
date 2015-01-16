@@ -39,6 +39,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
       border-color: $brand-blue;
     }
   }
+
+  .input-text, select {
+    min-height: $form-input-height;
+  }
     
   label {
     padding: $base-spacing 0;

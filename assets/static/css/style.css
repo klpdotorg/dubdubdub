@@ -74,13 +74,13 @@ q:before, q:after {
   src: url("../fonts/lato/Lato-Lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Lig-webfont.woff") format("woff"), url("../fonts/lato/Lato-Lig-webfont.ttf") format("truetype");
   font-weight: 300;
   font-style: normal; }
-.font-base-family, .form-base .input-text, .form-base textarea, .form-base select, body {
+.font-base-family, .form-base .input-text, .form-base textarea, .form-base select, .select2-search input, .select2-results, body {
   font-family: "Lato", sans-serif; }
 
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
@@ -406,7 +406,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .profile-meta-img, .gender-item .k-icon {
@@ -944,6 +944,8 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   padding: 8px; }
   .form-base .input-text:focus, .form-base textarea:focus, .form-base select:focus {
     border-color: #3891e3; }
+.form-base .input-text, .form-base select {
+  min-height: 35px; }
 .form-base label {
   padding: 10px 0; }
 
@@ -1035,14 +1037,14 @@ Version: 3.5.1 Timestamp: Tue Jul 22 18:58:56 EDT 2014
 
 .select2-container .select2-choice {
   display: block;
-  height: 26px;
+  height: 35px;
   padding: 0 0 0 8px;
   overflow: hidden;
   position: relative;
   border: 1px solid #d8d8d8;
   white-space: nowrap;
-  line-height: 26px;
-  color: #444;
+  line-height: 35px;
+  color: #5F5F5F;
   text-decoration: none;
   background-clip: padding-box;
   -webkit-touch-callout: none;
@@ -1056,11 +1058,7 @@ html[dir="rtl"] .select2-container .select2-choice {
 
 .select2-container.select2-drop-above .select2-choice {
   border-bottom-color: #d8d8d8;
-  border-radius: 0 0 3px 3px;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.9, #fff));
-  background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 90%);
-  background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 90%);
-  background-image: linear-gradient(to bottom, #eee 0%, #fff 90%); }
+  border-radius: 0 0 3px 3px; }
 
 .select2-container.select2-allowclear .select2-choice .select2-chosen {
   margin-right: 42px; }
@@ -1088,7 +1086,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
   font-size: 1px;
   text-decoration: none;
   border: 0;
-  background: url("select2.png") right top no-repeat;
+  background: url("/static/js/lib/select2-3.5.1/select2.png") right top no-repeat;
   cursor: pointer;
   outline: 0; }
 
@@ -1132,9 +1130,7 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
   margin-top: 1px;
   border-top: 1px solid #aaa;
   border-bottom: 0;
-  border-radius: 4px 4px 0 0;
-  -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15); }
+  border-radius: 3px 3px 0 0; }
 
 .select2-drop-active {
   border: 1px solid #5897fb;
@@ -1165,21 +1161,23 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow {
   right: auto;
   border-left: none;
   border-right: 1px solid #aaa;
-  border-radius: 4px 0 0 4px; }
+  border-radius: 3px 0 0 3px; }
 
 .select2-container .select2-choice .select2-arrow b {
   display: block;
   width: 100%;
   height: 100%;
-  background: url("select2.png") no-repeat 0 1px; }
+  background: url("/static/js/lib/select2-3.5.1/select2.png") no-repeat 0 1px; }
 
 html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
   background-position: 2px 1px; }
 
+.select2-search, .select2-container-multi .select2-choices, .select2-search input {
+  min-height: 35px; }
+
 .select2-search {
   display: inline-block;
   width: 100%;
-  min-height: 26px;
   margin: 0;
   padding-left: 4px;
   padding-right: 4px;
@@ -1190,46 +1188,24 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
 .select2-search input {
   width: 100%;
   height: auto !important;
-  min-height: 26px;
   padding: 4px 20px 4px 5px;
   margin: 0;
   outline: 0;
-  font-family: sans-serif;
-  font-size: 1em;
-  border: 1px solid #aaa;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  background: #fff url("select2.png") no-repeat 100% -22px;
-  background: url("select2.png") no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
-  background: url("select2.png") no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2.png") no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2.png") no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0; }
+  border: 1px solid #d8d8d8; }
 
 html[dir="rtl"] .select2-search input {
-  padding: 4px 5px 4px 20px;
-  background: #fff url("select2.png") no-repeat -37px -22px;
-  background: url("select2.png") no-repeat -37px -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
-  background: url("select2.png") no-repeat -37px -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2.png") no-repeat -37px -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2.png") no-repeat -37px -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0; }
+  padding: 4px 5px 4px 20px; }
 
 .select2-drop.select2-drop-above .select2-search input {
   margin-top: 4px; }
 
 .select2-search input.select2-active {
-  background: #fff url("select2-spinner.gif") no-repeat 100%;
-  background: url("select2-spinner.gif") no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
-  background: url("select2-spinner.gif") no-repeat 100%, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2-spinner.gif") no-repeat 100%, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
-  background: url("select2-spinner.gif") no-repeat 100%, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0; }
+  background: #fff url("/static/js/lib/select2-3.5.1/select2-spinner.gif") no-repeat 100%; }
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
   border: 1px solid #5897fb;
-  outline: none;
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+  outline: none; }
 
 .select2-dropdown-open .select2-choice {
   border-bottom-color: transparent;
@@ -1239,12 +1215,7 @@ html[dir="rtl"] .select2-search input {
 .select2-dropdown-open.select2-drop-above .select2-choice,
 .select2-dropdown-open.select2-drop-above .select2-choices {
   border: 1px solid #5897fb;
-  border-top-color: transparent;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.5, #eee));
-  background-image: -webkit-linear-gradient(center top, #fff 0%, #eee 50%);
-  background-image: -moz-linear-gradient(center top, #fff 0%, #eee 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff', GradientType=0);
-  background-image: linear-gradient(to bottom, #fff 0%, #eee 50%); }
+  border-top-color: transparent; }
 
 .select2-dropdown-open .select2-choice .select2-arrow {
   background: transparent;
@@ -1292,9 +1263,6 @@ html[dir="rtl"] .select2-results {
   list-style: none;
   display: list-item;
   background-image: none; }
-
-.select2-results li.select2-result-with-children > .select2-result-label {
-  font-weight: bold; }
 
 .select2-results .select2-result-label {
   padding: 3px 7px 4px;
@@ -1368,7 +1336,7 @@ disabled look for disabled choices in the results dropdown
   display: none; }
 
 .select2-more-results.select2-active {
-  background: #f4f4f4 url("select2-spinner.gif") no-repeat 100%; }
+  background: #f4f4f4 url("/static/js/lib/select2-3.5.1/select2-spinner.gif") no-repeat 100%; }
 
 .select2-results .select2-ajax-error {
   background: rgba(255, 50, 50, 0.2); }
@@ -1379,9 +1347,9 @@ disabled look for disabled choices in the results dropdown
 
 /* disabled styles */
 .select2-container.select2-container-disabled .select2-choice {
-  background-color: #f4f4f4;
+  background-color: #f6f6f6;
   background-image: none;
-  border: 1px solid #ddd;
+  border: 1px solid #d8d8d8;
   cursor: default; }
 
 .select2-container.select2-container-disabled .select2-choice .select2-arrow {
@@ -1399,7 +1367,7 @@ disabled look for disabled choices in the results dropdown
   margin: 0;
   padding: 0 5px 0 0;
   position: relative;
-  border: 1px solid #aaa;
+  border: 1px solid #d8d8d8;
   cursor: text;
   overflow: hidden;
   background-color: #fff; }
@@ -1409,9 +1377,6 @@ html[dir="rtl"] .select2-container-multi .select2-choices {
 
 .select2-locked {
   padding: 3px 5px 3px 5px !important; }
-
-.select2-container-multi .select2-choices {
-  min-height: 26px; }
 
 .select2-container-multi.select2-container-active .select2-choices {
   border: 1px solid #5897fb;
@@ -1432,15 +1397,13 @@ html[dir="rtl"] .select2-container-multi .select2-choices li {
 .select2-container-multi .select2-choices .select2-search-field input {
   padding: 5px;
   margin: 1px 0;
-  font-family: sans-serif;
-  font-size: 100%;
   color: #666;
   outline: 0;
   border: 0;
   background: transparent !important; }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-  background: #fff url("select2-spinner.gif") no-repeat 100% !important; }
+  background: #fff url("/static/js/lib/select2-3.5.1/select2-spinner.gif") no-repeat 100% !important; }
 
 .select2-default {
   color: #999 !important; }
@@ -1453,7 +1416,6 @@ html[dir="rtl"] .select2-container-multi .select2-choices li {
   color: #333;
   cursor: default;
   border: 1px solid #aaaaaa;
-  border-radius: 3px;
   background-clip: padding-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -1470,9 +1432,6 @@ html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
 .select2-container-multi .select2-choices .select2-search-choice .select2-chosen {
   cursor: default; }
 
-.select2-container-multi .select2-choices .select2-search-choice-focus {
-  background: #d4d4d4; }
-
 .select2-search-choice-close {
   display: block;
   width: 12px;
@@ -1482,7 +1441,7 @@ html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
   top: 4px;
   font-size: 1px;
   outline: none;
-  background: url("select2.png") right top no-repeat; }
+  background: url("/static/js/lib/select2-3.5.1/select2.png") right top no-repeat; }
 
 html[dir="rtl"] .select2-search-choice-close {
   right: auto;
@@ -1553,7 +1512,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   .select2-search-choice-close,
   .select2-container .select2-choice abbr,
   .select2-container .select2-choice .select2-arrow b {
-    background-image: url("select2x2.png") !important;
+    background-image: url("/static/js/lib/select2-3.5.1/select2x2.png") !important;
     background-repeat: no-repeat !important;
     background-size: 60px 40px !important; }
 
