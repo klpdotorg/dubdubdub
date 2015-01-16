@@ -31,7 +31,6 @@
         });
 
 
-
         //menu on mobile navigation    
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
@@ -45,6 +44,10 @@
         $(window).click(function(){
             $('.js-nav').removeClass("nav-open");
         });
+
+
+        //datepicker 
+        $(".js-input-date").pickadate();
 
         //iframe videos: responsive
         

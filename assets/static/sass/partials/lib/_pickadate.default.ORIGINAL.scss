@@ -11,7 +11,7 @@
  * The header containing the month and year stuff.
  */
 .picker__header {
-  @extend %center-text;
+  text-align: center;
   position: relative;
   margin-top: .75em;
 }
@@ -20,22 +20,22 @@
  */
 .picker__month,
 .picker__year {
-  @extend %font-bold;
+  font-weight: 500;
   display: inline-block;
   margin-left: .25em;
   margin-right: .25em;
 }
 .picker__year {
-  color: $grey-steel;
+  color: #999999;
   font-size: .8em;
-  @extend %font-italic;
+  font-style: italic;
 }
 /**
  * The month and year selectors.
  */
 .picker__select--month,
 .picker__select--year {
-  border: 1px solid $grey-cloud;
+  border: 1px solid #b7b7b7;
   height: 2em;
   padding: .5em;
   margin-left: .25em;
@@ -98,22 +98,21 @@
   content: " ";
   border-top: .5em solid transparent;
   border-bottom: .5em solid transparent;
-  border-right: 0.75em solid $black;
+  border-right: 0.75em solid #000000;
   width: 0;
   height: 0;
   display: block;
   margin: 0 auto;
 }
-
 .picker__nav--next:before {
   border-right: 0;
-  border-left: 0.75em solid $black;
+  border-left: 0.75em solid #000000;
 }
 .picker__nav--prev:hover,
 .picker__nav--next:hover {
   cursor: pointer;
-  color: $black;
-  background: $blue-sky;
+  color: #000000;
+  background: #b1dcfb;
 }
 .picker__nav--disabled,
 .picker__nav--disabled:hover,
@@ -121,14 +120,14 @@
 .picker__nav--disabled:before:hover {
   cursor: default;
   background: none;
-  border-right-color: $grey-mist;
-  border-left-color: $grey-mist;
+  border-right-color: #f5f5f5;
+  border-left-color: #f5f5f5;
 }
 /**
  * The calendar table of dates
  */
 .picker__table {
-  @extend %center-text;
+  text-align: center;
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
@@ -151,15 +150,15 @@
  */
 .picker__weekday {
   width: 14.285714286%;
-  //font-size: .75em;
+  font-size: .75em;
   padding-bottom: .25em;
-  color: $grey-steel;
+  color: #999999;
   font-weight: 500;
   /* Increase the spacing a tad */
 }
 @media (min-height: 33.875em) {
   .picker__weekday {
-   // padding-bottom: .5em;
+    padding-bottom: .5em;
   }
 }
 /**
@@ -193,7 +192,7 @@
 .picker__day--outfocus:hover {
   cursor: pointer;
   color: #000000;
-  background: $blue-sky;
+  background: #b1dcfb;
 }
 .picker__day--highlighted {
   border-color: #0089ec;
@@ -284,17 +283,17 @@
   vertical-align: top;
   font-size: 1.1em;
   margin-right: .35em;
-  color: $grey-steel;
+  color: #777777;
 }
 .picker__button--today[disabled],
 .picker__button--today[disabled]:hover {
-  background: $grey-mist;
-  border-color: $grey-mist;
-  color: $grey-silver;
+  background: #f5f5f5;
+  border-color: #f5f5f5;
+  color: #dddddd;
   cursor: default;
 }
 .picker__button--today[disabled]:before {
-  border-top-color: $grey-silver;
+  border-top-color: #aaaaaa;
 }
 
 /* ==========================================================================
