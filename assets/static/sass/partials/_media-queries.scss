@@ -301,6 +301,7 @@
     ul {
 			position: absolute;
 			left: 0;
+			top: $header-height - 6px;
   		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
 			border: 1px solid $grey-cloud;
 			border-top: none;  
@@ -311,6 +312,8 @@
 
     	> a {
     		border-left: none;
+    		position: relative;
+    		top: 4px;
     	}
     }
 

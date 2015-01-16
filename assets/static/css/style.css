@@ -89,7 +89,7 @@ q:before, q:after {
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .nav li, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -293,7 +293,7 @@ sub {
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .icon-button-round, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
@@ -352,7 +352,7 @@ sub {
 .black, .picker__day--infocus:hover,
 .picker__day--outfocus:hover, .picker__button--today:hover,
 .picker__button--clear:hover,
-.picker__button--close:hover {
+.picker__button--close:hover, .nav-trigger {
   color: #000; }
 
 .black-bg {
@@ -615,7 +615,7 @@ hr {
 /* NOTIFICATIONS AND ALERTS */
 .alert {
   position: fixed;
-  top: 42px;
+  top: 45px;
   left: 5%;
   right: 5%;
   opacity: 0.9;
@@ -1491,7 +1491,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 42px; }
+  height: 45px; }
 
 .logo, .top-nav {
   display: inline-block;
@@ -1505,7 +1505,6 @@ body {
 
 .nav-trigger {
   font-size: 22px;
-  color: #000;
   right: 10px;
   top: 5px;
   cursor: pointer; }
@@ -1514,7 +1513,7 @@ body {
   list-style-type: none;
   width: 220px;
   right: -220px;
-  top: 42px;
+  top: 45px;
   bottom: 0;
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
@@ -1523,13 +1522,14 @@ body {
   .nav ul {
     display: none; }
   .nav li {
-    text-transform: uppercase;
     padding: 0 15px;
-    cursor: pointer; }
+    cursor: pointer;
+    letter-spacing: 1px; }
     .nav li li {
       text-transform: capitalize;
       display: block;
-      font-weight: normal; }
+      font-weight: normal;
+      letter-spacing: normal; }
       .nav li li a {
         line-height: 1;
         padding: 0 10px;
@@ -1580,7 +1580,7 @@ body {
 /*-------------------------------------*/
 .main {
   position: relative;
-  top: 42px; }
+  top: 45px; }
 
 /*-------------------------------------*/
 .profile-login-block {
@@ -1882,7 +1882,7 @@ body {
 
 .map_canvas_full {
   position: fixed;
-  top: 79px;
+  top: 82px;
   left: 0;
   right: 0;
   bottom: 0; }
@@ -2339,13 +2339,16 @@ body {
     .nav ul {
       position: absolute;
       left: 0;
+      top: 39px;
       box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
       border: 1px solid #d8d8d8;
       border-top: none; }
     .nav > li {
       border-top: 5px solid; }
       .nav > li > a {
-        border-left: none; }
+        border-left: none;
+        position: relative;
+        top: 4px; }
     .nav li {
       border-left: none;
       display: inline-block;

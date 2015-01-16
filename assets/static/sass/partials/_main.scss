@@ -81,7 +81,7 @@ body {
 
 .nav-trigger {
 	font-size: 22px;
-	color: #000;
+	@extend %black;
   right: $base-spacing;
   top: $base-spacing-sm;
   cursor: pointer;
@@ -107,15 +107,17 @@ body {
 
 	li {
 		@extend %font-bold;
-		text-transform: uppercase;
+		@extend %font-uppercase;
 		padding: 0 $base-spacing-mid;
     cursor: pointer;
+    letter-spacing: 1px;
 
 		li {
 			text-transform: capitalize;
 			display: block;
 			@extend %font-smallest;
 			font-weight: normal;
+      letter-spacing: normal;
 
 			a {
 				line-height: 1;
