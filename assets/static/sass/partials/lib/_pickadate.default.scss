@@ -1,23 +1,14 @@
-/* ==========================================================================
-   $BASE-DATE-PICKER
-   ========================================================================== */
-/**
- * The picker box.
- */
+
 .picker__box {
-  padding: 0 1em;
+  padding: 0 $base-spacing;
 }
-/**
- * The header containing the month and year stuff.
- */
+
 .picker__header {
   @extend %center-text;
   position: relative;
-  margin-top: .75em;
+  margin-top: $base-spacing-lg;
 }
-/**
- * The month and year labels.
- */
+
 .picker__month,
 .picker__year {
   @extend %font-bold;
@@ -26,13 +17,9 @@
   margin-right: .25em;
 }
 .picker__year {
-  color: $grey-steel;
-  font-size: .8em;
-  @extend %font-italic;
+  color: $grey-silver;
 }
-/**
- * The month and year selectors.
- */
+
 .picker__select--month,
 .picker__select--year {
   border: 1px solid $grey-cloud;
@@ -41,12 +28,14 @@
   margin-left: .25em;
   margin-right: .25em;
 }
+
 @media (min-width: 24.5em) {
   .picker__select--month,
   .picker__select--year {
     margin-top: -0.5em;
   }
 }
+
 .picker__select--month {
   width: 35%;
 }
@@ -57,9 +46,7 @@
 .picker__select--year:focus {
   border-color: #0089ec;
 }
-/**
- * The month navigation buttons.
- */
+
 .picker__nav--prev,
 .picker__nav--next {
   position: absolute;
@@ -69,46 +56,50 @@
   box-sizing: content-box;
   top: -0.25em;
 }
+
 @media (min-width: 24.5em) {
   .picker__nav--prev,
   .picker__nav--next {
     top: -0.33em;
   }
 }
+
 .picker__nav--prev {
-  left: -1em;
+  left: $base-spacing;
   padding-right: 1.25em;
 }
+
 @media (min-width: 24.5em) {
   .picker__nav--prev {
     padding-right: 1.5em;
   }
 }
+
 .picker__nav--next {
-  right: -1em;
+  right:  $base-spacing;
   padding-left: 1.25em;
 }
+
 @media (min-width: 24.5em) {
   .picker__nav--next {
     padding-left: 1.5em;
   }
 }
+
 .picker__nav--prev:before,
 .picker__nav--next:before {
-  content: " ";
-  border-top: .5em solid transparent;
-  border-bottom: .5em solid transparent;
-  border-right: 0.75em solid $black;
-  width: 0;
-  height: 0;
-  display: block;
-  margin: 0 auto;
+  font-family: "FontAwesome";
+  color: $grey-steel;
+}
+
+.picker__nav--prev:before {
+  content: "\f053";
 }
 
 .picker__nav--next:before {
-  border-right: 0;
-  border-left: 0.75em solid $black;
+  content: "\f054";
 }
+
 .picker__nav--prev:hover,
 .picker__nav--next:hover {
   cursor: pointer;
@@ -124,9 +115,7 @@
   border-right-color: $grey-mist;
   border-left-color: $grey-mist;
 }
-/**
- * The calendar table of dates
- */
+
 .picker__table {
   @extend %center-text;
   border-collapse: collapse;
@@ -146,113 +135,89 @@
   margin: 0;
   padding: 0;
 }
-/**
- * The weekday labels
- */
+
 .picker__weekday {
   width: 14.285714286%;
-  //font-size: .75em;
   padding-bottom: .25em;
   color: $grey-steel;
-  font-weight: 500;
-  /* Increase the spacing a tad */
 }
-@media (min-height: 33.875em) {
-  .picker__weekday {
-   // padding-bottom: .5em;
-  }
-}
-/**
- * The days on the calendar
- */
+
 .picker__day {
   padding: .3125em 0;
-  font-weight: 200;
-  border: 1px solid transparent;
+  @extend %font-light;
 }
 .picker__day--today {
   position: relative;
 }
-.picker__day--today:before {
-  content: " ";
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 0;
-  height: 0;
-  border-top: 0.5em solid #0059bc;
-  border-left: .5em solid transparent;
-}
+
 .picker__day--disabled:before {
-  border-top-color: #aaaaaa;
+  border-top-color: $grey-steel;
 }
 .picker__day--outfocus {
-  color: #dddddd;
+  color: $grey-cloud;
 }
 .picker__day--infocus:hover,
 .picker__day--outfocus:hover {
   cursor: pointer;
-  color: #000000;
+  @extend %black;
   background: $blue-sky;
 }
-.picker__day--highlighted {
-  border-color: #0089ec;
-}
+
 .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted {
   cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
+  @extend %white;
+  @extend %brand-blue-bg;
 }
+
 .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected {
-  background: #0089ec;
-  color: #ffffff;
+  @extend %brand-blue-bg;
+  @extend %white;
 }
+
 .picker__day--disabled,
 .picker__day--disabled:hover,
 .picker--focused .picker__day--disabled {
   background: #f5f5f5;
   border-color: #f5f5f5;
-  color: #dddddd;
+  color: $grey-cloud;
   cursor: default;
 }
 .picker__day--highlighted.picker__day--disabled,
 .picker__day--highlighted.picker__day--disabled:hover {
   background: #bbbbbb;
 }
-/**
- * The footer containing the "today", "clear", and "close" buttons.
- */
+
 .picker__footer {
-  text-align: center;
+  @extend %center-text;
 }
 .picker__button--today,
 .picker__button--clear,
 .picker__button--close {
-  border: 1px solid #ffffff;
-  background: #ffffff;
+  @extend %white-bg;
   font-size: .8em;
   padding: .66em 0;
-  font-weight: bold;
+  @extend %font-bold;
   width: 33%;
   display: inline-block;
   vertical-align: bottom;
+  border: none;
 }
+
 .picker__button--today:hover,
 .picker__button--clear:hover,
 .picker__button--close:hover {
   cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-  border-bottom-color: #b1dcfb;
+  @extend %black;
+  background: $blue-sky;
 }
+
 .picker__button--today:focus,
 .picker__button--clear:focus,
 .picker__button--close:focus {
-  background: #b1dcfb;
-  border-color: #0089ec;
+  background: $blue-sky;
   outline: none;
 }
 .picker__button--today:before,
@@ -267,25 +232,27 @@
   content: " ";
   margin-right: .45em;
 }
+
 .picker__button--today:before {
   top: -0.05em;
   width: 0;
   border-top: 0.66em solid #0059bc;
   border-left: .66em solid transparent;
 }
+
 .picker__button--clear:before {
-  top: -0.25em;
-  width: .66em;
-  border-top: 3px solid #ee2200;
+  content: "\f068";
+  font-family: "FontAwesome";
+  @extend %brand-red;
 }
+
 .picker__button--close:before {
-  content: "\D7";
-  top: -0.1em;
-  vertical-align: top;
-  font-size: 1.1em;
+  content: "\f00d";
+  font-family: "FontAwesome";
   margin-right: .35em;
   color: $grey-steel;
 }
+
 .picker__button--today[disabled],
 .picker__button--today[disabled]:hover {
   background: $grey-mist;
@@ -293,10 +260,7 @@
   color: $grey-silver;
   cursor: default;
 }
+
 .picker__button--today[disabled]:before {
   border-top-color: $grey-silver;
 }
-
-/* ==========================================================================
-   $DEFAULT-DATE-PICKER
-   ========================================================================== */

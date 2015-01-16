@@ -77,14 +77,16 @@ q:before, q:after {
 .font-base-family, .form-base .input-text, .form-base textarea, .form-base select, body {
   font-family: "Lato", sans-serif; }
 
-.font-italic, em, i, .picker__year {
+.font-italic, em, i {
   font-style: italic; }
 
 .font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .picker__month,
-.picker__year, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.picker__year, .picker__button--today,
+.picker__button--clear,
+.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .banner-full-caption, .module-img-each, .about-map {
+.font-light, .heading-secondary, .banner-full-caption, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
 .font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
@@ -294,7 +296,10 @@ sub {
 .brand-blue, .icon-button-round, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .school-demo-tab .icon-boy, .gender-item-boy .k-icon {
+.brand-blue-bg, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
+.picker--focused .picker__day--highlighted, .picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .school-demo-tab .icon-boy, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
@@ -309,16 +314,21 @@ sub {
 .brand-purple-bg {
   background-color: #7575bc; }
 
-.brand-red, .error-message, .about-map span {
+.brand-red, .error-message, .picker__button--clear:before, .about-map span {
   color: #cb0012; }
 
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .main-footer, .main-footer a, .home-help-block, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.white, .link-external:after, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.picker--focused .picker__day--highlighted, .picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .school-demo-tab .icon-boy, .school-demo-tab .icon-girl, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .picker__box, body, .main-header, .nav, .nav ul {
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .picker__box, .picker__button--today,
+.picker__button--clear,
+.picker__button--close, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
 
 .yellow-mild {
@@ -339,7 +349,10 @@ sub {
 .green-pista-bg {
   background-color: #addd8e; }
 
-.black {
+.black, .picker__day--infocus:hover,
+.picker__day--outfocus:hover, .picker__button--today:hover,
+.picker__button--clear:hover,
+.picker__button--close:hover {
   color: #000; }
 
 .black-bg {
@@ -455,7 +468,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
@@ -1209,7 +1222,7 @@ input.error {
   transform: translateY(0);
   background: transparent;
   zoom: 1;
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, 0.8);
   transition: background 0.15s ease-out; }
 
 .picker--opened .picker__frame {
@@ -1221,25 +1234,13 @@ input.error {
 @media (min-height: 33.875em) {
   .picker--opened .picker__frame {
     bottom: 0; } }
-/* ==========================================================================
-   $BASE-DATE-PICKER
-   ========================================================================== */
-/**
- * The picker box.
- */
 .picker__box {
-  padding: 0 1em; }
+  padding: 0 10px; }
 
-/**
- * The header containing the month and year stuff.
- */
 .picker__header {
   position: relative;
-  margin-top: .75em; }
+  margin-top: 20px; }
 
-/**
- * The month and year labels.
- */
 .picker__month,
 .picker__year {
   display: inline-block;
@@ -1247,12 +1248,8 @@ input.error {
   margin-right: .25em; }
 
 .picker__year {
-  color: #898989;
-  font-size: .8em; }
+  color: #bbb; }
 
-/**
- * The month and year selectors.
- */
 .picker__select--month,
 .picker__select--year {
   border: 1px solid #d8d8d8;
@@ -1275,9 +1272,6 @@ input.error {
 .picker__select--year:focus {
   border-color: #0089ec; }
 
-/**
- * The month navigation buttons.
- */
 .picker__nav--prev,
 .picker__nav--next {
   position: absolute;
@@ -1292,14 +1286,14 @@ input.error {
   .picker__nav--next {
     top: -0.33em; } }
 .picker__nav--prev {
-  left: -1em;
+  left: 10px;
   padding-right: 1.25em; }
 
 @media (min-width: 24.5em) {
   .picker__nav--prev {
     padding-right: 1.5em; } }
 .picker__nav--next {
-  right: -1em;
+  right: 10px;
   padding-left: 1.25em; }
 
 @media (min-width: 24.5em) {
@@ -1307,18 +1301,14 @@ input.error {
     padding-left: 1.5em; } }
 .picker__nav--prev:before,
 .picker__nav--next:before {
-  content: " ";
-  border-top: .5em solid transparent;
-  border-bottom: .5em solid transparent;
-  border-right: 0.75em solid #000;
-  width: 0;
-  height: 0;
-  display: block;
-  margin: 0 auto; }
+  font-family: "FontAwesome";
+  color: #898989; }
+
+.picker__nav--prev:before {
+  content: "\f053"; }
 
 .picker__nav--next:before {
-  border-right: 0;
-  border-left: 0.75em solid #000; }
+  content: "\f054"; }
 
 .picker__nav--prev:hover,
 .picker__nav--next:hover {
@@ -1335,9 +1325,6 @@ input.error {
   border-right-color: #f6f6f6;
   border-left-color: #f6f6f6; }
 
-/**
- * The calendar table of dates
- */
 .picker__table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -1354,107 +1341,64 @@ input.error {
   margin: 0;
   padding: 0; }
 
-/**
- * The weekday labels
- */
 .picker__weekday {
   width: 14.285714286%;
   padding-bottom: .25em;
-  color: #898989;
-  font-weight: 500;
-  /* Increase the spacing a tad */ }
+  color: #898989; }
 
-/**
- * The days on the calendar
- */
 .picker__day {
-  padding: .3125em 0;
-  font-weight: 200;
-  border: 1px solid transparent; }
+  padding: .3125em 0; }
 
 .picker__day--today {
   position: relative; }
 
-.picker__day--today:before {
-  content: " ";
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 0;
-  height: 0;
-  border-top: 0.5em solid #0059bc;
-  border-left: .5em solid transparent; }
-
 .picker__day--disabled:before {
-  border-top-color: #aaaaaa; }
+  border-top-color: #898989; }
 
 .picker__day--outfocus {
-  color: #dddddd; }
+  color: #d8d8d8; }
 
 .picker__day--infocus:hover,
 .picker__day--outfocus:hover {
   cursor: pointer;
-  color: #000000;
   background: #c7e0f7; }
-
-.picker__day--highlighted {
-  border-color: #0089ec; }
 
 .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb; }
-
-.picker__day--selected,
-.picker__day--selected:hover,
-.picker--focused .picker__day--selected {
-  background: #0089ec;
-  color: #ffffff; }
+  cursor: pointer; }
 
 .picker__day--disabled,
 .picker__day--disabled:hover,
 .picker--focused .picker__day--disabled {
   background: #f5f5f5;
   border-color: #f5f5f5;
-  color: #dddddd;
+  color: #d8d8d8;
   cursor: default; }
 
 .picker__day--highlighted.picker__day--disabled,
 .picker__day--highlighted.picker__day--disabled:hover {
   background: #bbbbbb; }
 
-/**
- * The footer containing the "today", "clear", and "close" buttons.
- */
-.picker__footer {
-  text-align: center; }
-
 .picker__button--today,
 .picker__button--clear,
 .picker__button--close {
-  border: 1px solid #ffffff;
-  background: #ffffff;
   font-size: .8em;
   padding: .66em 0;
-  font-weight: bold;
   width: 33%;
   display: inline-block;
-  vertical-align: bottom; }
+  vertical-align: bottom;
+  border: none; }
 
 .picker__button--today:hover,
 .picker__button--clear:hover,
 .picker__button--close:hover {
   cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-  border-bottom-color: #b1dcfb; }
+  background: #c7e0f7; }
 
 .picker__button--today:focus,
 .picker__button--clear:focus,
 .picker__button--close:focus {
-  background: #b1dcfb;
-  border-color: #0089ec;
+  background: #c7e0f7;
   outline: none; }
 
 .picker__button--today:before,
@@ -1476,15 +1420,12 @@ input.error {
   border-left: .66em solid transparent; }
 
 .picker__button--clear:before {
-  top: -0.25em;
-  width: .66em;
-  border-top: 3px solid #ee2200; }
+  content: "\f068";
+  font-family: "FontAwesome"; }
 
 .picker__button--close:before {
-  content: "\D7";
-  top: -0.1em;
-  vertical-align: top;
-  font-size: 1.1em;
+  content: "\f00d";
+  font-family: "FontAwesome";
   margin-right: .35em;
   color: #898989; }
 
@@ -1498,9 +1439,6 @@ input.error {
 .picker__button--today[disabled]:before {
   border-top-color: #bbb; }
 
-/* ==========================================================================
-   $DEFAULT-DATE-PICKER
-   ========================================================================== */
 /*
 // currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
 // remove all extra classes in _login_modal.html if they're not being used later
