@@ -67,8 +67,7 @@ body {
 }
 
 .logo, .top-nav {
-  display: inline-block;
-  vertical-align: top;
+  @extend %vertical-inline-top;
 }
 
 .logo {
@@ -185,8 +184,7 @@ body {
   margin-bottom: $base-spacing;
 
   li {
-    display: inline-block;
-    vertical-align: top;
+    @extend %vertical-inline-top;
     padding: 0 $base-spacing-mid 0 0;
   }
 

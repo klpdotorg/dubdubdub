@@ -319,8 +319,7 @@
 
     li {
     	border-left: none;    	
-      display: inline-block;
-      vertical-align: top;
+      @include vertical-inline-top;
       margin: 0 3px;
   		text-align: center;
   		position: relative;

@@ -264,8 +264,7 @@ sub {
   }
 
   li {
-    display: inline-block;
-    vertical-align: top;
+    @extend %vertical-inline-top;
     padding: 2px $base-spacing-lg 2px $base-spacing-sm;
     position: relative;
     top: 2px;

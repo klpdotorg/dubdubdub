@@ -412,7 +412,7 @@ img, video {
 }
 
 //vertical-alignment
-.vertical-align-top, %vertical-align-top {
+.vertical-inline-top, %vertical-inline-top {
   display: inline-block;
   vertical-align: top;
 }
@@ -739,8 +739,7 @@ a.button {
   margin-bottom: 0;
   
   li, a {
-    display: inline-block;
-    vertical-align: top;
+    @extend %vertical-inline-top;
   }
 
   a {
@@ -879,8 +878,7 @@ a.button {
 /* MODULE: STATS ICON */
 
 .module-stats-icon {
-  display: inline-block;
-  vertical-align: top;
+  @extend %vertical-inline-top;
   margin: 0 $base-spacing 0 0;
 
   &:last-of-type {
@@ -896,11 +894,52 @@ a.button {
 }
 
 .module-stats-info {
-  display: inline-block;
-  vertical-align: top;
+  @extend %vertical-inline-top;
   padding: 0 0 0 $base-spacing-sm;
 }
 
+
+/*-------------------------------------*/
+/* BAR GRAPH: CUSTOM */
+//e.g. school demographics
+
+.bar-graph-wrap {
+  @extend %clearfix;
+  margin-bottom: $base-spacing-mid;
+}
+
+.bar-custom {
+  height: $base-spacing-mid;
+  background-color: $grey-cloud;
+  min-width: 200px;
+}
+
+.bar-label {
+  @extend %font-small;
+  @extend %grey-gravel;
+  @extend %font-bold;
+  width: 120px;
+  word-wrap: break-word;
+}
+
+.bar-value {
+  height: 100%;
+  background-color: $font-base-color;
+}
+
+.bar-label, .bar-graph {
+  @extend %float-left;
+}
+
+.bar-percent, .bar-custom {
+  @extend %vertical-inline-middle;
+}
+
+.bar-percent {
+  width: $base-spacing-lg-2x;
+  padding-right: $base-spacing-sm;
+  text-align: right;
+}
 
 /*-------------------------------------*/
 /* TABS */
@@ -958,8 +997,7 @@ a.button {
     }
 
     .tab-each {
-      display: inline-block;
-      vertical-align: top;
+      @extend %vertical-inline-top;
     }
 
     .tab-heading {

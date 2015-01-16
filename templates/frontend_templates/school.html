@@ -169,14 +169,15 @@
       <h4 class="heading-tiny-uppercase">Languages</h4>
       <div class="lang-marks fr phn-fn phn-width-full">
           {% for mt, percent in mt_profile_percents %}
-          <div class="item">
-              <div class="label fl">{{ mt|capitalize }}</div>
-              <div class="percent color-gray fl">{{ mt_profile[mt] }}</div>
-              <div class="bar fr qtip" original-title="{{ percent }}%">
-                  <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
-                  </div>
+          <div class="bar-graph-wrap">
+              <div class="bar-label font-uppercase grey-gravel">{{ mt|capitalize }}</div>
+              <div class="bar-graph">
+                <div class="bar-percent">{{ mt_profile[mt] }}</div>
+                <div class="bar-custom qtip" original-title="{{ percent }}%">
+                    <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
+                    </div>
+                </div>
               </div>
-              <div class="clr"></div>
           </div>
           {% endfor %}
       </div>

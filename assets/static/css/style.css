@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .table-data tr td:first-of-type, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -95,7 +95,7 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .bar-label, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
@@ -200,8 +200,6 @@ sub {
   .heading-section-block > ul {
     margin-bottom: 0; }
   .heading-section-block li {
-    display: inline-block;
-    vertical-align: top;
     padding: 2px 20px 2px 5px;
     position: relative;
     top: 2px; }
@@ -370,7 +368,7 @@ sub {
 .grey-steel-bg {
   background-color: #898989; }
 
-.grey-gravel {
+.grey-gravel, .bar-label {
   color: #4d4d4d; }
 
 .grey-gravel-bg {
@@ -454,7 +452,7 @@ img, video {
 .align-right {
   text-align: right; }
 
-.float-left, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .profile-volunteer-date {
   float: left; }
 
 .float-right, .profile-volunteer-verified {
@@ -463,7 +461,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .profile-volunteer-date-block:after {
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -496,11 +494,11 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-align-top {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .bar-percent, .bar-custom, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -677,9 +675,6 @@ hr {
 
 .scroll-smooth-links {
   margin-bottom: 0; }
-  .scroll-smooth-links li, .scroll-smooth-links a {
-    display: inline-block;
-    vertical-align: top; }
   .scroll-smooth-links a {
     padding: 10px 15px; }
     .scroll-smooth-links a:hover, .scroll-smooth-links a:focus {
@@ -755,8 +750,6 @@ hr {
 /*-------------------------------------*/
 /* MODULE: STATS ICON */
 .module-stats-icon {
-  display: inline-block;
-  vertical-align: top;
   margin: 0 10px 0 0; }
   .module-stats-icon:last-of-type {
     margin: 0; }
@@ -765,9 +758,30 @@ hr {
   line-height: 1; }
 
 .module-stats-info {
-  display: inline-block;
-  vertical-align: top;
   padding: 0 0 0 5px; }
+
+/*-------------------------------------*/
+/* BAR GRAPH: CUSTOM */
+.bar-graph-wrap {
+  margin-bottom: 15px; }
+
+.bar-custom {
+  height: 15px;
+  background-color: #d8d8d8;
+  min-width: 200px; }
+
+.bar-label {
+  width: 120px;
+  word-wrap: break-word; }
+
+.bar-value {
+  height: 100%;
+  background-color: #5F5F5F; }
+
+.bar-percent {
+  width: 50px;
+  padding-right: 5px;
+  text-align: right; }
 
 /*-------------------------------------*/
 /* TABS */
@@ -824,8 +838,7 @@ hr {
     }
 
     .tab-each {
-      display: inline-block;
-      vertical-align: top;
+      @extend %vertical-inline-top;
     }
 
     .tab-heading {
@@ -1987,10 +2000,6 @@ body {
   right: 0;
   height: 45px; }
 
-.logo, .top-nav {
-  display: inline-block;
-  vertical-align: top; }
-
 .logo {
   padding: 6px 20px 0 0; }
 
@@ -2057,8 +2066,6 @@ body {
 .nav-footer {
   margin-bottom: 10px; }
   .nav-footer li {
-    display: inline-block;
-    vertical-align: top;
     padding: 0 15px 0 0; }
   .nav-footer .k-icon {
     vertical-align: top; }
