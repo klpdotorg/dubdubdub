@@ -299,18 +299,17 @@
       {% endfor %}
   </table>
   
-  <div class="infra_data_indicators fr-desktop">
-      <div class="green item">Indicates infrastructure present</div>
-      <div class="red item">Indicates infrastructure absent</div>
-      <div class="grey item">Indicates information unavailable</div>
+  <div class="infra-key-legend">
+    <div class="table-infra-key-color brand-green">Indicates infrastructure present</div>
+    <div class="table-infra-key-color brand-red">Indicates infrastructure absent</div>
+    <div class="table-infra-key-color brand-grey">Indicates information unavailable</div>
   </div>
   <div class="clr"></div>
-  <table class="info_data_table label_small">
-      <tr>
-          <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-      </tr>
-  </table>
+  <div>
+    <div class="base-spacing-lg"></div> 
+    <span class="school-tab-copyright"><strong>Source</strong></span>
+    <span>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</span>
+  </div>
   
 </script>
 <script type="text/html" id="tpl-tab-library">

@@ -368,7 +368,7 @@ sub {
 .grey-steel-bg {
   background-color: #898989; }
 
-.grey-gravel, .bar-label {
+.grey-gravel, .bar-label, .school-tab-copyright {
   color: #4d4d4d; }
 
 .grey-gravel-bg {
@@ -2005,6 +2005,7 @@ the css in the head of map.html
 //school demographics: what is this total that's showing up on the page? can't see on dev
 //modularize icon boy girl and total later, add same classes to the map popup
 //let's only show the legend on infrastructure tab if left column info is present?
+//make make border: 1px solid $grey-cloud modular;
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2385,6 +2386,13 @@ body {
     content: "\f111";
     font-size: 8px;
     line-height: 14px; }
+
+.infra-key-legend {
+  border: 1px solid #d8d8d8;
+  padding: 10px; }
+
+.school-tab-copyright {
+  padding-right: 50px; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }
