@@ -553,7 +553,7 @@
   
   <div class="fr-desktop-tablet width-48p-desktop-tablet">
       <div class="share-your-story">
-        <a href="" id="trigger_share_story_form" class="button orange">Share your story</a>
+        <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
         <br/>
           <!--
       <div class="stats first">
@@ -638,33 +638,33 @@
   {% endif %}
 </script>
 <script type="text/html" id="tpl-share-story-form">
-  <h2>Share Your Story</h2>
-  <form id="sysForm" class="form" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
-      <div class="field-container">
+  <h2 class="heading-secondary brand-blue">Share Your Story</h2>
+  <form id="sysForm" class="form-base form-share-story" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
+      <div class="form-field-wrap">
         <label for="name_id">Name:</label>
-        <input type="text" name="name" id="name_id" />
+        <input type="text" name="name" id="name_id" class="input-text">
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <label for="email_id">E-mail:</label>
-        <input type='email' name="email" id="email_id" />
+        <input type='email' name="email" id="email_id" class="input-text">
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <label for="telephone">Telephone:</label>
-        <input type='tel' name="telephone" id="telephone" />
+        <input type='tel' name="telephone" id="telephone" class="input-text">
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <label for="date">Date of Visit:</label>
-        <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD"/>
+        <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD" class="input-text js-input-date">
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <label for="comments_id">Comments:</label>
         <textarea name="comments" id="comments_id" />
       </div>
       {% for q in questions %}
-      <div class="field-container">
+      <div class="">
         {% if q.question_type == 'checkbox' %}
-        <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" />
-        <label class='checkbox-text' for='id_question_{{ q.qid }}'>
+        <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" class="input-checkbox">
+        <label class="input-checkbox-label" for='id_question_{{ q.qid }}'>
           {{ q.text }}
         </label>
         {% elseif q.question_type == 'radio' %}
@@ -673,8 +673,8 @@
         </div>
         <div class='radio-options'>
           {% for option in q.options %}
-          <input type='radio' class='radio-option' value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
-          <label for="id_question_{{ q.qid }}_{{ option }}">
+          <input type='radio' class="input-radio" value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
+          <label for="id_question_{{ q.qid }}_{{ option }}" class="input-radio-label">
               {{ option }}
           </label>
           <br />
@@ -683,25 +683,25 @@
         {% endif %}
       </div>
       {% endfor %}
-      <div class="field-container">
+      <div class="form-field-wrap">
         <label>
           Upload images:
         </label>
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <input name="image" type="file" />
         <img class="imagePreview js-image-preview" width="100" />
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <input name="image" type="file" />
         <img class="imagePreview js-image-preview" width="100" />
       </div>
-      <div class="field-container">
+      <div class="form-field-wrap">
         <input name="image" type="file" />
         <img class="imagePreview js-image-preview" width="100" />
       </div>
   
-      <div class="field-container">
+      <div class="form-field-wrap">
         <button type="submit" class="button js-submit-btn">Submit</button>
         <div class="js-submit-loading" style="display:none;">
           Sending...
