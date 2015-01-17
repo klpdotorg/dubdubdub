@@ -317,24 +317,26 @@
       <p> No data available </p>
   </div>
   
-  <div class="options-wrapper">
-    <select name="" id="select_library_browse" class="js-apply-selectboxit">
+  <div class="options-wrapper center-text form-base">
+    <select name="" id="select_library_browse" class="grey-mist-bg">
       <option value="level" selected>Borrow By Level</option>
       <option value="language">Borrow By Language</option>
       <option value="aggregate">Aggregate</option>
     </select>
   
-    <select name="" id="select_library_year" class="js-apply-selectboxit">
+    <select name="" id="select_library_year" class="grey-mist-bg">
       {% for year in years %}
         <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
       {% endfor %}
     </select>
   
-    <select name="" id="select_library_class" class="js-apply-selectboxit">
+    <select name="" id="select_library_class" class="grey-mist-bg">
     {% for klass in klasses %}
       <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
     {% endfor %}
     </select>
+
+    <div class="base-spacing-mid"></div>
 
     <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>  
   </div>

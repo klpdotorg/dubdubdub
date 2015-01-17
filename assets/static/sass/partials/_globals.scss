@@ -149,6 +149,15 @@
   background-color: $black;
 }
 
+//grey-mist
+.grey-mist, %grey-mist {
+  color: $grey-mist;
+}
+
+.grey-mist-bg, %grey-mist-bg {
+  background-color: $grey-mist;
+}
+
 //grey-silver
 .grey-silver, %grey-silver {
   color: $grey-silver;
@@ -1099,6 +1108,11 @@ a.button {
 }
 
 
+/*-------------------------------------*/
+/* HIDE */
+.hide {
+  display: none;
+}
 
 /*.cms-default-styles {
   ul, ol {
