@@ -78,7 +78,7 @@
             var lastName = data.last_name;
             var name = firstName + " " + lastName;
             var $user = $('#authUsername');
-            $user.text(name);
+            $user.text('');
             $user.data('state', 'loggedin');
             var profileURL = "/profile/" + data.id;
             var editProfileURL = profileURL + "/edit";
