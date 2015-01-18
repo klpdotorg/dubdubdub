@@ -52,9 +52,11 @@
 
     t.close =function() {
         $('.js-volunteerHereModal').hide().remove();
+        $('.closeLightBox').click();
     };
 
     function showConfirmModal(data) {
+        console.log("show confirm modal", data);
         var userId = klp.auth.getId();
         for (var i=0; i<data.users.length;i++) {
             if (parseInt(userId) === data.users[i].user_details.id) {
@@ -64,9 +66,10 @@
         }
         var html = tplConfirmModal(data);
         $('.js-volunteerHereModal').remove();
-        $('body').append(html);
+        //$('body').append(html);
         var activityId = data.id;
-        $('.js-volunteerHereModal').addClass('show');
+        klp.utils.openModal(html);
+        //$('.js-volunteerHereModal').addClass('show');
         $('.js-volunteerHereModal').find('.confirmationStep').css({
             'visibility': 'inherit',
             'opacity': '1'

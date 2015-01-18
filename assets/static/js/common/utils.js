@@ -275,6 +275,15 @@
 
         getSchoolType: function(id) {
             return id === 1 ? 'school' : 'preschool';
+        },
+
+        openModal: function(html) {
+            var $trigger = $('<div />');
+            $trigger.rbox({
+                'type': 'html',
+                'html': html
+            });
+            $trigger.click();
         }
     };
 
