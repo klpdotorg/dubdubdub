@@ -1,9 +1,7 @@
 
 //page: school map
-.map-canvas-full {
+.map-canvas-full, .map-volunteer-canvas-full {
   position:fixed; 
-  top: $header-height + $subheader-height; 
-  left: 0; 
   right:0; 
   bottom: 0;
   //z-index: 1;
@@ -11,6 +9,16 @@
   > div{
     height: 100%;
   }
+}
+
+.map-canvas-full {
+  left: 0; 
+  top: $header-height + $subheader-height;   
+}
+
+.map-volunteer-canvas-full {
+  top: $header-height + $map-subheader-height;  
+  left: $sidebar-map-width;
 }
 
 //map: popup
@@ -292,11 +300,6 @@
 
 .filter-tool.active {
     background-image: url('../images/map/filters_active.png');
-}
-
-.search-input {
-    padding: 0 !important;
-    border: 0 !important;
 }
 
 .leaflet-draw {

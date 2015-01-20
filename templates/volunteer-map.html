@@ -31,12 +31,13 @@
 
 {% block subheader %}
 	<div class="map-subheader-wrapper subheader-wrapper js-show-volunteer-filters">
-		<div class="form-base subheader-content">
+		<div class="form-base subheader-content container">
+			<div class="filter-item filter-search">
+				<input type="text" name="search" placeholder="Search for a location" class="search-input input-text">
+				<a class="button-grey js-toggle-vol-mobile-filters hide">Filters</a>
+			</div>
 
-			<input type="text" name="search" placeholder="Search for a location" class="search-input input-text vertical-inline-top">
-			<a class="button no-mar filled-shadow clickable grey mt-10 mr-10 fr hide phn-block js-toggle-vol-mobile-filters vertical-inline-top">Filters</a>
-
-			<div class="volunteer-filters-wrapper vertical-inline-top">
+			<div class="volunteer-filters-wrapper js-volunteer-filters-wrapper">
 				<!-- <div class="label fl">Location</div>
 				<div class="filter-item fl phn-fr">
 					<select name="location" class="dropdown">
@@ -48,10 +49,10 @@
 				</div> -->
 				<!-- <div class="hide phn-block phn-clr"></div> -->
 				
-				<div class="vertical-inline-top">
-					<span class="label">Date</span>	
+				<span class="filter-item">
+					<span class="filter-label">Date</span>	
 					<input type="date" class="input-text js-input-date" id="vol-date-input">				
-				</div>
+				</span>
 				<!--<div class="filter-item fl phn-fr">
 					<span class="js-volunter-date-input-wrapper">
 						<input type="text" name="date" readonly="readonly" value="15-07-2014" class="input date-input" id="vol-date-input">
@@ -66,9 +67,9 @@
 				</div>-->
 				<!-- <div class="hide phn-block phn-clr"></div> -->
 
-				<span class="label fl">Organization</span>
 				<span class="filter-item">
-					<select name="organization" id="filterOrganization">
+					<span class="filter-label">Organization</span>
+						<select name="organization" id="filterOrganization">
 						<option value="" selected>All</option>
 						{% for org in organizations %}
 						<option value="{{ org.id }}">{{ org.name }}</option>
@@ -77,8 +78,8 @@
 				</span>
 				<!-- <div class="hide phn-block phn-clr"></div> -->
 
-				<span class="label">Opportunity</span>
-				<span class="filter-item fl phn-fr">
+				<span class="filter-item">
+					<span class="filter-label">Opportunity</span>
 					<select name="activity" id="filterActivityType">
 						<option value="" selected>All</option>
 						{% for typ in activity_types %}
@@ -86,9 +87,9 @@
 						{% endfor %}
 					</select>
 				</span>
-			</div>
-		</div>
-	</div>
+			</div> <!-- /volunteer-filters-wrapper -->
+		</div> <!-- /subheader-content -->
+	</div> <!-- /map-subheader-wrapper -->
 
 
 {% endblock %}
@@ -97,13 +98,13 @@
 
 
 	<div class="map_page page-volunteer-map">
-		<section class="map-canvas-full">
-			<div id="map_canvas"></div>
-		</section>
-
-		<section id="sidebar_wrapper" class="sidebar-wrapper">
+		<section class="sidebar-volunteer-map">
 			<ul id="volunteerActivityList">
 			</ul>
+		</section>
+
+		<section class="map-canvas-full map-volunteer-canvas-full">
+			<div id="map_canvas"></div>
 		</section>
 
 		<section id="map_overlay" class="map_overlay hide">
@@ -111,7 +112,7 @@
 			<div class="content"></div>
 		</section>
 
-		<div id="modal_overlay" class="modal-overlay show"></div>
+		<!-- <div id="modal_overlay" class="modal-overlay show"></div>
 		<div id="modal_wrapper">
 				<div id="modal_volunteer_flow" class="modal volunteer-flow modal-volunteer jsVolunteerDateModal">
 			    	<a href="" class="button-close fr btn-modal-close"></a>
@@ -121,23 +122,17 @@
 					    	<div class="step-item fadein visible" data-step="1">
 					    		<div class="step-date">
 					    			<h3 class="bordered-heading blue">Select Date<span></span></h3>
-					    			<!--
-					    			<div class="input-wrapper">
-					    				<input type="text" class="input-text width-100p" placeholder="Whitefield, Bangalore">
-					    				<a href="" class="icon-location"></a>
-					    			</div>
-					    			-->
 					    			<div class="cal">
 					    				<input id="datepicker-modal-input" type="hidden" readonly="readonly">
 					    				<div id="datepicker-modal-wrapper"></div>
 					    			</div>
 					    		</div> 
-					    	</div> <!-- Step End -->
+					    	</div>
 						</div>
 					</div>
 				</div>
 		</div>
-
+ -->
 	{% include 'frontend_templates/volunteer_map.html' %}
 	{% include 'frontend_templates/volunteer_here.html' %}
 {% endblock %}

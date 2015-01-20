@@ -47,7 +47,10 @@
 
 
         //datepicker 
-        $(".js-input-date").pickadate();
+        $(".js-input-date").pickadate({
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd'
+        });
 
         //iframe videos: responsive
         

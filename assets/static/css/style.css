@@ -89,7 +89,7 @@ q:before, q:after {
 .font-light, .heading-secondary, .banner-full-caption, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .nav li, .heading-volunteer-box, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -500,7 +500,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .filter-item, .volunteer-filters-wrapper, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -2186,8 +2186,13 @@ body {
   background: #f6f6f6;
   padding: 10px 0;
   text-transform: uppercase;
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05), inset -1px -1px 3px rgba(0, 0, 0, 0.05); }
+
+.subheader-wrapper {
   height: 35px; }
+
+.map-subheader-wrapper {
+  height: 55px; }
 
 .breadcrumb a {
   color: #898989;
@@ -2344,6 +2349,45 @@ body {
     text-decoration: underline; }
 
 /*-------------------------------------*/
+.filter-item {
+  padding: 0 10px 0 0; }
+
+.filter-label {
+  padding-right: 10px; }
+
+.sidebar-volunteer-map {
+  width: 300px;
+  position: fixed;
+  left: 0;
+  top: 100px;
+  bottom: 0;
+  background-color: #f6f6f6;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.sidebar-volunteer-map::-webkit-scrollbar {
+  width: 12px;
+  height: 10px; }
+
+.sidebar-volunteer-map::-webkit-scrollbar-track {
+  background: #d8d8d8;
+  border-radius: 3px; }
+
+.sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  background: #e9e9e9;
+  box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.1); }
+
+.sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  border-radius: 10px; }
+
+.list-sidebar {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 15px; }
+
+.map-volunteer-canvas-full {
+  width: calc(100% - $sidebar-map-width); }
+
 /*-------------------------------------*/
 .school-map-wrapper {
   height: 300px;
@@ -2469,14 +2513,20 @@ body {
 .table-volunteer-oppor tr td:nth-of-type(2) {
   width: 45%; }
 
-.map-canvas-full {
+.map-canvas-full, .map-volunteer-canvas-full {
   position: fixed;
-  top: 80px;
-  left: 0;
   right: 0;
   bottom: 0; }
-  .map-canvas-full > div {
+  .map-canvas-full > div, .map-volunteer-canvas-full > div {
     height: 100%; }
+
+.map-canvas-full {
+  left: 0;
+  top: 80px; }
+
+.map-volunteer-canvas-full {
+  top: 100px;
+  left: 300px; }
 
 .map-pin-details .step-number {
   padding: 5px 7px;
@@ -2657,10 +2707,6 @@ body {
 
 .filter-tool.active {
   background-image: url("../images/map/filters_active.png"); }
-
-.search-input {
-  padding: 0 !important;
-  border: 0 !important; }
 
 .leaflet-draw {
   margin-top: 0 !important; }

@@ -291,8 +291,15 @@ body {
   padding: $base-spacing 0;
   text-transform: uppercase;
   @extend %font-smallest;
-  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);  
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(0,0,0,0.05);  
+}
+
+.subheader-wrapper {
   height: $subheader-height;
+}
+
+.map-subheader-wrapper {
+  height: $map-subheader-height;
 }
 
 .breadcrumb {
@@ -670,8 +677,61 @@ body {
 
 /*-------------------------------------*/
 //PAGE: VOLUNTEER MAP
-.map-subheader-wrapper {
+
+// filters
+.filter-item, .volunteer-filters-wrapper {
+  @extend %vertical-inline-top;
 } 
+
+.filter-item {
+  padding: 0 $base-spacing 0 0;
+}
+
+.filter-label {
+  @extend %font-uppercase;
+  padding-right: $base-spacing;
+}
+
+.sidebar-volunteer-map {
+  width: $sidebar-map-width;
+  position: fixed;
+  left: 0;
+  top: $header-height + $map-subheader-height;  //consolidate later
+  bottom: 0;
+  background-color: $grey-mist;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar-volunteer-map::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+}
+ 
+.sidebar-volunteer-map::-webkit-scrollbar-track {
+    background: $grey-cloud;
+    border-radius: 3px;
+}
+ 
+.sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  background: darken($grey-mist, 5%);
+  box-shadow: inset 1px 2px 3px rgba($black, 0.1);
+}
+
+.sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+
+
+.list-sidebar {
+  border-top: 1px solid $white;
+  border-bottom: 1px solid $grey-cloud;
+  padding: $base-spacing-mid;
+}
+
+.map-volunteer-canvas-full {
+  width: calc(100% - $sidebar-map-width);
+}
 
 
 /*-------------------------------------*/
