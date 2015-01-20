@@ -2186,7 +2186,8 @@ body {
   background: #f6f6f6;
   padding: 10px 0;
   text-transform: uppercase;
-  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05); }
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05);
+  height: 35px; }
 
 .breadcrumb a {
   color: #898989;
@@ -2468,13 +2469,13 @@ body {
 .table-volunteer-oppor tr td:nth-of-type(2) {
   width: 45%; }
 
-.map_canvas_full {
+.map-canvas-full {
   position: fixed;
-  top: 82px;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0; }
-  .map_canvas_full > div {
+  .map-canvas-full > div {
     height: 100%; }
 
 .map-pin-details .step-number {
