@@ -284,7 +284,7 @@ body {
 
 
 /*-------------------------------------*/
-//BREADCRUMB
+//SUBHEADER WRAPPER
 
 .subheader-wrapper {
   background: $grey-mist;
@@ -516,6 +516,7 @@ body {
   }
 }
 
+/*-------------------------------------*/
 //PAGE: DATA
 
 .data-each {
@@ -526,6 +527,7 @@ body {
   }
 }
 
+/*-------------------------------------*/
 //PAGE: PROGRAMMES
 .banner-reading, .banner-sikshana { 
   background-image: url('/static/images/bg_header_reading_programme.jpg');
@@ -570,6 +572,7 @@ body {
   }
 }
 
+/*-------------------------------------*/
 //PAGE: VOLUNTEER
 .banner-volunteer {
   background-image: url('/static/images/bg_blackboard_big.jpg');
@@ -664,7 +667,14 @@ body {
 }
 
 
-//page: school
+/*-------------------------------------*/
+//PAGE: VOLUNTEER MAP
+.map-subheader-wrapper {
+} 
+
+
+/*-------------------------------------*/
+//PAGE: SCHOOL
 .school-map-wrapper {
   height: 300px;
   //margin-bottom: 25px; 
@@ -835,7 +845,8 @@ body {
 }  
 
 
-//page: organization
+/*-------------------------------------*/
+//PAGE: ORGANIZATION
 
 .org-profile-img {
   max-width: 200px;
@@ -872,7 +883,8 @@ body {
 }
 
 
-//Page: Profile
+/*-------------------------------------*/
+//PAGE: PROFILE
 
 .profile-meta-img {
   max-width: 80px;
@@ -894,13 +906,16 @@ body {
   @extend %float-right;
 }
 
-//Page: Profile: Edit
+
+/*-------------------------------------*/
+//PAGE: PROFILE: EDIT
 .form-edit-password {
   margin-top: $base-spacing-lg-x;
 }
 
 
-//Page: Volunteer Opportunities
+/*-------------------------------------*/
+//PAGE: VOLUNTEER OPPORTUNITIES
 .table-volunteer-oppor {
   @extend %font-small;
   

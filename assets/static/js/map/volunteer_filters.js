@@ -54,7 +54,7 @@
     };
 
     t.show = function() {
-        $(".map-subheader-wrapper").addClass("show-volunteer-filters");
+        $(".map-subheader-wrapper").addClass("js-show-volunteer-filters");
     };
 
 })();

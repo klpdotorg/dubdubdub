@@ -2279,9 +2279,11 @@ body {
     .partners-list-block .partners-list:last-of-type {
       padding-bottom: 0; }
 
+/*-------------------------------------*/
 .data-each:first-of-type {
   padding-top: 0; }
 
+/*-------------------------------------*/
 .banner-reading, .banner-sikshana {
   background-image: url("/static/images/bg_header_reading_programme.jpg"); }
 
@@ -2306,6 +2308,7 @@ body {
 .library-grade-levels li > span:last-of-type {
   padding-left: 25px; }
 
+/*-------------------------------------*/
 .banner-volunteer {
   background-image: url("/static/images/bg_blackboard_big.jpg");
   padding: 50px 0; }
@@ -2339,6 +2342,8 @@ body {
   .volunteer-story-link:hover {
     text-decoration: underline; }
 
+/*-------------------------------------*/
+/*-------------------------------------*/
 .school-map-wrapper {
   height: 300px;
   position: relative; }
@@ -2428,6 +2433,7 @@ body {
 .profile-meta-block, .org-meta-block {
   margin: 50px 0 0 0; }
 
+/*-------------------------------------*/
 .org-profile-img {
   max-width: 200px;
   display: block;
@@ -2447,13 +2453,16 @@ body {
 .table-volunteer tr td:nth-of-type(2) {
   width: 30%; }
 
+/*-------------------------------------*/
 .profile-meta-img {
   max-width: 80px;
   border: 2px solid #d8d8d8; }
 
+/*-------------------------------------*/
 .form-edit-password {
   margin-top: 25px; }
 
+/*-------------------------------------*/
 .table-volunteer-oppor tr td:nth-of-type(1) {
   width: 30%; }
 .table-volunteer-oppor tr td:nth-of-type(2) {
