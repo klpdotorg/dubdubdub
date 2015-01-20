@@ -27,6 +27,12 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   }
 }
 
+.label-inline {
+  @extend %vertical-inline-middle;
+  min-width: 100px;
+  padding-right: $base-spacing;
+}
+
 
 //form styles for default forms; wrap your form with class of form-base
 .form-base {
@@ -190,3 +196,15 @@ input.error {
     width: 100%;
   }    
 }
+
+/*-------------------------------------*/
+//FORM: Form Share Story
+.form-share-story {
+  .input-text {
+    min-width: 300px;
+  }
+
+}
+
+
+

@@ -599,16 +599,18 @@
   
 </script>
 <script type="text/html" id="tpl-tab-volunteer">
-  {% if features.length %}
+ {% if features.length %}
       {% for f in features %}
       <div class="required pb-20">
-        <div class="fl phn-fn mt-5 mb-5">
-          <span class="font-20 color-red">{{ f.activity_type_details.name }}</span>
-          <br/>
-          <span class="color-grey-light-2">For </span>
-          <a href="/organisation/{{ f.organization_details.id }}">
-            <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
-          </a>
+        <div class="">
+          <div class="h5 brand-red">{{ f.activity_type_details.name }}</div>
+
+          <span class="font-smallest">
+            <span class="grey-steel">For </span>
+            <a href="/organisation/{{ f.organization_details.id }}" class="brand-turquoise font-uppercase">
+              {{ f.organization_details.name }}
+            </a>
+          </span>
         </div>
         <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">              <!--
           <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
@@ -621,12 +623,12 @@
               {{ f.text|striptags|nl2br|autolink|safe }}
           </p>
           <div class="fl phn-fn">
-            <div class="color-black bold mt-10">
+            <div class="black font-smallest font-bold">
               Date:
             </div>
-            <div class="font-16 color-blue bold">{{ f.date|date('jS F, Y') }}</div>
+            <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
           </div>
-          <a class="button fr phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
+          <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
             Volunteer Now
           </a>
           <div class="clr"></div>
@@ -642,43 +644,43 @@
   <h2 class="heading-secondary brand-blue">Share Your Story</h2>
   <form id="sysForm" class="form-base form-share-story" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
       <div class="form-field-wrap">
-        <label for="name_id">Name:</label>
+        <label for="name_id" class="label-inline">Name:</label>
         <input type="text" name="name" id="name_id" class="input-text">
       </div>
       <div class="form-field-wrap">
-        <label for="email_id">E-mail:</label>
+        <label for="email_id" class="label-inline">E-mail:</label>
         <input type='email' name="email" id="email_id" class="input-text">
       </div>
       <div class="form-field-wrap">
-        <label for="telephone">Telephone:</label>
+        <label for="telephone" class="label-inline">Telephone:</label>
         <input type='tel' name="telephone" id="telephone" class="input-text">
       </div>
       <div class="form-field-wrap">
-        <label for="date">Date of Visit:</label>
+        <label for="date" class="label-inline">Date of Visit:</label>
         <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD" class="input-text js-input-date">
       </div>
       <div class="form-field-wrap">
-        <label for="comments_id">Comments:</label>
-        <textarea name="comments" id="comments_id" />
+        <label for="comments_id" class="label-inline">Comments:</label>
+        <textarea name="comments" id="comments_id" class="input-text"></textarea>
       </div>
       {% for q in questions %}
-      <div class="">
+      <div>
         {% if q.question_type == 'checkbox' %}
         <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" class="input-checkbox">
         <label class="input-checkbox-label" for='id_question_{{ q.qid }}'>
           {{ q.text }}
         </label>
         {% elseif q.question_type == 'radio' %}
-        <div class='radio-text'>
-          <label>{{ q.text }}</label>
-        </div>
+          <div class="base-spacing"></div>
+          <label><strong>{{ q.text }}</strong></label>
         <div class='radio-options'>
           {% for option in q.options %}
+          <div class="base-spacing">
           <input type='radio' class="input-radio" value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
           <label for="id_question_{{ q.qid }}_{{ option }}" class="input-radio-label">
               {{ option }}
           </label>
-          <br />
+          </div>
           {% endfor %}
         </div>
         {% endif %}

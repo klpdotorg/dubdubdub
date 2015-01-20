@@ -504,7 +504,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .bar-percent, .bar-custom, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -997,6 +997,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
     outline: 0; }
 
+.label-inline {
+  min-width: 100px;
+  padding-right: 10px; }
+
 .form-base .input-text, .form-base textarea, .form-base select {
   padding: 8px; }
   .form-base .input-text:focus, .form-base textarea:focus, .form-base select:focus {
@@ -1082,6 +1086,10 @@ input.error {
 
 .form-volunteer-oppor-edit .select2 {
   width: 100%; }
+
+/*-------------------------------------*/
+.form-share-story .input-text {
+  min-width: 300px; }
 
 /*
 Version: 3.5.1 Timestamp: Tue Jul 22 18:58:56 EDT 2014
@@ -2019,6 +2027,7 @@ the css in the head of map.html
 //make make border: 1px solid $grey-cloud modular;
 //pickadate not showing on share story although the class is there
 //Share your story: Information from schools visits: Check the table below shows the right classes
+//test the volunteer tab content in school tabs as well, not formatted fully
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
