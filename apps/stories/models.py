@@ -116,7 +116,7 @@ class Story(TimestampedBaseModel):
         return self.school.get_geometry() or None
 
     def __unicode__(self):
-        return "%s: %s" % (self.email, self.school.name, self.created_at,)
+        return "%s: %s at %s" % (self.email, self.school.name, self.created_at,)
 
 
 @receiver(post_save, sender=Story)
