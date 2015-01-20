@@ -26,6 +26,7 @@ the css in the head of map.html
 //let's only show the legend on infrastructure tab if left column info is present?
 //make make border: 1px solid $grey-cloud modular;
 //pickadate not showing on share story although the class is there
+//Share your story: Information from schools visits: Check the table below shows the right classes
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -802,6 +803,11 @@ body {
 .school-tab-copyright {
   padding-right: $base-spacing-lg-2x;
   @extend %grey-gravel;
+}
+
+//tab: share your story
+.comment-item {
+  border-bottom: 1px solid $grey-cloud;
 }
 
 //Page: Profile and Org Profile

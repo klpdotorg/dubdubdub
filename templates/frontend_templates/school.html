@@ -532,12 +532,12 @@
   
       <p>This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:</p>
   
-      <table class="info_data_table label_longer mar_top_25 mar_btm_25">
+      <table class="table-data table-data-key">
         {% if latest_answers %}
             {% for answer in latest_answers %}
               <tr>
                 <td>{{ answer.question.text }}</td>
-                <td class="{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
+                <td class="table-infra-key-color brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
                   {{ answer.text }}
                 </td>
               </tr>
@@ -561,9 +561,9 @@
         <div class="text">Number of School Visits</div>
       </div>
     -->
-        <div class="stats">
-          <div class="number">{{ count }}</div>
-          <div class="text">Shared Stories</div>
+        <div class="base-spacing font-large">
+          <span class="step-number icon-left">{{ count }}</span>
+          <span class="text">Shared Stories</span>
         </div>
       </div>
   </div>
@@ -572,20 +572,21 @@
   <div class="fr-desktop-tablet width-48p-desktop-tablet">  
     <div class="comments mar_top_25">
         <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
+        <div class="base-spacing-sm"></div>
         {% for story in features %}
-        <div class="comment-item first">
-            <div class="name">
+        <div class="comment-item">
+            <p class="grey-gravel font-bold">
               {% if story.name %}
                   {{ story.name }}
               {% else %}
                 Anonymous
               {% endif %}
-            </div>
+            </p>
             {% if story.comments %}
-              <p class="text">{{ story.comments }}</p>
+              <p>{{ story.comments }}</p>
             {% endif %}
             {% if story.date_of_visit %}
-            <div class="timestamp">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
+            <p class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</p>
             {% endif %}
         </div>
         {% endfor %}
