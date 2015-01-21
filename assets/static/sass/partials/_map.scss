@@ -56,6 +56,16 @@
   }
 }
 
+.leaflet-container a {
+  &.brand-green {
+    @extend %brand-green;
+  }
+
+  &.brand-turquoise {
+    @extend %brand-turquoise;
+  }
+}
+
 .leaflet-container a.button-grey, .leaflet-container a.button  {
   color: white;
   font-size: 85%;

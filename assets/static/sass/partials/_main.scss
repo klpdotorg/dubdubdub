@@ -784,6 +784,14 @@ body {
   width: calc(100% - $sidebar-map-width);
 }
 
+//volunteer map: popup
+.vol-oppor-count {
+  padding: $base-spacing-sm;
+  background: $grey-mist;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: $grey-cloud;
+}
 
 /*-------------------------------------*/
 //PAGE: SCHOOL

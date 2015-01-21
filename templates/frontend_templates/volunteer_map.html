@@ -3,34 +3,33 @@
 	<div class="map-pin-details vol-oppor">
 		<div class="content">
 			<div class="info school">
-				<div class="icon fr">S</div>
-				<h2 class="name mr-30">
-					<a href="/school/{{ features[0].school_details.id }}" class="color-green">
-						{{ features[0].school_details.name }}
-					</a>
-				</h2>
-				<div class="address">
+				<div class="step-number">S</div>
+				<h3 class="map-heading-main"><a href="/school/{{ features[0].school_details.id }}" class="brand-green">
+						{{ features[0].school_details.name }}</a></h3>
+				<div class="grey-steel font-smaller">
 					{% if features[0].school_details.full_address %}
 						{{ features[0].school_details.full_address }}
 					{% endif %}
 				</div>
+				<div class="base-spacing-sm"></div>
 			</div>
 			<div class="vol-oppor-wrapper">
 				{% if features.length == 1 %}
-				<div class="vol-oppor-count ta-c">1 opportunity available</div>
+				<div class="vol-oppor-count">1 opportunity available</div>
 				{% else %}
-				<div class="vol-oppor-count ta-c">{{ features.length }} opportunity available</div>
+				<div class="vol-oppor-count">{{ features.length }} opportunities available</div>
 				{% endif %}
 				{% for f in features %}
 				<div class="vol-oppor-item">
-					<img class="thumb fl" src="{{ f.activity_type_details.image }}"/>
-					<a class="button blue small clickable fr js-trigger-volunteer-confirm js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
+					<img class="icon-left vertical-inline-middle" src="{{ f.activity_type_details.image }}"/>
+					<div class="brand-{{ f.activity_type_details.color }}">
+						<strong>{{ f.activity_type_details.name }}</strong>
+					</div>
+					<a class="button fr js-trigger-volunteer-confirm js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
 					<div class="item-info">
-						<div class="item-title bold color-{{ f.activity_type_details.color }}">
-							{{ f.activity_type_details.name }}
-						</div>
-						<div class="item-org">For 
-							<span class="uppercase color-green-2">
+						<div class="font-smallest">
+							<span class="grey-steel">For</span> 
+							<span class="font-uppercase brand-turquoise">
 								<a href="/organisation/{{ f.organization_details.id }}">
 									{{ f.organization_details.name }}
 								</a>
@@ -38,7 +37,7 @@
 						</div>
 					</div>
 					<div class="clr"></div>
-					<div class="item-desc">
+					<div class="grey-silver font-smaller">
 						{{ f.text }}
 					</div>
 				</div>

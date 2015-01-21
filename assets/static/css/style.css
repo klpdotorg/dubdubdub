@@ -285,7 +285,7 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main {
+.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main, .leaflet-container a.brand-green {
   color: #26b262; }
 
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
@@ -300,7 +300,7 @@ sub {
 .picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
   background-color: #3891e3; }
 
-.brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading {
+.brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading, .leaflet-container a.brand-turquoise {
   color: #24b2b6; }
 
 .brand-turquoise-bg, .home-help-donate .module-img, .volunteer-works-share .module-img {
@@ -2416,6 +2416,13 @@ body {
 
 .map-volunteer-canvas-full {
   width: calc(100% - $sidebar-map-width); }
+
+.vol-oppor-count {
+  padding: 5px;
+  background: #f6f6f6;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #d8d8d8; }
 
 /*-------------------------------------*/
 .school-map-wrapper {
