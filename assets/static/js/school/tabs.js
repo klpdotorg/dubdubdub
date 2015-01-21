@@ -150,7 +150,6 @@
                         $('.no-data').removeClass('hide');
                         return;
                     }
-                    $(".js-apply-selectboxit").selectBoxIt();
                     var $selectLibraryParam = $("#select_library_browse");
                     var $selectLibraryYear = $("#select_library_year");
                     var $selectLibraryClass = $("#select_library_class");

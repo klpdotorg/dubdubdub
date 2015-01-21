@@ -6,7 +6,6 @@
 <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lib/jquery-ui-1.10.4.custom.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/lib/selectBoxIt.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/klp/klp.js' %}"></script>
 <script type="text/javascript">
   (function(){
@@ -19,10 +18,6 @@
       var $btn_next_step_cal = $modal.find('.btn-next-step-cal');
       var $datepicker_input = $modal.find('#datepicker-input');
       var $select_location = $modal.find('#select-location');
-  
-      $select_location.selectBoxIt({
-        autoWidth: true
-      });
   
       $select_location.change(function(e){
         $input_data_location.val( $select_location.val() );
