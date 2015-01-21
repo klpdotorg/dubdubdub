@@ -686,14 +686,14 @@ a.button {
   background-color: $brand-orange;
 }
 
-.button-hollow {
+.button-hollow, %button-hollow {
   @extend %button-base;
   background-color: transparent;
   color: $grey-steel;
   border: 1px solid
 }
 
-.button-sm {
+.button-sm, %button-sm {
   @extend %font-smallest;
   padding: $base-spacing-sm $base-spacing;
 }

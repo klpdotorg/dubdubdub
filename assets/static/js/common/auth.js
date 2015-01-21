@@ -80,6 +80,7 @@
             var $user = $('#authUsername');
             $user.text('');
             $user.data('state', 'loggedin');
+            $user.addClass("profile-logged-in");
             var profileURL = "/profile/" + data.id;
             var editProfileURL = profileURL + "/edit";
             $('#userProfileBtn').attr("href", profileURL);
@@ -90,6 +91,7 @@
             var $user = $('#authUsername');
             $user.text("Login");
             $user.data('state', 'anonymous');
+            $user.removeClass("profile-logged-in");
         });
 
         //if user has a token, show logged in state:
