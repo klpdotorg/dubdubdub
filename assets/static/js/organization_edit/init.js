@@ -35,9 +35,13 @@
 
                     orgXHR.fail(function(err) {
                         var errors = JSON.parse(err.responseText);
+                        console.log("errors", errors);
+                        klp.utils.alertMessage("Please correct errors and re-submit", "error");
                         klp.utils.invalidateErrors(fields, errors);
                         //console.log("error saving", err);
                     });
+                } else {
+                    klp.utils.alertMessage("Please correct errors and re-submit", "error");
                 }
 
             });

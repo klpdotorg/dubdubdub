@@ -41,8 +41,11 @@
                     editXHR.fail(function(err) {
                         //console.log("error saving", err);
                         var errors = JSON.parse(err.responseText);
+                        klp.utils.alertMessage("Please correct errors and re-submit", "error");
                         klp.utils.invalidateErrors(fields, errors);
                     });
+                } else {
+                    klp.utils.invalidateErrors(fields, errors);
                 }
             });
 
