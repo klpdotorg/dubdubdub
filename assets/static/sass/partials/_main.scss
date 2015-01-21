@@ -703,10 +703,14 @@ body {
 .volunteer-filters-wrapper {
   background: $grey-mist;
   border-top: 1px solid $grey-cloud;
+  border-bottom: 1px solid $grey-cloud;
   margin: $base-spacing 0 0 0;
+  position: absolute;
+  left: 0;
+  right: 0;
 
   .filter-item {
-    padding: $base-spacing 0;
+    padding: $base-spacing-mid $base-spacing-lg;
   }
 }
 
@@ -715,6 +719,7 @@ body {
 
   .input-text {
     min-width: 180px;
+    background: $grey-mist;
   }
 }
 
@@ -753,6 +758,12 @@ body {
   border-top: 1px solid $white;
   border-bottom: 1px solid $grey-cloud;
   padding: $base-spacing-mid;
+  cursor: pointer;
+
+  &:hover {
+    background: darken($grey-mist, 5%);
+    @extend %transition-linear;
+  }
 }
 
 .map-volunteer-canvas-full {

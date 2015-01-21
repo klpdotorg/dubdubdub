@@ -366,8 +366,9 @@
   }
 
   .volunteer-filters-wrapper {
-  	border-top: none;
+  	border: none;
   	margin: 0;
+  	position: static;
 
   	.filter-item {
   	  padding: 0 $base-spacing 0 0;
