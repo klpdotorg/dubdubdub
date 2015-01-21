@@ -21,11 +21,10 @@
 
 .rbox_lightBoxBlock {
   max-width: 80%;
-  margin: 5% auto;
+  margin: 3% auto;
   position: relative;
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
+  @extend %center-text;
+  @extend %vertical-inline-middle;
 }
 
 .rbox_lightBox {
