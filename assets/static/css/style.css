@@ -936,11 +936,11 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .subheader-content, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container {
+.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .subheader-content {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
@@ -2555,10 +2555,9 @@ body {
 
 .map-canvas-full {
   left: 0;
-  top: 80px; }
+  top: 100px; }
 
 .map-volunteer-canvas-full {
-  top: 100px;
   left: 300px; }
 
 .map-pin-details .step-number {

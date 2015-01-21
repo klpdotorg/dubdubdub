@@ -693,6 +693,7 @@ body {
 
 .subheader-content {
   background: $grey-mist;
+  @extend %container;
 }
 
 // filters
