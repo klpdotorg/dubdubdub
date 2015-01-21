@@ -88,7 +88,7 @@
 
     function getFilters() {
         var filterParams = {};
-        var date = $('#vol-date-input').val();
+        var date = $('[name=date]').val();
         var org = $('#filterOrganization').val();
         var typ = $('#filterActivityType').val();
         if (date) {
@@ -146,7 +146,7 @@
 
     function markerPopup(marker, feature) {
         var school_id = feature.properties.school_details.id;
-        var date = $('#vol-date-input').val();
+        var date = $('[name=date]').val();
         var organisation = $('#filterOrganization').val();
         var type = $('#filterActivityType').val();
         var params = {
