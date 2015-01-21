@@ -283,6 +283,12 @@
 
 
 @media only screen and (min-width: 990px) {
+	//profile login
+	.profile-login-block {
+  	float: right;
+  	position: static;
+	}
+
 	//navigation
 
   .nav-trigger {

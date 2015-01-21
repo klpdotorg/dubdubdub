@@ -86,10 +86,12 @@ body {
 }
 
 .nav-trigger {
-	font-size: 22px;
-	@extend %black;
+//	font-size: 22px;
+  @extend %button-sm;
+  @extend %button-hollow;
+	color: $grey-gravel;
   right: $base-spacing;
-  top: $base-spacing-sm;
+  top: $base-spacing;
   cursor: pointer;
 }
 
@@ -231,7 +233,9 @@ body {
 //LOGIN
 
 .profile-login-block {
-  float: right;
+  position: fixed;
+  right: 55px;
+  top: 0;
 }
 
 .profile-options-wrapper{
@@ -248,8 +252,11 @@ body {
 }
 
 .profile-options {
+  @extend %button-hollow;
+  @extend %button-sm;
+
   &:before {
-    content: "\f013";
+    content: "\f007"; //previously f013
     font-family: 'FontAwesome';
     @extend %icon-left;
   }
@@ -257,6 +264,12 @@ body {
 
 .profile-options{
   margin: $base-spacing 0 0 0;
+}
+
+.profile-logged-in {
+  &:before {
+    margin: 0;
+  }
 }
 
 .options-list{

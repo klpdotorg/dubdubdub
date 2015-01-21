@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .tipsy, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -101,7 +101,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
-.font-smallest, .verified, .button-sm, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
+.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -350,7 +350,7 @@ sub {
 .black, .picker__day--infocus:hover,
 .picker__day--outfocus:hover, .picker__button--today:hover,
 .picker__button--clear:hover,
-.picker__button--close:hover, .nav-trigger {
+.picker__button--close:hover {
   color: #000; }
 
 .black-bg {
@@ -410,7 +410,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .table-infra-key-color:after {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .tipsy:after, .box-info, .module-img-each, .module-img {
@@ -504,7 +504,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -616,7 +616,7 @@ hr {
     right: 7px; }
 
 /*-------------------------------------*/
-.button, .button-grey, .button-orange, .button-hollow {
+.button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options {
   font-size: 75%;
   text-transform: uppercase;
   line-height: 1;
@@ -640,12 +640,12 @@ hr {
 .button-orange {
   background-color: #ec6608; }
 
-.button-hollow {
+.button-hollow, .nav-trigger, .profile-options {
   background-color: transparent;
   color: #898989;
   border: 1px solid; }
 
-.button-sm {
+.button-sm, .nav-trigger, .profile-options {
   padding: 5px 10px; }
 
 /*-------------------------------------*/
@@ -2066,9 +2066,9 @@ body {
   position: fixed; }
 
 .nav-trigger {
-  font-size: 22px;
+  color: #4d4d4d;
   right: 10px;
-  top: 5px;
+  top: 10px;
   cursor: pointer; }
 
 .nav {
@@ -2144,7 +2144,9 @@ body {
 
 /*-------------------------------------*/
 .profile-login-block {
-  float: right; }
+  position: fixed;
+  right: 55px;
+  top: 0; }
 
 .profile-options-wrapper {
   position: relative; }
@@ -2154,11 +2156,14 @@ body {
     display: block; }
 
 .profile-options:before {
-  content: "\f013";
+  content: "\f007";
   font-family: 'FontAwesome'; }
 
 .profile-options {
   margin: 10px 0 0 0; }
+
+.profile-logged-in:before {
+  margin: 0; }
 
 .options-list {
   display: none;
@@ -2988,6 +2993,10 @@ body {
     float: right;
     width: 40%; } }
 @media only screen and (min-width: 990px) {
+  .profile-login-block {
+    float: right;
+    position: static; }
+
   .nav-trigger {
     display: none; }
 
