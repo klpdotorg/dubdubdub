@@ -354,4 +354,47 @@
   .banner-volunteer-boy {
   	right: $base-spacing;
   }
+
+  //page: volunteer-map 
+
+	.button-filter-volunteer {
+	  display: none;
+	}
+
+  .volunteer-filters-wrapper, .map-volunteer-canvas-full {
+		display: block;
+  }
+
+  .volunteer-filters-wrapper {
+  	border-top: none;
+  	margin: 0;
+
+  	.filter-item {
+  	  padding: 0 $base-spacing 0 0;
+  	}
+  }
+
+  .filter-item, .volunteer-filters-wrapper, .volunteer-filters-wrapper.filter-toggle {
+	  @include vertical-inline-top;
+	} 
+
+	.filter-item {
+	  padding: 0 $base-spacing 0 0;
+	}
+
+	.filter-label, .filter-item .input-text {
+		min-width: 0;
+	}
+
+	.sidebar-volunteer-map {
+	  width: $sidebar-map-width;
+	  position: fixed;
+	  left: 0;
+	  top: $header-height + $map-subheader-height;  //consolidate later
+	  bottom: 0;
+	  overflow-x: hidden;
+	  overflow-y: auto;
+	}
+
+
 }

@@ -14,7 +14,7 @@ textarea {
   height: 120px;
 }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select {
   border: 1px solid $grey-cloud;
   @extend %white-bg;
 

@@ -324,7 +324,7 @@ sub {
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .picker__box, .picker__button--today,
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .picker__box, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
@@ -500,7 +500,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .filter-item, .volunteer-filters-wrapper, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -984,17 +984,17 @@ textarea {
   vertical-align: top;
   height: 120px; }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="url"], textarea, select {
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select {
   border: 1px solid #d8d8d8; }
-  input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
+  input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
     color: #bbb; }
-  input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
     color: #bbb; }
-  input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
     color: #bbb; }
-  input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
+  input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
     color: #bbb; }
-  input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
+  input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
     outline: 0; }
 
 .label-inline {
@@ -2349,21 +2349,41 @@ body {
     text-decoration: underline; }
 
 /*-------------------------------------*/
+.subheader-content {
+  background: #f6f6f6; }
+
+.button-filter-volunteer {
+  height: 35px;
+  font-size: 100%;
+  vertical-align: top;
+  margin-left: 5px;
+  padding-top: 12px; }
+
+.volunteer-filters-wrapper, .map-volunteer-canvas-full {
+  display: none; }
+
+.volunteer-filters-wrapper.filter-toggle {
+  display: block; }
+
+.volunteer-filters-wrapper {
+  background: #f6f6f6;
+  border-top: 1px solid #d8d8d8;
+  margin: 10px 0 0 0; }
+  .volunteer-filters-wrapper .filter-item {
+    padding: 10px 0; }
+
 .filter-item {
-  padding: 0 10px 0 0; }
+  display: block; }
+  .filter-item .input-text {
+    min-width: 180px; }
 
 .filter-label {
-  padding-right: 10px; }
+  padding-right: 10px;
+  min-width: 120px;
+  display: inline-block; }
 
 .sidebar-volunteer-map {
-  width: 300px;
-  position: fixed;
-  left: 0;
-  top: 100px;
-  bottom: 0;
-  background-color: #f6f6f6;
-  overflow-x: hidden;
-  overflow-y: auto; }
+  background-color: #f6f6f6; }
 
 .sidebar-volunteer-map::-webkit-scrollbar {
   width: 12px;
@@ -3010,6 +3030,37 @@ body {
     left: 10px; }
 
   .banner-volunteer-boy {
-    right: 10px; } }
+    right: 10px; }
+
+  .button-filter-volunteer {
+    display: none; }
+
+  .volunteer-filters-wrapper, .map-volunteer-canvas-full {
+    display: block; }
+
+  .volunteer-filters-wrapper {
+    border-top: none;
+    margin: 0; }
+    .volunteer-filters-wrapper .filter-item {
+      padding: 0 10px 0 0; }
+
+  .filter-item, .volunteer-filters-wrapper, .volunteer-filters-wrapper.filter-toggle {
+    display: inline-block;
+    vertical-align: top; }
+
+  .filter-item {
+    padding: 0 10px 0 0; }
+
+  .filter-label, .filter-item .input-text {
+    min-width: 0; }
+
+  .sidebar-volunteer-map {
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 100px;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto; } }
 
 /*# sourceMappingURL=style.css.map */

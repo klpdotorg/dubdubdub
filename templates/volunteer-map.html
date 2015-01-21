@@ -34,7 +34,7 @@
 		<div class="form-base subheader-content container">
 			<div class="filter-item filter-search">
 				<input type="text" name="search" placeholder="Search for a location" class="search-input input-text">
-				<a class="button-grey js-toggle-vol-mobile-filters hide">Filters</a>
+				<a class="button-grey button-filter-volunteer js-toggle-filters">Filters</a>
 			</div>
 
 			<div class="volunteer-filters-wrapper js-volunteer-filters-wrapper">
@@ -69,7 +69,7 @@
 
 				<span class="filter-item">
 					<span class="filter-label">Organization</span>
-						<select name="organization" id="filterOrganization">
+						<select name="organization" id="filterOrganization" class="input-text">
 						<option value="" selected>All</option>
 						{% for org in organizations %}
 						<option value="{{ org.id }}">{{ org.name }}</option>
@@ -80,7 +80,7 @@
 
 				<span class="filter-item">
 					<span class="filter-label">Opportunity</span>
-					<select name="activity" id="filterActivityType">
+					<select name="activity" id="filterActivityType" class="input-text">
 						<option value="" selected>All</option>
 						{% for typ in activity_types %}
 						<option value="{{ typ.id }}">{{ typ.name }}</option>

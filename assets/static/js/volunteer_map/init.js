@@ -7,9 +7,9 @@
         klp.volunteer_here.init();
         klp.volunteer_date_modal.init();
         init_volunteer_date_filter();
-        $(document).on("click", ".js-toggle-vol-mobile-filters", function(){
+        $(document).on("click", ".js-toggle-filters", function(){
             //console.log("here 2");
-            $(".js-volunteer-filters-wrapper").toggleClass("show-mobile");
+            $(".js-volunteer-filters-wrapper").toggleClass("filter-toggle");
         });
         klp.volunteer_date_modal.open();
         klp.router.start();
