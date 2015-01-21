@@ -10,6 +10,11 @@ Use required commands
 Changelog
 ---
 
+Release 0.13: f0688aca75e84cd5c0626e2073057e87fc8135e0
+  - Additional profile fields for organisations / users
+  - Some CSS clean-ups and template corrections
+  - IVRS data import scripts + API
+
 Release 0.12:
   - Replaced all views with materialized views [psql mview.sql]
   - Installed dateutil and created fields in story model to replace string date and entered_timestamp. Fake the 0003 migration of stories app.
