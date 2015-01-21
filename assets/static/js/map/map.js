@@ -65,6 +65,10 @@
 
     t.init = function() {
 
+        $(document).on('click', '.js-map-popup-close', function(e) {
+            e.preventDefault();
+            map.closePopup();
+        });
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
