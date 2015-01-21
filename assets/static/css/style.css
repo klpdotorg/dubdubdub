@@ -86,7 +86,7 @@ q:before, q:after {
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
-.font-light, .heading-secondary, .banner-full-caption, .module-img-each, .picker__day, .about-map {
+.font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
 .font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
@@ -2828,7 +2828,8 @@ body {
 
   .banner-full-caption {
     padding-bottom: 100px;
-    font-size: 110%; }
+    font-size: 110%;
+    font-weight: 300; }
 
   .module-img {
     width: 180px;

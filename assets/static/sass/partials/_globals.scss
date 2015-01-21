@@ -792,7 +792,6 @@ a.button {
 
 .banner-full-caption {
   @extend %white;
-  @extend %font-light;
   @extend %container-sm;
   padding-bottom: $base-spacing-lg-x;
 }
