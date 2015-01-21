@@ -2396,12 +2396,11 @@ body {
   height: 10px; }
 
 .sidebar-volunteer-map::-webkit-scrollbar-track {
-  background: #d8d8d8;
+  background: #ececec;
   border-radius: 3px; }
 
 .sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  background: #e9e9e9;
-  box-shadow: inset 1px 2px 3px rgba(0, 0, 0, 0.1); }
+  background: #d8d8d8; }
 
 .sidebar-volunteer-map::-webkit-scrollbar-thumb {
   border-radius: 10px; }

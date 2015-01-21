@@ -749,18 +749,17 @@ body {
 }
 
 .sidebar-volunteer-map::-webkit-scrollbar {
-    width: 12px;
-    height: 10px;
+  width: 12px;
+  height: 10px;
 }
  
 .sidebar-volunteer-map::-webkit-scrollbar-track {
-    background: $grey-cloud;
-    border-radius: 3px;
+  background: lighten($grey-cloud, 8%);
+  border-radius: 3px;
 }
  
 .sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  background: darken($grey-mist, 5%);
-  box-shadow: inset 1px 2px 3px rgba($black, 0.1);
+  background: $grey-cloud;
 }
 
 .sidebar-volunteer-map::-webkit-scrollbar-thumb {
