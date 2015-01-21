@@ -288,13 +288,6 @@
 
         });
 
-        /*var sidebar_height = $("#sidebar_wrapper").height();
-        $('#sidebar_wrapper ul').slimScroll({
-            height: sidebar_height + 'px',
-            size: '5px',
-            color: '#8d8d8d',
-            railVisible: false,
-        });*/
         var map_overlay_top = $(".main-header").height() + 20 + 100;
         $("#map_overlay").css({
             'top': map_overlay_top + 'px'

@@ -9,14 +9,6 @@
     t.init = function() {
         load_map();
 
-       /* var sidebar_height = $("#sidebar_wrapper").height();
-        $('#sidebar_wrapper ul').slimScroll({
-            height: sidebar_height+'px',
-            size: '5px',
-            color: '#8d8d8d',
-            railVisible: false
-        });*/
-
         // Google Geocode Search
         var searchInput = $('.search-input');
         searchInput.on('keypress', function(e) {
