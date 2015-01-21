@@ -210,7 +210,7 @@
         clearValidationErrors: function(formID) {
             var $form = $('#' + formID);
             $form.find('.error').removeClass('error');
-            $form.find('.js-error-message .error-message').remove();
+            $form.find('.js-error-message, .error-message').remove();
         },
 
         clearForm: function(formID) {
