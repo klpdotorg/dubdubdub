@@ -284,12 +284,6 @@
 
         });
 
-        // $('input').iCheck({
-        //  checkboxClass: 'icheckbox_minimal',
-        //  radioClass: 'iradio_minimal',
-        //  increaseArea: '20%' // optional
-        // });
-
         /*var sidebar_height = $("#sidebar_wrapper").height();
         $('#sidebar_wrapper ul').slimScroll({
             height: sidebar_height + 'px',
