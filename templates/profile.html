@@ -16,7 +16,9 @@
 			<div class="container">
 				<div class="profile-meta-block">
 					<div class="profile-meta-each profile-meta-edit">
-						<img class="profile-meta-img" src="/static/images/thumb_reading_programme.jpg">
+						{% if object.image %}
+							<img class="profile-meta-img" src="{{ object.image.url }}">
+						{% endif %}
 						<h3 class="heading-tertiary">{{ object.first_name }} {{ object.last_name }}</h3>
 							<!-- <p class="location mb-5">
 								Malleswaram, Bangalore, India

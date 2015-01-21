@@ -121,6 +121,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True
     )
 
+    def __init__(self, *args, **kwargs):
+        super(OrganizationSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['url', 'blog_url', 'fb_url', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
     class Meta:
         #exclude = ('users',)
         model = Organization
@@ -139,6 +145,13 @@ class UserSerializer(serializers.ModelSerializer):
         read_only=True,
         many=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super(UserSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['fb_url', 'website', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
 
     def restore_object(self, attrs, instance=None):
         user = super(UserSerializer, self).restore_object(attrs, instance)
