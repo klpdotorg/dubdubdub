@@ -17,7 +17,7 @@ class StoryImageInline(admin.StackedInline):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'created_at', 'school', 'is_verified',)
+    list_display = ('id', 'email', 'created_at', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
     search_fields = ('school__name',)
