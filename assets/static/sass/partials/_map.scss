@@ -13,11 +13,10 @@
 
 .map-canvas-full {
   left: 0; 
-  top: $header-height + $subheader-height;   
+  top: $header-height + $map-subheader-height;  
 }
 
 .map-volunteer-canvas-full {
-  top: $header-height + $map-subheader-height;  
   left: $sidebar-map-width;
 }
 

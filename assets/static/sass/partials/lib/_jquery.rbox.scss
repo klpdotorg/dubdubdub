@@ -21,11 +21,10 @@
 
 .rbox_lightBoxBlock {
   max-width: 80%;
-  margin: 5% auto;
+  margin: 3% auto;
   position: relative;
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
+  @extend %center-text;
+  @extend %vertical-inline-middle;
 }
 
 .rbox_lightBox {
@@ -70,14 +69,17 @@
 }
 
 .rbox_lightBoxContent iframe {
-  display: block;
-  margin: 0 auto;
+  @extend %center-element-inline;
   max-width: 100%;
 }
 
-.rbox_inline {
-  background: #fff;
-  padding: 20px;
+.rbox_inline, .rbox_html {
+  @extend %white-bg;
+  padding: $base-spacing-lg;
+  border: 1px solid $grey-cloud;
+  box-shadow: 0 2px 0 0 $grey-cloud;
+  @extend %border-radius-sm;
+
 }
 
 @media only screen and (min-width: 600px) {
