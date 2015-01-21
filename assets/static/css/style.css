@@ -324,7 +324,7 @@ sub {
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .picker__box, .picker__button--today,
+.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, body, .main-header, .nav, .nav ul {
   background-color: #fff; }
@@ -410,7 +410,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .table-infra-key-color:after {
+.border-radius-sm, .heading-section, .text-bordered, .tipsy, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -479,7 +479,7 @@ img, video {
   margin-left: auto;
   margin-right: auto; }
 
-.center-element-inline {
+.center-element-inline, .rbox_lightBoxContent iframe {
   display: block;
   margin-left: auto;
   margin-right: auto; }
@@ -1640,13 +1640,12 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   left: 15px; }
 
 .rbox_lightBoxContent iframe {
-  display: block;
-  margin: 0 auto;
   max-width: 100%; }
 
-.rbox_inline {
-  background: #fff;
-  padding: 20px; }
+.rbox_inline, .rbox_html {
+  padding: 20px;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 2px 0 0 #d8d8d8; }
 
 @media only screen and (min-width: 600px) {
   .nextLightBox {
