@@ -293,10 +293,6 @@
                 //console.log('comparison result html', html);
                 $comparison_result_wrapper.html(html);
                 $comparison_result_wrapper.html(html).addClass('show');
-                // setTimeout(function(){
-                //     var $selects = $comparison_result_wrapper.find('select');
-                //     $selects.easyDropDown();
-                // },0);
                 var urlString = [school1.id, school2.id].join(",")
                 //console.log("url string", urlString);
                 klp.router.setHash(null, {'compare': urlString}, {trigger: false});
