@@ -9,13 +9,6 @@
         //     e.preventDefault();
         //     t.show();
         // });
-        $('.js-volunteer-filters-dropdown').easyDropDown({
-            onChange: function(selected) {
-                var filterName = $(this).attr('name');
-                var selectedValue = selected.value;
-                t.setFilter(filterName, selectedValue);
-            }
-        });
 
         $date_input = $("#vol-date-input");
         $calender_wrapper = $('.js-volunteer-cal');
