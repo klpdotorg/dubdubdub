@@ -120,7 +120,8 @@
             var html = tplVolunteerEmptyList(context);
             $('#volunteerActivityList').html(html);
         }
-        activitiesLayer.addData(activities);
+        var geojson = klp.utils.filterGeoJSON(data);
+        activitiesLayer.addData(geojson);
         map.fitBounds(activitiesLayer.getBounds());
     }
 
