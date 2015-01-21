@@ -43,8 +43,9 @@
                 optsArray.push(dateObj);
             });
             $date_input.pickadate({
-                format: 'yyyy-mm-dd',
+                //format: 'yyyy-mm-dd',
                 formatSubmit: 'yyyy-mm-dd',
+                hiddenName: true,
                 onSet: function(thingSet) {
                     klp.volunteer_map.applyFilters();
                 },
