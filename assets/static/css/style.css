@@ -101,7 +101,7 @@ q:before, q:after {
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
-.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number {
+.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -393,7 +393,7 @@ sub {
 .base-spacing-sm {
   padding: 5px 0; }
 
-.base-spacing-mid {
+.base-spacing-mid, .vol-oppor-item {
   padding: 15px 0; }
 
 .base-spacing-lg {
@@ -500,7 +500,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -565,7 +565,7 @@ hr {
 .icon-right {
   margin-left: 5px; }
 
-.icon-left, .profile-options:before {
+.icon-left, .profile-options:before, .vol-oppor-icon {
   margin-right: 5px; }
 
 .icon-button-round {
@@ -2417,12 +2417,20 @@ body {
 .map-volunteer-canvas-full {
   width: calc(100% - $sidebar-map-width); }
 
+.vol-oppor-item {
+  border-bottom: 1px solid #d8d8d8; }
+  .vol-oppor-item:last-of-type {
+    border-bottom: none; }
+
 .vol-oppor-count {
   padding: 5px;
   background: #f6f6f6;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: #d8d8d8; }
+
+.vol-oppor-icon {
+  width: 32px; }
 
 /*-------------------------------------*/
 .school-map-wrapper {
@@ -2588,6 +2596,9 @@ body {
   color: white;
   font-size: 85%;
   padding: 10px; }
+.leaflet-container a.button-sm {
+  color: white;
+  padding: 5px 10px; }
 
 .map-label-title {
   color: #898989;

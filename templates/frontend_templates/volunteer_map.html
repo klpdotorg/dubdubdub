@@ -21,23 +21,27 @@
 				{% endif %}
 				{% for f in features %}
 				<div class="vol-oppor-item">
-					<img class="icon-left vertical-inline-middle" src="{{ f.activity_type_details.image }}"/>
-					<div class="brand-{{ f.activity_type_details.color }}">
-						<strong>{{ f.activity_type_details.name }}</strong>
-					</div>
-					<a class="button fr js-trigger-volunteer-confirm js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
-					<div class="item-info">
-						<div class="font-smallest">
-							<span class="grey-steel">For</span> 
-							<span class="font-uppercase brand-turquoise">
-								<a href="/organisation/{{ f.organization_details.id }}">
+					<div class="clearfix">
+						<img class="vol-oppor-icon" src="{{ f.activity_type_details.image }}">
+						<span class="vertical-inline-top">
+							<span class="h5 brand-{{ f.activity_type_details.color }}">
+								<strong>{{ f.activity_type_details.name }}</strong>
+							</span>
+							<br>
+							<span class="font-small">
+								<span class="grey-steel">For</span> 
+								<a href="/organisation/{{ f.organization_details.id }}" class="font-uppercase brand-turquoise">
 									{{ f.organization_details.name }}
 								</a>
 							</span>
-						</div>
+						</span>
+						
+						<a class="button float-right js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
 					</div>
-					<div class="clr"></div>
-					<div class="grey-silver font-smaller">
+
+					<div class="base-spacing-sm"></div>
+
+					<div class="grey-steel">
 						{{ f.text }}
 					</div>
 				</div>

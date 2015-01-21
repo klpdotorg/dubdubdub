@@ -785,6 +785,15 @@ body {
 }
 
 //volunteer map: popup
+.vol-oppor-item {
+  border-bottom: 1px solid $grey-cloud;
+  @extend %base-spacing-mid;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
 .vol-oppor-count {
   padding: $base-spacing-sm;
   background: $grey-mist;
@@ -792,6 +801,13 @@ body {
   border-bottom: 1px solid;
   border-color: $grey-cloud;
 }
+
+.vol-oppor-icon {
+  width: 32px;
+  @extend %vertical-inline-top;
+  @extend %icon-left;
+}
+
 
 /*-------------------------------------*/
 //PAGE: SCHOOL

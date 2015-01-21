@@ -64,13 +64,20 @@
   &.brand-turquoise {
     @extend %brand-turquoise;
   }
+
+  &.button-grey, &.button {
+    color: white;
+    font-size: 85%;
+    padding: $base-spacing;    
+  }
+
+  &.button-sm {
+    color: white;
+    @extend %font-smallest;
+    padding: $base-spacing-sm $base-spacing;    
+  }
 }
 
-.leaflet-container a.button-grey, .leaflet-container a.button  {
-  color: white;
-  font-size: 85%;
-  padding: $base-spacing;
-}
 
 .map-label-title {
   color: $grey-steel;
