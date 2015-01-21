@@ -1,5 +1,11 @@
 (function() {
     klp.utils = {
+
+        /*
+            Helper function to precompile templates with class tpl-raw
+            Those templates will need a data-tpl attribute with a name
+            See usage in map/init.js
+         */
         compile_templates: function() {
             var $raw_tpls = $(".tpl-raw");
             var _tpl = {};
@@ -15,8 +21,14 @@
             return _tpl;
         },
         
+        /*
+            Returns a Leaflet map icon based on type of entity
+            For new types / icons:
+              Add icons in /static/images/map/icon_<type>.png
+              And add the type -> name mapping below                
+        */
         mapIcon: function (type) {
-
+           
             // FIXME: May be fix this in the icon name.
             // This is Sanjay's fault.
             type = type.replace(' ', '').toLowerCase();
@@ -40,6 +52,11 @@
             });
         },
 
+        /*
+            Function to display the alert boxes at top of screen
+            Remains for 3 seconds, then goes away
+            TODO: Make timeout a param
+         */
         alertMessage: function(message, status) {
             // Status - error, success, warning.
             var $alert = $('<div />')
@@ -58,6 +75,14 @@
                 });
             }, 3000);
             //alert(message);
+        },
+
+        filterGeoJSON: function(geojson) {
+            return geojson.features.filter(emptyGeom);
+
+            function emptyGeom(feature) {
+                return !_.isEmpty(feature.geometry);
+            }
         },
 
         getRelativeHeight: function (width, height, min_height, container_width){

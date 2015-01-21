@@ -5,50 +5,29 @@
         klp.router.init();
         klp.volunteer_map.init();
         klp.volunteer_here.init();
-        klp.volunteer_date_modal.init();
+        //klp.volunteer_date_modal.init();
         init_volunteer_date_filter();
         $(document).on("click", ".js-toggle-filters", function(){
             //console.log("here 2");
             $(".js-volunteer-filters-wrapper").toggleClass("filter-toggle");
         });
-        klp.volunteer_date_modal.open();
+        //klp.volunteer_date_modal.open();
         klp.router.start();
+        klp.volunteer_map.applyFilters();
     };
 
     function init_volunteer_date_filter(){
-        // console.log("initting date filter");
+        //console.log("initting date filter");
         var $date_input = $("#vol-date-input");
-        var $calender_wrapper = $('.js-volunteer-cal');
-        var $datepicker_wrapper = $calender_wrapper.find("#vol-datepicker-wrapper");
 
-        $date_input.Zebra_DatePicker({
-            always_visible: $datepicker_wrapper,
-            format: 'Y-m-d',
-            first_day_of_week: 0,
-            show_clear_date: false,
-            show_select_today: false,
-            //disabled_dates: ['1,3,4,5,12,13,14,22,24'],
-            onSelect: onDateSelect,
-            onClear: onDateClear
+        $date_input.pickadate({
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd',
+            onSet: function(thingSet) {
+                klp.volunteer_map.applyFilters();
+            }
         });
-     // var datepicker = $datepicker_input.data('Zebra_DatePicker');
 
-        function onDateSelect(date){
-            $date_input.val(date);
-            $calender_wrapper.removeClass("show");
-            klp.volunteer_map.applyFilters();
-         // $btn_next_step_cal.show();
-        }
-
-        function onDateClear(){
-            $date_input.val("");
-            $btn_next_step_cal.hide();
-        }
-
-
-        $(document).on("click", ".js-volunter-date-input-wrapper", function(){
-            $(".js-volunteer-cal").toggleClass("show");
-        });
 
     }
 

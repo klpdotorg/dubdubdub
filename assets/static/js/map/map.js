@@ -39,13 +39,7 @@
 
     var isMobile = $(window).width() < 768;
 
-    var filterGeoJSON = function(geojson) {
-        return geojson.features.filter(emptyGeom);
-
-        function emptyGeom(feature) {
-            return !_.isEmpty(feature.geometry);
-        }
-    };
+    var filterGeoJSON = klp.utils.filterGeoJSON;
 
     var getLayerFromName = function(name) {
         var invertedMapLayers = _.invert(mapLayers);
