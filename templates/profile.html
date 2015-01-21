@@ -14,7 +14,9 @@
 	<section class="page-profile profile-head pt-30 pb-30">
 		<div class="container">
 			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
-				<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg" style="visibility:hidden;">
+				{% if object.image %}
+				<img class="profile-img fl mr-10" src="{{ object.image.url }}">
+				{% endif %}
 				<div class="fl mt-5 mr-10">
 					<h3 class="desc-title">{{ object.first_name }} {{ object.last_name }}</h3>
 					<p class="location mb-5">
