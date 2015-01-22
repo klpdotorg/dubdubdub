@@ -124,27 +124,4 @@
 	</section>
 </div>
 
-<script>
-	$(document).ready(function() {
-		var headerHeight = $(".main-header").height() - 5;
-
-		var stickyNavTop = $('.js-scroll-smooth-block').offset().top;
-		var stickyNav = function(){
-			var scrollTop = $(window).scrollTop();
-			     
-			if ((scrollTop + headerHeight) > stickyNavTop) { 
-			    $('.js-scroll-smooth-block').addClass('scroll-smooth-sticky');
-			} else {
-			    $('.js-scroll-smooth-block').removeClass('scroll-smooth-sticky'); 
-			}
-		};
-
-		stickyNav();
-
-		$(window).scroll(function() {
-			stickyNav();
-		});
-});
-
-</script>
 {% endblock %}

@@ -72,11 +72,31 @@
             }
         });
 
-       /* $("#page_sticky_nav").stickOnScroll({
-            topOffset: 0,
-            setParentOnStick:   true,
-            setWidthOnStick:    true
-        });*/
+        //Sticky Scroll 
+
+        //only run if this selector exists on the page
+        if($(".js-scroll-smooth-block").length > 0) {
+            var stickySelector = $('.js-scroll-smooth-block');
+
+            var headerHeight = $(".main-header").height() + 10;
+
+            var stickyNavTop = stickySelector.offset().top;
+            var stickyNav = function(){
+                var scrollTop = $(window).scrollTop();
+                     
+                if ((scrollTop + headerHeight) > stickyNavTop) { 
+                    stickySelector.addClass('scroll-smooth-sticky');
+                } else {
+                    stickySelector.removeClass('scroll-smooth-sticky'); 
+                }
+            };
+
+            stickyNav();
+
+            $(window).scroll(function() {
+                stickyNav();
+            });
+        }
 
 
         
