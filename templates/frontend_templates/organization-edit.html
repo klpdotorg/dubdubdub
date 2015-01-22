@@ -8,7 +8,7 @@
     <td>
       <div class="brand-green table-volunteer-school"><strong>{{ school_details.name }}</strong></div>
       {% if school_details.address_full %}
-      <div class="color-grey-light-2 mt-5"><strong>{{ school_details.address_full }}</strong></div>
+      <div class="grey-steel font-small"><strong>{{ school_details.address_full }}</strong></div>
       {% endif %}
     </td>
     <td>
@@ -42,17 +42,17 @@
 <script type="text/html" id="tpl-donationRequirement">
   <tr>
     <td>
-      <div class="bold">{{ title }}</div>
-      <div class="color-grey-light-2 mt-5">
+      <div class="font-bold">{{ title }}</div>
+      <div>
           {{ description }}
       </div>
     </td>
     <td>
-      <div class="color-green bold">
-        {{ school_details.name }}
+      <div class="brand-green table-donation-school">
+        <strong>{{ school_details.name }}</strong>
       </div>
-      <div class="color-grey-light-2 mt-5">
-        {{ school_details.address_full }}
+      <div class="grey-steel font-small">
+        <strong>{{ school_details.address_full }}</strong>
       </div>
     </td>
       <td class="font-14">
@@ -64,7 +64,13 @@
         {% endfor %}
       </td>
       <td class="ta-r">
-        <div class="action-dropdown fr">
+        <div class="form-base">
+          <div class="form-field-wrap">
+            <select>
+              <option>Some text here</option>
+            </select>
+          </div>
+        <!--<div class="action-dropdown fr">
             <a href="#" class="dropdown-trigger small"></a>
             <ul class="action-dropdown-list ta-l">
               <li>
@@ -80,11 +86,12 @@
                   <a href="#">Option 4</a>
               </li>
             </ul>
-          </div>
-          <a href="/organisation/{{ organization_details.id }}/donation_requirement/{{ id }}" class="button-hollow fr mt-0 mr-10">
-              Edit
+          </div>-->
+
+          <a href="/organisation/{{ organization_details.id }}/donation_requirement/{{ id }}" class="button-hollow button-sm">
+            Edit
           </a>
-          <div class="clr"></div>
+        </div> <!-- /form-base -->
       </td>
   </tr>
 </script>

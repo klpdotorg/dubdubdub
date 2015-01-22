@@ -19,7 +19,7 @@
 </section>
 
 <section>
-  <div class="js-tab-wrap tab-wrap">
+  <div class="js-tab-wrap tab-wrap tab-org-edit">
     <div class="tab-wrap-widescreen">
       <div data-tab="details" class="js-tabs-link tab-heading tab-heading-active">Edit Details</div>
       <!-- <li data-tab="members" class="js-tab-link">Members</li> -->
@@ -39,7 +39,7 @@
               <div class="form-field-wrap">
                 <label>
                 URL
-                <span class="grey-silver">(optional)</span>
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgURL" type="url">
               </div>
@@ -54,7 +54,7 @@
               <div class="form-field-wrap">
                 <label>
                 Logo
-                <span class="grey-silver">(optional)</span>
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input type="file" id="logo" data-type="image">
 
@@ -63,42 +63,42 @@
               <div class="form-field-wrap">
                 <label>
                 About the Organization
-                <span class="grey-silver">(optional)</span>
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <textarea class="input-text" id="orgAbout"></textarea>
               </div>
               <div class="form-field-wrap">
                 <label>
-                <span class="fa fa-twitter icon-left"></span>Twitter Handle
-                <span class="grey-silver">(optional)</span>
+                  <span class="fa fa-twitter icon-left"></span>Twitter Handle
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgTwitter" type="text">
               </div>
               <div class="form-field-wrap">
                 <label>
-                <span class="fa fa-facebook icon-left"></span>Facebook URL
-                <span class="grey-silver">(optional)</span>
+                  <span class="fa fa-facebook icon-left"></span>Facebook URL
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgFacebook" type="url">
               </div>
               <div class="form-field-wrap">
                 <label>
-                <span class="fa fa-book icon-left"></span>Blog URL
-                <span class="grey-silver">(optional)</span>
+                  <span class="fa fa-book icon-left"></span>Blog URL
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgBlog" type="url">
               </div>
               <div class="form-field-wrap">
                 <label>
-                <span class="fa fa-flickr icon-left"></span>Flickr / Photo Site URL
-                <span class="grey-silver">(optional)</span>
+                  <span class="fa fa-flickr icon-left"></span>Flickr / Photo Site URL
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgPhotos" type="url">
               </div>
               <div class="form-field-wrap">
                 <label>
-                <span class="fa fa-youtube icon-left"></span>Youtube URL
-                <span class="grey-silver">(optional)</span>
+                  <span class="fa fa-youtube icon-left"></span>Youtube URL
+                  <span class="grey-silver">(optional)</span>
                 </label>
                 <input class="input-text" id="orgYoutube" type="url">
               </div>
@@ -109,7 +109,7 @@
                 </div>
                 -->
               <div class="form-field-wrap center-text">
-                <a class="button blue" href="#" id="submitBtn">Submit</a>
+                <a class="button" href="#" id="submitBtn">Submit</a>
               </div>
             </form>
           </div> <!-- /form-edit-profile-tab -->
@@ -216,7 +216,7 @@
           <a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
           Add Volunteer Activity
           </a>
-          <table class="table-base table-volunteer" id="jsVolunteerTable">
+          <table class="table-base table-base-volunteer" id="jsVolunteerTable">
             <tr class="table-base-heading">
               <th>Title</th>
               <th>School</th>
@@ -234,12 +234,12 @@
           <a class="button" href="/organisation/{{ object.id }}/donation_requirement">
           Add Donation Request
           </a>
-          <table class="tbl-common ta-l" id="donationTable">
-            <tr>
-              <th class="cell-width-40">Title</th>
-              <th class="cell-width-25">School</th>
-              <th class="cell-width-20">Items</th>
-              <th class="cell-width-15 ta-r">Status</th>
+          <table class="table-base table-base-donation" id="donationTable">
+            <tr class="table-base-heading">
+              <th>Title</th>
+              <th>School</th>
+              <th>Items</th>
+              <th>Status</th>
             </tr>
           </table>
         </div> <!-- /container -->

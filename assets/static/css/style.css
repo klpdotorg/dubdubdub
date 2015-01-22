@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
@@ -524,7 +524,8 @@ img, video {
 .table-base {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 25px; }
   .table-base th, .table-base td {
     border-bottom: 1px solid #d8d8d8;
     padding: 10px; }
@@ -2030,7 +2031,7 @@ the css in the head of map.html
 //pickadate not showing on share story although the class is there
 //Share your story: Information from schools visits: Check the table below shows the right classes
 //test the volunteer tab content in school tabs as well, not formatted fully
-// organization edit: what is that script js at the bottom of the page?
+// organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js and also /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2542,10 +2543,13 @@ body {
 .org-tab-button {
   margin: 10px 0 0 0; }
 
-.table-volunteer tr td:nth-of-type(1) {
+.table-base-volunteer tr td:nth-of-type(1) {
   width: 40%; }
-.table-volunteer tr td:nth-of-type(2) {
+.table-base-volunteer tr td:nth-of-type(2) {
   width: 30%; }
+
+.tab-org-edit .tab-content {
+  padding-top: 35px; }
 
 /*-------------------------------------*/
 .profile-meta-img {
@@ -2802,23 +2806,23 @@ body {
     padding-left: 10px;
     padding-right: 10px; } }
 @media only screen and (max-width: 799px) {
-  .table-volunteer {
+  .table-base-volunteer, .table-base-donation {
     display: block; }
-    .table-volunteer .table-base-heading {
+    .table-base-volunteer .table-base-heading, .table-base-donation .table-base-heading {
       display: none; }
-    .table-volunteer tr, .table-volunteer td, .table-volunteer th {
+    .table-base-volunteer tr, .table-base-volunteer td, .table-base-volunteer th, .table-base-donation tr, .table-base-donation td, .table-base-donation th {
       display: block;
       width: 100%;
       padding: 5px 0; }
-    .table-volunteer tr td:nth-of-type(1), .table-volunteer tr td:nth-of-type(2) {
+    .table-base-volunteer tr td:nth-of-type(1), .table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(1), .table-base-donation tr td:nth-of-type(2) {
       width: 100%; }
-    .table-volunteer td {
+    .table-base-volunteer td, .table-base-donation td {
       border-bottom: none; }
-    .table-volunteer tr {
+    .table-base-volunteer tr, .table-base-donation tr {
       border-bottom: 1px solid #d8d8d8;
       padding: 15px 10px; }
 
-  .table-volunteer-school:before {
+  .table-volunteer-school:before, .table-donation-school:before {
     content: "School";
     margin-right: 5px;
     color: #bbb; } }
