@@ -3,30 +3,29 @@
   <div class="modal volunteer-flow modal-volunteer second-step js-volunteerHereModal">
       <a class="button-close btn-modal-close"></a>
       <div class="content">
-          <h2 class="modal-heading">Volunteer</h2>
+          <div class="heading-tiny-uppercase">Volunteer</div>
+          <div class="base-spacing-sm"></div>
           <div class="steps-wrapper">
-            <div class="step-item confirmationStep" data-step-name="confirmation">
-                <div class="step-confirmation ta-c">
+            <div class="modal-block confirmationStep" data-step-name="confirmation">
+                <div class="step-confirmation">
                     <h3 class="heading-border">Confirm Details<span></span></h3>
-                    <div class="address en-school">
-                      <div class="step-number brand-green">S</div>
-                      <div class="h2 font-light brand-green">{{ school_details.name }}</div>
-                      <div class="grey-steel font-small">
-                          {% if school_details.address_full %}
-                              {{ school_details.address_full }}
-                          {% endif %}
-                      </div>
+                    <div class="step-number brand-green">S</div>
+                    <div class="h2 font-light brand-green">{{ school_details.name }}</div>
+                    <div class="grey-steel font-small">
+                        {% if school_details.address_full %}
+                            {{ school_details.address_full }}
+                        {% endif %}
                     </div>
                     <div class="base-spacing-lg-2x">
                       <div class="icon-button-round"><span class="fa fa-calendar"></span></div>
                       <div class="h1 font-light">{{ date|date('jS F, Y') }}</div>
                     </div>
-                    <div class="confirm-org">
-                      <div class="confirm-org-1 float-left">
+                    <div class="clearfix">
+                      <div class="float-left">
                           <div class="heading-tiny-uppercase">Organisation</div>
                           <div class="brand-turquoise"><strong>{{ organization_details.name }}</strong></div>
                       </div>
-                      <div class="confirm-org-2 float-right">
+                      <div class="float-right">
                           <div class="heading-tiny-uppercase">Opportunity</div>
                           <div class="brand-{{ activity_type_details.color }}">
                               <strong>{{ activity_type_details.name }}</strong>

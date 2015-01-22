@@ -2039,6 +2039,7 @@ the css in the head of map.html
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
 // organisation/1/volunteer_activity: need to test volunteer tab styling
 //donate: add_edit: need to style Donation items below form, not sure how
+///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
