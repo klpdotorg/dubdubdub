@@ -171,6 +171,7 @@ body {
 .main-footer {
   background: $grey-gravel;
   border-top: 10px solid darken($grey-gravel, 10%);
+  margin: $base-spacing-lg-2x 0 0 0;
   @extend %white;
   @extend %grid-child;
 

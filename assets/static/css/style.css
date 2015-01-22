@@ -2130,7 +2130,8 @@ body {
 /*-------------------------------------*/
 .main-footer {
   background: #4d4d4d;
-  border-top: 10px solid #343434; }
+  border-top: 10px solid #343434;
+  margin: 50px 0 0 0; }
 
 .footer-wrapper {
   padding-top: 20px;
