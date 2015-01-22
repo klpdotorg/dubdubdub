@@ -986,6 +986,15 @@ body {
   }
 }  
 
+.org-tab-content, .profile-tab-content {
+  border-bottom: 1px solid $grey-cloud;
+  padding: $base-spacing 0 ($base-spacing + 2);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
 
 /*-------------------------------------*/
 //PAGE: ORGANIZATION
@@ -994,15 +1003,6 @@ body {
   max-width: 200px;
   display: block;
   margin: ($base-spacing-lg-x + 5) 0 0 0;
-}
-
-.org-tab-content {
-  border-bottom: 1px solid $grey-cloud;
-  padding: $base-spacing 0 ($base-spacing + 2);
-
-  &:last-of-type {
-    border-bottom: none;
-  }
 }
 
 .org-tab-button {
