@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -89,7 +89,7 @@ q:before, q:after {
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .tab-heading, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
@@ -846,83 +846,64 @@ hr {
 
 /*-------------------------------------*/
 /* TABS */
-/*  .tab-wrapper {
-    border: 1px solid $grey-cloud;
-  }
+.tab-wrap {
+  border: 1px solid #d8d8d8;
+  border-bottom: none; }
 
-  .tab-heading {
-    text-decoration: none;
-    display: block;
-    padding: $base-spacing-sm $base-spacing;
-    color: inherit;
-    text-transform: uppercase;
-    border-bottom: 1px solid;
-  }
+.tab-wrap-widescreen {
+  display: none; }
 
-  .tab-each:last-of-type .tab-heading {
-    border-bottom: none;
-  }
+.tab-heading {
+  text-decoration: none;
+  display: block;
+  padding: 5px 10px;
+  color: #4d4d4d;
+  border-bottom: 1px solid;
+  cursor: pointer; }
 
-  .tab-each:first-of-type .tab-content {
-    display: block;
-  }
+.tab-heading, .tab-heading-active {
+  border-color: #d8d8d8; }
 
-  .tab-heading, .tab-heading-active {
-    border-color: $grey-cloud;
-  }
+.tab-heading.tab-heading-active {
+  background: #f6f6f6; }
+
+.tab-content {
+  display: none;
+  padding: 10px;
+  border-bottom: 1px solid #d8d8d8; }
+  .tab-content.tab-active {
+    display: block; }
+
+@media only screen and (min-width: 750px) {
+  .tab-wrap {
+    border: none; }
+
+  .tab-wrap-widescreen {
+    display: block; }
+
+  .tab-each .tab-heading {
+    display: none; }
 
   .tab-heading.tab-heading-active {
-    background: $grey-mist;
-  }
+    background: #fff; }
+
+  .tab-heading {
+    display: inline-block;
+    vertical-align: top; }
+
+  .tab-heading {
+    position: relative;
+    top: 1px;
+    border-bottom: none; }
 
   .tab-content {
-    display: none;
-    padding: 10px;
-    border-bottom: 1px solid $grey-cloud;
-    @extend %white-bg;
-    
-    &.tab-active {
-      display: block;
-    }
-  }
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #d8d8d8; }
 
-  @media only screen and (min-width: 600px) {
-    .tab-wrap {
-      position: relative;
-      max-width: 700px;
-      border: none;
-      border-bottom: 1px solid $grey-cloud;
-    }
-
-    .tab-heading.tab-heading-active {
-      background: #fff;
-    }
-
-    .tab-each {
-      @extend %vertical-inline-top;
-    }
-
-    .tab-heading {
-      border-bottom: none;
-      position: relative;
-      top: 1px;
-      background: #fff;
-    }
-
-    .tab-content {
-      position: absolute;
-      left: 0;
-      right: 0;
-      border: 1px solid $grey-cloud;
-      border-top: none;
-    }
-
-    .tab-heading-active {
-      border: 1px solid $grey-cloud;
-      border-bottom: none;
-    }
-  }
-*/
+  .tab-heading-active {
+    border: 1px solid #d8d8d8;
+    border-bottom: none; } }
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
@@ -958,11 +939,11 @@ hr {
 /* end GLOBAL HELPER classes */
 /*  */
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .subheader-content, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .header-content, .banner-home-container, .subheader-content {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }

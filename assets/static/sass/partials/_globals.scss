@@ -1050,25 +1050,26 @@ a.button {
 /*-------------------------------------*/
 /* TABS */
 
-/*  .tab-wrapper {
+  .tab-wrap {
     border: 1px solid $grey-cloud;
+    border-bottom: none;
+  }
+
+  .tab-wrap-widescreen {
+    display: none;
+    @extend %container;
   }
 
   .tab-heading {
     text-decoration: none;
     display: block;
     padding: $base-spacing-sm $base-spacing;
-    color: inherit;
-    text-transform: uppercase;
+    color: $grey-gravel;
+    @extend %font-uppercase;
+    @extend %font-smaller;
+    @extend %font-bold;
     border-bottom: 1px solid;
-  }
-
-  .tab-each:last-of-type .tab-heading {
-    border-bottom: none;
-  }
-
-  .tab-each:first-of-type .tab-content {
-    display: block;
+    cursor: pointer;
   }
 
   .tab-heading, .tab-heading-active {
@@ -1081,44 +1082,48 @@ a.button {
 
   .tab-content {
     display: none;
-    padding: 10px;
+    padding: $base-spacing;
     border-bottom: 1px solid $grey-cloud;
-    @extend %white-bg;
     
     &.tab-active {
       display: block;
     }
   }
 
-  @media only screen and (min-width: 600px) {
+  
+  @media only screen and (min-width: 750px) {
     .tab-wrap {
-      position: relative;
-      max-width: 700px;
       border: none;
-      border-bottom: 1px solid $grey-cloud;
     }
 
-    .tab-heading.tab-heading-active {
-      background: #fff;
+    .tab-wrap-widescreen {
+      display: block;
     }
 
     .tab-each {
-      @extend %vertical-inline-top;
+      .tab-heading {
+        display: none;
+      }
+    }
+
+    .tab-heading.tab-heading-active {
+      background: $white;
     }
 
     .tab-heading {
-      border-bottom: none;
+      @include vertical-inline-top;
+    }
+
+    .tab-heading {
       position: relative;
       top: 1px;
-      background: #fff;
+      border-bottom: none;
     }
 
     .tab-content {
-      position: absolute;
-      left: 0;
-      right: 0;
-      border: 1px solid $grey-cloud;
-      border-top: none;
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+      border-color:  $grey-cloud;
     }
 
     .tab-heading-active {
@@ -1126,7 +1131,7 @@ a.button {
       border-bottom: none;
     }
   }
-*/
+
 
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
