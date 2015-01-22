@@ -793,8 +793,8 @@ hr {
   max-width: 500px; }
 
 .module-img {
-  width: 140px;
-  height: 140px;
+  width: 180px;
+  height: 180px;
   position: relative;
   margin-bottom: 25px;
   overflow: hidden; }
@@ -2848,11 +2848,8 @@ body {
     font-size: 110%;
     font-weight: 300; }
 
-  .module-img {
-    width: 180px;
-    height: 180px; }
-    .module-img img {
-      max-width: none; }
+  .module-img img {
+    max-width: none; }
 
   .float-left-padding {
     float: left;
