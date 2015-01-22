@@ -97,8 +97,8 @@
 
 		<div class="js-tab-wrap tab-wrap">
 			<div class="tab-wrap-widescreen">
-		    <div data-tab="volunteer" class="js-tab-link tab-heading tab-heading-active">Volunteer</div>
-		    <div data-tab="donate" class="js-tab-link tab-heading">Donate</div>					
+		    <div data-tab="volunteer" class="js-tabs-link tab-heading tab-heading-active">Volunteer</div>
+		    <div data-tab="donate" class="js-tabs-link tab-heading">Donate</div>					
 			</div>
 
 		  <div class="tab-each">
@@ -147,33 +147,5 @@
 	</section>
 	{% include 'frontend_templates/organization.html' %}
 	{% include 'frontend_templates/volunteer_here.html' %}
-
-	<script type="text/javascript">
-		function init_tabs(){
-			$('.js-tab-link').each(function() {
-				var $this = $(this);
-				var $clone = $this.clone();
-				var tabName = $this.attr("data-tab");
-				$('.tab-content[data-tab=' + tabName + ']').before($clone);
-			});
-
-  		$(document).on("click", ".js-tab-link", function(e){
-  			var $wrapper = $(".js-tab-wrap");
-				var $trigger = $(this).closest(".js-tab-link");
-				var tab_id = $trigger.attr('data-tab');
-
-				$(".tab-heading-active").removeClass('tab-heading-active');
-				$('.tab-heading[data-tab=' + tab_id + ']').addClass('tab-heading-active');
-
-				$wrapper.find(".js-tab-content.tab-active").removeClass('tab-active');
-				$wrapper.find('.js-tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
-			});
-  	}
-
-  	$(document).ready(function(){
-		init_tabs();
-	});
-
-  </script>
 
 {% endblock %}
