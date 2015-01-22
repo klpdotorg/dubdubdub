@@ -1075,6 +1075,10 @@ input.error {
   border-color: #cb0012; }
 
 /*-------------------------------------*/
+.form-optional-text {
+  color: #bbb; }
+
+/*-------------------------------------*/
 .modal-block {
   min-width: 280px; }
 
