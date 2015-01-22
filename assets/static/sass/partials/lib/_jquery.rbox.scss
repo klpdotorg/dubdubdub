@@ -33,13 +33,12 @@
 }
 
 .nextLightBox, .prevLightBox, .closeLightBox {
-  color: $white; //fallback
-  color: rgba($white, 0.7);
+  color: $grey-silver;
   cursor: pointer;
   font-size: 25px; 
   
   &:hover {
-    color: $white;
+    color: $grey-cloud;
     @extend %transition-ease-in;
   }
 }
@@ -50,8 +49,8 @@
 
 .closeLightBox {
   position: absolute;
-  right: -14px;
-  top: -26px;
+  right: -16px;
+  top: -16px;
   padding: 4px; 
 }
 
