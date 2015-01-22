@@ -2031,8 +2031,9 @@ the css in the head of map.html
 //pickadate not showing on share story although the class is there
 //Share your story: Information from schools visits: Check the table below shows the right classes
 //test the volunteer tab content in school tabs as well, not formatted fully
-// organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js and also /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
+// organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js, in  and also in volunteer activity/form base, /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
+// organisation/1/volunteer_activity: need to test volunteer tab styling
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling

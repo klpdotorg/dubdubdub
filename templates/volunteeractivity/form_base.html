@@ -8,22 +8,22 @@
 <section>
   <div class="container">
     <h1 class="heading-primary brand-blue">Volunteer Opportunities {{ action }}</h1>
-    <div class="mb-30" id="activityDetails">
-    </div>
-    <ul>
-      <li data-tab="details" class="js-tab-link current">{{ action }} Details</li>
-      {% if action != 'Add' %}
-      <li data-tab="volunteers" class="js-tab-link">Volunteers</li>
-      {% endif %}
-    </ul>
+    <div id="activityDetails">
+    </div>  
   </div>
 </section>
-<div class="hr"></div>
-<section class="pt-30 pb-60 phn-pt-0">
-  <div class="js-tabs-wrapper">
-    <div class="tab-heading">{{ action }} Details</div>
-    <div class="tab-content container current" data-tab="details">
-      <div>
+
+<div class="js-tab-wrap tab-wrap tab-org-edit">
+  <div class="tab-wrap-widescreen">
+    <div data-tab="details" class="js-tabs-link tab-heading tab-heading-active">{{ action }} Details</div>
+    {% if action != 'Add' %}
+    <div data-tab="volunteers" class="js-tabs-link tab-heading">Volunteers</div>
+    {% endif %}
+  </div>
+
+  <div class="tab-each">
+    <div data-tab="details" class="js-tab-content tab-content tab-active">
+      <div class="container">
         <form class="form-base form-volunteer-oppor-edit" id="activityForm">
           <div class="form-field-wrap">
             <label>Activity Type</label>
@@ -36,7 +36,7 @@
           </div>
           <div class="form-field-wrap">
             <label>School</label>
-            <input id="school" class="select2" />
+            <input id="school" class="select2">
           </div>
           <div class="form-field-wrap">
             <label>Date</label>
@@ -51,44 +51,29 @@
             <input type="submit" value="Submit" class="button">
           </div>
         </form>
-      </div>
-      <div class="clr"></div>
-    </div>
-    <!-- Edit Details Tab END -->
-    {% if action != 'Add' %}
-    <div class="tab-heading">Volunteer Opportunities</div>
-    <div class="tab-content container" data-tab="volunteers">
-      <div>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+
+  {% if action != 'Add' %}
+  <div class="tab-each">
+    <div data-tab="volunteers" class="js-tab-content tab-content tab-active">
+      <div class="container" data-tab="volunteers">
         <table class="table-base table-volunteer-oppor" id="jsVolunteerTable">
           <tr class="table-base-heading">
             <th>Name</th>
             <th>Status</th>
-            <th class="cell-width-15 ta-r">Action</th>
+            <th>Action</th>
           </tr>
         </table>
-      </div>
-    </div>
-    <!-- Volunteer Tab END -->
-    {% endif %}
-  </div>
-</section>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+  {% endif %}
+</div> <!-- /tab-wrap -->
+
 {% include 'frontend_templates/volunteeractivity_form.html' %}
 <script type="text/javascript">
-  function init_tabs(){
-    $(document).on("click", ".js-tab-link", function(e){
-      var $wrapper = $(".js-tabs-wrapper");
-      var $trigger = $(this).closest(".js-tab-link");
-      var tab_id = $trigger.attr('data-tab');
-
-      // Change current tab link
-      $trigger.parent().find("li.current").removeClass('current');
-      $trigger.addClass("current");
-
-      // Change current tab content
-      $wrapper.find(".tab-content.current").removeClass('current');
-      $wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
-    });
-
     $(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
       if($(document).width() < 768){
           return true;
@@ -104,10 +89,5 @@
           $trigger.removeClass("show-drop");
       }
     });
-  }
-  
-  $(document).ready(function(){
-    init_tabs();
-  });
 </script>
 {% endblock %}
