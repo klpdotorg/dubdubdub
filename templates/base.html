@@ -77,10 +77,12 @@
   		<div class="header-content">
   			<a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
   			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
-  			<nav class="top-nav" role="navigation">
-  				{% include "includes/_top_navigation.html" %}
-  			</nav>
-        {% include 'includes/_profile_options.html' %}
+  			<div class="nav-wrap">
+          <nav class="top-nav" role="navigation">
+            {% include "includes/_top_navigation.html" %}
+          </nav>            
+          {% include 'includes/_profile_options.html' %}
+        </div>
   		</div>
 
   	</header>

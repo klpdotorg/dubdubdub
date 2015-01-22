@@ -287,7 +287,8 @@
 	//profile login
 	.profile-login-block {
   	float: right;
-  	position: static;
+  	right: 0;
+  	padding-right: $base-spacing-lg;
 	}
 
 	//navigation
@@ -304,6 +305,7 @@
 	  overflow: visible;
 	  border: none;
 	  box-shadow: none;
+	  padding-left: $base-spacing-mid;
 
     ul {
 			position: absolute;
@@ -312,20 +314,21 @@
   		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
 			border: 1px solid $grey-cloud;
 			border-top: none;  
-  }
+  	}
 
     > li {
     	border-top: 5px solid;
+    	border-left: none;    	
 
     	> a {
     		border-left: none;
     		position: relative;
     		top: 4px;
+				margin: ($base-spacing - 3) 0;
     	}
     }
 
     li {
-    	border-left: none;    	
       @include vertical-inline-top;
       margin: 0 3px;
   		text-align: center;
@@ -334,6 +337,17 @@
 
   		li {
   			text-align: left;
+
+  			a {
+  				padding: 0 $base-spacing;
+  				margin: $base-spacing-lg 0;
+					border-left: 2px solid;
+					border-color: transparent;		
+  			}
+
+				&:hover a {
+					border-color: inherit;
+				}
   		}
     }
   }

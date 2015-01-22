@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -2100,8 +2100,12 @@ body {
   right: 0;
   height: 45px; }
 
+.header-content {
+  position: relative; }
+
 .logo {
-  padding: 6px 20px 0 0; }
+  padding: 9px 0 0 0;
+  position: absolute; }
 
 .nav, .nav-trigger {
   position: fixed; }
@@ -2127,7 +2131,8 @@ body {
   .nav li {
     padding: 0 15px;
     cursor: pointer;
-    letter-spacing: 1px; }
+    letter-spacing: 1px;
+    text-align: left; }
     .nav li li {
       text-transform: capitalize;
       display: block;
@@ -2135,18 +2140,13 @@ body {
       letter-spacing: normal; }
       .nav li li a {
         line-height: 1;
-        padding: 0 10px;
-        margin: 20px 0;
-        border-left: 2px solid;
-        border-color: transparent; }
-      .nav li li:hover a {
-        border-color: inherit; }
+        padding: 10px; }
     .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
       color: inherit; }
   .nav > li > a {
     border-left: 3px solid;
     padding: 0 10px;
-    margin: 7px 0; }
+    margin: 15px 0; }
   .nav a {
     display: block; }
 
@@ -2185,12 +2185,13 @@ body {
 
 /*-------------------------------------*/
 .profile-login-block {
-  position: fixed;
+  position: absolute;
   right: 55px;
   top: 0; }
 
 .profile-options-wrapper {
-  position: relative; }
+  position: relative;
+  text-align: left; }
   .profile-options-wrapper.show-drop .profile-options {
     background-color: rgba(0, 0, 0, 0.05); }
   .profile-options-wrapper.show-drop .options-list {
@@ -3050,7 +3051,8 @@ body {
 @media only screen and (min-width: 990px) {
   .profile-login-block {
     float: right;
-    position: static; }
+    right: 0;
+    padding-right: 20px; }
 
   .nav-trigger {
     display: none; }
@@ -3062,7 +3064,8 @@ body {
     width: auto;
     overflow: visible;
     border: none;
-    box-shadow: none; }
+    box-shadow: none;
+    padding-left: 15px; }
     .nav ul {
       position: absolute;
       left: 0;
@@ -3071,13 +3074,14 @@ body {
       border: 1px solid #d8d8d8;
       border-top: none; }
     .nav > li {
-      border-top: 5px solid; }
+      border-top: 5px solid;
+      border-left: none; }
       .nav > li > a {
         border-left: none;
         position: relative;
-        top: 4px; }
+        top: 4px;
+        margin: 7px 0; }
     .nav li {
-      border-left: none;
       display: inline-block;
       vertical-align: top;
       margin: 0 3px;
@@ -3086,6 +3090,13 @@ body {
       min-width: 115px; }
       .nav li li {
         text-align: left; }
+        .nav li li a {
+          padding: 0 10px;
+          margin: 20px 0;
+          border-left: 2px solid;
+          border-color: transparent; }
+        .nav li li:hover a {
+          border-color: inherit; }
 
   .banner-logo-klp {
     width: 170px; }

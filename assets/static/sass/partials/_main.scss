@@ -71,6 +71,7 @@ body {
 
 .header-content {
   @extend %container;
+  position: relative;
 }
 
 .logo, .top-nav {
@@ -78,7 +79,12 @@ body {
 }
 
 .logo {
-  padding: ($base-spacing-sm + 1) $base-spacing-lg 0 0;
+  padding: ($base-spacing - 1) 0 0 0;
+  position: absolute;
+}
+
+.nav-wrap {
+ @extend %center-text;
 }
 
 .nav, .nav-trigger {
@@ -119,6 +125,7 @@ body {
 		padding: 0 $base-spacing-mid;
     cursor: pointer;
     letter-spacing: 1px;
+    text-align: left;
 
 		li {
 			text-transform: capitalize;
@@ -129,14 +136,7 @@ body {
 
 			a {
 				line-height: 1;
-				padding: 0 $base-spacing;
-				margin: $base-spacing-lg 0;
-				border-left: 2px solid;
-				border-color: transparent;
-			}
-
-			&:hover a {
-				border-color: inherit;
+				padding: $base-spacing;
 			}
 		}
 
@@ -151,7 +151,7 @@ body {
 		border-left: 3px solid;
 		@extend %font-smallest;
 		padding: 0 $base-spacing;
-		margin: ($base-spacing - 3) 0;
+		margin: ($base-spacing-mid) 0;
 	}
 
 	a {
@@ -223,7 +223,7 @@ body {
 //MAIN
 
 .main {
-  position: relative;
+  position: relative; 
   top: $header-height;
 }
 
@@ -233,13 +233,14 @@ body {
 //LOGIN
 
 .profile-login-block {
-  position: fixed;
+  position: absolute;
   right: 55px;
   top: 0;
 }
 
 .profile-options-wrapper{
   position: relative;
+  text-align: left;
 
   &.show-drop{
     .profile-options{
