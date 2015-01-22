@@ -5,17 +5,12 @@
         postLoginCallback = callback;
         klp.openModal = t;
         $('#signupModalTrigger').click();
-        // $('.modal-overlay').addClass('show');
-        // $('.js-login-modal').addClass('show');
     };
 
     t.close = function() {
         //showSignup();
         $('.closeLightBox').click();
         console.log("login modal close called");
-        //$('.js-login-modal').removeClass('show');
-        //$(".modal-overlay").removeClass("show");
-
     };
 
     t.afterClose = function() {

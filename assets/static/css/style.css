@@ -291,7 +291,7 @@ sub {
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .module-stats-label, .form-edit-heading, .modal .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .icon-boy, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
@@ -1112,7 +1112,7 @@ input.error {
   border-color: #cb0012; }
 
 /*-------------------------------------*/
-.steps-wrapper {
+.modal-block {
   min-width: 280px; }
 
 /*-------------------------------------*/
@@ -2253,7 +2253,7 @@ body {
     color: #7bb6ec; }
 
 /*-------------------------------------*/
-.modal .heading-border {
+.rbox_lightBox .heading-border {
   margin-bottom: 40px; }
 
 /*-------------------------------------*/
