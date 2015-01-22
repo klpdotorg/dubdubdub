@@ -8,7 +8,7 @@
     <td>
       <div class="brand-green table-volunteer-school"><strong>{{ school_details.name }}</strong></div>
       {% if school_details.address_full %}
-      <div class="grey-steel font-small"><strong>{{ school_details.address_full }}</strong></div>
+      <div class="grey-steel font-small">{{ school_details.address_full }}</div>
       {% endif %}
     </td>
     <td>
@@ -52,7 +52,7 @@
         <strong>{{ school_details.name }}</strong>
       </div>
       <div class="grey-steel font-small">
-        <strong>{{ school_details.address_full }}</strong>
+        {{ school_details.address_full }}
       </div>
     </td>
       <td class="font-14">
