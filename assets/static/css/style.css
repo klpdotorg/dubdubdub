@@ -2532,10 +2532,8 @@ body {
   margin: 30px 0 0 0; }
 
 .org-tab-content {
-  border-bottom: 1px solid #d8d8d8; }
-
-.org-tab-date-block {
-  padding: 0 0 20px 0; }
+  border-bottom: 1px solid #d8d8d8;
+  padding: 10px 0 12px; }
 
 .org-tab-button {
   margin: 10px 0 0 0; }
@@ -2961,6 +2959,9 @@ body {
     width: 35%; }
     .profile-meta-activities .heading-tiny-uppercase:first-of-type, .org-meta-activities .heading-tiny-uppercase:first-of-type {
       margin-top: 0; }
+
+  .org-tab-org {
+    float: left; }
 
   .org-tab-school {
     float: right;

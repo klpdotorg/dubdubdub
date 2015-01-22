@@ -994,10 +994,7 @@ body {
 
 .org-tab-content {
   border-bottom: 1px solid $grey-cloud;
-}
-
-.org-tab-date-block {
-  padding: 0 0 $base-spacing-lg 0;
+  padding: $base-spacing 0 ($base-spacing + 2);
 }
 
 .org-tab-button {
