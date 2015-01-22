@@ -78,25 +78,20 @@
             formatSubmit: 'yyyy-mm-dd'
         });
 
-        //iframe videos: responsive
-        
+        //iframe videos: responsive        
         $(".video-iframe-responsive").fitVids();
 
-        // Adds easing scrolling to # targets
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-                || location.hostname == this.hostname) {
 
-              var target = $(this.hash);
-              target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-              if (target.length) {
-                $('html,body').animate({
-                  scrollTop: target.offset().top-100
-                }, 300);
-                return false;
-              }
-            }
+        // Adds easing scrolling to # targets
+        $('.js-scroll-smooth-link').click(function(e) {
+            e.preventDefault();
+            var hash = this.hash;
+            var $scrollToElem = $(hash);
+            $('html, body').animate({
+                scrollTop: $scrollToElem.offset().top - 100
+            }, 700);
         });
+
 
         //Sticky Scroll 
 
