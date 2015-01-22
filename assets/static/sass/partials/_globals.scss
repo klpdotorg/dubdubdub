@@ -511,7 +511,7 @@ hr {
   margin: $base-spacing-lg-x 0;
 }
 
-//TOOLTIPS
+/*//TOOLTIPS
 .tipsy { 
   font-size: 10px; 
   position: absolute; 
@@ -537,7 +537,7 @@ hr {
     right: 0;
     @extend %center-element;
   }
-}
+}*/
 
 //ICONS
 .icon-right, %icon-right {
@@ -550,7 +550,6 @@ hr {
 
 .icon-button-round {
   font-size: 14px;
-  line-height: 1;
   padding: $base-spacing-sm;
   @extend %border-radius-circle;
   border: 2px solid;
@@ -750,6 +749,56 @@ a.button {
   }
 }
 
+/*-------------------------------------*/
+/* TOOLTIPS */
+.tooltip {
+  position: relative;
+  text-decoration: none;
+
+  &:before, &:after {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity 0.25s ease-in-out);
+  }
+
+  &:after {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    content: attr(aria-label);
+    padding: $base-spacing-sm $base-spacing;
+    font-size: 12px;
+    white-space: nowrap;
+    @extend %center-text;
+    @extend %white;
+    background: $black;
+    @extend %border-radius-sm;
+    left: -9999px;
+    margin-top: 12px;
+  }
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent $black transparent;
+    margin-top: 0;
+}
+
+  &:hover, &:focus {
+    &:after, &:before {
+      visibility: visible;
+      opacity: 1;
+      top: 80%;
+      left: 0;
+    }
+
+    &:before {
+      left: 15px;
+    }
+  }
+}
 
 /*-------------------------------------*/
 

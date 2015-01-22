@@ -174,7 +174,7 @@
               <div class="bar-label">{{ mt|capitalize }}</div>
               <div class="bar-graph">
                 <div class="bar-percent">{{ mt_profile[mt] }}</div>
-                <div class="bar-custom qtip" original-title="{{ percent }}%">
+                <div class="bar-custom tooltip" role="tooltip" aria-label="{{ percent }}%">
                     <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
                     </div>
                 </div>

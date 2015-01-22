@@ -2,6 +2,12 @@
 	z-index: 3000;
 }
 
+.tooltip {
+  &:before, &:after {
+    z-index: 100;
+  }
+}
+
 .alert {
 	z-index: 2500;
 }

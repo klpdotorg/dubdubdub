@@ -34,35 +34,35 @@
 								<div>
 									{% if object.twitter_handle %}
 									<span>
-										<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
+										<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Twitter">
 											<span class="fa fa-twitter"></span>
 										</a>
 									</span>
 									{% endif %}
 									{% if object.fb_url %}
 									<span>
-										<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
+										<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Facebook">
 											<span class="fa fa-facebook"></span>
 										</a>
 									</span>
 									{% endif %}
 									{% if object.website %}
 									<span>
-										<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
+										<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Website">
 											<span class="fa fa-laptop"></span>
 										</a>
 									</span>
 									{% endif %}
 									{% if object.photos_url %}
 									<span>
-										<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
+										<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Photos">
 											<span class="fa fa-image"></span>
 										</a>
 									</span>
 									{% endif %}
 									{% if object.youtube_url %}
 									<span>
-										<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
+										<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Videos">
 											<span class="fa fa-video-camera"></span>
 										</a>
 									</span>
