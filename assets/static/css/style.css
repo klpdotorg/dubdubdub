@@ -725,7 +725,8 @@ hr {
 /* NAVIGATION: SMOOTH-SCROLL */
 .scroll-smooth-block {
   border-bottom: 1px solid #d8d8d8;
-  letter-spacing: 1px; }
+  letter-spacing: 1px;
+  display: none; }
 
 .scroll-smooth-links {
   margin-bottom: 0; }
@@ -2938,6 +2939,9 @@ body {
     margin-bottom: 0; }
     .module-img-each h3:first-of-type {
       padding: 10px 0; }
+
+  .scroll-smooth-block {
+    display: block; }
 
   .banner-home .banner-full-caption {
     max-width: 480px; }

@@ -830,6 +830,7 @@ a.button {
   @extend %font-smallest;
   @extend %center-text;
   letter-spacing: 1px;
+  display: none;
 }
 
 .scroll-smooth-links {
