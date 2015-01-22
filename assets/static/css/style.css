@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
@@ -446,7 +446,7 @@ img, video {
   max-width: 100%;
   height: auto; }
 
-.full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text, .form-volunteer-oppor-edit .input-text {
+.full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text, .form-volunteer-oppor-edit .input-text, .form-add-donation .input-text {
   width: 100%; }
 
 /*.box-shadow-base, %box-shadow-base {
@@ -1079,7 +1079,7 @@ input.error {
   min-width: 280px; }
 
 /*-------------------------------------*/
-.form-edit-profile label, .form-volunteer-oppor-edit label {
+.form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label {
   display: block;
   padding-bottom: 5px; }
 
@@ -2034,6 +2034,7 @@ the css in the head of map.html
 // organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js, in  and also in volunteer activity/form base, /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
 // organisation/1/volunteer_activity: need to test volunteer tab styling
+//donate: add_edit: need to style Donation items below form, not sure how
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling

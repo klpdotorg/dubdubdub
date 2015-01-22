@@ -16,24 +16,24 @@
 
 {% block content %}
 
-	<section class="phn-pb-30">
+	<section>
 		<div class="container">
-			<h1 class="bordered blue">{{ action }} Donation Request</h1>
+			<h1 class="heading-primary brand-blue">{{ action }} Donation Request</h1>
 		</div>
 	</section>
 
-	<section class="page-donation pt-30 pb-60 phn-pt-0">
+	<section class="page-donation">
 		<div class="container">
-			<div class="width-400 ma">
-				<form id="donationForm" class="" data-id="{{ donation_requirement.id }}">
+			<div>
+				<form id="donationForm" class="form-base form-add-donation" data-id="{{ donation_requirement.id }}">
 					<input type="hidden" name="organization" id="donationOrganization" value="{{ org.id }}" />
-					<div class="mb-30">
-						<label class="block bold mb-5">sTitle</label>
-						<input type="text" name="title" id="donationTitle" class="input" value="{{ donation_requirement.title }}">
+					<div class="form-field-wrap">
+						<label>Title</label>
+						<input type="text" name="title" id="donationTitle" class="input-text" value="{{ donation_requirement.title }}">
 					</div>
-					<div class="mb-30">
-						<label class="block bold mb-5">School</label>
-						<input id="donationSchool" class="select2 width-full" value="{{ donation_requirement.school.id }}"/>
+					<div class="form-field-wrap">
+						<label>School</label>
+						<input id="donationSchool" class="select2 input-text" value="{{ donation_requirement.school.id }}"/>
 						<!--
 						<select id="donationSchool" class="select2 width-full">
 							<option value="3537">Gian Jyoti Public School</option>
@@ -42,16 +42,16 @@
 						</select>
 						-->
 					</div>
-					<div class="mb-30">
-						<label class="block bold mb-5">End Date</label>
+					<div class="form-field-wrap">
+						<label>End Date</label>
 						<input type="date" id="donationEndDate" class="input-text js-input-date" value="{{ donation_requirement.end_date|date:"Y-m-d" }}">
 					</div>
-					<div class="mb-30">
-						<label class="block bold mb-5">Text</label>
-						<textarea class="input textarea" id="donationText">{{ donation_requirement.description }}</textarea>
+					<div class="form-field-wrap">
+						<label>Text</label>
+						<textarea class="input-text" id="donationText">{{ donation_requirement.description }}</textarea>
 					</div>
-					<div class="ta-c mb-30">
-						<input type="submit" value="Submit" class="button blue" id="donationFormSubmitBtn">
+					<div class="form-field-wrap">
+						<input type="submit" value="Submit" class="button" id="donationFormSubmitBtn">
 					</div>
 				</form>
 			</div>
@@ -61,18 +61,18 @@
 			<div class="ma">
 				<form id="donationItemsForm" class="add-req-form">
 					<h2 class="tile-head blue mb-30">Donation Items</h2>
-					<table id="donationItemsTable" class="tbl-common ta-l cell-pl-10 cell-pr-10">
-						<tr>
-							<th class="cell-width-5">S.No.</th>
-							<th class="cell-width-25">Item Name</th>
-							<th class="cell-width-10">Quantity</th>
-							<th class="cell-width-10">Unit</th>
-							<th class="cell-width-20">Category</th>
-							<th class="cell-width-25">Item Description</th>
-							<th class="cell-width-5"></th>
+					<table id="donationItemsTable" class="table-base">
+						<tr class="table-base-heading">
+							<th>S.No.</th>
+							<th>Item Name</th>
+							<th>Quantity</th>
+							<th>Unit</th>
+							<th>Category</th>
+							<th>Item Description</th>
+							<th></th>
 						</tr>
 					</table>
-					<input type="submit" id="addDonationItemBtn" value="Add another" class="button-hollow fr mt-10 mr-10">
+					<input type="submit" id="addDonationItemBtn" value="Add another" class="button-hollow">
 					<div class="clr"></div>
 				</form>
 			</div>
