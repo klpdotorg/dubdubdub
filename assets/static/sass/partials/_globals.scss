@@ -1053,6 +1053,7 @@ a.button {
   .tab-wrap {
     border: 1px solid $grey-cloud;
     border-bottom: none;
+    margin-top: $base-spacing-lg-x;
   }
 
   .tab-wrap-widescreen {
@@ -1066,7 +1067,7 @@ a.button {
     padding: $base-spacing-sm $base-spacing;
     color: $grey-gravel;
     @extend %font-uppercase;
-    @extend %font-smaller;
+    @extend %font-smallest;
     @extend %font-bold;
     border-bottom: 1px solid;
     cursor: pointer;

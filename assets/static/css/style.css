@@ -98,10 +98,10 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .tab-heading, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
-.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
+.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -848,7 +848,8 @@ hr {
 /* TABS */
 .tab-wrap {
   border: 1px solid #d8d8d8;
-  border-bottom: none; }
+  border-bottom: none;
+  margin-top: 25px; }
 
 .tab-wrap-widescreen {
   display: none; }
@@ -2029,6 +2030,7 @@ the css in the head of map.html
 //pickadate not showing on share story although the class is there
 //Share your story: Information from schools visits: Check the table below shows the right classes
 //test the volunteer tab content in school tabs as well, not formatted fully
+// organization edit: what is that script js at the bottom of the page?
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling

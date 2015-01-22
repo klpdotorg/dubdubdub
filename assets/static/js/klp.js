@@ -1,27 +1,29 @@
-function init_tabs(){
-    $('.js-tabs-link').each(function() {
-        var $this = $(this);
-        var $clone = $this.clone();
-        var tabName = $this.attr("data-tab");
-        $('.js-tab-content[data-tab=' + tabName + ']').before($clone);
-    });
-
-$(document).on("click", ".js-tabs-link", function(e){
-    var $wrapper = $(".js-tab-wrap");
-        var $trigger = $(this).closest(".js-tabs-link");
-        var tab_id = $trigger.attr('data-tab');
-
-        $(".tab-heading-active").removeClass('tab-heading-active');
-        $('.tab-heading[data-tab=' + tab_id + ']').addClass('tab-heading-active');
-
-        $wrapper.find(".js-tab-content.tab-active").removeClass('tab-active');
-        $wrapper.find('.js-tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
-    });
-}
-
 (function() {
     klp.data = {};
     klp.openModal = null;
+
+    // tabs function
+    function init_tabs(){
+        $('.js-tabs-link').each(function() {
+            var $this = $(this);
+            var $clone = $this.clone();
+            var tabName = $this.attr("data-tab");
+            $('.js-tab-content[data-tab=' + tabName + ']').before($clone);
+        });
+
+    $(document).on("click", ".js-tabs-link", function(e){
+        var $wrapper = $(".js-tab-wrap");
+            var $trigger = $(this).closest(".js-tabs-link");
+            var tab_id = $trigger.attr('data-tab');
+
+            $(".tab-heading-active").removeClass('tab-heading-active');
+            $('.tab-heading[data-tab=' + tab_id + ']').addClass('tab-heading-active');
+
+            $wrapper.find(".js-tab-content.tab-active").removeClass('tab-active');
+            $wrapper.find('.js-tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
+        });
+    }
+
     $(document).ready(function() {
         $(document).on('click', ".btn-modal-close", function(e){
             e.preventDefault();
