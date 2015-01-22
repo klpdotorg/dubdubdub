@@ -3,7 +3,7 @@
   <tr>
     <td>
       <div class="brand-red font-bold">{{ activity_type_details.name }}</div>
-      <div class="color-grey-light-2 mt-5">{{ text }}</div>
+      <div>{{ text }}</div>
     </td>
     <td>
       <div class="brand-green table-volunteer-school"><strong>{{ school_details.name }}</strong></div>
@@ -12,9 +12,9 @@
       {% endif %}
     </td>
     <td>
-      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="font-14 brand-blue">{{ users.length }} volunteers</a>
+      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="brand-blue">{{ users.length }} volunteers</a>
     </td>
-    <td class="ta-r">
+    <td>
           <!--
       <div class="action-dropdown fr">
           <a href="#" class="dropdown-trigger small"></a>
@@ -34,15 +34,14 @@
           </ul>
       </div>
     -->
-      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="button-sm button-hollow fr">Edit</a>
-      <div class="clr"></div>
+      <a href="/organisation/{{ organization }}/volunteer_activity/{{ id }}" class="button-sm button-hollow">Edit</a>
     </td>
   </tr>
 </script>
 <script type="text/html" id="tpl-donationRequirement">
   <tr>
     <td>
-      <div class="font-bold">{{ title }}</div>
+      <div class="brand-red font-bold">{{ title }}</div>
       <div>
           {{ description }}
       </div>
@@ -55,15 +54,15 @@
         {{ school_details.address_full }}
       </div>
     </td>
-      <td class="font-14">
+      <td>
         {% for item in items %}
         <div>
           {{ item.quantity }}{{ item.unit }} X 
-          <span class="color-blue">{{ item.name }}</span>
+          <span class="brand-blue">{{ item.name }}</span>
         </div>
         {% endfor %}
       </td>
-      <td class="ta-r">
+      <td>
         <div class="form-base">
           <div class="form-field-wrap">
             <select>
