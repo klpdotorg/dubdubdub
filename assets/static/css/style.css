@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-volunteer {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
@@ -326,7 +326,7 @@ sub {
 
 .white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, body, .main-header, .nav, .nav ul {
+.picker__button--close, body, .main-header, .nav, .nav ul, .options-list {
   background-color: #fff; }
 
 .yellow-mild {
@@ -410,7 +410,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .table-infra-key-color:after {
+.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -2196,9 +2196,11 @@ body {
   .profile-options-wrapper.show-drop .options-list {
     display: block; }
 
-.profile-options:before {
-  content: "\f007";
-  font-family: 'FontAwesome'; }
+.profile-options {
+  color: #bbb; }
+  .profile-options:before {
+    content: "\f007";
+    font-family: 'FontAwesome'; }
 
 .profile-options {
   margin: 10px 0 0 0; }
@@ -2209,23 +2211,18 @@ body {
 .options-list {
   display: none;
   position: absolute;
-  top: 32px;
-  left: 0;
+  top: 45px;
+  left: -80px;
   right: 0;
+  min-width: 80px;
   z-index: 2;
-  border-left: 1px solid #d8d8d8;
-  border-bottom: 1px solid #d8d8d8;
-  border-right: 1px solid #d8d8d8;
-  border-radius: 3px;
-  background-color: #fff; }
-  .options-list li a {
+  border: 1px solid #d8d8d8; }
+  .options-list a {
     display: block;
-    color: #5f5f5f;
+    color: #898989;
     padding: 10px; }
-    .options-list li a:hover {
-      text-decoration: none; }
-  .options-list li:hover {
-    background-color: #F6F6F6; }
+    .options-list a:hover {
+      background: #f6f6f6; }
 
 /*-------------------------------------*/
 .subheader-wrapper {

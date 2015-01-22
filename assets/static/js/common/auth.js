@@ -49,8 +49,15 @@
     t.init = function() {
         t.events = $('<div />');
         //console.log("initting auth");
+        var $profile_options_wrapper = $('.profile-options-wrapper');
+        $(window).on('click', function(e) {
+            if ($profile_options_wrapper.hasClass('show-drop')) {
+                $profile_options_wrapper.removeClass('show-drop');
+            }
+        });
         $(document).on("click", ".profile-options-wrapper .profile-options", function(e){
             //console.log("clicked auth");
+            e.stopPropagation();
             var $user = $('#authUsername');
             var state = $user.data('state');
             //console.log('state', state);

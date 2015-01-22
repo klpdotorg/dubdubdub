@@ -254,6 +254,7 @@ body {
 .profile-options {
   @extend %button-hollow;
   @extend %button-sm;
+  color: $grey-silver;
 
   &:before {
     content: "\f007"; //previously f013
@@ -274,23 +275,24 @@ body {
 
 .options-list{
   display: none;
-  position: absolute; top: 32px; left: 0; right: 0; z-index: 2;
-  border-left: 1px solid #d8d8d8; border-bottom: 1px solid #d8d8d8; border-right: 1px solid #d8d8d8;
-  border-radius: 3px;
-  background-color: #fff;
+  position: absolute; 
+  top: $header-height; 
+  left: -80px; 
+  right: 0; 
+  min-width: 80px;
+  @extend %font-smaller;
+  z-index: 2;
+  @extend %white-bg;
+  @extend %border-radius-sm;
+  border: 1px solid $grey-cloud; 
 
-  li{
-  
-    a{
-      display: block; color: #5f5f5f; padding: 10px;
-
-      &:hover{
-        text-decoration: none; 
-      }
-    }
+  a {
+    display: block; 
+    color: $grey-steel; 
+    padding: $base-spacing;
 
     &:hover{
-      background-color: #F6F6F6; 
+      background: $grey-mist; 
     }
   }
 }
