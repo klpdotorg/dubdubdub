@@ -737,6 +737,12 @@ hr {
 .scroll-smooth-links, .scroll-smooth-links a {
   color: #4d4d4d; }
 
+.scroll-smooth-sticky {
+  position: fixed;
+  top: 45px;
+  left: 0;
+  right: 0; }
+
 /*-------------------------------------*/
 /* BORDERS */
 .border-grey-cloud {

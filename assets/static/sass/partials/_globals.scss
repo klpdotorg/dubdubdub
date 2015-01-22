@@ -854,6 +854,12 @@ a.button {
   color: $grey-gravel;
 }
 
+.scroll-smooth-sticky {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  right: 0;
+}
 
 /*-------------------------------------*/
 

@@ -13,7 +13,7 @@
     <div class="banner-overlay"></div>
 	</section>
 
-<nav class="scroll-smooth-block">
+<nav class="scroll-smooth-block js-scroll-smooth-block">
   <ul class="scroll-smooth-links">
 		<li><a href="#section-project-goals">Project Goals</a></li>
 		<li><a href="#section-methodology">Methodology</a></li>
@@ -123,4 +123,28 @@
 		</div>
 	</section>
 </div>
+
+<script>
+	$(document).ready(function() {
+		var headerHeight = $(".main-header").height() - 5;
+
+		var stickyNavTop = $('.js-scroll-smooth-block').offset().top;
+		var stickyNav = function(){
+			var scrollTop = $(window).scrollTop();
+			     
+			if ((scrollTop + headerHeight) > stickyNavTop) { 
+			    $('.js-scroll-smooth-block').addClass('scroll-smooth-sticky');
+			} else {
+			    $('.js-scroll-smooth-block').removeClass('scroll-smooth-sticky'); 
+			}
+		};
+
+		stickyNav();
+
+		$(window).scroll(function() {
+			stickyNav();
+		});
+});
+
+</script>
 {% endblock %}
