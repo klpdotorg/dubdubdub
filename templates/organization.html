@@ -35,39 +35,29 @@
 								<div class="heading-tiny-uppercase">Links</div>
 								<div>
 									{% if object.twitter_handle %}
-									<span>
-										<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="TWITTER">
-											<span class="fa fa-twitter"></span>
-										</a>
-									</span>
+									<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="TWITTER">
+										<span class="fa fa-twitter"></span>
+									</a>
 									{% endif %}
 									{% if object.fb_url %}
-									<span>
-										<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="FACEBOOK">
-											<span class="fa fa-facebook"></span>
-										</a>
-									</span>
+									<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="FACEBOOK">
+										<span class="fa fa-facebook"></span>
+									</a>
 									{% endif %}
 									{% if object.website %}
-									<span>
-										<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="WEBSITE">
-											<span class="fa fa-laptop"></span>
-										</a>
-									</span>
+									<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="WEBSITE">
+										<span class="fa fa-laptop"></span>
+									</a>
 									{% endif %}
 									{% if object.photos_url %}
-									<span>
-										<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="PHOTOS">
-											<span class="fa fa-image"></span>
-										</a>
-									</span>
+									<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="PHOTOS">
+										<span class="fa fa-image"></span>
+									</a>
 									{% endif %}
 									{% if object.youtube_url %}
-									<span>
-										<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="VIDEOS">
-											<span class="fa fa-video-camera"></span>
-										</a>
-									</span>
+									<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="VIDEOS">
+										<span class="fa fa-video-camera"></span>
+									</a>
 									{% endif %}
 								</div>
 
@@ -112,7 +102,7 @@
 			</div>
 
 		  <div class="tab-each">
-		    <div data-tab="volunteer" class="tab-content tab-active">
+		    <div data-tab="volunteer" class="js-tab-content tab-content tab-active">
 		    	<div class="container" id="volunteerActivitiesList">
 						<div class="heading-tiny-uppercase">Volunteering opportunties</div>
 		    	</div> <!-- /container -->
@@ -120,7 +110,7 @@
 		  </div> <!-- /tab-each -->
 
 		  <div class="tab-each">
-		    <div data-tab="donate" class="tab-content">
+		    <div data-tab="donate" class="js-tab-content tab-content">
 		    	<div class="container" id="donationRequirementsList">
 						<div class="heading-tiny-uppercase">Donate</div>
 		    	</div> <!-- /container -->
@@ -175,8 +165,8 @@
 				$(".tab-heading-active").removeClass('tab-heading-active');
 				$('.tab-heading[data-tab=' + tab_id + ']').addClass('tab-heading-active');
 
-				$wrapper.find(".tab-content.tab-active").removeClass('tab-active');
-				$wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
+				$wrapper.find(".js-tab-content.tab-active").removeClass('tab-active');
+				$wrapper.find('.js-tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
 			});
   	}
 

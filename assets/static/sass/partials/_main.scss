@@ -995,6 +995,10 @@ body {
 .org-tab-content {
   border-bottom: 1px solid $grey-cloud;
   padding: $base-spacing 0 ($base-spacing + 2);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 }
 
 .org-tab-button {

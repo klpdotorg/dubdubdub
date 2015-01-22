@@ -2534,6 +2534,8 @@ body {
 .org-tab-content {
   border-bottom: 1px solid #d8d8d8;
   padding: 10px 0 12px; }
+  .org-tab-content:last-of-type {
+    border-bottom: none; }
 
 .org-tab-button {
   margin: 10px 0 0 0; }
