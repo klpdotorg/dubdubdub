@@ -28,50 +28,40 @@ e{% extends "base.html" %}
 						<p class="font-small">
 						{{ about }}
 						</p>
-							{% if object.has_links %}
+						{% if object.has_links %}
+						<div>
+							<div class="heading-tiny-uppercase"><strong>Links:</strong></div>
 							<div>
-								<div class="heading-tiny-uppercase"><strong>Links:</strong></div>
-								<div>
-									{% if object.twitter_handle %}
-									<span>
-										<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Twitter">
-											<span class="fa fa-twitter"></span>
-										</a>
-									</span>
-									{% endif %}
-									{% if object.fb_url %}
-									<span>
-										<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Facebook">
-											<span class="fa fa-facebook"></span>
-										</a>
-									</span>
-									{% endif %}
-									{% if object.website %}
-									<span>
-										<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Website">
-											<span class="fa fa-laptop"></span>
-										</a>
-									</span>
-									{% endif %}
-									{% if object.photos_url %}
-									<span>
-										<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Photos">
-											<span class="fa fa-image"></span>
-										</a>
-									</span>
-									{% endif %}
-									{% if object.youtube_url %}
-									<span>
-										<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Videos">
-											<span class="fa fa-video-camera"></span>
-										</a>
-									</span>
-									{% endif %}
-								</div>
+								{% if object.twitter_handle %}
+								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Twitter">
+									<span class="fa fa-twitter"></span>
+								</a>
+								{% endif %}
+								{% if object.fb_url %}
+								<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Facebook">
+									<span class="fa fa-facebook"></span>
+								</a>
+								{% endif %}
+								{% if object.website %}
+								<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Website">
+									<span class="fa fa-laptop"></span>
+								</a>
+								{% endif %}
+								{% if object.photos_url %}
+								<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Photos">
+									<span class="fa fa-image"></span>
+								</a>
+								{% endif %}
+								{% if object.youtube_url %}
+								<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Videos">
+									<span class="fa fa-video-camera"></span>
+								</a>
+								{% endif %}
 							</div>
+						</div>
 							{% endif %}
-						</p>
-					</div>
+					</div> <!-- /profile-meta-each -->
+
 					<div class="profile-meta-each profile-meta-activities">
 						<div class="heading-tiny-uppercase">Activities</div>
 						<!--
@@ -93,47 +83,46 @@ e{% extends "base.html" %}
 						<div id="userOrganizations">
 
 						</div>
+					</div> <!-- /profile-meta-each -->
+				</div> <!-- /profile-meta-block -->
+			</div> <!-- /container -->
+		</section>
+
+		<section>
+			<div class="container">
+				<div id="jsUserVolunteeringActivities">
+					<div class="heading-tiny-uppercase">Volunteering Activities</div>
+
 					</div>
-					</div> <!-- /profile-meta-block -->
-				</div> <!-- /container -->
-			</section>
 
-			<section>
-				<div class="container">
-					<div id="jsUserVolunteeringActivities">
-						<div class="heading-tiny-uppercase">Volunteering Activities</div>
-
+				<!--
+				<div class="right-column fr pt-30 pb-30 phn-width-full phn-pl-0 phn-pt-0">
+					<div class="profile-title bold uppercase ta-c">Donation Activities</div>
+					<div class="column-sections mt-30 mb-30 pb-15">
+						<div class="column-content mb-10">
+							<span class="desc-title blue">3 chairs</span> to <a class="desc-title green" href="school.php">Gian Jyoti Public School</a> in <span class="desc-title">Malleswaram, Bangalore</span>
 						</div>
-
-					<!--
-					<div class="right-column fr pt-30 pb-30 phn-width-full phn-pl-0 phn-pt-0">
-						<div class="profile-title bold uppercase ta-c">Donation Activities</div>
-						<div class="column-sections mt-30 mb-30 pb-15">
-							<div class="column-content mb-10">
-								<span class="desc-title blue">3 chairs</span> to <a class="desc-title green" href="school.php">Gian Jyoti Public School</a> in <span class="desc-title">Malleswaram, Bangalore</span>
-							</div>
-							<div class="mb-10">
-								For <a class="uppercase color-green-2" href="organisation-profile.php">Akshara Foundation</a>
-							</div>
-							<div class="color-grey-light fl">July 21, 2013</div>
-							<div class="clr"></div>
+						<div class="mb-10">
+							For <a class="uppercase color-green-2" href="organisation-profile.php">Akshara Foundation</a>
 						</div>
-						<div class="column-sections mt-30 mb-30 pb-15">
-							<div class="column-content mb-10">
-								<span class="desc-title blue">1 computer</span> to <a class="desc-title green" href="school.php" href="#">Gian Jyoti Public School</a> in <span class="desc-title">Davanagere</span>
-							</div>
-							<div class="mb-10">
-								For <a class="uppercase color-green-2" href="organisation-profile.php">Akshaya Patra</a>
-							</div>
-							<div class="color-grey-light fl">July 21, 2013</div>
-							<div class="clr"></div>
-						</div>
+						<div class="color-grey-light fl">July 21, 2013</div>
+						<div class="clr"></div>
 					</div>
-					-->
+					<div class="column-sections mt-30 mb-30 pb-15">
+						<div class="column-content mb-10">
+							<span class="desc-title blue">1 computer</span> to <a class="desc-title green" href="school.php" href="#">Gian Jyoti Public School</a> in <span class="desc-title">Davanagere</span>
+						</div>
+						<div class="mb-10">
+							For <a class="uppercase color-green-2" href="organisation-profile.php">Akshaya Patra</a>
+						</div>
+						<div class="color-grey-light fl">July 21, 2013</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+				-->
 			</div> <!-- /container -->
 		</section>
 	</section> <!-- /page-profile -->
-
 
 	{% include 'frontend_templates/profile.html' %}
 
