@@ -16,8 +16,8 @@
         //dropdown navigation
         $(".js-dropdown li:has(ul)").click(function(event){
             event.stopPropagation();
-            var thisNav = $(this).closest(".js-nav").find('ul');
-            $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-nav').children('li:has(ul)').removeClass('clicked');
+            var thisNav = $(this).closest(".js-dropdown").find('ul');
+            $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
             if (this == event.target || this == $(event.target).parent()[0]) {
                 $(this).toggleClass('clicked').children('ul').slideToggle(300);
                 $(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();
@@ -34,15 +34,15 @@
         //menu on mobile navigation    
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
-            $('.js-nav').toggleClass('nav-open');
+            $('.js-dropdown').toggleClass('nav-open');
         });
 
-        $('.js-nav').click(function(event){
+        $('.js-dropdown').click(function(event){
             event.stopPropagation();
         });
 
         $(window).click(function(){
-            $('.js-nav').removeClass("nav-open");
+            $('.js-dropdown').removeClass("nav-open");
         });
 
 
