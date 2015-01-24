@@ -20,8 +20,9 @@
   </ul>
 </script>
 <script type="text/html" id="tpl-tab-info">
-  <div class="school-data-wrap">
-    <div class="school-data-block">
+  <div class="container">
+    <div class="school-data-wrap">
+      <div class="school-data-block">
         {% if address_full %}
         <h4 class="heading-tiny-uppercase">Address</h4>
         <p>{{ address_full }}</p>
@@ -31,100 +32,102 @@
         <h4 class="heading-tiny-uppercase">Landmark</h4>
         <p>{{ landmark }}</p>
         {% endif %}
-    
+      
         <h4 class="heading-tiny-uppercase">School Information</h4>
         <table class="table-data">
-            <tr>
-                <td>Category</td>
-                <td>{{ cat }}</td>
-            </tr>
-            {% if buses %}
-            <tr>
-                <td>Buses</td>
-                <td>{{ buses }}</td>
-            </tr>
+          <tr>
+            <td>Category</td>
+            <td>{{ cat }}</td>
+          </tr>
+          {% if buses %}
+          <tr>
+            <td>Buses</td>
+            <td>{{ buses }}</td>
+          </tr>
+          {% endif %}
+          {% if identifiers %}
+          <tr>
+            <td>Identifiers</td>
+            <td>{{ identifiers }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td>Gender</td>
+            <td>{{ sex|capitalize }}</td>
+          </tr>
+
+          {% if type.id == 1 %}
+          <tr>
+            <td>Medium</td>
+            <td>{{ moi|capitalize }}</td>
+          </tr>
+            {% if dise_code %}
+          <tr>
+            <td>DISE</td>
+            <td>{{ dise_code }}</td>
+          </tr>
             {% endif %}
-            {% if identifiers %}
-            <tr>
-                <td>Identifiers</td>
-                <td>{{ identifiers }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <td>Gender</td>
-                <td>{{ sex|capitalize }}</td>
-            </tr>
-    
-            {% if type.id == 1 %}
-            <tr>
-                <td>Medium</td>
-                <td>{{ moi|capitalize }}</td>
-            </tr>
-                {% if dise_code %}
-            <tr>
-                <td>DISE</td>
-                <td>{{ dise_code }}</td>
-            </tr>
-                {% endif %}
-            {% endif %}
+          {% endif %}
         </table>
-    
-        <h4 class="heading-tiny-uppercase">Constituency Information</h4>
-        <table class="table-data">
-          <tr>
-            <td>MLA Constituency</td>
-            <td>
-                {% if assembly %}
-                    {{ assembly.name }}
-                {% else %}
-                    Data unavailable.
-                {% endif %}
-            </td>
-          </tr>
-          <!--
-          <tr>
-              <td>MLA Details</td>
-              <td>Dr. Ashwath Narayan (BJP)</td>
-          </tr>
-      -->
-          <tr>
-            <td>MP Constituency</td>
-            <td>
-                {% if parliament %}
-                    {{ parliament.name }}
-                {% else %}
-                    Data unavailable.
-                {% endif %}
-            </td>
-          </tr>
+      
+          <h4 class="heading-tiny-uppercase">Constituency Information</h4>
+          <table class="table-data">
+            <tr>
+              <td>MLA Constituency</td>
+              <td>
+                  {% if assembly %}
+                      {{ assembly.name }}
+                  {% else %}
+                      Data unavailable.
+                  {% endif %}
+              </td>
+            </tr>
             <!--
+            <tr>
+                <td>MLA Details</td>
+                <td>Dr. Ashwath Narayan (BJP)</td>
+            </tr>
+        -->
+            <tr>
+              <td>MP Constituency</td>
+              <td>
+                  {% if parliament %}
+                      {{ parliament.name }}
+                  {% else %}
+                      Data unavailable.
+                  {% endif %}
+              </td>
+            </tr>
+              <!--
+          <tr>
+            <td>MLA Details</td>
+            <td>DB Chandre Gowada (BJP)</td>
+          </tr>
+        -->
+        </table>
+      </div> <!-- school-data-block -->
+
+      <div class="school-photos-block">
+          {% if images.length > 0 %}
+          <h4 class="heading-tiny-uppercase">Photos</h4>
+          <div class="school-photos">
+            {% for image in images %}
+              <span data-rbox-image="{{ image }}" class="rbox_img_gal image-preview-gallery"><img src="{{ image }}"></span>
+            {% endfor %}
+          </div>
+          {% endif %}
+      </div>
+      <div class="clear"></div> 
+
+      <div class="base-spacing"></div> 
+      <table class="table-data table-data-source">
         <tr>
-          <td>MLA Details</td>
-          <td>DB Chandre Gowada (BJP)</td>
+          <td>Source</td>
+          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
         </tr>
-      -->
       </table>
-    </div> <!-- school-data-block -->
-
-    <div class="school-photos-block">
-        {% if images.length > 0 %}
-        <h4 class="heading-tiny-uppercase">Photos</h4>
-        <div class="school-photos">
-          {% for image in images %}
-            <span data-rbox-image="{{ image }}" class="rbox_img_gal image-preview-gallery"><img src="{{ image }}"></span>
-          {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-  </div> <!-- school-data-wrap -->
-
-  <div class="base-spacing"></div> 
-  <table class="table-data">
-    <tr>
-      <td>Source</td>
-      <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-    </tr>
-  </table>
+    </div> <!-- /school-data-wrap -->
+  </div> <!-- /container -->
 </script>
 <script type="text/html" id="tpl-tab-demographics">
   <div class="">

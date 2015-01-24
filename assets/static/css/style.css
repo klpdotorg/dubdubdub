@@ -3066,7 +3066,7 @@ body {
       display: table;
       clear: both; }
 
-  .school-data-block, .school-photos-block {
+  .school-data-block, .school-photos-block, .table-data-source {
     padding-left: 20px;
     padding-right: 20px; }
 

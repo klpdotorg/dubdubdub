@@ -284,7 +284,7 @@
 		@include grid-parent;
 	}
 
-	.school-data-block, .school-photos-block {
+	.school-data-block, .school-photos-block, .table-data-source {
 		@include grid-child;
 	}
 
