@@ -11,18 +11,19 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
     EmailVerificationView, VolunteerMapPageView)
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
 
-    #home page
+    # home page
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
         extra_context={
-                # anything put into this dict will be availabe in template
-                'homepage': True
-                }
+            # anything put into this dict will be availabe in template
+            'homepage': True
+            }
         ), name='home'),
 
-    #about pages
+    # about pages
     url(r'^about/$', StaticPageView.as_view(
         template_name='aboutus.html',
         extra_context={
@@ -62,7 +63,7 @@ urlpatterns = patterns('',
         ), name='disclaimer'),
     url(r'text/disclaimer/$', RedirectView.as_view(url='/disclaimer')),
 
-    #reports page
+    # reports page
     url(r'^reports/$', StaticPageView.as_view(
         template_name='reports.html',
         extra_context={
@@ -76,7 +77,7 @@ urlpatterns = patterns('',
         ), name='reports'),
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
 
-    #data page
+    # data page
     url(r'^data/$', StaticPageView.as_view(
         template_name='data.html',
         extra_context={
@@ -91,7 +92,7 @@ urlpatterns = patterns('',
     url(r'text/data$', RedirectView.as_view(url='/data')),
     url(r'listFiles/2$', RedirectView.as_view(url='/data')),
 
-    #programme pages
+    # programme pages
     url(r'^programmes/reading/$', StaticPageView.as_view(
         template_name='reading_programme.html',
         extra_context={
@@ -195,14 +196,6 @@ urlpatterns = patterns('',
     #         'hide_footer': True
     #     }), name='volunteer_map'),
 
-    url(r'^school$', StaticPageView.as_view(
-        template_name='school.html',
-        extra_context={
-            #'header_full_width': True,
-            #'header_fixed': True,
-            #'hide_footer': True
-        }), name='school_detail'),
-
     url(r'^volunteer-map$', VolunteerMapPageView.as_view(
         template_name='volunteer-map.html',
         extra_context={
@@ -221,18 +214,23 @@ urlpatterns = patterns('',
             ]
         }), name='volunteer_map'),
 
-    url(r'^school/(?P<pk>[0-9]+)/$', SchoolPageView.as_view(), name='school_page'),
+    url(r'^school/(?P<pk>[0-9]+)/$',
+        SchoolPageView.as_view(), name='school_page'),
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$$', RedirectView.as_view(
         pattern_name='school_page',
         query_string=True
     ), name='old_school_page'),
 
-    url(r'^users/verify_email', EmailVerificationView.as_view(), name='user_email_verify'),
+    url(r'^users/verify_email',
+        EmailVerificationView.as_view(), name='user_email_verify'),
 
-    url(r'^profile/(?P<pk>[0-9]+)/$', ProfilePageView.as_view(), name='profile_page'),
+    url(r'^profile/(?P<pk>[0-9]+)/$',
+        ProfilePageView.as_view(), name='profile_page'),
 
-    url(r'^organisation/(?P<pk>[0-9]+)/$', OrganizationPKPageView.as_view(), name='organization_page'),
-    url(r'^organisation/(?P<slug>[-a-zA-Z0-9_]+)/$', OrganizationSlugPageView.as_view(), name='organization_page_slug'),
+    url(r'^organisation/(?P<pk>[0-9]+)/$',
+        OrganizationPKPageView.as_view(), name='organization_page'),
+    url(r'^organisation/(?P<slug>[-a-zA-Z0-9_]+)/$',
+        OrganizationSlugPageView.as_view(), name='organization_page_slug'),
 
     url(r'^organisation/(?P<pk>[0-9]+)/edit$',
         OrganizationEditPageView.as_view(),
@@ -246,30 +244,35 @@ urlpatterns = patterns('',
         VolunteerActivityEditPageView.as_view(),
         name='volunteeractivity_edit_page'),
 
-    url(r'^profile/(?P<pk>[0-9]+)/edit$', ProfileEditPageView.as_view(), name='profile_edit_page'),
+    url(r'^profile/(?P<pk>[0-9]+)/edit$',
+        ProfileEditPageView.as_view(), name='profile_edit_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {
-        'template_name': 'users/password-reset-confirm.html'
+            'template_name': 'users/password-reset-confirm.html'
         }, name='password_reset_confirm'),
 
-    url(r'^password-reset/done/$', 'django.contrib.auth.views.password_reset_complete', {
-        'template_name': 'users/password-reset-complete.html'
+    url(r'^password-reset/done/$',
+        'django.contrib.auth.views.password_reset_complete', {
+            'template_name': 'users/password-reset-complete.html'
         },
         name='password_reset_complete'),
 
     url(r'^blog-feed$', 'schools.views.blog_feed', name='blog_feed'),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^grappelli/', include('grappelli.urls')),
 
     url(r'^api/v1/', include('dubdubdub.api_urls')),
-    url(r'^api-docs/', include('rest_framework_swagger.urls')),
+    url(r'^api/docs/', include('rest_framework_swagger.urls')),
 )
 
 if settings.DEBUG:
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
-   )
+        url(r'^favicon\.ico$', 'django.views.static.serve', {
+            'url': '/static/images/favicon.ico'
+        }),
+    )

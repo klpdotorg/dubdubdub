@@ -137,17 +137,51 @@
             return data;
         },
 
+        populateForm: function(fields, data) {
+            _(_(fields).keys()).each(function(key) {
+                var $field = fields[key];
+                if ($field.is('[data-type=image]')) {
+                    if (data[key]) {
+                        var $imagePreview = $field.parent().find('.js-image-preview');
+
+                        //FIXME: avoid hard-coding "/media/", get from settings or so
+                        var imageSrc = "/media/" + data[key];
+                        $imagePreview.attr("src", imageSrc);
+                    }
+                } else {    
+                    $field.val(data[key]);
+                }
+            });
+        },
+
         getFormData: function(fields) {
             var data = {};
             _(_(fields).keys()).each(function(key) {
-                data[key] = fields[key].val();
+                var $field = fields[key];
+                if ($field.attr('type') === 'checkbox') {
+                    data[key] = $field.is(":checked");
+                } else if ($field.is('[data-type=image]')) {
+                    var imageData = $field.parent().find('.js-image-preview').attr('src');
+                    if (imageData) {
+                        //remove first part of b64data
+                        var fileData = imageData.split(",")[1];
+                        data[key] = fileData;
+                    } else {
+                        data[key] = ''; //FIXME: UGLY!!
+                    }
+                } else {
+                    data[key] = fields[key].val();
+                }
             });
             return data;
         },
 
         invalidateField: function($field, message) {
+            //remove existing errors
+            $field.parent().find('.error-message').remove();
+
             $field.addClass('error');
-            var $error = $('<div />').addClass('error-message mt-5');
+            var $error = $('<div />').addClass('js-error-message error-message');
             $error.text(message);
             $field.after($error);
         },
@@ -176,7 +210,7 @@
         clearValidationErrors: function(formID) {
             var $form = $('#' + formID);
             $form.find('.error').removeClass('error');
-            $form.find('.error-message').remove();
+            $form.find('.js-error-message, .error-message').remove();
         },
 
         clearForm: function(formID) {

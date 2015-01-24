@@ -4,6 +4,7 @@
     t.open = function(callback) {
         postLoginCallback = callback;
         klp.openModal = t;
+        $('.modal-overlay').addClass('show');
         $('.js-login-modal').addClass('show');
         showSignup();
     };
@@ -12,6 +13,7 @@
         //showSignup();
         // console.log("login modal close called");
         $('.js-login-modal').removeClass('show');
+        $(".modal-overlay").removeClass("show");
         klp.utils.clearForm('signupForm');
         klp.utils.clearForm('loginForm');
         klp.utils.clearForm('forgotPasswordForm');
@@ -79,7 +81,8 @@
                 'last_name': $('#signupLastName'),
                 'mobile_no': $('#signupPhone'),
                 'email': $('#signupEmail'),
-                'password': $('#signupPassword')
+                'password': $('#signupPassword'),
+                'opted_email': $('#signupOptedEmail')
             };
 
             var data = klp.utils.getFormData(fields);

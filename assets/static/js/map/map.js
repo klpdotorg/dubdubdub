@@ -90,8 +90,12 @@
                     var searchResponse = {
                         results: [
                         {
-                            text: "Schools",
-                            children: makeResults(data.schools.features, 'school')
+                            text: "Pre-Schools",
+                            children: makeResults(data.pre_schools.features, 'school')
+                        },
+                        {
+                            text: "Primary Schools",
+                            children: makeResults(data.primary_schools.features, 'school')
                         },
                         {
                             text: "Boundaries",
@@ -609,7 +613,7 @@
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-control filter-control');
                 container.title = 'Filter Schools';
-                var button = "<a class='filter-tool' href='#'></a>";
+                var button = "<a class='js-filter-tool filter-tool' href='#'></a>";
                 container.innerHTML = button;
                 L.DomEvent
                 .addListener(container, 'click', L.DomEvent.stopPropagation)

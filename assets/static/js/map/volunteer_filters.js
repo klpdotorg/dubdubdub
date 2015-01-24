@@ -9,7 +9,7 @@
         //     e.preventDefault();
         //     t.show();
         // });
-        $('.volunteer-filters-dropdown').easyDropDown({
+        $('.js-volunteer-filters-dropdown').easyDropDown({
             onChange: function(selected) {
                 var filterName = $(this).attr('name');
                 var selectedValue = selected.value;

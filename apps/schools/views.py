@@ -16,6 +16,10 @@ class SchoolPageView(DetailView):
         context = super(SchoolPageView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the books
         school = context['object']
+
+        #FIXME: there really should be a better way of handling school / preschool
+        #Ideally, this would be better naming of "Boundary Type" and then just use that
+        school_type = school.schooldetails.type.name
         context['breadcrumbs'] = [
             {
                 'url': reverse('map'),
@@ -23,7 +27,7 @@ class SchoolPageView(DetailView):
             },
             {
                 'url': reverse('school_page', kwargs={'pk': school.id}),
-                'name': 'School: %s' % (school.name,)
+                'name': '%s: %s' % (school_type, school.name,)
             }
         ]
         return context
@@ -33,4 +37,3 @@ def blog_feed(request):
     url = settings.BLOG_FEED_URL
     json = urllib2.urlopen(url).read()
     return HttpResponse(json)
-

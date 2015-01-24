@@ -3,10 +3,22 @@
         var $profileXHR = klp.api.authDo("users/profile");
         $profileXHR.done(function(data) {
             // console.log("data", data);
-            $('#firstName').val(data.first_name);
-            $('#lastName').val(data.last_name);
-            $('#email').val(data.email);
-            $('#mobileNo').val(data.mobile_no);
+            var fields = {
+                'first_name': $('#firstName'),
+                'last_name': $('#lastName'),
+                'email': $('#email'),
+                'mobile_no': $('#mobileNo'),
+                'about': $('#about'),
+                'twitter_handle': $('#twitterHandle'),
+                'fb_url': $('#fbURL'),
+                'website': $('#website'),
+                'photos_url': $('#photosURL'),
+                'youtube_url': $('#youtubeURL'),
+                'image': $('#image')
+            };
+
+            $('#image').imagePreview();
+            klp.utils.populateForm(fields, data);
 
             var profileFormID = 'userProfileForm';
             $('#' + profileFormID).submit(function(e) {
@@ -15,12 +27,6 @@
                 }
                 klp.utils.clearValidationErrors(profileFormID);
 
-                var fields = {
-                    'first_name': $('#firstName'),
-                    'last_name': $('#lastName'),
-                    'email': $('#email'),
-                    'mobile_no': $('#mobileNo')
-                };
 
                 var data = klp.utils.getFormData(fields);
 
@@ -35,8 +41,11 @@
                     editXHR.fail(function(err) {
                         //console.log("error saving", err);
                         var errors = JSON.parse(err.responseText);
+                        klp.utils.alertMessage("Please correct errors and re-submit", "error");
                         klp.utils.invalidateErrors(fields, errors);
                     });
+                } else {
+                    klp.utils.invalidateErrors(fields, errors);
                 }
             });
 

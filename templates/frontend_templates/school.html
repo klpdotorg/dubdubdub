@@ -114,7 +114,7 @@
         {% if images.length > 0 %}
         <h4>Photos</h4>
             {% for image in images %}
-            <a href="{{ image }}" class="gallery"><img src="{{ image }}" alt=""></a>
+              <span data-rbox-image="{{ image }}" class="rbox_img_gal"><img src="{{ image }}"></span>
             {% endfor %}
         {% endif %}
         <div class="clr"></div>
@@ -132,7 +132,7 @@
 <script type="text/html" id="tpl-tab-demographics">
     <div class="fl-desktop-tablet">
         <h4>Student Information</h4>
-        <div class="no-data klp" style="display:none;">
+        <div class="no-data js-klp" style="display:none;">
             <p> No data available </p>
         </div>
 
@@ -186,7 +186,7 @@
 
     {% if type_name != 'preschool' %}
     <h4 class="mar_top_25">DISE Student Profile</h4>
-    <div class="no-data dise" style="display:none;">
+    <div class="no-data js-dise" style="display:none;">
         <p> No data available </p>
     </div>
     <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
@@ -218,7 +218,7 @@
         <div class="clr"></div>
     </div>
     {% endif %}
-    
+
     <br /><br />
     <table class="info_data_table label_small">
         <tr>
@@ -321,19 +321,19 @@
     </div>
 
     <div class="options-wrapper">
-        <select name="" id="select_library_browse" class="apply-selectboxit">
+        <select name="" id="select_library_browse" class="js-apply-selectboxit">
             <option value="level" selected>Borrow By Level</option>
             <option value="language">Borrow By Language</option>
             <option value="aggregate">Aggregate</option>
         </select>
 
-        <select name="" id="select_library_year" class="apply-selectboxit">
+        <select name="" id="select_library_year" class="js-apply-selectboxit">
             {% for year in years %}
                 <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
             {% endfor %}
         </select>
 
-        <select name="" id="select_library_class" class="apply-selectboxit">
+        <select name="" id="select_library_class" class="js-apply-selectboxit">
         {% for klass in klasses %}
             <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
         {% endfor %}
@@ -591,8 +591,8 @@
                 {% if story.comments %}
                     <p class="text">{{ story.comments }}</p>
                 {% endif %}
-                {% if story.date %}
-                <div class="timestamp">Shared on : {{ story.date|date('jS F, Y') }}</div>
+                {% if story.date_of_visit %}
+                <div class="timestamp">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
                 {% endif %}
             </div>
             {% endfor %}
@@ -664,9 +664,9 @@
             <input type='tel' name="telephone" id="telephone" />
         </div>
         <div class="field-container">
-            <label for="date">Date:</label>
-            <input type='date' name="date" id="date" />
-        </div>        
+            <label for="date">Date of Visit:</label>
+            <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD"/>
+        </div>
         <div class="field-container">
             <label for="comments_id">Comments:</label>
             <textarea name="comments" id="comments_id" />
@@ -701,15 +701,15 @@
         </div>
         <div class="field-container">
             <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+            <img class="imagePreview js-image-preview" width="100" />
         </div>
         <div class="field-container">
             <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+            <img class="imagePreview js-image-preview" width="100" />
         </div>
         <div class="field-container">
             <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+            <img class="imagePreview js-image-preview" width="100" />
         </div>
 
         <div class="field-container">

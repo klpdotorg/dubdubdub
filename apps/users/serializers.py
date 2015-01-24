@@ -6,6 +6,7 @@ from .models import User, Organization, UserOrganization, VolunteerActivity,\
 from schools.serializers import SchoolListSerializer
 from django.contrib.auth import login, authenticate, logout
 from common.serializers import KLPSerializer
+from drf_extra_fields.fields import Base64ImageField
 
 
 class OrganizationBasicSerializer(serializers.ModelSerializer):
@@ -107,6 +108,7 @@ class UserVolunteerActivityNestedSerializer(serializers.ModelSerializer):
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
+    logo = Base64ImageField(required=False)
     volunteer_activities = VolunteerActivitySerializer(
         source='volunteeractivity_set',
         read_only=True,
@@ -119,13 +121,19 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True
     )
 
+    def __init__(self, *args, **kwargs):
+        super(OrganizationSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['url', 'blog_url', 'fb_url', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
     class Meta:
         #exclude = ('users',)
         model = Organization
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    image = Base64ImageField(required=False)
     token = serializers.Field(source='get_token')
     volunteer_activities = UserVolunteerActivityNestedSerializer(
         source='uservolunteeractivity_set',
@@ -138,38 +146,18 @@ class UserSerializer(serializers.ModelSerializer):
         many=True
     )
 
+    def __init__(self, *args, **kwargs):
+        super(UserSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['fb_url', 'website', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
+
     def restore_object(self, attrs, instance=None):
-        email = attrs.get('email', None)
-        password = attrs.get('password', None)
-        extras = {
-            'mobile_no': attrs.get('mobile_no', None),
-            'first_name': attrs.get('first_name', None),
-            'last_name': attrs.get('last_name', None)
-        }
-        request = self.context['request']
-
-        #create new user
-        if not instance:
-            user = User.objects.create_user(email, password, **extras)
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            user = authenticate(username=email, password=password)
-            login(request, user)
-            return user
-        else:
-            if request.user.id != instance.id \
-                    and not request.user.is_superuser:
-                raise PermissionDenied()
-            for key in extras.keys():
-                if extras[key] is not None:
-                    setattr(instance, key, extras[key])
-            if password and password != '':
-                instance.set_password(password)
-            instance.save()
-            return instance
-
-    def save_object(self, *args, **kwargs):
-        pass
+        user = super(UserSerializer, self).restore_object(attrs, instance)
+        if attrs.has_key('password'):
+            user.set_password(attrs['password'])
+        return user
 
     def validate_mobile_no(self, attrs, source):
         value = attrs[source]
@@ -186,8 +174,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
-                  'last_name', 'password', 'token', 'volunteer_activities',
-                  'organizations')
+                  'last_name', 'password', 'opted_email', 'token', 'volunteer_activities',
+                  'image', 'organizations', 'about', 'twitter_handle', 'fb_url', 
+                  'website', 'photos_url', 'youtube_url',)
         write_only_fields = ('password',)
 
 
@@ -208,7 +197,9 @@ class OtherUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organizations',)
+        fields = ('id', 'first_name', 'last_name', 'volunteer_activities', 'organizations',
+                  'about', 'twitter_handle', 'fb_url', 
+                  'website', 'photos_url', 'youtube_url',)
 
 
 

@@ -8,6 +8,10 @@ from django.db.models import Q
 
 
 class AdminDetails(KLPDetailAPIView, CacheMixin):
+    """Returns details for a particular admin level
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
     lookup_url_kwarg = 'id'
@@ -17,6 +21,10 @@ class AdminDetails(KLPDetailAPIView, CacheMixin):
 
 
 class AssemblyDetails(KLPDetailAPIView, CacheMixin):
+    """Returns details for a particular Assembly level
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = AssemblySerializer
     bbox_filter_field = 'coord'
     lookup_url_kwarg = 'id'
@@ -26,6 +34,10 @@ class AssemblyDetails(KLPDetailAPIView, CacheMixin):
 
 
 class ParliamentDetails(KLPDetailAPIView, CacheMixin):
+    """Returns details for a particular Parliamentary level
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = ParliamentSerializer
     bbox_filter_field = 'coord'
     lookup_url_kwarg = 'id'
@@ -35,6 +47,10 @@ class ParliamentDetails(KLPDetailAPIView, CacheMixin):
 
 
 class PincodeDetails(KLPDetailAPIView, CacheMixin):
+    """Returns details for a particular Pincode
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = PincodeSerializer
     bbox_filter_field = 'coord'
     lookup_url_kwarg = 'pincode'
@@ -45,9 +61,11 @@ class PincodeDetails(KLPDetailAPIView, CacheMixin):
 
 
 class Admin1s(KLPListAPIView, CacheMixin):
-    '''
-        Returns a list of all districts (id and name)
-    '''
+    """Returns a list of districts
+
+    school_type -- [all]/preschools/primaryschools - school types to return
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -68,13 +86,15 @@ class Admin1s(KLPListAPIView, CacheMixin):
 
 
 class Admin2sInsideAdmin1(KLPListAPIView):
-    '''
-        Returns a list of all blocks/projects inside given district
-        (id and name)
+    """
+    Returns a list of all blocks/projects inside given district
+    (id and name)
 
-        PreSchool Example:
-            http://localhost:8001/api/v1/boundary/admin1/8773/admin2
-    '''
+    PreSchool Example:
+        http://localhost:8001/api/v1/boundary/admin1/8773/admin2
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -87,10 +107,12 @@ class Admin2sInsideAdmin1(KLPListAPIView):
 
 
 class Admin3sInsideAdmin1(KLPListAPIView):
-    '''
-        Returns a list of all clusters/circles
-        inside given district (id and name)
-    '''
+    """
+    Returns a list of all clusters/circles
+    inside given district (id and name)
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -104,9 +126,11 @@ class Admin3sInsideAdmin1(KLPListAPIView):
 
 
 class Admin2s(KLPListAPIView, CacheMixin):
-    '''
-        Returns a list of all blocks (id and name)
-    '''
+    """Returns a list of blocks/projects
+
+    school_type -- [all]/preschools/primaryschools - school types to return
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -127,9 +151,10 @@ class Admin2s(KLPListAPIView, CacheMixin):
 
 
 class Admin3sInsideAdmin2(KLPListAPIView):
-    '''
-        Returns a list of all clusters inside given block (id and name)
-    '''
+    """Returns a list of all clusters/circles inside given block/project
+
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundarySerializer
     bbox_filter_field = 'boundarycoord__coord'
 
@@ -142,9 +167,11 @@ class Admin3sInsideAdmin2(KLPListAPIView):
 
 
 class Admin3s(KLPListAPIView, CacheMixin):
-    '''
-        Returns a list of all districts (id and name)
-    '''
+    """Returns a list of custers/circles
+
+    school_type -- [all]/preschools/primaryschools - school types to return
+    bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
+    """
     serializer_class = BoundaryWithParentSerializer
     bbox_filter_field = 'boundarycoord__coord'
 

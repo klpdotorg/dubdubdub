@@ -144,7 +144,9 @@
 		&.right-align{
 			float: right; text-align: right;
 			.item{
-				float: right; margin-left: 50px;
+				float: right; padding-left: 40px;
+				width: 33.33%;
+				@include box-sizing(border-box);
 			}
 		}
 	}

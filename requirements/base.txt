@@ -34,3 +34,9 @@ django-rest-swagger
 
 #http://django-compressor.readthedocs.org/ (for js / css minification)
 django-compressor==1.4
+
+#https://github.com/Hipo/drf-extra-fields (for Base64ImageField)
+django-extra-fields==0.1
+
+python-dateutil==2.3
+pytz==2014.10

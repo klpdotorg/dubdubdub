@@ -17,12 +17,12 @@ class StoryImageInline(admin.StackedInline):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'entered_timestamp', 'school', 'is_verified',)
+    list_display = ('id', 'email', 'created_at', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
     search_fields = ('school__name',)
     raw_id_fields = ('school',)
-    ordering = ['-entered_timestamp']
+    ordering = ['-created_at']
     inlines = [AnswerInline, StoryImageInline]
 
     def get_search_results(self, request, queryset, search_term):
@@ -45,8 +45,25 @@ class StoryImageAdmin(admin.ModelAdmin):
     list_editable = ('is_verified',)
 
 
-admin.site.register([Answer, Question, Questiongroup, QuestiongroupQuestions,
+class QuestionAdmin(admin.ModelAdmin):
+    search_fields = ('text',)
+    list_display = ('text', 'question_type', 'is_active')
+    list_editable = ('is_active',)
+
+
+class QuestionInline(admin.TabularInline):
+    model = QuestiongroupQuestions
+    readonly_fields = ('question',)
+
+class QuestiongroupAdmin(admin.ModelAdmin):
+    list_display = ('source', 'version')
+    inlines = [QuestionInline, ]
+    readonly_fields = ('source', 'version',)
+
+admin.site.register([Answer,
                     QuestionType, Source])
 
 admin.site.register(Story, StoryAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Questiongroup, QuestiongroupAdmin)
 admin.site.register(StoryImage, StoryImageAdmin)

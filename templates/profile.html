@@ -14,7 +14,9 @@
 	<section class="page-profile profile-head pt-30 pb-30">
 		<div class="container">
 			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
-				<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg" style="visibility:hidden;">
+				{% if object.image %}
+				<img class="profile-img fl mr-10" src="{{ object.image.url }}">
+				{% endif %}
 				<div class="fl mt-5 mr-10">
 					<h3 class="desc-title">{{ object.first_name }} {{ object.last_name }}</h3>
 					<p class="location mb-5">
@@ -23,11 +25,51 @@
 					<a href="/profile/{{ object.id }}/edit" class="button-hollow mt-0" id="editProfileBtn" style="display:none;">Edit Profile</a>
 				</div>
 				<div class="clr"></div>
-				<!--
 				<p class="profile-description">
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+					{{ about }}
+					{% if object.has_links %}
+					<div>
+						<div class="profile-title uppercase mb-5"><strong>Links:</strong></div>
+						<div>
+							{% if object.twitter_handle %}
+							<span>
+								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
+									<span class="fa fa-twitter"></span>
+								</a>
+							</span>
+							{% endif %}
+							{% if object.fb_url %}
+							<span>
+								<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
+									<span class="fa fa-facebook"></span>
+								</a>
+							</span>
+							{% endif %}
+							{% if object.website %}
+							<span>
+								<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
+									<span class="fa fa-laptop"></span>
+								</a>
+							</span>
+							{% endif %}
+							{% if object.photos_url %}
+							<span>
+								<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
+									<span class="fa fa-image"></span>
+								</a>
+							</span>
+							{% endif %}
+							{% if object.youtube_url %}
+							<span>
+								<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
+									<span class="fa fa-video-camera"></span>
+								</a>
+							</span>
+							{% endif %}
+						</div>
+					</div>
+					{% endif %}
 				</p>
-				-->
 			</div>
 			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
 				<div class="profile-title bold uppercase">Activities</div>
