@@ -156,23 +156,6 @@
         				<div class="color-green bold uppercase">Admin</div>
         			</div>
         			<div class="div-table-cell action ta-r">
-        				<div class="action-dropdown fr">
-        					<a href="#" class="dropdown-trigger"></a>
-        					<ul class="action-dropdown-list ta-l">
-        						<li>
-        							<a href="#">Option 1</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 2</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 3</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 4</a>
-        						</li>
-        					</ul>
-        				</div>
         				<a href="#" class="button small grey fr mt-0 mr-10">Remove Admin</a>
         				<div class="clr"></div>
         			</div>
@@ -187,23 +170,6 @@
         				<div class="bold uppercase">Member</div>
         			</div>
         			<div class="div-table-cell action ta-r">
-        				<div class="action-dropdown fr">
-        					<a href="#" class="dropdown-trigger"></a>
-        					<ul class="action-dropdown-list ta-l">
-        						<li>
-        							<a href="#">Option 1</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 2</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 3</a>
-        						</li>
-        						<li>
-        							<a href="#">Option 4</a>
-        						</li>
-        					</ul>
-        				</div>
         				<a href="#" class="button-hollow fr mt-0 mr-10">Make Admin</a>
         				<div class="clr"></div>
         			</div>
@@ -248,22 +214,4 @@
   </div> <!-- /tab-wrap -->
 </section>
 {% include 'frontend_templates/organization-edit.html' %}
-  <script type="text/javascript">
-    	$(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
-    		if($(document).width() < 768){
-           return true;
-        }
-    
-        e.preventDefault();
-    
-        var $trigger = $(this).closest(".action-dropdown");
-    
-        if(!$trigger.hasClass("show-drop")) {
-          $trigger.addClass("show-drop");
-        } else {
-         	$trigger.removeClass("show-drop");
-        }
-    	});
-    }
-  </script>
 {% endblock %}

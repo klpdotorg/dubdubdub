@@ -17,17 +17,24 @@ the css in the head of map.html
 
 //maybe a class for border-color
 
-//tab code is repeated in too many places
-//can we have a conditional for object about description for profile edit and organisation edit?
+
+
 //horizontal scroll bar on info tab in school on desktop also
-//pie-chart-inner in school (frontend templates, what in the world is that; does it affect anything?)
-//school demographics: what is this total that's showing up on the page? can't see on dev
+
 //modularize icon boy girl and total later, add same classes to the map popup
-//let's only show the legend on infrastructure tab if left column info is present?
+
+//let's only show the legend on infrastructure tab if left column info is present: FILE A BUG: Sanj
+
 //make make border: 1px solid $grey-cloud modular;
-//pickadate not showing on share story although the class is there
+
+//pickadate not showing on share story although the class is there: FILE BUG: Sanj to fix
+
 //Share your story: Information from schools visits: Check the table below shows the right classes
-//test the volunteer tab content in school tabs as well, not formatted fully
+
+// Share your story: Style comments; http://localhost:8001/school/33141/#?tab=share-story
+
+//test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
+
 // organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js, in  and also in volunteer activity/form base, /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
 // organisation/1/volunteer_activity: need to test volunteer tab styling
