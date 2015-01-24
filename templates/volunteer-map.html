@@ -11,26 +11,15 @@
 		 	<script type="text/javascript" src="{% static 'js/volunteer_map/volunteer_map.js' %}"></script>
 			<script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
     {% endcompress %}
-
-    <!-- <script type="text/javascript" src="js/map.js"></script> -->
     <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
-
-   <style type="text/css">
-		@media only screen and (min-width: 769px) {
-			.main-header {
-				position: fixed;
-			}
-		}
-   </style>
-
 {% endblock %}
 
 {% block subheader %}
 	<div class="map-subheader-wrapper subheader-wrapper js-show-volunteer-filters">
 		<div class="form-base subheader-content">
-			<div class="filter-item filter-search">
+			<div class="filter-item">
 				<input type="text" name="search" placeholder="Search for a location" class="search-input input-text">
-				<a class="button-grey button-filter-volunteer js-toggle-filters">Filters</a>
+				<a class="button-filter-volunteer js-toggle-filters">Filters</a>
 			</div>
 
 			<div class="volunteer-filters-wrapper js-volunteer-filters-wrapper">

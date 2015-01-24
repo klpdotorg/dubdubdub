@@ -708,10 +708,11 @@ body {
 
 .button-filter-volunteer {
   height: $form-input-height;
-  font-size: 100%;;
+  font-size: 100%;
   vertical-align: top;
   margin-left: $base-spacing-sm;
   padding-top: 12px;
+  @extend %button-grey;
 }
 
 .volunteer-filters-wrapper, .map-volunteer-canvas-full {

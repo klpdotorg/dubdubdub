@@ -649,12 +649,12 @@ a.button {
 }
 
 
-.button-grey {
+.button-grey, %button-grey {
   @extend %button;
   background-color: $grey-steel;
 }
 
-.button-orange {
+.button-orange, %button-orange {
   @extend %button;
   background-color: $brand-orange;
 }

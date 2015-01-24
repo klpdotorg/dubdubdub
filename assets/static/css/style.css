@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -294,7 +294,7 @@ sub {
 .brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
-.brand-blue-bg, .icon-boy, .button, .button-grey, .button-orange, .alert, .picker__day--highlighted:hover,
+.brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .gender-item-boy .k-icon {
@@ -318,7 +318,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
@@ -410,7 +410,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
+.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -504,7 +504,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -596,7 +596,7 @@ hr {
     right: 7px; }
 
 /*-------------------------------------*/
-.button, .button-grey, .button-orange, .button-hollow, .nav-trigger, .profile-options {
+.button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options {
   font-size: 75%;
   text-transform: uppercase;
   line-height: 1;
@@ -605,16 +605,16 @@ hr {
   cursor: pointer;
   outline: none; }
 
-.button, .button-grey, .button-orange {
+.button, .button-grey, .button-filter-volunteer, .button-orange {
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
   position: relative;
   border: none; }
-  .button:hover, .button:focus, .button-grey:hover, .button-orange:hover, .button-grey:focus, .button-orange:focus {
+  .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus {
     box-shadow: none;
     top: 1px; }
 
-.button-grey {
+.button-grey, .button-filter-volunteer {
   background-color: #898989; }
 
 .button-orange {
