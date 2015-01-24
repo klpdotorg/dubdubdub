@@ -5,7 +5,6 @@
     t.init = function() {
         $(document).on("click", ".js-volunteerHereBtn", function(e) {
             e.preventDefault();
-            // console.log("clicked volunteer here");
             var $this = $(this);
             var activityId = $this.attr("data-id");
             klp.auth.requireLogin(function() {
@@ -56,7 +55,6 @@
     };
 
     function showConfirmModal(data) {
-        console.log("show confirm modal", data);
         var userId = klp.auth.getId();
         for (var i=0; i<data.users.length;i++) {
             if (parseInt(userId) === data.users[i].user_details.id) {
@@ -69,11 +67,7 @@
         //$('body').append(html);
         var activityId = data.id;
         klp.utils.openModal(html);
-        //$('.js-volunteerHereModal').addClass('show');
-        $('.js-volunteerHereModal').find('.confirmationStep').css({
-            'visibility': 'inherit',
-            'opacity': '1'
-        });
+
         $('.jsConfirmVolunteerBtn').click(function(e) {
             e.preventDefault();
             doConfirm(activityId);

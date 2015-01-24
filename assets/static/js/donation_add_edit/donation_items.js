@@ -2,7 +2,8 @@
     var t = klp.donation_items = {};
     var template,
         $table,
-        urlBase = 'donation_requirements/'
+        $tbody,
+        urlBase = 'donation_requirements/';
 
     /*
         Item class
@@ -21,7 +22,7 @@
             this.$.data("item", this);
             var html = template(this.data);
             this.$.html(html);
-            $table.append(this.$);
+            $tbody.append(this.$);
             this.$name = this.$.find('.js-name');
             this.$quantity = this.$.find('.js-quantity');
             this.$unit = this.$.find('.js-unit');
@@ -132,6 +133,7 @@
     t.init = function() {
         template = swig.compile($('#tplDonationItem').html());
         $table = $('#donationItemsTable');
+        $tbody = $table.find('tbody');
         $('#addDonationItemBtn').click(function(e) {
             e.preventDefault();
             var item = new t.Item();

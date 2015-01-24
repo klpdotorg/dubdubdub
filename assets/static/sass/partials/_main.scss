@@ -32,21 +32,15 @@ the css in the head of map.html
 
 //test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
 
-// frontend templates/volunteer.html: What is this template? need to style it? not done
 
-// frontend templates/volunteer page: need to style comments, heeelp
 
-// frontend templates/org edit: {{ item.quantity }}{{ item.unit }}: Sanj, need help to test
+// organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
-// organisation/1/volunteer_activity: need to test volunteer tab styling
 
-///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
-
-// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters and input number
+// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters: thead and tbody; and input number
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
-//enhancement: make tab accordion  accordion look more buttonyee
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -770,26 +764,9 @@ body {
 
 .sidebar-volunteer-map {
   background-color: $grey-mist;
+  
+  @extend %scrollbar-webkit;
 }
-
-.sidebar-volunteer-map::-webkit-scrollbar {
-  width: 12px;
-  height: 10px;
-}
- 
-.sidebar-volunteer-map::-webkit-scrollbar-track {
-  background: lighten($grey-cloud, 8%);
-  border-radius: 3px;
-}
- 
-.sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  background: $grey-cloud;
-}
-
-.sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-}
-
 
 .list-sidebar {
   border-top: 1px solid $white;
@@ -1053,25 +1030,28 @@ body {
 }
 
 .table-base-donation-items {
-  .icon-button-round {
-    color: $grey-silver;
-    counter-reset: slideNum;
+  counter-reset: counter-rows;
+
+  tbody tr {
+    counter-increment: counter-rows;
   }
 
   td {
     vertical-align: top;
 
     &:first-of-type {
-      counter-increment: slideNum;
-
       &:before {
-        content: "#" counter(slideNum);
+        content: "#" counter(counter-rows);
       }
     }
 
     &:last-of-type {
       vertical-align: middle;
     }
+  }
+
+  input[type="number"] {
+    width: 80px;
   }
 
 }

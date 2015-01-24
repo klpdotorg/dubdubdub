@@ -13,9 +13,12 @@
           {% endif %}
         </div>
         <p class="heading-tiny">{{ story.date|date('jS F, Y') }}</p>
+        
+        {% if story.comments %}
         <p>
-            {{ story.comments }}
+          {{ story.comments }}
         </p>
+        {% endif %}
         <a href="/schoolpage/school/{{ story.school }}#?tab=share-story" class="volunteer-story-link">Read more</a>
     {% endfor %}
     </ul>

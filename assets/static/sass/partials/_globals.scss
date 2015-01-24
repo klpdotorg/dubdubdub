@@ -468,6 +468,11 @@ img, video {
 }
 
 //table
+.table-responsive-wrap {
+  overflow-y: auto;
+  @extend %scrollbar-webkit;
+}
+
 .table-base {
   border-collapse: collapse;
   border-spacing: 0;
@@ -521,13 +526,10 @@ hr {
   margin-right: $base-spacing-sm;
 }
 
-.icon-button-round, %icon-button-round {
-  font-size: 14px;
+%icon-button-round {
   padding: $base-spacing-sm;
   @extend %border-radius-circle;
   border: 2px solid;
-  width: 34px;
-  height: 34px;
   @extend %vertical-inline-middle;
   @extend %center-text;
   position: relative;
@@ -536,6 +538,20 @@ hr {
   .fa {
     @extend %dead-center;
   }
+}
+
+.icon-button-round {
+  @extend %icon-button-round;
+  font-size: 14px;
+  width: 34px;
+  height: 34px;
+}
+
+.icon-button-round-sm {
+  @extend %icon-button-round;
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
 }
 
 //ICONS: VERIFIED
@@ -1189,4 +1205,26 @@ a.button {
 
 /* end GLOBAL HELPER classes */
 
-/*  */
+
+/*-------------------------------------*/
+/* SCROLLBAR: WEBKIT - NON STANDARD */
+
+%scrollbar-webkit {
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+  }
+ 
+  &::-webkit-scrollbar-track {
+    background: lighten($grey-cloud, 8%);
+    border-radius: 3px;
+  }
+ 
+  &::-webkit-scrollbar-thumb {
+    background: $grey-cloud;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
+}

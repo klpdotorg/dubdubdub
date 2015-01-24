@@ -413,7 +413,7 @@ sub {
 .border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
+.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -491,7 +491,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .icon-boy:before, .icon-girl:before, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
+.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-boy:before, .icon-girl:before, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -504,7 +504,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1 {
   display: inline-block;
   vertical-align: middle; }
 
@@ -520,6 +520,9 @@ img, video {
 .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .rbox_show, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in; }
+
+.table-responsive-wrap {
+  overflow-y: auto; }
 
 .table-base {
   border-collapse: collapse;
@@ -549,14 +552,21 @@ hr {
 .icon-left, .profile-options:before, .vol-oppor-icon {
   margin-right: 5px; }
 
-.icon-button-round {
-  font-size: 14px;
+.icon-button-round, .icon-button-round-sm {
   padding: 5px;
   border: 2px solid;
-  width: 34px;
-  height: 34px;
   position: relative;
   margin-right: 5px; }
+
+.icon-button-round {
+  font-size: 14px;
+  width: 34px;
+  height: 34px; }
+
+.icon-button-round-sm {
+  font-size: 12px;
+  width: 24px;
+  height: 24px; }
 
 .verified {
   letter-spacing: 1px; }
@@ -949,7 +959,19 @@ hr {
 }*/
 /* end CMS DEFAULT STYLES */
 /* end GLOBAL HELPER classes */
-/*  */
+/*-------------------------------------*/
+/* SCROLLBAR: WEBKIT - NON STANDARD */
+.table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar {
+  width: 12px;
+  height: 10px; }
+.table-responsive-wrap::-webkit-scrollbar-track, .sidebar-volunteer-map::-webkit-scrollbar-track {
+  background: #ececec;
+  border-radius: 3px; }
+.table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  background: #d8d8d8; }
+.table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb {
+  border-radius: 10px; }
+
 /* GRID STYLING */
 .container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .container-sm, .banner-full-caption {
   margin-left: auto;
@@ -2051,21 +2073,15 @@ the css in the head of map.html
 
 //test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
 
-// frontend templates/volunteer.html: What is this template? need to style it? not done
 
-// frontend templates/volunteer page: need to style comments, heeelp
 
-// frontend templates/org edit: {{ item.quantity }}{{ item.unit }}: Sanj, need help to test
+// organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
-// organisation/1/volunteer_activity: need to test volunteer tab styling
 
-///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
-
-// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters and input number
+// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters: thead and tbody; and input number
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
-//enhancement: make tab accordion  accordion look more buttonyee
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2432,20 +2448,6 @@ body {
 .sidebar-volunteer-map {
   background-color: #f6f6f6; }
 
-.sidebar-volunteer-map::-webkit-scrollbar {
-  width: 12px;
-  height: 10px; }
-
-.sidebar-volunteer-map::-webkit-scrollbar-track {
-  background: #ececec;
-  border-radius: 3px; }
-
-.sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  background: #d8d8d8; }
-
-.sidebar-volunteer-map::-webkit-scrollbar-thumb {
-  border-radius: 10px; }
-
 .list-sidebar {
   border-top: 1px solid #fff;
   border-bottom: 1px solid #d8d8d8;
@@ -2586,17 +2588,18 @@ body {
 .tab-org-edit .tab-content {
   padding-top: 35px; }
 
-.table-base-donation-items .icon-button-round {
-  color: #bbb;
-  counter-reset: slideNum; }
-.table-base-donation-items td {
-  vertical-align: top; }
-  .table-base-donation-items td:first-of-type {
-    counter-increment: slideNum; }
+.table-base-donation-items {
+  counter-reset: counter-rows; }
+  .table-base-donation-items tbody tr {
+    counter-increment: counter-rows; }
+  .table-base-donation-items td {
+    vertical-align: top; }
     .table-base-donation-items td:first-of-type:before {
-      content: "#" counter(slideNum); }
-  .table-base-donation-items td:last-of-type {
-    vertical-align: middle; }
+      content: "#" counter(counter-rows); }
+    .table-base-donation-items td:last-of-type {
+      vertical-align: middle; }
+  .table-base-donation-items input[type="number"] {
+    width: 80px; }
 
 /*-------------------------------------*/
 .profile-meta-img {

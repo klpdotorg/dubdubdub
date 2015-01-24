@@ -1,6 +1,10 @@
 (function() {
     klp.data = {};
     klp.openModal = null;
+    var headerHeight;
+    $(document).ready(function() {
+        headerHeight = $(".main-header").height() + 10;
+    });
 
     // tabs function
     function init_tabs(){
@@ -11,8 +15,8 @@
             $('.js-tab-content[data-tab=' + tabName + ']').before($clone);
         });
 
-    $(document).on("click", ".js-tabs-link", function(e){
-        var $wrapper = $(".js-tab-wrap");
+        $(document).on("click", ".js-tabs-link", function(e){
+            var $wrapper = $(".js-tab-wrap");
             var $trigger = $(this).closest(".js-tabs-link");
             var tab_id = $trigger.attr('data-tab');
 
@@ -21,6 +25,13 @@
 
             $wrapper.find(".js-tab-content.tab-active").removeClass('tab-active');
             $wrapper.find('.js-tab-content[data-tab="'+ tab_id +'"]').addClass('tab-active');
+
+            //on mobile, scroll to top of accordion
+            var $accordionTrigger = $('.tab-each .tab-heading-active');
+            if ($accordionTrigger.is(":visible")) {
+                var offsetTop = $accordionTrigger.offset().top - headerHeight;
+                $(document).scrollTop(offsetTop);
+            }
         });
     }
 
@@ -99,12 +110,11 @@
         if($(".js-scroll-smooth-block").length > 0) {
             var stickySelector = $('.js-scroll-smooth-block');
 
-            var headerHeight = $(".main-header").height() + 10;
+            //var headerHeight = $(".main-header").height() + 10;
 
             var stickyNavTop = stickySelector.offset().top;
             var stickyNav = function(){
-                var scrollTop = $(window).scrollTop();
-                     
+                var scrollTop = $(window).scrollTop();                     
                 if ((scrollTop + headerHeight) > stickyNavTop) { 
                     stickySelector.addClass('scroll-smooth-sticky');
                 } else {
