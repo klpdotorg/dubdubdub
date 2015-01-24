@@ -37,6 +37,8 @@ the css in the head of map.html
 
 ///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
+// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters
+
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
 -- add disabled styling for radio, checks and inputs
@@ -1015,7 +1017,7 @@ body {
   margin: $base-spacing 0 0 0;
 }
 
-.table-base-volunteer, .table-base-donation {
+.table-base-volunteer, .table-base-donation, .table-base-donation-items {
   @extend %font-smaller;
 }
 
@@ -1042,10 +1044,24 @@ body {
 
 .table-base-donation-items {
   .icon-button-round {
+    color: $grey-silver;
+    counter-reset: slideNum;
   }
 
-  td:last-of-type {
-    vertical-align: middle;
+  td {
+    vertical-align: top;
+
+    &:first-of-type {
+      counter-increment: slideNum;
+
+      &:before {
+        content: "#" counter(slideNum);
+      }
+    }
+
+    &:last-of-type {
+      vertical-align: middle;
+    }
   }
 
 }

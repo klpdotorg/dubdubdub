@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
@@ -2044,6 +2044,8 @@ the css in the head of map.html
 
 ///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
+// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters
+
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
 -- add disabled styling for radio, checks and inputs
@@ -2562,8 +2564,17 @@ body {
 .tab-org-edit .tab-content {
   padding-top: 35px; }
 
-.table-base-donation-items td:last-of-type {
-  vertical-align: middle; }
+.table-base-donation-items .icon-button-round {
+  color: #bbb;
+  counter-reset: slideNum; }
+.table-base-donation-items td {
+  vertical-align: top; }
+  .table-base-donation-items td:first-of-type {
+    counter-increment: slideNum; }
+    .table-base-donation-items td:first-of-type:before {
+      content: "#" counter(slideNum); }
+  .table-base-donation-items td:last-of-type {
+    vertical-align: middle; }
 
 /*-------------------------------------*/
 .profile-meta-img {
