@@ -27,18 +27,15 @@ the css in the head of map.html
 
 //make make border: 1px solid $grey-cloud modular;
 
-//pickadate not showing on share story although the class is there: FILE BUG: Sanj to fix
-
 //Share your story: Information from schools visits: Check the table below shows the right classes
 
 // Share your story: Style comments; http://localhost:8001/school/33141/#?tab=share-story
 
 //test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
 
-// organization edit: what is that script js at the bottom of the page?: can i just make those options a select?, ok I just did, so now can i delete that scripts/js, in  and also in volunteer activity/form base, /donation_add_edit/init.js that dropdown trigger acgtion dropdown stuff?
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
 // organisation/1/volunteer_activity: need to test volunteer tab styling
-//donate: add_edit: need to style Donation items below form, not sure how
+
 ///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
 //MY Learnings for boilerplate;
@@ -1044,6 +1041,9 @@ body {
   }
 }
 
+.table-base-donation-items {
+
+}
 
 /*-------------------------------------*/
 //PAGE: PROFILE

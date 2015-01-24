@@ -4,13 +4,13 @@
       
   </td>
   <td>
-    <input type="text" class="input js-name" value="{{ name }}">
+    <input type="text" class="input-text js-name" value="{{ name }}">
   </td>
   <td>
-    <input type="text" class="input pad-h-10 js-quantity" value="{{ quantity }}">
+    <input type="text" class="input-text js-quantity" value="{{ quantity }}">
   </td>
   <td>
-    <input type="text" class="input pad-h-10 js-unit" value="{{ unit }}">
+    <input type="text" class="input-text js-unit" value="{{ unit }}">
   </td>
   <td>
   {% endverbatim %}
@@ -22,10 +22,10 @@
   {% verbatim %}
   </td>
   <td>
-    <textarea class="input textarea pad-h-10 js-description">{{ description }}</textarea>
+    <textarea class="input-text js-description">{{ description }}</textarea>
   </td>
   <td>
-    <a href="#" class="js-deleteItem cross small">x</a>
+    <a href="#" class="js-deleteItem fa fa-close"></a>
   </td>  
 </script>
 {% endverbatim %}
