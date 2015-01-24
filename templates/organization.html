@@ -27,9 +27,11 @@
 
 					<div>
 						<div class="base-spacing"></div>
-						<div class="font-small">
-							{{ object.about }}
-						</div>
+						{% if object.about %}
+						<p class="font-small">
+						{{ object.about }}
+						</p>
+						{% endif %}
 							{% if object.has_links %}
 							<div>
 								<div class="heading-tiny-uppercase">Links</div>

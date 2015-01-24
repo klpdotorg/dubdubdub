@@ -25,9 +25,12 @@
 							</p> -->
 						<a href="/profile/{{ object.id }}/edit" class="button-hollow button-sm" id="editProfileBtn" style="display:none;">Edit Profile</a>
 						<div class="base-spacing"></div>
+						{% if object.about %}
 						<p class="font-small">
-						{{ about }}
+						{{ object.about }}
 						</p>
+						{% endif %}
+
 						{% if object.has_links %}
 						<div>
 							<div class="heading-tiny-uppercase"><strong>Links:</strong></div>

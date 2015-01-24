@@ -2006,23 +2006,24 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   border-top-color: #bbb; }
 
 /*
-// currently when i hit submit on the login form, it repeats the error message one below the other. whoops 
+
 // remove all extra classes in _login_modal.html if they're not being used later
-//check small jump on mobile when clicking a dropdown   
-// ask batpad if we can remove the checked="", disabled, equal part, HTML5 style
+
 // speak to batpad about checked + disabled input radio styling, right now clicking another removes the checked state on the checked + disabled
-//what is this reports at the top of reports?
-//was the plan for each of the pages to have a different color? seems so in their styleguide. can do stuff accordingly for this.
+
+//what is this reports at the top of reports? // ASK GAUTAM later
+
 //background size used without webkit prefix needed only for android 2.3
+
 //on library page, both blue and yellow show 9-10 sentences
-//ask sanj if there's an error with volunteer page recently share stories.
+
 //add a class for link-hover-underline for all those sorta links later
+
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
-//sanj: form file preview replace with our kh js?;
-//sanj on organization edit and profile edit, i've made input type url for url, facebook, blog, flickr, youtube (but not twitter??) and many pages, is it ok
+
 //maybe a class for border-color
-//on profile, is there a visibility class on his image for a reason?:affecting the grid padding; i've removed it for now, but it's static, we need to figure it out
+
 //tab code is repeated in too many places
 //can we have a conditional for object about description for profile edit and organisation edit?
 //horizontal scroll bar on info tab in school on desktop also
