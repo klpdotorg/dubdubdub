@@ -32,12 +32,15 @@ the css in the head of map.html
 
 //test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
 
-// frontend templates/org edit: {{ item.quantity }}{{ item.unit }} what is this for?
+// frontend templates/org edit: {{ item.quantity }}{{ item.unit }}: Sanj, need help to test
+
 // organisation/1/volunteer_activity: need to test volunteer tab styling
 
 ///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
 // /organisation/1/donation_requirement/6 : do responsive table styling and figure counters
+
+// frontend templates/org: Ask sanj for the needed items if the comma wont show up for a single item, and if he can link to the donate now page? that button is broken
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -1001,6 +1004,10 @@ body {
   &:last-of-type {
     border-bottom: none;
   }
+}
+
+.social-link-block {
+  margin-bottom: $base-spacing-lg;
 }
 
 

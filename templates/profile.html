@@ -34,7 +34,7 @@
 						{% if object.has_links %}
 						<div>
 							<div class="heading-tiny-uppercase"><strong>Links:</strong></div>
-							<div>
+							<div class="social-link-block">
 								{% if object.twitter_handle %}
 								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Twitter">
 									<span class="fa fa-twitter"></span>
@@ -60,7 +60,7 @@
 									<span class="fa fa-video-camera"></span>
 								</a>
 								{% endif %}
-							</div>
+							</div> <!--/social-link-block -->
 						</div>
 							{% endif %}
 					</div> <!-- /profile-meta-each -->

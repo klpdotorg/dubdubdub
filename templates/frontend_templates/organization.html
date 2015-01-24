@@ -17,9 +17,12 @@
         {% endif %}
       </div>
     </div> <!-- /clearfix -->
+    
+    {% if text %}
     <p class="font-small">
       {{ text|striptags|nl2br|autolink|safe }}
     </p>
+    {% endif %}
     <div class="org-tab-date-block">
       <div class="org-tab-date">
         <div class="font-smallest black">
@@ -55,9 +58,11 @@
       </div>
     </div> <!-- /clearfix -->
 
+    {% if description %}
     <p class="font-small">
       {{ description }}
     </p>
+    {% endif %}
 
     <div class="org-tab-date-block">
       <div class="org-tab-date">
@@ -71,7 +76,7 @@
         {% endfor %}
       </div>
       <div class="org-tab-button">
-       <a class="button" href="{{ }}">Donate Now</a>
+        <a class="button" href="{{ }}">Donate Now</a>
       </div>
     </div>
   </div> <!-- /org-tab-content -->
