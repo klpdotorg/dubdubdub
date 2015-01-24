@@ -2047,18 +2047,15 @@ the css in the head of map.html
 
 // frontend templates/org edit: {{ item.quantity }}{{ item.unit }}: Sanj, need help to test
 
-// frontend templates//volunteeractivity_form; where does this show up? need to test it and clean markup
-
 // organisation/1/volunteer_activity: need to test volunteer tab styling
 
 ///assets/static/js/common/volunteer_here.js: has some step confirmation code; let's look at together? i want to remove from volunteer here page
 
-// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters
-
-// frontend templates/org: Ask sanj for the needed items if the comma wont show up for a single item, and if he can link to the donate now page? that button is broken
+// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters and input number
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
+//enhancement: make tab accordion  accordion look more buttonyee
 
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
@@ -2573,10 +2570,8 @@ body {
 .org-tab-button {
   margin: 10px 0 0 0; }
 
-.table-base-volunteer tr td:nth-of-type(1) {
-  width: 40%; }
-.table-base-volunteer tr td:nth-of-type(2) {
-  width: 30%; }
+.table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(2) {
+  width: 35%; }
 
 .tab-org-edit .tab-content {
   padding-top: 35px; }
@@ -2864,8 +2859,13 @@ body {
       border-bottom: 1px solid #d8d8d8;
       padding: 15px 10px; }
 
-  .table-volunteer-school:before, .table-donation-school:before {
+  .td-label-school:before {
     content: "School";
+    margin-right: 5px;
+    color: #bbb; }
+
+  .td-label-items:before {
+    content: "Items";
     margin-right: 5px;
     color: #bbb; } }
 @media only screen and (min-width: 600px) {
@@ -2944,10 +2944,10 @@ body {
     display: table;
     clear: both; }
 
-  .org-tab-date {
+  .org-tab-date, .type-activity {
     float: left; }
 
-  .org-tab-button {
+  .org-tab-button, .type-school {
     float: right; } }
 @media only screen and (min-width: 750px) {
   .module-img-block {

@@ -1,19 +1,20 @@
 {% verbatim %}
 <script type="text/html" id="tpl-activityDetails">
-  <div class="fl">
-    <div class="h5 brand-red">{{ activity_type_details.name }}</div>
-    <div class="font-smallest">
-      <span class="grey-silver">For </span>
-      <span class="font-uppercase brand-turquoise"> {{ organization_details.name }}</span>
+  <div class="clearfix">
+    <div class="type-activity">
+      <div class="h5 brand-red">{{ activity_type_details.name }}</div>
+      <div class="font-smallest">
+        <span class="grey-silver">For </span>
+        <span class="font-uppercase brand-turquoise"> {{ organization_details.name }}</span>
+      </div>
+    </div>
+    <div class="type-school">
+      <div class="brand-green font-uppercase font-larger">{{ school_details.name }}</div>
+      {% if school_details.address_full %}
+        <div class="grey-steel font-smaller">{{ school_details.address_full }}</div>
+      {% endif %}
     </div>
   </div>
-  <div class="fr ta-r">
-    <div class="brand-green font-uppercase font-larger">{{ school_details.name }}</div>
-    {% if school_details.address_full %}
-      <div>{{ school_details.address_full }}</div>
-    {% endif %}
-  </div>
-  <div class="clr"></div>
 </script>
 <script type="text/html" id="tpl-volunteerDetails">
   <tr class="js-volunteerTR" data-id="{{ user_details.id }}">
@@ -32,7 +33,7 @@
       {% endif %}
       <!-- <div class="bold uppercase">Mohali, Punjab, India</div> -->
     </td>
-    <td class="ta-r">
+    <td>
       <a class="button js-volunteerVerify" data-status="{{ status }}" href="#">
         {% if status == 1 %}Cancel{% else %}Attended{% endif %}
       </a>

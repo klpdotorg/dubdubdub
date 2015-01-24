@@ -48,13 +48,22 @@
 		}
 	}
 
-	.table-volunteer-school, .table-donation-school {
+	.td-label-school {
 		&:before {
 			content: "School";
 			margin-right: $base-spacing-sm;
 			color: $grey-silver;
 		}
 	}
+
+	.td-label-items {
+		&:before {
+			content: "Items";
+			margin-right: $base-spacing-sm;
+			color: $grey-silver;
+		}
+	}
+
 }
 
 @media only screen and (min-width: 600px) {
@@ -156,13 +165,15 @@
 		@include clearfix;
 	}
 
-	.org-tab-date {
+	.org-tab-date, .type-activity {
 		float: left;
 	} 
 
-	.org-tab-button {
+	.org-tab-button, .type-school {
 		float: right;
 	}
+
+
 }
 
 @media only screen and (min-width: 750px) {
