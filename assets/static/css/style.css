@@ -538,7 +538,8 @@ img, video {
 .table-data td {
   padding: 2.5px 10px; }
 .table-data tr td:first-of-type {
-  color: #4d4d4d; }
+  color: #4d4d4d;
+  padding-left: 0; }
 
 hr {
   display: block;

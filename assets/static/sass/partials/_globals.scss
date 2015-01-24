@@ -503,6 +503,7 @@ img, video {
     td:first-of-type {
       @extend %font-bold;
       color: $grey-gravel;
+      padding-left: 0;
     }
   }
 }
