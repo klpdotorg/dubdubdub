@@ -521,7 +521,7 @@ hr {
   margin-right: $base-spacing-sm;
 }
 
-.icon-button-round {
+.icon-button-round, %icon-button-round {
   font-size: 14px;
   padding: $base-spacing-sm;
   @extend %border-radius-circle;

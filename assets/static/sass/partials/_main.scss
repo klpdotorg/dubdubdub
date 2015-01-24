@@ -18,7 +18,6 @@ the css in the head of map.html
 //maybe a class for border-color
 
 
-
 //horizontal scroll bar on info tab in school on desktop also
 
 //modularize icon boy girl and total later, add same classes to the map popup
@@ -1042,6 +1041,12 @@ body {
 }
 
 .table-base-donation-items {
+  .icon-button-round {
+  }
+
+  td:last-of-type {
+    vertical-align: middle;
+  }
 
 }
 

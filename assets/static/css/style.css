@@ -2025,7 +2025,6 @@ the css in the head of map.html
 //maybe a class for border-color
 
 
-
 //horizontal scroll bar on info tab in school on desktop also
 
 //modularize icon boy girl and total later, add same classes to the map popup
@@ -2562,6 +2561,9 @@ body {
 
 .tab-org-edit .tab-content {
   padding-top: 35px; }
+
+.table-base-donation-items td:last-of-type {
+  vertical-align: middle; }
 
 /*-------------------------------------*/
 .profile-meta-img {
