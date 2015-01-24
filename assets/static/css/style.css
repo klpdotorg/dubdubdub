@@ -2078,8 +2078,6 @@ the css in the head of map.html
 // organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
 
-// /organisation/1/donation_requirement/6 : do responsive table styling and figure counters: thead and tbody; and input number
-
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
 
@@ -2533,6 +2531,7 @@ body {
     font-size: 10px;
     position: absolute;
     right: 0;
+    top: 0;
     border: 1px solid #d8d8d8;
     width: 15px;
     height: 15px; }
@@ -2553,7 +2552,10 @@ body {
   padding-right: 50px; }
 
 .comment-item {
-  border-bottom: 1px solid #d8d8d8; }
+  border-bottom: 1px solid #d8d8d8;
+  padding: 20px 0 0 0; }
+  .comment-item:last-of-type {
+    border-bottom: none; }
 
 .page-profile .heading-tiny-uppercase, .page-org-profile .heading-tiny-uppercase {
   margin-top: 25px; }
@@ -2592,6 +2594,8 @@ body {
   counter-reset: counter-rows; }
   .table-base-donation-items tbody tr {
     counter-increment: counter-rows; }
+  .table-base-donation-items .tooltip:after {
+    left: -55px; }
   .table-base-donation-items td {
     vertical-align: top; }
     .table-base-donation-items td:first-of-type:before {

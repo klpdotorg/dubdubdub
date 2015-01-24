@@ -537,8 +537,10 @@
             {% for answer in latest_answers %}
               <tr>
                 <td>{{ answer.question.text }}</td>
-                <td class="table-infra-key-color brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
+                <td> 
+                  <div class="table-infra-key-color brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
                   {{ answer.text }}
+                  </div>
                 </td>
               </tr>
               {% endfor %}
@@ -570,9 +572,8 @@
   <!-- <div class="clr-phone-tablet"></div> -->
   
   <div class="fr-desktop-tablet width-48p-desktop-tablet">  
-    <div class="comments mar_top_25">
+    <div class="comments">
         <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
-        <div class="base-spacing-sm"></div>
         {% for story in features %}
         <div class="comment-item">
             <p class="grey-gravel font-bold">
@@ -586,7 +587,7 @@
               <p>{{ story.comments }}</p>
             {% endif %}
             {% if story.date_of_visit %}
-            <p class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</p>
+            <div class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
             {% endif %}
         </div>
         {% endfor %}
