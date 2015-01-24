@@ -648,7 +648,6 @@ a.button {
   @extend %white;
 }
 
-
 .button-grey, %button-grey {
   @extend %button;
   background-color: $grey-steel;
