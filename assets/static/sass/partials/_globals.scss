@@ -1081,6 +1081,22 @@ a.button {
     background: $grey-mist;
   }
 
+  .tab-each {
+    .tab-heading {
+      position: relative;
+      padding: $base-spacing $base-spacing-lg $base-spacing;
+
+      &:after {
+        content: "\f107";
+        font-family: "FontAwesome";
+        position: absolute;
+        right: $base-spacing;
+        top: 8px;
+        @extend %font-larger;
+      }
+    }
+  }
+
   .tab-content {
     display: none;
     padding: $base-spacing;

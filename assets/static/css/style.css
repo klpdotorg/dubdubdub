@@ -107,7 +107,7 @@ q:before, q:after {
 .font-large, .alert, .volunteer-story-heading {
   font-size: 110%; }
 
-.font-larger {
+.font-larger, .tab-each .tab-heading:after {
   font-size: 120%; }
 
 .font-largest {
@@ -868,6 +868,16 @@ hr {
 
 .tab-heading.tab-heading-active {
   background: #f6f6f6; }
+
+.tab-each .tab-heading {
+  position: relative;
+  padding: 10px 20px 10px; }
+  .tab-each .tab-heading:after {
+    content: "\f107";
+    font-family: "FontAwesome";
+    position: absolute;
+    right: 10px;
+    top: 8px; }
 
 .tab-content {
   display: none;
