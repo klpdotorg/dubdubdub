@@ -71,7 +71,7 @@
         </div>
         {% for item in items %}
         <div class="brand-blue font-bold">
-          <span>{{ item.name }} </span> x {{ quantity }}{{ unit }},
+          <span>{{ item.name }} </span> x {{ quantity }}{{ unit }}{% if not loop.last %},{% endif %}
         </div>
         {% endfor %}
       </div>

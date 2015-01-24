@@ -33,7 +33,7 @@
                       </div>
                     </div>
                     <div>
-                      <div class="base-spacing-lg-2x"></div> 
+                      <div class="base-spacing-lg-x"></div> 
                       <a class="button-grey btn-modal-close">Cancel</a>
                       <a class="button btn-next-step-submit jsConfirmVolunteerBtn">Confirm</a>
                     </div>
@@ -59,21 +59,20 @@
                       <div class="icon-cal"></div>
                       <div class="value">{{ date|date('jS F, Y') }}</div>
                     </div>
-                    <div class="confirm-org mt-0">
-                        <div class="confirm-org-1 fl">
-                          <div class="org-head">Organisation</div>
-                          <div class="text color-green-2">{{ organization_details.name }}</div>
+                    <div class="confirm-org">
+                      <div>
+                        <div class="org-head">Organisation</div>
+                        <div class="text color-green-2">{{ organization_details.name }}</div>
+                      </div>
+                      <div>
+                        <div class="org-head">Opportunity</div>
+                        <div class="text color-{{ activity_type_details.color }}">
+                          {{ activity_type_details.name }}
                         </div>
-                        <div class="confirm-org-2 fr">
-                          <div class="org-head">Opportunity</div>
-                          <div class="text color-{{ activity_type_details.color }}">
-                              {{ activity_type_details.name }}
-                          </div>
-                        </div>
-                        <div class="clr"></div>
+                      </div>
                     </div>
                     <div class="mt-20">
-                      <a class="button blue btn-modal-close">Close</a>
+                      <a class="button  btn-modal-close">Close</a>
                     </div>
                 </div>
               </div> --> <!-- Step End -->

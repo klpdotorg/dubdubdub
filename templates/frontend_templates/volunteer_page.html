@@ -1,15 +1,15 @@
 {% verbatim %}
 <script type="text/html" id="tpl-recentStories">
   <div class="container">
-    <h2 class="heading-secondary heading-border">Recently shared stories<span></span></h2>
+    <h2 class="heading-secondary heading-border">Recently shared stories</h2>
     <ul class="volunteer-story-block">  
     {% for story in stories %}
       <li class="volunteer-story-each">
         <div class="volunteer-story-heading">
           {% if story.name %}
-              {{ story.name }}
+            {{ story.name }}
           {% else %}
-              Anonymous
+            Anonymous
           {% endif %}
         </div>
         <p class="heading-tiny">{{ story.date|date('jS F, Y') }}</p>

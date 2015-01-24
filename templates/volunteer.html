@@ -3,6 +3,14 @@
 
 {% block page_title %}Volunteer{% endblock %}
 
+{% block css_extra %}
+<style>
+  .main-footer {
+    margin-top: 0;
+  }
+</style>
+{% endblock %}
+
 {% block endbody %}
   <script type="text/javascript" src="{% static 'js/volunteer_page/init.js' %}"></script>
 {% endblock %}

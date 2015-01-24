@@ -1,8 +1,8 @@
 {% verbatim %}
 <script type="text/template" id="tplVolunteerMapPopup">
-	<div class="map-pin-details vol-oppor">
+	<div class="map-pin-details">
 		<div class="content">
-			<div class="info school">
+			<div>
 				<div class="step-number">S</div>
 				<h3 class="map-heading-main"><a href="/school/{{ features[0].school_details.id }}" class="brand-green">
 						{{ features[0].school_details.name }}</a></h3>
@@ -53,7 +53,7 @@
 
 <script type="text/html" id="tplVolunteerListItem">
 	<li class="list-sidebar js-volunteerHereBtn" data-id="{{ id }}">
-		<div class="font-bold brand-{{ activity_type_details.color }} ellipsis">
+		<div class="font-bold brand-{{ activity_type_details.color }}">
 			{{ activity_type_details.name }}
 		</div>
 		<!--
@@ -80,6 +80,5 @@
 	<li class="list-sidebar">
 		<div class="font-smaller grey-steel">Sorry, we did not find any volunteer opportunities that match your query.</div>
 	</li>
-
 </script>
 {% endverbatim %}
