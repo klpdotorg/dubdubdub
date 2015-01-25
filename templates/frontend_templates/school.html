@@ -621,46 +621,49 @@
 </script>
 
 <script type="text/html" id="tpl-tab-volunteer">
- {% if features.length %}
-      {% for f in features %}
-      <div class="required pb-20">
-        <div class="">
-          <div class="h5 brand-red">{{ f.activity_type_details.name }}</div>
+  <div class="container">
+    {% if features.length %}
+    {% for f in features %}
+    <div>
+      <div>
+        <div class="h5 brand-red">{{ f.activity_type_details.name }}</div>
 
-          <span class="font-smallest">
-            <span class="grey-steel">For </span>
-            <a href="/organisation/{{ f.organization_details.id }}" class="brand-turquoise font-uppercase">
-              {{ f.organization_details.name }}
-            </a>
-          </span>
-        </div>
-        <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">              <!--
-          <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
-          <br/>
-          <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
-    -->
-          </div>
-          <div class="clr"></div>
-          <p>
-              {{ f.text|striptags|nl2br|autolink|safe }}
-          </p>
-          <div class="fl phn-fn">
-            <div class="black font-smallest font-bold">
-              Date:
-            </div>
-            <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
-          </div>
-          <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
-            Volunteer Now
+        <span class="font-smallest">
+          <span class="grey-steel">For </span>
+          <a href="/organisation/{{ f.organization_details.id }}" class="brand-turquoise font-uppercase">
+            {{ f.organization_details.name }}
           </a>
-          <div class="clr"></div>
+        </span>
       </div>
-      {% endfor %}
-  {% else %}
-    <div class="required pb-20">
+      <div class="tab-items">              <!--
+        <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
+        <br/>
+        <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
+  -->
+      </div>
+      <p>
+          {{ f.text|striptags|nl2br|autolink|safe }}
+      </p>
+      <div>
+        <div class="black font-smallest font-bold">
+          Date:
+        </div>
+        <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
+      </div>
+      <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
+        Volunteer Now
+      </a>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div>
       No volunteering opportunities at this school.
     </div>
-  {% endif %}
+    {% endif %}
+
+  </div> <!-- /container -->
+
 </script>
 <script type="text/html" id="tpl-share-story-form">
   <h2 class="heading-secondary brand-blue">Share Your Story</h2>
