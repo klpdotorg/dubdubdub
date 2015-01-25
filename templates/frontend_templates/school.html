@@ -324,203 +324,205 @@
   </div> <!-- /container -->  
 </script>
 <script type="text/html" id="tpl-tab-library">
-  <div class="hide no-data">
+  <div class="container">
+    <div class="hide no-data">
       <p> No data available </p>
-  </div>
-  
-  <div class="options-wrapper center-text form-base">
-    <select name="" id="select_library_browse" class="grey-mist-bg">
-      <option value="level" selected>Borrow By Level</option>
-      <option value="language">Borrow By Language</option>
-      <option value="aggregate">Aggregate</option>
-    </select>
-  
-    <select name="" id="select_library_year" class="grey-mist-bg">
-      {% for year in years %}
-        <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
+    </div>
+
+    <div class="options-wrapper center-text form-base">
+      <select name="" id="select_library_browse" class="grey-mist-bg">
+        <option value="level" selected>Borrow By Level</option>
+        <option value="language">Borrow By Language</option>
+        <option value="aggregate">Aggregate</option>
+      </select>
+    
+      <select name="" id="select_library_year" class="grey-mist-bg">
+        {% for year in years %}
+          <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
+        {% endfor %}
+      </select>
+    
+      <select name="" id="select_library_class" class="grey-mist-bg">
+      {% for klass in klasses %}
+        <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
       {% endfor %}
-    </select>
-  
-    <select name="" id="select_library_class" class="grey-mist-bg">
-    {% for klass in klasses %}
-      <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
-    {% endfor %}
-    </select>
+      </select>
 
-    <div class="base-spacing-mid"></div>
-
-    <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>  
-  </div>
+      <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>  
+      <div class="base-spacing-mid"></div>
+    </div> <!-- /form-base -->
   
-  <div class="ta_c" id="graph_library">{ Graph here }</div>
-  
-  <table id="table_library" class="basic_table mar_top_25" style="display:none;">
-    <tr>
-      <th>Month</th>
-      <th>Kannada</th>
-      <th>Urdu</th>
-      <th>Telugu</th>
-      <th>Tamil</th>
-      <th>Hindi</th>
-      <th>English</th>
-    </tr>
-    <tr>
-      <td>Jan</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Feb</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Mar</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Apr</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>May</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Jun</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Jul</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Aug</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Sep</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Oct</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Nov</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Dec</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>0.4</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </table>
-  
-  <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
-  
-  <table class="info_data_table label_long mar_top_25 mar_btm_25">
-    {% for value in lib_infra %}
+    <div id="graph_library">{ Graph here }</div>
+    
+    <table id="table_library" class="table-data" style="display:none;">
       <tr>
-        <td>{{ loop.key }}</td>
-        <td>{% if value %} {{ value }} {% else %} - {% endif %}</td>
+        <th>Month</th>
+        <th>Kannada</th>
+        <th>Urdu</th>
+        <th>Telugu</th>
+        <th>Tamil</th>
+        <th>Hindi</th>
+        <th>English</th>
       </tr>
-    {% endfor %}
-      <!--
-    <tr>
-      <td>Number of Books</td>
-      <td>1006</td>
-    </tr>
-    <tr>
-      <td>Number of UPS(s)</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td>Status Library</td>
-      <td>Handed over</td>
-    </tr>
-    <tr>
-      <td>Number of Tables</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td>Number of Racks</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <td>Number of Computers</td>
-      <td>-</td>
-    </tr>
-    -->
-  </table>
-  
-  <p>DISE Reports Number of Books as : <strong>175</strong></p>
-  
-  <table class="info_data_table label_small">
-    <tr>
-      <td>Source</td>
-      <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-    </tr>
-  </table>
-  
+      <tr>
+        <td>Jan</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Feb</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Mar</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Apr</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>May</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Jun</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Jul</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Aug</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Sep</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Oct</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Nov</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Dec</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+    </table>
+    
+    <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
+    
+    <table class="table-data">
+      {% for value in lib_infra %}
+        <tr>
+          <td>{{ loop.key }}</td>
+          <td>{% if value %} {{ value }} {% else %} - {% endif %}</td>
+        </tr>
+      {% endfor %}
+        <!--
+      <tr>
+        <td>Number of Books</td>
+        <td>1006</td>
+      </tr>
+      <tr>
+        <td>Number of UPS(s)</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Status Library</td>
+        <td>Handed over</td>
+      </tr>
+      <tr>
+        <td>Number of Tables</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Number of Racks</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Number of Computers</td>
+        <td>-</td>
+      </tr>
+      -->
+    </table>
+    
+    <p>DISE Reports Number of Books as : <strong>175</strong></p>
+    
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
+    </table>
+  </div> <!-- /container -->
+    
 </script>
+
 <script type="text/html" id="tpl-tab-nutrition">
   <h4 class="heading-tiny-uppercase">Mid-day Meal Summary</h4>
   <div class="hide no-data">
