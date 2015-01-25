@@ -1090,15 +1090,16 @@ a.button {
     @extend %font-bold;
     border-bottom: 1px solid;
     cursor: pointer;
+
+    &.tab-heading-active {
+      background: $grey-mist;
+    }
   }
 
   .tab-heading, .tab-heading-active {
     border-color: $grey-cloud;
   }
 
-  .tab-heading.tab-heading-active {
-    background: $grey-mist;
-  }
 
   .tab-each {
     .tab-heading {
@@ -1112,6 +1113,10 @@ a.button {
         right: $base-spacing;
         top: 8px;
         @extend %font-larger;
+      }
+
+      &:hover {
+        background-color: $grey-mist;
       }
     }
   }

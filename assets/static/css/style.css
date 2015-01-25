@@ -873,12 +873,11 @@ hr {
   color: #4d4d4d;
   border-bottom: 1px solid;
   cursor: pointer; }
+  .tab-heading.tab-heading-active {
+    background: #f6f6f6; }
 
 .tab-heading, .tab-heading-active {
   border-color: #d8d8d8; }
-
-.tab-heading.tab-heading-active {
-  background: #f6f6f6; }
 
 .tab-each .tab-heading {
   position: relative;
@@ -889,6 +888,8 @@ hr {
     position: absolute;
     right: 10px;
     top: 8px; }
+  .tab-each .tab-heading:hover {
+    background-color: #f6f6f6; }
 
 .tab-content {
   display: none;
