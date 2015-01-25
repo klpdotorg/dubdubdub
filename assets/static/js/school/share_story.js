@@ -21,6 +21,11 @@
 
     function doPostFormRender() {
         $('[name=image]').imagePreview();
+        //datepicker 
+        $(".js-input-date").pickadate({
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd'
+        });
         $('#sysForm').submit(function(e) {
             if (e) {
                 e.preventDefault();
