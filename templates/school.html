@@ -64,84 +64,77 @@
             <a class="button-grey js-trigger-compare" href="">Compare to</a>
           </div>          
         </div>
-        <ul class="tabs">
-          <li data-tab="info" class="js-tab-link tab-heading tab-heading-active">Info</li>
-          <li data-tab="demographics" class="js-tab-link tab-heading">Demographics</li>
-          <li data-tab="programmes" class="js-tab-link tab-heading">Programmes</li>
-          <li data-tab="finances" class="js-tab-link tab-heading">Finances</li>
-          <li data-tab="infrastructure" class="js-tab-link tab-heading">Infrastructure</li>
-          <li data-tab="library" class="js-tab-link tab-heading">Library</li>
-          <li data-tab="nutrition" class="js-tab-link tab-heading">Nutrition</li>
-          <li data-tab="share-story" class="js-tab-link tab-heading">Share your story</li>
-          <li data-tab="volunteer" class="js-tab-link tab-heading">Volunteer</li>
-        </ul>
+        <div class="tab-wrap">
+          <div class="tab-wrap-widescreen">
+            <div data-tab="info" class="js-tab-link tab-heading tab-heading-active">Info</div>
+            <div data-tab="demographics" class="js-tab-link tab-heading">Demographics</div>
+            <div data-tab="programmes" class="js-tab-link tab-heading">Programmes</div>
+            <div data-tab="finances" class="js-tab-link tab-heading">Finances</div>
+            <div data-tab="infrastructure" class="js-tab-link tab-heading">Infrastructure</div>
+            <div data-tab="library" class="js-tab-link tab-heading">Library</div>
+            <div data-tab="nutrition" class="js-tab-link tab-heading">Nutrition</div>
+            <div data-tab="share-story" class="js-tab-link tab-heading">Share your story</div>
+            <div data-tab="volunteer" class="js-tab-link tab-heading">Volunteer</div>
+          </div> <!-- /tab-wrap-widescreen -->
+      
+          <div class="tab-each">
+            <div class="tab-content" data-tab="info">
+              Loading...
+            </div>
+            <!-- Info Tab END -->            
+          </div>
+          <div class="tab-each">
+            <div class="tab-content tab-active" data-tab="demographics">
+              Loading...
+            </div>
+            <!-- Demographics Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="programmes">
+              Loading...
+            </div>
+            <!-- Programme Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="finances">
+              Loading...
+            </div>
+            <!-- Finances Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="infrastructure">
+              Loading...
+            </div>
+            <!-- Infrastructure Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="library">
+              Loading...
+            </div>
+            <!-- Library Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="nutrition">
+              Loading...
+            </div>
+            <!-- Nutrition Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="share-story">
+              Loading...
+            </div>
+            <!-- Share your story Tab END -->
+          </div>
+          <div class="tab-each">
+            <div class="tab-content" data-tab="volunteer">
+              Loading...
+            </div>
+            <!-- Share your story Tab END -->
+          </div>
+
+        </div> <!-- /tab-wrap -->
       </div> <!-- /container -->
     </div> <!-- /school-map-info -->
-  </div>
-  <div class="school-details js-tabs-wrapper tab-wrapper">
-    <div class="tab-each">
-      <li data-tab="info" class="tab-heading js-tab-link">Info</li>
-      <div class="tab-content" data-tab="info">
-        Loading...
-      </div>
-      <!-- Info Tab END -->            
-    </div>
-    <div class="tab-each">
-      <li data-tab="demographics" class="tab-heading js-tab-link">Demographics</li>
-      <div class="tab-content" data-tab="demographics">
-        Loading...
-      </div>
-      <!-- Demographics Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="programmes" class="tab-heading js-tab-link">Programmes</li>
-      <div class="tab-content" data-tab="programmes">
-        Loading...
-      </div>
-      <!-- Programme Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="finances" class="tab-heading js-tab-link">Finances</li>
-      <div class="tab-content" data-tab="finances">
-        Loading...
-      </div>
-      <!-- Finances Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="infrastructure" class="tab-heading js-tab-link">Infrastructure</li>
-      <div class="tab-content" data-tab="infrastructure">
-        Loading...
-      </div>
-      <!-- Infrastructure Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="library" class="tab-heading js-tab-link">Library</li>
-      <div class="tab-content" data-tab="library">
-        Loading...
-      </div>
-      <!-- Library Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="nutrition" class="tab-heading js-tab-link">Nutrition</li>
-      <div class="tab-content" data-tab="nutrition">
-        Loading...
-      </div>
-      <!-- Nutrition Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="share-story" class="tab-heading js-tab-link">Share your story</li>
-      <div class="tab-content" data-tab="share-story">
-        Loading...
-      </div>
-      <!-- Share your story Tab END -->
-    </div>
-    <div class="tab-each">
-      <li data-tab="volunteer" class="tab-heading js-tab-link">Volunteer</li>
-      <div class="tab-content" data-tab="volunteer">
-        Loading...
-      </div>
-      <!-- Share your story Tab END -->
-    </div>
   </div>
 </section>
 {% include 'frontend_templates/school.html' %}

@@ -11,6 +11,12 @@
     var schoolType;
 
     t.init = function() {
+        $('.js-tab-link').each(function() {
+            var $this = $(this);
+            var $clone = $this.clone();
+            var tabName = $this.attr("data-tab");
+            $('.tab-content[data-tab=' + tabName + ']').before($clone);
+        });
         schoolInfoURL = 'schools/school/' + SCHOOL_ID;
         schoolType = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
         tabs = {
@@ -405,14 +411,14 @@
         //slightly ugly hack to lazy load all tabs only on mobile
         //FIXME: possibly, get "isMobile" somewhere else, not sure
         //checking for < 768 on page load is the best technique.
-        if ($(window).width() < 768) {
-            tabDeferred.done(function() {
-                var tabsToLoad = _(keys).without(firstTab);
-                _(tabsToLoad).each(function(tabName) {
-                    t.showTab(tabName, true);
-                });
-            });
-        }
+        // if ($(window).width() < 768) {
+        //     tabDeferred.done(function() {
+        //         var tabsToLoad = _(keys).without(firstTab);
+        //         _(tabsToLoad).each(function(tabName) {
+        //             t.showTab(tabName, true);
+        //         });
+        //     });
+        // }
         // console.log(templates);
 
     };
@@ -433,16 +439,16 @@
         if (typeof(replaceState) === 'undefined') {
             replaceState = false;
         }
-        $('.tab-content.tab-active').removeClass('tab-active');
+        $('.tab-active').removeClass('tab-active');
         var queryParams = klp.router.getHash().queryParams;
         if (!(queryParams.hasOwnProperty('tab') && queryParams['tab'] === tabName)) {
             klp.router.setHash(null, {'tab': tabName}, {trigger: false, replace: replaceState});
         }
         currentTab = tabName;
         var $tabButton = $('.js-tab-link[data-tab=' + tabName + ']');
-        $tabButton.parent().find("tab-heading-active").removeClass('tab-heading-active');
+        $(".tab-heading-active").removeClass('tab-heading-active');
         $tabButton.addClass("tab-heading-active");
-        $('div[data-tab=' + tabName + ']').addClass('tab-active');
+        $('.tab-content[data-tab=' + tabName + ']').addClass('tab-active');
         var $deferred = $.Deferred();
         getData(tabName, function(data) {
             if (tabs[tabName].hasOwnProperty('getContext')) {
@@ -450,7 +456,7 @@
             }
             var html = templates[tabName](data);
             //$('#loadingTab').removeClass('current');
-            $('div[data-tab=' + tabName + ']').html(html);
+            $('.tab-content[data-tab=' + tabName + ']').html(html);
             doPostRender(tabName, data);
             $deferred.resolve();
         });
