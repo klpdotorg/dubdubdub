@@ -130,108 +130,115 @@
   </div> <!-- /container -->
 </script>
 <script type="text/html" id="tpl-tab-demographics">
-  <div class="">
-    <h4 class="heading-tiny-uppercase">Student Information</h4>
-    <div class="no-data js-klp" style="display:none;">
-        <p> No data available </p>
-    </div>
   
-    <div class="pie-chart-wrapper" id="boygirlChartWrapper">
-      <div class="pie-chart-inner">
-        <div id="num_students_piechart" class="chart"></div>
-      </div>
-  
-      <div class="school-demo-tab">
-        <div class="module-stats-icon">
-          <span class="icon-boy"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Boys</div>
-            <p class="module-stats-label">{{ num_boys }}</p>
-          </div>
-        </div>
+  <div class="container">
 
-        <div class="module-stats-icon module-stats-girl">
-          <span class="icon-girl"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Girls</div>
-            <p class="module-stats-label">{{ num_girls }}</p>
-          </div>
+    <div class="grid-parent">
+      <div class="float-left grid-child">
+        <h4 class="heading-tiny-uppercase">Student Information</h4>
+        <div class="no-data js-klp" style="display:none;">
+            <p> No data available </p>
         </div>
+    
+        <div class="pie-chart-wrapper" id="boygirlChartWrapper">
+          <div class="pie-chart-inner">
+            <div id="num_students_piechart" class="chart"></div>
+          </div>
+      
+          <div class="school-demo-tab">
+            <div class="module-stats-icon">
+              <span class="icon-boy"></span>
+              <div class="module-stats-info">
+                <div class="font-uppercase">Boys</div>
+                <p class="module-stats-label">{{ num_boys }}</p>
+              </div>
+            </div>
 
-        <div class="module-stats-icon module-stats-boygirl">
-          <span class="icon-boy-girl"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Total</div>
-            <p class="module-stats-label">{{ total_students }}</p>
-          </div>
-        </div>
-      </div> <!-- /school-demo-tab -->
-    </div> <!--/pie-chart-wrapper --> 
-  </div> 
+            <div class="module-stats-icon module-stats-girl">
+              <span class="icon-girl"></span>
+              <div class="module-stats-info">
+                <div class="font-uppercase">Girls</div>
+                <p class="module-stats-label">{{ num_girls }}</p>
+              </div>
+            </div>
+
+            <div class="module-stats-icon module-stats-boygirl">
+              <span class="icon-boy-girl"></span>
+              <div class="module-stats-info">
+                <div class="font-uppercase">Total</div>
+                <p class="module-stats-label">{{ total_students }}</p>
+              </div>
+            </div>
+          </div> <!-- /school-demo-tab -->
+        </div> <!--/pie-chart-wrapper --> 
+      </div> 
   
-  <div class="fr-desktop-tablet">
-      <h4 class="heading-tiny-uppercase">Languages</h4>
-      <div>
+      <div class="float-right grid-child">
+        <h4 class="heading-tiny-uppercase">Languages</h4>
+        <div>
           {% for mt, percent in mt_profile_percents %}
           <div class="bar-graph-wrap">
-              <div class="bar-label">{{ mt|capitalize }}</div>
-              <div class="bar-graph">
-                <div class="bar-percent">{{ mt_profile[mt] }}</div>
-                <div class="bar-custom tooltip" role="tooltip" aria-label="{{ percent }}%">
-                    <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
-                    </div>
-                </div>
-              </div> <!-- /bar-graph -->
+            <div class="bar-label">{{ mt|capitalize }}</div>
+            <div class="bar-graph">
+              <div class="bar-percent">{{ mt_profile[mt] }}</div>
+              <div class="bar-custom tooltip" role="tooltip" aria-label="{{ percent }}%">
+                  <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
+                  </div>
+              </div>
+            </div> <!-- /bar-graph -->
           </div> <!-- /bar-graph-wrap -->
           {% endfor %}
-      </div>
-  </div>
-  
-  {% if type_name != 'preschool' %}
-  <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
-  <div class="no-data js-dise" style="display:none;">
-      <p> No data available </p>
-  </div>
-  <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
-      <div class="pie-chart-inner fl">
-        <div id="num_students_piechart_dise" class="chart fl"></div>
-      </div>
-  
-      <div class="school-demo-tab">
-        <div class="module-stats-icon">
-          <span class="icon-boy"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Boys</div>
-            <p class="module-stats-label">{{ num_boys_dise }}</p>
           </div>
         </div>
+      </div> <!-- /float-right -->
+    
+      {% if type_name != 'preschool' %}
+      <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
+      <div class="no-data js-dise" style="display:none;">
+          <p> No data available </p>
+      </div>
+  
+      <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
+        <div class="pie-chart-inner fl">
+          <div id="num_students_piechart_dise" class="chart fl"></div>
+        </div>
+    
+        <div class="school-demo-tab">
+          <div class="module-stats-icon">
+            <span class="icon-boy"></span>
+            <div class="module-stats-info">
+              <div class="font-uppercase">Boys</div>
+              <p class="module-stats-label">{{ num_boys_dise }}</p>
+            </div>
+          </div>
 
-        <div class="module-stats-icon module-stats-girl">
-          <span class="icon-girl"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Girls</div>
-            <p class="module-stats-label">{{ num_girls_dise }}</p>
+          <div class="module-stats-icon module-stats-girl">
+            <span class="icon-girl"></span>
+            <div class="module-stats-info">
+              <div class="font-uppercase">Girls</div>
+              <p class="module-stats-label">{{ num_girls_dise }}</p>
+            </div>
           </div>
-        </div>
 
-        <div class="module-stats-icon module-stats-boygirl">
-          <span class="icon-boy-girl"></span>
-          <div class="module-stats-info">
-            <div class="font-uppercase">Total</div>
-            <p class="module-stats-label">{{ dise.total_students }}</p>
+          <div class="module-stats-icon module-stats-boygirl">
+            <span class="icon-boy-girl"></span>
+            <div class="module-stats-info">
+              <div class="font-uppercase">Total</div>
+              <p class="module-stats-label">{{ dise.total_students }}</p>
+            </div>
           </div>
         </div>
       </div>
-  </div>
-  {% endif %}
+      {% endif %}
   
-  <br /><br />
-  <table class="table-data">
+    <div class="base-spacing"></div>
+    <table class="table-data">
       <tr>
         <td>Source</td>
         <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
-  </table>
+    </table>
+  </container>
   
 </script>
 <script type="text/html" id="tpl-tab-programmes">
@@ -351,13 +358,13 @@
       {% endfor %}
       </select>
 
-      <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>  
+      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button-->>  
       <div class="base-spacing-mid"></div>
     </div> <!-- /form-base -->
   
     <div id="graph_library">{ Graph here }</div>
     
-    <table id="table_library" class="table-data" style="display:none;">
+    <!--<table id="table_library" class="table-data" style="display:none;">
       <tr>
         <th>Month</th>
         <th>Kannada</th>
@@ -475,7 +482,7 @@
         <td>1</td>
         <td>1</td>
       </tr>
-    </table>
+    </table>-->
     
     <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
     
@@ -514,8 +521,9 @@
       -->
     </table>
     
-    <p>DISE Reports Number of Books as : <strong>175</strong></p>
+    <div>DISE Reports Number of Books as : <strong>175</strong></div>
     
+    <div class="base-spacing"></div>
     <table class="table-data">
       <tr>
         <td>Source</td>

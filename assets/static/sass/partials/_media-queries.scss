@@ -280,6 +280,11 @@
 	}
 
 	//Page: School
+
+	.button-compare-wrap {
+		display: block;
+	}
+
 	.school-data-wrap, .tab-school-infra-block, .school-tab-story {
 		@include grid-parent;
 	}

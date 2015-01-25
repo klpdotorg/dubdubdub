@@ -1,24 +1,27 @@
 {% verbatim %}
   <script type="text/html" id="tpl-compare-option">
-    <div class="en-icon big en-{{ type_name }} fl">
-      {% if type.id==1 %} S {% else %} P {% endif %}
-    </div>
-    <div class="ml">
-      <h2 class="name en-{{ type_name }}">{{ name }}</h2>
-    </div>
-    <div class="item">
-      <div class="label">District</div>
-      <div class="value">{{ admin1.name|capitalize }}</div>
-    </div>
-    <div class="item">
-      <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-      <div class="value">{{ admin2.name|capitalize }}</div>
-    </div>
-    <div class="item">
-      <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-      <div class="value">{{ admin3.name|capitalize }}</div>
-    </div>
-    <div class="clr"></div>
+    <span class="h4 school-type-{{ type_name }}">
+      <span class="icon-number en-{{ type_name }} fl">
+        {% if type.id==1 %} S {% else %} P {% endif %}
+      </span>
+
+      {{ name }}
+
+    </span>
+
+    <ul class="map-location-labels font-smallest">
+      <li class="map-label-each">
+        <div class="map-label-title">District</div>
+        <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+        <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+        <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+    </ul>
   </script>
 
 

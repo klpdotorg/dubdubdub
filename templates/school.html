@@ -22,39 +22,36 @@
 {% block content %}
 <section id="compare_flow" class="school-comparison-flow is-map-page hide">
   <div class="content">
-    <div class="compare-box">
-      <a href="#" class="button-close js-comparison-close" title="Close"><span></span></a>
-      <div class="vs-separator">
-        <!-- <a href="" class="label fl js-comparison-clear-left">clear</a> -->
-        <div class="label bg fl">Comparing</div>
-        <a href="" class="label fl js-comparison-clear-right">clear</a>
+    <div class="container">
+      <a href="#" class="fa fa-close js-comparison-close" title="Close"></a>
+      <div class="center-text">
+        <span class="label-compare js-comparison-clear-right">clear</span>
+        <span class="label-compare label-compare-clear">Comparing</span>
         <div class="vr"></div>
-        <div class="vs-label">vs</div>
+        <div class="icon-button-round icon-button-compare"><span class="fa">vs</span></div>
       </div>
-      <div class="info school left-align js-comparison-option-left">
+      <div class="grid-parent">
+        <div class="school-compare-each js-comparison-option-left">
+        </div>
+        <div class="school-compare-each school-compare-search hide js-comparison-option-right">
+        </div>        
+
+        <div class="school-compare-each school-compare-search js-comparison-default-right">
+          <div id="dropdown_wrapper" class="school-compare-select">
+            <input type="text" id="comparison-search-select" class="select2 input-text" placeholder="Search to compare">
+          </div>
+        </div>
+
       </div>
-      <div class="info school-district right-align hide js-comparison-option-right">
-      </div>
-      <div class="info default right-align js-comparison-default-right">
-        <a href="" class="title-select ta-r mar_top_15 js-comparison-show-options-right">
-        <span class="button-hollow">Click to search for an entity</span>
-        </a>
-        <!-- <div class="text-select ta-r">or select one by clicking a pin on the map below</div> -->
-        <div class="clr"></div>
-      </div>
-      <div class="clr"></div>
-      <a href="" class="btn compare-now js-btn-compare">Compare now</a>
-      <a href="" class="btn cancel js-btn-cancel js-comparison-close show">Cancel</a>
+
+    </div> <!-- /container -->
+
+    <div class="compare-button-block">
+      <a href="" class="js-btn-compare">Compare now</a>
+      <a href="" class="js-btn-cancel js-comparison-close show">Cancel</a>        
     </div>
+
     <div class="comparison-result-wrapper js-comparison-result-wrapper">
-    </div>
-  </div>
-  <div class="dropdown-wrapper" id="dropdown_wrapper">
-    <div class="triangle"></div>
-    <div class="search-box">
-      <input type="text" id="comparison-search-select" class="input-search" placeholder="Search"/>
-      <!-- <a href="" class="icon"><i class="icon-search"></i></a> -->
-      <div class="clr"></div>
     </div>
   </div>
 </section>
@@ -63,12 +60,13 @@
     <div class="map-canvas" id="map-canvas"></div>
     <div class="school-map-info">
       <div class="container">
-        <div class="info-wrapper" id="school-info-wrapper">
+        <div class="grid-parent">
+          <div class="info-wrapper" id="school-info-wrapper">
+          </div>
+          <div class="button-compare-wrap">
+            <a class="button-grey js-trigger-compare" href="">Compare to</a>
+          </div>          
         </div>
-        <div class="button-compare-wrap">
-          <a class="button-grey js-trigger-compare" href="">Compare to</a>
-        </div>
-        <div class="clr"></div>
         <ul class="tabs">
           <li data-tab="info" class="js-tab-link tab-heading tab-heading-active">Info</li>
           <li data-tab="demographics" class="js-tab-link tab-heading">Demographics</li>
@@ -80,8 +78,8 @@
           <li data-tab="share-story" class="js-tab-link tab-heading">Share your story</li>
           <li data-tab="volunteer" class="js-tab-link tab-heading">Volunteer</li>
         </ul>
-      </div>
-    </div>
+      </div> <!-- /container -->
+    </div> <!-- /school-map-info -->
   </div>
   <div class="school-details js-tabs-wrapper tab-wrapper">
     <div class="tab-each">

@@ -272,7 +272,7 @@
         $(document).on('click', ".js-comparison-close", close);
         $(document).on('click', ".js-comparison-clear-left", clear_option_left);
         $(document).on('click', ".js-comparison-clear-right", clear_option_right);
-        $(document).on('click', ".js-comparison-show-options-right", show_options_dropdown_right);
+        //$(document).on('click', ".js-comparison-show-options-right", show_options_dropdown_right);
         //$(document).on('click', ".js-dropdown-option-right", select_options_right);
         $(document).on('click', ".js-btn-compare", function(e){
             e.preventDefault();

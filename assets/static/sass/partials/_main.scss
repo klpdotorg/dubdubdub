@@ -37,14 +37,10 @@ the css in the head of map.html
 // organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
 //SANJ:
-  / school/demographics: do we want the pie charts to both be floated left or just the first?
+
+// checkboxes on share your story form and couple of other places look odd without a parent label. can we add one?
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
-
-// what is this for school library tab?
-button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>  
-and this:     <table id="table_library" class="basic_table mar_top_25" style="display:none
-clicking on aggregate in library shows a blank chart
 
 // what is this for school tabs?
 one class called data. can i knoock if off? i know you're using no-data in the js, hence i asked
@@ -839,7 +835,17 @@ body {
   padding: 20px 0 0;
   background-color: $white;
   background-color: rgba($white, 0.8);
+}
 
+.info-wrapper {
+  @extend %float-left;
+  @extend %grid-child;
+}
+
+.button-compare-wrap {
+  display: none;
+  @extend %float-right;
+  @extend %grid-child;
 }
 
 .school-type-preschool, .school-type-school {
@@ -863,7 +869,7 @@ body {
 }
 
 .school-details {
-  margin-top: $school-map-spacing;
+//  margin-top: $school-map-spacing;
   font-size: 85%;
 
   .heading-tiny-uppercase {
@@ -975,6 +981,81 @@ body {
     border-bottom: none;
   }
 }
+
+// compare
+.compare-button-block {
+
+  a {
+    @extend %grey-steel-bg;
+    @extend %center-text;
+    padding: $base-spacing;
+    line-height: 1;
+    @extend %white;
+    @extend %font-uppercase;
+    @extend %font-smaller;
+    @extend %font-bold;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    &:hover {
+      @extend %white;
+    }
+  }
+}
+
+.label-compare {
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  padding: $base-spacing-sm $base-spacing;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.label-compare-clear {
+  background: $grey-steel;
+  @extend %white;
+  cursor: pointer;
+}
+
+.icon-button-compare {
+  @extend %grey-steel-bg;
+  @extend %white;
+  border: none;
+  position: relative;
+  top: $base-spacing-lg;
+
+  .fa {
+    @extend %font-small;
+  }
+}
+
+.school-compare-each {
+  width: 50%;
+  @extend %float-left;
+  @extend %grid-child;
+
+  &:first-of-type {
+    border-right: 1px solid $grey-cloud;
+  }
+}
+
+.school-compare-each-search {
+  text-align: right;
+}
+
+.school-compare-select {
+  @extend %float-right;
+  width: 100%;
+
+  .select2-container {
+    width: 100%;
+  }
+}
+
+
 
 //Page: Profile and Org Profile
 .page-profile, .page-org-profile {
