@@ -83,7 +83,7 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .icon-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
@@ -321,7 +321,7 @@ sub {
 .white, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
-.picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-clear, .icon-button-compare, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
 .white-bg, .heading-section, .icon-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .compare-button-block a, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .compare-button-block a, .label-compare-block, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -550,7 +550,7 @@ hr {
 .icon-right {
   margin-left: 5px; }
 
-.icon-left, .profile-options:before, .vol-oppor-icon {
+.icon-left, .profile-options:before, .vol-oppor-icon, .label-compare-clear:before {
   margin-right: 5px; }
 
 .icon-button-round, .icon-button-round-sm {
@@ -2062,7 +2062,9 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
-//maybe a class for border-color
+//maybe a class for border-
+
+//highcharts NOT WORKING ON FINANCE
 
 
 //horizontal scroll bar on info tab in school on desktop also
@@ -2575,12 +2577,30 @@ body {
   .comment-item:last-of-type {
     border-bottom: none; }
 
-.compare-button-block a {
-  padding: 10px;
-  line-height: 1;
-  display: none; }
-  .compare-button-block a.show {
-    display: block; }
+.compare-button-block {
+  letter-spacing: 1px; }
+  .compare-button-block a {
+    padding: 10px;
+    line-height: 1;
+    display: none; }
+    .compare-button-block a.show {
+      display: block; }
+
+.compare-block {
+  position: relative; }
+  .compare-block:after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: #bbb;
+    position: absolute;
+    left: 49%;
+    top: 0; }
+
+.label-compare-block {
+  position: relative;
+  left: -26px;
+  z-index: 1; }
 
 .label-compare {
   padding: 5px 10px;
@@ -2588,18 +2608,22 @@ body {
   letter-spacing: 1px; }
 
 .label-compare-clear {
-  background: #898989;
   cursor: pointer; }
+  .label-compare-clear:before {
+    content: "\f00d";
+    font-family: "FontAwesome"; }
+
+.label-compare-compare {
+  background: #898989; }
 
 .icon-button-compare {
   border: none;
   position: relative;
-  top: 20px; }
+  top: 20px;
+  left: 18px; }
 
 .school-compare-each {
   width: 50%; }
-  .school-compare-each:first-of-type {
-    border-right: 1px solid #d8d8d8; }
 
 .school-compare-each-search {
   text-align: right; }

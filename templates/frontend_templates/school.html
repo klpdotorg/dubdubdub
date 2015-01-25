@@ -238,58 +238,64 @@
         <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
     </table>
-  </container>
+  </div> <!-- /container -->
   
 </script>
+
 <script type="text/html" id="tpl-tab-programmes">
-  Coming soon.
-  <!-- <h4 class="heading-tiny-uppercase">Programme Information</h4>
-    <a href="" class="black external"><b>Akshara Foundation-Reading (2006)</b></a><br/>
-    <a href="" class="black external"><b>Akshara Foundation-Remedial_Math_Level2 (2008)</b></a>
-    
-    <table class="info_data_table label_small mar_top_25">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
-        </tr>
-    </table> -->
+  <div class="container">
+    Coming soon.
+    <!-- <h4 class="heading-tiny-uppercase">Programme Information</h4>
+      <a href="" class="black external"><b>Akshara Foundation-Reading (2006)</b></a><br/>
+      <a href="" class="black external"><b>Akshara Foundation-Remedial_Math_Level2 (2008)</b></a>
+      
+      <table class="info_data_table label_small mar_top_25">
+          <tr>
+              <td>Source</td>
+              <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
+          </tr>
+      </table> -->
+  </div> <!-- /container -->
 </script>
+
 <script type="text/html" id="tpl-tab-finances">
-  <h4 class="heading-tiny-uppercase">SSA GRANTS ALLOCATION</h4>
-  
-  <div class="center-text" id="pie_chart_finance">{ Chart here }</div>
-  
-  <table class="table-data table-data-finances">
-      <tr>
-        <td>School Maintence Grant (SMG)</td>
-        <td>₹ 5,000 for upto 3 classrooms and ₹ 10,000 for more than 3 classrooms.</td>
-      </tr>
-      <tr>
-        <td>School Grant (SG)</td>
-        <td>₹ 5,000 for lower primary schools and ₹ 7,000 for upper and model primary schools.</td>
-      </tr>
-      <tr>
-        <td>Teacher Learning Material Grant (TLM)</td>
-        <td>₹ 500 per teacher.</td>
-      </tr>
-  </table>
-  <div class="base-spacing"></div>
-  <p>
-    {% if classroom_count > 3 %}
-    This school with more than 3 classrooms has
-    {% else %}
-    This school with 3 classrooms or fewer has
-    {% endif %}
-    {{ teacher_count }} teachers as per DISE sources.<br/>
-    It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
-  </p>
-  
-  <table class="table-data">
-      <tr>
-        <td>Source</td>
-        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-      </tr>
-  </table>
+  <div class="container">
+    <h4 class="heading-tiny-uppercase">SSA GRANTS ALLOCATION</h4>
+    
+    <div class="center-text" id="pie_chart_finance">{ Chart here }</div>
+    
+    <table class="table-data table-data-finances">
+        <tr>
+          <td>School Maintence Grant (SMG)</td>
+          <td>₹ 5,000 for upto 3 classrooms and ₹ 10,000 for more than 3 classrooms.</td>
+        </tr>
+        <tr>
+          <td>School Grant (SG)</td>
+          <td>₹ 5,000 for lower primary schools and ₹ 7,000 for upper and model primary schools.</td>
+        </tr>
+        <tr>
+          <td>Teacher Learning Material Grant (TLM)</td>
+          <td>₹ 500 per teacher.</td>
+        </tr>
+    </table>
+    <div class="base-spacing"></div>
+    <p>
+      {% if classroom_count > 3 %}
+      This school with more than 3 classrooms has
+      {% else %}
+      This school with 3 classrooms or fewer has
+      {% endif %}
+      {{ teacher_count }} teachers as per DISE sources.<br/>
+      It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
+    </p>
+    
+    <table class="table-data">
+        <tr>
+          <td>Source</td>
+          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        </tr>
+    </table>
+  </div> <!-- /container -->
 </script>
 
 <script type="text/html" id="tpl-tab-infrastructure">

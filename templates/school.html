@@ -21,15 +21,15 @@
 {% endblock %}
 {% block content %}
 <section id="compare_flow" class="school-comparison-flow is-map-page hide">
-  <div class="content">
-    <div class="container">
-      <a href="#" class="fa fa-close js-comparison-close" title="Close"></a>
-      <div class="center-text">
-        <span class="label-compare js-comparison-clear-right">clear</span>
-        <span class="label-compare label-compare-clear">Comparing</span>
+  <div class="container">
+    <div class="compare-block">
+      <div class="label-compare-block">
+        <span class="label-compare label-compare-clear js-comparison-clear-right">clear</span>
+        <span class="label-compare label-compare-compare">Comparing</span>
         <div class="vr"></div>
         <div class="icon-button-round icon-button-compare"><span class="fa">vs</span></div>
       </div>
+      <a href="#" class="fa fa-close js-comparison-close" title="Close"></a>
       <div class="grid-parent">
         <div class="school-compare-each js-comparison-option-left">
         </div>
@@ -41,19 +41,16 @@
             <input type="text" id="comparison-search-select" class="select2 input-text" placeholder="Search to compare">
           </div>
         </div>
+      </div>      
+    </div> <!-- /compare-block --> 
+  </div> <!-- /container -->
 
-      </div>
-
-    </div> <!-- /container -->
-
-    <div class="compare-button-block">
-      <a href="" class="js-btn-compare">Compare now</a>
-      <a href="" class="js-btn-cancel js-comparison-close show">Cancel</a>        
-    </div>
-
-    <div class="comparison-result-wrapper js-comparison-result-wrapper">
-    </div>
+  <div class="compare-button-block">
+    <a href="" class="js-btn-compare">Compare now</a>
+    <a href="" class="js-btn-cancel js-comparison-close show">Cancel</a>        
   </div>
+
+  <div class="comparison-result-wrapper js-comparison-result-wrapper"></div>
 </section>
 <section class="school-page">
   <div class="school-map-wrapper">

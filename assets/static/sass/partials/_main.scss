@@ -15,7 +15,9 @@
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
-//maybe a class for border-color
+//maybe a class for border-
+
+//highcharts NOT WORKING ON FINANCE
 
 
 //horizontal scroll bar on info tab in school on desktop also
@@ -984,6 +986,7 @@ body {
 
 // compare
 .compare-button-block {
+  letter-spacing: 1px;
 
   a {
     @extend %grey-steel-bg;
@@ -1006,18 +1009,48 @@ body {
   }
 }
 
+.compare-block {
+  position: relative;
+  &:after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: $grey-silver;
+    position: absolute;
+    left: 49%;
+    top: 0;
+  }
+}
+
+.label-compare-block {
+  @extend %center-text;
+  position: relative;
+  left: -26px; // equals width of clear button + inline whitespace
+  z-index: 1;
+}
+
 .label-compare {
   @extend %font-uppercase;
   @extend %font-smallest;
+  @extend %font-bold;
   padding: $base-spacing-sm $base-spacing;
   line-height: 1;
   letter-spacing: 1px;
 }
 
 .label-compare-clear {
+  cursor: pointer;
+
+  &:before {
+    content: "\f00d";
+    font-family: "FontAwesome";
+    @extend %icon-left;
+  }
+}
+
+.label-compare-compare {
   background: $grey-steel;
   @extend %white;
-  cursor: pointer;
 }
 
 .icon-button-compare {
@@ -1026,6 +1059,7 @@ body {
   border: none;
   position: relative;
   top: $base-spacing-lg;
+  left: 18px;
 
   .fa {
     @extend %font-small;
@@ -1036,10 +1070,6 @@ body {
   width: 50%;
   @extend %float-left;
   @extend %grid-child;
-
-  &:first-of-type {
-    border-right: 1px solid $grey-cloud;
-  }
 }
 
 .school-compare-each-search {
