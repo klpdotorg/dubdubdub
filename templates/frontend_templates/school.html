@@ -7,7 +7,7 @@
     {{ name }}
   </h4>
   
-  <ul class="map-location-labels">  
+  <ul class="map-location-labels font-smallest">  
     <li class="map-label-each">
       <div class="map-label-title">District</div>
       <div class="map-label-name">{{ admin1.name|capitalize }}</div>
@@ -644,15 +644,19 @@
       <p>
           {{ f.text|striptags|nl2br|autolink|safe }}
       </p>
-      <div>
+
+      <div class="clearfix grid-parent">
+      <div class="float-left grid-child">
         <div class="black font-smallest font-bold">
           Date:
         </div>
         <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
       </div>
+      <div class="float-right grid-child">
       <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
         Volunteer Now
       </a>
+      </div>
     </div>
     {% endfor %}
 

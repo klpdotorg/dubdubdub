@@ -48,11 +48,16 @@
 .map-label-each {
   display: inline-block;
   vertical-align: top;
-  width: 33.33%;
   padding-right: $base-spacing;
 
   &:last-of-type {
     padding-right: 0;
+  }
+}
+
+.map-pin-details {
+  .map-label-each {
+    width: 33.33%;
   }
 }
 
