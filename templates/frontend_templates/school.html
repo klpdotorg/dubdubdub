@@ -76,27 +76,27 @@
             <tr>
               <td>MLA Constituency</td>
               <td>
-                  {% if assembly %}
-                      {{ assembly.name }}
-                  {% else %}
-                      Data unavailable.
-                  {% endif %}
+                {% if assembly %}
+                    {{ assembly.name }}
+                {% else %}
+                    Data unavailable.
+                {% endif %}
               </td>
             </tr>
             <!--
             <tr>
-                <td>MLA Details</td>
-                <td>Dr. Ashwath Narayan (BJP)</td>
+              <td>MLA Details</td>
+              <td>Dr. Ashwath Narayan (BJP)</td>
             </tr>
         -->
             <tr>
               <td>MP Constituency</td>
               <td>
-                  {% if parliament %}
-                      {{ parliament.name }}
-                  {% else %}
-                      Data unavailable.
-                  {% endif %}
+                {% if parliament %}
+                    {{ parliament.name }}
+                {% else %}
+                    Data unavailable.
+                {% endif %}
               </td>
             </tr>
               <!--
@@ -119,15 +119,14 @@
           {% endif %}
       </div>
       <div class="clear"></div> 
-
-      <div class="base-spacing"></div> 
-      <table class="table-data table-data-source">
-        <tr>
-          <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-        </tr>
-      </table>
     </div> <!-- /school-data-wrap -->
+    <div class="base-spacing"></div> 
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
+    </table>
   </div> <!-- /container -->
 </script>
 <script type="text/html" id="tpl-tab-demographics">
@@ -227,10 +226,10 @@
   {% endif %}
   
   <br /><br />
-  <table class="info_data_table label_small">
+  <table class="table-data">
       <tr>
-          <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
   </table>
   
@@ -269,52 +268,60 @@
   </table>
   <div class="base-spacing"></div>
   <p>
-      {% if classroom_count > 3 %}
-      This school with more than 3 classrooms has
-      {% else %}
-      This school with 3 classrooms or fewer has
-      {% endif %}
-      {{ teacher_count }} teachers as per DISE sources.<br/>
-      It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
+    {% if classroom_count > 3 %}
+    This school with more than 3 classrooms has
+    {% else %}
+    This school with 3 classrooms or fewer has
+    {% endif %}
+    {{ teacher_count }} teachers as per DISE sources.<br/>
+    It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
   </p>
   
-  <table class="info_data_table label_small">
+  <table class="table-data">
       <tr>
-          <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
   </table>
 </script>
+
 <script type="text/html" id="tpl-tab-infrastructure">
-  <h4 class="heading-tiny-uppercase">Infrastructure</h4>
-  
-  <table class="table-data table-data-key">
-      {% for title, facs in facilities %}
-      <tr>
+  <div class="container">
+    <h4 class="heading-tiny-uppercase">Infrastructure</h4>
+    
+    <div class="tab-school-infra-block">
+      <table class="table-data table-data-key">
+        {% for title, facs in facilities %}
+        <tr>
           <td>{{ title }}</td>
           <td>
-              {% for key, value in facs %}
-              <div class="table-infra-key-color brand-{% if value %}green{% else %}red{% endif %}">
-                  {{ key }}
-              </div>
-              {% endfor %}
+            {% for key, value in facs %}
+            <div class="table-infra-key-color brand-{% if value %}green{% else %}red{% endif %}">
+                {{ key }}
+            </div>
+            {% endfor %}
           </td>
-      </tr>
-      {% endfor %}
-  </table>
-  
-  <div class="infra-key-legend">
-    <div class="table-infra-key-color brand-green">Indicates infrastructure present</div>
-    <div class="table-infra-key-color brand-red">Indicates infrastructure absent</div>
-    <div class="table-infra-key-color brand-grey">Indicates information unavailable</div>
-  </div>
-  <div class="clr"></div>
-  <div>
+        </tr>
+        {% endfor %}
+      </table>
+      
+      <div class="infra-key-legend">
+        <div class="table-infra-key-color brand-green">Indicates infrastructure present</div>
+        <div class="table-infra-key-color brand-red">Indicates infrastructure absent</div>
+        <div class="table-infra-key-color brand-grey">Indicates information unavailable</div>
+      </div>
+
+    </div> <!-- /tab-school-infra-block -->
+      
     <div class="base-spacing-lg"></div> 
-    <span class="school-tab-copyright"><strong>Source</strong></span>
-    <span>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</span>
-  </div>
-  
+
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
+    </table>
+  </div> <!-- /container -->  
 </script>
 <script type="text/html" id="tpl-tab-library">
   <div class="hide no-data">

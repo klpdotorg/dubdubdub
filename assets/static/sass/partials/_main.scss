@@ -36,6 +36,8 @@ the css in the head of map.html
 
 // organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
+//SANJ:
+  / school/demographics: do we want the pie charts to both be floated left or just the first?
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
@@ -906,7 +908,11 @@ body {
 }
 
 //tab: infrastructure
-  
+
+.table-data-key {
+  margin-bottom: $base-spacing-lg;
+}
+
 .table-infra-key-color {
   padding-right: $base-spacing-lg-x;
   position: relative;

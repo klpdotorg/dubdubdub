@@ -280,11 +280,11 @@
 	}
 
 	//Page: School
-	.school-data-wrap {
+	.school-data-wrap, .tab-school-infra-block {
 		@include grid-parent;
 	}
 
-	.school-data-block, .school-photos-block, .table-data-source {
+	.school-data-block, .school-photos-block, .table-data-key, .infra-key-legend {
 		@include grid-child;
 	}
 
@@ -296,6 +296,17 @@
 	.school-photos-block {
 		float: right;
 		width: 40%;
+	}
+
+	.table-data-key {
+		float: left;
+		width: 70%;
+		margin-bottom: 0;
+	}
+
+	.infra-key-legend {
+		float: right;
+		width: 30%;
 	}
 }
 
