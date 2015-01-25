@@ -458,6 +458,13 @@
             //$('#loadingTab').removeClass('current');
             $('.tab-content[data-tab=' + tabName + ']').html(html);
             doPostRender(tabName, data);
+            //on mobile, scroll to top of accordion
+            var $accordionTrigger = $('.tab-each .tab-heading-active');
+            if ($accordionTrigger.is(":visible")) {
+                var headerHeight = $('.main-header').height();
+                var offsetTop = $accordionTrigger.offset().top - headerHeight;
+                $(document).scrollTop(offsetTop);
+            }
             $deferred.resolve();
         });
         return $deferred;
