@@ -9,19 +9,12 @@
   	  font-size: 140%;
   	}
 	}
-
-	.table-volunteer-oppor {
-		.button {
-			padding-left: $base-spacing;
-			padding-right: $base-spacing;
-		}
-	}
 }
 
-@media only screen and (max-width: 799px) {
+@media only screen and (max-width: 750px) {
 	//table volunteer
 
-	.table-base-volunteer, .table-base-donation {
+	.table-base-volunteer, .table-base-donation, .table-volunteer-oppor {
 		display: block;
 
 		.table-base-heading {

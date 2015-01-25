@@ -2075,19 +2075,9 @@ the css in the head of map.html
 
 //make make border: 1px solid $grey-cloud modular;
 
-//Share your story: Information from schools visits: Check the table below shows the right classes
 
-// Share your story: Style comments; http://localhost:8001/school/33141/#?tab=share-story
-
-//test the volunteer tab content in school tabs as well, not formatted fully: http://localhost:8001/school/18639/#?tab=volunteer;
-
-
-
-// organisation/1/volunteer_activity: need to test volunteer tab styling on mobile for table
 
 //SANJ:
-
-// checkboxes on share your story form and couple of other places look odd without a parent label. can we add one?
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
 
@@ -2932,25 +2922,21 @@ body {
     padding-bottom: 25px; }
     .banner-full .heading-primary {
       margin: 25px 0;
-      font-size: 140%; }
-
-  .table-volunteer-oppor .button {
-    padding-left: 10px;
-    padding-right: 10px; } }
-@media only screen and (max-width: 799px) {
-  .table-base-volunteer, .table-base-donation {
+      font-size: 140%; } }
+@media only screen and (max-width: 750px) {
+  .table-base-volunteer, .table-base-donation, .table-volunteer-oppor {
     display: block; }
-    .table-base-volunteer .table-base-heading, .table-base-donation .table-base-heading {
+    .table-base-volunteer .table-base-heading, .table-base-donation .table-base-heading, .table-volunteer-oppor .table-base-heading {
       display: none; }
-    .table-base-volunteer tr, .table-base-volunteer td, .table-base-volunteer th, .table-base-donation tr, .table-base-donation td, .table-base-donation th {
+    .table-base-volunteer tr, .table-base-volunteer td, .table-base-volunteer th, .table-base-donation tr, .table-base-donation td, .table-base-donation th, .table-volunteer-oppor tr, .table-volunteer-oppor td, .table-volunteer-oppor th {
       display: block;
       width: 100%;
       padding: 5px 0; }
-    .table-base-volunteer tr td:nth-of-type(1), .table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(1), .table-base-donation tr td:nth-of-type(2) {
+    .table-base-volunteer tr td:nth-of-type(1), .table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(1), .table-base-donation tr td:nth-of-type(2), .table-volunteer-oppor tr td:nth-of-type(1), .table-volunteer-oppor tr td:nth-of-type(2) {
       width: 100%; }
-    .table-base-volunteer td, .table-base-donation td {
+    .table-base-volunteer td, .table-base-donation td, .table-volunteer-oppor td {
       border-bottom: none; }
-    .table-base-volunteer tr, .table-base-donation tr {
+    .table-base-volunteer tr, .table-base-donation tr, .table-volunteer-oppor tr {
       border-bottom: 1px solid #d8d8d8;
       padding: 15px 10px; }
 

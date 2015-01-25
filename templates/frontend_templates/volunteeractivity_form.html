@@ -18,7 +18,7 @@
 </script>
 <script type="text/html" id="tpl-volunteerDetails">
   <tr class="js-volunteerTR" data-id="{{ user_details.id }}">
-    <td>
+    <td class="font-small">
       <!-- <img class="profile-img" src="images/thumb_reading_programme.jpg"> -->
       <a href="/profile/{{ user_details.id }}" class="font-bold">
         {{ user_details.first_name }} {{ user_details.last_name }} 
@@ -34,7 +34,7 @@
       <!-- <div class="bold uppercase">Mohali, Punjab, India</div> -->
     </td>
     <td>
-      <a class="button js-volunteerVerify" data-status="{{ status }}" href="#">
+      <a class="button button-sm js-volunteerVerify" data-status="{{ status }}" href="#">
         {% if status == 1 %}Cancel{% else %}Attended{% endif %}
       </a>
     </td>
