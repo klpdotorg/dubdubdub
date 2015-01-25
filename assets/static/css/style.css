@@ -892,7 +892,7 @@ hr {
 
 .tab-content {
   display: none;
-  padding: 10px;
+  padding: 25px 10px 10px 10px;
   border-bottom: 1px solid #d8d8d8; }
   .tab-content.tab-active {
     display: block; }
@@ -2485,8 +2485,7 @@ body {
     height: inherit; }
 
 .school-map-info {
-  position: relative;
-  top: -160px;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -2653,9 +2652,6 @@ body {
 
 .table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(2) {
   width: 35%; }
-
-.tab-org-edit .tab-content {
-  padding-top: 35px; }
 
 .table-base-donation-items {
   counter-reset: counter-rows; }

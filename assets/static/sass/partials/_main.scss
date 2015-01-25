@@ -819,8 +819,8 @@ body {
 }
 
 .school-map-info {
-  position: relative;
-  top: -($school-map-spacing);
+  position: absolute;
+//  top: -($school-map-spacing);
   left: 0;
   right: 0;
   bottom: 0;
@@ -1140,13 +1140,6 @@ body {
         width: 35%;
       }
     }
-  }
-}
-
-
-.tab-org-edit {
-  .tab-content {
-    padding-top: ($base-spacing-lg-x) + 10;
   }
 }
 
