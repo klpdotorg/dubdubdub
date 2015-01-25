@@ -80,7 +80,7 @@ q:before, q:after {
 .font-italic, em, i {
   font-style: italic; }
 
-.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .step-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .icon-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
@@ -95,13 +95,13 @@ q:before, q:after {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .step-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .step-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
-.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .step-number, .school-type-school .step-number, .leaflet-container a.button-sm {
+.font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .icon-number, .school-type-school .icon-number, .leaflet-container a.button-sm {
   font-size: 70%; }
 
 .font-large, .alert, .volunteer-story-heading {
@@ -267,7 +267,7 @@ sub {
   border: 1px solid #d8d8d8;
   padding: 10px 15px; }
 
-.step-number {
+.icon-number {
   border: 1px solid;
   display: inline-block;
   padding: 7px 10px;
@@ -285,7 +285,7 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .step-number, .map-heading-main, .leaflet-container a.brand-green {
+.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green {
   color: #26b262; }
 
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
@@ -324,7 +324,7 @@ sub {
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .gender-item .k-icon:before, .gender-item .k-icon:after {
   color: #fff; }
 
-.white-bg, .heading-section, .step-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
+.white-bg, .heading-section, .icon-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, body, .main-header, .nav, .nav ul, .options-list {
   background-color: #fff; }
@@ -413,7 +413,7 @@ sub {
 .border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
   border-radius: 3px; }
 
-.border-radius-circle, .step-number, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
+.border-radius-circle, .icon-number, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -472,7 +472,7 @@ img, video {
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .step-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -803,7 +803,7 @@ hr {
   margin-bottom: 50px; }
   .module-img-each:last-of-type {
     margin-bottom: 0; }
-  .module-img-each .step-number {
+  .module-img-each .icon-number {
     position: relative;
     top: 10px;
     z-index: 1; }
@@ -2494,7 +2494,7 @@ body {
 .school-type-preschool, .school-type-school {
   letter-spacing: 1px;
   line-height: 1; }
-  .school-type-preschool .step-number, .school-type-school .step-number {
+  .school-type-preschool .icon-number, .school-type-school .icon-number {
     line-height: 1;
     position: relative;
     top: -2px; }
@@ -2635,7 +2635,7 @@ body {
 .map-volunteer-canvas-full {
   left: 300px; }
 
-.map-pin-details .step-number {
+.map-pin-details .icon-number {
   padding: 5px 7px;
   position: absolute;
   right: 20px; }

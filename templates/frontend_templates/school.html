@@ -1,7 +1,7 @@
 {% verbatim %}
 <script type="text/html" id="tpl-school-info">
   <h4 class="school-type-{{ type_name }}">
-    <span class="step-number">
+    <span class="icon-number">
       {% if type_name == 'school' %} S {% else %} P {% endif %}
     </span>
     {{ name }}
@@ -19,6 +19,7 @@
       <div class="map-label-name">{{ admin3.name|capitalize }}</div>
   </ul>
 </script>
+
 <script type="text/html" id="tpl-tab-info">
   <div class="container">
     <div class="school-data-wrap">
@@ -567,7 +568,7 @@
       </div>
     -->
         <div class="base-spacing font-large">
-          <span class="step-number icon-left">{{ count }}</span>
+          <span class="icon-number icon-left">{{ count }}</span>
           <span class="text">Shared Stories</span>
         </div>
       </div>
