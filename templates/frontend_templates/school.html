@@ -646,17 +646,17 @@
       </p>
 
       <div class="clearfix grid-parent">
-      <div class="float-left grid-child">
-        <div class="black font-smallest font-bold">
-          Date:
+        <div class="float-left grid-child">
+          <div class="black font-smallest font-bold">
+            Date:
+          </div>
+          <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
         </div>
-        <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
-      </div>
-      <div class="float-right grid-child">
-      <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
-        Volunteer Now
-      </a>
-      </div>
+        <div class="float-right grid-child">
+          <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
+            Volunteer Now
+          </a>
+        </div>
     </div>
     {% endfor %}
 
@@ -670,76 +670,81 @@
 
 </script>
 <script type="text/html" id="tpl-share-story-form">
-  <h2 class="heading-secondary brand-blue">Share Your Story</h2>
-  <form id="sysForm" class="form-base form-share-story" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
-      <div class="form-field-wrap">
-        <label for="name_id" class="label-inline">Name:</label>
-        <input type="text" name="name" id="name_id" class="input-text">
-      </div>
-      <div class="form-field-wrap">
-        <label for="email_id" class="label-inline">E-mail:</label>
-        <input type='email' name="email" id="email_id" class="input-text">
-      </div>
-      <div class="form-field-wrap">
-        <label for="telephone" class="label-inline">Telephone:</label>
-        <input type='tel' name="telephone" id="telephone" class="input-text">
-      </div>
-      <div class="form-field-wrap">
-        <label for="date" class="label-inline">Date of Visit:</label>
-        <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD" class="input-text js-input-date">
-      </div>
-      <div class="form-field-wrap">
-        <label for="comments_id" class="label-inline">Comments:</label>
-        <textarea name="comments" id="comments_id" class="input-text"></textarea>
-      </div>
-      {% for q in questions %}
-      <div>
-        {% if q.question_type == 'checkbox' %}
-        <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" class="input-checkbox">
-        <label class="input-checkbox-label" for='id_question_{{ q.qid }}'>
-          {{ q.text }}
-        </label>
-        {% elseif q.question_type == 'radio' %}
-          <div class="base-spacing"></div>
-          <label><strong>{{ q.text }}</strong></label>
-        <div class='radio-options'>
-          {% for option in q.options %}
-          <div class="base-spacing">
-          <input type='radio' class="input-radio" value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
-          <label for="id_question_{{ q.qid }}_{{ option }}" class="input-radio-label">
-              {{ option }}
+  <div class="container-sm">
+    <div class="base-spacing-lg">
+      <h2 class="heading-secondary brand-blue">Share Your Story</h2>
+    </div>
+    <form id="sysForm" class="form-base form-share-story" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
+        <div class="form-field-wrap">
+          <label for="name_id" class="label-inline">Name:</label>
+          <input type="text" name="name" id="name_id" class="input-text">
+        </div>
+        <div class="form-field-wrap">
+          <label for="email_id" class="label-inline">E-mail:</label>
+          <input type='email' name="email" id="email_id" class="input-text">
+        </div>
+        <div class="form-field-wrap">
+          <label for="telephone" class="label-inline">Telephone:</label>
+          <input type='tel' name="telephone" id="telephone" class="input-text">
+        </div>
+        <div class="form-field-wrap">
+          <label for="date" class="label-inline">Date of Visit:</label>
+          <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD" class="input-text js-input-date">
+        </div>
+        <div class="form-field-wrap">
+          <label for="comments_id" class="label-inline">Comments:</label>
+          <textarea name="comments" id="comments_id" class="input-text"></textarea>
+        </div>
+        {% for q in questions %}
+        <div>
+          {% if q.question_type == 'checkbox' %}
+          <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" class="input-checkbox">
+          <label class="input-checkbox-label" for='id_question_{{ q.qid }}'>
+            {{ q.text }}
           </label>
+          {% elseif q.question_type == 'radio' %}
+            <div class="base-spacing"></div>
+            <label><strong>{{ q.text }}</strong></label>
+          <div class='radio-options'>
+            {% for option in q.options %}
+            <div class="base-spacing">
+            <input type='radio' class="input-radio" value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
+            <label for="id_question_{{ q.qid }}_{{ option }}" class="input-radio-label">
+                {{ option }}
+            </label>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
+          {% endif %}
         </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-      <div class="form-field-wrap">
-        <label>
-          Upload images:
-        </label>
-      </div>
-      <div class="form-field-wrap">
-        <input name="image" type="file" />
-        <img class="imagePreview js-image-preview" width="100" />
-      </div>
-      <div class="form-field-wrap">
-        <input name="image" type="file" />
-        <img class="imagePreview js-image-preview" width="100" />
-      </div>
-      <div class="form-field-wrap">
-        <input name="image" type="file" />
-        <img class="imagePreview js-image-preview" width="100" />
-      </div>
-  
-      <div class="form-field-wrap">
-        <button type="submit" class="button js-submit-btn">Submit</button>
-        <div class="js-submit-loading" style="display:none;">
-          Sending...
+        {% endfor %}
+        <div class="form-field-wrap">
+          <label>
+            Upload images:
+          </label>
         </div>
-      </div>
-  </form>
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
+        </div>
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
+        </div>
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
+        </div>
+    
+        <div class="form-field-wrap center-text">
+          <button type="submit" class="button js-submit-btn">Submit</button>
+          <div class="js-submit-loading" style="display:none;">
+            Sending...
+          </div>
+        </div>
+    </form>
+
+  </div> <!-- /container -->
   
 </script>
 {% endverbatim %}
