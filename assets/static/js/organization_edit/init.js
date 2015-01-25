@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.basic_tabs.init();
         var apiURL = "organizations/" + ORGANIZATION_ID;
         var $orgXHR = klp.api.authDo(apiURL);
         $orgXHR.done(function(data) {

@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.basic_tabs.init();
         var $infoXHR = klp.api.authDo("volunteer_activities/" + VOLUNTEER_ACTIVITY_ID);
         var tplActivityDetails = swig.compile($('#tpl-activityDetails').html());
         var tplVolunteerDetails = swig.compile($('#tpl-volunteerDetails').html());

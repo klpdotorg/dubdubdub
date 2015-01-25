@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load compress %}
 {% block page_title %}Manage Organisation: {{ object.name }}{% endblock %}
 {% block endbody %}
+{% compress js %}
 <script type="text/javascript" src="{% static 'js/organization_edit/init.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+{% endcompress %}
 <script>
   ORGANIZATION_ID = {{ object.id }}
 </script>

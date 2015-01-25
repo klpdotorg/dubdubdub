@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% load compress %}
 {% block page_title %}Volunteer Opportunities {{ action }}{% endblock %}
 {% block endbody %}
+{% compress js %}
+<script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+{% endcompress %}
 {% block endbody_extra %} {% endblock %}
 {% endblock %}
 {% block content %}
