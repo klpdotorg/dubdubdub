@@ -2515,7 +2515,8 @@ body {
 
 .image-preview-gallery img {
   width: 60px;
-  margin: 5px; }
+  margin: 5px;
+  cursor: pointer; }
 
 .school-demo-tab .module-stats-icon {
   display: block;
