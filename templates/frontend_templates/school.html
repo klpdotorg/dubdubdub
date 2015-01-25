@@ -287,24 +287,26 @@
 
 <script type="text/html" id="tpl-tab-infrastructure">
   <div class="container">
-    <h4 class="heading-tiny-uppercase">Infrastructure</h4>
     
     <div class="tab-school-infra-block">
-      <table class="table-data table-data-key">
-        {% for title, facs in facilities %}
-        <tr>
-          <td>{{ title }}</td>
-          <td>
-            {% for key, value in facs %}
-            <div class="table-infra-key-color brand-{% if value %}green{% else %}red{% endif %}">
-                {{ key }}
-            </div>
-            {% endfor %}
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-      
+      <div class="school-infra-table">    
+        <h4 class="heading-tiny-uppercase">Infrastructure</h4>
+        <table class="table-data table-data-key">
+          {% for title, facs in facilities %}
+          <tr>
+            <td>{{ title }}</td>
+            <td>
+              {% for key, value in facs %}
+              <div class="table-infra-key-color brand-{% if value %}green{% else %}red{% endif %}">
+                  {{ key }}
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div> <!-- /school-infra-table -->
+    
       <div class="infra-key-legend">
         <div class="table-infra-key-color brand-green">Indicates infrastructure present</div>
         <div class="table-infra-key-color brand-red">Indicates infrastructure absent</div>
@@ -325,6 +327,7 @@
 </script>
 <script type="text/html" id="tpl-tab-library">
   <div class="container">
+    <h4 class="heading-tiny-uppercase">Library</h4>
     <div class="hide no-data">
       <p> No data available </p>
     </div>
@@ -531,7 +534,7 @@
       <p> No data available </p>
     </div>
     <div class="hide data">
-      <div class="ta_c" id="graph_nutrition">{ Graph here }</div>
+      <div id="graph_nutrition">{ Graph here }</div>
     </div>
 
     <div class="base-spacing"></div>
@@ -544,79 +547,79 @@
   </div> <!-- /container -->
   
 </script>
+
+
 <script type="text/html" id="tpl-tab-share-story">
-  <div class="fl-desktop-tablet width-48p-desktop-tablet">
-      <h4 class="heading-tiny-uppercase">Information from schools visits</h4>
-  
-      <p>This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:</p>
-  
-      <table class="table-data table-data-key">
-        {% if latest_answers %}
-            {% for answer in latest_answers %}
+  <div class="container">
+    <div class="school-tab-story">
+      <div class="school-story-visits">
+          <h4 class="heading-tiny-uppercase">Information from schools visits</h4>
+      
+          <p>This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:</p>
+      
+          <table class="table-data table-data-key">
+            {% if latest_answers %}
+                {% for answer in latest_answers %}
+                  <tr>
+                    <td>{{ answer.question.text }}</td>
+                    <td> 
+                      <div class="table-infra-key-color brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
+                      {{ answer.text }}
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+              {% else %}
               <tr>
-                <td>{{ answer.question.text }}</td>
-                <td> 
-                  <div class="table-infra-key-color brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
-                  {{ answer.text }}
-                  </div>
-                </td>
+                <td>No answers available for school.</td>
+                <td></td>
               </tr>
-              {% endfor %}
-          {% else %}
-          <tr>
-            <td>No answers available for school.</td>
-            <td></td>
-          </tr>
-          {% endif %}
-      </table>
-  </div>
-  
-  <div class="fr-desktop-tablet width-48p-desktop-tablet">
-      <div class="share-your-story">
-        <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
-        <br/>
+              {% endif %}
+          </table>
+      </div> <!-- /school-story-visits -->
+       
+      <div class="school-share-story">
+        <div class="share-your-story">
+          <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
+          <div class="base-spacing-sm"></div>
           <!--
-      <div class="stats first">
-        <div class="number"></div>
-        <div class="text">Number of School Visits</div>
-      </div>
-    -->
+        <div class="stats first">
+          <div class="number"></div>
+          <div class="text">Number of School Visits</div>
+        </div>
+        -->
         <div class="base-spacing font-large">
           <span class="icon-number icon-left">{{ count }}</span>
           <span class="text">Shared Stories</span>
         </div>
-      </div>
-  </div>
-  <!-- <div class="clr-phone-tablet"></div> -->
-  
-  <div class="fr-desktop-tablet width-48p-desktop-tablet">  
-    <div class="comments">
-        <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
-        {% for story in features %}
-        <div class="comment-item">
-            <p class="grey-gravel font-bold">
-              {% if story.name %}
-                  {{ story.name }}
-              {% else %}
-                Anonymous
-              {% endif %}
-            </p>
-            {% if story.comments %}
-              <p>{{ story.comments }}</p>
-            {% endif %}
-            {% if story.date_of_visit %}
-            <div class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>  
-  </div>
-  
-  <div class="clr"></div>
-  
-  
-  
+
+        <div class="comments">
+            <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
+            {% for story in features %}
+            <div class="comment-item">
+                <p class="grey-gravel font-bold">
+                  {% if story.name %}
+                      {{ story.name }}
+                  {% else %}
+                    Anonymous
+                  {% endif %}
+                </p>
+                {% if story.comments %}
+                  <p>{{ story.comments }}</p>
+                {% endif %}
+                {% if story.date_of_visit %}
+                <div class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div> <!-- /comments --> 
+      </div> <!-- /school-share-story -->
+
+    </div> <!-- /school-tab-story --> 
+  </div> <!-- /container -->
+
 </script>
+
 <script type="text/html" id="tpl-tab-volunteer">
  {% if features.length %}
       {% for f in features %}

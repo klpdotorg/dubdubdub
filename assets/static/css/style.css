@@ -2088,6 +2088,10 @@ button class="styled hide" id="library_graph_table_switch">Switch to Table View<
 and this:     <table id="table_library" class="basic_table mar_top_25" style="display:none
 clicking on aggregate in library shows a blank chart
 
+// what is this for school tabs?
+one class called data. can i knoock if off? i know you're using no-data in the js, hence i asked
+
+
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
 -- add disabled styling for radio, checks and inputs
@@ -2529,9 +2533,6 @@ body {
 .table-data-finances tr td:first-of-type {
   width: 40%; }
 
-.table-data-key {
-  margin-bottom: 20px; }
-
 .table-infra-key-color {
   padding-right: 25px;
   position: relative; }
@@ -2556,10 +2557,14 @@ body {
 
 .infra-key-legend {
   border: 1px solid #d8d8d8;
-  padding: 10px; }
+  padding: 10px;
+  margin-top: 40px; }
 
 .school-tab-copyright {
   padding-right: 50px; }
+
+.share-your-story {
+  margin-top: 40px; }
 
 .comment-item {
   border-bottom: 1px solid #d8d8d8;
@@ -3068,30 +3073,29 @@ body {
   .form-edit-password {
     margin-top: 0; }
 
-  .school-data-wrap, .tab-school-infra-block {
+  .school-data-wrap, .tab-school-infra-block, .school-tab-story {
     margin-left: -20px;
     margin-right: -20px; }
-    .school-data-wrap:after, .tab-school-infra-block:after {
+    .school-data-wrap:after, .tab-school-infra-block:after, .school-tab-story:after {
       content: "";
       display: table;
       clear: both; }
 
-  .school-data-block, .school-photos-block, .table-data-key, .infra-key-legend {
+  .school-data-block, .school-photos-block, .school-infra-table, .infra-key-legend, .school-story-visits, .school-share-story {
     padding-left: 20px;
     padding-right: 20px; }
 
-  .school-data-block {
+  .school-data-block, .school-story-visits {
     float: left;
     width: 60%; }
 
-  .school-photos-block {
+  .school-photos-block, .school-share-story {
     float: right;
     width: 40%; }
 
-  .table-data-key {
+  .school-infra-table {
     float: left;
-    width: 70%;
-    margin-bottom: 0; }
+    width: 70%; }
 
   .infra-key-legend {
     float: right;

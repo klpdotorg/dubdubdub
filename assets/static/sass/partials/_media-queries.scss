@@ -280,28 +280,27 @@
 	}
 
 	//Page: School
-	.school-data-wrap, .tab-school-infra-block {
+	.school-data-wrap, .tab-school-infra-block, .school-tab-story {
 		@include grid-parent;
 	}
-
-	.school-data-block, .school-photos-block, .table-data-key, .infra-key-legend {
+	
+	.school-data-block, .school-photos-block, .school-infra-table, .infra-key-legend, .school-story-visits, .school-share-story {
 		@include grid-child;
 	}
 
-	.school-data-block {
+	.school-data-block, .school-story-visits {
 		float: left;
 		width: 60%;
 	}
 
-	.school-photos-block {
+	.school-photos-block, .school-share-story {
 		float: right;
 		width: 40%;
 	}
 
-	.table-data-key {
+	.school-infra-table {
 		float: left;
-		width: 70%;
-		margin-bottom: 0;
+		width: 70%;		
 	}
 
 	.infra-key-legend {

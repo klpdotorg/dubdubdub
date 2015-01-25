@@ -46,6 +46,10 @@ button class="styled hide" id="library_graph_table_switch">Switch to Table View<
 and this:     <table id="table_library" class="basic_table mar_top_25" style="display:none
 clicking on aggregate in library shows a blank chart
 
+// what is this for school tabs?
+one class called data. can i knoock if off? i know you're using no-data in the js, hence i asked
+
+
 //MY Learnings for boilerplate;
 -- add better custom radio checkbox styling
 -- add disabled styling for radio, checks and inputs
@@ -913,10 +917,6 @@ body {
 
 //tab: infrastructure
 
-.table-data-key {
-  margin-bottom: $base-spacing-lg;
-}
-
 .table-infra-key-color {
   padding-right: $base-spacing-lg-x;
   position: relative;
@@ -953,6 +953,7 @@ body {
 .infra-key-legend {
   border: 1px solid $grey-cloud;
   padding: $base-spacing;
+  margin-top: ($base-spacing-lg-x) + 15;
 }
 
 //copyright for tabs
@@ -962,6 +963,10 @@ body {
 }
 
 //tab: share your story
+.share-your-story {
+  margin-top: ($base-spacing-lg-x) + 15;
+}
+
 .comment-item {
   border-bottom: 1px solid $grey-cloud;
   padding: $base-spacing-lg 0 0 0;
