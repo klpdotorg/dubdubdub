@@ -72,6 +72,10 @@
             e.preventDefault();
             doConfirm(activityId);
         });
+
+        $('.btn-modal-close').click(function() {
+            t.close();
+        });
     }
 
 })();
