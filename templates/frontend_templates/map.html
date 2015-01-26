@@ -129,4 +129,48 @@
   </div>
   </div>
 </script>
+
+<script type="text/html" id="tpl-filters-modal">
+  <div class="modal modal-map-filter">
+    <a class="button-close btn-modal-close"></a>
+    <h3 class="modal-heading">Filter Schools</h3>
+    <div class="page-section-menu">
+      <div class="options-wrapper">
+        <div class="klp-filter-select v-border">
+          <div class="label">School Type</div>
+          <select name="type" id="select-type" class="js-filters-dropdown">
+            <option></option>
+            <option>Primary School</option>
+            <option>Preschool</option>
+          </select>
+        </div>
+
+        <div class="klp-filter-select v-border">
+          <div class="label">District</div>
+          <input type="hidden" class="filter-dropdown" id="select-district" />
+          </select>
+        </div>
+
+        <div class="klp-filter-select v-border">
+          <div class="label">Block</div>
+          <input type="hidden" class="filter-dropdown" id="select-block" />
+        </div>
+
+        <div class="klp-filter-select v-border">
+          <div class="label">Cluster</div>
+          <input type="hidden" class="filter-dropdown" id="select-cluster" />
+         </div>
+
+        <div class="klp-filter-select v-border">
+          <div class="label">School</div>
+          <input type="hidden" class="filter-dropdown" id="select-school" />
+        </div>
+      </div>
+    </div>
+    <div class="download-button center">
+    <a href="" class="button hide" id="download">Download CSV</a>
+    </div>
+  </div>
+
+</script>
 {% endverbatim %}

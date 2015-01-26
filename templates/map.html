@@ -15,10 +15,10 @@
       <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script>
+      <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script>
+      <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/marker-cluster/leaflet.markercluster.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
@@ -67,46 +67,6 @@
 
 {% block content %}
 
-  <div class="modal modal-map-filter">
-    <a class="button-close btn-modal-close"></a>
-    <h3 class="modal-heading">Filter Schools</h3>
-    <div class="page-section-menu">
-      <div class="options-wrapper">
-        <div class="klp-filter-select v-border">
-          <div class="label">School Type</div>
-          <select name="type" id="select-type" class="js-filters-dropdown">
-            <option></option>
-            <option>Primary School</option>
-            <option>Preschool</option>
-          </select>
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">District</div>
-          <input type="hidden" class="filter-dropdown" id="select-district" />
-          </select>
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">Block</div>
-          <input type="hidden" class="filter-dropdown" id="select-block" />
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">Cluster</div>
-          <input type="hidden" class="filter-dropdown" id="select-cluster" />
-         </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">School</div>
-          <input type="hidden" class="filter-dropdown" id="select-school" />
-        </div>
-      </div>
-    </div>
-    <div class="download-button center">
-    <a href="" class="button hide" id="download">Download CSV</a>
-    </div>
-  </div>
 
   <div class="map_page no-sidebar">
     <section class="map-canvas-full">
