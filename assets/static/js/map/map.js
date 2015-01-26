@@ -592,7 +592,7 @@
 
         var filterControl = L.Control.extend({
             options: {
-                position: 'topright'
+                position: 'bottomright'
             },
 
             onAdd: function(map) {
@@ -623,7 +623,7 @@
 
         // Initialise the draw control and pass it the FeatureGroup of editable layers
         var drawControl = new L.Control.Draw({
-            position: 'topright',
+            position: 'bottomright',
             draw: {
                 polyline: false,
                 polygon: false,
