@@ -619,7 +619,7 @@
                   {% endif %}
                 </p>
                 {% if story.comments %}
-                  <p>{{ story.comments }}</p>
+                  <p>{{ story.comments|autolink|safe }}</p>
                 {% endif %}
                 {% if story.date_of_visit %}
                 <div class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
