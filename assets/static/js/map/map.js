@@ -564,14 +564,14 @@
         }
 
         var overlays = {
-            '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
-            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
-            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer,
-            '<span class="en-icon small en-preschool-district">pd</span> <span class="label en-preschool-district">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
-            '<span class="en-icon small en-school-block">sb</span> <span class="label en-school-block">SCHOOL BLOCK</span>': blockLayer,
-            '<span class="en-icon small en-school-cluster">sc</span> <span class="label en-school-cluster">SCHOOL CLUSTER</span>': clusterLayer,
-            '<span class="en-icon small en-preschool-project">pp</span> <span class="label en-preschool-project">PRESCHOOL PROJECT</span>': projectLayer,
-            '<span class="en-icon small en-preschool-circle">pc</span> <span class="label en-preschool-circle">PRESCHOOL CIRCLE</span>': circleLayer
+            '<span class="icon-number en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
+            '<span class="icon-number en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
+            '<span class="icon-number en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer,
+            '<span class="icon-number en-preschool-district">pd</span> <span class="label en-preschool-district">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
+            '<span class="icon-number en-school-block">sb</span> <span class="label en-school-block">SCHOOL BLOCK</span>': blockLayer,
+            '<span class="icon-number en-school-cluster">sc</span> <span class="label en-school-cluster">SCHOOL CLUSTER</span>': clusterLayer,
+            '<span class="icon-number en-preschool-project">pp</span> <span class="label en-preschool-project">PRESCHOOL PROJECT</span>': projectLayer,
+            '<span class="icon-number en-preschool-circle">pc</span> <span class="label en-preschool-circle">PRESCHOOL CIRCLE</span>': circleLayer
 
         };
 
