@@ -84,57 +84,8 @@
 
     <div class="msg-filter-radius hide" id="msg-filter-radius">Click and drag on the map to draw circle</div>
 
-    <section id="compare_flow" class="school-comparison-flow is-map-page hide">
-      <div class="content">
-        <div class="compare-box">
-          <a href="#" class="button-close js-comparison-close" title="Close"><span></span></a>
-
-          <div class="vs-separator">
-            <!-- <a href="" class="label fl js-comparison-clear-left">clear</a> -->
-            <div class="label bg fl">Comparing</div>
-            <a href="" class="label fl js-comparison-clear-right">clear</a>
-            <div class="vr"></div>
-            <div class="vs-label">vs</div>
-          </div>
-
-          <div class="info school left-align js-comparison-option-left">
-
-          </div>
-
-          <div class="info school-district right-align hide js-comparison-option-right">
-
-          </div>
-
-          <div class="info default right-align js-comparison-default-right">
-            <a href="" class="title-select ta-r mar_top_15 js-comparison-show-options-right">
-              <span class="button-hollow">Click to search for an entity</span>
-            </a>
-            <!-- <div class="text-select ta-r">or select one by clicking a pin on the map below</div> -->
-
-            <div class="clr"></div>
-          </div>
-          <div class="clr"></div>
-
-          <a href="" class="btn compare-now js-btn-compare">Compare now</a>
-          <a href="" class="btn cancel js-btn-cancel js-comparison-close show">Cancel</a>
-        </div>
-
-        <div class="comparison-result-wrapper js-comparison-result-wrapper">
-
-        </div>
-
-      </div>
-
-      <div class="dropdown-wrapper" id="dropdown_wrapper">
-        <div class="triangle"></div>
-        <div class="search-box">
-          <input type="text" id="comparison-search-select" class="input-search" placeholder="Search"/>
-          <!-- <a href="" class="icon"><i class="icon-search"></i></a> -->
-          <div class="clr"></div>
-        </div>
-      </div>
-    </section>
-
+    {% include 'includes/_compare_flow.html' %}
+    
     <section id="map_overlay" class="map_overlay hide">
       <a href="" class="button-close js-close-info" title="Close"><span></span></a>
       <div class="content"></div>
