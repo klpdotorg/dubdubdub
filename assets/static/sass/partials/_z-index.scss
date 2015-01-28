@@ -19,3 +19,51 @@
 .school-map-info {
   z-index: 1;
 }
+
+// Select 2
+.select2-drop-mask {
+    z-index: 9998;
+}
+
+.select2-drop {
+    z-index: 9999;
+}
+
+.select2-search {
+    z-index: 10000;
+}
+
+// Lightbox
+
+.rbox_overlay {
+  z-index: -1;
+}
+
+.rbox_show {
+  z-index: 10000;
+}
+
+
+// Module Image Each: Icon Number
+.module-img-each {
+  .icon-number {
+    z-index: 1;
+  }
+}
+
+
+// Compare Modal 
+.label-compare-block {
+  z-index: 1;
+}
+
+// Dropdown: login
+.options-list {
+  z-index: 2;
+}
+
+
+// Date picker
+.picker {
+  z-index: 10000;  
+} 

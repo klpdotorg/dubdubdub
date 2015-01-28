@@ -292,7 +292,6 @@ body {
   right: 0; 
   min-width: 80px;
   @extend %font-smaller;
-  z-index: 2;
   @extend %white-bg;
   @extend %border-radius-sm;
   border: 1px solid $grey-cloud; 
@@ -1021,7 +1020,6 @@ body {
   @extend %center-text;
   position: relative;
   left: -26px; // equals width of clear button + inline whitespace
-  z-index: 1;
 }
 
 .label-compare {

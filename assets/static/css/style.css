@@ -805,8 +805,7 @@ hr {
     margin-bottom: 0; }
   .module-img-each .icon-number {
     position: relative;
-    top: 10px;
-    z-index: 1; }
+    top: 10px; }
 
 .module-img-each {
   max-width: 500px; }
@@ -1019,6 +1018,33 @@ hr {
 .school-map-info {
   z-index: 1; }
 
+.select2-drop-mask {
+  z-index: 9998; }
+
+.select2-drop {
+  z-index: 9999; }
+
+.select2-search {
+  z-index: 10000; }
+
+.rbox_overlay {
+  z-index: -1; }
+
+.rbox_show {
+  z-index: 10000; }
+
+.module-img-each .icon-number {
+  z-index: 1; }
+
+.label-compare-block {
+  z-index: 1; }
+
+.options-list {
+  z-index: 2; }
+
+.picker {
+  z-index: 10000; }
+
 /*-------------------------------------*/
 input[type="submit"] {
   -moz-appearance: none;
@@ -1120,9 +1146,6 @@ input.error {
   color: #bbb; }
 
 /*-------------------------------------*/
-.modal-block {
-  min-width: 280px; }
-
 /*-------------------------------------*/
 .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label {
   display: block;
@@ -1227,7 +1250,6 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
   height: auto;
   width: auto;
   opacity: 0;
-  z-index: 9998;
   /* styles required for IE to work */
   background-color: #fff;
   filter: alpha(opacity=0); }
@@ -1236,7 +1258,6 @@ html[dir="rtl"] .select2-container .select2-choice > .select2-chosen {
   width: 100%;
   margin-top: -1px;
   position: absolute;
-  z-index: 9999;
   top: 100%;
   background: #fff;
   color: #000;
@@ -1300,7 +1321,6 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
   padding-left: 4px;
   padding-right: 4px;
   position: relative;
-  z-index: 10000;
   white-space: nowrap; }
 
 .select2-search input {
@@ -1646,15 +1666,14 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   right: 0;
   background: #000;
   background: rgba(0, 0, 0, 0.8);
-  opacity: 0;
-  z-index: -1; }
+  opacity: 0; }
 
 .rbox_show {
-  opacity: 1;
-  z-index: 10000; }
+  opacity: 1; }
 
 .rbox_lightBoxBlock {
   max-width: 80%;
+  min-width: 280px;
   margin: 3% auto;
   position: relative; }
 
@@ -1714,7 +1733,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   line-height: 1.2;
   color: #000000;
   position: absolute;
-  z-index: 10000;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2233,7 +2251,6 @@ body {
   left: -80px;
   right: 0;
   min-width: 80px;
-  z-index: 2;
   border: 1px solid #d8d8d8; }
   .options-list a {
     display: block;
@@ -2590,8 +2607,7 @@ body {
 
 .label-compare-block {
   position: relative;
-  left: -26px;
-  z-index: 1; }
+  left: -26px; }
 
 .label-compare {
   padding: 5px 10px;

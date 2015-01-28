@@ -4,13 +4,13 @@
 /**
  * Note: the root picker element should *NOT* be styled more than what’s here.
  */
+
 .picker {
   font-size: $font-base-size;
   text-align: left;
   line-height: 1.2;
   color: #000000;
   position: absolute;
-  z-index: 10000;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
