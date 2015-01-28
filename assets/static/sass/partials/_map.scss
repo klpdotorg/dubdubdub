@@ -13,7 +13,7 @@
 
 .map-canvas-full {
   left: 0; 
-  top: $header-height + $map-subheader-height;  
+  top: ($header-height + $map-subheader-height) - 5;  
 }
 
 .map-volunteer-canvas-full {

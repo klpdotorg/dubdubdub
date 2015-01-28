@@ -754,7 +754,7 @@
         map.closePopup();
     };
 
-    $(window).resize(onWindowResize);
+    /*$(window).resize(onWindowResize);
 
     function onWindowResize() {
         window_width = $(window).width();
@@ -764,7 +764,7 @@
             } else {
                 $mobile_details_wrapper.removeClass("show");
             }
-        }
+        }*/
 
     function load_map() {
         // var param_location = getUrlVar("location");
