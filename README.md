@@ -49,6 +49,9 @@ and go to `http://localhost:8001`
     
     $ sass assets/static/sass/style.scss assets/static/css/style.css
 
+3. Alternately, you can simply watch and compile the Sass outside vagrant by running this command:
+sass --watch assets/static/sass/style.scss:assets/static/css/style.css
+
 #### Running unit tests
 
 Unit tests are available for the schools and users endpoints. Below are instructions to run the unit tests available so far. 
