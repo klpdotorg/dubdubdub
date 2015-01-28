@@ -442,6 +442,26 @@
 	  overflow-x: hidden;
 	  overflow-y: auto;
 	}
+}
 
+@media only screen and (min-width: 1200px) {
+	.filter-school-block {
+	  border-top: 1px solid;
+	  border-bottom: 1px solid;
+	  border-color: $grey-cloud;
+	}
 
+	.filter-school-each {
+	  border-right: 1px solid;
+	  border-color: $grey-cloud;  
+	  @include vertical-inline-top;
+
+	  &:first-of-type {
+	    border-left: 1px solid $grey-cloud;
+	  }
+
+	  .select2-container {
+	    width: 140px;
+	  }
+  }
 }

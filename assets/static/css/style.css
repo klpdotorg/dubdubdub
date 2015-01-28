@@ -410,7 +410,7 @@ sub {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .table-infra-key-color:after {
+.border-radius-sm, .heading-section, .text-bordered, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block, .table-infra-key-color:after {
   border-radius: 3px; }
 
 .border-radius-circle, .icon-number, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
@@ -467,7 +467,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .filter-school-block:after, .profile-volunteer-date-block:after {
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -500,7 +500,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .filter-school-each, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -2329,20 +2329,13 @@ body {
   background-color: #c7e0f7; }
 
 /*-------------------------------------*/
-.filter-school-block {
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-color: #d8d8d8; }
-
 .filter-school-each {
   min-height: 87px;
-  border-right: 1px solid #d8d8d8;
-  padding: 15px 20px; }
+  padding: 15px;
+  min-width: 170px; }
   .filter-school-each .heading-tiny-uppercase {
     line-height: 1;
     margin-bottom: 10px; }
-  .filter-school-each:last-of-type {
-    border-right: none; }
 
 /*-------------------------------------*/
 .about-map {
@@ -3278,5 +3271,20 @@ body {
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto; } }
+@media only screen and (min-width: 1200px) {
+  .filter-school-block {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #d8d8d8; }
+
+  .filter-school-each {
+    border-right: 1px solid;
+    border-color: #d8d8d8;
+    display: inline-block;
+    vertical-align: top; }
+    .filter-school-each:first-of-type {
+      border-left: 1px solid #d8d8d8; }
+    .filter-school-each .select2-container {
+      width: 140px; } }
 
 /*# sourceMappingURL=style.css.map */
