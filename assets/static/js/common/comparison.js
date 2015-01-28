@@ -1,3 +1,7 @@
+/*
+    Handles all JS for compare modal, accessible on map and school pages.
+ */
+
 (function(){
 
     var $compare_flow,

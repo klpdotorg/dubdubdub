@@ -1,3 +1,6 @@
+/*
+    Handles JS for non-ajax tabs
+ */
 (function() {
     var t = klp.basic_tabs = {};
     t.init = function() {

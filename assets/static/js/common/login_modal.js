@@ -1,3 +1,6 @@
+/*
+    Handles JS for login modal, including login, sign-up and forgot password
+ */
 (function() {
     var t = klp.login_modal = {};
     var postLoginCallback = null;

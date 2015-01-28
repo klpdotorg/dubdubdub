@@ -1,24 +1,41 @@
+/*
+    This runs JS required across all pages -
+    runs various things inside $(document).ready() and then calls the klp.init()
+    method. Each page is responsible to define a klp.init function to run
+    page-specific JS.
+
+ */
+
 (function() {
+
+    //can be used by other modules to hold data in memory
     klp.data = {};
+
+    //we will use this in other places to close the currently open modal, etc.
     klp.openModal = null;
+
+    //we need headerHeight in a few places, so we calculate it just once on ready
     var headerHeight;
     $(document).ready(function() {
         headerHeight = $(".main-header").height() + 10;
     });
 
+
     $(document).ready(function() {
-        $(document).on('click', ".btn-modal-close", function(e){
-            e.preventDefault();
 
-            var $modal = $(e.target).closest(".modal").removeClass("show");
-            $(".modal-overlay").removeClass("show");
-            if (klp.openModal) {
-                klp.openModal.close();
-                klp.openModal = null;
-            }
-        });
 
-        //dropdown navigation
+        // $(document).on('click', ".btn-modal-close", function(e){
+        //     e.preventDefault();
+
+        //     var $modal = $(e.target).closest(".modal").removeClass("show");
+        //     $(".modal-overlay").removeClass("show");
+        //     if (klp.openModal) {
+        //         klp.openModal.close();
+        //         klp.openModal = null;
+        //     }
+        // });
+
+        //dropdown navigation - used for top menu navigation
         $(".js-dropdown li:has(ul)").click(function(event){
             event.stopPropagation();
             var thisNav = $(this).closest(".js-dropdown").find('ul');
@@ -31,12 +48,14 @@
             }
         }).addClass('has_ul');
     
-        $(window).click(function(){        
-           $(".js-dropdown ul").slideUp(200).closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
+        $(window).click(function(){
+            //slide up an open menu if user clicks anywhere else on window        
+            $(".js-dropdown ul").slideUp(200).closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
+            $('.js-dropdown').removeClass("nav-open");
         });
 
 
-        //menu on mobile navigation    
+        //menu on mobile (hamburger menu) navigation    
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
             $('.js-dropdown').toggleClass('nav-open');
@@ -46,11 +65,8 @@
             event.stopPropagation();
         });
 
-        $(window).click(function(){
-            $('.js-dropdown').removeClass("nav-open");
-        });
-
-        //datepicker 
+        //datepicker
+        //FIXME: format issue 
         $(".js-input-date").pickadate({
             format: 'yyyy-mm-dd',
             formatSubmit: 'yyyy-mm-dd'
@@ -97,9 +113,11 @@
         }
 
 
-        
+        //initializes the auth and login_modal modules required on all pages   
         klp.auth.init();
         klp.login_modal.init();
+
+        //if this page has defined a klp.init function, call it.
         if (klp.hasOwnProperty('init')) {
             klp.init();
         }

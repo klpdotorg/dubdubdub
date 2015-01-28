@@ -1,3 +1,7 @@
+/*
+    Handles displaying of confirm modal for volunteer activities
+ */
+
 (function() {
     var t = klp.volunteer_here = {};
     var tplConfirmModal = swig.compile($('#tpl-volunteerHereModal').html());
