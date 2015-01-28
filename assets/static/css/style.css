@@ -467,7 +467,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .profile-volunteer-date-block:after {
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .filter-school-block:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -500,7 +500,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .filter-school-each, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
   display: inline-block;
   vertical-align: top; }
 
@@ -1031,7 +1031,7 @@ hr {
   z-index: -1; }
 
 .rbox_show {
-  z-index: 10000; }
+  z-index: 9000; }
 
 .module-img-each .icon-number {
   z-index: 1; }
@@ -2329,6 +2329,22 @@ body {
 
 .home-volunteer-request {
   background-color: #c7e0f7; }
+
+/*-------------------------------------*/
+.filter-school-block {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #d8d8d8; }
+
+.filter-school-each {
+  min-height: 87px;
+  border-right: 1px solid #d8d8d8;
+  padding: 15px 20px; }
+  .filter-school-each .heading-tiny-uppercase {
+    line-height: 1;
+    margin-bottom: 10px; }
+  .filter-school-each:last-of-type {
+    border-right: none; }
 
 /*-------------------------------------*/
 .about-map {

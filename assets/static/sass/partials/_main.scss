@@ -486,6 +486,34 @@ body {
   background-color: $blue-sky;
 }
 
+
+/*-------------------------------------*/
+//PAGE: MAP
+.filter-school-block {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: $grey-cloud;
+  @extend %clearfix;
+}
+
+.filter-school-each {
+  min-height: 87px;
+
+  .heading-tiny-uppercase {
+    line-height: 1;
+    margin-bottom: $base-spacing;
+  }
+
+  @extend %vertical-inline-top;
+  border-right: 1px solid $grey-cloud;
+  padding: $base-spacing-mid $base-spacing-lg;
+
+  &:last-of-type {
+    border-right: none;
+  }
+}
+
+
 /*-------------------------------------*/
 //PAGE: ABOUT
 
