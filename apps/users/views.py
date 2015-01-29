@@ -31,17 +31,21 @@ class EmailVerificationView(StaticPageView):
         email = self.request.GET.get('email', '')
 
         users = User.objects.filter(
-            is_email_verified=False,
             email=email,
             email_verification_code=email_verification_code
         )
+        extra_context = {}
         if users.count() == 1:
             user = users[0]
-            user.is_email_verified = True
-            user.save()
+            if user.is_email_verified:
+                extra_context['already_verified'] = True
+            else:
+                user.is_email_verified = True
+                user.save()
         else:
             raise Http404()
 
+        self.extra_context = extra_context
         return super(EmailVerificationView, self).get(request, **kwargs)
 
 
