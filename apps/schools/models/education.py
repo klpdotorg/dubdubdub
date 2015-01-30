@@ -19,7 +19,7 @@ class AcademicYear(BaseModel):
     from_year = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
-        return "%(to_year)d-%(from_year)d" % self
+        return "%s-%s" % (self.from_year, self.to_year)
 
     class Meta:
         db_table = 'tb_academic_year'
@@ -174,8 +174,6 @@ class StudentGroup(BaseModel):
 class School(GeoBaseModel):
     admin3 = models.ForeignKey('Boundary', db_column='bid')
 
-    # TODO: check if address should be ForeignKey or OneToOneField
-    # CHECK: http://hastebin.com/awotomoven aid appears once for each school
     address = models.OneToOneField('Address', db_column='aid',
                                    blank=True, null=True)
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code',
@@ -350,15 +348,24 @@ class SchoolDetails(BaseModel):
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')
     postal = models.ForeignKey('Postal', db_column='pin_id')
 
-    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
-    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
-
     def __unicode__(self):
         return str(self.pk)
 
     class Meta:
         managed = False
         db_table = 'mvw_school_details'
+
+
+class SchoolExtra(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey('AcademicYear')
+
+    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
+    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_extra'
 
 
 class SchoolClassTotalYear(BaseModel):

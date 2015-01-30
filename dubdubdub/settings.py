@@ -230,7 +230,7 @@ CACHES = {
 }
 
 # How long will the cache last? A: 10 days
-CACHE_TIMEOUT = 60 * 60 * 24 * 10
+CACHE_TIMEOUT = 60 * 60 * 24
 
 # Should cache be used or not? A: Yes
 CACHE_ENABLED = True
