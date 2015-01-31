@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+DATA_IMPORT_DIR = os.path.join(PROJECT_ROOT, 'data')
+
 EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
@@ -164,6 +166,7 @@ INSTALLED_APPS = (
     'schools',
     'users',
     'stories',
+    'imports',
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

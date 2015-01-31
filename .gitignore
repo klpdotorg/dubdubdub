@@ -60,4 +60,6 @@ misc.sql
 
 # gitignore: added stuff to ignore here: e.g. screenshots
 gitignore/
- 
+
+# data folder
+data
