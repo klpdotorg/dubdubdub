@@ -320,6 +320,12 @@ sub {
 .brand-purple-bg {
   background-color: #7575bc; }
 
+.purple-amethyst {
+  color: #7b7795; }
+
+.purple-amethyst-bg {
+  background-color: #7b7795; }
+
 .brand-red, .error-message, .picker__button--clear:before, .about-map span {
   color: #cb0012; }
 
@@ -385,7 +391,7 @@ sub {
 .grey-steel {
   color: #898989; }
 
-.grey-steel-bg, .compare-button-block a, .icon-button-compare {
+.grey-steel-bg, .icon-button-compare {
   background-color: #898989; }
 
 .grey-gravel, .bar-label, .school-tab-copyright {
@@ -1029,11 +1035,11 @@ hr {
   border-radius: 10px; }
 
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .school-comparison-flow, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .school-comparison-flow {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
@@ -2675,9 +2681,12 @@ body {
   width: 30px;
   height: 30px; }
 
-.comparison-result-wrapper {
-  padding: 0 0 20px;
+.school-comparison-flow {
+  padding: 0;
   border-bottom: 1px solid #d8d8d8; }
+
+.comparison-result-wrapper {
+  padding: 0; }
 
 .compare-section {
   padding: 20px; }

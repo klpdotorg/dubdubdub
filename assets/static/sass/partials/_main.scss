@@ -986,7 +986,6 @@ body {
   letter-spacing: 1px;
 
   a {
-    @extend %grey-steel-bg;
     @extend %center-text;
     padding: $base-spacing;
     line-height: 1;
@@ -1071,9 +1070,14 @@ body {
   }
 }
 
-.comparison-result-wrapper {
-  padding: 0 0 $base-spacing-lg;
+.school-comparison-flow {
+  @extend %container;
+  padding: 0;
   border-bottom: 1px solid $grey-cloud;
+}
+
+.comparison-result-wrapper {
+  padding: 0;
 }
 
 .compare-section {
