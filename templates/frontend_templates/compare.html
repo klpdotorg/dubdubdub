@@ -187,28 +187,21 @@
         <!-- Bar item ends here -->
         {% endfor %}
 
+        <div class="base-spacing-lg"></div>  
         <div class="compare-each-block">
 
           <div class="compare-section-heading">Medium of instruction</div>
           
           <div class="float-left">
-            <div class="grey-steel font-bold center-text font-small">{{ school1.moi|capitalize }}</div>
+            <div class="grey-steel font-small"><strong>{{ school1.moi|capitalize }}</strong></div>
           </div>
 
           <div class="float-right">
-            <div class="grey-steel font-bold center-text font-small">{{ school2.moi|capitalize }}</div>
+            <div class="grey-steel font-small"><strong>{{ school2.moi|capitalize }}</strong></div>
           </div>
-          
-
-          <div class="clr"></div>
         </div>
         <!-- Bar item ends here -->
-
-        <div class="aggregate-stats width-400">
-          <div class="text">
-            Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
-          </div>
-        </div>
+  
         <!--
         <div class="aggregate-stats width-400">
           <div class="label">Aggregate stats</div>
@@ -228,6 +221,12 @@
         -->
 
       </div>
+      <div class="center-text">        
+        <div class="compare-section-source">
+          Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
+        </div>
+      </div>
+  
     </div>
     <!-- Comparison Result ends -->
 
