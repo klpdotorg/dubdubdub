@@ -140,6 +140,14 @@
   background-color: $green-pista;
 }
 
+//green-leaf 
+.green-leaf, %green-leaf {
+  color: $green-leaf;
+}
+
+.green-leaf-bg, %green-leaf-bg {
+  background-color: $green-leaf;
+}
 //black
 .black, %black {
   color: $black;
@@ -1043,8 +1051,8 @@ a.button {
   word-wrap: break-word;
 }
 
-.bar-label.brand-green {
-  @extend %brand-green;
+.bar-label.green-leaf-bg {
+  @extend %green-leaf-bg;
 }
 
 .bar-value {
@@ -1052,8 +1060,8 @@ a.button {
   background-color: $font-base-color;
 }
 
-.bar-value.brand-green-bg {
-  @extend %brand-green-bg;
+.bar-value.green-leaf-bg {
+  @extend %green-leaf-bg;
 }
 
 .bar-label, .bar-graph {
@@ -1065,8 +1073,8 @@ a.button {
 }
 
 .bar-percent {
-  width: $base-spacing-lg-2x;
-  padding-right: $base-spacing-sm;
+  width: 60px;
+  padding: 0 $base-spacing-sm;
   text-align: right;
   @extend %font-small;
   @extend %font-bold;

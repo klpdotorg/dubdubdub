@@ -1100,15 +1100,27 @@ body {
   padding: 0;
 }
 
-.compare-section-block {
-  @extend %clearfix;
+.compare-section {
+  padding: $base-spacing-lg;
 }
 
-.compare-section {
-  @extend %grid-child;
-  padding-bottom: $base-spacing-lg;
-  @extend %float-left;
-  width: 50%;
+.compare-section-heading {
+  @extend %font-uppercase;
+  @extend %font-small;
+  @extend %font-bold;
+  color: $purple-amethyst;
+  letter-spacing: 1px;
+  @extend %dead-center;
+  @extend %white-bg;
+  padding: 3px;
+  margin-top: -8px;
+}
+
+.compare-gender-distribution {
+  .compare-section {
+    @extend %float-left;
+    width: 50%;
+  }
 }
 
 .compare-section-source {
@@ -1145,6 +1157,12 @@ body {
   .highcharts-container {
     @extend %center-element;
   }
+}
+
+.compare-each-block {
+  @extend %clearfix;
+  position: relative;
+  padding: $base-spacing 0;
 }
 
 .icon-compare-label {

@@ -37,7 +37,7 @@
         </select>
         -->
       </div>
-      <div class="compare-section-block">
+      <div class="compare-section-block clearfix">
         <div class="compare-section">
 
           {% if school1.hasStudents %}
@@ -99,7 +99,7 @@
             </div>
           </div>
           <div class="">Total Number of students <strong>{{ school2.total_students }}</strong></div>
-          <div class="stat-ratio">
+          <div>
             <div class="icon-compare-gender icon-compare-boy">
               <div class="icon-compare-label">Boys</div>
               <div class="icon-button-round"><span class="k-icon">{{ school2.num_boys }}<span></div>
@@ -157,26 +157,23 @@
         <div class="clr"></div>
       </div>
 
-      <div class="result-content">
+      <div class="compare-section">
         {% for mt, val in mt_profiles %}
         <div class="comparison-item">
-          <div class="comparison-heading purple">
-            <div class="heading-tiny-uppercase">{{ mt }}</div>
-          </div>
 
-          <div class="col-left ta-c">
-            <div class="bar-graph-wrap">
+          <div class="compare-each-block">
+            <div class="bar-graph-wrap float-left">
               <div class="bar-custom">
-                <div class="bar-value brand-green-bg float-right" style="width:{{ val.school1.percent }}%;"></div>
+                <div class="bar-value green-leaf-bg float-right" style="width:{{ val.school1.percent }}%;"></div>
                 <div class="clear"></div>
-                <div class="brand-green font-smaller center-text"><strong>{{ val.school1.total }} students</strong></div>
+                <div class="green-leaf font-smaller center-text"><strong>{{ val.school1.total }} students</strong></div>
               </div>
-              <div class="bar-percent brand-green">{{ val.school1.percent }}%</div>
+              <div class="bar-percent green-leaf">{{ val.school1.percent }}%</div>
             </div>
-          </div>
 
-          <div class="col-right ta-c">
-            <div class="bar-graph-wrap">
+            <div class="compare-section-heading">{{ mt }}</div>
+
+            <div class="bar-graph-wrap float-right">
               <div class="bar-percent">{{ val.school2.percent }}%</div>
               <div class="bar-custom">
                 <div class="bar-value" style="width:{{ val.school2.percent }}%;"></div>
@@ -190,19 +187,16 @@
         <!-- Bar item ends here -->
         {% endfor %}
 
-        <div class="comparison-item mar_top_60">
+        <div class="compare-each-block">
 
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">Medium of instruction</div>
-          </div>
-
+          <div class="compare-section-heading">Medium of instruction</div>
           
-          <div class="col-left width-37p ta-c">
-            <div class="text grey bold">{{ school1.moi|capitalize }}</div>
+          <div class="float-left">
+            <div class="grey-steel font-bold center-text font-small">{{ school1.moi|capitalize }}</div>
           </div>
 
-          <div class="col-right width-37p ta-c">
-            <div class="text grey bold">{{ school2.moi|capitalize }}</div>
+          <div class="float-right">
+            <div class="grey-steel font-bold center-text font-small">{{ school2.moi|capitalize }}</div>
           </div>
           
 

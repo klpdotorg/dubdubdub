@@ -163,9 +163,9 @@ h6, h5, h4, h3, h2, h1 {
 /* HEADER: STRIP */
 
 .header-strip {
-  background: $grey-steel;
+  background: $purple-amethyst;
   @extend %white;
-  padding: $base-spacing;
+  padding: $base-spacing $base-spacing-lg;
 
   .heading-tiny-uppercase {
     @extend %white;
