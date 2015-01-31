@@ -1028,6 +1028,7 @@ body {
 .label-compare-block {
   @extend %center-text;
   position: relative;
+  line-height: 1;
   left: -26px; // equals width of clear button + inline whitespace
 }
 

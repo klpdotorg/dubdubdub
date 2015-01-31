@@ -2657,6 +2657,7 @@ body {
 
 .label-compare-block {
   position: relative;
+  line-height: 1;
   left: -26px; }
 
 .label-compare {
