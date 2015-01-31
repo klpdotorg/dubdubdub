@@ -503,7 +503,6 @@ img, video {
 
 //table-data
 .table-data {
-//  width: 100%;
 
   td {
     padding: $base-spacing-sm/2 $base-spacing;
@@ -518,6 +517,65 @@ img, video {
   }
 }
 
+//table with legend key (with green ticks and red crosses)
+
+%table-infra-icon-legend {
+  content: "";
+  font-family: "FontAwesome";
+  font-size: 10px;
+  position: absolute;
+  top: 1px;
+  border: 1px solid $grey-cloud;
+  @extend %border-radius-sm;
+  @extend %center-text;
+  width: $base-spacing-mid;
+  height: $base-spacing-mid;  
+}
+
+.table-infra-key-color {
+  position: relative;
+  margin-bottom: $base-spacing-sm;
+
+  &:after {
+    @extend %table-infra-icon-legend;
+  }
+
+  &.brand-green:after {
+    content: "\f00c";
+  }
+
+  &.brand-red:after {
+    content: "\f00d";
+  }
+
+  &.brand-grey:after {
+    content: "\f111";
+    font-size: 8px;
+    line-height: 14px;  
+  }
+}
+
+.table-infra-icon-left {
+  padding-left: $base-spacing-lg-x + 10;
+
+  &:after {
+    left: 0;
+  }
+}
+
+.table-infra-icon-right {
+  padding-right: $base-spacing-lg-x + 10;
+
+  &:after {
+    right: 0;
+  }
+}
+
+.infra-key-legend {
+  border: 1px solid $grey-cloud;
+  padding: $base-spacing;
+  margin-top: ($base-spacing-lg-x) + 15;
+}
 
 //HR
 hr {

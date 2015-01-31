@@ -159,8 +159,6 @@
 
       <div class="compare-section">
         {% for mt, val in mt_profiles %}
-        <div class="comparison-item">
-
           <div class="compare-each-block">
             <div class="bar-graph-wrap float-left">
               <div class="bar-custom">
@@ -181,9 +179,6 @@
               </div>
             </div>
           </div>
-
-          <div class="clr"></div>
-        </div>
         <!-- Bar item ends here -->
         {% endfor %}
 
@@ -601,7 +596,7 @@
     </div>
     {% endif %}
 
-    <div class="comparison-result infrastructure">
+    <div class="comparison-result compare-infrastructure">
       <div class="header-strip">
         <div class="heading-tiny-uppercase">Infrastructure</div>
         <!--
@@ -614,22 +609,20 @@
         <div class="clr"></div>
       </div>
 
-      <div class="result-content">
+      <div class="compare-section">
         {% for key, value in infrastructure %}
-        <div class="comparison-item">
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">{{ key }}</div>
-          </div>
+        <div class="compare-each-block">
+          <div class="compare-section-heading">{{ key }}</div>
 
-          <div class="infra-indicator col-left width-37p">
+          <div class="float-left">
             {% for k, v in value %}
-            <div class="infra-indicator-item {{ v.entity1 }}">{{ k }}</div>
+            <div class="table-infra-key-color brand-{{ v.entity1 }} table-infra-icon-left">{{ k }}</div>
             {% endfor %}
           </div>
 
-          <div class="infra-indicator col-right width-37p">
+          <div class="float-right">
             {% for k, v in value %}
-            <div class="infra-indicator-item {{ v.entity2 }}">{{ k }}</div>
+            <div class="table-infra-key-color brand-{{ v.entity2 }} table-infra-icon-right">{{ k }}</div>
             {% endfor %}
           </div>
           <div class="clr"></div>
@@ -637,8 +630,8 @@
         {% endfor %}
         <!-- Infra Item ends -->
       </div>
-      <div class="aggregate-stats width-400">
-        <div class="text">
+      <div class="center-text">
+        <div class="compare-section-source">
           Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
         </div>
       </div>

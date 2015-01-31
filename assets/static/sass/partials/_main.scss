@@ -946,44 +946,19 @@ body {
 }
 
 //tab: infrastructure
+.compare-infrastructure {
+  .compare-each-block {
+    @extend %font-small;
+    margin-top: $base-spacing-mid;
 
-.table-infra-key-color {
-  padding-right: $base-spacing-lg-x;
-  position: relative;
-
-  &:after {
-    content: "";
-    font-family: "FontAwesome";
-    font-size: 10px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    border: 1px solid $grey-cloud;
-    @extend %border-radius-sm;
-    @extend %center-text;
-    width: $base-spacing-mid;
-    height: $base-spacing-mid;
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
-  &.brand-green:after {
-    content: "\f00c";
+  .table-infra-icon-right {
+    text-align: right;
   }
-
-  &.brand-red:after {
-    content: "\f00d";
-  }
-
-  &.brand-grey:after {
-    content: "\f111";
-    font-size: 8px;
-    line-height: 14px;  
-  }
-}
-
-.infra-key-legend {
-  border: 1px solid $grey-cloud;
-  padding: $base-spacing;
-  margin-top: ($base-spacing-lg-x) + 15;
 }
 
 //copyright for tabs
@@ -1097,7 +1072,8 @@ body {
 }
 
 .comparison-result-wrapper {
-  padding: 0;
+  padding: 0 0 $base-spacing-lg;
+  border-bottom: 1px solid $grey-cloud;
 }
 
 .compare-section {

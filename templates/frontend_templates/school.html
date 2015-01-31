@@ -310,7 +310,7 @@
             <td>{{ title }}</td>
             <td>
               {% for key, value in facs %}
-              <div class="table-infra-key-color brand-{% if value %}green{% else %}red{% endif %}">
+              <div class="table-infra-key-color table-infra-icon-right brand-{% if value %}green{% else %}red{% endif %}">
                   {{ key }}
               </div>
               {% endfor %}
@@ -321,9 +321,9 @@
       </div> <!-- /school-infra-table -->
     
       <div class="infra-key-legend">
-        <div class="table-infra-key-color brand-green">Indicates infrastructure present</div>
-        <div class="table-infra-key-color brand-red">Indicates infrastructure absent</div>
-        <div class="table-infra-key-color brand-grey">Indicates information unavailable</div>
+        <div class="table-infra-key-color table-infra-icon-right brand-green">Indicates infrastructure present</div>
+        <div class="table-infra-key-color table-infra-icon-right brand-red">Indicates infrastructure absent</div>
+        <div class="table-infra-key-color table-infra-icon-right brand-grey">Indicates information unavailable</div>
       </div>
 
     </div> <!-- /tab-school-infra-block -->
