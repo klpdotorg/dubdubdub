@@ -363,7 +363,7 @@ sub {
   @extend %white-bg;
   @extend %font-bold;
   @extend %font-smaller;
-  border: 1px solid;
+  border: 2px solid;
   display: inline-block;
   padding: ($base-spacing - 3) $base-spacing;
   @extend %center-text;

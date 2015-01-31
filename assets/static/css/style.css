@@ -268,7 +268,7 @@ sub {
   padding: 10px 15px; }
 
 .icon-number {
-  border: 1px solid;
+  border: 2px solid;
   display: inline-block;
   padding: 7px 10px;
   line-height: 1; }
@@ -979,11 +979,11 @@ hr {
   border-radius: 10px; }
 
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
@@ -2602,7 +2602,10 @@ body {
       display: block; }
 
 .compare-block {
-  position: relative; }
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3); }
   .compare-block:after {
     content: "";
     width: 1px;
@@ -2611,6 +2614,13 @@ body {
     position: absolute;
     left: 49%;
     top: 0; }
+
+.icon-compare-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #898989;
+  z-index: 20; }
 
 .label-compare-block {
   position: relative;

@@ -1024,6 +1024,11 @@ body {
 
 .compare-block {
   position: relative;
+  @extend %container;
+  padding-top: $base-spacing-lg;
+  padding-bottom: $base-spacing-lg;
+  box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3);
+
   &:after {
     content: "";
     width: 1px;
@@ -1033,6 +1038,14 @@ body {
     left: 49%;
     top: 0;
   }
+}
+
+.icon-compare-close {
+  position: absolute;
+  top: $base-spacing;
+  right: $base-spacing;
+  color: $grey-steel;
+  z-index: 20;
 }
 
 .label-compare-block {
