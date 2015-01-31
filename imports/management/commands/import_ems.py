@@ -2,9 +2,6 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.db import connection
 import os
-import psycopg2.extras
-import pandas as pd
-import numpy as np
 from csv import DictReader
 from prettytable import PrettyTable
 cursor = connection.cursor()
