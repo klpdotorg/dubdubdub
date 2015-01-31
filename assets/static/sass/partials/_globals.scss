@@ -538,7 +538,7 @@ hr {
   position: relative;
   margin-right: $base-spacing-sm;
 
-  .fa {
+  .fa, .k-icon {
     @extend %dead-center;
   }
 }

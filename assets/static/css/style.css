@@ -89,16 +89,16 @@ q:before, q:after {
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
   text-transform: uppercase; }
 
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .icon-button-compare .fa, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
+.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .icon-button-compare .k-icon, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .icon-number, .school-type-school .icon-number, .label-compare, .leaflet-container a.button-sm {
@@ -107,7 +107,7 @@ q:before, q:after {
 .font-large, .alert, .volunteer-story-heading {
   font-size: 110%; }
 
-.font-larger, .tab-each .tab-heading:after {
+.font-larger, .tab-each .tab-heading:after, .icon-compare-gender .icon-button-round, .icon-compare-label {
   font-size: 120%; }
 
 .font-largest {
@@ -133,6 +133,14 @@ h1, .h1 {
 
 h6, h5, h4, h3, h2, h1 {
   margin: 0 0 15px 0; }
+
+/*-------------------------------------*/
+/* HEADER: STRIP */
+.header-strip {
+  background: #898989;
+  padding: 10px; }
+  .header-strip .heading-tiny-uppercase {
+    margin: 0; }
 
 p, ul, ol {
   margin: 0 0 15px 0; }
@@ -291,7 +299,7 @@ sub {
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .facility-items .k-icon, .gender-item-boy .gender-item-count {
+.brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count {
   color: #3891e3; }
 
 .brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .picker__day--highlighted:hover,
@@ -318,7 +326,7 @@ sub {
 .brand-red-bg, .alert.error {
   background-color: #cb0012; }
 
-.white, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .header-strip, .header-strip .heading-tiny-uppercase, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .gender-item .k-icon:before, .gender-item .k-icon:after {
@@ -326,7 +334,7 @@ sub {
 
 .white-bg, .heading-section, .icon-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, body, .main-header, .nav, .nav ul, .options-list {
+.picker__button--close, body, .main-header, .nav, .nav ul, .options-list, .compare-section-source {
   background-color: #fff; }
 
 .yellow-mild {
@@ -458,7 +466,7 @@ img, video {
 .align-right {
   text-align: right; }
 
-.float-left, .bar-label, .bar-graph, .info-wrapper, .school-compare-each, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-section, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
 .float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
@@ -467,15 +475,15 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .profile-volunteer-date-block:after {
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .compare-section-block:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .compare-button-block a, .label-compare-block, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .table-infra-key-color:after, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
-.center-element, .box-info, .module-img-each, .module-img {
+.center-element, .box-info, .module-img-each, .module-img, .compare-gender-distribution .highcharts-container {
   margin-left: auto;
   margin-right: auto; }
 
@@ -491,7 +499,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-boy:before, .icon-girl:before, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
+.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-boy:before, .icon-girl:before, .module-img img, .gender-item-boy .k-icon:before, .gender-item-girl .k-icon:before {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -500,7 +508,7 @@ img, video {
   transform: translate(-50%, -50%); }
 
 /* add this to the parent of the element you want to vertically and horizontally center */
-.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab {
+.vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab, .icon-compare-gender {
   display: inline-block;
   vertical-align: top; }
 
@@ -979,11 +987,11 @@ hr {
   border-radius: 10px; }
 
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
@@ -999,7 +1007,7 @@ hr {
     display: table;
     clear: both; }
 
-.grid-child, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
+.grid-child, .main-footer, .info-wrapper, .button-compare-wrap, .compare-section, .school-compare-each, .gender-item {
   padding-left: 20px;
   padding-right: 20px; }
 
@@ -2601,19 +2609,13 @@ body {
     .compare-button-block a.show {
       display: block; }
 
+.compare-block, .comparison-result-wrapper {
+  box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3);
+  background: url("/static/images/dot.png?f83666099422") repeat-y center;
+  background-size: 1px 1px; }
+
 .compare-block {
-  position: relative;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3); }
-  .compare-block:after {
-    content: "";
-    width: 1px;
-    height: 100%;
-    background: #bbb;
-    position: absolute;
-    left: 49%;
-    top: 0; }
+  position: relative; }
 
 .icon-compare-close {
   position: absolute;
@@ -2644,10 +2646,38 @@ body {
   border: none;
   position: relative;
   top: 20px;
-  left: 18px; }
+  left: 30px;
+  width: 30px;
+  height: 30px; }
+
+.comparison-result-wrapper {
+  padding: 0; }
+
+.compare-section {
+  width: 50%; }
+
+.compare-section-source {
+  padding: 20px 50px;
+  color: #bbb;
+  border: 1px solid;
+  display: inline-block;
+  margin: 25px 0; }
+
+.icon-compare-gender {
+  letter-spacing: 1px; }
+  .icon-compare-gender .icon-button-round {
+    min-width: 70px;
+    min-height: 70px; }
+
+.icon-compare-girl {
+  color: #f87c84; }
+
+.icon-compare-label {
+  letter-spacing: 1px; }
 
 .school-compare-each {
-  width: 50%; }
+  width: 50%;
+  margin: 20px 0 0 0; }
 
 .school-compare-each-search {
   text-align: right; }

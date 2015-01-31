@@ -159,6 +159,20 @@ h6, h5, h4, h3, h2, h1 {
   margin: 0 0 $base-spacing-mid 0;
 }
 
+/*-------------------------------------*/
+/* HEADER: STRIP */
+
+.header-strip {
+  background: $grey-steel;
+  @extend %white;
+  padding: $base-spacing;
+
+  .heading-tiny-uppercase {
+    @extend %white;
+    margin: 0;
+  }
+}
+
 p, ul, ol {
     margin: 0 0 $base-spacing-mid 0;
 }

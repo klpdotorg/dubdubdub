@@ -26,9 +26,9 @@
 
 
   <script type="text/template" class="tpl-raw" id="tpl-comparison-result" data-tpl="comparison_result">
-    <div class="comparison-result gender-distribution">
-      <div class="result-header">
-        <div class="heading">Gender Distribution</div>
+    <div class="comparison-result compare-gender-distribution">
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Gender Distribution</div>
         <!--
         <select class="dropdown">
           <option value="1" selected>Year: 2011 -2012</option>
@@ -36,93 +36,92 @@
           <option value="3">Year: 2013 -2014</option>
         </select>
         -->
-        <div class="clr"></div>
       </div>
+      <div class="compare-section-block">
+        <div class="compare-section">
 
-      <div class="width-48p fl ta-c">
-        {% if school1.hasStudents %}
-        <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_boygirlchart_1"></div>
-          <div class="gender_icons">
-            <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ school1.num_boys }}</p>
-              <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ school1.num_girls }}</p>
-              <div class="clr"></div>
-            </div>
-          </div>
-        </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
-        <div class="stat-ratio">
-          <div class="stat-item boy">
-            Boys<br>
-            <span>{{ school1.num_boys }}</span>
-          </div>
-          <div class="fl">:</div>
-          <div class="stat-item girl">
-            Girls<br>
-            <span>{{ school1.num_girls }}</span>
-          </div>
-          <div class="clr"></div>
-        </div>
-      {% else %}
-        <div class="pie-chart-wrapper no-data">
-          No data available
-          <div class="clr"></div>
-        </div>
-      {% endif %}
-      </div>
-
-      <div class="width-48p fr ta-c">
-        {% if school2.hasStudents %}
-        <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_boygirlchart_2"></div>
-          <div class="gender_icons">
-            <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ school2.num_boys }}</p>
-              <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ school2.num_girls }}</p>
-              <div class="clr"></div>
+          {% if school1.hasStudents %}
+          <div class="pie-chart-wrapper">
+            <div class="chart" id="comparison_boygirlchart_1"></div>
+            <div class="gender_icons">
+              <div class="stats_gender_item no_width boy">
+                <span class="icon"></span>
+                <p class="label">Boys</p>
+                <p class="value">{{ school1.num_boys }}</p>
+                <div class="clr"></div>
+              </div>
+              <div class="stats_gender_item no_width girl">
+                <span class="icon"></span>
+                <p class="label">Girls</p>
+                <p class="value">{{ school1.num_girls }}</p>
+                <div class="clr"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school2.total_students }}</span></div>
-        <div class="stat-ratio">
-          <div class="stat-item boy">
-            Boys<br>
-            <span>{{ school2.num_boys }}</span>
+          <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
+          <div class="stat-ratio">
+            <div class="stat-item boy">
+              Boys<br>
+              <span>{{ school1.num_boys }}</span>
+            </div>
+            <div class="fl">:</div>
+            <div class="stat-item girl">
+              Girls<br>
+              <span>{{ school1.num_girls }}</span>
+            </div>
+            <div class="clr"></div>
           </div>
-          <div class="fl">:</div>
-          <div class="stat-item girl">
-            Girls<br>
-            <span>{{ school2.num_girls }}</span>
-          </div>
-          <div class="clr"></div>
-        </div>
         {% else %}
-        <div class="pie-chart-wrapper no-data">
-          No data available
+          <div class="pie-chart-wrapper no-data">
+            No data available
+            <div class="clr"></div>
+          </div>
+        {% endif %}
+        </div>
+
+        <div class="compare-section">
+          {% if school2.hasStudents %}
+          <div class="pie-chart-wrapper">
+            <div class="chart" id="comparison_boygirlchart_2"></div>
+            <div class="gender_icons">
+              <div class="stats_gender_item no_width boy">
+                <span class="icon"></span>
+                <p class="label">Boys</p>
+                <p class="value">{{ school2.num_boys }}</p>
+                <div class="clr"></div>
+              </div>
+              <div class="stats_gender_item no_width girl">
+                <span class="icon"></span>
+                <p class="label">Girls</p>
+                <p class="value">{{ school2.num_girls }}</p>
+                <div class="clr"></div>
+              </div>
+            </div>
+          </div>
+          <div class="">Total Number of students <strong>{{ school2.total_students }}</strong></div>
+          <div class="stat-ratio">
+            <div class="icon-compare-gender icon-compare-boy">
+              <div class="icon-compare-label">Boys</div>
+              <div class="icon-button-round"><span class="k-icon">{{ school2.num_boys }}<span></div>
+            </div>
+            <div class="vertical-inline-top">:</div>
+            <div class="icon-compare-gender icon-compare-girl">
+              <div class="icon-compare-label">Girls</div>
+              <div class="icon-button-round"><span class="k-icon">{{ school2.num_girls }}</span></div>
+            </div>
+          </div>
+          {% else %}
+          <div class="pie-chart-wrapper no-data">
+            No data available
           <div class="clr"></div>
         </div>        
         {% endif %}
       </div>
+    </div> <!-- /compare-section-block -->  
 
-      <div class="clr"></div>
-
-      <div class="aggregate-stats width-400">
-        <div class="text">
+      
+      <div class="center-text">        
+        <div class="compare-section-source">
           Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
         </div>
       </div>
@@ -140,13 +139,14 @@
         </div>
       </div>
       -->
-
     </div>
     <!-- Comparison Result ends -->
 
     <div class="comparison-result language-distribution">
-      <div class="result-header">
-        <div class="heading">Language Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Language Distribution</div>
+      </div>
+
         <!--
         <select class="dropdown">
           <option value="1" selected>Year: 2011 -2012</option>
@@ -245,8 +245,8 @@
 
     <!--
     <div class="comparison-result score-distribution">
-      <div class="result-header">
-        <div class="heading">Score Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Score Distribution</div>
         
         <select class="dropdown">
           <option value="1" selected>Year: 2011 -2012</option>
@@ -322,8 +322,8 @@
 
     <!--
     <div class="comparison-result grade-distribution">
-      <div class="result-header">
-        <div class="heading">Grade Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Grade Distribution</div>
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
             <option value="2">Year: 2012 -2013</option>
@@ -541,8 +541,8 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result teacher-student-ratio">
-      <div class="result-header">
-        <div class="heading">Teacher student ratio</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Teacher student ratio</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -615,8 +615,8 @@
     {% endif %}
 
     <div class="comparison-result infrastructure">
-      <div class="result-header">
-        <div class="heading">Infrastructure</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Infrastructure</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -660,8 +660,8 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result basic-infrastructure">
-      <div class="result-header">
-        <div class="heading">Basic Infrastructure</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Basic Infrastructure</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -753,8 +753,8 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result grants-distribution">
-      <div class="result-header">
-        <div class="heading">Grants Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Grants Distribution</div>
         <!--
         <select class="dropdown">
           <option value="1" selected>Year: 2011 -2012</option>
