@@ -293,10 +293,10 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green {
+.brand-green, .verified, .bar-label.brand-green, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green {
   color: #26b262; }
 
-.brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
+.brand-green-bg, .verified:before, .alert.success, .bar-value.brand-green-bg, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
 .brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count {
@@ -851,7 +851,6 @@ hr {
   min-width: 200px; }
 
 .bar-label {
-  width: 120px;
   word-wrap: break-word; }
 
 .bar-value {
@@ -2558,6 +2557,9 @@ body {
 .school-demo-tab .module-stats-boygirl .module-stats-label {
   color: #2c3e50; }
 
+.bar-tab-demo-block .bar-label {
+  width: 120px; }
+
 .table-data-finances tr td:first-of-type {
   width: 40%; }
 
@@ -2654,6 +2656,7 @@ body {
   padding: 0; }
 
 .compare-section {
+  padding-bottom: 20px;
   width: 50%; }
 
 .compare-section-source {
@@ -2661,7 +2664,7 @@ body {
   color: #bbb;
   border: 1px solid;
   display: inline-block;
-  margin: 25px 0; }
+  margin: 0 0 25px 0; }
 
 .icon-compare-gender {
   letter-spacing: 1px; }

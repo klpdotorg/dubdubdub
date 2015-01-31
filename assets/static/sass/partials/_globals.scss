@@ -1040,13 +1040,20 @@ a.button {
   @extend %font-small;
   @extend %grey-gravel;
   @extend %font-bold;
-  width: 120px;
   word-wrap: break-word;
+}
+
+.bar-label.brand-green {
+  @extend %brand-green;
 }
 
 .bar-value {
   height: 100%;
   background-color: $font-base-color;
+}
+
+.bar-value.brand-green-bg {
+  @extend %brand-green-bg;
 }
 
 .bar-label, .bar-graph {

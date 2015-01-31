@@ -161,32 +161,26 @@
         {% for mt, val in mt_profiles %}
         <div class="comparison-item">
           <div class="comparison-heading purple">
-            <div class="heading-text">{{ mt }}</div>
+            <div class="heading-tiny-uppercase">{{ mt }}</div>
           </div>
 
           <div class="col-left ta-c">
-            <div class="bar_graph_hor green">
-              <div class="item">
-                <div class="label fr">{{ val.school1.percent }}%</div>
-                <div class="bar fl">
-                  <div class="value fr" style="width:{{ val.school1.percent }}%;"></div>
-                  <div class="clr"></div>
-                  <div class="count">{{ val.school1.total }} students</div>
-                </div>
-                <div class="clr"></div>
+            <div class="bar-graph-wrap">
+              <div class="bar-custom">
+                <div class="bar-value brand-green-bg float-right" style="width:{{ val.school1.percent }}%;"></div>
+                <div class="clear"></div>
+                <div class="brand-green font-smaller center-text"><strong>{{ val.school1.total }} students</strong></div>
               </div>
+              <div class="bar-percent brand-green">{{ val.school1.percent }}%</div>
             </div>
           </div>
 
           <div class="col-right ta-c">
-            <div class="bar_graph_hor grey">
-              <div class="item">
-                <div class="label fl">{{ val.school2.percent }}%</div>
-                <div class="bar fr">
-                  <div class="value" style="width:{{ val.school2.percent }}%;"></div>
-                  <div class="count">{{ val.school2.total }} students</div>
-                </div>
-                <div class="clr"></div>
+            <div class="bar-graph-wrap">
+              <div class="bar-percent">{{ val.school2.percent }}%</div>
+              <div class="bar-custom">
+                <div class="bar-value" style="width:{{ val.school2.percent }}%;"></div>
+                <div class="font-smaller center-text"><strong>{{ val.school2.total }} students</strong></div>
               </div>
             </div>
           </div>

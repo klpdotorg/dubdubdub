@@ -927,6 +927,15 @@ body {
   @extend %vertical-inline-top;
 }
 
+
+//tab: demographics
+.bar-tab-demo-block {
+  .bar-label {
+    width: 120px;
+  }
+}
+
+
 //tab: finances
 .table-data-finances {
   tr {
@@ -1097,6 +1106,7 @@ body {
 
 .compare-section {
   @extend %grid-child;
+  padding-bottom: $base-spacing-lg;
   @extend %float-left;
   width: 50%;
 }
@@ -1108,7 +1118,7 @@ body {
   @extend %font-smaller;
   border: 1px solid;
   display: inline-block;
-  margin: $base-spacing-lg-x 0;
+  margin: 0 0 $base-spacing-lg-x 0;
 }
 
 .icon-compare-gender {
