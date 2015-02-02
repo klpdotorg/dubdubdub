@@ -54,13 +54,12 @@
 
 {% block subheader %}
   <div class="map-subheader-wrapper subheader-wrapper">
-    <div class="subheader-content">
-      <input type="text" name="search" placeholder="Search" class="search-input input-text">
+    <div class="subheader-content clearfix">
+      <input type="text" name="search" placeholder="Search" class="search-input input-text float-left">
 <!--       <div class="volunteer-btn-wrapper fr">
         <a class="button blue js-volunteer-trigger">Volunteer</a>
       </div> -->
-
-      <div class="clr"></div>
+      {% include 'includes/_breadcrumb.html' %}
     </div>
   </div>
 {% endblock %}

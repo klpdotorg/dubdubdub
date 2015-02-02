@@ -83,13 +83,13 @@ q:before, q:after {
 .font-bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .icon-number, .table-data tr td:first-of-type, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count {
+.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title {
+.font-uppercase, .heading-tertiary, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -490,7 +490,7 @@ img, video {
 .float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
-.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
+.float-right, .map-subheader-wrapper .breadcrumb, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
   float: right; }
 
 .clear {
@@ -2129,6 +2129,8 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 /*
 
+// remove remaining importants in map.scss
+
 // remove all extra classes in _login_modal.html if they're not being used later
 
 // speak to batpad about checked + disabled input radio styling, right now clicking another removes the checked state on the checked + disabled
@@ -2334,6 +2336,12 @@ body {
 
 .map-subheader-wrapper {
   height: 55px; }
+  .map-subheader-wrapper .search-input {
+    width: 25%; }
+  .map-subheader-wrapper .breadcrumb {
+    width: 70%;
+    text-align: right;
+    margin-top: 10px; }
 
 .breadcrumb a {
   color: #898989;
@@ -2955,22 +2963,19 @@ body {
   width: 36px;
   height: 36px; }
 
+.leaflet-control-layers-selector {
+  top: 5px; }
+
 .en-icon {
   display: inline-block; }
-
-.leaflet-control-layers {
-  border-radius: 5px 5px 0px 0px; }
 
 .leaflet-control-layers label {
   font-size: 12px;
   line-height: 26px;
-  font-weight: 700;
   letter-spacing: 1px;
-  text-transform: uppercase;
   text-decoration: none;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #CCC; }
+  padding: 10px 0;
+  border-bottom: 1px solid #d8d8d8; }
 
 .leaflet-control-layers label:last-of-type {
   border-bottom: none; }
@@ -2984,11 +2989,6 @@ body {
 .leaflet-control-layers input {
   float: right; }
 
-.filter-control {
-  margin-top: 0px !important;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc; }
-
 .filter-tool {
   background-color: white;
   background-position: 50% 50%;
@@ -2996,17 +2996,14 @@ body {
   background-repeat: no-repeat;
   width: 36px;
   height: 36px;
-  display: block; }
+  display: block;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  border-radius: 4px; }
+  .filter-tool:hover {
+    background-color: #f6f6f6; }
 
 .filter-tool.active {
   background-image: url("../images/map/filters_active.png"); }
-
-.leaflet-draw {
-  margin-top: 0 !important; }
-
-.leaflet-bar {
-  box-shadow: none !important;
-  border-radius: 0 !important; }
 
 .leaflet-draw-toolbar .leaflet-draw-draw-circle {
   width: 36px;
@@ -3022,9 +3019,6 @@ body {
 
 .leaflet-draw-toolbar a.active {
   background-image: url("../images/map/radius_active.png"); }
-
-.leaflet-bar a:last-child {
-  border-radius: 0px 0px 5px 5px !important; }
 
 .leaflet-right .leaflet-draw-actions {
   right: 36px; }

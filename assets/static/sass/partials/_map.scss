@@ -265,24 +265,23 @@
   height: 36px;
 }
 
-.en-icon {
-    display: inline-block;
+.leaflet-control-layers-selector {
+  top: 5px;
 }
 
-.leaflet-control-layers {
-    border-radius: 5px 5px 0px 0px;
+.en-icon {
+  display: inline-block;
 }
 
 .leaflet-control-layers label {
   font-size: 12px;
   line-height: 26px;
-  font-weight: 700;
+  @extend %font-bold;
   letter-spacing: 1px;
-  text-transform: uppercase;
+  @extend %font-uppercase;
   text-decoration: none;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #CCC;
+  padding: $base-spacing 0;
+  border-bottom: 1px solid $grey-cloud;
 }
 
 .leaflet-control-layers label:last-of-type {
@@ -301,50 +300,38 @@
 }
 
 .leaflet-control-layers input {
-    float: right;
-}
-
-.filter-control {
-    margin-top: 0px !important;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+  float: right;
 }
 
 .filter-tool {
-    background-color: white;
-    background-position: 50% 50%;
-    background-image: url('../images/map/filters.png');
-    background-repeat: no-repeat;
-    width: 36px;
-    height: 36px;
-    display: block;
+  background-color: white;
+  background-position: 50% 50%;
+  background-image: url('../images/map/filters.png');
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 36px;
+  display: block;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: $grey-mist;
+  }
 }
 
 .filter-tool.active {
-    background-image: url('../images/map/filters_active.png');
+  background-image: url('../images/map/filters_active.png');
 }
 
-.leaflet-draw {
-    margin-top: 0 !important;
-}
-
-.leaflet-bar {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
 
 .leaflet-draw-toolbar .leaflet-draw-draw-circle {
     width: 36px;
     height: 36px;
 
-    &:hover {
-      width: 36px;
-      height: 36px;
-    }
-}
-
-.leaflet-draw-draw-circle {
-  //background-position: 0 0 !important; 
+  &:hover {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .leaflet-draw .leaflet-draw-toolbar a {
@@ -357,12 +344,8 @@
     background-image: url('../images/map/radius_active.png');
 }
 
-.leaflet-bar a:last-child {
-  border-radius: 0px 0px 5px 5px !important;
-}
-
 .leaflet-right .leaflet-draw-actions {
-    right: 36px;
+  right: 36px;
 }
 
 /* Hide map controls on small devices. */
