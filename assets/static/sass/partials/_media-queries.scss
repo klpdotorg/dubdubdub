@@ -316,8 +316,12 @@
   	padding-right: $base-spacing-lg;
 	}
 
-	//navigation
+	//breadcrumb
+	.breadcrumb a {
+		font-size: 100%;
+	}
 
+	//navigation
   .nav-trigger {
     display: none;
   }
@@ -400,6 +404,17 @@
   .banner-volunteer-boy {
   	right: $base-spacing;
   }
+
+  //page: map 
+  .search-input-map {
+		width: 30%;
+	}
+	
+	.map-subheader-wrapper {
+		.breadcrumb {
+			width: 70%;
+		}
+	}
 
   //page: volunteer-map 
 

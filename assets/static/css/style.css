@@ -98,7 +98,7 @@ q:before, q:after {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-container .select2-choice > .select2-chosen, .select2-results, .options-list, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
 .font-smallest, .verified, .button-sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .icon-number, .school-type-school .icon-number, .label-compare, .leaflet-container a.button-sm {
@@ -487,7 +487,7 @@ img, video {
 .align-right {
   text-align: right; }
 
-.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .school-compare-each, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .search-input-map, .info-wrapper, .compare-gender-distribution .compare-section, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
 .float-right, .map-subheader-wrapper .breadcrumb, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
@@ -537,7 +537,7 @@ img, video {
   display: inline-block;
   vertical-align: middle; }
 
-.text-truncate {
+.text-truncate, .breadcrumb {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
@@ -1056,15 +1056,15 @@ hr {
 .container-sm, .banner-full-caption {
   max-width: 520px; }
 
-.grid-parent, .footer-wrapper, .gender-icons {
+.grid-parent, .footer-wrapper, .map-sub-wrap, .gender-icons {
   margin-left: -20px;
   margin-right: -20px; }
-  .grid-parent:after, .footer-wrapper:after, .gender-icons:after {
+  .grid-parent:after, .footer-wrapper:after, .map-sub-wrap:after, .gender-icons:after {
     content: "";
     display: table;
     clear: both; }
 
-.grid-child, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
+.grid-child, .main-footer, .map-subheader-wrapper .breadcrumb, .search-input-map, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
   padding-left: 20px;
   padding-right: 20px; }
 
@@ -2336,12 +2336,13 @@ body {
 
 .map-subheader-wrapper {
   height: 55px; }
-  .map-subheader-wrapper .search-input {
-    width: 25%; }
   .map-subheader-wrapper .breadcrumb {
-    width: 70%;
+    width: 50%;
     text-align: right;
     margin-top: 10px; }
+
+.search-input-map {
+  width: 50%; }
 
 .breadcrumb a {
   color: #898989;
@@ -2350,8 +2351,10 @@ body {
     content: "\f105";
     font-family: 'FontAwesome';
     padding-left: 10px; }
-  .breadcrumb a:last-of-type:after {
-    content: ""; }
+  .breadcrumb a:last-of-type {
+    padding-right: 0; }
+    .breadcrumb a:last-of-type:after {
+      content: ""; }
   .breadcrumb a:hover {
     color: #7bb6ec; }
 
@@ -3268,6 +3271,9 @@ body {
     right: 0;
     padding-right: 20px; }
 
+  .breadcrumb a {
+    font-size: 100%; }
+
   .nav-trigger {
     display: none; }
 
@@ -3328,6 +3334,12 @@ body {
 
   .banner-volunteer-boy {
     right: 10px; }
+
+  .search-input-map {
+    width: 30%; }
+
+  .map-subheader-wrapper .breadcrumb {
+    width: 70%; }
 
   .button-filter-volunteer {
     display: none; }

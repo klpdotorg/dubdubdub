@@ -328,23 +328,33 @@ body {
 .map-subheader-wrapper {
   height: $map-subheader-height;
 
-  .search-input {
-    width: 25%;
-  }
-
   .breadcrumb {
     @extend %float-right;
-    width: 70%;
+    width: 50%;
+    @extend %grid-child;
     text-align: right;
     margin-top: $base-spacing;
   }
 }
 
+.search-input-map {
+  width: 50%;
+  @extend %float-left;
+  @extend %grid-child;
+}
+
+.map-sub-wrap {
+  @extend %grid-parent;
+}
+
 .breadcrumb {
+  @extend %text-truncate;
+
   a {
-  color: $grey-steel;
-  padding: 0 $base-spacing 0 0;
-  @extend %transition-linear;
+    color: $grey-steel;
+    padding: 0 $base-spacing 0 0;
+    @extend %transition-linear;
+    @extend %font-smaller;
 
     &:after {
       content: "\f105";
@@ -352,8 +362,12 @@ body {
       padding-left: $base-spacing;
     }
 
-    &:last-of-type:after {
-      content: "";
+    &:last-of-type {
+      padding-right: 0;
+
+      &:after {
+        content: "";
+      }
     }
 
     &:hover {
