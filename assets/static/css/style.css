@@ -74,7 +74,7 @@ q:before, q:after {
   src: url("../fonts/lato/Lato-Lig-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/lato/Lato-Lig-webfont.woff") format("woff"), url("../fonts/lato/Lato-Lig-webfont.ttf") format("truetype");
   font-weight: 300;
   font-style: normal; }
-.font-base-family, .form-base .input-text, .form-base textarea, .form-base select, .select2-search input, .select2-results, body {
+.font-base-family, .form-base .input-text, .form-base textarea, .form-base select, .select2-search input, .select2-results, body, .leaflet-container {
   font-family: "Lato", sans-serif; }
 
 .font-italic, em, i {
@@ -2950,10 +2950,10 @@ body {
 .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
   border: none; }
 
-.leaflet-control-layers-toggle {
+.leaflet-control-layers .leaflet-control-layers-toggle {
   background-image: url("../images/map/layers.png");
-  width: 36px !important;
-  height: 36px !important; }
+  width: 36px;
+  height: 36px; }
 
 .en-icon {
   display: inline-block; }
@@ -2980,9 +2980,6 @@ body {
   width: 220px;
   border-radius: 0px;
   background: none repeat scroll 0% 0% #F4F4F4; }
-
-.leaflet-container {
-  font-family: "Lato",sans-serif; }
 
 .leaflet-control-layers input {
   float: right; }
@@ -3011,16 +3008,16 @@ body {
   box-shadow: none !important;
   border-radius: 0 !important; }
 
-.leaflet-draw-draw-circle {
-  width: 36px !important;
-  height: 36px !important; }
+.leaflet-draw-toolbar .leaflet-draw-draw-circle {
+  width: 36px;
+  height: 36px; }
+  .leaflet-draw-toolbar .leaflet-draw-draw-circle:hover {
+    width: 36px;
+    height: 36px; }
 
-.leaflet-draw-draw-circle {
-  background-position: 0 0 !important; }
-
-.leaflet-draw-toolbar a {
+.leaflet-draw .leaflet-draw-toolbar a {
   background-image: url("../images/map/radius.png");
-  background-position: 50% 50% !important;
+  background-position: 50% 50%;
   background-repeat: no-repeat; }
 
 .leaflet-draw-toolbar a.active {

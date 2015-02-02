@@ -218,7 +218,7 @@
 
 //leaflet map overrides
 .marker-cluster-school {
-    background-color: rgba($brand-green, 0.6);
+  background-color: rgba($brand-green, 0.6);
 }
 .marker-cluster-school div {
     background-color: rgba(38, 178, 98, 0.6);
@@ -233,35 +233,36 @@
 
 
 .marker-cluster {
-    background-clip: padding-box;
-    border-radius: 20px;
-    margin-left: -20px !important;
-    margin-top: -20px !important;
-    width: 40px !important;
-    height: 40px !important;
+  background-clip: padding-box;
+  border-radius: 20px;
+  margin-left: -20px !important;
+  margin-top: -20px !important;
+  width: 40px !important;
+  height: 40px !important;
 } //DO WE NEED ALL THIS?
 
 .marker-cluster div {
-    width: 30px;
-    height: 30px;
-    margin-left: 5px;
-    margin-top: 5px;
-    text-align: center;
-    border-radius: 15px;
-    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 15px;
+  font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
 } //DO WE NEED ALL THIS?
+
 .marker-cluster span {
-    line-height: 30px;
+  line-height: 30px;
 }  //DO WE NEED ALL THIS?
 
 .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-    border: none;
+  border: none;
 }  //DO WE NEED ALL THIS?
 
-.leaflet-control-layers-toggle {
-    background-image: url("../images/map/layers.png");
-    width: 36px !important;
-    height: 36px !important;
+.leaflet-control-layers .leaflet-control-layers-toggle {
+  background-image: url("../images/map/layers.png");
+  width: 36px;
+  height: 36px;
 }
 
 .en-icon {
@@ -273,30 +274,30 @@
 }
 
 .leaflet-control-layers label {
-    font-size: 12px;
-    line-height: 26px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #CCC;
+  font-size: 12px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #CCC;
 }
 
 .leaflet-control-layers label:last-of-type {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .leaflet-control-layers.leaflet-control-layers-expanded {
-    box-shadow: 0px 3px 3px 0px rgba(77, 77, 77, 0.3);
-    width: 220px;
-    border-radius: 0px;
-    background: none repeat scroll 0% 0% #F4F4F4;
+  box-shadow: 0px 3px 3px 0px rgba(77, 77, 77, 0.3);
+  width: 220px;
+  border-radius: 0px;
+  background: none repeat scroll 0% 0% #F4F4F4;
 }
 
 .leaflet-container {
-    font-family: "Lato",sans-serif;
+  @extend %font-base-family;
 }
 
 .leaflet-control-layers input {
@@ -332,19 +333,24 @@
     border-radius: 0 !important;
 }
 
-.leaflet-draw-draw-circle {
-    width: 36px !important;
-    height: 36px !important;
+.leaflet-draw-toolbar .leaflet-draw-draw-circle {
+    width: 36px;
+    height: 36px;
+
+    &:hover {
+      width: 36px;
+      height: 36px;
+    }
 }
 
 .leaflet-draw-draw-circle {
-    background-position: 0 0 !important; 
+  //background-position: 0 0 !important; 
 }
 
-.leaflet-draw-toolbar a {
-    background-image: url('../images/map/radius.png');
-    background-position: 50% 50% !important;
-    background-repeat: no-repeat;
+.leaflet-draw .leaflet-draw-toolbar a {
+  background-image: url('../images/map/radius.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
 
 .leaflet-draw-toolbar a.active {
@@ -352,7 +358,7 @@
 }
 
 .leaflet-bar a:last-child {
-    border-radius: 0px 0px 5px 5px !important;
+  border-radius: 0px 0px 5px 5px !important;
 }
 
 .leaflet-right .leaflet-draw-actions {
@@ -361,7 +367,7 @@
 
 /* Hide map controls on small devices. */
 @media (max-width: 768px) {
-    .leaflet-control-container {
-        display: none;
-    }
+  .leaflet-control-container {
+      display: none;
+  }
 }
