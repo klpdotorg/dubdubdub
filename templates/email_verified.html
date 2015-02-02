@@ -5,7 +5,13 @@
 <section class="page-verified">
   <div class="container">
     <h1 class="heading-primary brand-turquoise">Verified</h1>
-    <p>Your email address has been successfully verified. You can now login.</p>
+      <p>
+        {% if already_verified %}
+            Your email address is already verified. Thank you.
+        {% else %}
+            Your email address has been successfully verified. Thank you.
+        {% endif %}
+      </p>
   </div>
 </section>
 
