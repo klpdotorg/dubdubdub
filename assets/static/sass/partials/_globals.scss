@@ -60,7 +60,7 @@
 }
 
 //green
-.brand-green, %brand-green {
+.brand-green, %brand-green, .brand-school {
   color: $brand-green;
 }
 
@@ -69,7 +69,7 @@
 }
 
 //blue
-.brand-blue, %brand-blue {
+.brand-blue, %brand-blue, .brand-school-cluster {
   color: $brand-blue;
 }
 
@@ -78,7 +78,7 @@
 }
 
 //turquoise
-.brand-turquoise, %brand-turquoise {
+.brand-turquoise, %brand-turquoise, .brand-school-block {
   color: $brand-turquoise;
 }
 
@@ -87,7 +87,7 @@
 }
 
 //purple
-.brand-purple, %brand-purple {
+.brand-purple, %brand-purple, .brand-preschool {
   color: $brand-purple;
 }
 
@@ -96,7 +96,7 @@
 }
 
 //purple-amethyst
-.purple-amethyst, %purple-amethyst {
+.purple-amethyst, %purple-amethyst, .brand-school-district {
   color: $purple-amethyst;
 }
 
@@ -105,12 +105,26 @@
 }
 
 //red
-.brand-red, %brand-red {
+.brand-red, %brand-red, .brand-preschool-project {
   color: $brand-red;
 }
 
 .brand-red-bg, %brand-red-bg {
   background-color: $brand-red;
+}
+
+//maroon 
+.maroon, %maroon, .brand-preschool-district {
+  color: $maroon;
+}
+
+//pink-salmon
+.pink-salmon, %pink-salmon, .brand-preschool-circle {
+  color: $pink-salmon;
+}
+
+.pink-salmon-bg, %pink-salmon-bg {
+  background-color: $pink-salmon;
 }
 
 //white
@@ -628,8 +642,8 @@ hr {
 .icon-button-round-sm {
   @extend %icon-button-round;
   font-size: 12px;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 //ICONS: VERIFIED
