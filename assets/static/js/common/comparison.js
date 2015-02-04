@@ -11,7 +11,9 @@
         $comparison_option_left,
         $comparison_option_right,
         $comparison_default_right,
+        $trigger,
         $comparison_result_wrapper;
+
 
     var templates = {};
 
@@ -144,6 +146,8 @@
     var open = function(entity1){
         //e.preventDefault();
         // console.log("compare open called with ", entity1);
+        // 
+        $trigger.click();
         if(klp.map){
             klp.map.closePopup();
         }
@@ -216,7 +220,31 @@
         $dropdown_wrapper.addClass("show");
     };
 
-    var init = function(){
+    var init = function() {
+        $trigger = $('<div />');
+        $trigger.rbox({
+            'type': 'inline',
+            'inline': '#tpl-compare-flow',
+            'onopen': afterOpen,
+            'onclose': function() {
+                entityOne = entityTwo = entityOneXHR = entityTwoXHR = null;
+                klp.router.setHash(null, {compare: null}, {trigger: false});
+            }
+        });
+
+        klp.router.events.on('hashchange:compare', function(e, params) {
+            // console.log("change params", params);
+            var changedCompare = params.changed.compare;
+            if (changedCompare.newVal) {
+                openFromURL(changedCompare.newVal);
+            } else {
+                close();
+            }
+        });
+    };
+
+    var afterOpen = function(){
+        console.log("called afterOpen");
         $compare_flow = $("#compare_flow");
         $dropdown_wrapper = $('#dropdown_wrapper');
 
@@ -272,13 +300,10 @@
             selectOptionRight(data);
         });
 
-        //$(document).on('click', ".js-trigger-compare", open);
-        $(document).on('click', ".js-comparison-close", close);
-        $(document).on('click', ".js-comparison-clear-left", clear_option_left);
-        $(document).on('click', ".js-comparison-clear-right", clear_option_right);
-        //$(document).on('click', ".js-comparison-show-options-right", show_options_dropdown_right);
-        //$(document).on('click', ".js-dropdown-option-right", select_options_right);
-        $(document).on('click', ".js-btn-compare", function(e){
+        $('.js-comparison-clear-left').click(clear_option_left);
+        $('.js-comparison-clear-right').click(clear_option_right);
+
+        $('.js-btn-compare').click(function(e) {
             e.preventDefault();
             $.when(entityOneXHR, entityTwoXHR).done(function(data1, data2) {
                 //console.log("compare xhrs done ", data1, data2);
@@ -302,23 +327,11 @@
                 klp.router.setHash(null, {'compare': urlString}, {trigger: false});
                 setTimeout(function(){
                     init_comparison_charts(context);
+                    $(window).resize();
                 },100);
                 //var html = templates['comparison-result'](context);
             });
-            $btn_comparison_submit.removeClass("show");
-            //var html = klp._tpl.comparison_result();
-            //$comparison_result_wrapper.html(html).addClass('show');
-
-
-        });
-        klp.router.events.on('hashchange:compare', function(e, params) {
-            // console.log("change params", params);
-            var changedCompare = params.changed.compare;
-            if (changedCompare.newVal) {
-                openFromURL(changedCompare.newVal);
-            } else {
-                close();
-            }
+            $btn_comparison_submit.removeClass("show");            
         });
     };
 
