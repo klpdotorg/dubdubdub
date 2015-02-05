@@ -107,7 +107,7 @@ body {
 
 .nav-trigger {
 //	font-size: 22px;
-  @extend %button-sm;
+  @extend %button--sm;
   @extend %button-hollow;
 	color: $grey-gravel;
   right: $base-spacing;
@@ -269,7 +269,7 @@ body {
 
 .profile-options {
   @extend %button-hollow;
-  @extend %button-sm;
+  @extend %button--sm;
   color: $grey-silver;
 
   &:before {

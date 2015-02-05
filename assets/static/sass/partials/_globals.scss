@@ -774,7 +774,7 @@ a.button {
   border: 1px solid
 }
 
-.button-sm, %button-sm {
+.button--sm, %button--sm {
   @extend %font-smallest;
   padding: $base-spacing-sm $base-spacing;
 }

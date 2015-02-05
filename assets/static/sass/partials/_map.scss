@@ -76,8 +76,8 @@
     padding: $base-spacing;    
   }
 
-  &.button-sm {
-    color: white;
+  &.button--sm {
+    @extend %white;
     @extend %font-smallest;
     padding: $base-spacing-sm $base-spacing;    
   }
