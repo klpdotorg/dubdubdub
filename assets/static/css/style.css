@@ -2113,7 +2113,6 @@ the css in the head of map.html
 //make make border: 1px solid $grey-cloud modular;
 
 
-
 //SANJ:
 
 //perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
@@ -2824,19 +2823,21 @@ body {
   color: #898989;
   letter-spacing: 1px; }
 
-.facility-items .k-icon {
-  font-size: 18px;
-  margin: 0 0 15px 0; }
-  .facility-items .k-icon:before {
-    margin: 5px; }
-.facility-items .computer:before {
-  content: "\f109"; }
-.facility-items .book:before {
-  content: "\f02d"; }
-.facility-items .events:before {
-  content: "\f073"; }
-.facility-items .football:before {
-  content: "\f1e3"; }
+.facility-items {
+  display: none; }
+  .facility-items .k-icon {
+    font-size: 18px;
+    margin: 0 0 15px 0; }
+    .facility-items .k-icon:before {
+      margin: 5px; }
+  .facility-items .computer:before {
+    content: "\f109"; }
+  .facility-items .book:before {
+    content: "\f02d"; }
+  .facility-items .events:before {
+    content: "\f073"; }
+  .facility-items .football:before {
+    content: "\f1e3"; }
 
 .gender-icons-title, .facility-icons-title {
   letter-spacing: 1px;
@@ -3183,6 +3184,9 @@ body {
     margin: 0; }
 
   .leaflet-control-container {
+    display: block; }
+
+  .facility-items {
     display: block; }
 
   .edit-profile-block {

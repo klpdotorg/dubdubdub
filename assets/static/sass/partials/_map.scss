@@ -89,6 +89,7 @@
 }
 
 .facility-items {
+  display: none;
   @extend %center-text;
 
   .k-icon {
