@@ -1,5 +1,5 @@
 @media only screen and (max-width: 599px) {
-	//banner full-width
+	// banner full-width
 
 	.banner-full {
 		padding-bottom: $base-spacing-lg-x;
@@ -12,7 +12,7 @@
 }
 
 @media only screen and (max-width: 750px) {
-	//table volunteer
+	// table volunteer
 
 	.table-base-volunteer, .table-base-donation, .table-volunteer-oppor {
 		display: block;
@@ -60,8 +60,8 @@
 }
 
 @media only screen and (min-width: 600px) {
+	
 	//alerts
-
 	.alert {
 		left: 20%;
 		right: 20%;
@@ -81,7 +81,6 @@
 	    max-width: none;
 	  }  
 	}
-
 
 	//float-left and float-right for images in content areas
 
@@ -295,6 +294,11 @@
 
 	.org-profile-img {
 		margin: 0;
+	}
+
+	//page: Map
+	.leaflet-control-container {
+		display: block;
 	}
 
 	//page: Profile edit

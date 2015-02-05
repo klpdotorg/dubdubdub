@@ -4,7 +4,6 @@
   position:fixed; 
   right:0; 
   bottom: 0;
-  //z-index: 1;
 
   > div{
     height: 100%;
@@ -142,17 +141,7 @@
   float: left;
 
   .k-icon {
-    width: 44px;
-    height: 44px;
-    @extend %border-radius-circle;
-    position: relative;
     margin-left: $base-spacing-mid;
-    
-    &:before, &:after {
-      @extend %font-icon;
-      @extend %white;
-      font-size: 20px;
-    }
   }
 }
 
@@ -163,52 +152,18 @@
 }
 
 .gender-item-boy {
-  .k-icon {
-    @extend %brand-blue-bg;
-
-    &:before {
-      content: "\f183";
-      @extend %dead-center;
-    }
-  }
-
   .gender-item-count {
     @extend %brand-blue;
   }
 }
 
 .gender-item-girl {
-  .k-icon {
-    background-color: $pink-salmon;
-  
-    &:before {
-      content: "\f182";
-      @extend %dead-center;
-    }
-  }
-
   .gender-item-count {
     color: $pink-salmon;
   }
 }
 
 .gender-item-total {
-  .k-icon {
-    background-color: $blue-ink;
-  
-    &:before {
-      content: "\f182";
-      @extend %vertical-center;
-      margin-left: 22px;
-    }
-
-    &:after {
-      content: "\f183";
-      @extend %vertical-center;
-      margin-left: 9px;
-    }
-  }
-
   .gender-item-count {
     color: $blue-ink;
   }
@@ -346,9 +301,6 @@
   right: 36px;
 }
 
-/* Hide map controls on small devices. */
-@media (max-width: 768px) {
-  .leaflet-control-container {
-      display: none;
-  }
+.leaflet-control-container {
+  display: none;
 }
