@@ -274,7 +274,7 @@ body {
 
   &:before {
     content: "\f007";
-    font-family: 'FontAwesome';
+    @extend %font-icon;
     @extend %icon-left;
   }
 }
@@ -361,7 +361,7 @@ body {
 
     &:after {
       content: "\f105";
-      font-family: 'FontAwesome';
+      @extend %font-icon;
       padding-left: $base-spacing;
     }
 
@@ -1064,7 +1064,7 @@ body {
 
   &:before {
     content: "\f00d";
-    font-family: "FontAwesome";
+    @extend %font-icon;
     @extend %icon-left;
   }
 }

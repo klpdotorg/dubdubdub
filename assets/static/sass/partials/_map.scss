@@ -46,8 +46,7 @@
 }
 
 .map-label-each {
-  display: inline-block;
-  vertical-align: top;
+  @extend %vertical-inline-top;
   padding-right: $base-spacing;
 
   &:last-of-type {
@@ -95,9 +94,8 @@
 
   .k-icon {
     @extend %brand-blue;
-    display: inline-block;
-    vertical-align: top;
-    font-family: 'FontAwesome';
+    @extend %vertical-inline-top;
+    @extend %font-icon;
     font-size: 18px;
     margin: 0 0 $base-spacing-mid 0;
 
@@ -151,7 +149,7 @@
     margin-left: $base-spacing-mid;
     
     &:before, &:after {
-      font-family: "FontAwesome";
+      @extend %font-icon;
       @extend %white;
       font-size: 20px;
     }

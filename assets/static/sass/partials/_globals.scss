@@ -237,7 +237,7 @@
 
 
 /*-------------------------------------*/
-//SPACING CLASSES
+/* SPACING */
 
 .base-spacing, %base-spacing {
   padding: $base-spacing 0;
@@ -440,7 +440,8 @@ img, video {
 
 
 /*-------------------------------------*/
-// TRANSITIONS
+/* TRANSITIONS */
+// Use these for general linear and ease-in transitions
 %transition-linear {
   @include transition(all 0.2s linear);
 }
@@ -451,7 +452,7 @@ img, video {
 
 
 /*-------------------------------------*/
-// DROPDOWNS: GENERIC
+/* DROPDOWNS: GENERIC */
 .dropdown-base {
   position: relative;
   @extend %font-small;
@@ -483,7 +484,9 @@ img, video {
 }
 
 /*-------------------------------------*/
-// TABLE: BASE
+/* TABLES */
+
+// table: base
 .table-responsive-wrap {
   overflow-y: auto;
   @extend %scrollbar-webkit;
@@ -509,7 +512,7 @@ img, video {
   @extend %heading-tiny-uppercase;
 }
 
-//table-data
+// table-data
 .table-data {
 
   td {
@@ -525,11 +528,11 @@ img, video {
   }
 }
 
-//table with legend key (with green ticks and red crosses)
+// table with legend key (with green ticks and red crosses)
 
 %table-infra-icon-legend {
   content: "";
-  font-family: "FontAwesome";
+  @extend %font-icon;
   font-size: 10px;
   position: absolute;
   top: 1px;
@@ -586,7 +589,9 @@ img, video {
   margin-top: ($base-spacing-lg-x) + 15;
 }
 
-//HR
+/*-------------------------------------*/
+/* HR */
+
 hr {
   display: block;
   height: 1px;
@@ -595,7 +600,13 @@ hr {
 }
 
 
-//ICONS
+/*-------------------------------------*/
+/* ICONS */
+
+.font-icon, %font-icon {
+  font-family: $font-icon;
+}
+
 .icon-right, %icon-right {
   margin-left: $base-spacing-sm;
 }
@@ -604,6 +615,7 @@ hr {
   margin-right: $base-spacing-sm;
 }
 
+// icon: round
 %icon-button-round {
   padding: $base-spacing-sm;
   @extend %border-radius-circle;
@@ -632,7 +644,20 @@ hr {
   height: 28px;
 }
 
-//ICONS: VERIFIED
+// icon-number
+.icon-number {
+  @extend %white-bg;
+  @extend %font-bold;
+  @extend %font-smaller;
+  border: 2px solid;
+  display: inline-block;
+  padding: ($base-spacing - 3) $base-spacing;
+  @extend %center-text;
+  @extend %border-radius-circle;
+  line-height: 1;
+}
+
+// icon: vertified
 .verified {
   @extend %brand-green;
   @extend %font-uppercase;
@@ -642,7 +667,7 @@ hr {
 
   &:before {
     content: "\f00c";
-    font-family: "FontAwesome";
+    @extend %font-icon;
     @extend %brand-green-bg;
     @extend %white;
     padding: 2px;
@@ -652,8 +677,7 @@ hr {
   }
 }
 
-
-//ICONS: BOY, GIRL, BOTH
+// icons: boy, girl, both
   .icon-boy, .icon-girl, .icon-boy-girl {
     width: 45px;
     height: 45px;
@@ -665,7 +689,7 @@ hr {
     position: relative;
 
     &:before, &:after {
-      font-family: "FontAwesome";
+      @extend %font-icon;
       font-size: 22px;
     }
   }
@@ -705,9 +729,9 @@ hr {
   }
 
 
-
 /*-------------------------------------*/
 //BUTTONS
+
 %button-base {
   @extend %font-bold;
   font-size: 75%;
@@ -765,7 +789,6 @@ a.button {
 }
 
 /*-------------------------------------*/
-
 /* NOTIFICATIONS AND ALERTS */
 
 .alert {
@@ -785,7 +808,7 @@ a.button {
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 
   &:after {
-    font-family: 'FontAwesome';
+    @extend %font-icon;
     position: absolute;
     top: $base-spacing;
     right: $base-spacing;
@@ -878,7 +901,7 @@ a.button {
 
 /*-------------------------------------*/
 
-/* BANNERS: FULLWIDTH; */
+/* BANNERS: FULLWIDTH */
 
 .banner-full { 
   padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
@@ -913,10 +936,10 @@ a.button {
 }
 
 
-
 /*-------------------------------------*/
 
 /* NAVIGATION: SMOOTH-SCROLL */
+
 .scroll-smooth-block {
   border-bottom: 1px solid $grey-cloud;
   @extend %white-bg;
@@ -972,7 +995,7 @@ a.button {
   
   &:before {
     content: "\f111";
-    font-family: "FontAwesome"; 
+    @extend %font-icon;
     margin-right: $base-spacing;           
   }
 
@@ -1195,7 +1218,7 @@ a.button {
 
       &:after {
         content: "\f107";
-        font-family: "FontAwesome";
+        @extend %font-icon;
         position: absolute;
         right: $base-spacing;
         top: 8px;

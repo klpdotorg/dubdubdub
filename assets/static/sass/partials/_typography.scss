@@ -1,7 +1,8 @@
-/* FONTS + TYPOGRAPHY */
+/* TYPOGRAPHY */
 
 /*-------------------------------------*/
-//LINKS
+/* LINKS */
+
 a {
   text-decoration: none;
   @extend %link-color;
@@ -15,7 +16,6 @@ a {
   }
 }
 
-
 // links: external 
 .link-external {
   color: inherit;
@@ -24,7 +24,7 @@ a {
 
   &:after {
     content: "\f064";
-    font-family: 'FontAwesome';
+    @extend %font-icon;
     font-size: 9px;
     @extend %white;
     background: $grey-steel;
@@ -45,7 +45,11 @@ a {
   }
 }
 
-//default font: regular
+
+/*-------------------------------------*/
+/* FONT_FAMILIES */
+
+// font-family: default: regular
 @font-face {
   font-family: 'Lato';
   src: url('../fonts/lato/Lato-Reg-webfont.eot');
@@ -56,7 +60,7 @@ a {
   font-style: normal;
 }
 
-//default font: italic
+// font-family: default: italic
 @font-face {
   font-family: 'Lato';
   src: url('../fonts/lato/Lato-RegIta-webfont.eot');
@@ -67,7 +71,7 @@ a {
   font-style: italic;
 }
 
-//default font: bold
+// font-family: default: bold
 @font-face {
   font-family: 'Lato';
   src: url('../fonts/lato/Lato-Bol-webfont.eot');
@@ -78,7 +82,7 @@ a {
   font-style: normal;
 }
 
-//default font: light
+// font-family: default: light
 @font-face {
   font-family: 'Lato';
   src: url('../fonts/lato/Lato-Lig-webfont.eot');
@@ -89,7 +93,7 @@ a {
   font-style: normal;
 }
 
-//font families
+//font family
 .font-base-family, %font-base-family {
   font-family: $font-base-family;
 }
@@ -219,36 +223,38 @@ h6, h5, h4, h3, h2, h1 {
 }
 
 p, ul, ol {
-    margin: 0 0 $base-spacing-mid 0;
+  margin: 0 0 $base-spacing-mid 0;
 }
 
 sub, sup {
-    font-size: 65%;
-    position: relative;
-    line-height: 0;
+  font-size: 65%;
+  position: relative;
+  line-height: 0;
 }
 
 sup {
-    top: -8px;
+  top: -8px;
 }
 
 sub {
-    bottom: -8px;
+  bottom: -8px;
 }
 
-//heading styles
-  .heading-border, %heading-border {
-    @extend %center-text;
+/*-------------------------------------*/
+/* HEADINGS */
 
-    &:after {
-    content: '';
-    display: block;
-    margin: $base-spacing auto 0;
-    width: 80px;
-    height: 5px;
-    background-color: currentColor;
-    }
+.heading-border, %heading-border {
+  @extend %center-text;
+
+  &:after {
+  content: '';
+  display: block;
+  margin: $base-spacing auto 0;
+  width: 80px;
+  height: 5px;
+  background-color: currentColor;
   }
+}
 
 .heading-primary, %heading-primary {
   @extend %center-text;
@@ -256,7 +262,7 @@ sub {
   line-height: 1.5;
   margin: 50px 0;
   letter-spacing: 1px;
-  text-transform: uppercase;
+  @extend %font-uppercase;
 
   &:after {
     @extend %heading-border;
@@ -265,12 +271,12 @@ sub {
 
 .heading-secondary, %heading-secondary {
   @extend %h2;
-  text-transform: uppercase;
+  @extend %font-uppercase;
   @extend %center-text;
   @extend %font-light;
 }
 
-.heading-tertiary {
+.heading-tertiary, %heading-tertiary {
   @extend %font-bold;
   @extend %h5;
   @extend %font-uppercase;
@@ -299,7 +305,7 @@ sub {
   @extend %h4;
   @extend %center-text;
   @extend %border-radius-sm;
-  text-transform: uppercase;
+  @extend %font-uppercase;
   border: 1px solid $grey-cloud;
   box-shadow: 0px 1px 1px 0px $grey-cloud;
   padding: $base-spacing-sm $base-spacing-lg;
@@ -330,7 +336,7 @@ sub {
 
     &:before {
       content: "\f10c";
-      font-family: "FontAwesome";
+      @extend %font-icon;
       font-size: 5px;
       position: absolute;
       left: -($base-spacing-sm);
@@ -368,7 +374,11 @@ sub {
   }
 }
 
-//list: ul default
+
+/*-------------------------------------*/
+/* LISTS */
+
+// list: ul default
 .ul-base {
   list-style-type: disc;
   margin-left: $base-spacing-lg;
@@ -378,57 +388,15 @@ sub {
   }
 }
 
-/*//list: with colored bullets
-.list-bullet-colored {
 
-  li {
-    &:before {
-      content: "\f111";
-      font-family: "FontAwesome"; 
-      margin-right: $base-spacing;           
-    } 
 
-    &:first-of-type:before {
-      color: $brand-orange;    
-    }
+/*-------------------------------------*/
+/* TEXT-BORDERED */
 
-    &:nth-of-type(2):before {
-      color: $orange-mild;    
-    }
-
-    &:nth-of-type(3):before {
-      color: $yellow-mild;    
-    }
-
-    &:nth-of-type(4):before {
-      color: $green-pista;    
-    }
-    &:nth-of-type(5):before {
-      color: $brand-green;    
-    }
-  }
-}
-*/
-//text-styles
 .text-bordered {
   border: 1px solid $grey-cloud;
   padding: $base-spacing $base-spacing-mid;
   @extend %border-radius-sm;
 
 }
-
-//icon-number
-.icon-number {
-  @extend %white-bg;
-  @extend %font-bold;
-  @extend %font-smaller;
-  border: 2px solid;
-  display: inline-block;
-  padding: ($base-spacing - 3) $base-spacing;
-  @extend %center-text;
-  @extend %border-radius-circle;
-  line-height: 1;
-}
-
-/*-------------------------------------*/
 

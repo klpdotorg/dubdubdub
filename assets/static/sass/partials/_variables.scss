@@ -2,11 +2,13 @@
 
 /*-------------------------------------*/
 // GRID: GUTTER
+
 $grid-padding: 20px;
 
 
 /*-------------------------------------*/
 // WIDTHS AND HEIGHT
+
 $header-height: 45px;
 $nav-width: 220px;
 $subheader-height: 35px;
@@ -60,6 +62,7 @@ $link-hover-color: lighten($brand-blue, 15%);
 
 /*-------------------------------------*/
 // SPACING
+
 $base-spacing: 10px;
 $base-spacing-mid: $base-spacing * 1.5;				//15px
 $base-spacing-lg: $base-spacing * 2;					//20px
@@ -70,17 +73,20 @@ $base-spacing-sm: $base-spacing / 2;					//5px
 
 /*-------------------------------------*/
 // FONT BASE STYLES
+
 $font-base-size: 16px;
 $font-base-family: 'Lato', sans-serif;
 
 
 /*-------------------------------------*/
 // FONT ICON: FAMILY
+
 $font-icon: "FontAwesome";
 
 
 /*-------------------------------------*/
 // BORDER-RADIUS
+
 $border-radius: 6px;
 $border-radius-sm: $border-radius / 2;
 $border-radius-circle: 50%;
