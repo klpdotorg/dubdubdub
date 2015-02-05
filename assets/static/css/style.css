@@ -349,7 +349,7 @@ sub {
 
 .white-bg, .heading-section, .icon-number, .scroll-smooth-block, .box-info, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .select2-container .select2-choice, .rbox_inline, .rbox_html, .picker__box, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, body, .main-header, .nav, .nav ul, .options-list, .compare-section-heading, .compare-section-source {
+.picker__button--close, body, .main-header, .nav, .nav ul, .options-list, .school-comparison-flow, .compare-section-heading, .compare-section-source {
   background-color: #fff; }
 
 .yellow-mild {
@@ -1045,11 +1045,11 @@ hr {
   border-radius: 10px; }
 
 /* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .school-comparison-flow, .container-sm, .banner-full-caption {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .container-sm, .banner-full-caption {
   margin-left: auto;
   margin-right: auto; }
 
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .school-comparison-flow {
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper {
   max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px; }
@@ -2704,9 +2704,9 @@ body {
   height: 30px; }
 
 .school-comparison-flow {
-  padding: 0;
+  min-width: 750px;
   border-bottom: 1px solid #d8d8d8;
-  min-width: 750px; }
+  overflow: auto; }
 
 .comparison-result-wrapper {
   padding: 0; }
@@ -3241,9 +3241,6 @@ body {
   .form-edit-password {
     margin-top: 0; }
 
-  .button-compare-wrap {
-    display: block; }
-
   .school-data-wrap, .tab-school-infra-block, .school-tab-story {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3346,6 +3343,9 @@ body {
 
   .map-subheader-wrapper .breadcrumb {
     width: 70%; }
+
+  .button-compare-wrap {
+    display: block; }
 
   .button-filter-volunteer {
     display: none; }

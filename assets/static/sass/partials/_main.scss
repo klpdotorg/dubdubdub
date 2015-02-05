@@ -1099,10 +1099,10 @@ body {
 }
 
 .school-comparison-flow {
-  @extend %container;
-  padding: 0;
+  min-width: 750px; //a bit dicy, these fixed widths
   border-bottom: 1px solid $grey-cloud;
-  min-width: 750px;
+  overflow: auto;
+  @extend %white-bg;
 }
 
 .comparison-result-wrapper {

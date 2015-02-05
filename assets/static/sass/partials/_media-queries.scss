@@ -274,10 +274,6 @@
 
 	//Page: School
 
-	.button-compare-wrap {
-		display: block;
-	}
-
 	.school-data-wrap, .tab-school-infra-block, .school-tab-story {
 		@include grid-parent;
 	}
@@ -415,6 +411,13 @@
 			width: 70%;
 		}
 	}
+
+	//page: school
+	.button-compare-wrap {
+		display: block;
+	}
+
+
 
   //page: volunteer-map 
 
