@@ -1,4 +1,8 @@
-/* global SITE styles */
+/*-------------------------------------*/
+/* GLOBAL SITE STYLES */
+
+
+/*-------------------------------------*/
 //MIXINS: VENDOR PREFIXES only
 //box-sizing
 @mixin box-sizing($box-model: border-box) {
@@ -13,6 +17,8 @@
     box-sizing:           $box-model;
 }
 
+
+/*-------------------------------------*/
 //placeholders for inputs
 @mixin placeholder {
   &.placeholder{
@@ -32,6 +38,8 @@
   }
 }
 
+
+/*-------------------------------------*/
 //transitions
 @mixin transition($tr-values...) {
     -webkit-transition: $tr-values;
@@ -43,9 +51,13 @@
 /*-------------------------------------*/
 
 
+/*-------------------------------------*/
 //CLASSES, PLACEHOLDERS AND MIXINS
 //mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
 
+
+
+/*-------------------------------------*/
 /* COLORS */
 
 //site colors
@@ -226,8 +238,8 @@
     color: $link-hover-color;
 }
 
-/*-------------------------------------*/
 
+/*-------------------------------------*/
 //SPACING CLASSES
 
 .base-spacing, %base-spacing {
@@ -498,7 +510,40 @@ img, video {
   @include transition(all 0.3s ease-in);
 }
 
-//table
+/*-------------------------------------*/
+// DROPDOWNS: GENERIC
+.dropdown-base {
+  position: relative;
+  @extend %font-small;
+
+  ul {
+    display: none;
+    min-width: 80px;
+    @extend %white-bg;
+    @extend %border-radius-sm;
+    border: 1px solid $grey-cloud; 
+    position: absolute;
+    left: 0;
+    z-index: 1;
+
+    a {
+      display: block; 
+    }
+  }
+
+  a {
+    display: inline-block;
+    color: $grey-steel; 
+    padding: $base-spacing;
+
+    &:hover{
+      background: $grey-mist; 
+    }
+  }
+}
+
+/*-------------------------------------*/
+// TABLE: BASE
 .table-responsive-wrap {
   overflow-y: auto;
   @extend %scrollbar-webkit;
