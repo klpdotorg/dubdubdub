@@ -1,5 +1,50 @@
 /* FONTS + TYPOGRAPHY */
 
+/*-------------------------------------*/
+//LINKS
+a {
+  text-decoration: none;
+  @extend %link-color;
+
+  &:hover, &:focus, &:active {
+    @extend %link-hover-color;
+  }
+  
+  &:focus {
+    outline: none;        
+  }
+}
+
+
+// links: external 
+.link-external {
+  color: inherit;
+  display: inline-block;
+  @extend %transition-linear;
+
+  &:after {
+    content: "\f064";
+    font-family: 'FontAwesome';
+    font-size: 9px;
+    @extend %white;
+    background: $grey-steel;
+    padding: ($base-spacing-sm)-2;
+    margin: 0 $base-spacing-sm;
+    line-height: 1;
+    @extend %border-radius-circle;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+.link-external:hover, .link-external:focus {
+  text-decoration: underline;
+
+  &:after {
+    background: $link-hover-color;
+  }
+}
+
 //default font: regular
 @font-face {
   font-family: 'Lato';

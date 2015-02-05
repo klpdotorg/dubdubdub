@@ -56,12 +56,11 @@ one class called data. can i knoock if off? i know you're using no-data in the j
 }
 
 html, body {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-
   @extend %white-bg;
   color: $font-base-color;
   @extend %font-base-family;
@@ -456,7 +455,7 @@ body {
   }
 
   h3:first-of-type {
-      @extend %brand-blue;
+    @extend %brand-blue;
   }
 }
 
@@ -466,7 +465,7 @@ body {
   }
 
   h3:first-of-type {
-      @extend %brand-turquoise;
+    @extend %brand-turquoise;
   }
 }
 
@@ -825,6 +824,7 @@ body {
 }
 
 .map-volunteer-canvas-full {
+  width: -webkit-calc(100% - $sidebar-map-width);
   width: calc(100% - $sidebar-map-width);
 }
 

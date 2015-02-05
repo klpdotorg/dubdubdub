@@ -3,23 +3,23 @@
 
 
 /*-------------------------------------*/
-//MIXINS: VENDOR PREFIXES only
-//box-sizing
+// MIXINS: VENDOR PREFIXES only
+
+// mixin: box-sizing
 @mixin box-sizing($box-model: border-box) {
-    -webkit-box-sizing:   $box-model;
-    -moz-box-sizing:      $box-model;
-    box-sizing:           $box-model;
+  -webkit-box-sizing:   $box-model;
+  -moz-box-sizing:      $box-model;
+  box-sizing:           $box-model;
 }
 
 @mixin box-sizing($box-model: border-box) {
-    -webkit-box-sizing:   $box-model;
-    -moz-box-sizing:      $box-model;
-    box-sizing:           $box-model;
+  -webkit-box-sizing:   $box-model;
+  -moz-box-sizing:      $box-model;
+  box-sizing:           $box-model;
 }
 
 
-/*-------------------------------------*/
-//placeholders for inputs
+// mixin: placeholders for inputs
 @mixin placeholder {
   &.placeholder{
     @content;
@@ -38,31 +38,25 @@
   }
 }
 
-
-/*-------------------------------------*/
-//transitions
+// mixin: transitions
 @mixin transition($tr-values...) {
     -webkit-transition: $tr-values;
     transition: $tr-values;
 }
 
-/*-------------------------------------*/
-/*-------------------------------------*/
-/*-------------------------------------*/
-
 
 /*-------------------------------------*/
-//CLASSES, PLACEHOLDERS AND MIXINS
-//mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
+// CLASSES, PLACEHOLDERS AND MIXINS
+// mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
 
 
 
 /*-------------------------------------*/
 /* COLORS */
 
-//site colors
+//colors: brand
 
-//orange
+// orange
 .brand-orange, %brand-orange {
   color: $brand-orange;
 }
@@ -71,7 +65,7 @@
   background-color: $brand-orange;
 }
 
-//green
+// green
 .brand-green, %brand-green, .brand-school {
   color: $brand-green;
 }
@@ -80,7 +74,7 @@
   background-color: $brand-green;
 }
 
-//blue
+// blue
 .brand-blue, %brand-blue, .brand-school-cluster {
   color: $brand-blue;
 }
@@ -89,7 +83,7 @@
   background-color: $brand-blue;
 }
 
-//turquoise
+// turquoise
 .brand-turquoise, %brand-turquoise, .brand-school-block {
   color: $brand-turquoise;
 }
@@ -98,7 +92,7 @@
   background-color: $brand-turquoise;
 }
 
-//purple
+// purple
 .brand-purple, %brand-purple, .brand-preschool {
   color: $brand-purple;
 }
@@ -107,7 +101,10 @@
   background-color: $brand-purple;
 }
 
-//purple-amethyst
+
+// colors: others
+
+// purple-amethyst
 .purple-amethyst, %purple-amethyst, .brand-school-district {
   color: $purple-amethyst;
 }
@@ -116,7 +113,7 @@
   background-color: $purple-amethyst;
 }
 
-//red
+// red
 .brand-red, %brand-red, .brand-preschool-project {
   color: $brand-red;
 }
@@ -125,12 +122,12 @@
   background-color: $brand-red;
 }
 
-//maroon 
+// maroon 
 .maroon, %maroon, .brand-preschool-district {
   color: $maroon;
 }
 
-//pink-salmon
+// pink-salmon
 .pink-salmon, %pink-salmon, .brand-preschool-circle {
   color: $pink-salmon;
 }
@@ -139,7 +136,7 @@
   background-color: $pink-salmon;
 }
 
-//white
+// white
 .white, %white {
   color: $white;
 }
@@ -148,7 +145,7 @@
   background-color: $white;
 }
 
-//yellow
+// yellow-mild
 .yellow-mild, %yellow-mild {
   color: $yellow-mild;
 }
@@ -157,7 +154,7 @@
   background-color: $yellow-mild;
 }
 
-//orange
+// orange-mild
 .orange-mild, %orange-mild {
   color: $orange-mild;
 }
@@ -166,7 +163,7 @@
   background-color: $orange-mild;
 }
 
-//pista
+// green-pista
 .green-pista, %green-pista {
   color: $green-pista;
 }
@@ -175,7 +172,7 @@
   background-color: $green-pista;
 }
 
-//green-leaf 
+// green-leaf 
 .green-leaf, %green-leaf {
   color: $green-leaf;
 }
@@ -183,7 +180,7 @@
 .green-leaf-bg, %green-leaf-bg {
   background-color: $green-leaf;
 }
-//black
+// black
 .black, %black {
   color: $black;
 }
@@ -192,7 +189,7 @@
   background-color: $black;
 }
 
-//grey-mist
+// grey-mist
 .grey-mist, %grey-mist {
   color: $grey-mist;
 }
@@ -201,7 +198,7 @@
   background-color: $grey-mist;
 }
 
-//grey-silver
+// grey-silver
 .grey-silver, %grey-silver {
   color: $grey-silver;
 }
@@ -210,7 +207,7 @@
   background-color: $grey-silver;
 }
 
-//grey-steel
+// grey-steel
 .grey-steel, %grey-steel {
   color: $grey-steel;
 }
@@ -219,7 +216,7 @@
   background-color: $grey-steel;
 }
 
-//grey-gravel
+// grey-gravel
 .grey-gravel, %grey-gravel {
   color: $grey-gravel;
 }
@@ -228,14 +225,14 @@
   background-color: $grey-gravel;
 }
 
-//link colors
+// colors: link
 
 .link-color, %link-color {
-    color: $link-color;
+  color: $link-color;
 }
 
 .link-hover-color, %link-hover-color {
-    color: $link-hover-color;
+  color: $link-hover-color;
 }
 
 
@@ -243,94 +240,48 @@
 //SPACING CLASSES
 
 .base-spacing, %base-spacing {
-    padding: $base-spacing 0;
+  padding: $base-spacing 0;
 }
 
 .base-spacing-sm, %base-spacing-sm {
-    padding: $base-spacing-sm 0;
+  padding: $base-spacing-sm 0;
 }
 
 .base-spacing-mid, %base-spacing-mid {
-    padding: $base-spacing-mid 0;
+  padding: $base-spacing-mid 0;
 }
 
 .base-spacing-lg, %base-spacing-lg {
-    padding: $base-spacing-lg 0;
+  padding: $base-spacing-lg 0;
 }
 
 .base-spacing-lg-x, %base-spacing-lg-x {
-    padding: $base-spacing-lg-x 0;
+  padding: $base-spacing-lg-x 0;
 }
 
 .base-spacing-lg-2x, %base-spacing-lg-2x {
-    padding: $base-spacing-lg-2x 0;
+  padding: $base-spacing-lg-2x 0;
 }
 
-/*-------------------------------------*/
 
-/* BORDER-RADIUS */
+/*-------------------------------------*/
+// BORDER-RADIUS
 
 .border-radius, %border-radius {
-    border-radius: $border-radius;
+  border-radius: $border-radius;
 }
 
 .border-radius-sm, %border-radius-sm {
-    border-radius: $border-radius-sm;
+  border-radius: $border-radius-sm;
 }
 
 .border-radius-circle, %border-radius-circle {
-    border-radius: $border-radius-circle;
+  border-radius: $border-radius-circle;
 }
+
 
 /*-------------------------------------*/
-
-//LINKS
-a {
-  text-decoration: none;
-  @extend %link-color;
-
-    &:hover, &:focus, &:active {
-      @extend %link-hover-color;
-    }
-    
-    &:focus {
-    	outline: none;        
-    }
-}
-
-
-//links: external 
-.link-external {
-  color: inherit;
-  display: inline-block;
-  @extend %transition-linear;
-
-  &:after {
-    content: "\f064";
-    font-family: 'FontAwesome';
-    font-size: 9px;
-    @extend %white;
-    background: $grey-steel;
-    padding: ($base-spacing-sm)-2;
-    margin: 0 $base-spacing-sm;
-    line-height: 1;
-    @extend %border-radius-circle;
-    display: inline-block;
-    text-decoration: none;
-  }
-}
-
-.link-external:hover, .link-external:focus {
-  text-decoration: underline;
-
-  &:after {
-    background: $link-hover-color;
-  }
-}
-
-/*-------------------------------------*/
-
-//IMAGES, VIDEOS, IFRAMES
+// IMAGES, VIDEOS, IFRAMES
 img, video {
 	max-width: 100%;
 	height: auto;
@@ -341,26 +292,16 @@ img, video {
   width: 100%;
 }
 
-//BOX-SHADOW
-/*.box-shadow-base, %box-shadow-base {
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}*/
 
-/* end global SITE styles */
+/*-------------------------------------*/
+// GLOBAL HELPER classes */
 
-/* GLOBAL HELPER classes */
-/* includes helpful site-agnostic classes and placeholders */
-
+// includes helpful site-agnostic classes and placeholders
 //to use a placeholder, you can simply extend it inside a selector:
 //e.g. selector {@extend %clearfix};
-//NOTE: placeholders don't work inside media queries unless mentioned once again inside that media query scope
 
-//ALIGNMENT
 
-.align-right, %align-right {
-  text-align: right;
-}
-
+// Helpers: Floats
 .float-left, %float-left {
   float: left;
 }
@@ -398,35 +339,41 @@ img, video {
   }
 }
 
-//centering things
+// Helpers: Alignment: Right
+
+.align-right, %align-right {
+  text-align: right;
+}
+
+// Helpers: Alignment: Center
 .center-text, %center-text {
-    text-align: center;
+  text-align: center;
 }
 
 @mixin center-text {
-    text-align: center;
+  text-align: center;
 }
 
 .center-element, %center-element {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @mixin center-element {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .center-element-inline, %center-element-inline {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @mixin center-element-inline {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .vertical-center, %vertical-center {
@@ -446,13 +393,13 @@ img, video {
 }
 
 .dead-center, %dead-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-} /* add this to the parent of the element you want to vertically and horizontally center */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
 
 @mixin dead-center {
   position: absolute;
@@ -463,7 +410,7 @@ img, video {
   transform: translate(-50%,-50%);
 }
 
-//vertical-alignment
+// Helpers: Aligment: Vertical
 .vertical-inline-top, %vertical-inline-top {
   display: inline-block;
   vertical-align: top;
@@ -472,7 +419,6 @@ img, video {
 @mixin vertical-inline-top {
   display: inline-block;
   vertical-align: top;
-
 }
 
 .vertical-inline-middle, %vertical-inline-middle {
@@ -485,23 +431,16 @@ img, video {
   vertical-align: middle;
 }
 
-//text-truncation
+// Helpers: text-truncation
 .text-truncate, %text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-//cursor-pointer
-%cursor-pointer {
-  cursor: pointer;
-}
 
-@mixin cursor-pointer {
-  cursor: pointer;
-}
-
-//transitions
+/*-------------------------------------*/
+// TRANSITIONS
 %transition-linear {
   @include transition(all 0.2s linear);
 }
@@ -509,6 +448,7 @@ img, video {
 %transition-ease-in {
   @include transition(all 0.3s ease-in);
 }
+
 
 /*-------------------------------------*/
 // DROPDOWNS: GENERIC
@@ -1133,7 +1073,7 @@ a.button {
 }
 
 /*-------------------------------------*/
-/* MODULE: STATS ICON */
+// MODULE: STATS ICON
 
 .module-stats-icon {
   @extend %vertical-inline-top;
@@ -1162,9 +1102,8 @@ a.button {
 }
 
 
-
 /*-------------------------------------*/
-/* BAR GRAPH: CUSTOM */
+// BAR GRAPH: CUSTOM
 //e.g. school demographics
 
 .bar-graph-wrap {
@@ -1215,7 +1154,7 @@ a.button {
 }
 
 /*-------------------------------------*/
-/* TABS */
+// TABS
 
   .tab-wrap {
     border: 1px solid $grey-cloud;
@@ -1280,8 +1219,6 @@ a.button {
   }
 
 
-/*-------------------------------------*/
-/* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;
   display: block;
@@ -1289,41 +1226,16 @@ a.button {
 
 
 /*-------------------------------------*/
-/* HIDE */
+// HIDE
 .hide {
   display: none;
 }
 
 /*-------------------------------------*/
-/* HIDE */
+// SHOW
 .show {
   display: block;
 }
-
-/*.cms-default-styles {
-  ul, ol {
-    list-style-position: inside;
-  }
-
-  ul {
-    list-style-type: disc;
-  }
-  
-  ol {
-    list-style-type: decimal;
-  }
-
-  a {
-    @extend %brand-1-color;
-
-    &:hover {
-    }
-  }
-}*/
-
-/* end CMS DEFAULT STYLES */
-
-/* end GLOBAL HELPER classes */
 
 
 /*-------------------------------------*/

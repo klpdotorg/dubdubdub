@@ -50,6 +50,31 @@ q:before, q:after {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /* FONTS + TYPOGRAPHY */
+/*-------------------------------------*/
+a {
+  text-decoration: none; }
+  a:focus {
+    outline: none; }
+
+.link-external {
+  color: inherit;
+  display: inline-block; }
+  .link-external:after {
+    content: "\f064";
+    font-family: 'FontAwesome';
+    font-size: 9px;
+    background: #898989;
+    padding: 3px;
+    margin: 0 5px;
+    line-height: 1;
+    display: inline-block;
+    text-decoration: none; }
+
+.link-external:hover, .link-external:focus {
+  text-decoration: underline; }
+  .link-external:hover:after, .link-external:focus:after {
+    background: #7bb6ec; }
+
 @font-face {
   font-family: 'Lato';
   src: url("../fonts/lato/Lato-Reg-webfont.eot");
@@ -287,11 +312,6 @@ sub {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /*-------------------------------------*/
-/*-------------------------------------*/
-/*-------------------------------------*/
-/*-------------------------------------*/
-/*-------------------------------------*/
-/*-------------------------------------*/
 /* COLORS */
 .brand-orange, .heading-volunteer-box {
   color: #ec6608; }
@@ -347,7 +367,7 @@ sub {
 .pink-salmon-bg {
   background-color: #f87c84; }
 
-.white, .header-strip, .header-strip .heading-tiny-uppercase, .link-external:after, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .leaflet-container a.button--sm, .gender-item .k-icon:before, .gender-item .k-icon:after {
@@ -441,40 +461,14 @@ sub {
   padding: 50px 0; }
 
 /*-------------------------------------*/
-/* BORDER-RADIUS */
 .border-radius, .alert {
   border-radius: 6px; }
 
 .border-radius-sm, .heading-section, .text-bordered, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
 
-.border-radius-circle, .icon-number, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
+.border-radius-circle, .link-external:after, .icon-number, .icon-button-round, .icon-button-round-sm, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img, .gender-item .k-icon {
   border-radius: 50%; }
-
-/*-------------------------------------*/
-a {
-  text-decoration: none; }
-  a:focus {
-    outline: none; }
-
-.link-external {
-  color: inherit;
-  display: inline-block; }
-  .link-external:after {
-    content: "\f064";
-    font-family: 'FontAwesome';
-    font-size: 9px;
-    background: #898989;
-    padding: 3px;
-    margin: 0 5px;
-    line-height: 1;
-    display: inline-block;
-    text-decoration: none; }
-
-.link-external:hover, .link-external:focus {
-  text-decoration: underline; }
-  .link-external:hover:after, .link-external:focus:after {
-    background: #7bb6ec; }
 
 /*-------------------------------------*/
 img, video {
@@ -484,15 +478,7 @@ img, video {
 .full-width, .form-signup .input-text, .form-login .input-text, .form-edit-profile .input-text, .form-volunteer-oppor-edit .input-text, .form-add-donation .input-text {
   width: 100%; }
 
-/*.box-shadow-base, %box-shadow-base {
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}*/
-/* end global SITE styles */
-/* GLOBAL HELPER classes */
-/* includes helpful site-agnostic classes and placeholders */
-.align-right {
-  text-align: right; }
-
+/*-------------------------------------*/
 .float-left, .bar-label, .bar-graph, .search-input-map, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
@@ -506,6 +492,9 @@ img, video {
   content: "";
   display: table;
   clear: both; }
+
+.align-right {
+  text-align: right; }
 
 .center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
@@ -534,7 +523,6 @@ img, video {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%); }
 
-/* add this to the parent of the element you want to vertically and horizontally center */
 .vertical-inline-top, .heading-section-block li, .scroll-smooth-links li, .scroll-smooth-links a, .module-stats-icon, .module-stats-info, .logo, .top-nav, .nav-footer li, .vol-oppor-icon, .pie-chart-inner, .school-demo-tab, .icon-compare-gender {
   display: inline-block;
   vertical-align: top; }
@@ -548,7 +536,8 @@ img, video {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-.heading-section-block a:hover, .link-external, .nav, .footer-wrapper a, .breadcrumb a, .banner-home .banner-full-caption a, .volunteer-story-link:hover, .list-sidebar:hover {
+/*-------------------------------------*/
+.link-external, .heading-section-block a:hover, .nav, .footer-wrapper a, .breadcrumb a, .banner-home .banner-full-caption a, .volunteer-story-link:hover, .list-sidebar:hover {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear; }
 
@@ -913,7 +902,6 @@ hr {
     max-width: 85%; }
 
 /*-------------------------------------*/
-/* MODULE: STATS ICON */
 .module-stats-icon {
   margin: 0 10px 0 0; }
   .module-stats-icon:last-of-type {
@@ -929,7 +917,6 @@ hr {
   color: #f87c84; }
 
 /*-------------------------------------*/
-/* BAR GRAPH: CUSTOM */
 .bar-graph-wrap {
   margin-bottom: 15px; }
 
@@ -951,7 +938,6 @@ hr {
   text-align: right; }
 
 /*-------------------------------------*/
-/* TABS */
 .tab-wrap {
   border: 1px solid #d8d8d8;
   border-bottom: none;
@@ -992,44 +978,18 @@ hr {
   .tab-content.tab-active {
     display: block; }
 
-/*-------------------------------------*/
-/* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
   margin: 25px auto;
   display: block; }
 
 /*-------------------------------------*/
-/* HIDE */
 .hide {
   display: none; }
 
 /*-------------------------------------*/
-/* HIDE */
 .show {
   display: block; }
 
-/*.cms-default-styles {
-  ul, ol {
-    list-style-position: inside;
-  }
-
-  ul {
-    list-style-type: disc;
-  }
-  
-  ol {
-    list-style-type: decimal;
-  }
-
-  a {
-    @extend %brand-1-color;
-
-    &:hover {
-    }
-  }
-}*/
-/* end CMS DEFAULT STYLES */
-/* end GLOBAL HELPER classes */
 /*-------------------------------------*/
 /* SCROLLBAR: WEBKIT - NON STANDARD */
 .table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar {
@@ -2563,6 +2523,7 @@ body {
     background: #e9e9e9; }
 
 .map-volunteer-canvas-full {
+  width: -webkit-calc(100% - $sidebar-map-width);
   width: calc(100% - $sidebar-map-width); }
 
 .vol-oppor-item {
