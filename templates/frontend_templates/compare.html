@@ -614,13 +614,13 @@
         <div class="compare-each-block">
           <div class="compare-section-heading">{{ key }}</div>
 
-          <div class="float-left">
+          <div class="compare-each">
             {% for k, v in value %}
             <div class="table-infra-key-color brand-{{ v.entity1 }} table-infra-icon-left">{{ k }}</div>
             {% endfor %}
           </div>
 
-          <div class="float-right">
+          <div class="compare-each float-right">
             {% for k, v in value %}
             <div class="table-infra-key-color brand-{{ v.entity2 }} table-infra-icon-right">{{ k }}</div>
             {% endfor %}

@@ -1102,6 +1102,7 @@ body {
   @extend %container;
   padding: 0;
   border-bottom: 1px solid $grey-cloud;
+  min-width: 750px;
 }
 
 .comparison-result-wrapper {
@@ -1122,6 +1123,7 @@ body {
   @extend %white-bg;
   padding: 3px;
   margin-top: -8px;
+  width: 20%;
 }
 
 .compare-gender-distribution {
@@ -1173,11 +1175,17 @@ body {
   padding: $base-spacing 0;
 }
 
+.compare-each {
+  @extend %float-left;
+  width: 40%;
+}
+
 .icon-compare-label {
   @extend %font-larger;
   letter-spacing: 1px;
   @extend %font-uppercase;
 }
+
 .school-compare-each {
   width: 50%;
   @extend %float-left;

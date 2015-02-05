@@ -558,6 +558,7 @@ img, video {
 .table-infra-key-color {
   position: relative;
   margin-bottom: $base-spacing-sm;
+  text-align: left;
 
   &:after {
     @extend %table-infra-icon-legend;
@@ -1122,7 +1123,7 @@ a.button {
 .bar-custom {
   height: $base-spacing-mid;
   background-color: $grey-cloud;
-  min-width: 200px;
+  min-width: 180px;
 }
 
 .bar-label {
@@ -1154,7 +1155,7 @@ a.button {
 }
 
 .bar-percent {
-  width: 60px;
+  width: 65px;
   padding: 0 $base-spacing-sm;
   text-align: right;
   @extend %font-small;

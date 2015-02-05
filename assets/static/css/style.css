@@ -487,7 +487,7 @@ img, video {
 .align-right {
   text-align: right; }
 
-.float-left, .bar-label, .bar-graph, .search-input-map, .info-wrapper, .compare-gender-distribution .compare-section, .school-compare-each, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .search-input-map, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
 .float-right, .map-subheader-wrapper .breadcrumb, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
@@ -582,7 +582,8 @@ img, video {
 
 .table-infra-key-color {
   position: relative;
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  text-align: left; }
   .table-infra-key-color.brand-green:after {
     content: "\f00c"; }
   .table-infra-key-color.brand-red:after {
@@ -906,7 +907,7 @@ hr {
 .bar-custom {
   height: 15px;
   background-color: #d8d8d8;
-  min-width: 200px; }
+  min-width: 180px; }
 
 .bar-label {
   word-wrap: break-word; }
@@ -916,7 +917,7 @@ hr {
   background-color: #5F5F5F; }
 
 .bar-percent {
-  width: 60px;
+  width: 65px;
   padding: 0 5px;
   text-align: right; }
 
@@ -2704,7 +2705,8 @@ body {
 
 .school-comparison-flow {
   padding: 0;
-  border-bottom: 1px solid #d8d8d8; }
+  border-bottom: 1px solid #d8d8d8;
+  min-width: 750px; }
 
 .comparison-result-wrapper {
   padding: 0; }
@@ -2716,7 +2718,8 @@ body {
   color: #7b7795;
   letter-spacing: 1px;
   padding: 3px;
-  margin-top: -8px; }
+  margin-top: -8px;
+  width: 20%; }
 
 .compare-gender-distribution .compare-section {
   width: 50%; }
@@ -2740,6 +2743,9 @@ body {
 .compare-each-block {
   position: relative;
   padding: 10px 0; }
+
+.compare-each {
+  width: 40%; }
 
 .icon-compare-label {
   letter-spacing: 1px; }
