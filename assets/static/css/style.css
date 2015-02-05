@@ -1005,8 +1005,17 @@ hr {
   padding-left: 20px;
   padding-right: 20px; }
 
-.main-header, .nav, .nav-trigger, .scroll-smooth-block {
-  z-index: 3000; }
+.label-compare-block {
+  z-index: 1; }
+
+.options-list {
+  z-index: 2; }
+
+.banner-content {
+  z-index: 1; }
+
+.school-map-info {
+  z-index: 1; }
 
 .tooltip:before, .tooltip:after {
   z-index: 100; }
@@ -1014,11 +1023,8 @@ hr {
 .alert {
   z-index: 2500; }
 
-.banner-content {
-  z-index: 1; }
-
-.school-map-info {
-  z-index: 1; }
+.main-header, .nav, .nav-trigger, .scroll-smooth-block {
+  z-index: 3000; }
 
 .select2-drop-mask {
   z-index: 9998; }
@@ -1037,12 +1043,6 @@ hr {
 
 .module-img-each .icon-number {
   z-index: 1; }
-
-.label-compare-block {
-  z-index: 1; }
-
-.options-list {
-  z-index: 2; }
 
 .picker {
   z-index: 10000; }
