@@ -1,5 +1,5 @@
 /*-------------------------------------*/
-//FORM: DEFAULT STYLES
+/* FORM: DEFAULT STYLES */
 
 input[type="submit"] {
   -moz-appearance: none;
@@ -34,7 +34,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 }
 
 
-//form styles for default forms; wrap your form with class of form-base
+/*-------------------------------------*/
+/* FORM: BASE STYLES */
+// Wrap your form with class of form-base
+
 .form-base {
   .input-text, textarea, select {
     padding: $base-spacing - 2;
@@ -59,6 +62,9 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   }
 }
 
+
+/*-------------------------------------*/
+/* CUSTOM CHECKBOXES AND RADIOS */
 .input-checkbox, .input-radio {
   opacity: 0;
   position: absolute;
@@ -93,10 +99,10 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 }
 
 .input-checkbox:checked + .input-checkbox-label:before {
-    content: "\f00c";
-    font-family: 'FontAwesome';
-    background: $grey-silver;
-    @extend %white;
+  content: "\f00c";
+  @extend %font-icon;
+  background: $grey-silver;
+  @extend %white;
 }
 
 .input-radio + .input-radio-label:before  {
@@ -110,16 +116,16 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 
 
 .form-field-wrap {
-    padding: 0 0 $base-spacing-lg 0;
+  padding: 0 0 $base-spacing-lg 0;
 }
 
 
 /*-------------------------------------*/
-//FORM: DISABLED INPUTS
+/* FORM: DISABLED INPUTS */
+
 input[disabled], input[disabled] + .input-checkbox-label, input[disabled] + .input-radio-label {
   cursor: not-allowed;
 }
-
 
 input[disabled], .input-checkbox[disabled] + .input-checkbox-label:before, .input-radio[disabled] + .input-radio-label:before {
   border-color: darken($grey-mist, 5%);  
@@ -130,16 +136,20 @@ input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-lab
   border-color: darken($grey-mist, 5%);  
 }
 
+
 /*-------------------------------------*/
-//FORM: INPUT FILE PREVIEW
+/* FORM: INPUT FILE PREVIEW */
+
 .form-file-preview {
   display: block;
   margin: $base-spacing 0 0 0;
   @extend %border-radius-sm;
 }
 
+
 /*-------------------------------------*/
-//FORM: ERRORS
+/* FORM: ERRORS */
+
 .error-message {
   @extend %brand-red;
   @extend %font-smaller;
@@ -152,21 +162,25 @@ input.error {
 
 
 /*-------------------------------------*/
-//FORM: OPTIONAL TEXT
+/* FORM: OPTIONAL TEXT */
+
 .form-optional-text {
   color: $grey-silver;
 }
 
+
 /*-------------------------------------*/
-//FORM: LOGIN
+/* FORM: LOGIN */
+
 .form-signup, .form-login {
   .input-text {
     @extend %full-width;
   }
 }
 
+
 /*-------------------------------------*/
-//FORM: ORGANIZATION, PROFILE EDIT, VOLUNTEER OPPORTUNITIES EDIT
+/* FORM: ORGANIZATION, PROFILE EDIT, VOLUNTEER OPPORTUNITIES EDIT */
 .form-edit-profile, .form-volunteer-oppor-edit, .form-add-donation {
   label {
     display: block;
@@ -180,8 +194,9 @@ input.error {
   }
 }
 
+
 /*-------------------------------------*/
-//FORM: PROFILE EDIT PASSWORD
+/* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
   background-color: $grey-mist;
   padding: $base-spacing-lg-x;
@@ -197,21 +212,20 @@ input.error {
   letter-spacing: 1px;
 }
 
-//FORM: VOLUNTEER OPPORTUNITIES EDIT
+
+/* FORM: VOLUNTEER OPPORTUNITIES EDIT */
 .form-volunteer-oppor-edit {
   .select2 {
     width: 100%;
   }    
 }
 
+
 /*-------------------------------------*/
-//FORM: Form Share Story
+/* FORM: FORM SHARE STORY */
 .form-share-story {
   .input-text {
     min-width: 300px;
   }
 
 }
-
-
-

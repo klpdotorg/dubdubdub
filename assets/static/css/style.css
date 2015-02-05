@@ -602,7 +602,7 @@ hr {
 
 /*-------------------------------------*/
 /* ICONS */
-.font-icon, .link-external:after, .heading-section-block li:before, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon, .gender-item .k-icon:before, .gender-item .k-icon:after {
+.font-icon, .link-external:after, .heading-section-block li:before, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon, .gender-item .k-icon:before, .gender-item .k-icon:after {
   font-family: "FontAwesome"; }
 
 .icon-right {
@@ -1048,6 +1048,7 @@ hr {
   z-index: 10000; }
 
 /*-------------------------------------*/
+/* FORM: DEFAULT STYLES */
 input[type="submit"] {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -1076,6 +1077,8 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   min-width: 100px;
   padding-right: 10px; }
 
+/*-------------------------------------*/
+/* FORM: BASE STYLES */
 .form-base .input-text, .form-base textarea, .form-base select {
   padding: 8px; }
   .form-base .input-text:focus, .form-base textarea:focus, .form-base select:focus {
@@ -1087,6 +1090,8 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 .form-base label {
   padding: 10px 0; }
 
+/*-------------------------------------*/
+/* CUSTOM CHECKBOXES AND RADIOS */
 .input-checkbox, .input-radio {
   opacity: 0;
   position: absolute; }
@@ -1110,7 +1115,6 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 
 .input-checkbox:checked + .input-checkbox-label:before {
   content: "\f00c";
-  font-family: 'FontAwesome';
   background: #bbb; }
 
 .input-radio:checked + .input-radio-label:before {
@@ -1121,6 +1125,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   padding: 0 0 20px 0; }
 
 /*-------------------------------------*/
+/* FORM: DISABLED INPUTS */
 input[disabled], input[disabled] + .input-checkbox-label, input[disabled] + .input-radio-label {
   cursor: not-allowed; }
 
@@ -1132,11 +1137,13 @@ input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-lab
   border-color: #e9e9e9; }
 
 /*-------------------------------------*/
+/* FORM: INPUT FILE PREVIEW */
 .form-file-preview {
   display: block;
   margin: 10px 0 0 0; }
 
 /*-------------------------------------*/
+/* FORM: ERRORS */
 .error-message {
   padding-top: 5px; }
 
@@ -1144,16 +1151,20 @@ input.error {
   border-color: #cb0012; }
 
 /*-------------------------------------*/
+/* FORM: OPTIONAL TEXT */
 .form-optional-text {
   color: #bbb; }
 
 /*-------------------------------------*/
+/* FORM: LOGIN */
 /*-------------------------------------*/
+/* FORM: ORGANIZATION, PROFILE EDIT, VOLUNTEER OPPORTUNITIES EDIT */
 .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label {
   display: block;
   padding-bottom: 5px; }
 
 /*-------------------------------------*/
+/* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
   background-color: #f6f6f6;
   padding: 25px;
@@ -1162,10 +1173,12 @@ input.error {
 .form-edit-heading {
   letter-spacing: 1px; }
 
+/* FORM: VOLUNTEER OPPORTUNITIES EDIT */
 .form-volunteer-oppor-edit .select2 {
   width: 100%; }
 
 /*-------------------------------------*/
+/* FORM: FORM SHARE STORY */
 .form-share-story .input-text {
   min-width: 300px; }
 
