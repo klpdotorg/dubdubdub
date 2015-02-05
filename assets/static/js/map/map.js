@@ -780,7 +780,7 @@
             bounds = L.latLngBounds(southWest, northEast);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        t.map = map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'

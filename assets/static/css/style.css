@@ -2125,6 +2125,9 @@ the css in the head of map.html
 //highcharts NOT WORKING ON FINANCE
 
 
+// run through map.html with sanj, to see if we can remove extra fluff
+// also remove frontend templates/map.html mobile specific code later and in js , once we test
+
 //horizontal scroll bar on info tab in school on desktop also
 
 //modularize icon boy girl and total later, add same classes to the map popup

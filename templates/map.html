@@ -73,7 +73,7 @@
 
   <div class="map_page no-sidebar">
     <section class="map-canvas-full">
-      <div id="map_canvas"></div>
+      <div id="js-map-canvas"></div>
     </section>
 
 <!--     <div class="map-tools">
@@ -89,19 +89,11 @@
 
     {% include 'includes/_compare_flow.html' %}
     
-    <section id="map_overlay" class="map_overlay hide">
-      <a href="" class="button-close js-close-info" title="Close"><span></span></a>
-      <div class="content"></div>
-    </section>
-
     <div class="mobile-details-wrapper" id="mobile-details-wrapper"></div>
 
   </div>
 
   {% include 'frontend_templates/map.html' %}
-
-  <div id="modal_overlay" class="modal-overlay"></div>
-  <div id="modal_wrapper"></div>
 
   {% include 'frontend_templates/compare.html' %}
   
