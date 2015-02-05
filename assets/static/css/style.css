@@ -963,36 +963,6 @@ hr {
   .tab-content.tab-active {
     display: block; }
 
-@media only screen and (min-width: 750px) {
-  .tab-wrap {
-    border: none; }
-
-  .tab-wrap-widescreen {
-    display: block; }
-
-  .tab-each .tab-heading {
-    display: none; }
-
-  .tab-heading.tab-heading-active {
-    background: #fff; }
-
-  .tab-heading {
-    display: inline-block;
-    vertical-align: top; }
-
-  .tab-heading {
-    position: relative;
-    top: 1px;
-    border-bottom: none; }
-
-  .tab-content {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: #d8d8d8; }
-
-  .tab-heading-active {
-    border: 1px solid #d8d8d8;
-    border-bottom: none; } }
 /*-------------------------------------*/
 /* CMS DEFAULT STYLES */
 .float-left-padding, .float-right-padding {
@@ -3150,6 +3120,36 @@ body {
   .org-tab-button, .type-school {
     float: right; } }
 @media only screen and (min-width: 750px) {
+  .tab-wrap {
+    border: none; }
+
+  .tab-wrap-widescreen {
+    display: block; }
+
+  .tab-each .tab-heading {
+    display: none; }
+
+  .tab-heading.tab-heading-active {
+    background: #fff; }
+
+  .tab-heading {
+    display: inline-block;
+    vertical-align: top; }
+
+  .tab-heading {
+    position: relative;
+    top: 1px;
+    border-bottom: none; }
+
+  .tab-content {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #d8d8d8; }
+
+  .tab-heading-active {
+    border: 1px solid #d8d8d8;
+    border-bottom: none; }
+
   .module-img-block {
     margin-left: -20px;
     margin-right: -20px; }
