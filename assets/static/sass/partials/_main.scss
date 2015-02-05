@@ -937,12 +937,6 @@ body {
     margin-left: $base-spacing;
   }
 
-  .module-stats-girl {
-    .module-stats-label {
-      color: $pink-salmon;
-    }
-  }
-
   .module-stats-boygirl {
     .module-stats-label {
       color: $blue-ink;
@@ -1163,9 +1157,14 @@ body {
   color: $pink-salmon;  
 }
 
-.compare-gender-distribution {
-  .highcharts-container {
-    @extend %center-element;
+.pie-chart-gender, .compare-gender-pie {
+  @extend %vertical-inline-middle;
+}
+
+.compare-gender-pie {
+  .module-stats-icon {
+    display: block;
+    margin-left: $base-spacing;
   }
 }
 

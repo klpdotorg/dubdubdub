@@ -342,7 +342,7 @@
     };
 
     function init_comparison_charts(context) {
-        var chart_width = 300;
+        var chart_width = 170;
         var s1 = context.school1;
         var s2 = context.school2;
         // console.log("charts init called with ", context);

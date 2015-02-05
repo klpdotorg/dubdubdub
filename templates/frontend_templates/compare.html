@@ -1,7 +1,7 @@
 {% verbatim %}
   <script type="text/html" id="tpl-compare-option">
-    <span class="h4 school-type-{{ type_name }}">
-      <span class="icon-number en-{{ type_name }} fl">
+    <span class="h4 brand-{{ type_name }}">
+      <span class="icon-number">
         {% if type.id==1 %} S {% else %} P {% endif %}
       </span>
 
@@ -42,39 +42,39 @@
 
           {% if school1.hasStudents %}
           <div class="pie-chart-wrapper">
-            <div class="chart" id="comparison_boygirlchart_1"></div>
-            <div class="gender_icons">
-              <div class="stats_gender_item no_width boy">
-                <span class="icon"></span>
-                <p class="label">Boys</p>
-                <p class="value">{{ school1.num_boys }}</p>
-                <div class="clr"></div>
+            <div class="pie-chart-gender" id="comparison_boygirlchart_1"></div>
+            <div class="compare-gender-pie">
+              <div class="module-stats-icon">
+                <span class="icon-boy"></span>
+                <div class="module-stats-info">
+                  <div class="font-uppercase">Boys</div>
+                  <p class="module-stats-label">{{ school1.num_boys }}</p>
+                </div>
               </div>
-              <div class="stats_gender_item no_width girl">
-                <span class="icon"></span>
-                <p class="label">Girls</p>
-                <p class="value">{{ school1.num_girls }}</p>
-                <div class="clr"></div>
+              <div class="module-stats-icon module-stats-girl">
+                <span class="icon-girl"></span>
+                <div class="module-stats-info">
+                  <div class="font-uppercase">Girls</div>
+                  <p class="module-stats-label">{{ school1.num_girls }}</p>
+                </div>
               </div>
-            </div>
+            </div> <!-- /compare-gender-pie -->
           </div>
-          <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
-          <div class="stat-ratio">
-            <div class="stat-item boy">
-              Boys<br>
-              <span>{{ school1.num_boys }}</span>
+          <div class="grey-steel">Total Number of students <span class="font-bold">{{ school1.total_students }}</span></div>
+          <div>
+            <div class="icon-compare-gender icon-compare-boy">
+              <div class="icon-compare-label">Boys</div>
+              <div class="icon-button-round"><span class="k-icon">{{ school1.num_boys }}<span></div>
             </div>
-            <div class="fl">:</div>
-            <div class="stat-item girl">
-              Girls<br>
-              <span>{{ school1.num_girls }}</span>
+            <div class="vertical-inline-top">:</div>
+            <div class="icon-compare-gender icon-compare-girl">
+              <div class="icon-compare-label">Girls</div>
+              <div class="icon-button-round"><span class="k-icon">{{ school1.num_girls }}</span></div>
             </div>
-            <div class="clr"></div>
           </div>
         {% else %}
           <div class="pie-chart-wrapper no-data">
             No data available
-            <div class="clr"></div>
           </div>
         {% endif %}
         </div>
@@ -82,23 +82,25 @@
         <div class="compare-section">
           {% if school2.hasStudents %}
           <div class="pie-chart-wrapper">
-            <div class="chart" id="comparison_boygirlchart_2"></div>
-            <div class="gender_icons">
-              <div class="stats_gender_item no_width boy">
-                <span class="icon"></span>
-                <p class="label">Boys</p>
-                <p class="value">{{ school2.num_boys }}</p>
-                <div class="clr"></div>
+            <div class="pie-chart-gender" id="comparison_boygirlchart_2"></div>
+            <div class="compare-gender-pie">
+              <div class="module-stats-icon">
+                <span class="icon-boy"></span>
+                <div class="module-stats-info">
+                  <div class="font-uppercase">Boys</div>
+                  <p class="module-stats-label">{{ school2.num_boys }}</p>
+                </div>
               </div>
-              <div class="stats_gender_item no_width girl">
-                <span class="icon"></span>
-                <p class="label">Girls</p>
-                <p class="value">{{ school2.num_girls }}</p>
-                <div class="clr"></div>
+              <div class="module-stats-icon module-stats-girl">
+                <span class="icon-girl"></span>
+                <div class="module-stats-info">
+                  <div class="font-uppercase">Girls</div>
+                  <p class="module-stats-label">{{ school2.num_girls }}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div class="">Total Number of students <strong>{{ school2.total_students }}</strong></div>
+          <div class="grey-steel">Total Number of students: <span class="font-bold">{{ school2.total_students }}</span></div>
           <div>
             <div class="icon-compare-gender icon-compare-boy">
               <div class="icon-compare-label">Boys</div>
@@ -113,7 +115,6 @@
           {% else %}
           <div class="pie-chart-wrapper no-data">
             No data available
-          <div class="clr"></div>
         </div>        
         {% endif %}
       </div>
@@ -625,7 +626,6 @@
             <div class="table-infra-key-color brand-{{ v.entity2 }} table-infra-icon-right">{{ k }}</div>
             {% endfor %}
           </div>
-          <div class="clr"></div>
         </div>
         {% endfor %}
         <!-- Infra Item ends -->
@@ -686,7 +686,7 @@
           <div class="clr"></div>
 
         </div>
-        <!-- Infratstructure Item ends -->
+        <!-- Infrastructure Item ends -->
 
         <div class="comparison-item">
 

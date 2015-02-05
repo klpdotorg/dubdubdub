@@ -504,7 +504,7 @@ img, video {
 .center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .icon-number, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
-.center-element, .box-info, .module-img-each, .module-img, .compare-gender-distribution .highcharts-container {
+.center-element, .box-info, .module-img-each, .module-img {
   margin-left: auto;
   margin-right: auto; }
 
@@ -533,7 +533,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1 {
+.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1, .pie-chart-gender, .compare-gender-pie {
   display: inline-block;
   vertical-align: middle; }
 
@@ -898,6 +898,9 @@ hr {
 
 .module-stats-info {
   padding: 0 0 0 5px; }
+
+.module-stats-girl .module-stats-label {
+  color: #f87c84; }
 
 /*-------------------------------------*/
 /* BAR GRAPH: CUSTOM */
@@ -2592,8 +2595,6 @@ body {
 .school-demo-tab .module-stats-icon {
   display: block;
   margin-left: 10px; }
-.school-demo-tab .module-stats-girl .module-stats-label {
-  color: #f87c84; }
 .school-demo-tab .module-stats-boygirl .module-stats-label {
   color: #2c3e50; }
 
@@ -2709,6 +2710,10 @@ body {
 
 .icon-compare-girl {
   color: #f87c84; }
+
+.compare-gender-pie .module-stats-icon {
+  display: block;
+  margin-left: 10px; }
 
 .compare-each-block {
   position: relative;
