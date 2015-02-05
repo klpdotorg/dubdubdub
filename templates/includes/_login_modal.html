@@ -3,19 +3,19 @@
     <h3 class="heading-border">Signup</h3>
     <form id="signupForm" class="form-base form-signup">
       <div class="form-field-wrap">
-        <input type="text" id="signupFirstName" data-required="true" placeholder="First Name" class="input-text">                       
+        <input type="text" id="signupFirstName" data-required="true" placeholder="First Name" class="input-text" aria-label="First Name">                       
       </div>
       <div class="form-field-wrap">
-        <input type="text" id="signupLastName" placeholder="Last Name" class="input-text">
+        <input type="text" id="signupLastName" placeholder="Last Name" class="input-text" aria-label="Last Name">
       </div>
       <div class="form-field-wrap">
-        <input type="email" id="signupEmail" data-required="true" placeholder="Email" class="input-text">
+        <input type="email" id="signupEmail" data-required="true" placeholder="Email" class="input-text" aria-label="Email">
       </div>
       <div class="form-field-wrap">
-        <input type="tel" id="signupPhone" data-required="true" placeholder="Phone Number" class="input-text">
+        <input type="tel" id="signupPhone" data-required="true" placeholder="Phone Number" class="input-text" aria-label="Phone Number">
       </div>
       <div class="form-field-wrap">
-        <input type="password" id="signupPassword" data-required="true" placeholder="Password" class="input-text">
+        <input type="password" id="signupPassword" data-required="true" placeholder="Password" class="input-text" aria-label="Password">
       </div>
       <div class="form-field-wrap">
         <input type="checkbox" name="opted_email" id="signupOptedEmail" class="input-checkbox" checked>
@@ -39,10 +39,10 @@
   <h3 class="heading-border">Login</h3>
   <form id="loginForm" class="form-base form-login">
     <div class="form-field-wrap">
-      <input type="email" id="loginEmail" data-required="true" class="input-text" placeholder="Email">
+      <input type="email" id="loginEmail" data-required="true" class="input-text" placeholder="Email" aria-label="Email">
     </div>
     <div class="form-field-wrap">
-      <input type="password" id="loginPassword" data-required="true" class="input-text" placeholder="Password">
+      <input type="password" id="loginPassword" data-required="true" class="input-text" placeholder="Password" aria-label="Password">
     </div>
     <div class="form-field-wrap">
       <input type="submit" value="Submit" class="button js-submit-btn" id="loginFormSubmit">
@@ -65,7 +65,7 @@
   <h3 class="heading-border">Forgot Password</h3>
   <form id="forgotPasswordForm" class="form-base form-login">
     <div class="form-field-wrap">
-      <input type="text" id="forgotPasswordEmail" data-required="true" class="input-text" placeholder="Email">                        
+      <input type="text" id="forgotPasswordEmail" data-required="true" class="input-text" placeholder="Email" aria-label="Email">                        
     </div>
     <div class="form-field-wrap">
       <a class="button js-submit-btn" id="forgotPasswordFormSubmit">Reset Password</a>
