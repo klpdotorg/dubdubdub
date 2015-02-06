@@ -42,6 +42,8 @@ class StoryAdmin(admin.ModelAdmin):
 
 class StoryImageAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'image_tag', 'is_verified',)
+    search_fields = ('image', 'filename', 'story__name', 'story__email', 'story__user__email',)
+    list_filter = ('is_verified',)
     list_editable = ('is_verified',)
 
 
