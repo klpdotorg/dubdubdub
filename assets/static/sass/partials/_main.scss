@@ -1025,7 +1025,7 @@ body {
 .compare-block, .comparison-result-wrapper {
   @extend %container;
   box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3);
-  background: url('/static/images/dot.png?f83666099422') repeat-y center;
+  background: url('/static/images/dot.png') repeat-y center;
   background-size: 1px 1px;
 }
 
