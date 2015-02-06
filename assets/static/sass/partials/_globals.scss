@@ -1,0 +1,1285 @@
+/*-------------------------------------*/
+/* GLOBAL SITE STYLES */
+
+
+/*-------------------------------------*/
+// MIXINS: VENDOR PREFIXES only
+
+// mixin: box-sizing
+@mixin box-sizing($box-model: border-box) {
+  -webkit-box-sizing:   $box-model;
+  -moz-box-sizing:      $box-model;
+  box-sizing:           $box-model;
+}
+
+@mixin box-sizing($box-model: border-box) {
+  -webkit-box-sizing:   $box-model;
+  -moz-box-sizing:      $box-model;
+  box-sizing:           $box-model;
+}
+
+
+// mixin: placeholders for inputs
+@mixin placeholder {
+  &.placeholder{
+    @content;
+  }
+
+  &::-moz-placeholder{
+    @content;
+  }
+    
+  &::-webkit-input-placeholder{
+    @content;
+  }
+
+  &:-ms-input-placeholder{
+    @content;
+  }
+}
+
+// mixin: transitions
+@mixin transition($tr-values...) {
+    -webkit-transition: $tr-values;
+    transition: $tr-values;
+}
+
+
+/*-------------------------------------*/
+// CLASSES, PLACEHOLDERS AND MIXINS
+// mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
+
+
+
+/*-------------------------------------*/
+/* COLORS */
+
+//colors: brand
+
+// orange
+.brand-orange, %brand-orange {
+  color: $brand-orange;
+}
+
+.brand-orange-bg, %brand-orange-bg {
+  background-color: $brand-orange;
+}
+
+// green
+.brand-green, %brand-green, .brand-school {
+  color: $brand-green;
+}
+
+.brand-green-bg, %brand-green-bg {
+  background-color: $brand-green;
+}
+
+// blue
+.brand-blue, %brand-blue, .brand-school-cluster {
+  color: $brand-blue;
+}
+
+.brand-blue-bg, %brand-blue-bg {
+  background-color: $brand-blue;
+}
+
+// turquoise
+.brand-turquoise, %brand-turquoise, .brand-school-block {
+  color: $brand-turquoise;
+}
+
+.brand-turquoise-bg, %brand-turquoise-bg {
+  background-color: $brand-turquoise;
+}
+
+// purple
+.brand-purple, %brand-purple, .brand-preschool {
+  color: $brand-purple;
+}
+
+.brand-purple-bg, %brand-purple-bg {
+  background-color: $brand-purple;
+}
+
+
+// colors: others
+
+// purple-amethyst
+.purple-amethyst, %purple-amethyst, .brand-school-district {
+  color: $purple-amethyst;
+}
+
+.purple-amethyst-bg, %purple-amethyst-bg {
+  background-color: $purple-amethyst;
+}
+
+// red
+.brand-red, %brand-red, .brand-preschool-project {
+  color: $brand-red;
+}
+
+.brand-red-bg, %brand-red-bg {
+  background-color: $brand-red;
+}
+
+// maroon 
+.maroon, %maroon, .brand-preschool-district {
+  color: $maroon;
+}
+
+// pink-salmon
+.pink-salmon, %pink-salmon, .brand-preschool-circle {
+  color: $pink-salmon;
+}
+
+.pink-salmon-bg, %pink-salmon-bg {
+  background-color: $pink-salmon;
+}
+
+// white
+.white, %white {
+  color: $white;
+}
+
+.white-bg, %white-bg {
+  background-color: $white;
+}
+
+// yellow-mild
+.yellow-mild, %yellow-mild {
+  color: $yellow-mild;
+}
+
+.yellow-mild-bg, %yellow-mild-bg {
+  background-color: $yellow-mild;
+}
+
+// orange-mild
+.orange-mild, %orange-mild {
+  color: $orange-mild;
+}
+
+.orange-mild-bg, %orange-mild-bg {
+  background-color: $orange-mild;
+}
+
+// green-pista
+.green-pista, %green-pista {
+  color: $green-pista;
+}
+
+.green-pista-bg, %green-pista-bg {
+  background-color: $green-pista;
+}
+
+// green-leaf 
+.green-leaf, %green-leaf {
+  color: $green-leaf;
+}
+
+.green-leaf-bg, %green-leaf-bg {
+  background-color: $green-leaf;
+}
+// black
+.black, %black {
+  color: $black;
+}
+
+.black-bg, %black-bg {
+  background-color: $black;
+}
+
+// grey-mist
+.grey-mist, %grey-mist {
+  color: $grey-mist;
+}
+
+.grey-mist-bg, %grey-mist-bg {
+  background-color: $grey-mist;
+}
+
+// grey-silver
+.grey-silver, %grey-silver {
+  color: $grey-silver;
+}
+
+.grey-silver-bg, %grey-silver-bg {
+  background-color: $grey-silver;
+}
+
+// grey-steel
+.grey-steel, %grey-steel {
+  color: $grey-steel;
+}
+
+.grey-steel-bg, %grey-steel-bg {
+  background-color: $grey-steel;
+}
+
+// grey-gravel
+.grey-gravel, %grey-gravel {
+  color: $grey-gravel;
+}
+
+.grey-gravel-bg, %grey-gravel-bg {
+  background-color: $grey-gravel;
+}
+
+// colors: link
+
+.link-color, %link-color {
+  color: $link-color;
+}
+
+.link-hover-color, %link-hover-color {
+  color: $link-hover-color;
+}
+
+
+/*-------------------------------------*/
+/* SPACING */
+
+.base-spacing, %base-spacing {
+  padding: $base-spacing 0;
+}
+
+.base-spacing-sm, %base-spacing-sm {
+  padding: $base-spacing-sm 0;
+}
+
+.base-spacing-mid, %base-spacing-mid {
+  padding: $base-spacing-mid 0;
+}
+
+.base-spacing-lg, %base-spacing-lg {
+  padding: $base-spacing-lg 0;
+}
+
+.base-spacing-lg-x, %base-spacing-lg-x {
+  padding: $base-spacing-lg-x 0;
+}
+
+.base-spacing-lg-2x, %base-spacing-lg-2x {
+  padding: $base-spacing-lg-2x 0;
+}
+
+
+/*-------------------------------------*/
+// BORDER-RADIUS
+
+.border-radius, %border-radius {
+  border-radius: $border-radius;
+}
+
+.border-radius-sm, %border-radius-sm {
+  border-radius: $border-radius-sm;
+}
+
+.border-radius-circle, %border-radius-circle {
+  border-radius: $border-radius-circle;
+}
+
+
+/*-------------------------------------*/
+// IMAGES, VIDEOS, IFRAMES
+img, video {
+	max-width: 100%;
+	height: auto;
+}
+
+//use this when you need a full-width container
+.full-width, %full-width {
+  width: 100%;
+}
+
+
+/*-------------------------------------*/
+// GLOBAL HELPER classes */
+
+// includes helpful site-agnostic classes and placeholders
+//to use a placeholder, you can simply extend it inside a selector:
+//e.g. selector {@extend %clearfix};
+
+
+// Helpers: Floats
+.float-left, %float-left {
+  float: left;
+}
+
+@mixin float-left {
+  float: left;
+}
+
+.float-right, %float-right {
+  float: right;
+}
+
+@mixin float-right {
+  float: right;
+}
+
+//clearing floats
+.clear {
+    clear: both;
+}
+
+.clearfix, %clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Helpers: Alignment: Right
+
+.align-right, %align-right {
+  text-align: right;
+}
+
+// Helpers: Alignment: Center
+.center-text, %center-text {
+  text-align: center;
+}
+
+@mixin center-text {
+  text-align: center;
+}
+
+.center-element, %center-element {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin center-element {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-element-inline, %center-element-inline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin center-element-inline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vertical-center, %vertical-center {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@mixin vertical-center {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.dead-center, %dead-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+@mixin dead-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+// Helpers: Aligment: Vertical
+.vertical-inline-top, %vertical-inline-top {
+  display: inline-block;
+  vertical-align: top;
+}
+
+@mixin vertical-inline-top {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.vertical-inline-middle, %vertical-inline-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin vertical-inline-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Helpers: text-truncation
+.text-truncate, %text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/*-------------------------------------*/
+/* TRANSITIONS */
+// Use these for general linear and ease-in transitions
+%transition-linear {
+  @include transition(all 0.2s linear);
+}
+
+%transition-ease-in {
+  @include transition(all 0.3s ease-in);
+}
+
+
+/*-------------------------------------*/
+/* DROPDOWNS: GENERIC */
+.dropdown-base {
+  position: relative;
+  @extend %font-small;
+
+  ul {
+    display: none;
+    min-width: 80px;
+    @extend %white-bg;
+    @extend %border-radius-sm;
+    border: 1px solid $grey-cloud; 
+    position: absolute;
+    left: 0;
+    z-index: 1;
+
+    a {
+      display: block; 
+    }
+  }
+
+  a {
+    display: inline-block;
+    color: $grey-steel; 
+    padding: $base-spacing;
+
+    &:hover{
+      background: $grey-mist; 
+    }
+  }
+}
+
+/*-------------------------------------*/
+/* TABLES */
+
+// table: base
+.table-responsive-wrap {
+  overflow-y: auto;
+  @extend %scrollbar-webkit;
+}
+
+.table-base {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: $base-spacing-lg-x;
+
+  th, td {
+    border-bottom: 1px solid $grey-cloud;
+    padding: $base-spacing;
+  }
+
+  th {
+    text-align: left;
+  }
+}
+
+.table-base-heading {
+  @extend %heading-tiny-uppercase;
+}
+
+// table-data
+.table-data {
+
+  td {
+    padding: $base-spacing-sm/2 $base-spacing;
+  }
+
+  tr {
+    td:first-of-type {
+      @extend %font-bold;
+      color: $grey-gravel;
+      padding-left: 0;
+    }
+  }
+}
+
+// table with legend key (with green ticks and red crosses)
+
+%table-infra-icon-legend {
+  content: "";
+  @extend %font-icon;
+  font-size: 10px;
+  position: absolute;
+  top: 1px;
+  border: 1px solid $grey-cloud;
+  @extend %border-radius-sm;
+  @extend %center-text;
+  width: $base-spacing-mid;
+  height: $base-spacing-mid;  
+}
+
+.table-infra-key-color {
+  position: relative;
+  margin-bottom: $base-spacing-sm;
+  text-align: left;
+
+  &:after {
+    @extend %table-infra-icon-legend;
+  }
+
+  &.brand-green:after {
+    content: "\f00c";
+  }
+
+  &.brand-red:after {
+    content: "\f00d";
+  }
+
+  &.brand-grey:after {
+    content: "\f111";
+    font-size: 8px;
+    line-height: 14px;  
+  }
+}
+
+.table-infra-icon-left {
+  padding-left: $base-spacing-lg-x + 10;
+
+  &:after {
+    left: 0;
+  }
+}
+
+.table-infra-icon-right {
+  padding-right: $base-spacing-lg-x + 10;
+
+  &:after {
+    right: 0;
+  }
+}
+
+.infra-key-legend {
+  border: 1px solid $grey-cloud;
+  padding: $base-spacing;
+  margin-top: ($base-spacing-lg-x) + 15;
+}
+
+/*-------------------------------------*/
+/* HR */
+
+hr {
+  display: block;
+  height: 1px;
+  border-top: 1px solid $grey-cloud;
+  margin: $base-spacing-lg-x 0;
+}
+
+
+/*-------------------------------------*/
+/* ICONS */
+
+.font-icon, %font-icon {
+  font-family: $font-icon;
+}
+
+.icon-right, %icon-right {
+  margin-left: $base-spacing-sm;
+}
+
+.icon-left, %icon-left {
+  margin-right: $base-spacing-sm;
+}
+
+// icon: round
+%icon-button-round {
+  padding: $base-spacing-sm;
+  @extend %border-radius-circle;
+  border: 2px solid;
+  @extend %vertical-inline-middle;
+  @extend %center-text;
+  position: relative;
+  margin-right: $base-spacing-sm;
+
+  .fa, .k-icon {
+    @extend %dead-center;
+  }
+}
+
+.icon-button-round {
+  @extend %icon-button-round;
+  font-size: 14px;
+  width: 34px;
+  height: 34px;
+}
+
+.icon-button-round-sm {
+  @extend %icon-button-round;
+  font-size: 12px;
+  width: 28px;
+  height: 28px;
+}
+
+// icon-number
+.icon-number {
+  @extend %white-bg;
+  @extend %font-bold;
+  @extend %font-smaller;
+  border: 2px solid;
+  display: inline-block;
+  padding: ($base-spacing - 3) $base-spacing;
+  @extend %center-text;
+  @extend %border-radius-circle;
+  line-height: 1;
+}
+
+// icon: vertified
+.verified {
+  @extend %brand-green;
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  @extend %font-bold;
+  letter-spacing: 1px;
+
+  &:before {
+    content: "\f00c";
+    @extend %font-icon;
+    @extend %brand-green-bg;
+    @extend %white;
+    padding: 2px;
+    font-size: 12px;
+    @extend %border-radius-sm;
+    margin-right: $base-spacing-sm;
+  }
+}
+
+// icons: boy, girl, both
+  .icon-boy, .icon-girl, .icon-boy-girl {
+    width: 45px;
+    height: 45px;
+    @extend %white;
+    padding: $base-spacing;
+    line-height: 1;
+    display: inline-block;
+    @extend %border-radius-circle;
+    position: relative;
+
+    &:before, &:after {
+      @extend %font-icon;
+      font-size: 22px;
+    }
+  }
+
+  .icon-boy {
+    @extend %brand-blue-bg;    
+    &:before {
+      content: "\f183";
+      @extend %dead-center;
+    }
+  }
+
+  .icon-girl {
+    background-color: $pink-salmon;        
+    &:before {
+      content: "\f182";
+      @extend %dead-center;
+    }
+  }
+
+  .icon-boy-girl {
+    background-color: $blue-ink;        
+
+    &:before, &:after {
+      @extend %vertical-center;
+    }
+    
+    &:before {
+      content: "\f183";
+      left: 8px;
+    }
+
+    &:after {
+      content: "\f182";
+      right: 7px;
+    }
+  }
+
+
+/*-------------------------------------*/
+//BUTTONS
+
+%button-base {
+  @extend %font-bold;
+  font-size: 75%;
+  @extend %center-text;
+  @extend %border-radius-sm;
+  @extend %vertical-inline-middle;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 1px;
+  padding: $base-spacing $base-spacing-lg;
+  cursor: pointer;
+  outline: none;
+}
+
+.button, %button {
+  @extend %button-base;
+  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
+  position: relative;
+  @extend %brand-blue-bg;
+  @extend %white;
+  border: none;
+
+  &:hover, &:focus {
+    @extend %white;
+    box-shadow: none;
+    top: 1px;
+  }
+}
+
+a.button {
+  @extend %white;
+}
+
+.button-grey, %button-grey {
+  @extend %button;
+  background-color: $grey-steel;
+}
+
+.button-orange, %button-orange {
+  @extend %button;
+  background-color: $brand-orange;
+}
+
+.button-hollow, %button-hollow {
+  @extend %button-base;
+  background-color: transparent;
+  color: $grey-steel;
+  border: 1px solid
+}
+
+.button--sm, %button--sm {
+  @extend %font-smallest;
+  padding: $base-spacing-sm $base-spacing;
+}
+
+/*-------------------------------------*/
+/* NOTIFICATIONS AND ALERTS */
+
+.alert {
+  position: fixed;
+  top: $header-height;
+  left: 5%;
+  right: 5%;
+  @extend %brand-blue-bg;
+  @extend %center-text;
+  @extend %font-bold;
+  @extend %font-large;
+  opacity: 0.9;
+  @extend %border-radius;
+  padding: $base-spacing ($base-spacing-lg + 10) $base-spacing;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+
+  &:after {
+    @extend %font-icon;
+    position: absolute;
+    top: $base-spacing;
+    right: $base-spacing;
+  }
+}
+
+.alert.success {
+  @extend %brand-green-bg;
+
+  &:after {
+    content: "\f14a";
+  }
+}
+
+.alert.warning {
+  @extend %brand-orange-bg;
+
+  &:after {
+    content: "\f071";
+  }
+}
+
+.alert.error {
+  @extend %brand-red-bg;
+
+  &:after {
+    content: "\f057";
+  }
+}
+
+/*-------------------------------------*/
+/* TOOLTIPS */
+.tooltip {
+  position: relative;
+  text-decoration: none;
+
+  &:before, &:after {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity 0.25s ease-in-out);
+  }
+
+  &:after {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    content: attr(aria-label);
+    padding: $base-spacing-sm $base-spacing;
+    font-size: 12px;
+    white-space: nowrap;
+    @extend %center-text;
+    @extend %white;
+    background: $black;
+    @extend %border-radius-sm;
+    left: -9999px;
+    margin-top: 12px;
+  }
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent $black transparent;
+    margin-top: 0;
+}
+
+  &:hover, &:focus {
+    &:after, &:before {
+      visibility: visible;
+      opacity: 1;
+      top: 80%;
+      left: 0;
+    }
+
+    &:before {
+      left: 15px;
+    }
+  }
+}
+
+/*-------------------------------------*/
+
+/* VIDEO RESPONSIVE */
+
+.video-iframe-responsive {
+  margin-bottom: $base-spacing-lg-2x;
+}
+
+
+/*-------------------------------------*/
+
+/* BANNERS: FULLWIDTH */
+
+.banner-full { 
+  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: $grey-steel;
+  background-size: cover;
+  @extend %center-text;
+  position: relative;
+}
+
+.banner-content {
+  position: relative;
+}
+
+.banner-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
+  width: 100%;
+  height: 100%;
+}
+
+
+.banner-full-caption {
+  @extend %white;
+  @extend %container-sm;
+  padding-bottom: $base-spacing-lg-x;
+}
+
+
+/*-------------------------------------*/
+
+/* NAVIGATION: SMOOTH-SCROLL */
+
+.scroll-smooth-block {
+  border-bottom: 1px solid $grey-cloud;
+  @extend %white-bg;
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  @extend %center-text;
+  letter-spacing: 1px;
+  display: none;
+}
+
+.scroll-smooth-links {
+  @extend %container;
+  margin-bottom: 0;
+  
+  li, a {
+    @extend %vertical-inline-top;
+  }
+
+  a {
+    padding: $base-spacing $base-spacing-mid;
+
+    &:hover, &:focus {
+      background-color: $grey-mist;
+      @extend %transition-ease-in;
+    }
+  }
+}
+
+.scroll-smooth-links, .scroll-smooth-links a {
+  color: $grey-gravel;
+}
+
+.scroll-smooth-sticky {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  right: 0;
+}
+
+/*-------------------------------------*/
+
+/* BORDERS */
+.border-grey-cloud, %border-grey-cloud {
+  border: 1px solid $grey-cloud;
+}
+
+/*-------------------------------------*/
+/* CIRCULAR BULLETS */
+
+.circle-bullet {
+  color: inherit;
+  padding-bottom: ($base-spacing-sm) + 2;
+  
+  &:before {
+    content: "\f111";
+    @extend %font-icon;
+    margin-right: $base-spacing;           
+  }
+
+  &.brand-green:before {
+    color: $brand-green;
+  }
+
+  &.brand-blue:before {
+    color: $brand-blue;
+  }
+
+  &.green-pista:before {
+    color: $green-pista;
+  }
+
+  &.brand-orange:before {
+    color: $brand-orange;
+  }
+
+  &.orange-mild:before {
+    color: $orange-mild;
+  }
+
+  &.yellow-mild:before {
+    color: $yellow-mild;
+  }
+
+  &.white:before {
+    color: $grey-cloud;
+    content: "\f1db";
+  }
+}
+
+
+/*-------------------------------------*/
+/* BOX INFO */
+.box-info {
+  @extend %white-bg;
+  @extend %border-radius-sm;
+  padding: $base-spacing-lg-x;
+  @extend %center-element;
+  line-height: 1.3;
+}
+
+/*-------------------------------------*/
+/* NO DATA */
+.no-data {
+  @extend %heading-tiny;
+}
+
+/*-------------------------------------*/
+/* MODULE: IMG */
+// e.g. home page and volunteer page
+
+.module-img-wrapper {
+  .heading-secondary {
+    margin-bottom: $base-spacing-lg-2x;
+  }  
+}
+
+.module-img-each {
+  @extend %center-text;
+  @extend %font-light;
+  margin-bottom: $base-spacing-lg-2x;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .icon-number {
+    position: relative;
+    top: $base-spacing;
+  }
+}
+
+.module-img-each {
+  max-width: 500px;
+  @extend %center-element;
+
+  h3:first-of-type {
+    @extend %font-uppercase;
+  }
+}
+
+.module-img {
+  width: 180px;
+  height: 180px;
+  @extend %border-radius-circle;
+  @extend %center-element;
+  position: relative;
+  margin-bottom: $base-spacing-lg-x;
+  overflow: hidden;
+
+  img {
+    @extend %dead-center;
+    max-width: 85%;
+  }  
+}
+
+/*-------------------------------------*/
+// MODULE: STATS ICON
+
+.module-stats-icon {
+  @extend %vertical-inline-top;
+  margin: 0 $base-spacing 0 0;
+
+  &:last-of-type {
+    margin: 0;
+  }
+}
+
+.module-stats-label {
+  @extend %brand-blue;
+  @extend %font-bold;
+  line-height: 1;
+}
+
+.module-stats-info {
+  @extend %vertical-inline-top;
+  padding: 0 0 0 $base-spacing-sm;
+}
+
+.module-stats-girl {
+  .module-stats-label {
+    color: $pink-salmon;
+  }
+}
+
+
+/*-------------------------------------*/
+// BAR GRAPH: CUSTOM
+//e.g. school demographics
+
+.bar-graph-wrap {
+  @extend %clearfix;
+  margin-bottom: $base-spacing-mid;
+}
+
+.bar-custom {
+  height: $base-spacing-mid;
+  background-color: $grey-cloud;
+  min-width: 180px;
+}
+
+.bar-label {
+  @extend %font-small;
+  @extend %grey-gravel;
+  @extend %font-bold;
+  word-wrap: break-word;
+}
+
+.bar-label.green-leaf-bg {
+  @extend %green-leaf-bg;
+}
+
+.bar-value {
+  height: 100%;
+  background-color: $font-base-color;
+}
+
+.bar-value.green-leaf-bg {
+  @extend %green-leaf-bg;
+}
+
+.bar-label, .bar-graph {
+  @extend %float-left;
+}
+
+.bar-percent, .bar-custom {
+  @extend %vertical-inline-middle;
+}
+
+.bar-percent {
+  width: 65px;
+  padding: 0 $base-spacing-sm;
+  text-align: right;
+  @extend %font-small;
+  @extend %font-bold;
+}
+
+/*-------------------------------------*/
+// TABS
+
+  .tab-wrap {
+    border: 1px solid $grey-cloud;
+    border-bottom: none;
+    margin-top: $base-spacing-lg-x;
+  }
+
+  .tab-wrap-widescreen {
+    display: none;
+    @extend %container;
+  }
+
+  .tab-heading {
+    text-decoration: none;
+    display: block;
+    padding: $base-spacing-sm $base-spacing;
+    color: $grey-gravel;
+    @extend %font-uppercase;
+    @extend %font-smallest;
+    @extend %font-bold;
+    border-bottom: 1px solid;
+    cursor: pointer;
+
+    &.tab-heading-active {
+      background: $grey-mist;
+    }
+  }
+
+  .tab-heading, .tab-heading-active {
+    border-color: $grey-cloud;
+  }
+
+
+  .tab-each {
+    .tab-heading {
+      position: relative;
+      padding: $base-spacing $base-spacing-lg $base-spacing;
+
+      &:after {
+        content: "\f107";
+        @extend %font-icon;
+        position: absolute;
+        right: $base-spacing;
+        top: 8px;
+        @extend %font-larger;
+      }
+
+      &:hover {
+        background-color: $grey-mist;
+      }
+    }
+  }
+
+  .tab-content {
+    display: none;
+    padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
+    border-bottom: 1px solid $grey-cloud;
+    
+    &.tab-active {
+      display: block;
+    }
+  }
+
+
+.float-left-padding, .float-right-padding {
+  margin: $base-spacing-lg-x auto;
+  display: block;
+}
+
+
+/*-------------------------------------*/
+// HIDE
+.hide {
+  display: none;
+}
+
+/*-------------------------------------*/
+// SHOW
+.show {
+  display: block;
+}
+
+
+/*-------------------------------------*/
+/* SCROLLBAR: WEBKIT - NON STANDARD */
+
+%scrollbar-webkit {
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+  }
+ 
+  &::-webkit-scrollbar-track {
+    background: lighten($grey-cloud, 8%);
+    border-radius: 3px;
+  }
+ 
+  &::-webkit-scrollbar-thumb {
+    background: $grey-cloud;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
+}

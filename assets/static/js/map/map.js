@@ -39,13 +39,7 @@
 
     var isMobile = $(window).width() < 768;
 
-    var filterGeoJSON = function(geojson) {
-        return geojson.features.filter(emptyGeom);
-
-        function emptyGeom(feature) {
-            return !_.isEmpty(feature.geometry);
-        }
-    };
+    var filterGeoJSON = klp.utils.filterGeoJSON;
 
     var getLayerFromName = function(name) {
         var invertedMapLayers = _.invert(mapLayers);
@@ -71,6 +65,10 @@
 
     t.init = function() {
 
+        $(document).on('click', '.js-map-popup-close', function(e) {
+            e.preventDefault();
+            map.closePopup();
+        });
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
@@ -290,19 +288,6 @@
 
         });
 
-        // $('input').iCheck({
-        //  checkboxClass: 'icheckbox_minimal',
-        //  radioClass: 'iradio_minimal',
-        //  increaseArea: '20%' // optional
-        // });
-
-        var sidebar_height = $("#sidebar_wrapper").height();
-        $('#sidebar_wrapper ul').slimScroll({
-            height: sidebar_height + 'px',
-            size: '5px',
-            color: '#8d8d8d',
-            railVisible: false,
-        });
         var map_overlay_top = $(".main-header").height() + 20 + 100;
         $("#map_overlay").css({
             'top': map_overlay_top + 'px'
@@ -553,7 +538,7 @@
                 t.stopLoading();
                 //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
                 if (!isMobile) {
-                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
+                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 } else {
                     // Its a phone
                     //marker.closePopup(); // Close popup
@@ -579,14 +564,14 @@
         }
 
         var overlays = {
-            '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
-            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
-            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer,
-            '<span class="en-icon small en-preschool-district">pd</span> <span class="label en-preschool-district">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
-            '<span class="en-icon small en-school-block">sb</span> <span class="label en-school-block">SCHOOL BLOCK</span>': blockLayer,
-            '<span class="en-icon small en-school-cluster">sc</span> <span class="label en-school-cluster">SCHOOL CLUSTER</span>': clusterLayer,
-            '<span class="en-icon small en-preschool-project">pp</span> <span class="label en-preschool-project">PRESCHOOL PROJECT</span>': projectLayer,
-            '<span class="en-icon small en-preschool-circle">pc</span> <span class="label en-preschool-circle">PRESCHOOL CIRCLE</span>': circleLayer
+            '<span class="brand-school"><span class="icon-button-round-sm"><span class="k-icon">s</span></span> <span class="font-small">SCHOOL</span></span>': schoolCluster,
+            '<span class="brand-preschool"><span class="icon-button-round-sm"><span class="k-icon">p</span></span> <span class="font-small">PRESCHOOL</span>': preschoolCluster,
+            '<span class="brand-school-district"><span class="icon-button-round-sm"><span class="k-icon">sd</span></span> <span class="font-small">SCHOOL DISTRICT</span>': districtLayer,
+            '<span class="brand-preschool-district"><span class="icon-button-round-sm"><span class="k-icon">pd</span></span> <span class="font-small">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
+            '<span class="brand-school-block"><span class="icon-button-round-sm"><span class="k-icon">sb</span></span> <span class="font-small">SCHOOL BLOCK</span>': blockLayer,
+            '<span class="brand-school-cluster"><span class="icon-button-round-sm"><span class="k-icon">sc</span></span> <span class="font-small">SCHOOL CLUSTER</span>': clusterLayer,
+            '<span class="brand-preschool-project"><span class="icon-button-round-sm"><span class="k-icon">pp</span></span> <span class="font-small">PRESCHOOL PROJECT</span>': projectLayer,
+            '<span class="brand-preschool-circle"><span class="icon-button-round-sm"><span class="k-icon">pc</span></span> <span class="font-small">PRESCHOOL CIRCLE</span>': circleLayer
 
         };
 
@@ -607,7 +592,7 @@
 
         var filterControl = L.Control.extend({
             options: {
-                position: 'topright'
+                position: 'bottomright'
             },
 
             onAdd: function(map) {
@@ -638,7 +623,7 @@
 
         // Initialise the draw control and pass it the FeatureGroup of editable layers
         var drawControl = new L.Control.Draw({
-            position: 'topright',
+            position: 'bottomright',
             draw: {
                 polyline: false,
                 polygon: false,
@@ -769,7 +754,7 @@
         map.closePopup();
     };
 
-    $(window).resize(onWindowResize);
+    /*$(window).resize(onWindowResize);
 
     function onWindowResize() {
         window_width = $(window).width();
@@ -779,7 +764,7 @@
             } else {
                 $mobile_details_wrapper.removeClass("show");
             }
-        }
+        }*/
 
     function load_map() {
         // var param_location = getUrlVar("location");
@@ -795,7 +780,7 @@
             bounds = L.latLngBounds(southWest, northEast);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        t.map = map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'

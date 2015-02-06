@@ -1,3 +1,7 @@
+/*
+    Handles displaying of confirm modal for volunteer activities
+ */
+
 (function() {
     var t = klp.volunteer_here = {};
     var tplConfirmModal = swig.compile($('#tpl-volunteerHereModal').html());
@@ -5,7 +9,6 @@
     t.init = function() {
         $(document).on("click", ".js-volunteerHereBtn", function(e) {
             e.preventDefault();
-            // console.log("clicked volunteer here");
             var $this = $(this);
             var activityId = $this.attr("data-id");
             klp.auth.requireLogin(function() {
@@ -52,6 +55,7 @@
 
     t.close =function() {
         $('.js-volunteerHereModal').hide().remove();
+        $('.closeLightBox').click();
     };
 
     function showConfirmModal(data) {
@@ -64,16 +68,17 @@
         }
         var html = tplConfirmModal(data);
         $('.js-volunteerHereModal').remove();
-        $('body').append(html);
+        //$('body').append(html);
         var activityId = data.id;
-        $('.js-volunteerHereModal').addClass('show');
-        $('.js-volunteerHereModal').find('.confirmationStep').css({
-            'visibility': 'inherit',
-            'opacity': '1'
-        });
+        klp.utils.openModal(html);
+
         $('.jsConfirmVolunteerBtn').click(function(e) {
             e.preventDefault();
             doConfirm(activityId);
+        });
+
+        $('.btn-modal-close').click(function() {
+            t.close();
         });
     }
 

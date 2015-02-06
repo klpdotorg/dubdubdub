@@ -1,11 +1,5 @@
 (function() {
     klp.init = function() {
-        //handle 'responsive' header resize
-        resizeHeader();
-        $(window).resize(function() {
-            resizeHeader();
-        });
-
         //handle getting blog feeds
         //var feedURL = "http://blog.klp.org.in/feeds/posts/default?alt=json-in-script&callback=?";
         var feedURL = '/blog-feed';
@@ -44,7 +38,7 @@
 
     function processRequest(feed) {
         var entries = feed.entry || [];
-        var html = ['<ul>'];
+        var html = ['<div>'];
 
         for (var i = 0; i < 2; ++i) {
             var entry = entries[i];
@@ -67,50 +61,10 @@
                     break;
                 }
             }
-            html.push(months[month],' ',date,',',year,'<br>','<b><a href="',link,'">',title,'</a></b>','<br>',content,'...','<br>','<br>');
+            html.push('<div>', months[month],' ', date,',',year,'</div><div><strong><a href="',link,'">',title,'</a></strong></div>','<p>',content,'...','</p>');
         }
-      html.push('</ul>');
-      document.getElementById("blog").innerHTML = html.join("");
-    }
-
-    function resizeHeader() {
-        if($(window).width() >=980){
-            // Its a desktop device
-            if($(window).height() <750){
-                // Resize only if height less than 750px (700px header + 50px navigation)
-                var header_height = $(window).height() - (50+30);   // 50px navigation + 30px padding in content
-
-                $(".home-header .content").css({
-                    'min-height': header_height + 'px',
-                    'height': header_height + 'px',
-                    'background-size': 'auto '+header_height + 'px'
-                });
-
-                // Setting headline text height as 130px
-                $(".home-header .content .headline-text").css({
-                    'height': 130 + 'px',
-                    'background-size': 'auto 130px',
-                    'margin-top': '30px'
-                });
-
-                if(header_height>450){
-                    $(".home-header .content .info").css({
-                        'margin-top': '30px',
-                        'display' : 'block'
-                    });
-                } else {
-                    $(".home-header .content .info").hide();
-                }
-
-                // console.log(header_height);
-            }
-        } else {
-            // Its a mobile or tablet. Reverting to original css.
-            $(".home-header .content").css({
-                'height': 'auto',
-                'min-height': 'inherit'
-            });
-        }
+      html.push('</div>');
+      document.getElementById("js-blog").innerHTML = html.join("");
     }
 
 })();

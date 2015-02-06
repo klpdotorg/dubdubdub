@@ -15,11 +15,11 @@
                 _(data.volunteer_activities).each(function(d) {
                     // console.log("d", d);
                     var html = tplVolunteerActivity(d);
-                    $('#userVolunteeringActivities').append(html);
+                    $('#jsUserVolunteeringActivities').append(html);
                 });
             } else {
                 var html = $('#tpl-emptyUserVolunteerActivity').html();
-                $('#userVolunteeringActivities').append(html);
+                $('#jsUserVolunteeringActivities').append(html);
             }
 
             var orgs = data.organizations;

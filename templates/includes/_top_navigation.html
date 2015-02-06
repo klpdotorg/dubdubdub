@@ -1,52 +1,36 @@
-<ul id="navigation">
-    {% if not homepage %}
-    <li class="home">
-        <a href="/">
-            <h1>Karnataka Learning Partnership</h1>
-        </a>
-    {% endif %}
-    <li class="school_map">
-        <a href="{% url 'map' %}" title="">School Map</a>
-    <li class="programmes">
-        <a href="{% url 'reading_programme' %}" title="">Programmes</a>
-        <ul>
-            <li><a href="{% url 'reading_programme' %}" title=""><span></span>Akshara</a></li>
-            <li><a href="{% url 'sikshana_programme' %}" title=""><span></span>Sikshana</a></li>
-        </ul>
-    <li class="volunteer phn-tab-hide">
-        <!-- REFER to dubdubdub-skin template before adding donate link -->
-        <a href="{% url 'volunteer' %}" title="">Volunteer</a>
-
-    <li class="volunteer hide phn-tab-block">
-        <a href="{% url 'volunteer' %}" title="">Volunteer</a>
-    <!--
-    <li class="volunteer hide phn-tab-block">
-        <a href="donation.php" title="">Donate</a>
-    </li>
-    -->
-
-    <li class="database">
-        <a href="{% url 'data' %}" title="">Data</a>
-        <ul>
-            <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
-            <li><a href="{% url 'data' %}" title=""><span></span>Data</a></li>
-            <li><a href="{% url 'django.swagger.base.view' %}#!/v1/" title=""><span></span>API</a></li>
-            <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
-        </ul>
-    <li class="reports">
-        <a href="{% url 'reports' %}" title="">Reports</a>
-        <ul>
-            <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
-            <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
-            <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
-            <li><a href="http://ivrs.klp.org.in/" target="_blank" title=""><span></span>IVRS</a></li>
-            <li><a href="{% url 'reports' %}" title=""><span></span>Other Reports</a></li>
-        </ul>
-    <li class="about">
-        <a href="{% url 'aboutus' %}" title="">About</a>
-        <ul>
-            <li><a href="{% url 'aboutus' %}" title=""><span></span>About</a></li>
-            <li><a href="{% url 'partners' %}" title=""><span></span>Partners</a></li>
-            <li><a href="{% url 'disclaimer' %}" title=""><span></span>Disclaimer</a></li>
-        </ul>
+<ul class="js-dropdown nav">
+  <li class="brand-orange">
+    <a href="{% url 'map' %}">School Map</a>
+  <li class="brand-green">
+    <a href="#">Programmes</a>
+    <ul>
+      <li><a href="{% url 'reading_programme' %}">Akshara</a></li>
+      <li><a href="{% url 'sikshana_programme' %}">Sikshana</a></li>
+    </ul>
+  <li class="brand-blue">
+    <a href="{% url 'volunteer' %}">Volunteer</a>
+  <li class="brand-turquoise">
+    <a href="#">Data</a>
+    <ul>
+      <li><a href="http://status.klp.org.in" target="_blank">Status</a></li>
+      <li><a href="{% url 'data' %}">Data</a></li>
+      <li><a href="{% url 'django.swagger.base.view' %}#!/v1/">API</a></li>
+      <li><a href="http://github.com/klpdotorg" target="_blank">Code</a></li>
+    </ul>
+  <li class="brand-purple">
+    <a href="#">Reports</a>
+    <ul>
+      <li><a href="http://dise.klp.org.in" target="_blank">DISE</a></li>
+      <li><a href="http://reports.klp.org.in" target="_blank">KLP Reports</a></li>
+      <li><a href="http://sslc.klp.org.in" target="_blank">SSLC</a></li>
+      <li><a href="http://ivrs.klp.org.in/" target="_blank">IVRS</a></li>
+      <li><a href="{% url 'reports' %}">Other Reports</a></li>
+    </ul>
+  <li class="brand-red">
+    <a href="#">About</a>
+    <ul>
+      <li><a href="{% url 'aboutus' %}">About</a></li>
+      <li><a href="{% url 'partners' %}">Partners</a></li>
+      <li><a href="{% url 'disclaimer' %}">Disclaimer</a></li>
+    </ul>
 </ul>

@@ -1,5 +1,16 @@
+/*
+    Bunch of utility methods used all over the place
+    FIXME: clean-up this file a bit. Remove this message when done.
+ */
+
 (function() {
     klp.utils = {
+
+        /*
+            Helper function to precompile templates with class tpl-raw
+            Those templates will need a data-tpl attribute with a name
+            See usage in map/init.js
+         */
         compile_templates: function() {
             var $raw_tpls = $(".tpl-raw");
             var _tpl = {};
@@ -15,8 +26,14 @@
             return _tpl;
         },
         
+        /*
+            Returns a Leaflet map icon based on type of entity
+            For new types / icons:
+              Add icons in /static/images/map/icon_<type>.png
+              And add the type -> name mapping below                
+        */
         mapIcon: function (type) {
-
+           
             // FIXME: May be fix this in the icon name.
             // This is Sanjay's fault.
             type = type.replace(' ', '').toLowerCase();
@@ -40,6 +57,11 @@
             });
         },
 
+        /*
+            Function to display the alert boxes at top of screen
+            Remains for 3 seconds, then goes away
+            TODO: Make timeout a param
+         */
         alertMessage: function(message, status) {
             // Status - error, success, warning.
             var $alert = $('<div />')
@@ -60,6 +82,20 @@
             //alert(message);
         },
 
+        /*
+            Filters out empty geometries from a geojson
+         */
+        filterGeoJSON: function(geojson) {
+            return geojson.features.filter(emptyGeom);
+
+            function emptyGeom(feature) {
+                return !_.isEmpty(feature.geometry);
+            }
+        },
+
+        /*
+            FIXME: I really hope we are not using this function anywhere.
+         */
         getRelativeHeight: function (width, height, min_height, container_width){
             var ht = (height/width)*container_width;
             ht = parseInt(ht,10);
@@ -73,6 +109,9 @@
             return ht;
         },
 
+        /*
+            Get percentage values for mt (mother-tongue) profile data
+         */
         getMTProfilePercents: function(mt_profile) {
             if (!mt_profile || _.isEmpty(mt_profile)) {
                 return {
@@ -93,18 +132,26 @@
             };           
         },
 
+        /*
+            Get ratio for students:teachers given school data
+            Returns an integer value
+         */
         getStudentTeacherRatio: function(data) {
             var numBoys = data.num_boys_dise || 0;
             var numGirls = data.num_girls_dise || 0;
             var totalStudents = numBoys + numGirls;
             var numTeachers = data.teacher_count || null;
             if (numTeachers) {
+                //FIXME: use Math.round ?
                 return parseInt(totalStudents / numTeachers);
             } else {
                 return false;
             }
         },
 
+        /*
+            Get percentage values and total given num_boys and num_girls
+         */
         getBoyGirlPercents: function(num_boys, num_girls) {
             var total_students = num_boys + num_girls;
             var percent_boys = Math.round((num_boys / total_students) * 100);
@@ -116,6 +163,9 @@
             };
         },
 
+        /*
+            Get percentage values for finance data
+         */
         getFinancePercents: function(financeData) {
             var sgAmount = financeData.sg_amount ? financeData.sg_amount : 0;
             var smgAmount = financeData.smg_amount ? financeData.smg_amount : 0;
@@ -128,6 +178,14 @@
             }
         },
 
+        /*
+            Given school data, it adds some values to it and returns the data object:
+              has_num_students
+              total_students
+              percent_boys
+              percent_girls
+              mt_profile_percents
+         */
         addSchoolContext: function(data) {
             data.has_num_students = data.num_boys && data.num_girls;
             data = $.extend(data, klp.utils.getBoyGirlPercents(data.num_boys, data.num_girls));
@@ -137,6 +195,12 @@
             return data;
         },
 
+        /*
+            Params:
+                fields <object> is a mapping of names to DOM elements
+                data <object> is a mapping of names to values
+            Populates all the DOM elements with data for corresponding name fields. 
+         */
         populateForm: function(fields, data) {
             _(_(fields).keys()).each(function(key) {
                 var $field = fields[key];
@@ -154,6 +218,11 @@
             });
         },
 
+        /*
+            Params:
+                fields <object>
+            Returns form data for all fields specified.
+         */
         getFormData: function(fields) {
             var data = {};
             _(_(fields).keys()).each(function(key) {
@@ -176,6 +245,12 @@
             return data;
         },
 
+        /*
+            Show error message on a field
+            Params:
+                $field - jQuery element - field to show error on
+                message - <string> - error message to show
+         */
         invalidateField: function($field, message) {
             //remove existing errors
             $field.parent().find('.error-message').remove();
@@ -186,6 +261,9 @@
             $field.after($error);
         },
 
+        /*
+            Pass in multiple errors to invalidate fields
+         */
         invalidateErrors: function(fields, errors) {
             _(_(errors).keys()).each(function(errorKey) {
                 var errorMsg = errors[errorKey];
@@ -194,6 +272,10 @@
             });
         },
 
+        /*
+            Check all inputs in a form with data-required=true
+            and invalidate them if they contain no data
+         */
         validateRequired: function(formID) {
             var $form = $('#' + formID);
             var isValid = true;
@@ -207,12 +289,18 @@
             return isValid;
         },
 
+        /*
+            Clear all validation errors on a form
+         */
         clearValidationErrors: function(formID) {
             var $form = $('#' + formID);
             $form.find('.error').removeClass('error');
             $form.find('.js-error-message, .error-message').remove();
         },
 
+        /*
+            Set all values in a form to blank
+         */
         clearForm: function(formID) {
             $('#' + formID).find('input, select').not('[type=submit]').each(function() {
                 $(this).val('');
@@ -220,6 +308,9 @@
             klp.utils.clearValidationErrors(formID);
         },
 
+        /*
+            Show loading for form
+         */
         startSubmit: function(formID) {
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').hide();
@@ -227,6 +318,9 @@
             $form.find('.js-submit-loading').show();
         },
 
+        /*
+            Stop showing loading for form
+         */
         stopSubmit: function(formID) {
             var $form = $('#' + formID);
             $form.find('.js-submit-btn').show();
@@ -234,6 +328,9 @@
             $form.find('.js-submit-loading').hide();            
         },
 
+        /*
+            Instantiate select2 on an element to search for schools
+         */
         schoolSelect2: function($elem, options) {
             $elem.select2({
                 placeholder: 'Search for schools...',
@@ -276,8 +373,24 @@
             });
         },
 
+        /*
+            Get school type as a string when passed a type id
+         */
         getSchoolType: function(id) {
             return id === 1 ? 'school' : 'preschool';
+        },
+
+        /*
+            Open an rbox model given some html
+            FIXME: FIXME
+         */
+        openModal: function(html) {
+            var $trigger = $('<div />');
+            $trigger.rbox({
+                'type': 'html',
+                'html': html
+            });
+            $trigger.click();
         }
     };
 

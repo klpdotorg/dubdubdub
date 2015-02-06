@@ -9,7 +9,9 @@ from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
-    EmailVerificationView, VolunteerMapPageView)
+    EmailVerificationView, VolunteerMapPageView, DonatePageView,
+    DonationRequirementsView, DonationRequirementView,
+    DonationRequirementAddEditPageView)
 
 urlpatterns = patterns(
     '',
@@ -169,10 +171,6 @@ urlpatterns = patterns(
         ), name='volunteer'),
     url(r'text/volunteer/$', RedirectView.as_view(url='/volunteer/')),
 
-    url(r'^volunteer-register/$', StaticPageView.as_view(
-        template_name='volunteer-register.html',
-        ), name='volunteer_register'),
-
     url(r'^map/$', StaticPageView.as_view(
         template_name='map.html',
         extra_context={
@@ -214,8 +212,44 @@ urlpatterns = patterns(
             ]
         }), name='volunteer_map'),
 
+    url('^donate$', DonatePageView.as_view(
+        template_name = 'donate/donate.html',
+        extra_context={
+            'breadcrumbs': [
+                {
+                    'url': '/donate',
+                    'name': 'Donate'
+                }
+            ]
+        }), name='donate'),
+
+    url('^donate/requests/$', DonationRequirementsView.as_view(
+        template_name = 'donate/donate_requests.html'
+        ), name='donate_requests'),
+
+    url('^donate/requests/(?P<pk>[0-9]+)$', DonationRequirementView.as_view(
+        template_name = 'donate/donate_request.html'
+        ), name='donate_request'),
+
+    url(r'^organisation/(?P<pk>[0-9]+)/donation_requirement$',
+        DonationRequirementAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Add'
+            }
+        ),
+        name='donationrequest_add_page'),
+
+    url(r'^organisation/(?P<org_pk>[0-9]+)/donation_requirement/(?P<pk>[0-9]+)$',
+        DonationRequirementAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Edit'
+            }
+        ),
+        name='volunteeractivity_edit_page'),
+
     url(r'^school/(?P<pk>[0-9]+)/$',
         SchoolPageView.as_view(), name='school_page'),
+
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$$', RedirectView.as_view(
         pattern_name='school_page',
         query_string=True

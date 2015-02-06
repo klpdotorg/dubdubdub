@@ -1,111 +1,133 @@
 {% extends "base.html" %}
 {% load static %}
+{% load compress %}
 
 {% block page_title %}Organisation Profile: {{ object.name }}{% endblock %}
 {% block endbody %}
-    <script type="text/javascript" src="/static/js/lib/jquery.easydropdown.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/organization/init.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/volunteer_here.js' %}"></script>
-
-    <script>
-    	ORGANIZATION_ID = {{ object.id }};
-    </script>
+	{% compress js %}
+  <script type="text/javascript" src="{% static 'js/organization/init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/volunteer_here.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+  {% endcompress %}
+  <script>
+  	ORGANIZATION_ID = {{ object.id }};
+  </script>
 {% endblock %}
 
 {% block content %}
 
-	<section class="page-organisation-profile org-head pt-30 phn-pb-30">
+	<section class="page-org-profile">
 		<div class="container">
-			<div class="grid_8 alpha phn-width-full phn-mar-0 phn-mb-20">
-				<h3 class="desc-title green2">{{ object.name }}</h3>
-				{% if object.url %}
-				<a class="color-grey" href="{{ object.url }}" target="_blank">{{ object.url }}</a><br/>
-				{% endif %}
-				<a href="/organisation/{{ object.id }}/edit" class="button-hollow mt-5" id="editOrganizationBtn" style="display:none;">Edit Profile</a>
-			</div>
-			<div class="grid_4 omega phn-width-full phn-mar-0">
-				{% if object.logo %}
-				<img class="mb-20" src="{{ object.logo.url }}">
-				{% endif %}
-			</div>
-			<div class="clr"></div>
-			<div class="grid_8 alpha phn-tab-width-full phn-tab-mar-0">
-				<p class="profile-description mt-0">
-					{{ object.about }}
-				</p>
-					{% if object.has_links %}
-					<div>
-						<div class="profile-title uppercase mb-5"><strong>Links:</strong></div>
-						<div>
-							{% if object.twitter_handle %}
-							<span>
-								<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round qtip" title="TWITTER">
-									<span class="fa fa-twitter"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.fb_url %}
-							<span>
-								<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round qtip" title="FACEBOOK">
-									<span class="fa fa-facebook"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.website %}
-							<span>
-								<a href="{{ object.website }}" target="_blank" class="icon-button-round qtip" title="WEBSITE">
-									<span class="fa fa-laptop"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.photos_url %}
-							<span>
-								<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round qtip" title="PHOTOS">
-									<span class="fa fa-image"></span>
-								</a>
-							</span>
-							{% endif %}
-							{% if object.youtube_url %}
-							<span>
-								<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round qtip" title="VIDEOS">
-									<span class="fa fa-video-camera"></span>
-								</a>
-							</span>
-							{% endif %}
-						</div>
-
-					</div>
+			<div class="org-meta-block">
+				<div class="org-meta-each org-meta-edit">
+					<h3 class="heading-tertiary brand-turquoise">{{ object.name }}</h3>
+					{% if object.url %}
+					<p><a class="heading-tiny" href="{{ object.url }}" target="_blank">{{ object.url }}</a></p>
 					{% endif %}
-			</div>
-			<div class="grid_4 omega phn-tab-width-full phn-tab-mar-0">
-				<div class="profile-title bold uppercase">Total Opportunties</div>
-				<!--
-				<div class="stats_opportunities fl">
-					<span class="icon donation"></span>
-					<p class="label">Donation</p>
-					<p class="value" id="donationCount"></p>
-				</div>
-				-->
-				<div class="stats_opportunities fl">
-					<span class="icon volunteer"></span>
-					<p class="label">Volunteer</p>
-					<p class="value" id="volunteerCount"></p>
-				</div>
-				<div class="clr"></div>
-			</div>
-			<div class="clr"></div>
-			<ul class="tabs phn-hide">
-				<li data-tab="volunteer" class="js-tab-link current">Volunteer</li>
-				<!-- <li data-tab="donation" class="js-tab-link">Donation</li> -->
-			</ul>
-		</div>
-	</section>
+					<div>
+						<a href="/organisation/{{ object.id }}/edit" class="button-hollow button--sm" id="editOrganizationBtn">Edit Profile</a>				
+					</div>
 
-	<section class="page-organisation-profile pt-30 pb-30 phn-pt-0">
-		<div class="js-tabs-wrapper">
-			<div class="tab-heading">Volunteer</div>
-			<div class="tab-content container current" data-tab="volunteer">
-				<div class="grid_3 omega fr phn-width-full phn-mar-0 phn-mb-40">
+					<div>
+						<div class="base-spacing"></div>
+						{% if object.about %}
+						<p class="font-small">
+						{{ object.about }}
+						</p>
+						{% endif %}
+							{% if object.has_links %}
+							<div class="social-link-block">
+								<div class="heading-tiny-uppercase">Links</div>
+								<div>
+									{% if object.twitter_handle %}
+									<a href="https://twitter.com/{{ object.twitter_handle }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Twitter">
+										<span class="fa fa-twitter"></span>
+									</a>
+									{% endif %}
+									{% if object.fb_url %}
+									<a href="{{ object.fb_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Facebook">
+										<span class="fa fa-facebook"></span>
+									</a>
+									{% endif %}
+									{% if object.website %}
+									<a href="{{ object.website }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Website">
+										<span class="fa fa-laptop"></span>
+									</a>
+									{% endif %}
+									{% if object.photos_url %}
+									<a href="{{ object.photos_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Photos">
+										<span class="fa fa-image"></span>
+									</a>
+									{% endif %}
+									{% if object.youtube_url %}
+									<a href="{{ object.youtube_url }}" target="_blank" class="icon-button-round tooltip" role="tooltip" aria-label="Videos">
+										<span class="fa fa-video-camera"></span>
+									</a>
+									{% endif %}
+								</div> <!--/social-link-block -->
+
+							</div>
+							{% endif %}
+					</div>
+				</div> <!-- /org-meta-edit -->
+
+			  <div class="org-meta-each org-meta-activities">
+					{% if object.logo %}
+					<div><img src="{{ object.logo.url }}" class="org-profile-img"></div>				
+					{% endif %}
+
+					<div class="heading-tiny-uppercase">Total Opportunities</div>
+					
+					<div class="module-stats-icon">
+						<img src="/static/images/icon_donation@2x.png" width="50">
+						<div class="module-stats-info">
+							<div>Donation</div>
+							<p class="module-stats-label" id="donationCount"></p>
+						</div>
+					</div>
+					
+					<div class="module-stats-icon">
+						<img src="/static/images/icon_volunteer@2x.png" width="50">
+						<div class="module-stats-info">
+							<div>Volunteer</div>
+							<p class="module-stats-label" id="volunteerCount"></p>
+						</div>
+					</div>
+
+			  </div> <!--/org-meta-activities -->
+				
+			</div> <!-- /org-meta-block -->
+
+		</div> <!-- /container -->
+
+		<div class="js-tab-wrap tab-wrap">
+			<div class="tab-wrap-widescreen">
+		    <div data-tab="volunteer" class="js-tabs-link tab-heading tab-heading-active">Volunteer</div>
+		    <div data-tab="donate" class="js-tabs-link tab-heading">Donate</div>					
+			</div>
+
+		  <div class="tab-each">
+		    <div data-tab="volunteer" class="js-tab-content tab-content tab-active">
+		    	<div class="container" id="volunteerActivitiesList">
+						<div class="heading-tiny-uppercase">Volunteering opportunties</div>
+		    	</div> <!-- /container -->
+		    </div> <!-- /tab-content -->
+		  </div> <!-- /tab-each -->
+
+		  <div class="tab-each">
+		    <div data-tab="donate" class="js-tab-content tab-content">
+		    	<div class="container" id="donationRequirementsList">
+						<div class="heading-tiny-uppercase">Donate</div>
+		    	</div> <!-- /container -->
+		    </div> <!-- /tab-content -->
+		  </div> <!-- /tab-each -->
+			
+		</div> <!-- /tab-wrap -->
+
+<!-- 			<ul class="tabs phn-hide">
+				<li data-tab="volunteer" class="js-tab-link current">Volunteer</li>
+				<li data-tab="donation" class="js-tab-link">Donation</li>
+			</ul> -->
 					<!--
 					<div class="profile-title bold uppercase mb-20">Filters</div>
 					<div class="page-section-menu">
@@ -127,115 +149,8 @@
 						</div>
 					</div>
 					-->
-				</div>
-				<div class="grid_9 alpha phn-width-full phn-mar-0" id="volunteerActivitiesList">
-					<div class="profile-title bold uppercase">Volunteering opportunties</div>
-
-				</div>
-				<div class="clr"></div>
-			</div>	<!-- Volunteer Tab END -->
-
-			<!--
-			<div class="tab-heading">Donation</div>
-			<div class="tab-content container" data-tab="donation">
-				<div class="required pb-20">
-					<div class="fl phn-fn">
-						<div class="desc-title mb-5">Required for library</div>
-						<span class="color-grey-light-2">For </span>
-						<span class="color-green-2 uppercase"> Akshara Foundation</span>
-					</div>
-					<div class="fr ta-r phn-fn phn-ta-l phn-mb-10">
-						<div class="desc-title color-green">Gian Jyoti Public School</div>
-						<div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
-					</div>
-					<div class="clr"></div>
-					<p class="mar-0 mt-10">
-						In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper tellus erat, non ultrices sem tincidunt euismod. Fusce rhoncus porttitor velit, eu bibendum nibh aliquet vel. Fusce lorem leo, vehicula at nibh quis, facilisis accumsan turpis.
-					</p>
-					<div class="fl phn-fn">
-						<div class="color-black bold mt-10">
-							Needed Items:
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Chairs </span> x 5,
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Tables </span> x 5,
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Cupboards </span> x 5,
-						</div>
-						<div class="items fl">
-							<span class="color-blue bold">Books </span>
-						</div>
-						<div class="clr"></div>
-					</div>
-					<a class="button fr mt-10 phn-fn phn-mt-10" href="donate-required-for-library.php">Donate Now</a>
-					<div class="clr"></div>
-				</div>
-				<div class="required pt-20 pb-20">
-					<div class="fl phn-fn">
-						<div class="desc-title mb-5">Required for library</div>
-						<span class="color-grey-light-2">For </span>
-						<span class="color-green-2 uppercase"> Akshara Foundation</span>
-					</div>
-					<div class="fr ta-r phn-fn phn-ta-l phn-mb-10">
-						<div class="desc-title color-green">Gian Jyoti Public School</div>
-						<div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
-					</div>
-					<div class="clr"></div>
-					<p class="mar-0 mt-10">
-						In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et elit eget elit facilisis tristique. Nam vel iaculis mauris. Sed ullamcorper tellus erat, non ultrices sem tincidunt euismod. Fusce rhoncus porttitor velit, eu bibendum nibh aliquet vel. Fusce lorem leo, vehicula at nibh quis, facilisis accumsan turpis.
-					</p>
-					<div class="fl phn-fn">
-						<div class="color-black bold mt-10">
-							Needed Items:
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Chairs </span> x 5,
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Tables </span> x 5,
-						</div>
-						<div class="items fl mr-10">
-							<span class="color-blue bold">Cupboards </span> x 5,
-						</div>
-						<div class="items fl">
-							<span class="color-blue bold">Books </span>
-						</div>
-						<div class="clr"></div>
-					</div>
-					<a class="button fr mt-10 phn-fn phn-mt-10" href="donate-required-for-library.php">Donate Now</a>
-					<div class="clr"></div>
-				</div>
-			</div>	--><!-- Donation Tab END -->
-		</div>
 	</section>
 	{% include 'frontend_templates/organization.html' %}
 	{% include 'frontend_templates/volunteer_here.html' %}
-
-	<script type="text/javascript">
-
-		function init_tabs(){
-    		$(document).on("click", ".js-tab-link", function(e){
-    			var $wrapper = $(".js-tabs-wrapper");
-				var $trigger = $(this).closest(".js-tab-link");
-				var tab_id = $trigger.attr('data-tab');
-
-				// Change current tab link
-				$trigger.parent().find("li.current").removeClass('current');
-				$trigger.addClass("current");
-
-				// Change current tab content
-				$wrapper.find(".tab-content.current").removeClass('current');
-				$wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
-			});
-    	}
-
-    	$(document).ready(function(){
-			init_tabs();
-		});
-
-    </script>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.basic_tabs.init();
         $('#organization').val(ORGANIZATION_ID);
         var formID = 'activityForm';
         var $school = $('#school');

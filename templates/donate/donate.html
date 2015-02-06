@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block page_title %}Donation{% endblock %}
+
+{% block content %}
+
+	<section class="pb-30">
+		<div class="container">
+			<h1 class="bordered blue">Donation</h1>
+			<p class="ta-c">
+				Some text for donation. [[FIXME: Replace with real text]]
+			</p>
+		</div>
+	</section>
+
+	<section class="page-donation bg-grey pb-30">
+		<h2 class="bordered blue pt-50 pb-60 mar-0">Choose a Category</h2>
+		<div class="container">	
+			<div>
+				{% for c in categories %}
+				<a class="grid_3 ta-c alpha phn-width-full phn-mar-0 phn-mb-10" href="/donate/requests/?category={{ c.id }}">
+					<img src="images/donate_chairs.png" data-2x="true" />
+					<p class="link-text color-blue ta-c mt-15">{{ c.name }}</p>
+				</a>
+				{% endfor %}
+				<div class="clr"></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="page-donation bg-white pb-30">
+		<h2 class="bordered blue pt-50 pb-60 mar-0">By Foundation</h2>
+		<div class="container">	
+			<div class="ta-c">
+				{% for o in organizations %}
+				<a href="/donate/requests/?org={{ o.id }}" class="grid_3 alpha color-grey phn-width-full phn-mar-0 phn-mb-10">
+					{% if o.logo %}
+					<img src="{{ o.logo.url }}" alt="{{ o.name }}">
+					{% endif %}
+					<p class="link-text ta-c mt-15">{{ o.name }}</p>
+				</a>
+				{% endfor %}
+				<div class="clr"></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="page-donation recently_shared_stories">
+		<div class="container">
+			<h2>Recent Donations<span></span></h2>
+
+			<div class="column_item">
+				<div class="font-20">
+					<a href="profile.php" class="color-green-2 inline-block">Gurliv Singh</a> <span class="font-16">donated</span>
+				</div>
+				<div class="font-16 mt-15 mb-15">
+					<span class="color-blue bold">3 chairs</span> to <a class="color-green bold" href="school.php">Gian Jyoti Public School</a> in <span class="color-black bold">Malleswaram, Bangalore</span>
+				</div>
+				<div class="fl phn-fn phn-mb-10">
+					For <a href="" class="color-green-2 uppercase">Akshara Foundaion</a>
+				</div>
+				<div class="fr phn-fn">
+					<div class="date">17 August, 2013</div>
+				</div>
+				<div class="clr"></div>
+			</div>
+
+			<div class="column_item">
+				<div class="font-20">
+					<a href="profile.php" class="color-green-2">Saheen Fathima</a> <span class="font-16">donated</span>
+				</div>
+				<div class="font-16 mt-15 mb-15">
+					<span class="color-blue bold">3 chairs</span> to <a class="color-green bold" href="school.php">Gian Jyoti Public School</a> in <span class="color-black bold">Malleswaram, Bangalore</span>
+				</div>
+				<div class="fl phn-fn phn-mb-10">
+					For <a href="" class="color-green-2 uppercase">Akshara Foundaion</a>
+				</div>
+				<div class="fr phn-fn">
+					<div class="date">21 July, 2013</div>
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div class="clr"></div>
+		</div>
+	</section>
+
+{% endblock %}

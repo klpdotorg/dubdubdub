@@ -1,0 +1,1349 @@
+/*
+
+// remove remaining importants in map.scss
+
+// remove all extra classes in _login_modal.html if they're not being used later
+
+// speak to batpad about checked + disabled input radio styling, right now clicking another removes the checked state on the checked + disabled
+
+//what is this reports at the top of reports? // ASK GAUTAM later
+
+//background size used without webkit prefix needed only for android 2.3
+
+//on library page, both blue and yellow show 9-10 sentences
+
+//add a class for link-hover-underline for all those sorta links later
+
+//consider adding a separate class for the header in breadcrumb for map and removing 
+the css in the head of map.html
+
+//maybe a class for border-
+
+//highcharts NOT WORKING ON FINANCE
+
+
+// run through map.html with sanj, to see if we can remove extra fluff
+// also remove frontend templates/map.html mobile specific code later and in js , once we test
+
+//horizontal scroll bar on info tab in school on desktop also
+
+//modularize icon boy girl and total later, add same classes to the map popup
+
+//let's only show the legend on infrastructure tab if left column info is present: FILE A BUG: Sanj
+
+//make make border: 1px solid $grey-cloud modular;
+
+
+//SANJ:
+
+//perhaps later make 2 classes for no-data: big and large, and everything that says sorry no data
+
+// what is this for school tabs?
+one class called data. can i knoock if off? i know you're using no-data in the js, hence i asked
+
+
+//MY Learnings for boilerplate;
+-- add better custom radio checkbox styling
+-- add disabled styling for radio, checks and inputs
+-- change img-fullwidth class to simply full-width
+--- give classes to inputs; enough of these attribute selectors
+
+*/
+
+* {
+  @include box-sizing;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  @extend %white-bg;
+  color: $font-base-color;
+  @extend %font-base-family;
+  @extend %font-base-size;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+
+/*-------------------------------------*/
+/* HEADER */
+
+.main-header {
+  @extend %white-bg;
+  border-bottom: 1px solid $grey-cloud;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+}
+
+.header-content {
+  @extend %container;
+  position: relative;
+}
+
+.logo, .top-nav {
+  @extend %vertical-inline-top;
+}
+
+.logo {
+  padding: ($base-spacing - 1) 0 0 0;
+  position: absolute;
+}
+
+.nav-wrap {
+ @extend %center-text;
+}
+
+.nav, .nav-trigger {
+  position: fixed;
+}
+
+.nav-trigger {
+  @extend %button--sm;
+  @extend %button-hollow;
+	color: $grey-gravel;
+  right: $base-spacing;
+  top: $base-spacing;
+  cursor: pointer;
+}
+
+.nav {
+	list-style-type: none;
+	@extend %white-bg;
+  width: $nav-width;
+  right: -($nav-width);
+  top: $header-height;
+  bottom: 0;
+  overflow: auto;
+	box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
+	border: 1px solid $grey-cloud;
+  @extend %transition-linear;
+  height: 100%;
+  
+  ul {
+  	display: none;
+  	@extend %white-bg;
+	}
+
+	li {
+		@extend %font-bold;
+		@extend %font-uppercase;
+		padding: 0 $base-spacing-mid;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-align: left;
+
+		li {
+			text-transform: capitalize;
+			display: block;
+			@extend %font-smallest;
+			font-weight: normal;
+      letter-spacing: normal;
+
+			a {
+				line-height: 1;
+				padding: $base-spacing;
+			}
+		}
+
+		&.brand-orange, &.brand-green, &.brand-blue, &.brand-turquoise, &.brand-purple, &.brand-red {
+			a {
+				color: inherit;
+			}
+		}	
+	}
+
+	> li > a {
+		border-left: 3px solid;
+		@extend %font-smallest;
+		padding: 0 $base-spacing;
+		margin: ($base-spacing-mid) 0;
+	}
+
+	a {
+		display: block;
+	}
+
+} //ends nav
+
+.nav-open {
+  right: 0;
+  transition: all 0.35s ease-in;
+}
+
+
+/*-------------------------------------*/
+/* FOOTER */
+
+.main-footer {
+  background: $grey-gravel;
+  border-top: 10px solid darken($grey-gravel, 10%);
+  margin: $base-spacing-lg-2x 0 0 0;
+  @extend %white;
+  @extend %grid-child;
+
+  a {
+    @extend %white;
+  }
+}
+
+.footer-wrapper {
+  @extend %grid-parent;
+  padding-top: $base-spacing-lg;
+  padding-bottom: $base-spacing-lg;
+
+  a {
+    @extend %transition-linear;
+  }
+}
+
+.nav-footer {
+  margin-bottom: $base-spacing;
+
+  li {
+    @extend %vertical-inline-top;
+    padding: 0 $base-spacing-mid 0 0;
+  }
+
+  .k-icon {
+    @extend %font-small;
+    vertical-align: top;
+  }
+}
+
+.nav-footer-menu-links {
+  @extend %font-bold;
+  text-transform: uppercase;
+  @extend %font-smallest;
+}
+
+.footer-copyright {
+  @extend %font-smallest;
+}
+
+.copyright {
+  color: $grey-cloud;
+  padding-top: $base-spacing-sm;
+  clear: both; //CLEARFIX EXTEND FAILING SILENTLY
+}
+
+
+/*-------------------------------------*/
+/* MAIN */
+
+.main {
+  position: relative; 
+  top: $header-height;
+}
+
+
+/*-------------------------------------*/
+/* LOGIN */
+
+.profile-login-block {
+  position: absolute;
+  right: 55px;
+  top: 0;
+}
+
+.profile-options-wrapper{
+  position: relative;
+  text-align: left;
+
+  &.show-drop{
+    .profile-options{
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .options-list{
+      display: block;
+    }
+  }
+}
+
+.profile-options {
+  @extend %button-hollow;
+  @extend %button--sm;
+  color: $grey-silver;
+
+  &:before {
+    content: "\f007";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
+
+.profile-options{
+  margin: $base-spacing 0 0 0;
+}
+
+.profile-logged-in {
+  &:before {
+    margin: 0;
+  }
+}
+
+.options-list{
+  display: none;
+  position: absolute; 
+  top: $header-height; 
+  left: -80px; 
+  right: 0; 
+  min-width: 80px;
+  @extend %font-smaller;
+  @extend %white-bg;
+  @extend %border-radius-sm;
+  border: 1px solid $grey-cloud; 
+
+  a {
+    display: block; 
+    color: $grey-steel; 
+    padding: $base-spacing;
+
+    &:hover{
+      background: $grey-mist; 
+    }
+  }
+}
+
+
+/*-------------------------------------*/
+//SUBHEADER WRAPPER
+
+.subheader-wrapper {
+  background: $grey-mist;
+  padding: $base-spacing 0;
+  text-transform: uppercase;
+  @extend %font-smallest;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(0,0,0,0.05);  
+}
+
+.subheader-wrapper {
+  height: $subheader-height;
+}
+
+.map-subheader-wrapper {
+  height: $map-subheader-height;
+
+  .breadcrumb {
+    @extend %float-right;
+    width: 50%;
+    @extend %grid-child;
+    text-align: right;
+    margin-top: $base-spacing;
+  }
+}
+
+.search-input-map {
+  width: 50%;
+  @extend %float-left;
+  @extend %grid-child;
+}
+
+.map-sub-wrap {
+  @extend %grid-parent;
+}
+
+.breadcrumb {
+  @extend %text-truncate;
+
+  a {
+    color: $grey-steel;
+    padding: 0 $base-spacing 0 0;
+    @extend %transition-linear;
+    @extend %font-smaller;
+
+    &:after {
+      content: "\f105";
+      @extend %font-icon;
+      padding-left: $base-spacing;
+    }
+
+    &:last-of-type {
+      padding-right: 0;
+
+      &:after {
+        content: "";
+      }
+    }
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+}
+
+/*-------------------------------------*/
+//MODALS: INNER ELEMENT STYLES
+
+.rbox_lightBox {
+  .heading-border {
+    @extend %brand-blue;
+    margin-bottom: $base-spacing-lg * 2;
+  }
+}
+
+
+/*-------------------------------------*/
+//PAGE: HOME
+.banner-home {
+  background-image: url('/static/images/bg_blackboard_big.jpg');
+
+  .banner-full-caption {
+    margin-left: 0;  
+    
+    a {
+      @extend %transition-linear;
+
+      &:hover, &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.banner-home-container {
+  @extend %container;
+  text-align: left;
+  position: relative;
+
+  a {
+    color: $grey-silver;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+}
+
+.banner-home-student {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-width: 200px;
+  display: none;
+}
+
+.banner-caption-klp {
+  margin-top: $base-spacing-lg;
+}
+
+.home-help-block {
+  background-color: $blue-ink;
+  @extend %base-spacing-lg-2x;
+  @extend %white;
+}
+
+.home-help-visit {
+  .module-img {
+    @extend %brand-green-bg;
+  }
+
+  h3:first-of-type {
+    @extend %brand-green;
+  }
+}
+
+.home-help-volunteer {
+  .module-img {
+    @extend %brand-blue-bg;
+  }
+
+  h3:first-of-type {
+    @extend %brand-blue;
+  }
+}
+
+.home-help-donate {
+  .module-img {
+    @extend %brand-turquoise-bg;    
+  }
+
+  h3:first-of-type {
+    @extend %brand-turquoise;
+  }
+}
+
+.home-current-block {
+  @extend %base-spacing-lg-2x;
+
+  h3:first-of-type {
+    @extend %h2;
+  }
+
+  .module-img {
+    border: 1px solid $font-base-color;
+  }
+}
+
+.home-current-stories {
+  h3:first-of-type:after {
+    @extend %brand-blue-bg;
+  }
+}
+
+.home-current-updates {
+  h3:first-of-type:after {
+    @extend %brand-green-bg;
+  }
+}
+
+.home-current-community {
+  h3:first-of-type:after {
+    @extend %brand-orange-bg;
+  }
+}
+
+.home-current-subheading {
+  @extend %font-bold;
+  margin-bottom: $base-spacing-lg;
+}
+
+.stories-list-each, .home-blog-list {
+  @extend %font-smaller;
+  text-align: left;
+  margin: $base-spacing 0 0 0;
+}
+
+.home-volunteer-request {
+  @extend %base-spacing-lg-2x;
+  background-color: $blue-sky;
+}
+
+
+/*-------------------------------------*/
+//PAGE: MAP
+.filter-school-block {
+  @extend %border-radius-sm;
+}
+
+.filter-school-each {
+  min-height: 87px;
+  padding: $base-spacing-mid;
+  min-width: 170px;
+
+  .heading-tiny-uppercase {
+    line-height: 1;
+    margin-bottom: $base-spacing;
+  }
+}
+
+
+/*-------------------------------------*/
+//PAGE: ABOUT
+
+.about-map {
+  background: $grey-mist;
+  @extend %font-light;
+  @extend %h3;
+  max-height: 140px;
+  @extend %center-text;
+  margin: $base-spacing-lg-2x 0;
+
+  span {
+    @extend %brand-red;
+  }
+}
+
+.about-map-link {
+    position: relative;
+    top: -22px;
+    display: block;
+}
+
+.about-map-image {
+  @extend %border-radius-circle;
+  border: 1px solid $brand-red;
+  margin-right: $base-spacing-mid;
+  max-width: 100px;
+}
+
+.about-map-url {
+  display: block;
+}
+
+
+/*-------------------------------------*/
+//PAGE: PARTNERS
+.logo-wrapper {
+  @extend %center-text;
+
+  > img {
+    padding: $base-spacing-lg;
+    max-width: 130px;
+  }
+}
+
+.partners-list-block {
+  margin: $base-spacing-lg-2x 0; 
+  @extend %center-text;
+
+  ul {
+    @extend %font-small;
+    line-height: 1.8;
+  }
+
+  .partners-list {
+    padding-bottom: $base-spacing-lg;
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
+}
+
+/*-------------------------------------*/
+//PAGE: DATA
+
+.data-each {
+  @extend %base-spacing-lg-x;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+}
+
+/*-------------------------------------*/
+//PAGE: PROGRAMMES
+.banner-reading, .banner-sikshana { 
+  background-image: url('/static/images/bg_header_reading_programme.jpg');
+}
+
+.banner-reading {
+  .banner-full-caption {
+      span.h1 {
+      font-size: 200%;
+      line-height: inherit;
+      @extend %vertical-inline-middle;
+      padding-right: $base-spacing-sm;
+    }
+  }
+}
+
+.banner-maths {
+  background-image: url('/static/images/bg_header_maths_programme.jpg');
+}
+
+.banner-library {
+  background-image: url('/static/images/bg_header_library_programme.jpg');
+}
+
+.banner-preschool {
+  background-image: url('/static/images/bg_header_preschool_programme.jpg');
+}
+
+.library-grade-levels {
+  li {
+    span {
+      display: inline-block;
+    }
+
+    > span:first-of-type {
+      min-width: 120px;
+    }
+
+    > span:last-of-type {
+      padding-left: $base-spacing-lg-x;
+    }
+  }
+}
+
+/*-------------------------------------*/
+//PAGE: VOLUNTEER
+.banner-volunteer {
+  background-image: url('/static/images/bg_blackboard_big.jpg');
+  padding: $base-spacing-lg-2x 0;
+
+  .box-info {
+    max-width: 400px;
+  }
+}
+
+.banner-volunteer-info {
+  position: relative;
+}
+
+.heading-volunteer-box {
+  @extend %brand-orange;
+  @extend %font-uppercase;
+  @extend %font-smaller;
+  letter-spacing: 1px;
+
+  &:after {
+    @extend %brand-green-bg;
+  }
+}
+
+.banner-volunteer-girl, .banner-volunteer-boy {
+  display: none;
+}
+
+.volunteer-works-block {
+  background-color: $blue-sky;
+  @extend %base-spacing-lg-2x;
+}
+
+.volunteer-works-locate {
+  .module-img {
+    background-color: $red-mild;
+  }
+
+  h3:first-of-type {
+    color: $red-mild;
+  }
+}
+
+.volunteer-works-teach {
+  .module-img {
+    @extend %brand-blue-bg;
+  }
+
+  h3:first-of-type {
+    @extend %brand-blue;
+  }
+}
+
+.volunteer-works-share {
+  .module-img {
+    @extend %brand-turquoise-bg;    
+  }
+
+  h3:first-of-type {
+    @extend %brand-turquoise;
+  }
+}
+
+.volunteer-stories {
+  background-color: $grey-mist;
+
+  .heading-tiny {
+    color: $grey-silver;
+  }
+}
+
+.volunteer-story-each {
+  @extend %base-spacing-lg-x;
+}
+
+
+.volunteer-story-heading {
+  @extend %brand-turquoise;
+  @extend %font-large;
+}
+
+.volunteer-story-link {
+  @extend %font-smaller;
+  color: $font-base-color;
+  @extend %font-bold;
+
+  &:hover {
+    text-decoration: underline;
+    @extend %transition-linear;
+  }
+}
+
+
+/*-------------------------------------*/
+//PAGE: VOLUNTEER MAP
+
+.subheader-content {
+  background: $grey-mist;
+  @extend %container;
+}
+
+// filters
+
+.button-filter-volunteer {
+  height: $form-input-height;
+  font-size: 100%;
+  vertical-align: top;
+  margin-left: $base-spacing-sm;
+  padding-top: 12px;
+  @extend %button-grey;
+}
+
+.volunteer-filters-wrapper, .map-volunteer-canvas-full {
+  display: none;
+}
+
+.volunteer-filters-wrapper.filter-toggle {
+  display: block;
+}
+
+.volunteer-filters-wrapper {
+  background: $grey-mist;
+  border-top: 1px solid $grey-cloud;
+  border-bottom: 1px solid $grey-cloud;
+  margin: $base-spacing 0 0 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  .filter-item {
+    padding: $base-spacing-mid $base-spacing-lg;
+  }
+}
+
+.filter-item {
+  display: block;
+
+  .input-text {
+    min-width: 180px;
+    background: $grey-mist;
+  }
+}
+
+.filter-label {
+  @extend %font-uppercase;
+  padding-right: $base-spacing;
+  min-width: 120px;
+  display: inline-block;
+}
+
+.sidebar-volunteer-map {
+  background-color: $grey-mist;
+  
+  @extend %scrollbar-webkit;
+}
+
+.list-sidebar {
+  border-top: 1px solid $white;
+  border-bottom: 1px solid $grey-cloud;
+  padding: $base-spacing-mid;
+  cursor: pointer;
+
+  &:hover {
+    background: darken($grey-mist, 5%);
+    @extend %transition-linear;
+  }
+}
+
+.map-volunteer-canvas-full {
+  width: -webkit-calc(100% - $sidebar-map-width);
+  width: calc(100% - $sidebar-map-width);
+}
+
+//volunteer map: popup
+.vol-oppor-item {
+  border-bottom: 1px solid $grey-cloud;
+  @extend %base-spacing-mid;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.vol-oppor-count {
+  padding: $base-spacing-sm;
+  background: $grey-mist;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: $grey-cloud;
+}
+
+.vol-oppor-icon {
+  width: 32px;
+  @extend %vertical-inline-top;
+  @extend %icon-left;
+}
+
+
+/*-------------------------------------*/
+//PAGE: SCHOOL
+.school-map-wrapper {
+  height: 300px;
+  position: relative;
+
+  .map-canvas {
+    width: 100%;
+    height: inherit;
+  }  
+}
+
+.school-map-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 0 0;
+  background-color: $white;
+  background-color: rgba($white, 0.8);
+}
+
+.info-wrapper {
+  @extend %float-left;
+  @extend %grid-child;
+}
+
+.button-compare-wrap {
+  display: none;
+  @extend %float-right;
+  @extend %grid-child;
+}
+
+.school-type-preschool, .school-type-school {
+  letter-spacing: 1px;
+  line-height: 1;
+
+  .icon-number {
+    @extend %font-smallest;
+    line-height: 1;
+    position: relative;
+    top: -2px;
+  }
+}
+
+.school-type-preschool {
+  @extend %brand-purple;
+}
+
+.school-type-school {
+  @extend %brand-green;
+}
+
+.school-details {
+  font-size: 85%;
+
+  .heading-tiny-uppercase {
+    margin-top: $base-spacing-lg;
+  }
+}
+
+.school-photos {
+  margin: 0 -$base-spacing-sm; //tied to margin of image-preview-gallery
+}
+
+.image-preview-gallery {
+  img {
+    width: 60px;
+    margin: $base-spacing-sm;    
+    cursor: pointer;
+  }
+}
+
+.school-demo-tab {
+
+  .module-stats-icon {
+    display: block;
+    margin-left: $base-spacing;
+  }
+
+  .module-stats-boygirl {
+    .module-stats-label {
+      color: $blue-ink;
+    }    
+  }
+}
+
+.pie-chart-inner, .school-demo-tab {
+  @extend %vertical-inline-top;
+}
+
+
+//tab: demographics
+.bar-tab-demo-block {
+  .bar-label {
+    width: 120px;
+  }
+}
+
+
+//tab: finances
+.table-data-finances {
+  tr {
+    td:first-of-type {
+      width: 40%;
+    }
+  }
+}
+
+//tab: infrastructure
+.compare-infrastructure {
+  .compare-each-block {
+    @extend %font-small;
+    margin-top: $base-spacing-mid;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  .table-infra-icon-right {
+    text-align: right;
+  }
+}
+
+//copyright for tabs
+.school-tab-copyright {
+  padding-right: $base-spacing-lg-2x;
+  @extend %grey-gravel;
+}
+
+//tab: share your story
+.share-your-story {
+  margin-top: ($base-spacing-lg-x) + 15;
+}
+
+.comment-item {
+  border-bottom: 1px solid $grey-cloud;
+  padding: $base-spacing-lg 0 0 0;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+// compare
+.compare-button-block {
+  letter-spacing: 1px;
+
+  a {
+    @extend %center-text;
+    padding: $base-spacing;
+    line-height: 1;
+    @extend %white;
+    @extend %font-uppercase;
+    @extend %font-smaller;
+    @extend %font-bold;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    &:hover {
+      @extend %white;
+    }
+  }
+}
+
+.compare-block, .comparison-result-wrapper {
+  @extend %container;
+  box-shadow: 0 0px 4px 0 rgba(77, 77, 77, 0.3);
+  background: url('/static/images/dot.png?f83666099422') repeat-y center;
+  background-size: 1px 1px;
+}
+
+.compare-block {
+  @extend %container;
+  position: relative;
+}
+
+.icon-compare-close {
+  position: absolute;
+  top: $base-spacing;
+  right: $base-spacing;
+  color: $grey-steel;
+  z-index: 20;
+}
+
+.label-compare-block {
+  @extend %center-text;
+  position: relative;
+  line-height: 1;
+  left: -26px; // equals width of clear button + inline whitespace
+}
+
+.label-compare {
+  @extend %font-uppercase;
+  @extend %font-smallest;
+  @extend %font-bold;
+  padding: $base-spacing-sm $base-spacing;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.label-compare-clear {
+  cursor: pointer;
+
+  &:before {
+    content: "\f00d";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
+
+.label-compare-compare {
+  background: $grey-steel;
+  @extend %white;
+}
+
+.icon-button-compare {
+  @extend %grey-steel-bg;
+  @extend %white;
+  border: none;
+  position: relative;
+  top: $base-spacing-lg;
+  left: 30px;
+  width: 30px;
+  height: 30px;
+
+  .k-icon {
+    @extend %font-small;
+  }
+}
+
+.school-comparison-flow {
+  min-width: 750px; //a bit dicy, these fixed widths
+  border-bottom: 1px solid $grey-cloud;
+  overflow: auto;
+  @extend %white-bg;
+}
+
+.comparison-result-wrapper {
+  padding: 0;
+}
+
+.compare-section {
+  padding: $base-spacing-lg;
+}
+
+.compare-section-heading {
+  @extend %font-uppercase;
+  @extend %font-small;
+  @extend %font-bold;
+  color: $purple-amethyst;
+  letter-spacing: 1px;
+  @extend %dead-center;
+  @extend %white-bg;
+  padding: 3px;
+  margin-top: -8px;
+  width: 20%;
+}
+
+.compare-gender-distribution {
+  .compare-section {
+    @extend %float-left;
+    width: 50%;
+  }
+}
+
+.compare-section-source {
+  padding: $base-spacing-lg $base-spacing-lg-2x;
+  color: $grey-silver;
+  @extend %white-bg;
+  @extend %font-smaller;
+  border: 1px solid;
+  display: inline-block;
+  margin: 0 0 $base-spacing-lg-x 0;
+}
+
+.icon-compare-gender {
+  letter-spacing: 1px;
+  @extend %vertical-inline-top;
+  @extend %center-text;
+
+  .icon-button-round {
+    @extend %font-larger;
+    min-width: 70px;
+    min-height: 70px;
+  }
+}
+
+.icon-compare-boy {
+  @extend %brand-blue;  
+}
+
+.icon-compare-girl {
+  color: $pink-salmon;  
+}
+
+.pie-chart-gender, .compare-gender-pie {
+  @extend %vertical-inline-middle;
+}
+
+.compare-gender-pie {
+  .module-stats-icon {
+    display: block;
+    margin-left: $base-spacing;
+  }
+}
+
+.compare-each-block {
+  @extend %clearfix;
+  position: relative;
+  padding: $base-spacing 0;
+}
+
+.compare-each {
+  @extend %float-left;
+  width: 40%;
+}
+
+.icon-compare-label {
+  @extend %font-larger;
+  letter-spacing: 1px;
+  @extend %font-uppercase;
+}
+
+.school-compare-each {
+  width: 50%;
+  @extend %float-left;
+  @extend %grid-child;
+  margin: $base-spacing-lg 0 0 0;
+}
+
+.school-compare-each-search {
+  text-align: right;
+}
+
+.school-compare-select {
+  @extend %float-right;
+  width: 100%;
+
+  .select2-container {
+    width: 100%;
+  }
+}
+
+
+
+//Page: Profile and Org Profile
+.page-profile, .page-org-profile {
+  .heading-tiny-uppercase {
+    margin-top: $base-spacing-lg-x;
+  }
+}
+
+.profile-meta-edit, .page-org-profile {
+  .heading-tertiary:first-of-type {
+    margin: 0;
+  }
+}
+
+.profile-meta-block, .org-meta-block {
+  margin: $base-spacing-lg-2x 0 0 0;
+}
+
+.org-meta-each, .profile-meta-each {
+  .module-stats-label {
+    @extend %h4; 
+  }
+}  
+
+.org-tab-content, .profile-tab-content {
+  border-bottom: 1px solid $grey-cloud;
+  padding: $base-spacing 0 ($base-spacing + 2);
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.social-link-block {
+  margin-bottom: $base-spacing-lg;
+}
+
+
+/*-------------------------------------*/
+//PAGE: ORGANIZATION
+
+.org-profile-img {
+  max-width: 200px;
+  display: block;
+  margin: ($base-spacing-lg-x + 5) 0 0 0;
+}
+
+.org-tab-button {
+  margin: $base-spacing 0 0 0;
+}
+
+.table-base-volunteer, .table-base-donation, .table-base-donation-items {
+  @extend %font-smaller;
+}
+
+.table-base-volunteer, .table-base-donation {
+
+  tr {
+    td {
+      &:nth-of-type(2) {
+        width: 35%;
+      }
+    }
+  }
+}
+
+.table-base-donation-items {
+  counter-reset: counter-rows;
+
+  tbody tr {
+    counter-increment: counter-rows;
+  }
+
+  .tooltip:after {
+    left: -55px;
+  }
+
+  td {
+    vertical-align: top;
+
+    &:first-of-type {
+      &:before {
+        content: "#" counter(counter-rows);
+      }
+    }
+
+    &:last-of-type {
+      vertical-align: middle;
+    }
+  }
+
+  input[type="number"] {
+    width: 80px;
+  }
+
+}
+
+/*-------------------------------------*/
+//PAGE: PROFILE
+
+.profile-meta-img {
+  max-width: 80px;
+  @extend %border-radius-circle;
+  border: 2px solid $grey-cloud;
+}
+
+.profile-volunteer-date-block {
+  @extend %clearfix;
+}
+
+.profile-volunteer-date {
+  @extend %heading-tiny;
+  @extend %grey-silver;
+  @extend %float-left;
+}
+
+.profile-volunteer-verified {
+  @extend %float-right;
+}
+
+
+/*-------------------------------------*/
+//PAGE: PROFILE: EDIT
+.form-edit-password {
+  margin-top: $base-spacing-lg-x;
+}
+
+
+/*-------------------------------------*/
+//PAGE: VOLUNTEER OPPORTUNITIES
+.table-volunteer-oppor {
+  @extend %font-small;
+  
+  tr {
+    td {
+      &:nth-of-type(1) {
+        width: 30%;
+      }
+
+      &:nth-of-type(2) {
+        width: 45%;
+      }
+    }
+  }
+}

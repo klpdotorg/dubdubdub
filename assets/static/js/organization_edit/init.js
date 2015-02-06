@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.basic_tabs.init();
         var apiURL = "organizations/" + ORGANIZATION_ID;
         var $orgXHR = klp.api.authDo(apiURL);
         $orgXHR.done(function(data) {
@@ -54,7 +55,21 @@
             var tplVolunteerOpportunity = swig.compile($('#tpl-volunteerOpportunity').html());
             _(data.volunteer_activities).each(function(v) {
                 var html = tplVolunteerOpportunity(v);
-                $('#volunteerTable').append(html);
+                $('#jsVolunteerTable').append(html);
+            });
+
+            var tplDonationRequirement = swig.compile($('#tpl-donationRequirement').html());
+            var donationsURL = "donation_requirements/";
+            var params = {
+                'organization': ORGANIZATION_ID
+            };
+            var $donationsXHR = klp.api.authDo(donationsURL, params);
+            $donationsXHR.done(function(data) {
+                var requirements = data.results;
+                _(requirements).each(function(r) {
+                    var html = tplDonationRequirement(r);
+                    $('#donationTable').append(html);
+                });
             });
 
             klp.auth.events.on("logout", function() {

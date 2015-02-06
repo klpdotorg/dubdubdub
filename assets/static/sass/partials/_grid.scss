@@ -1,0 +1,49 @@
+/* GRID STYLING */
+
+
+// Containers
+.container, %container, .container-sm, %container-sm {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container, %container {
+  max-width: 1000px;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+.container-sm, %container-sm {
+  max-width: 520px;
+}
+
+@mixin container {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+//Gutters inner
+.grid-parent, %grid-parent {
+  margin-left: -$grid-padding;
+  margin-right: -$grid-padding;
+  @include clearfix;
+}
+
+@mixin grid-parent {
+  margin-left: -$grid-padding;
+  margin-right: -$grid-padding;   
+  @include clearfix;
+}
+
+.grid-child, %grid-child {
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin grid-child {
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}

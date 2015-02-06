@@ -1,8 +1,20 @@
+/*
+    Contains a bunch of helpers to draw charts.
+    Defines a few jquery methods so you can make charts like:
+      $('#foo').financeChart(data, options)
+ */
+
 (function($) {
     var container_width = 960;
     var chart_gradient_param = [0, 0, 0, 300];
 
-
+    /*
+        Boy / girl conut chart
+        options:
+          innerSize: default: '80%',
+          height: default: 170,
+          width: default: 170
+     */
     $.fn.boyGirlChart = function(data, options) {
         if (typeof(options) === 'undefined') {
             options = {};
@@ -60,6 +72,9 @@
         });
     };
 
+    /*
+        Draw finance donut chart
+     */
     $.fn.financeChart = function(data, options) {
         if (typeof(options) === 'undefined') {
             options = {};
@@ -117,6 +132,9 @@
         });
     };
 
+    /*
+        Draw chart for library data
+     */
     $.fn.libraryChart = function(data, options) {
 
         // console.log('library data', data);

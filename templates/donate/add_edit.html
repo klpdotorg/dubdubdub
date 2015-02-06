@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+
+{% block page_title %}{{ action }} Donation Request{% endblock %}
+
+{% block endbody %}
+	{% compress js %}
+	<script src="{% static 'js/donation_add_edit/init.js' %}"></script>
+	<script src="{% static 'js/donation_add_edit/donation_form.js' %}"></script>
+	<script src="{% static 'js/donation_add_edit/donation_items.js' %}"></script>
+	{% endcompress %}
+
+{% endblock %}
+
+
+{% block content %}
+
+	<section>
+		<div class="container">
+			<h1 class="heading-primary brand-blue">{{ action }} Donation Request</h1>
+		</div>
+	</section>
+
+	<section class="page-donation">
+		<div class="container">
+			<div>
+				<form id="donationForm" class="form-base form-add-donation" data-id="{{ donation_requirement.id }}">
+					<input type="hidden" name="organization" id="donationOrganization" value="{{ org.id }}" />
+					<div class="form-field-wrap">
+						<label>Title</label>
+						<input type="text" name="title" id="donationTitle" class="input-text" value="{{ donation_requirement.title }}">
+					</div>
+					<div class="form-field-wrap">
+						<label>School</label>
+						<input id="donationSchool" class="select2 input-text" value="{{ donation_requirement.school.id }}"/>
+						<!--
+						<select id="donationSchool" class="select2 width-full">
+							<option value="3537">Gian Jyoti Public School</option>
+							<option value="3662">Manav Mangal School</option>
+							<option value="3537">Dav Public School</option>
+						</select>
+						-->
+					</div>
+					<div class="form-field-wrap">
+						<label>End Date</label>
+						<input type="date" id="donationEndDate" class="input-text js-input-date" value="{{ donation_requirement.end_date|date:"Y-m-d" }}">
+					</div>
+					<div class="form-field-wrap">
+						<label>Text</label>
+						<textarea class="input-text" id="donationText">{{ donation_requirement.description }}</textarea>
+					</div>
+					<div class="form-field-wrap center-text">
+						<input type="submit" value="Submit" class="button" id="donationFormSubmitBtn">
+					</div>
+				</form>
+			</div>
+
+			<div class="hr mt-60 mb-60"></div>
+
+			<div>
+				<form id="donationItemsForm" class="form-base">
+					<div class="base-spacing"></div>
+					<h2 class="heading-secondary brand-blue">Donation Items</h2>
+					<div class="table-responsive-wrap">
+						<table id="donationItemsTable" class="table-base table-base-donation-items">
+							<thead class="table-base-heading">
+								<tr>
+									<th>S.No.</th>
+									<th>Item Name</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Category</th>
+									<th>Item Description</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>						
+						<a href="#" id="addDonationItemBtn" class="button-hollow button--sm">Add another</a>
+						<div class="base-spacing"></div>
+					</div> <!-- /table-responsive-wrap -->
+				</form>
+			</div>
+		</div>
+	</section>
+	{% include 'frontend_templates/donation_form.html' %}
+{% endblock %}
