@@ -21,7 +21,7 @@
         $this.on('change keyup', function() {
             var charCount = $this.val().length;
             var charsLeft = opts.max - charCount;
-            $charsLeft.text(charsLeft.toString()); //FIXME: number format
+            $charsLeft.text(_.string.numberFormat(charsLeft));
             if (charCount <= opts.max) {
                 if (!$container.hasClass(opts.validClass)) {
                     $container.removeClass(opts.invalidClass).addClass(opts.validClass);
