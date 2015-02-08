@@ -20,6 +20,7 @@
     };
 
     function doPostFormRender() {
+        initializeUser();
         $('[name=image]').imagePreview();
         //datepicker 
         $(".js-input-date").pickadate({
@@ -59,6 +60,16 @@
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
             });
         });
+    }
+
+    function initializeUser() {
+        if (klp.auth.getToken()) {
+            klp.api.authDo("users/profile").done(function(data) {
+                $('#name_id').val(data.first_name + " " + data.last_name);
+                $('#email_id').val(data.email);
+                $('#telephone').val(data.mobile_no);
+            });
+        }
     }
 
     function getImagesData() {
