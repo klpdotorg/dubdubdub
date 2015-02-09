@@ -54,7 +54,7 @@
 
 				<span class="filter-item">
 					<span class="filter-label">Organization</span>
-						<select name="organization" id="filterOrganization" class="input-text">
+						<select name="organization" id="filterOrganization">
 						<option value="" selected>All</option>
 						{% for org in organizations %}
 						<option value="{{ org.id }}">{{ org.name }}</option>
@@ -65,7 +65,7 @@
 
 				<span class="filter-item">
 					<span class="filter-label">Opportunity</span>
-					<select name="activity" id="filterActivityType" class="input-text">
+					<select name="activity" id="filterActivityType">
 						<option value="" selected>All</option>
 						{% for typ in activity_types %}
 						<option value="{{ typ.id }}">{{ typ.name }}</option>

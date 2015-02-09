@@ -94,11 +94,19 @@
 	  margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
 	}
 	
-	//navigation: top
+	//navigation: footer
 	.nav-footer {
 	  float: left;
 	  margin-bottom: 0;
 	  margin-top: $base-spacing-mid + 2;
+
+	  ul {
+	  	float: left;
+
+	  	&:first-of-type {
+	  		padding-right: $base-spacing-lg;
+	  	}
+	  }
 	}
 	
 	.footer-copyright {

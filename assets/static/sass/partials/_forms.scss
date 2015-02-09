@@ -56,6 +56,11 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   .input-text, select {
     min-height: $form-input-height;
   }
+
+  .input-text {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
     
   label {
     padding: $base-spacing 0;

@@ -456,7 +456,7 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .compare-each-block:after, .profile-volunteer-date-block:after {
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .nav-footer:after, .compare-each-block:after, .profile-volunteer-date-block:after {
   content: "";
   display: table;
   clear: both; }
@@ -1085,6 +1085,9 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   padding: 0; }
 .form-base .input-text, .form-base select {
   min-height: 35px; }
+.form-base .input-text {
+  -webkit-appearance: none;
+  -moz-appearance: none; }
 .form-base label {
   padding: 10px 0; }
 
@@ -2493,7 +2496,7 @@ body {
 
 .filter-item {
   display: block; }
-  .filter-item .input-text {
+  .filter-item .input-text, .filter-item select {
     min-width: 180px;
     background: #f6f6f6; }
 
@@ -3027,6 +3030,10 @@ body {
     float: left;
     margin-bottom: 0;
     margin-top: 17px; }
+    .nav-footer ul {
+      float: left; }
+      .nav-footer ul:first-of-type {
+        padding-right: 20px; }
 
   .footer-copyright {
     float: right; }

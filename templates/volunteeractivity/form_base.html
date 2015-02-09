@@ -31,7 +31,7 @@
         <form class="form-base form-volunteer-oppor-edit" id="activityForm">
           <div class="form-field-wrap">
             <label>Activity Type</label>
-            <select class="input-text" id="activityType">
+            <select id="activityType">
               <option value="">Please select an activity type</option>
               {% for typ in activity_types %}
               <option value="{{ typ.id }}">{{ typ.name }}</option>

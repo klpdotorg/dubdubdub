@@ -204,6 +204,7 @@ body {
 
 .nav-footer {
   margin-bottom: $base-spacing;
+  @extend %clearfix;
 
   li {
     @extend %vertical-inline-top;
@@ -795,7 +796,7 @@ body {
 .filter-item {
   display: block;
 
-  .input-text {
+  .input-text, select {
     min-width: 180px;
     background: $grey-mist;
   }
