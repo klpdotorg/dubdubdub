@@ -1194,15 +1194,16 @@ a.button {
     text-decoration: none;
     display: block;
     padding: $base-spacing-sm $base-spacing;
-    color: $grey-gravel;
     @extend %font-uppercase;
     @extend %font-smallest;
     @extend %font-bold;
     border-bottom: 1px solid;
     cursor: pointer;
+    color: $white;
+    background: $grey-steel;
 
     &.tab-heading-active {
-      background: $grey-mist;
+      @extend %brand-blue-bg;
     }
   }
 
@@ -1223,10 +1224,6 @@ a.button {
         right: $base-spacing;
         top: 8px;
         @extend %font-larger;
-      }
-
-      &:hover {
-        background-color: $grey-mist;
       }
     }
   }

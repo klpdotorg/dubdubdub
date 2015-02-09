@@ -295,7 +295,7 @@ sub {
 .brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count, .brand-school-cluster {
   color: #3891e3; }
 
-.brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .picker__day--highlighted:hover,
+.brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .tab-heading.tab-heading-active, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img {
@@ -929,11 +929,10 @@ hr {
   text-decoration: none;
   display: block;
   padding: 5px 10px;
-  color: #4d4d4d;
   border-bottom: 1px solid;
-  cursor: pointer; }
-  .tab-heading.tab-heading-active {
-    background: #f6f6f6; }
+  cursor: pointer;
+  color: #fff;
+  background: #898989; }
 
 .tab-heading, .tab-heading-active {
   border-color: #d8d8d8; }
@@ -946,8 +945,6 @@ hr {
     position: absolute;
     right: 10px;
     top: 8px; }
-  .tab-each .tab-heading:hover {
-    background-color: #f6f6f6; }
 
 .tab-content {
   display: none;
@@ -2724,7 +2721,7 @@ body {
   margin-top: 25px; }
 
 .profile-meta-edit .heading-tertiary:first-of-type, .page-org-profile .heading-tertiary:first-of-type {
-  margin: 0; }
+  margin: 5px 0; }
 
 .profile-meta-block, .org-meta-block {
   margin: 50px 0 0 0; }
@@ -3091,17 +3088,16 @@ body {
   .tab-each .tab-heading {
     display: none; }
 
-  .tab-heading.tab-heading-active {
-    background: #fff; }
-
   .tab-heading {
     display: inline-block;
-    vertical-align: top; }
-
-  .tab-heading {
+    vertical-align: top;
+    color: #4d4d4d;
     position: relative;
     top: 1px;
-    border-bottom: none; }
+    border-bottom: none;
+    background: none; }
+    .tab-heading.tab-heading-active {
+      background: #fff; }
 
   .tab-content {
     border-top: 1px solid;

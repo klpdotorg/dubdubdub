@@ -185,18 +185,17 @@
     }
   }
 
-  .tab-heading.tab-heading-active {
-    background: $white;
-  }
-
   .tab-heading {
     @include vertical-inline-top;
-  }
-
-  .tab-heading {
+    color: $grey-gravel;
     position: relative;
     top: 1px;
     border-bottom: none;
+    background: none;
+
+	  &.tab-heading-active {
+	    background: $white;
+	  }
   }
 
   .tab-content {
