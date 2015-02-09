@@ -1190,6 +1190,16 @@ body {
   @extend %float-left;
   @extend %grid-child;
   margin: $base-spacing-lg 0 0 0;
+
+  h4:first-of-type {
+    margin-bottom: $base-spacing;
+
+    .icon-number {
+      padding: 4px 9px;
+      line-height: 1;
+      font-size: 100%;
+    }
+  }
 }
 
 .school-compare-each-search {
