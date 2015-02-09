@@ -20,11 +20,15 @@
     };
 
     function doPostFormRender() {
+        initializeUser();
         $('[name=image]').imagePreview();
         //datepicker 
         $(".js-input-date").pickadate({
             format: 'yyyy-mm-dd',
             formatSubmit: 'yyyy-mm-dd'
+        });
+        $('#comments_id').maxChars({
+            'max': 2000
         });
         $('#sysForm').submit(function(e) {
             if (e) {
@@ -36,6 +40,11 @@
             _(dataArray).each(function(a) {
                 dataObj[a.name] = a.value;
             });
+            var commentsChars = $('#comments_id').val().length;
+            if (commentsChars > 2000) {
+                klp.utils.alertMessage("Comments field longer than allowed length. Please fix and try again.", "error");
+                return;
+            }
             dataObj['images'] = getImagesData();
             var postURL = "stories/" + SCHOOL_ID;
             // console.log("data obj", dataObj);
@@ -51,6 +60,16 @@
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
             });
         });
+    }
+
+    function initializeUser() {
+        if (klp.auth.getToken()) {
+            klp.api.authDo("users/profile").done(function(data) {
+                $('#name_id').val(data.first_name + " " + data.last_name);
+                $('#email_id').val(data.email);
+                $('#telephone').val(data.mobile_no);
+            });
+        }
     }
 
     function getImagesData() {
