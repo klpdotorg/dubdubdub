@@ -24,6 +24,10 @@
   position: relative;
   @extend %center-text;
   @extend %vertical-inline-middle;
+
+  .nextLightBox, .prevLightBox, .closeLightBox {
+    font-size: 25px; 
+  }
 }
 
 .rbox_lightBox {
@@ -34,7 +38,6 @@
 .nextLightBox, .prevLightBox, .closeLightBox {
   color: $grey-silver;
   cursor: pointer;
-  font-size: 25px; 
   
   &:hover {
     color: $grey-cloud;

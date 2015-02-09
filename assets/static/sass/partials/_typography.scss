@@ -346,6 +346,7 @@ sub {
 
   a {
     display: block;
+    padding: 3px;
 
     &:hover {
       color: $link-hover-color;

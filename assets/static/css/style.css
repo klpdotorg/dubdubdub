@@ -244,7 +244,8 @@ sub {
       left: -5px;
       top: 5px; }
   .heading-section-block a {
-    display: block; }
+    display: block;
+    padding: 3px; }
     .heading-section-block a:hover {
       color: #7bb6ec; }
 
@@ -1689,6 +1690,8 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   min-width: 280px;
   margin: 3% auto;
   position: relative; }
+  .rbox_lightBoxBlock .nextLightBox, .rbox_lightBoxBlock .prevLightBox, .rbox_lightBoxBlock .closeLightBox {
+    font-size: 25px; }
 
 .rbox_lightBox {
   padding: 10px;
@@ -1696,8 +1699,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 .nextLightBox, .prevLightBox, .closeLightBox {
   color: #bbb;
-  cursor: pointer;
-  font-size: 25px; }
+  cursor: pointer; }
   .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover {
     color: #d8d8d8; }
 
@@ -2182,7 +2184,6 @@ body {
     display: none; }
   .nav li {
     padding: 0 10px;
-    cursor: pointer;
     letter-spacing: 1px;
     text-align: left; }
     .nav li li {
