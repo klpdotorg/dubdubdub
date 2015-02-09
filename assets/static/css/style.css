@@ -761,7 +761,7 @@ hr {
     top: 80%;
     left: 0; }
   .tooltip:hover:before, .tooltip:focus:before {
-    left: 15px; }
+    left: 10px; }
 
 /*-------------------------------------*/
 /* VIDEO RESPONSIVE */
@@ -2220,7 +2220,9 @@ body {
 .nav-footer {
   margin-bottom: 10px; }
   .nav-footer li {
-    padding: 0 15px 0 0; }
+    padding: 0 20px 0 0; }
+    .nav-footer li:last-of-type {
+      padding-right: 0; }
   .nav-footer .k-icon {
     vertical-align: top; }
 

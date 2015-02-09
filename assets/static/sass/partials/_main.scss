@@ -208,7 +208,11 @@ body {
 
   li {
     @extend %vertical-inline-top;
-    padding: 0 $base-spacing-mid 0 0;
+    padding: 0 $base-spacing-lg 0 0;
+
+    &:last-of-type {
+      padding-right: 0;
+    }
   }
 
   .k-icon {

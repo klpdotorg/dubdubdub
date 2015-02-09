@@ -885,7 +885,7 @@ a.button {
     }
 
     &:before {
-      left: 15px;
+      left: $base-spacing;
     }
   }
 }
