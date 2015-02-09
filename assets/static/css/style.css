@@ -3272,7 +3272,8 @@ body {
       top: 39px;
       box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
       border: 1px solid #d8d8d8;
-      border-top: none; }
+      border-top: none;
+      padding: 0 0 10px 0; }
     .nav > li {
       border-top: 5px solid;
       border-left: none; }
@@ -3291,12 +3292,18 @@ body {
       .nav li li {
         text-align: left; }
         .nav li li a {
-          padding: 0 10px;
-          margin: 20px 0;
-          border-left: 2px solid;
-          border-color: transparent; }
-        .nav li li:hover a {
-          border-color: inherit; }
+          padding: 10px;
+          position: relative; }
+          .nav li li a:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 2px;
+            height: 10px;
+            background: transparent; }
+        .nav li li:hover a:before {
+          background: currentColor; }
 
   .banner-logo-klp {
     width: 170px; }
@@ -3344,7 +3351,7 @@ body {
   .filter-item {
     padding: 0 10px 0 0; }
 
-  .filter-label, .filter-item .input-text {
+  .filter-label, .filter-item .input-text, .filter-item select {
     min-width: 0; }
 
   .sidebar-volunteer-map {

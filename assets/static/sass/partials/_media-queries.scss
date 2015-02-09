@@ -393,7 +393,8 @@
 			top: $header-height - 6px;
   		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
 			border: 1px solid $grey-cloud;
-			border-top: none;  
+			border-top: none;
+			padding: 0 0 $base-spacing 0;  
   	}
 
     > li {
@@ -419,15 +420,24 @@
   			text-align: left;
 
   			a {
-  				padding: 0 $base-spacing;
-  				margin: $base-spacing-lg 0;
-					border-left: 2px solid;
-					border-color: transparent;		
+  				padding: $base-spacing;
+  				position: relative;
+
+					&:before {
+						content: "";
+						position: absolute;
+						left: 0;
+						top: $base-spacing;
+						width: 2px;
+						height: $base-spacing;
+						background: transparent;
+					}
   			}
 
-				&:hover a {
-					border-color: inherit;
+				&:hover a:before {
+					background: currentColor;
 				}
+
   		}
     }
   }
@@ -502,7 +512,7 @@
 	  padding: 0 $base-spacing 0 0;
 	}
 
-	.filter-label, .filter-item .input-text {
+	.filter-label, .filter-item .input-text, .filter-item select {
 		min-width: 0;
 	}
 
