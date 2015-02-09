@@ -830,8 +830,8 @@ body {
 }
 
 .map-volunteer-canvas-full {
-  width: -webkit-calc(100% - $sidebar-map-width);
-  width: calc(100% - $sidebar-map-width);
+  width: -webkit-calc(100% - #{$sidebar-map-width});
+  width: calc(100% - #{$sidebar-map-width});
 }
 
 //volunteer map: popup
