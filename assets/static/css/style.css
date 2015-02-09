@@ -2181,7 +2181,7 @@ body {
   .nav ul {
     display: none; }
   .nav li {
-    padding: 0 15px;
+    padding: 0 10px;
     cursor: pointer;
     letter-spacing: 1px;
     text-align: left; }
@@ -3255,7 +3255,7 @@ body {
     overflow: visible;
     border: none;
     box-shadow: none;
-    padding-left: 15px; }
+    margin-left: -25px; }
     .nav ul {
       position: absolute;
       left: 0;
@@ -3277,7 +3277,7 @@ body {
       margin: 0 3px;
       text-align: center;
       position: relative;
-      min-width: 125px; }
+      min-width: 120px; }
       .nav li li {
         text-align: left; }
         .nav li li a {

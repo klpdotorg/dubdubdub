@@ -378,7 +378,7 @@
 	  overflow: visible;
 	  border: none;
 	  box-shadow: none;
-	  padding-left: $base-spacing-mid;
+	  margin-left: - $base-spacing-lg-x; // hack to center stuff
 
     ul {
 			position: absolute;
@@ -406,7 +406,7 @@
       margin: 0 3px;
   		text-align: center;
   		position: relative;
-			min-width: 125px; // adapt as per largest li width
+			min-width: 120px; // adapt as per largest li width
 
   		li {
   			text-align: left;
