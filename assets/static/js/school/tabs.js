@@ -460,7 +460,11 @@
             doPostRender(tabName, data);
             //on mobile, scroll to top of accordion
             var $accordionTrigger = $('.tab-each .tab-heading-active');
-            if ($accordionTrigger.is(":visible")) {
+
+            //slightly ugly -- if replaceState == true, means it was
+            //the 'default' first tab to show. In this case, don't scroll to
+            //top of the tab
+            if ($accordionTrigger.is(":visible") && !replaceState) {
                 var headerHeight = $('.main-header').outerHeight();
                 var offsetTop = $accordionTrigger.offset().top - headerHeight;
                 $(document).scrollTop(offsetTop);
