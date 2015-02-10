@@ -467,7 +467,9 @@
             if ($accordionTrigger.is(":visible") && !replaceState) {
                 var headerHeight = $('.main-header').outerHeight();
                 var offsetTop = $accordionTrigger.offset().top - headerHeight;
-                $(document).scrollTop(offsetTop);
+                $('html, body').animate({
+                    scrollTop: offsetTop
+                });
             }
             $deferred.resolve();
         });

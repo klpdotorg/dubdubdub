@@ -27,7 +27,9 @@
             if ($accordionTrigger.is(":visible")) {
                 var headerHeight = $('.main-header').outerHeight();
                 var offsetTop = $accordionTrigger.offset().top - headerHeight;
-                $(document).scrollTop(offsetTop);
+                $('html, body').animate({
+                    scrollTop: offsetTop
+                });
             }
         });
     };
