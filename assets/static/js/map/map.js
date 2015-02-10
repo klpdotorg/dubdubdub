@@ -523,12 +523,7 @@
             } else {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('preschool')});
             }
-            if (!isMobile) {
-                selectedLayers.addLayer(duplicateMarker);
-            }
-            // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
-            //     popupInfoXHR.abort();
-            // }
+            selectedLayers.addLayer(duplicateMarker);
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
@@ -536,23 +531,7 @@
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 t.stopLoading();
-                //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
-                if (!isMobile) {
-                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
-                } else {
-                    // Its a phone
-                    //marker.closePopup(); // Close popup
-                    // duplicateMarker.closePopup();
-                    //map.closePopup();
-                    // map.setView(marker.getLatLng(), 15);
-                    setTimeout(function() {
-                        var details_ht = $mobile_details_wrapper.height();
-                        var pan_y = parseInt(details_ht / 2.5);
-                        map.panBy(L.point(0, pan_y));
-                    }, 300);
-                    var html = tpl_mobile_place_details(data);
-                    $mobile_details_wrapper.html(html).addClass("show");
-                }
+                duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
                 $('.js-trigger-compare').unbind('click');
@@ -697,11 +676,11 @@
         });
 
         // Close the popup on mobile when clicked elesewhere on the map.
-        if (isMobile) {
-            map.on('click', function() {
-                $('.js-close-details').trigger('click');
-            });
-        }
+        // if (isMobile) {
+        //     map.on('click', function() {
+        //         $('.js-close-details').trigger('click');
+        //     });
+        // }
 
         //t.map = map;
     };
