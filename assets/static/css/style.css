@@ -447,10 +447,10 @@ img, video {
   width: 100%; }
 
 /*-------------------------------------*/
-.float-left, .bar-label, .bar-graph, .search-input-map, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
-.float-right, .map-subheader-wrapper .breadcrumb, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
+.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
   float: right; }
 
 .clear {
@@ -991,15 +991,15 @@ hr {
 .container-sm, .banner-full-caption {
   max-width: 520px; }
 
-.grid-parent, .footer-wrapper, .map-sub-wrap, .gender-icons {
+.grid-parent, .footer-wrapper, .gender-icons {
   margin-left: -20px;
   margin-right: -20px; }
-  .grid-parent:after, .footer-wrapper:after, .map-sub-wrap:after, .gender-icons:after {
+  .grid-parent:after, .footer-wrapper:after, .gender-icons:after {
     content: "";
     display: table;
     clear: both; }
 
-.grid-child, .main-footer, .map-subheader-wrapper .breadcrumb, .search-input-map, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
+.grid-child, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
   padding-left: 20px;
   padding-right: 20px; }
 
@@ -2296,13 +2296,6 @@ body {
 
 .map-subheader-wrapper {
   height: 55px; }
-  .map-subheader-wrapper .breadcrumb {
-    width: 50%;
-    text-align: right;
-    margin-top: 10px; }
-
-.search-input-map {
-  width: 50%; }
 
 .breadcrumb a {
   color: #898989;
@@ -2802,6 +2795,12 @@ body {
 .map-volunteer-canvas-full {
   left: 300px; }
 
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0; }
+
+.leaflet-popup-content {
+  padding: 10px; }
+
 .map-pin-details .icon-number {
   padding: 5px 7px;
   position: absolute;
@@ -2974,6 +2973,9 @@ body {
   right: 36px; }
 
 .leaflet-control-container {
+  display: none; }
+
+.button-map-compare {
   display: none; }
 
 @media only screen and (max-width: 599px) {
@@ -3324,11 +3326,8 @@ body {
   .banner-volunteer-boy {
     right: 10px; }
 
-  .search-input-map {
-    width: 30%; }
-
-  .map-subheader-wrapper .breadcrumb {
-    width: 70%; }
+  .button-map-compare {
+    display: inline-block; }
 
   .button-compare-wrap {
     display: block; }

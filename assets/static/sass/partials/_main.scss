@@ -335,24 +335,9 @@ body {
 
 .map-subheader-wrapper {
   height: $map-subheader-height;
-
-  .breadcrumb {
-    @extend %float-right;
-    width: 50%;
-    @extend %grid-child;
-    text-align: right;
-    margin-top: $base-spacing;
-  }
 }
 
 .search-input-map {
-  width: 50%;
-  @extend %float-left;
-  @extend %grid-child;
-}
-
-.map-sub-wrap {
-  @extend %grid-parent;
 }
 
 .breadcrumb {

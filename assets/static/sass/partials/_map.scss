@@ -20,6 +20,15 @@
 }
 
 //map: popup
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0;  
+}
+
+.leaflet-popup-content {
+  padding: $base-spacing;
+}
+
 .map-pin-details {
   .icon-number {
     @extend %font-small;
@@ -303,5 +312,9 @@
 }
 
 .leaflet-control-container {
+  display: none;
+}
+
+.button-map-compare {
   display: none;
 }
