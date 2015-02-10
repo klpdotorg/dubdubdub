@@ -104,10 +104,10 @@
     </div>
     <div class="facility-items">
       <h4 class="facility-icons-title">Facilities</h4>
-      {% if basic_facilities.computer_lab %}<div class="k-icon computer" title="Has Computers"></div>{% endif %}
-      {% if basic_facilities.library %}<div class="k-icon books" title="Has a Library"></div>{% endif %}
-      {% if has_volunteer_activities %}<div class="k-icon events" title="Needs Volunteers"></div>{% endif %}
-      {% if basic_facilities.playground %}<div class="k-icon football" title="Has a Playground"></div>{% endif %}
+      {% if basic_facilities.computer_lab %}<span class="tooltip" role="tooltip" aria-label="Has Computers"><div class="k-icon computer"></div></span>{% endif %}
+      {% if basic_facilities.library %}<span class="tooltip" role="tooltip" aria-label="Has a Library"><div class="k-icon books"></div></span>{% endif %}
+      {% if has_volunteer_activities %}<span class="tooltip" role="tooltip" aria-label="Needs Volunteers"><div class="k-icon events"></div></span>{% endif %}
+      {% if basic_facilities.playground %}<span class="tooltip" role="tooltip" aria-label="Has a Playground"><div class="k-icon football"></div></span>{% endif %}
     </div>
     {% if has_volunteer_activities %}
     <div class="center-text">
