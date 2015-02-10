@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
 <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
 <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
+
 <script>
   SCHOOL_ID = {{ object.id }};
   SCHOOL_TYPE_ID = {{ object.schooldetails.type.id }};
@@ -20,9 +21,18 @@
   
 </script>
 {% endblock %}
+
+
+{% block subheader %}
+  <div class="subheader-wrapper">
+    <div class="subheader-content">
+      {% include 'includes/_breadcrumb.html' %}        
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
 {% include 'includes/_compare_flow.html' %}
-
 <section class="school-page">
   <div class="school-map-wrapper">
     <div class="map-canvas" id="map-canvas"></div>
