@@ -2,12 +2,14 @@
 {% block page_title %}About{% endblock %}
 
 {% block css_extra %}
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
 <style>
-  .box-demo {
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    vertical-align: top;
+  code {
+    font-family: 'Source Code Pro';
+  }
+
+  p {
+    margin-bottom: 10px;
   }
 </style>
 {% endblock %}
@@ -44,11 +46,68 @@
   </div>
 
   <div class="container">
+    <h2 class="heading-secondary brand-purple">Colors: Brand</h2>
     <div id="colors-brand">
-      <div class="box-demo brand-blue-bg">
+      <div class="center-text">
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-blue-bg"></div>   
+          <div class="font-smaller brand-blue">$brand-blue</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-green-bg"></div>
+          <div class="font-smaller brand-green">$brand-green</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-turquoise-bg"></div>
+          <div class="font-smaller brand-turquoise">$brand-turquoise</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-purple-bg"></div>
+          <div class="font-smaller brand-purple">$brand-purple</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-red-bg"></div>
+          <div class="font-smaller brand-red">$brand-red</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-orange-bg"></div>
+          <div class="font-smaller brand-orange">$brand-orange</div>   
+        </div>
+      </div> <!-- /center-text -->
+    
+      <div class="base-spacing"></div>
+
+      <div class="heading-tertiary">Colors</div>
+      
+      <div class="style-block">
+        <div class="style-block-demo">
+          <p class="brand-blue">Add some brand-blue</p>
+          <p class="brand-green">Add some brand-green</p>
+          <p class="brand-turquoise">Add some brand-turquoise</p>
+          <p class="brand-purple">Add some brand-purple</p>
+          <p class="brand-red">Add some brand-red</p>
+          <p class="brand-orange">Add some brand-orange</p>
+          
+        </div> <!-- /style-block-demo -->
+
+<!--         <div class="style-block-code">
+          <code>
+            <p class="brand-blue">Add some brand-blue</p>
+            <p class="brand-green">Add some brand-green</p>
+            <p class="brand-turquoise">Add some brand-turquoise</p>
+            <p class="brand-purple">Add some brand-purple</p>
+            <p class="brand-red">Add some brand-red</p>
+            <p class="brand-orange">Add some brand-orange</p>        
+          </code>
+        </div> <!-- /style-block-code -->
+      </div> <!-- /style-block -->
         
-      </div>
-    </div>
+    </div> <!-- /colors-brand -->
     
   </div> <!-- /container -->
 
@@ -241,4 +300,13 @@
   </div>
 
 </section>
+
+<script>
+  $(document).ready(function(){
+    var styleHtml = $(".style-block-demo").html();    
+    $(".style-block").each(function(){  
+      $(this).append("<div class='style-block-code'><code>"+ styleHtml +  "</code></div>");
+    });
+  });
+</script>
 {% endblock %}

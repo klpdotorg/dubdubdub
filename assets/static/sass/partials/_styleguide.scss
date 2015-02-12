@@ -1,0 +1,25 @@
+.box-demo {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
+}
+
+code {
+  @extend %grey-mist-bg;
+  border-left: 3px solid $brand-purple;
+  overflow-y: auto;
+  padding: $base-spacing-lg;
+  display: block;
+  font-family: monospace;
+  @extend %font-small;
+}
+
+#colors-brand {
+  code {
+    p, div, span {
+      color: $font-base-color;
+    }
+  }
+}
