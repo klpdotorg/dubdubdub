@@ -521,7 +521,7 @@ img, video {
 
   tr {
     td:first-of-type {
-      @extend %font-bold;
+      @extend %bold; 
       color: $grey-gravel;
       padding-left: 0;
     }
@@ -647,7 +647,7 @@ hr {
 // icon-number
 .icon-number {
   @extend %white-bg;
-  @extend %font-bold;
+  @extend %bold; 
   @extend %font-smaller;
   border: 2px solid;
   display: inline-block;
@@ -662,7 +662,7 @@ hr {
   @extend %brand-green;
   @extend %font-uppercase;
   @extend %font-smallest;
-  @extend %font-bold;
+  @extend %bold; 
   letter-spacing: 1px;
 
   &:before {
@@ -733,7 +733,7 @@ hr {
 //BUTTONS
 
 %button-base {
-  @extend %font-bold;
+  @extend %bold; 
   font-size: 75%;
   @extend %center-text;
   @extend %border-radius-sm;
@@ -798,7 +798,7 @@ a.button {
   right: 5%;
   @extend %brand-blue-bg;
   @extend %center-text;
-  @extend %font-bold;
+  @extend %bold; 
   @extend %font-large;
   opacity: 0.9;
   @extend %border-radius;
@@ -1109,7 +1109,7 @@ a.button {
 
 .module-stats-label {
   @extend %brand-blue;
-  @extend %font-bold;
+  @extend %bold; 
   line-height: 1;
 }
 
@@ -1143,7 +1143,7 @@ a.button {
 .bar-label {
   @extend %font-small;
   @extend %grey-gravel;
-  @extend %font-bold;
+  @extend %bold; 
   word-wrap: break-word;
 }
 
@@ -1173,7 +1173,7 @@ a.button {
   padding: 0 $base-spacing-sm;
   text-align: right;
   @extend %font-small;
-  @extend %font-bold;
+  @extend %bold; 
 }
 
 /*-------------------------------------*/
@@ -1196,7 +1196,7 @@ a.button {
     padding: $base-spacing-sm $base-spacing;
     @extend %font-uppercase;
     @extend %font-smallest;
-    @extend %font-bold;
+    @extend %bold; 
     border-bottom: 1px solid;
     cursor: pointer;
     color: $white;

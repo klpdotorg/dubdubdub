@@ -103,7 +103,7 @@ a {
   font-style: italic;
 }
 
-.font-bold, %font-bold {
+.bold, %bold {
   font-weight: 700;
 }
 
@@ -173,7 +173,7 @@ a {
 }
 
 strong, b {
-  @extend %font-bold; 
+  @extend %bold; 
 }
 
 em, i {
@@ -277,7 +277,7 @@ sub {
 }
 
 .heading-tertiary, %heading-tertiary {
-  @extend %font-bold;
+  @extend %bold;
   @extend %h5;
   @extend %font-uppercase;
   color: $grey-gravel;
@@ -294,7 +294,7 @@ sub {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  @extend %font-bold;
+  @extend %bold;
   margin-bottom: $base-spacing-sm;
 }
 
@@ -362,7 +362,7 @@ sub {
 .heading-section-ul-alt {
   @extend %font-uppercase;
   letter-spacing: 1px;
-  @extend %font-bold;
+  @extend %bold;
   @extend %font-small;
   margin-bottom: 0;
 

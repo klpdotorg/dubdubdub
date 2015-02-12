@@ -287,7 +287,7 @@ html[dir="rtl"] .select2-results {
 }
 
 .select2-results li.select2-result-with-children > .select2-result-label {
-    @extend %font-bold;
+  @extend %bold; 
 }
 
 .select2-results .select2-result-label {

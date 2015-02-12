@@ -49,7 +49,7 @@
 
 .map-location-labels {
   @extend %font-small;
-  @extend %font-bold;
+  @extend %bold; 
   word-wrap: break-word;
 }
 
@@ -133,7 +133,7 @@
 .gender-icons-title, .facility-icons-title {
   @extend %font-uppercase;
   @extend %font-small;
-  @extend %font-bold;
+  @extend %bold; 
   @extend %center-text;
   letter-spacing: 1px;
   color: $grey-steel;
@@ -156,9 +156,9 @@
 }
 
 .gender-item-count { 
-    @extend %font-bold;
-    @extend %h2;
-    padding: $base-spacing-sm 0 0 0;
+  @extend %bold; 
+  @extend %h2;
+  padding: $base-spacing-sm 0 0 0;
 }
 
 .gender-item-boy {
@@ -239,7 +239,7 @@
 .leaflet-control-layers label {
   font-size: 12px;
   line-height: 26px;
-  @extend %font-bold;
+  @extend %bold; 
   letter-spacing: 1px;
   @extend %font-uppercase;
   text-decoration: none;

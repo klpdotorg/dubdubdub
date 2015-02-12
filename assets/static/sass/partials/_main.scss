@@ -134,7 +134,7 @@ body {
 	}
 
 	li {
-		@extend %font-bold;
+    @extend %bold; 
 		@extend %font-uppercase;
 		padding: 0 $base-spacing;
     letter-spacing: 1px;
@@ -224,7 +224,7 @@ body {
 }
 
 .nav-footer-menu-links {
-  @extend %font-bold;
+  @extend %bold; 
   text-transform: uppercase;
   @extend %font-smallest;
 }
@@ -491,7 +491,7 @@ body {
 }
 
 .home-current-subheading {
-  @extend %font-bold;
+  @extend %bold; 
   margin-bottom: $base-spacing-lg;
 }
 
@@ -730,7 +730,7 @@ body {
 .volunteer-story-link {
   @extend %font-smaller;
   color: $font-base-color;
-  @extend %font-bold;
+  @extend %bold; 
 
   &:hover {
     text-decoration: underline;
@@ -1000,7 +1000,7 @@ body {
     @extend %white;
     @extend %font-uppercase;
     @extend %font-smaller;
-    @extend %font-bold;
+    @extend %bold; 
     display: none;
 
     &.show {
@@ -1043,7 +1043,7 @@ body {
 .label-compare {
   @extend %font-uppercase;
   @extend %font-smallest;
-  @extend %font-bold;
+  @extend %bold; 
   padding: $base-spacing-sm $base-spacing;
   line-height: 1;
   letter-spacing: 1px;
@@ -1097,7 +1097,7 @@ body {
 .compare-section-heading {
   @extend %font-uppercase;
   @extend %font-small;
-  @extend %font-bold;
+  @extend %bold; 
   color: $purple-amethyst;
   letter-spacing: 1px;
   @extend %dead-center;

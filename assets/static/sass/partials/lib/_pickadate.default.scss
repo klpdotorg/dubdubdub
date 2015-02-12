@@ -11,7 +11,7 @@
 
 .picker__month,
 .picker__year {
-  @extend %font-bold;
+  @extend %bold; 
   display: inline-block;
   margin-left: .25em;
   margin-right: .25em;
@@ -199,7 +199,7 @@
   @extend %white-bg;
   font-size: .8em;
   padding: .66em 0;
-  @extend %font-bold;
+  @extend %bold; 
   width: 33%;
   display: inline-block;
   vertical-align: bottom;

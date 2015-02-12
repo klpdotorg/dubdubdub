@@ -611,7 +611,7 @@
             <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
             {% for story in features %}
             <div class="comment-item">
-                <p class="grey-gravel font-bold">
+                <p class="grey-gravel bold">
                   {% if story.name %}
                       {{ story.name }}
                   {% else %}
@@ -661,10 +661,10 @@
 
       <div class="clearfix grid-parent">
         <div class="float-left grid-child">
-          <div class="black font-smallest font-bold">
+          <div class="black font-smallest bold">
             Date:
           </div>
-          <div class="brand-blue font-bold">{{ f.date|date('jS F, Y') }}</div>
+          <div class="brand-blue bold">{{ f.date|date('jS F, Y') }}</div>
         </div>
         <div class="float-right grid-child">
           <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
