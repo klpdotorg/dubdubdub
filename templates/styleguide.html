@@ -298,10 +298,19 @@
 </section>
 
 <script>
-  $(document).ready(function(){
-    var styleHtml = $(".style-block-demo").html();    
+// Use the browser's built-in functionality to quickly and safely escape the
+// string
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+};
+
+  $(document).ready(function(){    
     $(".style-block").each(function(){  
-      $(this).append("<div class='style-block-code'><code>"+ styleHtml +  "</code></div>");
+      $demo = $(this).find('.style-block-demo');
+      var code = escapeHtml($demo.html());
+      $(this).append("<div class='style-block-code'><code><pre>"+ code +  "</pre></code></div>");
     });
   });
 </script>
