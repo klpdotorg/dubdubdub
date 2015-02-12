@@ -44,3 +44,9 @@ code {
 .demo-color-blue-extend {
   @extend %brand-blue;
 }
+
+.demo-color-background {
+  p {
+    padding: $base-spacing-sm;
+  }
+}

@@ -3388,4 +3388,7 @@ code {
 .demo-color-blue {
   color: #3891e3; }
 
+.demo-color-background p {
+  padding: 5px; }
+
 /*# sourceMappingURL=style.css.map */
