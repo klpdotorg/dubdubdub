@@ -15,7 +15,7 @@ code {
   @extend %grey-mist-bg;
   border-left: 3px solid $brand-purple;
   overflow-y: auto;
-  padding: $base-spacing-lg;
+  padding: ($base-spacing-lg) * 2 $base-spacing-lg $base-spacing-lg $base-spacing-lg;
   display: block;
   font-family: monospace;
   @extend %font-small;
