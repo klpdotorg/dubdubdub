@@ -235,6 +235,11 @@
   color: $link-hover-color;
 }
 
+/*-------------------------------------*/
+/* BORDER */
+.border-base, %border-base {
+  border: 1px solid $border-color;
+}
 
 /*-------------------------------------*/
 /* SPACING */
@@ -462,7 +467,7 @@ img, video {
     min-width: 80px;
     @extend %white-bg;
     @extend %border-radius-sm;
-    border: 1px solid $grey-cloud; 
+    @extend %border-base;
     position: absolute;
     left: 0;
     z-index: 1;
@@ -499,7 +504,7 @@ img, video {
   margin-bottom: $base-spacing-lg-x;
 
   th, td {
-    border-bottom: 1px solid $grey-cloud;
+    border-bottom: 1px solid $border-color;
     padding: $base-spacing;
   }
 
@@ -536,7 +541,7 @@ img, video {
   font-size: 10px;
   position: absolute;
   top: 1px;
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   @extend %border-radius-sm;
   @extend %center-text;
   width: $base-spacing-mid;
@@ -584,7 +589,7 @@ img, video {
 }
 
 .infra-key-legend {
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   padding: $base-spacing;
   margin-top: ($base-spacing-lg-x) + 15;
 }
@@ -595,7 +600,7 @@ img, video {
 hr {
   display: block;
   height: 1px;
-  border-top: 1px solid $grey-cloud;
+  border-top: 1px solid $border-color;
   margin: $base-spacing-lg-x 0;
 }
 
@@ -941,7 +946,7 @@ a.button {
 /* NAVIGATION: SMOOTH-SCROLL */
 
 .scroll-smooth-block {
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   @extend %white-bg;
   @extend %uppercase;
   @extend %font-smallest;
@@ -983,7 +988,7 @@ a.button {
 
 /* BORDERS */
 .border-grey-cloud, %border-grey-cloud {
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
 }
 
 /*-------------------------------------*/
@@ -1180,7 +1185,7 @@ a.button {
 // TABS
 
   .tab-wrap {
-    border: 1px solid $grey-cloud;
+    @extend %border-base;
     border-bottom: none;
     margin-top: $base-spacing-lg-x;
   }
@@ -1231,7 +1236,7 @@ a.button {
   .tab-content {
     display: none;
     padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
-    border-bottom: 1px solid $grey-cloud;
+    border-bottom: 1px solid $border-color;
     
     &.tab-active {
       display: block;

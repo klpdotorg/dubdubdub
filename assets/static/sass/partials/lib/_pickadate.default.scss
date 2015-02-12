@@ -22,7 +22,7 @@
 
 .picker__select--month,
 .picker__select--year {
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   height: 2em;
   padding: .5em;
   margin-left: .25em;

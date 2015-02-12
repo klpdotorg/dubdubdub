@@ -15,8 +15,6 @@
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
-//maybe a class for border-
-
 // role=tooltip is technically wrong because it violates when there's no described by
 
 //highcharts NOT WORKING ON FINANCE
@@ -30,9 +28,6 @@ the css in the head of map.html
 //modularize icon boy girl and total later, add same classes to the map popup
 
 //let's only show the legend on infrastructure tab if left column info is present: FILE A BUG: Sanj
-
-//make make border: 1px solid $grey-cloud modular;
-
 
 //SANJ:
 
@@ -74,7 +69,7 @@ body {
 
 .main-header {
   @extend %white-bg;
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   position: fixed;
   top: 0;
   left: 0;
@@ -122,7 +117,7 @@ body {
   bottom: 0;
   overflow: auto;
 	box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
-	border: 1px solid $grey-cloud;
+  @extend %border-base;
   @extend %transition-linear;
   height: 100%;
   
@@ -302,7 +297,7 @@ body {
   @extend %font-smaller;
   @extend %white-bg;
   @extend %border-radius-sm;
-  border: 1px solid $grey-cloud; 
+  @extend %border-base;
 
   a {
     display: block; 
@@ -766,8 +761,8 @@ body {
 
 .volunteer-filters-wrapper {
   background: $grey-mist;
-  border-top: 1px solid $grey-cloud;
-  border-bottom: 1px solid $grey-cloud;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
   margin: $base-spacing 0 0 0;
   position: absolute;
   left: 0;
@@ -802,7 +797,7 @@ body {
 
 .list-sidebar {
   border-top: 1px solid $white;
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   padding: $base-spacing-mid;
   cursor: pointer;
 
@@ -819,7 +814,7 @@ body {
 
 //volunteer map: popup
 .vol-oppor-item {
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   @extend %base-spacing-mid;
 
   &:last-of-type {
@@ -979,7 +974,7 @@ body {
 }
 
 .comment-item {
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   padding: $base-spacing-lg 0 0 0;
 
   &:last-of-type {
@@ -1079,7 +1074,7 @@ body {
 
 .school-comparison-flow {
   min-width: 750px; //a bit dicy, these fixed widths
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   overflow: auto;
   @extend %white-bg;
 }
@@ -1226,7 +1221,7 @@ body {
 }  
 
 .org-tab-content, .profile-tab-content {
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
   padding: $base-spacing 0 ($base-spacing + 2);
 
   &:last-of-type {

@@ -36,7 +36,7 @@
 		}
 
 		tr {
-			border-bottom: 1px solid $grey-cloud;
+			border-bottom: 1px solid $border-color;
 			padding: $base-spacing-mid $base-spacing;
 		}
 	}
@@ -213,7 +213,7 @@
   }
 
   .tab-heading-active {
-    border: 1px solid $grey-cloud;
+    border: 1px solid $border-color;
     border-bottom: none;
   }
 
@@ -392,7 +392,7 @@
 			left: 0;
 			top: $header-height - 6px;
   		box-shadow: 0 2px 2px 0 rgba(77,77,77,0.2);
-			border: 1px solid $grey-cloud;
+			border: 1px solid $border-color;
 			border-top: none;
 			padding: 0 0 $base-spacing 0;  
   	}
@@ -534,7 +534,7 @@
 	  @include vertical-inline-top;
 
 	  &:first-of-type {
-	    border-left: 1px solid $grey-cloud;
+	    border-left: 1px solid $border-color;
 	  }
 
 	  .select2-container {

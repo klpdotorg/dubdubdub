@@ -77,7 +77,7 @@
 .rbox_inline, .rbox_html {
   @extend %white-bg;
   padding: $base-spacing-lg;
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   box-shadow: 0 2px 0 0 $grey-cloud;
   @extend %border-radius-sm;
 

@@ -244,7 +244,7 @@
   @extend %uppercase;
   text-decoration: none;
   padding: $base-spacing 0;
-  border-bottom: 1px solid $grey-cloud;
+  border-bottom: 1px solid $border-color;
 }
 
 .leaflet-control-layers label:last-of-type {

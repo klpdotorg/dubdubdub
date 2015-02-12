@@ -15,7 +15,7 @@ textarea {
 }
 
 input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select {
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   @extend %white-bg;
 
   @include placeholder {
@@ -205,7 +205,7 @@ input.error {
 .form-edit-password {
   background-color: $grey-mist;
   padding: $base-spacing-lg-x;
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   @extend %border-radius-sm;
 }
 

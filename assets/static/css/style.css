@@ -51,6 +51,7 @@ q:before, q:after {
 /*-------------------------------------*/
 /*-------------------------------------*/
 /*-------------------------------------*/
+/*-------------------------------------*/
 /* TYPOGRAPHY */
 /*-------------------------------------*/
 /* LINKS */
@@ -218,7 +219,6 @@ sub {
 .heading-section {
   display: inline-block;
   color: #898989;
-  border: 1px solid #d8d8d8;
   box-shadow: 0px 1px 1px 0px #d8d8d8;
   padding: 5px 20px;
   margin: 50px 20px 0;
@@ -271,7 +271,6 @@ sub {
 /*-------------------------------------*/
 /* TEXT-BORDERED */
 .text-bordered {
-  border: 1px solid #d8d8d8;
   padding: 10px 15px; }
 
 /*-------------------------------------*/
@@ -409,6 +408,12 @@ sub {
   color: #7bb6ec; }
 
 /*-------------------------------------*/
+/* BORDER */
+.border-base, .heading-section, .text-bordered, .dropdown-base ul, .table-infra-key-color:after, .infra-key-legend, .border-grey-cloud, .tab-wrap, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container.select2-container-disabled .select2-choice, .select2-container-multi .select2-choices, .rbox_inline, .rbox_html, .picker__select--month,
+.picker__select--year, .nav, .options-list {
+  border: 1px solid #d8d8d8; }
+
+/*-------------------------------------*/
 /* SPACING */
 .base-spacing {
   padding: 10px 0; }
@@ -521,7 +526,6 @@ img, video {
   .dropdown-base ul {
     display: none;
     min-width: 80px;
-    border: 1px solid #d8d8d8;
     position: absolute;
     left: 0;
     z-index: 1; }
@@ -561,7 +565,6 @@ img, video {
   font-size: 10px;
   position: absolute;
   top: 1px;
-  border: 1px solid #d8d8d8;
   width: 15px;
   height: 15px; }
 
@@ -589,7 +592,6 @@ img, video {
     right: 0; }
 
 .infra-key-legend {
-  border: 1px solid #d8d8d8;
   padding: 10px;
   margin-top: 40px; }
 
@@ -820,9 +822,6 @@ hr {
 
 /*-------------------------------------*/
 /* BORDERS */
-.border-grey-cloud {
-  border: 1px solid #d8d8d8; }
-
 /*-------------------------------------*/
 /* CIRCULAR BULLETS */
 .circle-bullet {
@@ -918,7 +917,6 @@ hr {
 
 /*-------------------------------------*/
 .tab-wrap {
-  border: 1px solid #d8d8d8;
   border-bottom: none;
   margin-top: 25px; }
 
@@ -1058,18 +1056,16 @@ textarea {
   vertical-align: top;
   height: 120px; }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select {
-  border: 1px solid #d8d8d8; }
-  input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
-    color: #bbb; }
-  input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
-    color: #bbb; }
-  input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
-    color: #bbb; }
-  input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
-    color: #bbb; }
-  input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
-    outline: 0; }
+input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
+  color: #bbb; }
+input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  color: #bbb; }
+input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  color: #bbb; }
+input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
+  color: #bbb; }
+input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
+  outline: 0; }
 
 .label-inline {
   min-width: 100px;
@@ -1168,8 +1164,7 @@ input.error {
 /* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
   background-color: #f6f6f6;
-  padding: 25px;
-  border: 1px solid #d8d8d8; }
+  padding: 25px; }
 
 .form-edit-heading {
   letter-spacing: 1px; }
@@ -1196,7 +1191,6 @@ Version: 3.5.1 Timestamp: Tue Jul 22 18:58:56 EDT 2014
   padding: 0 0 0 8px;
   overflow: hidden;
   position: relative;
-  border: 1px solid #d8d8d8;
   white-space: nowrap;
   line-height: 35px;
   color: #5F5F5F;
@@ -1342,8 +1336,7 @@ html[dir="rtl"] .select2-container .select2-choice .select2-arrow b {
   height: auto !important;
   padding: 4px 20px 4px 5px;
   margin: 0;
-  outline: 0;
-  border: 1px solid #d8d8d8; }
+  outline: 0; }
 
 html[dir="rtl"] .select2-search input {
   padding: 4px 5px 4px 20px; }
@@ -1501,7 +1494,6 @@ disabled look for disabled choices in the results dropdown
 .select2-container.select2-container-disabled .select2-choice {
   background-color: #f6f6f6;
   background-image: none;
-  border: 1px solid #d8d8d8;
   cursor: default; }
 
 .select2-container.select2-container-disabled .select2-choice .select2-arrow {
@@ -1519,7 +1511,6 @@ disabled look for disabled choices in the results dropdown
   margin: 0;
   padding: 0 5px 0 0;
   position: relative;
-  border: 1px solid #d8d8d8;
   cursor: text;
   overflow: hidden;
   background-color: #fff; }
@@ -1727,7 +1718,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 .rbox_inline, .rbox_html {
   padding: 20px;
-  border: 1px solid #d8d8d8;
   box-shadow: 0 2px 0 0 #d8d8d8; }
 
 @media only screen and (min-width: 600px) {
@@ -1892,7 +1882,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 .picker__select--month,
 .picker__select--year {
-  border: 1px solid #d8d8d8;
   height: 2em;
   padding: .5em;
   margin-left: .25em;
@@ -2096,8 +2085,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 //consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
-//maybe a class for border-
-
 // role=tooltip is technically wrong because it violates when there's no described by
 
 //highcharts NOT WORKING ON FINANCE
@@ -2111,9 +2098,6 @@ the css in the head of map.html
 //modularize icon boy girl and total later, add same classes to the map popup
 
 //let's only show the legend on infrastructure tab if left column info is present: FILE A BUG: Sanj
-
-//make make border: 1px solid $grey-cloud modular;
-
 
 //SANJ:
 
@@ -2178,7 +2162,6 @@ body {
   bottom: 0;
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
-  border: 1px solid #d8d8d8;
   height: 100%; }
   .nav ul {
     display: none; }
@@ -2273,8 +2256,7 @@ body {
   top: 45px;
   left: -80px;
   right: 0;
-  min-width: 80px;
-  border: 1px solid #d8d8d8; }
+  min-width: 80px; }
   .options-list a {
     display: block;
     color: #898989;

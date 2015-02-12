@@ -306,7 +306,7 @@ sub {
   @extend %center-text;
   @extend %border-radius-sm;
   @extend %uppercase;
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   box-shadow: 0px 1px 1px 0px $grey-cloud;
   padding: $base-spacing-sm $base-spacing-lg;
   margin: $base-spacing-lg-2x $base-spacing-lg 0;
@@ -395,7 +395,7 @@ sub {
 /* TEXT-BORDERED */
 
 .text-bordered {
-  border: 1px solid $grey-cloud;
+  @extend %border-base;
   padding: $base-spacing $base-spacing-mid;
   @extend %border-radius-sm;
 
