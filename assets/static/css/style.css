@@ -288,7 +288,7 @@ sub {
 .brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green, .brand-school {
   color: #26b262; }
 
-.brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
+.brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after, .brand-school-bg {
   background-color: #26b262; }
 
 .brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count, .demo-color-blue-extend, .brand-school-cluster {
@@ -297,40 +297,43 @@ sub {
 .brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .tab-heading.tab-heading-active, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
-.picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img {
+.picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .brand-school-cluster-bg {
   background-color: #3891e3; }
 
 .brand-turquoise, .home-help-donate h3:first-of-type, .volunteer-works-share h3:first-of-type, .volunteer-story-heading, .leaflet-container a.brand-turquoise, .brand-school-block {
   color: #24b2b6; }
 
-.brand-turquoise-bg, .home-help-donate .module-img, .volunteer-works-share .module-img {
+.brand-turquoise-bg, .home-help-donate .module-img, .volunteer-works-share .module-img, .brand-school-block-bg {
   background-color: #24b2b6; }
 
 .brand-purple, .school-type-preschool, .brand-preschool {
   color: #7575bc; }
 
-.brand-purple-bg {
+.brand-purple-bg, .brand-preschool-bg {
   background-color: #7575bc; }
 
 .purple-amethyst, .brand-school-district {
   color: #7b7795; }
 
-.purple-amethyst-bg {
+.purple-amethyst-bg, .brand-school-district-bg {
   background-color: #7b7795; }
 
 .brand-red, .error-message, .picker__button--clear:before, .about-map span, .brand-preschool-project {
   color: #cb0012; }
 
-.brand-red-bg, .alert.error {
+.brand-red-bg, .alert.error, .brand-preschool-project-bg {
   background-color: #cb0012; }
 
 .maroon, .brand-preschool-district {
   color: #a31460; }
 
+.maroon-bg, .brand-preschool-district-bg {
+  background-color: #a31460; }
+
 .pink-salmon, .brand-preschool-circle {
   color: #f87c84; }
 
-.pink-salmon-bg {
+.pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: #f87c84; }
 
 .white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,

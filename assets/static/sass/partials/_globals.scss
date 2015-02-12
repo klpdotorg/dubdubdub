@@ -70,7 +70,7 @@
   color: $brand-green;
 }
 
-.brand-green-bg, %brand-green-bg {
+.brand-green-bg, %brand-green-bg, .brand-school-bg {
   background-color: $brand-green;
 }
 
@@ -79,7 +79,7 @@
   color: $brand-blue;
 }
 
-.brand-blue-bg, %brand-blue-bg {
+.brand-blue-bg, %brand-blue-bg, .brand-school-cluster-bg {
   background-color: $brand-blue;
 }
 
@@ -88,7 +88,7 @@
   color: $brand-turquoise;
 }
 
-.brand-turquoise-bg, %brand-turquoise-bg {
+.brand-turquoise-bg, %brand-turquoise-bg, .brand-school-block-bg {
   background-color: $brand-turquoise;
 }
 
@@ -97,7 +97,7 @@
   color: $brand-purple;
 }
 
-.brand-purple-bg, %brand-purple-bg {
+.brand-purple-bg, %brand-purple-bg, .brand-preschool-bg {
   background-color: $brand-purple;
 }
 
@@ -109,7 +109,7 @@
   color: $purple-amethyst;
 }
 
-.purple-amethyst-bg, %purple-amethyst-bg {
+.purple-amethyst-bg, %purple-amethyst-bg, .brand-school-district-bg {
   background-color: $purple-amethyst;
 }
 
@@ -118,7 +118,7 @@
   color: $brand-red;
 }
 
-.brand-red-bg, %brand-red-bg {
+.brand-red-bg, %brand-red-bg, .brand-preschool-project-bg {
   background-color: $brand-red;
 }
 
@@ -127,12 +127,16 @@
   color: $maroon;
 }
 
+.maroon-bg, %maroon-bg, .brand-preschool-district-bg {
+  background-color: $maroon;
+}
+
 // pink-salmon
 .pink-salmon, %pink-salmon, .brand-preschool-circle {
   color: $pink-salmon;
 }
 
-.pink-salmon-bg, %pink-salmon-bg {
+.pink-salmon-bg, %pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: $pink-salmon;
 }
 
