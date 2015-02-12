@@ -1,9 +1,14 @@
-.box-demo {
-  width: 80px;
-  height: 80px;
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 10px;
+.style-block {
+  @extend %base-spacing-lg;
+
+  .button-hollow {
+    margin: $base-spacing 0;
+  }
+}
+
+.style-block-code {
+  display: none;
+  margin: $base-spacing-lg 0 0 0;
 }
 
 code {
@@ -14,6 +19,14 @@ code {
   display: block;
   font-family: monospace;
   @extend %font-small;
+}
+
+.box-demo {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
 }
 
 #colors-brand {

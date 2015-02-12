@@ -424,7 +424,7 @@ sub {
 .base-spacing-mid, .vol-oppor-item {
   padding: 15px 0; }
 
-.base-spacing-lg {
+.base-spacing-lg, .style-block {
   padding: 20px 0; }
 
 .base-spacing-lg-x, .data-each, .volunteer-story-each {
@@ -3358,12 +3358,12 @@ body {
       border-left: 1px solid #d8d8d8; }
     .filter-school-each .select2-container {
       width: 140px; } }
-.box-demo {
-  width: 80px;
-  height: 80px;
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 10px; }
+.style-block .button-hollow {
+  margin: 10px 0; }
+
+.style-block-code {
+  display: none;
+  margin: 20px 0 0 0; }
 
 code {
   border-left: 3px solid #7575bc;
@@ -3371,6 +3371,13 @@ code {
   padding: 20px;
   display: block;
   font-family: monospace; }
+
+.box-demo {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px; }
 
 #colors-brand code p, #colors-brand code div, #colors-brand code span {
   color: #5F5F5F; }

@@ -9,7 +9,7 @@
   }
 
   p {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 </style>
 {% endblock %}
@@ -48,7 +48,7 @@
   <div class="container">
     <h2 class="heading-secondary brand-purple">Colors: Brand</h2>
     <div id="colors-brand">
-      <div class="center-text">
+      <div class="base-spacing-lg center-text">
         <div class="vertical-inline-top">
           <div class="box-demo brand-blue-bg"></div>   
           <div class="font-smaller brand-blue">$brand-blue</div>   
@@ -82,27 +82,63 @@
     
       <div class="base-spacing"></div>
 
-      <div class="heading-tertiary">Colors</div>
+     <!--  <div class="heading-tertiary center-text">Colors: Options</div>
       
       <div class="style-block">
+        <p class="bold">You can do this in 3 ways:</p>
         <div class="style-block-demo">
-          <p class="bold">You can do this in 3 ways:</p>
-          <p class="brand-blue">By adding a class in the template</p>
-          <p class="demo-color-blue">By adding a variable in the Sass file</p>
-          <p class="demo-color-blue-extend">By extending a placeholder in the Sass file</p>
+<p class="brand-blue">By adding a class in the template</p>
+
+<p class="demo-color-blue">By adding a variable in the Sass file, example below (of course, 
+you can't use Sass in an HTML/template file)</p>
+
+<style>
+.demo-color-blue {
+  color: $brand-blue;
+}
+</style>
+
+<p class="demo-color-blue-extend">By extending a placeholder in the Sass file</p>
+<style>
+.demo-color-blue-extend {
+  @extend %brand-blue;
+}
+</style>
         </div> <!-- /style-block-demo -->
   
       </div> <!-- /style-block -->
 
       <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Brand</div>
         <div class="style-block-demo">
-          <p class="brand-blue">Add some brand-blue</p>
-          <p class="brand-green">Add some brand-green</p>
-          <p class="brand-turquoise">Add some brand-turquoise</p>
-          <p class="brand-purple">Add some brand-purple</p>
-          <p class="brand-red">Add some brand-red</p>
-          <p class="brand-orange">Add some brand-orange</p>  
+<p class="brand-blue">Add some brand-blue</p>
+<p class="brand-green">Add some brand-green</p>
+<p class="brand-turquoise">Add some brand-turquoise</p>
+<p class="brand-purple">Add some brand-purple</p>
+<p class="brand-red">Add some brand-red</p>
+<p class="brand-orange">Add some brand-orange</p>  
         </div> <!-- /style-block-demo -->
+        
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Background: Brand</div>
+        <div class="style-block-demo white">
+<p class="brand-blue-bg">Brand-blue background</p>
+<p class="brand-green-bg">Brand-green background</p>
+<p class="brand-turquoise-bg">Brand-turquoise background</p>
+<p class="brand-purple-bg">Brand-purple background</p>
+<p class="brand-red-bg">Brand-red background</p>
+<p class="brand-orange-bg">Brand-orange background</p>  
+        </div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
     </div> <!-- /colors-brand -->
     
   </div> <!-- /container -->
@@ -310,8 +346,12 @@ function escapeHtml(str) {
     $(".style-block").each(function(){  
       $demo = $(this).find('.style-block-demo');
       var code = escapeHtml($demo.html());
-      $(this).append("<div class='style-block-code'><code><pre>"+ code +  "</pre></code></div>");
+      $(this).append("<div class='style-block-code js-toggled'><code><pre>"+ code +  "</pre></code></div>");
     });
+
+    $(".js-toggle").click(function(){
+      $(this).parents(".style-block").find(".js-toggled").slideToggle("fast");
+    })
   });
 </script>
 {% endblock %}
