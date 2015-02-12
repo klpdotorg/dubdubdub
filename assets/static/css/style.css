@@ -291,7 +291,7 @@ sub {
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after {
   background-color: #26b262; }
 
-.brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count, .brand-school-cluster {
+.brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count, .demo-color-blue-extend, .brand-school-cluster {
   color: #3891e3; }
 
 .brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .alert, .tab-heading.tab-heading-active, .picker__day--highlighted:hover,
@@ -3374,5 +3374,8 @@ code {
 
 #colors-brand code p, #colors-brand code div, #colors-brand code span {
   color: #5F5F5F; }
+
+.demo-color-blue {
+  color: #3891e3; }
 
 /*# sourceMappingURL=style.css.map */

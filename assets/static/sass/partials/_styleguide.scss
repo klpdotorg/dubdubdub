@@ -23,3 +23,11 @@ code {
     }
   }
 }
+
+.demo-color-blue {
+  color: $brand-blue;
+}
+
+.demo-color-blue-extend {
+  @extend %brand-blue;
+}
