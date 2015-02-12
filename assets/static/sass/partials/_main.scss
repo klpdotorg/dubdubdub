@@ -135,7 +135,7 @@ body {
 
 	li {
     @extend %bold; 
-		@extend %font-uppercase;
+    @extend %uppercase;
 		padding: 0 $base-spacing;
     letter-spacing: 1px;
     text-align: left;
@@ -661,7 +661,7 @@ body {
 
 .heading-volunteer-box {
   @extend %brand-orange;
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-smaller;
   letter-spacing: 1px;
 
@@ -790,7 +790,7 @@ body {
 }
 
 .filter-label {
-  @extend %font-uppercase;
+  @extend %uppercase;
   padding-right: $base-spacing;
   min-width: 120px;
   display: inline-block;
@@ -998,7 +998,7 @@ body {
     padding: $base-spacing;
     line-height: 1;
     @extend %white;
-    @extend %font-uppercase;
+    @extend %uppercase;
     @extend %font-smaller;
     @extend %bold; 
     display: none;
@@ -1041,7 +1041,7 @@ body {
 }
 
 .label-compare {
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-smallest;
   @extend %bold; 
   padding: $base-spacing-sm $base-spacing;
@@ -1095,7 +1095,7 @@ body {
 }
 
 .compare-section-heading {
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-small;
   @extend %bold; 
   color: $purple-amethyst;
@@ -1169,7 +1169,7 @@ body {
 .icon-compare-label {
   @extend %font-larger;
   letter-spacing: 1px;
-  @extend %font-uppercase;
+  @extend %uppercase;
 }
 
 .school-compare-each {

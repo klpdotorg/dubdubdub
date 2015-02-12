@@ -118,7 +118,7 @@ a {
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.font-uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label {
+.uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label {
   text-transform: uppercase; }
 
 .font-base-size, body {

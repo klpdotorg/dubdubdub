@@ -660,7 +660,7 @@ hr {
 // icon: vertified
 .verified {
   @extend %brand-green;
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-smallest;
   @extend %bold; 
   letter-spacing: 1px;
@@ -943,7 +943,7 @@ a.button {
 .scroll-smooth-block {
   border-bottom: 1px solid $grey-cloud;
   @extend %white-bg;
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-smallest;
   @extend %center-text;
   letter-spacing: 1px;
@@ -1076,7 +1076,7 @@ a.button {
   @extend %center-element;
 
   h3:first-of-type {
-    @extend %font-uppercase;
+    @extend %uppercase;
   }
 }
 
@@ -1194,7 +1194,7 @@ a.button {
     text-decoration: none;
     display: block;
     padding: $base-spacing-sm $base-spacing;
-    @extend %font-uppercase;
+    @extend %uppercase;
     @extend %font-smallest;
     @extend %bold; 
     border-bottom: 1px solid;

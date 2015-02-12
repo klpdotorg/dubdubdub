@@ -111,7 +111,7 @@ a {
   font-weight: 300;
 }
 
-.font-uppercase, %font-uppercase {
+.uppercase, %uppercase {
   text-transform: uppercase;
 }
 
@@ -262,7 +262,7 @@ sub {
   line-height: 1.5;
   margin: 50px 0;
   letter-spacing: 1px;
-  @extend %font-uppercase;
+  @extend %uppercase;
 
   &:after {
     @extend %heading-border;
@@ -271,7 +271,7 @@ sub {
 
 .heading-secondary, %heading-secondary {
   @extend %h2;
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %center-text;
   @extend %font-light;
 }
@@ -279,7 +279,7 @@ sub {
 .heading-tertiary, %heading-tertiary {
   @extend %bold;
   @extend %h5;
-  @extend %font-uppercase;
+  @extend %uppercase;
   color: $grey-gravel;
   margin-bottom: $base-spacing-lg-x;
 }
@@ -305,7 +305,7 @@ sub {
   @extend %h4;
   @extend %center-text;
   @extend %border-radius-sm;
-  @extend %font-uppercase;
+  @extend %uppercase;
   border: 1px solid $grey-cloud;
   box-shadow: 0px 1px 1px 0px $grey-cloud;
   padding: $base-spacing-sm $base-spacing-lg;
@@ -360,7 +360,7 @@ sub {
 }
 
 .heading-section-ul-alt {
-  @extend %font-uppercase;
+  @extend %uppercase;
   letter-spacing: 1px;
   @extend %bold;
   @extend %font-small;

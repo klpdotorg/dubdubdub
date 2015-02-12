@@ -210,7 +210,7 @@ input.error {
 }
 
 .form-edit-heading {
-  @extend %font-uppercase; 
+  @extend %uppercase;
   @extend %brand-blue;
   @extend %center-text;
   @extend %font-small;

@@ -6,11 +6,11 @@
         <div class="h5 brand-red">{{ activity_type_details.name }}</div>
         <span class="font-smallest"> 
           <span class="grey-steel">For </span>
-          <span class="font-uppercase brand-turquoise"> {{ organization_details.name }} </span>
+          <span class="uppercase brand-turquoise"> {{ organization_details.name }} </span>
         </span>
       </div>
       <div class="org-tab-school">
-        <div><a href="/schoolpage/school/{{ school_details.id }}" class="brand-green font-larger font-uppercase">{{ school_details.name }}</a></div>
+        <div><a href="/schoolpage/school/{{ school_details.id }}" class="brand-green font-larger uppercase">{{ school_details.name }}</a></div>
 
         {% if school_details.address_full %}
         <p class="heading-tiny">{{ school_details.address_full }}</p>
@@ -48,12 +48,12 @@
         <div class="h5 brand-red">{{ name }}</div>
         <span class="font-smallest">
           <span class="grey-steel">For </span>
-          <span class="font-uppercase brand-turquoise"> {{ organization_details.name }}</span>
+          <span class="uppercase brand-turquoise"> {{ organization_details.name }}</span>
         </span>
       </div>
 
       <div class="org-tab-school">
-        <div class="brand-green font-larger font-uppercase">{{ school_details.name }}</div>
+        <div class="brand-green font-larger uppercase">{{ school_details.name }}</div>
         <div class="heading-tiny">{{ school_details.address_full }}</div>
       </div>
     </div> <!-- /clearfix -->

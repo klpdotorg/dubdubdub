@@ -41,7 +41,7 @@
 
 .map-heading-main {
   @extend %brand-green;
-  @extend %font-uppercase;
+  @extend %uppercase;
   padding-right: $base-spacing-lg * 2;
   word-wrap: break-word;
   margin: 0 0 $base-spacing-sm 0;
@@ -93,7 +93,7 @@
 
 .map-label-title {
   color: $grey-steel;
-  @extend %font-uppercase;
+  @extend %uppercase;
   letter-spacing: 1px;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .gender-icons-title, .facility-icons-title {
-  @extend %font-uppercase;
+  @extend %uppercase;
   @extend %font-small;
   @extend %bold; 
   @extend %center-text;
@@ -241,7 +241,7 @@
   line-height: 26px;
   @extend %bold; 
   letter-spacing: 1px;
-  @extend %font-uppercase;
+  @extend %uppercase;
   text-decoration: none;
   padding: $base-spacing 0;
   border-bottom: 1px solid $grey-cloud;
