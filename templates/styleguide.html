@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block page_title %}About{% endblock %}
+
+{% block css_extra %}
+<style>
+  .box-demo {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <section>
@@ -24,12 +36,21 @@
     <h2 class="heading-section">Colors</h2>
     <div class="heading-section-block">
       <ul>
-        <li><a href="#paisa" class="js-scroll-smooth-link">Brand</a></li>
+        <li><a href="#colors-brand" class="js-scroll-smooth-link">Brand</a></li>
         <li><a href="#aser" class="js-scroll-smooth-link">Common</a></li>
         <li><a href="#probe" class="js-scroll-smooth-link">Links</a></li>
       </ul>
     </div>
   </div>
+
+  <div class="container">
+    <div id="colors-brand">
+      <div class="box-demo brand-blue-bg">
+        
+      </div>
+    </div>
+    
+  </div> <!-- /container -->
 
   <div class="center-text">
     <h2 class="heading-section">Grid</h2>
@@ -38,6 +59,10 @@
       </ul>
     </div>
   </div>
+
+  <div class="container">
+    
+  </div> <!-- /container -->
 
   <div class="center-text">
     <h2 class="heading-section">Typography</h2>
