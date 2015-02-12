@@ -25,6 +25,11 @@ urlpatterns = patterns(
             }
         ), name='home'),
 
+    # styleguide page
+    url(r'^styleguide/$', StaticPageView.as_view(
+        template_name='styleguide.html'
+        ), name='styleguide'),
+
     # about pages
     url(r'^about/$', StaticPageView.as_view(
         template_name='aboutus.html',
