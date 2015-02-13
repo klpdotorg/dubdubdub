@@ -102,6 +102,16 @@
 }
 
 
+// red
+.brand-red, %brand-red, .brand-preschool-project {
+  color: $brand-red;
+}
+
+.brand-red-bg, %brand-red-bg, .brand-preschool-project-bg {
+  background-color: $brand-red;
+}
+
+
 // colors: others
 
 // purple-amethyst
@@ -111,15 +121,6 @@
 
 .purple-amethyst-bg, %purple-amethyst-bg, .brand-school-district-bg {
   background-color: $purple-amethyst;
-}
-
-// red
-.brand-red, %brand-red, .brand-preschool-project {
-  color: $brand-red;
-}
-
-.brand-red-bg, %brand-red-bg, .brand-preschool-project-bg {
-  background-color: $brand-red;
 }
 
 // maroon 
@@ -200,6 +201,15 @@
 
 .grey-mist-bg, %grey-mist-bg {
   background-color: $grey-mist;
+}
+
+// grey-cloud
+.grey-cloud, %grey-cloud {
+  color: $grey-cloud;
+}
+
+.grey-cloud-bg, %grey-cloud-bg {
+  background-color: $grey-cloud;
 }
 
 // grey-silver
@@ -483,11 +493,11 @@ img, video {
 
   a {
     display: inline-block;
-    color: $grey-steel; 
+    @extend %grey-steel; 
     padding: $base-spacing;
 
     &:hover{
-      background: $grey-mist; 
+      @extend %grey-mist; 
     }
   }
 }
@@ -531,7 +541,7 @@ img, video {
   tr {
     td:first-of-type {
       @extend %bold; 
-      color: $grey-gravel;
+      @extend %grey-gravel;
       padding-left: 0;
     }
   }
@@ -777,7 +787,7 @@ a.button {
 
 .button-grey, %button-grey {
   @extend %button;
-  background-color: $grey-steel;
+  @extend %grey-steel;
 }
 
 .button-orange, %button-orange {
@@ -788,7 +798,7 @@ a.button {
 .button-hollow, %button-hollow {
   @extend %button-base;
   background-color: transparent;
-  color: $grey-steel;
+  @extend %grey-steel;
   border: 1px solid
 }
 
@@ -916,7 +926,7 @@ a.button {
   padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: $grey-steel;
+  @extend %grey-steel-bg;
   background-size: cover;
   @extend %center-text;
   position: relative;
@@ -971,14 +981,14 @@ a.button {
     padding: $base-spacing $base-spacing-mid;
 
     &:hover, &:focus {
-      background-color: $grey-mist;
+      @extend %grey-mist-bg;
       @extend %transition-ease-in;
     }
   }
 }
 
 .scroll-smooth-links, .scroll-smooth-links a {
-  color: $grey-gravel;
+  @extend %grey-gravel;
 }
 
 .scroll-smooth-sticky {
@@ -1033,7 +1043,7 @@ a.button {
   }
 
   &.white:before {
-    color: $grey-cloud;
+    @extend %grey-cloud;
     content: "\f1db";
   }
 }
@@ -1145,7 +1155,7 @@ a.button {
 
 .bar-custom {
   height: $base-spacing-mid;
-  background-color: $grey-cloud;
+  @extend %grey-cloud-bg;
   min-width: 180px;
 }
 
@@ -1209,7 +1219,7 @@ a.button {
     border-bottom: 1px solid;
     cursor: pointer;
     color: $white;
-    background: $grey-steel;
+    @extend %grey-steel-bg;
 
     &.tab-heading-active {
       @extend %brand-blue-bg;

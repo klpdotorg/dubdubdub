@@ -92,7 +92,7 @@
 
 
 .map-label-title {
-  color: $grey-steel;
+  @extend %grey-steel;
   @extend %uppercase;
   letter-spacing: 1px;
 }
@@ -120,7 +120,7 @@
   @extend %bold; 
   @extend %center-text;
   letter-spacing: 1px;
-  color: $grey-steel;
+  @extend %grey-steel;
   margin-top: $base-spacing-mid;
 }
 
@@ -262,7 +262,7 @@
   border-radius: 4px;
 
   &:hover {
-    background-color: $grey-mist;
+    @extend %grey-mist-bg;
   }
 }
 

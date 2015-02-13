@@ -17,7 +17,7 @@
   margin-right: .25em;
 }
 .picker__year {
-  color: $grey-silver;
+  @extend %grey-silver;
 }
 
 .picker__select--month,
@@ -88,8 +88,8 @@
 
 .picker__nav--prev:before,
 .picker__nav--next:before {
-  font-family: "FontAwesome";
-  color: $grey-steel;
+  @extend %font-icon;
+  @extend %grey-steel;
 }
 
 .picker__nav--prev:before {
@@ -139,7 +139,7 @@
 .picker__weekday {
   width: 14.285714286%;
   padding-bottom: .25em;
-  color: $grey-steel;
+  @extend %grey-steel;
 }
 
 .picker__day {
@@ -154,7 +154,7 @@
   border-top-color: $grey-steel;
 }
 .picker__day--outfocus {
-  color: $grey-cloud;
+  @extend %grey-cloud;
 }
 .picker__day--infocus:hover,
 .picker__day--outfocus:hover {
@@ -180,9 +180,9 @@
 .picker__day--disabled,
 .picker__day--disabled:hover,
 .picker--focused .picker__day--disabled {
-  background: #f5f5f5;
-  border-color: #f5f5f5;
-  color: $grey-cloud;
+  background: $grey-mist;
+  border-color: $grey-mist;
+  @extend %grey-cloud;
   cursor: default;
 }
 .picker__day--highlighted.picker__day--disabled,
@@ -250,14 +250,14 @@
   content: "\f00d";
   font-family: "FontAwesome";
   margin-right: .35em;
-  color: $grey-steel;
+  @extend %grey-steel;
 }
 
 .picker__button--today[disabled],
 .picker__button--today[disabled]:hover {
   background: $grey-mist;
   border-color: $grey-mist;
-  color: $grey-silver;
+  @extend %grey-silver;
   cursor: default;
 }
 

@@ -19,7 +19,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   @extend %white-bg;
 
   @include placeholder {
-    color: $grey-silver;
+    @extend %grey-silver;
   }
 
   &:focus {
@@ -170,7 +170,7 @@ input.error {
 /* FORM: OPTIONAL TEXT */
 
 .form-optional-text {
-  color: $grey-silver;
+  @extend %grey-silver;
 }
 
 
@@ -203,7 +203,7 @@ input.error {
 /*-------------------------------------*/
 /* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
-  background-color: $grey-mist;
+  @extend %grey-mist-bg;
   padding: $base-spacing-lg-x;
   @extend %border-base;
   @extend %border-radius-sm;

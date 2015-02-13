@@ -102,7 +102,7 @@ body {
 .nav-trigger {
   @extend %button--sm;
   @extend %button-hollow;
-	color: $grey-gravel;
+  @extend %grey-gravel;
   right: $base-spacing;
   top: $base-spacing;
   cursor: pointer;
@@ -227,7 +227,7 @@ body {
 }
 
 .copyright {
-  color: $grey-cloud;
+  @extend %grey-cloud;
   padding-top: $base-spacing-sm;
   clear: both; //CLEARFIX EXTEND FAILING SILENTLY
 }
@@ -268,7 +268,7 @@ body {
 .profile-options {
   @extend %button-hollow;
   @extend %button--sm;
-  color: $grey-silver;
+  @extend %grey-silver;
 
   &:before {
     content: "\f007";
@@ -301,7 +301,7 @@ body {
 
   a {
     display: block; 
-    color: $grey-steel; 
+    @extend %grey-steel;
     padding: $base-spacing;
 
     &:hover{
@@ -337,7 +337,7 @@ body {
   @extend %text-truncate;
 
   a {
-    color: $grey-steel;
+    @extend %grey-steel;
     padding: 0 $base-spacing 0 0;
     @extend %transition-linear;
     @extend %font-smaller;
@@ -397,7 +397,7 @@ body {
   position: relative;
 
   a {
-    color: $grey-silver;
+    @extend %grey-silver;
 
     &:hover {
       color: $link-hover-color;
@@ -703,10 +703,10 @@ body {
 }
 
 .volunteer-stories {
-  background-color: $grey-mist;
+  @extend %grey-mist-bg;
 
   .heading-tiny {
-    color: $grey-silver;
+    @extend %grey-silver;
   }
 }
 
@@ -790,7 +790,7 @@ body {
 }
 
 .sidebar-volunteer-map {
-  background-color: $grey-mist;
+  @extend %grey-mist-bg;
   
   @extend %scrollbar-webkit;
 }
@@ -824,7 +824,7 @@ body {
 
 .vol-oppor-count {
   padding: $base-spacing-sm;
-  background: $grey-mist;
+  @extend %grey-mist-bg;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: $grey-cloud;
@@ -1022,7 +1022,7 @@ body {
   position: absolute;
   top: $base-spacing;
   right: $base-spacing;
-  color: $grey-steel;
+  @extend %grey-steel;
   z-index: 20;
 }
 
@@ -1109,7 +1109,7 @@ body {
 
 .compare-section-source {
   padding: $base-spacing-lg $base-spacing-lg-2x;
-  color: $grey-silver;
+  @extend %grey-silver;
   @extend %white-bg;
   @extend %font-smaller;
   border: 1px solid;

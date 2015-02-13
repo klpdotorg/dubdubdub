@@ -36,11 +36,11 @@
 }
 
 .nextLightBox, .prevLightBox, .closeLightBox {
-  color: $grey-silver;
+  @extend %grey-silver;
   cursor: pointer;
   
   &:hover {
-    color: $grey-cloud;
+    @extend %grey-cloud;
     @extend %transition-ease-in;
   }
 }

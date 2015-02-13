@@ -280,17 +280,17 @@ sub {
   @extend %bold;
   @extend %h5;
   @extend %uppercase;
-  color: $grey-gravel;
+  @extend %grey-gravel;
   margin-bottom: $base-spacing-lg-x;
 }
 
 .heading-tiny, %heading-tiny {
-  color: $grey-steel;
+  @extend %grey-steel;
   @extend %font-smaller;
 }
 
 .heading-tiny-uppercase, %heading-tiny-uppercase {
-  color: $grey-steel;
+  @extend %grey-steel;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -301,7 +301,7 @@ sub {
 .heading-section {
   display: inline-block;
   @extend %white-bg;
-  color: $grey-steel;
+  @extend %grey-steel;
   @extend %h4;
   @extend %center-text;
   @extend %border-radius-sm;
@@ -315,7 +315,7 @@ sub {
 
 .heading-section-block {
   @extend %font-smaller;
-  background: $grey-mist;
+  @extend %grey-mist-bg;
   padding: $base-spacing-mid $base-spacing;
   border-top: 1px solid;
   border-bottom: 1px solid;
@@ -340,7 +340,7 @@ sub {
       font-size: 5px;
       position: absolute;
       left: -($base-spacing-sm);
-      top: $base-spacing-sm;
+      top: $base-spacing;
     }
   }
 
@@ -356,7 +356,7 @@ sub {
 }
 
 .heading-section-block, .heading-section-block a {
-  color: $grey-steel; 
+  @extend %grey-steel;
 }
 
 .heading-section-ul-alt {
@@ -371,7 +371,7 @@ sub {
   }
 
   a {
-    color: $grey-gravel;
+    @extend %grey-gravel;
   }
 }
 
