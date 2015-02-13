@@ -489,7 +489,6 @@
                                             data.basic_facilities.library ||
                                             data.basic_facilities.playground ||
                                             data.has_volunteer_activities;
-                console.log("school data", data);
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
@@ -526,6 +525,30 @@
 
         allLayers = L.layerGroup([preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, projectLayer, circleLayer]);
 
+ 
+       // Radius tool.
+        // Initialise the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        // Initialise the draw control and pass it the FeatureGroup of editable layers
+        var drawControl = new L.Control.Draw({
+            position: 'bottomright',
+            draw: {
+                polyline: false,
+                polygon: false,
+                rectangle: false,
+                marker: false,
+                circle: true
+            },
+            edit: {
+                featureGroup: drawnItems,
+                edit: false,
+                remove: false
+            }
+        });
+        map.addControl(drawControl);
+
         // Control for Filters.
 
         var filterControl = L.Control.extend({
@@ -554,28 +577,7 @@
 
         map.addControl(new filterControl());
 
-        // Radius tool.
-        // Initialise the FeatureGroup to store editable layers
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
-
-        // Initialise the draw control and pass it the FeatureGroup of editable layers
-        var drawControl = new L.Control.Draw({
-            position: 'bottomright',
-            draw: {
-                polyline: false,
-                polygon: false,
-                rectangle: false,
-                marker: false,
-                circle: true
-            },
-            edit: {
-                featureGroup: drawnItems,
-                edit: false,
-                remove: false
-            }
-        });
-        map.addControl(drawControl);
+ 
 
         // Map Events
         map.on('zoomend', updateLayers);
