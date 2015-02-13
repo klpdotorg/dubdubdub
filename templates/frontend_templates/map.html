@@ -41,6 +41,7 @@
             </div>
           </div>
           <div class="detail-item mar_top_20" style="display:none;">
+            {% if has_basic_facilities %}
             <h4 class="purple-heading">Facilities</h4>
             <div class="facility-items ta-c">
               {% if basic_facilities.computer_lab %}<div class="icon computer"></div>{% endif %}
@@ -48,6 +49,7 @@
               {% if has_volunteer_activities %}<div class="icon events"></div>{% endif %}
               {% if basic_facilities.playground %}<div class="icon football last"></div>{% endif %}
             </div>
+            {% endif %}
           </div>
           <div class="mar_top_10">
             <a class="button blue fl js-trigger-volunteer-map" href="/school/{{ id }}#?tab=volunteer">Volunteer</a>
@@ -102,6 +104,7 @@
         </div>
       </div>
     </div>
+    {% if has_basic_facilities %}
     <div class="facility-items">
       <h4 class="facility-icons-title">Facilities</h4>
       {% if basic_facilities.computer_lab %}<span class="tooltip" role="tooltip" aria-label="Has Computers"><div class="k-icon fa fa-laptop"></div></span>{% endif %}
@@ -109,6 +112,7 @@
       {% if has_volunteer_activities %}<span class="tooltip" role="tooltip" aria-label="Needs Volunteers"><div class="k-icon fa fa-calendar"></div></span>{% endif %}
       {% if basic_facilities.playground %}<span class="tooltip" role="tooltip" aria-label="Has a Playground"><div class="k-icon fa fa-soccer-ball-o"></div></span>{% endif %}
     </div>
+    {% endif %}
     {% if has_volunteer_activities %}
     <div class="center-text">
       <a class="button js-trigger-volunteer-map" href="/school/{{ id }}/#?tab=volunteer">Volunteer here</a>

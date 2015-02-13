@@ -485,6 +485,11 @@
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 t.stopLoading();
+                data.has_basic_facilities = data.basic_facilities.computer_lab || 
+                                            data.basic_facilities.library ||
+                                            data.basic_facilities.playground ||
+                                            data.has_volunteer_activities;
+                console.log("school data", data);
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
