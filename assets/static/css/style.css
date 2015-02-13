@@ -743,7 +743,8 @@ hr {
     white-space: nowrap;
     background: #000;
     left: -9999px;
-    margin-top: 12px; }
+    margin-top: 12px;
+    text-transform: initial; }
   .tooltip:before {
     content: "";
     width: 0;
@@ -3285,6 +3286,9 @@ body {
       width: 140px; } }
 .style-block .button-hollow {
   margin: 10px 0; }
+
+.style-block-demo {
+  position: relative; }
 
 .style-block-code {
   display: none;

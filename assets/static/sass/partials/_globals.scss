@@ -888,6 +888,7 @@ a.button {
     @extend %border-radius-sm;
     left: -9999px;
     margin-top: 12px;
+    text-transform: initial;
   }
 
   &:before {

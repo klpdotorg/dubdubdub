@@ -11,6 +11,10 @@
   p {
     margin-bottom: 5px;
   }
+
+  .alert {
+    position: static;
+  }
 </style>
 {% endblock %}
 
@@ -304,7 +308,7 @@ color: $brand-blue;
   </div> <!-- /container -->
 
   <div class="center-text">
-    <h2 class="heading-section">Notifications</h2>
+    <h2 class="heading-section">Alerts</h2>
     <div class="heading-section-block">
       <ul>
         <li><a href="#paisa" class="js-scroll-smooth-link">Linear</a></li>
@@ -313,6 +317,58 @@ color: $brand-blue;
     </div>
   </div>
 
+  <div class="container">
+    <h2 class="heading-secondary brand-purple">Notifications</h2>
+    <div>All alerts are fixed to the top of the screen (below the header) and slide up after a few seconds. They are neither fixed nor slide up on the styleguide, purely for demo purposes.</div>
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Alert: Default</div>
+      <div class="style-block-demo center-text">
+        <div class="alert">
+          Alert: Default
+        </div>
+      </div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Alert: Success</div>
+      <div class="style-block-demo center-text">
+        <div class="alert success">
+          Alert: Success
+        </div>
+      </div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Alert: Warning</div>
+      <div class="style-block-demo center-text">
+        <div class="alert warning">
+          Alert: Warning
+        </div>
+      </div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Alert: Error</div>
+      <div class="style-block-demo center-text">
+        <div class="alert error">
+          Alert: Error
+        </div>
+      </div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
   <div class="center-text">
     <h2 class="heading-section">Tooltips</h2>
     <div class="heading-section-block">
@@ -320,6 +376,43 @@ color: $brand-blue;
       </ul>
     </div>
   </div>
+
+  <div class="container">
+    <h2 class="heading-secondary brand-purple">Tooltips</h2>
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Tooltip: Text</div>
+      <div class="style-block-demo center-text">
+        <p><span class="tooltip" role="tooltip" aria-label="I am a tooltip">Hover over or tap me</span></p>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Tooltip: Button icon</div>
+      <div class="style-block-demo center-text">
+        <p><span class="icon-button-round tooltip" role="tooltip" aria-label="I am a tooltip"><span class="fa fa-check"></span></span></p>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Tooltip: Button</div>
+      <div class="style-block-demo center-text">
+        <p class="button tooltip" role="tooltip" aria-label="I am a tooltip">Hover hover hover</p>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
 
   <div class="center-text">
     <h2 class="heading-section">Tabs</h2>
