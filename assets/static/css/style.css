@@ -382,18 +382,18 @@ sub {
 .grey-cloud-bg, .bar-custom {
   background-color: #d8d8d8; }
 
-.grey-silver, input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder, input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder, input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder, .form-optional-text, .nextLightBox, .prevLightBox, .closeLightBox, .picker__year, .picker__button--today[disabled],
+.grey-silver, .button-hollow:hover, .button-hollow:focus, .nav-trigger:hover, .profile-options:hover, .nav-trigger:focus, .profile-options:focus, input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder, input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder, input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder, .form-optional-text, .nextLightBox, .prevLightBox, .closeLightBox, .picker__year, .picker__button--today[disabled],
 .picker__button--today[disabled]:hover, .profile-options, .banner-home-container a, .volunteer-stories .heading-tiny, .compare-section-source, .profile-volunteer-date {
   color: #bbb; }
 
 .grey-silver-bg {
   background-color: #bbb; }
 
-.grey-steel, .heading-tiny, .no-data, .profile-volunteer-date, .heading-tiny-uppercase, .table-base-heading, .heading-section, .heading-section-block, .heading-section-block a, .dropdown-base a, .button-grey, .button-filter-volunteer, .button-hollow, .nav-trigger, .profile-options, .picker__nav--prev:before,
+.grey-steel, .heading-tiny, .no-data, .profile-volunteer-date, .heading-tiny-uppercase, .table-base-heading, .heading-section, .heading-section-block, .heading-section-block a, .dropdown-base a, .button-hollow, .nav-trigger, .profile-options, .picker__nav--prev:before,
 .picker__nav--next:before, .picker__weekday, .picker__button--close:before, .options-list a, .breadcrumb a, .icon-compare-close, .map-label-title, .gender-icons-title, .facility-icons-title {
   color: #898989; }
 
-.grey-steel-bg, .banner-full, .tab-heading, .icon-button-compare {
+.grey-steel-bg, .button-grey, .button-filter-volunteer, .banner-full, .tab-heading, .icon-button-compare {
   background-color: #898989; }
 
 .grey-gravel, .heading-tertiary, .heading-section-ul-alt a, .table-data tr td:first-of-type, .scroll-smooth-links, .scroll-smooth-links a, .bar-label, .nav-trigger, .school-tab-copyright {
@@ -512,7 +512,7 @@ img, video {
 
 /*-------------------------------------*/
 /* TRANSITIONS */
-.link-external, .heading-section-block a:hover, .nav, .footer-wrapper a, .breadcrumb a, .banner-home .banner-full-caption a, .volunteer-story-link:hover, .list-sidebar:hover {
+.link-external, .heading-section-block a:hover, .button-hollow:hover, .button-hollow:focus, .nav-trigger:hover, .profile-options:hover, .nav-trigger:focus, .profile-options:focus, .nav, .footer-wrapper a, .breadcrumb a, .banner-home .banner-full-caption a, .volunteer-story-link:hover, .list-sidebar:hover {
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear; }
 
@@ -2024,7 +2024,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 /*
 
-// STYLEGUIDE: Grey silver not working: PLEASE FIX;
+// STYLEGUIDE: Grey silver not working througout the site: PLEASE FIX;
 
 // remove remaining importants in map.scss
 

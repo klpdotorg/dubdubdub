@@ -787,7 +787,7 @@ a.button {
 
 .button-grey, %button-grey {
   @extend %button;
-  @extend %grey-steel;
+  @extend %grey-steel-bg;
 }
 
 .button-orange, %button-orange {
@@ -799,7 +799,12 @@ a.button {
   @extend %button-base;
   background-color: transparent;
   @extend %grey-steel;
-  border: 1px solid
+  border: 1px solid;
+
+  &:hover, &:focus {
+    @extend %grey-silver;
+    @extend %transition-linear;
+  }
 }
 
 .button--sm, %button--sm {
