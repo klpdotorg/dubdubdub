@@ -2823,14 +2823,6 @@ body {
     margin: 0 0 15px 0; }
     .facility-items .k-icon:before {
       margin: 5px; }
-  .facility-items .computer:before {
-    content: "\f109"; }
-  .facility-items .book:before {
-    content: "\f02d"; }
-  .facility-items .events:before {
-    content: "\f073"; }
-  .facility-items .football:before {
-    content: "\f1e3"; }
 
 .gender-icons-title, .facility-icons-title {
   letter-spacing: 1px;
