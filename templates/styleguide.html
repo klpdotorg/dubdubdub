@@ -295,9 +295,10 @@
           <li><a href="#form-errors" class="js-scroll-smooth-link">Form: Base: Errors</a></li>
           <li><a href="#form-selects" class="js-scroll-smooth-link">Form: Base: Selects</a></li>
           <li><a href="#form-submits" class="js-scroll-smooth-link">Form: Base: Submit</a></li>
-          <li><a href="#probe" class="js-scroll-smooth-link">Custom Checkboxes and radios</a></li>
-          <li><a href="#probe" class="js-scroll-smooth-link">Custom Datepicker</a></li>
-          <li><a href="#efa" class="js-scroll-smooth-link">Custom selects</a></li>
+          <li><a href="#form-check" class="js-scroll-smooth-link">Custom Checkboxes</a></li>
+          <li><a href="#form-radio" class="js-scroll-smooth-link">Custom Radio Buttons</a></li>
+          <li><a href="#form-datepickers" class="js-scroll-smooth-link">Custom Datepicker</a></li>
+          <li><a href="#form-selects-custom" class="js-scroll-smooth-link">Custom selects</a></li>
         </ul>
       </div>
     </div>
@@ -387,31 +388,6 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="form-submits">Form Base: Submit</div>
-        <div class="style-block-demo center-text">
-          <form class="form-base">
-            <div class="form-field-wrap center-text">
-              <input type="submit" value="Submit Button" class="button">
-            </div>
-
-            <div class="form-field-wrap center-text">
-              <input type="submit" value="Submit Button: Centered" class="button">
-            </div>
-
-            <div class="form-field-wrap">
-              <input type="submit" value="Submit Button: Full-width" class="button full-width">
-            </div>          
-          </form>
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="container">
-      <div class="style-block">
         <div class="heading-tertiary center-text" id="form-selects">Form Base: Select</div>
         <div class="style-block-demo center-text">
         <form class="form-base">
@@ -439,12 +415,110 @@
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="form-submits">Form Base: Submit</div>
+        <div class="style-block-demo center-text">
+          <form class="form-base">
+            <div class="form-field-wrap center-text">
+              <input type="submit" value="Submit Button" class="button">
+            </div>
 
-    <div class="center-text">
-      <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
-      <div class="heading-section-block">
+            <div class="form-field-wrap center-text">
+              <input type="submit" value="Submit Button: Centered" class="button">
+            </div>
+
+            <div class="form-field-wrap">
+              <input type="submit" value="Submit Button: Full-width" class="button full-width">
+            </div>          
+          </form>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="center-text">
+        <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
+        <div class="heading-section-block">
+        </div>
       </div>
-    </div>
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="form-check">Checkboxes: Custom</div>
+        <div class="style-block-demo">
+          <div class="form-field-wrap">
+            <input type="checkbox" class="input-checkbox" id="check1">
+            <label for="check1" class="input-checkbox-label">Checkbox: Custom: Unchecked</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="checkbox" class="input-checkbox" id="check2" checked>
+            <label for="check2" class="input-checkbox-label">Checkbox: Custom: Checked</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="checkbox" class="input-checkbox" id="check3" disabled>
+            <label for="check3" class="input-checkbox-label">Checkbox: Custom: Disabled</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="checkbox" class="input-checkbox" id="check4" checked disabled>
+            <label for="check4" class="input-checkbox-label">Checkbox: Custom: Disabled and Checked</label>
+          </div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="form-radio">Radio Buttons: Custom</div>
+        <div class="style-block-demo">
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="radio1" name="radios">
+            <label for="radio1" class="input-radio-label">Radio: Custom: Unchecked</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="radio2" name="radios" checked>
+            <label for="radio2" class="input-radio-label">Radio: Custom: Checked</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="radio3" name="radios" disabled>
+            <label for="radio3" class="input-radio-label">Radio: Custom: Disabled</label>
+          </div>
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="radio4" checked disabled>
+            <label for="radio4" class="input-radio-label">Radio: Custom: Disabled and Checked</label>
+          </div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="form-datepickers">Datepicker: Custom</div>
+        <div class="style-block-demo center-text">
+          <form class="form-base">
+            <div class="form-field-wrap">
+              <label class="bold">Datepicker: Custom</label>
+              <input type="date" class="js-input-date input-text full-width">          
+            </div>
+          </form>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="container">
       <h2 class="heading-secondary brand-purple">Buttons</h2>
