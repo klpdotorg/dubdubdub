@@ -953,15 +953,15 @@ hr {
 
 /*-------------------------------------*/
 /* SCROLLBAR: WEBKIT - NON STANDARD */
-.table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar, .demo-sidebar::-webkit-scrollbar {
+.scrollbar-webkit::-webkit-scrollbar, .table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar, .demo-sidebar::-webkit-scrollbar {
   width: 12px;
   height: 10px; }
-.table-responsive-wrap::-webkit-scrollbar-track, .sidebar-volunteer-map::-webkit-scrollbar-track, .demo-sidebar::-webkit-scrollbar-track {
+.scrollbar-webkit::-webkit-scrollbar-track, .table-responsive-wrap::-webkit-scrollbar-track, .sidebar-volunteer-map::-webkit-scrollbar-track, .demo-sidebar::-webkit-scrollbar-track {
   background: #ececec;
   border-radius: 3px; }
-.table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
+.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
   background: #d8d8d8; }
-.table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
+.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
   border-radius: 10px; }
 
 /* GRID STYLING */

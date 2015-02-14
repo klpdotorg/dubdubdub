@@ -1291,7 +1291,7 @@ a.button {
 /*-------------------------------------*/
 /* SCROLLBAR: WEBKIT - NON STANDARD */
 
-%scrollbar-webkit {
+.scrollbar-webkit, %scrollbar-webkit {
   &::-webkit-scrollbar {
     width: 12px;
     height: 10px;

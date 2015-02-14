@@ -290,7 +290,9 @@
       <h2 class="heading-secondary brand-purple">Typography</h2>
       <div class="style-block">
         <div class="heading-tertiary center-text" id="font-families">Typography: Font Families</div>
+        <div class="center-text">You will rarely need to use this</div>
         <div class="style-block-demo center-text">
+          <div class="font-base-family">Lato: $font-base-family, .font-base-family, %font-base-family</div>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -303,6 +305,14 @@
       <div class="style-block">
         <div class="heading-tertiary center-text" id="typo-headings">Typography: Headings</div>
         <div class="style-block-demo center-text">
+          <div class="heading-primary">Heading Primary: Default</div>
+          <div class="heading-primary brand-red">Heading Primary, with additional color class</div>
+          <div class="heading-secondary">Heading Secondary: Default</div>
+          <div class="heading-secondary brand-blue">Heading Secondary: Default with additional color class</div>
+          <div class="heading-tertiary">Heading Tertiary</div>
+          <div class="heading-tiny">Heading Tiny</div>
+          <div class="heading-tiny-uppercase">Heading Tiny Uppercase</div>
+          <h2 class="heading-border brand-turquoise">Any Heading can take a bottom border</h2>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -942,6 +952,28 @@
         </ul>
       </div>
     </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Custom Scrollbars: Webkit</h2>
+      <div class="center-text">Non-standard styling for webkit scrollbars</div>
+      <ul>
+        <li><span class="brand-green"><span class="fa fa-check icon-left"></span>DO:</span> add a Sass placeholder %scrollbar-webkit to the selector, although you can also add the class scrollbar-webkit, as seen in the demo below.</li>
+        <li></li>
+      </ul>
+      <div></div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+          <div class="scrollbar-webkit" style="height: 200px; width: 300px; overflow-y: auto;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam voluptates tempore inventore laudantium, magnam voluptatem reprehenderit impedit facere autem, nostrum minus ad vel labore ullam, perferendis doloremque molestiae, sunt explicabo!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat qui aperiam nihil odit laudantium atque, vel dignissimos impedit tempore. Quo culpa aliquam, doloremque atque tenetur eius ut veritatis odit architecto.</p>
+          </div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-variables">Sass Variables</h2>
