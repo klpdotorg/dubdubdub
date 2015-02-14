@@ -278,7 +278,7 @@
         <ul>
           <li><a href="#font-families" class="js-scroll-smooth-link">Font Families</a></li>
           <li><a href="#typo-headings" class="js-scroll-smooth-link">Headings</a></li>
-          <li><a href="#typo-link" class="js-scroll-smooth-link">Links</a></li>
+          <li><a href="#typo-links" class="js-scroll-smooth-link">Links</a></li>
           <li><a href="#typo-html" class="js-scroll-smooth-link">Other Html Elements</a></li>
           <li><a href="#typo-helpers" class="js-scroll-smooth-link">Font Helpers</a></li>
           <li><a href="#typo-lists" class="js-scroll-smooth-link">Lists</a></li>
@@ -301,7 +301,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="typo-links">Typography: Links</div>
+        <div class="heading-tertiary center-text" id="typo-headings">Typography: Headings</div>
         <div class="style-block-demo center-text">
         </div> <!-- /style-block-demo -->
 
@@ -313,7 +313,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="typo-headings">Typography: Headings</div>
+        <div class="heading-tertiary center-text" id="typo-links">Typography: Links</div>
         <div class="style-block-demo center-text">
         </div> <!-- /style-block-demo -->
 
@@ -942,24 +942,11 @@
 </section>
 
 <script>
-// Use the browser's built-in functionality to quickly and safely escape the
-// string
+// Escape HTML strings
 function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 };
-
-  $(document).ready(function(){    
-    $(".style-block").each(function(){  
-      $demo = $(this).find('.style-block-demo');
-      var code = escapeHtml($demo.html());
-      $(this).append("<div class='style-block-code js-toggled'><code><pre>"+ code +  "</pre></code></div>");
-    });
-
-    $(".js-toggle").click(function(){
-      $(this).parents(".style-block").find(".js-toggled").slideToggle("fast");
-    })
-  });
 </script>
 {% endblock %}

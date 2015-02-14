@@ -22,8 +22,16 @@
 
 
     $(document).ready(function() {
+        //style guide
+        $(".style-block").each(function(){  
+          $demo = $(this).find('.style-block-demo');
+          var code = escapeHtml($demo.html());
+          $(this).append("<div class='style-block-code js-toggled'><code><pre>"+ code +  "</pre></code></div>");
+        });
 
-
+        $(".js-toggle").click(function(){
+          $(this).parents(".style-block").find(".js-toggled").slideToggle("fast");
+        });
         // $(document).on('click', ".btn-modal-close", function(e){
         //     e.preventDefault();
 
