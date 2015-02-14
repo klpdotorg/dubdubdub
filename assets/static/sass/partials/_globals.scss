@@ -486,6 +486,11 @@ img, video {
     left: 0;
     z-index: 1;
 
+    .has_ul:after {
+      content: "\f107";
+      @extend %font-icon;
+    }
+
     a {
       display: block; 
     }

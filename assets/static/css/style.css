@@ -453,10 +453,10 @@ img, video {
   width: 100%; }
 
 /*-------------------------------------*/
-.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
+.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date, .demo-sidebar {
   float: left; }
 
-.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
+.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified, .demo-main {
   float: right; }
 
 .clear {
@@ -530,6 +530,8 @@ img, video {
     position: absolute;
     left: 0;
     z-index: 1; }
+    .dropdown-base ul .has_ul:after {
+      content: "\f107"; }
     .dropdown-base ul a {
       display: block; }
   .dropdown-base a {
@@ -602,7 +604,7 @@ hr {
 
 /*-------------------------------------*/
 /* ICONS */
-.font-icon, .link-external:after, .heading-section-block li:before, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
+.font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
 .picker__nav--next:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon {
   font-family: "FontAwesome"; }
 
@@ -2026,6 +2028,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 /*
 
 // STYLEGUIDE: Grey silver not working througout the site: PLEASE FIX;
+also, inline style on dropdown ul remove later if possible
 
 // remove remaining importants in map.scss
 
@@ -3284,6 +3287,19 @@ body {
       border-left: 1px solid #d8d8d8; }
     .filter-school-each .select2-container {
       width: 140px; } }
+.demo-sidebar {
+  width: 200px;
+  position: fixed;
+  left: 0;
+  top: 45px;
+  bottom: 0;
+  overflow: auto; }
+
+.demo-main {
+  width: 70%;
+  width: -webkit-calc(100% - 200px);
+  width: calc(100% - 200px); }
+
 .style-block .button-hollow {
   margin: 10px 0; }
 

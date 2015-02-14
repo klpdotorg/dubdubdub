@@ -1,3 +1,20 @@
+.demo-sidebar {
+  width: 200px;
+  position: fixed;
+  left: 0;
+  top: $header-height;
+  bottom: 0;
+  overflow: auto;
+  @extend %float-left;
+}
+
+.demo-main {
+  width: 70%;
+  width: -webkit-calc(100% - 200px);
+  width: calc(100% - 200px);
+  @extend %float-right;
+}
+
 .style-block {
   @extend %base-spacing-lg;
 
