@@ -6,6 +6,7 @@
   bottom: 0;
   overflow: auto;
   @extend %float-left;
+  @extend %scrollbar-webkit;
 }
 
 .demo-main {

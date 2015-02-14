@@ -30,9 +30,9 @@
     <div class="dropdown-base js-dropdown dropdown-styleguide">
       <li>
         Menu
-        <ul style="display: block;">
-          <li>CSS: Setup</li>
-          <li>CSS: Conventions</li>
+        <ul style="display: block !important;">
+          <li><a href="#demo-block-setup">CSS: Setup</a></li>
+          <li><a href="#demo-block-conventions">CSS: Conventions</a></li>
           <li><a href="#demo-block-colors" class="js-scroll-smooth-link">Colors</a></li>
           <li><a href="#demo-block-grid" class="js-scroll-smooth-link">Grid</a></li>
           <li><a href="#demo-block-typography" class="js-scroll-smooth-link">Typography</a></li>
@@ -291,7 +291,7 @@
       <div class="heading-section-block">
         <ul>
           <li><a href="#paisa" class="js-scroll-smooth-link">Default form styling</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Base form styling</a></li>
+          <li><a href="#form-base" class="js-scroll-smooth-link">Base form styling</a></li>
           <li><a href="#probe" class="js-scroll-smooth-link">Custom Checkboxes and radios</a></li>
           <li><a href="#probe" class="js-scroll-smooth-link">Custom Datepicker</a></li>
           <li><a href="#efa" class="js-scroll-smooth-link">Custom selects</a></li>
@@ -300,6 +300,57 @@
       </div>
     </div>
 
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Forms</h2>
+      <div>All forms are styled inside _forms.scss (/assets/static/sass/partials)</div>
+      <div>All forms on the site have a class of form-base to provide default styling options</div>
+      <div>DO: Add an additional class to the form tag, prefixed with -form to override styling</div>
+      <div>DO: Add HTML types for input like email, tel, number and url where required</div>
+      <div>You can then add additional styling for making labels bold, changing input padding, etc. Ideally, you could add the styling via CSS, for all inputs of a particular form.</div>
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="form-base">Forms: Base with Different Styles</div>
+        <div class="style-block-demo">
+          <form class="form-base">
+            <div class="form-field-wrap">
+              <label class="bold">Text input</label>
+              <input type="text" class="input-text full-width" placeholder="A full-width text input">
+            </div>
+
+            <div class="form-field-wrap">
+              <label>Email input</label>
+              <input type="email" class="input-text full-width">
+            </div>
+
+            <div class="form-field-wrap">
+              <label>Input with error</label>
+              <input type="text" class="input-text error full-width" placeholder="Input with error styling">
+              <div class="js-error-message error-message">This field is required.</div>
+            </div>
+
+            <div class="form-field-wrap">
+              <label class="label-inline">Url input</label>
+              <input type="url" class="input-text">
+            </div>
+
+            <div class="form-field-wrap">
+              <label class="label-inline">Text input</label>
+              <input type="text" class="input-text">
+            </div>
+
+            <div class="form-field-wrap">
+              <label class="Submit">Text input</label>
+              <input type="submit" value="Submit Button" class="button">
+            </div>
+          </form>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
