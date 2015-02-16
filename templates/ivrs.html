@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load compress %}
+
+{% block endbody %}
+    {% compress js %}
+        <script src="{% static 'js/ivrs/init.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block content %}
+    <div class='container ta_c mar_top_25'>
+        <img alt="KLP" src="/assets/klp_logo_light.png" width="160" />
+    </div>
+    <div class='container'>
+        <section>
+            <div class='page-section-heading-with-menu'>
+                <div class='container'>
+                    <div class='heading'>
+                        <h2>IVRS Dashboard</h2>
+                    </div>
+                </div>
+                <div class='sub-sections-list'>
+                    <ul>
+                        <li class='active' id='school2'>
+                            <a class='menu-data-type' href='#' id='s'>School</a>
+                        </li>
+                        <li id='preschool2'>
+                            <a class='menu-data-type' href='#' id='p'>Pre-School</a>
+                        </li>
+                    </ul>
+                    <div class='pull-right' style='margin-top:12px;padding-right:10px;'>
+                        <strong>
+                            Last call :
+                        </strong>
+                        Fri, 02 Jan 2015 16:22:57 UTC
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class='tabs'>
+            <ul class='tabs-nav' style='display:none;'>
+                <li class='current' data-tab='tab-one' id='school'>School</li>
+                <li data-tab='tab-one' id='pre-school'>Pre school</li>
+            </ul>
+            <div class='tabs-content current' id='tab-one' style='border-width:0px;'>
+                <div class='circular_count_item'>
+                    <div class='row' style='margin-top:15px;'>
+                        <div class='col-sm-3' style='margin-top:40px;'>
+                            <div id='dashboard-info'>
+                                <p class='value' id='num_response_this_week_n'>
+                                    4643
+                                </p>
+                                <p>
+                                    <hr id='num_response_this_week_hr' width='70px'>
+                                </p>
+                                <p id='value-info'>Total Responses</p>
+                            </div>
+                        </div>
+                        <div class='col-sm-3' style='margin-top:40px;'>
+                            <div id='dashboard-info'>
+                                <p class='value' id='num_response_yest_n'>
+                                    12
+                                </p>
+                                <p>
+                                    <hr id='num_response_yest_hr' width='70px'>
+                                </p>
+                                <p id='value-info'>
+                                    No. of response yesterday
+                                </p>
+                            </div>
+                        </div>
+                        <div class='col-sm-6'>
+                            <center>
+                                <strong>
+                                    Number of Responses
+                                </strong>
+                            </center>
+                            <div id='bar-chart'>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style='border:1px solid #3892E3;background: #3892E3;'>
+
+                    <div class='row'>
+                        <div class='col-sm-3'>
+                            <center>
+                                Select District
+                            </center>
+                            <p></p>
+                            <div id='map'></div>
+                        </div>
+                        <div class='col-sm-9'>
+                            <div class='row'>
+                                <div class='col-sm-3'>
+                                    School type
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt1'>
+                                        Question - 1
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt2'>
+                                        Question - 2
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt3'>
+                                        Question - 3
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='type'></div>
+                                        <div id='type_A'></div>
+                                    </p>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question1'></div>
+                                    </p>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question2'></div>
+                                    </p>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question3'></div>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-3'>
+                                    <div id='reset-link'>
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt4'>
+                                        Question - 4
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt5'>
+                                        Question - 5
+                                    </div>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <div id='qt6'>
+                                        Question - 6
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-3'>
+                                    <table class='table table-condensed table-striped' id='select-list'>
+                                        <th id='block-select'>Block</th>
+                                        <tr>
+                                            <td>
+                                                <select id='listBlocksChosen' style='width:150px'>
+                                                    <option value='select_block'>Select none</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th id='cluster-select'>Cluster</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select id='listClustersChosen' style='width:150px'>
+                                                    <option value='select_cluster'>Select none</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question4'></div>
+                                    </p>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question5'></div>
+                                        <div id='question5s'></div>
+                                    </p>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <p>
+                                        <div id='question6'></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+{% endblock %}

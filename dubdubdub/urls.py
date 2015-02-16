@@ -5,6 +5,7 @@ from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView
+from stories.views import IVRSPageView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
@@ -166,6 +167,8 @@ urlpatterns = patterns(
 
     url(r'^profile/(?P<pk>[0-9]+)/edit$',
         ProfileEditPageView.as_view(), name='profile_edit_page'),
+
+    url(r'^ivrs$', IVRSPageView.as_view(), name='ivrs_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {

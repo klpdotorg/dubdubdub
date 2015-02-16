@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
 from django.db.models import Q
+from django.utils import timezone
 
 from schools.models import School, SchoolDetails
 from users.models import User
@@ -17,12 +18,12 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
 from rest_framework import authentication, permissions
 
 import random
+import datetime
 from base64 import b64decode
 from collections import Counter
 from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
-
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -35,58 +36,87 @@ class StoryInfoView(KLPAPIView):
 
 
 class StoryMetaView(KLPAPIView):
+    """Returns:
+    1. Total number of Stories for Primary or Pre school for a
+    given source.
+    2. Number of responses per month for Primary or Pre school
+    for a given source, for a given Block/Project and/or
+    Cluster/Circle.
+    3. Questions and their corresponsing answers for
+    Primary or Pre schools for a given source, for a given
+    Block/Project and/or Cluster/Circle.
+
+    source -- Source of data [web/ivrs].
+    admin1 -- ID of the District to search inside.
+    admin2 -- ID of the Block/Project to search inside.
+    admin3 -- ID of the Cluster/Circle to search inside.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
     def get(self, request):
+        qset = Story.objects.filter()
         source = self.request.QUERY_PARAMS.get('source', None)
-        district_id = self.request.QUERY_PARAMS.get('district', None)
-        block_id = self.request.QUERY_PARAMS.get('block', None)
+        admin1_id = self.request.QUERY_PARAMS.get('district', None)
+        admin2_id = self.request.QUERY_PARAMS.get('block', None)
+        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
+        school_type = self.request.QUERY_PARAMS.get('school_type', None)
 
         if not source:
             raise APIException("Source (ivrs, web) not mentioned")
 
+        if not school_type:
+            raise APIException("School Type (Primary School, PreSchool) not mentioned")
+
         response_json = {}
-        response_json['Primary School'] = {}
-        response_json['PreSchool'] = {}
+        response_json['school_type'] = school_type
 
         question_group = Questiongroup.objects.get(
             source__name=source)
 
         # Number of Responses
-        total_response_primary = Story.objects.filter(
-            group=question_group, school__admin3__type__name="Primary School"
+        total_responses = qset.filter(
+            group=question_group, school__admin3__type__name=school_type
         ).count()
-        total_response_pre = Story.objects.filter(
-            group=question_group, school__admin3__type__name="PreSchool"
-        ).count()
-        total_responses = Story.objects.filter(
-            group=question_group).count()
 
-        response_json['Primary School']['total_responses'] = total_response_primary
-        response_json['PreSchool']['total_responses'] = total_response_pre
+        yesterday = timezone.now().date() - datetime.timedelta(days=1)
+
+        responses_yesterday = qset.filter(
+            group=question_group,
+            school__admin3__type__name=school_type,
+            date_of_visit=yesterday
+        ).count()
+
+        response_json['total_responses'] = total_responses
+        response_json['responses_yesterday'] = responses_yesterday
 
         # Number of Responses per month
-        primary_school_story_dates = Story.objects.filter(
-            group=question_group, school__admin3__type__name="Primary School"
-        ).values_list('date_of_visit', flat=True)
-        pre_school_story_dates = Story.objects.filter(
-            group=question_group, school__admin3__type__name="PreSchool"
-        ).values_list('date_of_visit', flat=True)
-        per_month_primary_response = dict(Counter(
-            [date.month for date in primary_school_story_dates]))
-        per_month_pre_response = dict(Counter(
-            [date.month for date in pre_school_story_dates]))
+        if admin1_id:
+            qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
 
-        response_json['Primary School']['per_month_responses'] = per_month_primary_response
-        response_json['PreSchool']['per_month_responses'] = per_month_pre_response
+        if admin2_id:
+            qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
+
+        if admin3_id:
+            qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
+
+        story_dates = qset.filter(
+            group=question_group, school__admin3__type__name=school_type
+        ).values_list('date_of_visit', flat=True)
+
+        per_month_responses = dict(Counter(
+            [date.month for date in story_dates]))
+
+        response_json['per_month_responses'] = per_month_responses
 
         # List of questions and their answer counts
         questions = Question.objects.filter(
             questiongroup=question_group,
+            school_type__name=school_type,
         ).select_related(
             'question_type', 'school_type'
         ).prefetch_related('answer_set')
 
-        response_json['Primary School']['questions'] = []
-        response_json['PreSchool']['questions'] = []
+        response_json['questions'] = []
 
         for question in questions:
             j = {}
@@ -94,10 +124,10 @@ class StoryMetaView(KLPAPIView):
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
-                Counter([a.text for a in question.answer_set.all()])
+                Counter([a.text for a in question.answer_set.filter(story__in=qset)])
             )
 
-            response_json[question.school_type.name]['questions'].append(j)
+            response_json['questions'].append(j)
 
         return Response(response_json)
 
