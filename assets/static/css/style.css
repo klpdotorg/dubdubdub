@@ -356,7 +356,7 @@ sub {
 .green-leaf {
   color: #44c28c; }
 
-.green-leaf-bg, .bar-label.green-leaf-bg, .bar-value.green-leaf-bg {
+.green-leaf-bg {
   background-color: #44c28c; }
 
 .black, .picker__day--infocus:hover,
@@ -396,7 +396,7 @@ sub {
 .grey-steel-bg, .button-grey, .button-filter-volunteer, .banner-full, .tab-heading, .icon-button-compare {
   background-color: #898989; }
 
-.grey-gravel, .heading-tertiary, .heading-section-ul-alt a, .table-data tr td:first-of-type, .scroll-smooth-links, .scroll-smooth-links a, .bar-label, .nav-trigger, .school-tab-copyright {
+.grey-gravel, .heading-tertiary, .heading-section-ul-alt a, .table-data tr td:first-of-type, .scroll-smooth-links, .scroll-smooth-links a, .nav-trigger, .school-tab-copyright {
   color: #4d4d4d; }
 
 .grey-gravel-bg {
@@ -896,8 +896,7 @@ hr {
   word-wrap: break-word; }
 
 .bar-value {
-  height: 100%;
-  background-color: #5F5F5F; }
+  height: 100%; }
 
 .bar-percent {
   width: 65px;

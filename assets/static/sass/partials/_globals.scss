@@ -1172,22 +1172,12 @@ a.button {
 
 .bar-label {
   @extend %font-small;
-  @extend %grey-gravel;
   @extend %bold; 
   word-wrap: break-word;
 }
 
-.bar-label.green-leaf-bg {
-  @extend %green-leaf-bg;
-}
-
 .bar-value {
   height: 100%;
-  background-color: $font-base-color;
-}
-
-.bar-value.green-leaf-bg {
-  @extend %green-leaf-bg;
 }
 
 .bar-label, .bar-graph {
