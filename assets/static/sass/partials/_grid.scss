@@ -18,7 +18,7 @@
 }
 
 @mixin container {
-  max-width: 980px;
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
   padding-left: $grid-padding;
@@ -47,3 +47,56 @@
   padding-left: $grid-padding;
   padding-right: $grid-padding;
 }
+
+// 1/4th
+.col-25-flt, %col-25-flt {
+  width: 25%;
+  float: left;
+  @extend %grid-child;
+}
+
+// 1/3rd
+@mixin col-25-flt {
+  width: 25%;
+  float: left;
+  @include grid-child;  
+}
+
+.col-33-flt, %col-33-flt {
+  width: 33.33%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-33-flt {
+  width: 33%;
+  float: left;
+  @include grid-child;  
+}
+
+// 1/2
+.col-50-flt, %col-50-flt {
+  width: 50%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-50-flt {
+  width: 50%;
+  float: left;
+  @include grid-child;  
+}
+
+// 2/3rds
+.col-66-flt, %col-66-flt {
+  width: 66.66%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-66-flt {
+  width: 66.66%;
+  float: left;
+  @include grid-child;  
+}
+

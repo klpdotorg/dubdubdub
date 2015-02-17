@@ -996,9 +996,25 @@ hr {
     display: table;
     clear: both; }
 
-.grid-child, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
+.grid-child, .col-25-flt, .col-33-flt, .col-50-flt, .col-66-flt, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
   padding-left: 20px;
   padding-right: 20px; }
+
+.col-25-flt {
+  width: 25%;
+  float: left; }
+
+.col-33-flt {
+  width: 33.33%;
+  float: left; }
+
+.col-50-flt {
+  width: 50%;
+  float: left; }
+
+.col-66-flt {
+  width: 66.66%;
+  float: left; }
 
 .label-compare-block {
   z-index: 1; }
@@ -2914,7 +2930,7 @@ body {
     .banner-full .heading-primary {
       margin: 25px 0;
       font-size: 140%; } }
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 749px) {
   .table-base-volunteer, .table-base-donation, .table-volunteer-oppor {
     display: block; }
     .table-base-volunteer .table-base-heading, .table-base-donation .table-base-heading, .table-volunteer-oppor .table-base-heading {
@@ -2944,7 +2960,7 @@ body {
   .alert {
     left: 20%;
     right: 20%;
-    max-width: 980px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 20px;
@@ -3088,10 +3104,10 @@ body {
       clear: both; }
 
   .partners-list {
-    padding-left: 20px;
-    padding-right: 20px;
     width: 50%;
     float: left;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-bottom: 0; }
 
   .profile-meta-block, .org-meta-block {
