@@ -1037,6 +1037,18 @@ a.button {
     color: $brand-blue;
   }
 
+  &.brand-red:before {
+    color: $brand-red;
+  }
+
+  &.brand-turquoise:before {
+    color: $brand-turquoise;
+  }
+
+  &.brand-purple:before {
+    color: $brand-purple;
+  }
+
   &.green-pista:before {
     color: $green-pista;
   }

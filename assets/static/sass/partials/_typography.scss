@@ -99,7 +99,7 @@ a {
 }
 
 //font-styles
-.font-italic, %font-italic {
+.italic, %italic {
   font-style: italic;
 }
 
@@ -177,7 +177,7 @@ strong, b {
 }
 
 em, i {
-  @extend %font-italic; 
+  @extend %italic; 
 }
 
 h6, .h6, %h6 {
@@ -386,7 +386,16 @@ sub {
   
   li {
     padding-left: $base-spacing;
+
+    ul {
+      list-style-type: circle;
+      list-style-position: inside;
+    }
   }
+}
+
+ol {
+  list-style-type: decimal;
 }
 
 

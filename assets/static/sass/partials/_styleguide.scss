@@ -33,6 +33,27 @@
   margin: $base-spacing-lg 0 0 0;
 }
 
+.demo-do {
+  @extend %brand-green;
+  @extend %uppercase;
+
+  &:before {
+    content: "\f00c";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
+
+.demo-dont {
+  @extend %brand-red;
+  @extend %uppercase;
+
+  &:before {
+    content: "\f00d";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
 
 code {
   @extend %grey-mist-bg;
@@ -42,6 +63,7 @@ code {
   display: block;
   font-family: monospace;
   @extend %font-small;
+  margin: $base-spacing-sm 0;
 }
 
 .box-demo {

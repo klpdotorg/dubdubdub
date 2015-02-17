@@ -19,7 +19,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
   @extend %white-bg;
 
   @include placeholder {
-    @extend %grey-silver;
+    color: $grey-silver;
   }
 
   &:focus {
@@ -36,7 +36,7 @@ input[type="text"], input[type="email"], input[type="number"], input[type="tel"]
 
 /*-------------------------------------*/
 /* FORM: BASE STYLES */
-// Wrap your form with class of form-base
+// Wrap all forms with a class of form-base
 
 .form-base {
   .input-text, textarea, select {
@@ -136,7 +136,7 @@ input[disabled], .input-checkbox[disabled] + .input-checkbox-label:before, .inpu
   border-color: darken($grey-mist, 5%);  
 }
 
-input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before {
+input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before, .input-text[disabled] {
   background: darken($grey-mist, 5%);
   border-color: darken($grey-mist, 5%);  
 }

@@ -52,21 +52,70 @@
           <li><a href="#demo-block-bar" class="js-scroll-smooth-link">Bar Graphs: Custom</a></li>
           <li><a href="#demo-block-scrollbars" class="js-scroll-smooth-link">Scrollbars: Custom: Webkit</a></li>
           <li><a href="#demo-block-variables" class="js-scroll-smooth-link">Variables: Sass</a></li>
+          <li><a href="#demo-block-mixins-vendor" class="js-scroll-smooth-link">Vendor Prefixes: Sass</a></li>
         </ul>
       </li>
     </div>
   </div> <!-- /demo-sidebar -->
 
   <div class="demo-main">    
+    <div class="center-text" id="css-setup">
+      <h2 class="heading-section">CSS: Basics</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#css-setup" class="js-scroll-smooth-link">CSS: Setup</a></li>
+          <li><a href="#css-structure" class="js-scroll-smooth-link">CSS: Structure</a></li>
+          <li><a href="#css-conventions" class="js-scroll-smooth-link">CSS: Conventions</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="container">
+      <div class="heading-secondary brand-purple" id="css-setup">CSS: Setup</div>
       <p class="bold">The project uses Sass to provide the CSS with some structure.</p>
       <ul class="ul-base">
-        <li>You need to install Ruby (unfortunately) and Sass</li>
-        <li>Watching and compiling can be done by running one single command: sass --watch assets/static/sass/style.scss:assets/static/css/style.css. Doing this outside the vagrant box is a bit faster (practically realtime) and is hence recommended.</li>
-        <li>Don't edit the generated style.css in /assets/static/css</li>
-        <li>The partials folder inside the sass folder contains all the small Sass files that are imported into the style.scss folder</li>
-        <li>The lib folder inside the partials folder, contains all third party plugin files</li>
-        <li>Conventions: 2 spaces, avoid ids.</li>
+        <li>You need to <a href="http://sass-lang.com/install" class="bold">install Ruby and Sass</a>.</li>
+        <li><span class="bold">Watching and compiling</span> can be done by running one single command, preferably outside the vagrant box: 
+        <pre><code>sass --watch assets/static/sass/style.scss:assets/static/css/style.css.
+        </code></pre></li>
+        <li><span class="demo-dont">Don't</span> edit the generated style.css in /assets/static/css</li>
+      </ul>
+      <div class="base-spacing"></div>
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="css-structure">CSS: Structure</div>
+      <ul class="ul-base">
+        <li>The <span class="bold">partials folder</span> inside the sass folder contains all the small Sass files that are imported into the style.scss folder</li>
+        <li>The <span class="bold">media-queries partial</span> contains all the styles that make the app responsive.</li>
+        <li>Reference for <span class="bold">typography</span>, e.g. headings, links, lists belong to the _typography.scss partial. These affect the entire app; handle with care if making changes.</li>
+        <li>Reference for <span class="bold">forms:</span> e.g. inputs, labels, selects, errors is found in the forms partials. All overrides for individual forms are made here.</li>
+        <li>Reference for <span class="bold">globals:</span> vendor prefixing mixins and global classes belong to the _globals.scss partial. These affect the entire app; handle with care if making changes.</li>
+        <li>All <span class="bold">variables</span> referenced in all other Sass files belong to the variables partial. A variable is always prefixed with a $ symbol. e.g. $header-height defines the height of the fixed height header, which can then be re-used for positioning the main element, map, fixed alerts, etc.</li>
+        <li>The <span class="bold">lib folder</span> inside the partials folder, contains all third party plugin sass partials</li>
+        <li>If you need a new UI module that deserves its own partial file, e.g. some groovy animation library, you could <span class="bold">create a new partial</span> (e.g. _groovy.animation.scss) and import it into the style.scss file. <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials">Documentation here.</a></li>
+      </ul>
+      <div class="base-spacing"></div>
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="css-conventions">CSS: Conventions</div>
+        <li><span class="demo-do">Do </span> use <span class="bold">2 spaces</span> to indent.</li>
+        <li><span class="demo-dont">Don't </span> use <span class="bold">ids</span> for styling; they are used for JS</li>
+        <li>You can use <span class="bold">variables, nesting, mixins, extends and placeholders</span> in a manner that benefits the app. Some <a href="http://sass-lang.com/guide">documentation</a> if you're new to Sass.</li>
+        <li><span class="demo-do">Do </span> use <span class="bold">Sass comments</span> (similar to JS single line comments //) for comments that only other developers need to see. These do not get compiled into the final CSS stylesheet.</li>
+        <li><span class="demo-do">Do</span> use helpful comments for new sections inside a Sass partial, which are useful for documentation of the section in question. See below:
+        <pre>
+          <code>
+/*-------------------------------------*/
+/* FORM: BASE STYLES */
+          </code>
+        </pre>
+        </li>
+        <li><span class="demo-do">Do</span> spend a few minutes browsing through the globals, variables and typography partials. They contain plenty of reusable code.</li>
+        <li><span class="demo-dont">Don't</span> try to extend a Sass placeholder (e.g. %grid-parent) inside a media query, because you will get an error and the file won't compile. If a mixin is available, use that instead, inside the media query block.</li>
+
+
       </ul>
     </div> <!-- /container -->
 
@@ -279,9 +328,9 @@
           <li><a href="#font-families" class="js-scroll-smooth-link">Font Families</a></li>
           <li><a href="#typo-headings" class="js-scroll-smooth-link">Headings</a></li>
           <li><a href="#typo-links" class="js-scroll-smooth-link">Links</a></li>
+          <li><a href="#typo-lists" class="js-scroll-smooth-link">Lists</a></li>
           <li><a href="#typo-html" class="js-scroll-smooth-link">Other Html Elements</a></li>
           <li><a href="#typo-helpers" class="js-scroll-smooth-link">Font Helpers</a></li>
-          <li><a href="#typo-lists" class="js-scroll-smooth-link">Lists</a></li>
         </ul>
       </div>
     </div>
@@ -290,9 +339,9 @@
       <h2 class="heading-secondary brand-purple">Typography</h2>
       <div class="style-block">
         <div class="heading-tertiary center-text" id="font-families">Typography: Font Families</div>
-        <div class="center-text">You will rarely need to use this</div>
+        <div class="center-text">You will rarely need to use this variable, class or extend, for font Lato, used throughout the site.</div>
         <div class="style-block-demo center-text">
-          <div class="font-base-family">Lato: $font-base-family, .font-base-family, %font-base-family</div>
+          <div class="font-base-family">$font-base-family, .font-base-family, %font-base-family</div>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -345,7 +394,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="typo-headings">Typography: Heading Tiny and Heading Tiny Uppercase</div>
+        <div class="heading-tertiary center-text">Typography: Heading Tiny and Heading Tiny Uppercase</div>
         <div class="style-block-demo center-text">
           <div class="heading-tiny">Heading Tiny</div>
           <div class="heading-tiny-uppercase">Heading Tiny Uppercase</div>
@@ -359,7 +408,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="typo-headings">Typography: Heading with Border</div>
+        <div class="heading-tertiary center-text">Typography: Heading with Border</div>
         <div class="style-block-demo center-text">
           <h2 class="heading-border brand-turquoise">Any Heading can take a bottom border</h2>
           <div class="heading-secondary heading-border">Heading Secondary with bottom border</div>
@@ -373,7 +422,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="typo-headings">Typography: Header Strip</div>
+        <div class="heading-tertiary center-text">Typography: Header Strip</div>
         <div class="style-block-demo center-text">
 <div class="header-strip">
   <div class="heading-tiny-uppercase">Heading goes here</div>
@@ -385,6 +434,66 @@
         </div>    
       </div> <!-- /style-block -->
     </div> <!-- /container -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section</div>
+      <div class="style-block-demo center-text">
+        <div class="center-text">
+          <h2 class="heading-section">Heading Section</h2>
+          <div class="heading-section-block"></div>
+        </div>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section with Links</div>
+<div class="style-block-demo">
+<div class="center-text">
+  <h2 class="heading-section">Heading Section</h2>
+  <div class="heading-section-block">
+    <ul>
+      <li><a href="#" class="js-scroll-smooth-link">General link or anchor example</a></li>
+      <li><a href="#smooth-demo-1" class="js-scroll-smooth-link">Smooth scrolling link example</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div id="smooth-demo-1">
+    <h3>Smoothness is coolness</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque ea iure repudiandae, debitis molestiae quas a, excepturi placeat non, numquam magni unde sed eligendi modi neque hic amet. Vitae.</p>
+  </div>
+</div>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section: Alternate List Style</div>
+      <div class="style-block-demo">
+  <div class="center-text">
+    <h2 class="heading-section">Heading Section</h2>
+    <div class="heading-section-block">
+      <ul class="heading-section-ul-alt">
+        <li><a href="#">Links to something</a></li>
+        <li><a href="#">Links to something</a></li>
+        <li><a href="#">Links to something</a></li>
+      </ul>
+    </div>
+  </div>
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
 
     <div class="container">
       <div class="style-block">
@@ -419,6 +528,140 @@
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Ordered: Base</div>
+
+        <div class="style-block-demo">
+<ol>
+  <li>List item</li>
+  <li>List item</li>
+  <li>List item</li>
+</ol>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="typo-lists">Typography: Lists</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Unordered: Base</div>
+
+        <div class="style-block-demo">
+<ul class="ul-base">
+  <li>List item
+    <ul>
+      <li>Nested list item</li>
+      <li>Nested list item</li>
+    </ul>
+  </li>
+  <li>List item</li>
+  <li>List item</li>
+</ul>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Unordered: Pretty Circles</div>
+        <div class="center-text">You can add more colors, if required to the bullets, in the _globals.scss partial, to the circle bullet class.</div>
+        <div class="style-block-demo">
+<ul>
+  <li class="circle-bullet brand-red">List item</li>
+  <li class="circle-bullet brand-green">List item</li>
+  <li class="circle-bullet brand-orange">List item</li>
+  <li class="circle-bullet brand-blue">List item</li>
+  <li class="circle-bullet brand-turquoise">List item</li>
+  <li class="circle-bullet brand-purple">List item</li>
+  <li class="circle-bullet orange-mild">List item</li>
+  <li class="circle-bullet yellow-mild">List item</li>
+  <li class="circle-bullet green-pista">List item</li>
+  <li class="circle-bullet white">List item</li>
+</ul>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="typo-html">Typography: Other HTML elements</div>
+        <div class="center-text">You will rarely need to use this variable, class or extend, for font Lato, used throughout the site.</div>
+        <div class="style-block-demo center-text">
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="typo-helpers">Typography: Helpers</div>
+      <div class="center-text">Here are some helpers (could be classes, placeholders, mixins, variables) for typography</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Helpers: Bordered text</div>
+        <div class="style-block-demo center-text">
+          <div class="text-bordered">
+            An example of bordered text
+          </div>          
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography Helpers: Font: Weight and Style</div>
+        <div class="style-block-demo center-text">
+<div class="font-light">.font-light or %font-light. Defaults to 300 weight</div>          
+<div class="bold">.bold or %bold or &lt;strong&gt; &lt;/strong&gt; or &lt;b&gt;&lt;/b&gt;. Defaults to 700 weight</div>
+<div class="italic">.italic or %italic or &lt;em&gt; &lt;/em&gt; or &lt;i&gt;&lt;/i&gt;</div>
+<div class="uppercase">.uppercase or %uppercase</div>
+
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography Helpers: Font: Sizes</div>
+        <div class="style-block-demo center-text">
+<div class="font-small">.font-small or %font-small</div>         
+<div class="font-smaller">.font-smaller or %font-smaller</div>         
+<div class="font-smallest">.font-smallest or %font-smallest</div>         
+<div class="font-base-size">.font-base-size or %font-base-size</div>          
+<div class="font-large">.font-large or %font-large</div>         
+<div class="font-larger">.font-larger or %font-larger</div>         
+<div class="font-largest">.font-larger or %font-largest</div>         
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-forms">Forms</h2>
       <div class="heading-section-block">
@@ -441,8 +684,8 @@
       <h2 class="heading-secondary brand-purple">Forms</h2>
       <div>All forms are styled inside _forms.scss (/assets/static/sass/partials)</div>
       <div>All forms on the site have a class of form-base to provide default styling options</div>
-      <div>DO: Add an additional class to the form tag, prefixed with -form to override styling</div>
-      <div>DO: Add HTML types for input like email, tel, number and url where required, as seen in the demo below</div>
+      <div><span class="demo-do">DO:</span> Add an additional class to the form tag, prefixed with -form to override styling</div>
+      <div><span class="demo-do">DO:</span> Add HTML types for input like email, tel, number and url where required, as seen in the demo below</div>
       <div>You can then add additional styling for making labels bold, changing input padding, etc. Ideally, you could add the styling via CSS, for all inputs of a particular form.</div>
 
       <div class="style-block">
@@ -451,6 +694,10 @@
           <form class="form-base">
             <div class="form-field-wrap">
               <input type="text" class="input-text" placeholder="Input: Text">
+            </div>
+
+            <div class="form-field-wrap">
+              <input type="text" class="input-text" placeholder="Input: Text: Disabled" disabled>
             </div>
 
             <div class="form-field-wrap">
@@ -463,6 +710,10 @@
 
             <div class="form-field-wrap">
               <input type="number" class="input-text" placeholder="Input: Number">
+            </div>
+
+            <div class="form-field-wrap">
+              <textarea class="input-text"></textarea>
             </div>
 
             <div class="form-field-wrap">
@@ -502,13 +753,18 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="form-errors">Form: Errors</div>
+        <div class="heading-tertiary center-text" id="form-errors">Form: Errors and Optional Text</div>
         <div class="style-block-demo">
           <form class="form-base">
             <div class="form-field-wrap">
               <label>Input with error</label>
               <input type="text" class="input-text error full-width" placeholder="Input with error styling">
               <div class="js-error-message error-message">This field is required.</div>
+            </div>
+
+            <div class="form-field-wrap">
+              <label>Input with optional text in label <span class="form-optional-text">(optional)</span></label>
+              <input type="text" class="input-text full-width">
             </div>
           </form>
         </div> <!-- /style-block-demo -->
@@ -572,11 +828,6 @@
         </div>    
       </div> <!-- /style-block -->
 
-      <div class="center-text">
-        <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
-        <div class="heading-section-block">
-        </div>
-      </div>
     </div> <!-- /container -->
 
     <div class="container">
@@ -655,6 +906,12 @@
       </div> <!-- /style-block -->
       <div class="base-spacing-lg"></div>
     </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
+      <div class="heading-section-block">
+      </div>
+    </div>
 
     <div class="container">
       <h2 class="heading-secondary brand-purple">Buttons</h2>
@@ -813,7 +1070,7 @@
   
     <div class="container">
       <h2 class="heading-secondary brand-purple">Banners: Full width</h2>
-      <div>DO: Add an additional class to the div with class banner-full and add your background image to it. Currently uses an inline style for demo.</div>
+      <div><span class="demo-do">DO:</span> Add an additional class to the div with class banner-full and add your background image to it. Currently uses an inline style for demo.</div>
     </div> <!-- /container -->
     <div class="style-block">
       <div class="style-block-demo center-text">
@@ -1206,7 +1463,7 @@
       <h2 class="heading-secondary brand-purple">Custom Scrollbars: Webkit</h2>
       <div class="center-text">Non-standard styling for webkit scrollbars</div>
       <ul>
-        <li><span class="brand-green"><span class="fa fa-check icon-left"></span>DO:</span> add a Sass placeholder %scrollbar-webkit to the selector, although you can also add the class scrollbar-webkit, as seen in the demo below.</li>
+        <li><span class="brand-green"><span class="demo-do">DO:</span> add a Sass placeholder %scrollbar-webkit to the selector, although you can also add the class scrollbar-webkit, as seen in the demo below.</li>
         <li></li>
       </ul>
       <div></div>

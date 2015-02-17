@@ -107,7 +107,7 @@ a {
 .font-base-family, .form-base .input-text, .form-base textarea, .form-base select, .select2-search input, .select2-results, body, .leaflet-container {
   font-family: "Lato", sans-serif; }
 
-.font-italic, em, i {
+.italic, em, i {
   font-style: italic; }
 
 .bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
@@ -119,7 +119,7 @@ a {
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label {
+.uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label, .demo-do, .demo-dont {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -255,6 +255,12 @@ sub {
   margin-left: 20px; }
   .ul-base li {
     padding-left: 10px; }
+    .ul-base li ul {
+      list-style-type: circle;
+      list-style-position: inside; }
+
+ol {
+  list-style-type: decimal; }
 
 /*-------------------------------------*/
 /* TEXT-BORDERED */
@@ -273,7 +279,7 @@ sub {
 .brand-orange-bg, .alert.warning, .home-current-community h3:first-of-type:after {
   background-color: #ec6608; }
 
-.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green, .brand-school {
+.brand-green, .verified, .home-help-visit h3:first-of-type, .school-type-school, .map-pin-details .icon-number, .map-heading-main, .leaflet-container a.brand-green, .demo-do, .brand-school {
   color: #26b262; }
 
 .brand-green-bg, .verified:before, .alert.success, .home-help-visit .module-img, .home-current-updates h3:first-of-type:after, .heading-volunteer-box:after, .brand-school-bg {
@@ -300,7 +306,7 @@ sub {
 .brand-purple-bg, .brand-preschool-bg {
   background-color: #7575bc; }
 
-.brand-red, .error-message, .picker__button--clear:before, .about-map span, .brand-preschool-project {
+.brand-red, .error-message, .picker__button--clear:before, .about-map span, .demo-dont, .brand-preschool-project {
   color: #cb0012; }
 
 .brand-red-bg, .alert.error, .brand-preschool-project-bg {
@@ -382,7 +388,7 @@ sub {
 .grey-cloud-bg, .bar-custom {
   background-color: #d8d8d8; }
 
-.grey-silver, .button-hollow:hover, .button-hollow:focus, .nav-trigger:hover, .profile-options:hover, .nav-trigger:focus, .profile-options:focus, input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder, input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder, input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder, input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder, .form-optional-text, .nextLightBox, .prevLightBox, .closeLightBox, .picker__year, .picker__button--today[disabled],
+.grey-silver, .button-hollow:hover, .button-hollow:focus, .nav-trigger:hover, .profile-options:hover, .nav-trigger:focus, .profile-options:focus, .form-optional-text, .nextLightBox, .prevLightBox, .closeLightBox, .picker__year, .picker__button--today[disabled],
 .picker__button--today[disabled]:hover, .profile-options, .banner-home-container a, .volunteer-stories .heading-tiny, .compare-section-source, .profile-volunteer-date {
   color: #bbb; }
 
@@ -605,13 +611,13 @@ hr {
 /*-------------------------------------*/
 /* ICONS */
 .font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
-.picker__nav--next:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon {
+.picker__nav--next:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon, .demo-do:before, .demo-dont:before {
   font-family: "FontAwesome"; }
 
 .icon-right {
   margin-left: 5px; }
 
-.icon-left, .profile-options:before, .vol-oppor-icon, .label-compare-clear:before {
+.icon-left, .profile-options:before, .vol-oppor-icon, .label-compare-clear:before, .demo-do:before, .demo-dont:before {
   margin-right: 5px; }
 
 .icon-button-round, .icon-button-round-sm {
@@ -825,6 +831,12 @@ hr {
     color: #26b262; }
   .circle-bullet.brand-blue:before {
     color: #3891e3; }
+  .circle-bullet.brand-red:before {
+    color: #cb0012; }
+  .circle-bullet.brand-turquoise:before {
+    color: #24b2b6; }
+  .circle-bullet.brand-purple:before {
+    color: #7575bc; }
   .circle-bullet.green-pista:before {
     color: #addd8e; }
   .circle-bullet.brand-orange:before {
@@ -1043,6 +1055,14 @@ textarea {
   vertical-align: top;
   height: 120px; }
 
+input[type="text"].placeholder, input[type="email"].placeholder, input[type="number"].placeholder, input[type="tel"].placeholder, input[type="password"].placeholder, input[type="date"].placeholder, input[type="url"].placeholder, textarea.placeholder, select.placeholder {
+  color: #bbb; }
+input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="number"]::-moz-placeholder, input[type="tel"]::-moz-placeholder, input[type="password"]::-moz-placeholder, input[type="date"]::-moz-placeholder, input[type="url"]::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  color: #bbb; }
+input[type="text"]::-webkit-input-placeholder, input[type="email"]::-webkit-input-placeholder, input[type="number"]::-webkit-input-placeholder, input[type="tel"]::-webkit-input-placeholder, input[type="password"]::-webkit-input-placeholder, input[type="date"]::-webkit-input-placeholder, input[type="url"]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  color: #bbb; }
+input[type="text"]:-ms-input-placeholder, input[type="email"]:-ms-input-placeholder, input[type="number"]:-ms-input-placeholder, input[type="tel"]:-ms-input-placeholder, input[type="password"]:-ms-input-placeholder, input[type="date"]:-ms-input-placeholder, input[type="url"]:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
+  color: #bbb; }
 input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="password"]:focus, input[type="date"]:focus, input[type="url"]:focus, textarea:focus, select:focus {
   outline: 0; }
 
@@ -1108,7 +1128,7 @@ input[disabled], input[disabled] + .input-checkbox-label, input[disabled] + .inp
 input[disabled], .input-checkbox[disabled] + .input-checkbox-label:before, .input-radio[disabled] + .input-radio-label:before {
   border-color: #e9e9e9; }
 
-input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before {
+input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before, .input-text[disabled] {
   background: #e9e9e9;
   border-color: #e9e9e9; }
 
@@ -2026,7 +2046,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 
 /*
 
-// STYLEGUIDE: Grey silver not working througout the site: PLEASE FIX;
+// STYLEGUIDE:
 also, inline style on dropdown ul remove later if possible
 does datepicker need js docs? maybe a link?
 Same for select2? How to give docs?
@@ -3311,12 +3331,19 @@ body {
   display: none;
   margin: 20px 0 0 0; }
 
+.demo-do:before {
+  content: "\f00c"; }
+
+.demo-dont:before {
+  content: "\f00d"; }
+
 code {
   border-left: 3px solid #7575bc;
   overflow-y: auto;
   padding: 40px 20px 20px 20px;
   display: block;
-  font-family: monospace; }
+  font-family: monospace;
+  margin: 5px 0; }
 
 .box-demo {
   width: 80px;
