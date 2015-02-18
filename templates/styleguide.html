@@ -1668,12 +1668,12 @@
 
     <div class="container">
       <h2 class="heading-secondary brand-purple">Tabs</h2>
-      <div class="center-text">
-        <p>Tabs are responsive and become accordions on mobile.</p>
-        <p>Tabs look nice when they are not inside a container element, as seen in the demo below</p>
-        <p><span class="demo-do">DO</span> add a reference to basic_tabs.js on the page.</p>
-        <p>Then use the markup below.</p>
-      </div>
+      <ul class="ul-base container-mid">
+        <li>Tabs are responsive and become accordions on mobile.; resize to see the magic.</li>
+        <li>Tabs look nice when they are <span>not inside a container element</span>, as seen in the demo below</li>
+        <li><span class="demo-do">DO</span> add a reference to basic_tabs.js on the page.
+        Then use the markup below.</li>
+      </ul>
     </div>
 
       <div class="style-block">
@@ -1701,7 +1701,7 @@
     </div> <!-- /tab-content -->
   </div> <!-- /tab-each -->
 </div> <!-- /tab-wrap -->
-      </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -1717,22 +1717,23 @@
     </div>
   
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Banners: Full width</h2>
-      <div><span class="demo-do">DO:</span> Add an additional class to the div with class banner-full and add your background image to it. Currently uses an inline style for demo.</div>
+      <h2 class="heading-secondary brand-purple">Banners, Heros and All</h2>
+      <div class="container-mid center-text"><span class="demo-do">DO:</span> Add an additional class to the div with class banner-full and add your background image to it. Currently uses an inline style for demo.</div>
     </div> <!-- /container -->
     <div class="style-block">
       <div class="style-block-demo center-text">
-        <section class="banner-full" style="background: url('/static/images/bg_header_reading_programme.jpg');">
-          <div class="banner-content">
-            <h1 class="heading-primary white">Banner Heading</h1>
-            <div class="banner-full-caption">
-              <p>Banner caption content: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore numquam quos aut earum id ratione.</p>
-              <div class="base-spacing"></div>
-            </div>
-          </div> <!-- /banner-content -->
-          <div class="banner-overlay"></div>
-        </section>
-      </div> <!-- /style-block-demo -->
+<section class="banner-full" style="background: url('/static/images/bg_header_reading_programme.jpg');">
+  <div class="banner-content">
+    <h1 class="heading-primary white">Banner Heading</h1>
+    <div class="banner-full-caption">
+      <p>Banner caption content: Lorem ipsum dolor sit amet, consectetur 
+      adipisicing elit. Inventore numquam quos aut earum id ratione.</p>
+      <div class="base-spacing"></div>
+    </div>
+  </div> <!-- /banner-content -->
+  <div class="banner-overlay"></div>
+</section>
+</div> <!-- /style-block-demo -->
 
       <div class="center-text">
         <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -1747,6 +1748,52 @@
       </div>
     </div>
 
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Module: Images with text below</h2>
+      <ul class="ul-base container-mid">
+        <li>This module is used for round images with headings and text below</li>
+        <li>The module is quite flexible, and can be overriden with additional classes</li>
+        <li>The columns for this module stack on mobile and increase to 3 on larger screens.</li>
+        <li>The demo below shows the module without any additional classes.</li>
+        <li>To override, you can add additional classes to module-img-block and module-img-each items.</li>
+        <li>With additional classes, this module would appear just like the <em>How You Can Help</em> section on the home page.</li>
+      </ul>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<ul class="module-img-block">
+  <li class="module-img-each">
+    <div class="module-img">
+      <img src="/static/images/auto.png" alt="Icon: Auto">
+    </div>
+    <h3>Pay a visit</h3>
+    <p>Got some free time?<br>
+      Visit a school in your local area.<br>
+      Look around and offer to help.
+    </p>
+  </li><li class="module-img-each">
+    <div class="module-img">
+      <img src="/static/images/helpout.png" alt="Icon: Volunteer">
+    </div>
+    <h3>Volunteer</h3>
+    <p>Show your volunteer Spirit!
+      <br>
+      Spend some of your time teaching and helping children in nearby schools and make a difference to their lives.</p>
+  </li><li class="module-img-each">
+    <div class="module-img">            
+      <img src="/static/images/books.png" alt="Icon: Share">
+    </div>
+    <h3>Donate</h3>
+    <p>Donate books, computers, chairs, tables, sports equipment, etc. Your donations help the school provide a better learning environment for the children.</p>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-iframes">Responsive iframe videos</h2>
       <div class="heading-section-block">
@@ -1757,12 +1804,15 @@
 
     <div class="container">
       <h2 class="heading-secondary brand-purple">Iframe: Responsive Video</h2>
+      <div class="center-text">
+        <p>Simply wrap the iframe embedded video in a div with a class of <em>video-iframe-responsive</em></p>
+      </div>
       <div class="style-block">
         <div class="style-block-demo center-text">
-          <div class="video-iframe-responsive">
-            <iframe src="https://www.youtube.com/embed/BQBsAjlBTHw" allowfullscreen="" frameborder="0" width="850" height="500" class="video_frame"></iframe>
-          </div>
-        </div> <!-- /style-block-demo -->
+<div class="video-iframe-responsive">
+  <iframe src="https://www.youtube.com/embed/BQBsAjlBTHw" allowfullscreen="" frameborder="0" width="850" height="500" class="video_frame"></iframe>
+</div>
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -1782,8 +1832,9 @@
       <h2 class="heading-section" id="demo-block-icons">Icons</h2>
       <div class="heading-section-block">
         <ul>
-          <li><a href="#icons-docs" class="js-scroll-smooth-link">Documentation</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Custom Icons</a></li>
+          <li><a href="#icons-docs" class="js-scroll-smooth-link">Icons: Documentation</a></li>
+          <li><a href="#icons-custom" class="js-scroll-smooth-link">Icons: Custom &amp; Styles</a></li>
+          <li><a href="#icons-common" class="js-scroll-smooth-link">Icons: Common</a></li>
         </ul>
       </div>
     </div>
@@ -1792,7 +1843,7 @@
       <h2 class="heading-secondary brand-purple" id="icons-docs">Icons</h2>
       <div class="style-block">
         <div class="heading-tertiary center-text">Documentation</div>
-        <p>The site uses the Font Awesome icon collection. All icons are vector and used like a font and can be styled so.</p>
+        <p>The site uses the Font Awesome icon collection. All icons are vector and used and styled like a font.</p>
         <p>Useful variables and helpers for icons include:</p>
         
           <pre><code>$font-icon / .font-icon / %font-icon; //extends Font Awesome
@@ -1828,7 +1879,7 @@
     </div> <!-- /container -->
 
     <div class="container">
-      <h2 class="heading-secondary brand-purple" id="icons-custom">Custom Icons</h2>
+      <h2 class="heading-secondary brand-purple" id="icons-custom">Custom Icons &amp; Styles</h2>
       <div class="center-text">These icons have been created using the Font Awesome icon library are used throughout the site.</div>
       <div class="style-block">
         <div class="heading-tertiary center-text">Icon Round: with icons</div>
@@ -1892,6 +1943,48 @@
         <div class="icon-boy"></div>
         <div class="icon-girl"></div>
         <div class="icon-boy-girl"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-common">Common Icons</h2>
+      <div class="center-text">Below are some of the icons commonly used across the site</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Arrows</div>
+        <div class="heading-tertiary center-text">Actions</div>
+        <div class="heading-tertiary center-text">Schools</div>
+        <div class="heading-tertiary center-text">Social</div>
+        <div class="style-block-demo center-text">
+<div class="fa fa-check"></div>
+<div class="fa fa-check-square"></div>
+<div class="fa fa-close"></div>
+<div class="fa fa-close-circle"></div>
+<div class="fa fa-circle"></div>
+<div class="fa fa-laptop"></div>
+<div class="fa fa-calendar"></div>
+<div class="fa fa-user"></div>
+<div class="fa fa-edit"></div>
+<div class="fa fa-angle-left"></div>
+<div class="fa fa-angle-right"></div>
+<div class="fa fa-angle-down"></div>
+<div class="fa fa-angle-up"></div>
+<div class="fa fa-sign-out"></div>
+<div class="fa fa-facebook"></div>
+<div class="fa fa-twitter"></div>
+<div class="fa fa-rss"></div>
+<div class="fa fa-youtube"></div>
+<div class="fa fa-map-marker"></div>
+<div class="fa fa-male"></div>
+<div class="fa fa-female"></div>
+<div class="fa fa-book"></div>
+<div class="fa fa-soccer-ball-o"></div>
+
+
 </div> <!-- /style-block-demo -->
 
         <div class="center-text">
