@@ -56,7 +56,7 @@
             }
         }).addClass('has_ul');
 
-        $(".js-dropdown li").click(function() {
+        $(".js-dropdown ul li").click(function() {
             $(".js-dropdown li").removeClass("selected");
             $(this).addClass("selected");
         });
