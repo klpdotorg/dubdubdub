@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block page_title %}About{% endblock %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Styleguide{% endblock %}
 
 {% block css_extra %}
 <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
@@ -16,6 +18,12 @@
     position: static;
   }
 </style>
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+  {% endcompress %}
 {% endblock %}
 
 {% block content %}
@@ -1546,6 +1554,53 @@
         </ul>
       </div>
     </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Tabs</h2>
+      <div class="center-text">
+        <p>Tabs are responsive and become accordions on mobile.</p>
+        <p>First, add a reference to basic_tabs.js on the page.</p>
+        <p>Tabs look nice when they are not inside a container element, as seen in the demo below</p>
+<pre><code>&lt;script type="text/javascript" src="/static/js/common/basic_tabs.js' %}"&gt;&lt;/script&gt;
+</code></pre>
+        <p>Then use the markup below.</p>
+      </div>
+    </div>
+
+      <div class="style-block">
+      
+      <div class="style-block-demo">
+<div class="js-tab-wrap tab-wrap">
+  <div class="tab-wrap-widescreen">
+    <div data-tab="volunteer" class="js-tabs-link tab-heading tab-heading-active">Volunteer</div>
+    <div data-tab="donate" class="js-tabs-link tab-heading">Donate</div>          
+  </div>
+
+  <div class="tab-each">
+    <div data-tab="volunteer" class="js-tab-content tab-content tab-active">
+      <div class="container" id="volunteerActivitiesList">
+        <div class="heading-tiny-uppercase">Volunteering opportunties</div>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+
+  <div class="tab-each">
+    <div data-tab="donate" class="js-tab-content tab-content">
+      <div class="container" id="donationRequirementsList">
+        <div class="heading-tiny-uppercase">Donate</div>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+  
+</div> <!-- /tab-wrap -->
+
+      </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-banners">Banners: Full-width</h2>
