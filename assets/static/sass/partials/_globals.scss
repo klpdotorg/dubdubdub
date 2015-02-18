@@ -474,39 +474,62 @@ img, video {
 /* DROPDOWNS: GENERIC */
 .dropdown-base {
   position: relative;
-  @extend %font-small;
+  @extend %font-smaller;
+  
+  > li {
+    display: inline-block;
+    @extend %border-radius-sm;
+    @extend %border-base;
+  }
 
   ul {
     display: none;
-    min-width: 80px;
+    min-width: 120px;
     @extend %white-bg;
     @extend %border-radius-sm;
     @extend %border-base;
     position: absolute;
+    top: 100%;
     left: 0;
 
-    .has_ul:after {
-      content: "\f107";
-      @extend %font-icon;
-    }
+    .has_ul {
+      position: relative;
+      padding-right: $base-spacing-lg;
 
-    a {
-      display: block; 
+      &:after {
+        content: "\f107";
+        @extend %font-icon;
+        position: absolute;
+        right: $base-spacing-sm;
+        top: $base-spacing-sm + 2;
+      }
+    }
+    
+    ul {
+      position: static;
+      border: none;
     }
   }
 
-  li.selected {
-    @extend %grey-mist-bg;    
-  }
-
-  a {
+  li {
     @extend %grey-steel; 
-    padding: $base-spacing;
+    padding: ($base-spacing-sm + 2) $base-spacing;
+    cursor: pointer;
 
     &:hover {
       @extend %grey-mist-bg; 
     }
   }
+
+  a {
+    @extend %grey-steel; 
+    display: block; 
+  }
+}
+
+.dropdown-base-trigger {
+  padding: $base-spacing-sm;
+  @extend %border-base;
 }
 
 /*-------------------------------------*/

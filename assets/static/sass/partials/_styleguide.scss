@@ -3,11 +3,32 @@
 }
 
 .dropdown-styleguide {
+  > li {
+    display: block;
+    border-radius: 0;
+  }
+
+  li {
+    &.selected {
+      @extend %grey-mist-bg;    
+    }
+  }
+
   ul {
     border: none;
     position: static;
+    right: 0;
     display: block !important;
   }
+
+  .styleguide-nav-trigger {
+    border: none;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.styleguide-nav-trigger {
+  @extend %grey-mist-bg;
 }
 
 .heading-secondary.brand-purple {

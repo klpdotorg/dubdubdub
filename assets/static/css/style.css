@@ -125,10 +125,10 @@ a {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .dropdown-base, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code {
+.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .dropdown-base, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
 .font-smallest, .verified, .button--sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .icon-number, .school-type-school .icon-number, .label-compare, .leaflet-container a.button--sm {
@@ -377,7 +377,7 @@ ol {
 .grey-mist {
   color: #f6f6f6; }
 
-.grey-mist-bg, .heading-section-block, .dropdown-base li.selected, .dropdown-base a:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, code {
+.grey-mist-bg, .heading-section-block, .dropdown-base li:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, .dropdown-styleguide li.selected, .styleguide-nav-trigger, code {
   background-color: #f6f6f6; }
 
 .grey-cloud, .circle-bullet.white:before, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover, .picker__day--outfocus, .picker__day--disabled,
@@ -395,7 +395,7 @@ ol {
 .grey-silver-bg {
   background-color: #bbb; }
 
-.grey-steel, .heading-tiny, .no-data, .profile-volunteer-date, .heading-tiny-uppercase, .table-base-heading, .heading-section, .heading-section-block, .heading-section-block a, .dropdown-base a, .button-hollow, .nav-trigger, .profile-options, .picker__nav--prev:before,
+.grey-steel, .heading-tiny, .no-data, .profile-volunteer-date, .heading-tiny-uppercase, .table-base-heading, .heading-section, .heading-section-block, .heading-section-block a, .dropdown-base li, .dropdown-base a, .button-hollow, .nav-trigger, .profile-options, .picker__nav--prev:before,
 .picker__nav--next:before, .picker__weekday, .picker__button--close:before, .options-list a, .breadcrumb a, .icon-compare-close, .map-label-title, .gender-icons-title, .facility-icons-title {
   color: #898989; }
 
@@ -416,7 +416,7 @@ ol {
 
 /*-------------------------------------*/
 /* BORDER */
-.border-base, .heading-section, .text-bordered, .dropdown-base ul, .table-infra-key-color:after, .infra-key-legend, .border-grey-cloud, .tab-wrap, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container.select2-container-disabled .select2-choice, .select2-container-multi .select2-choices, .rbox_inline, .rbox_html, .picker__select--month,
+.border-base, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .dropdown-base-trigger, .table-infra-key-color:after, .infra-key-legend, .border-grey-cloud, .tab-wrap, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container.select2-container-disabled .select2-choice, .select2-container-multi .select2-choices, .rbox_inline, .rbox_html, .picker__select--month,
 .picker__select--year, .nav, .options-list {
   border: 1px solid #d8d8d8; }
 
@@ -444,7 +444,7 @@ ol {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
+.border-radius-sm, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
 
 .border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .icon-number, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
@@ -530,17 +530,33 @@ img, video {
 /* DROPDOWNS: GENERIC */
 .dropdown-base {
   position: relative; }
+  .dropdown-base > li {
+    display: inline-block; }
   .dropdown-base ul {
     display: none;
-    min-width: 80px;
+    min-width: 120px;
     position: absolute;
+    top: 100%;
     left: 0; }
-    .dropdown-base ul .has_ul:after {
-      content: "\f107"; }
-    .dropdown-base ul a {
-      display: block; }
+    .dropdown-base ul .has_ul {
+      position: relative;
+      padding-right: 20px; }
+      .dropdown-base ul .has_ul:after {
+        content: "\f107";
+        position: absolute;
+        right: 5px;
+        top: 7px; }
+    .dropdown-base ul ul {
+      position: static;
+      border: none; }
+  .dropdown-base li {
+    padding: 7px 10px;
+    cursor: pointer; }
   .dropdown-base a {
-    padding: 10px; }
+    display: block; }
+
+.dropdown-base-trigger {
+  padding: 5px; }
 
 /*-------------------------------------*/
 /* TABLES */
@@ -2083,7 +2099,7 @@ bar charts add js info
 // add current class to styleguide menu tree
 // FIX tabs demo not WORKING
 
-// add the commonly used icons in font awesome
+// Sanj: Js docs for custom bar charts;
 
 // remove remaining importants in map.scss
 
@@ -3341,10 +3357,17 @@ body {
       border-left: 1px solid #d8d8d8; }
     .filter-school-each .select2-container {
       width: 140px; } }
+.dropdown-styleguide > li {
+  display: block;
+  border-radius: 0; }
 .dropdown-styleguide ul {
   border: none;
   position: static;
+  right: 0;
   display: block !important; }
+.dropdown-styleguide .styleguide-nav-trigger {
+  border: none;
+  border-bottom: 1px solid #d8d8d8; }
 
 .heading-secondary.brand-purple {
   margin: 0 0 25px 0; }

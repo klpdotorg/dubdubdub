@@ -26,9 +26,9 @@
 <section class="clearfix">
   <div class="demo-sidebar">
     <ul class="dropdown-base js-dropdown dropdown-styleguide">
-      <li>
-        <span class="fa fa-bars icon-left grey-steel vertical-inline-middle"></span>
-        <span class="heading-tiny-uppercase">Menu</span>
+      <li class="styleguide-nav-trigger">
+        <a href="#"><span class="fa fa-bars icon-left grey-steel vertical-inline-middle"></span>
+        <span class="heading-tiny-uppercase">Menu</span></a>
         <ul>
           <li><a href="#demo-block-basics" class="js-scroll-smooth-link">CSS: Basics</a></li>
           <li><a href="#demo-block-colors" class="js-scroll-smooth-link">Colors</a></li>
@@ -1824,9 +1824,65 @@
       <h2 class="heading-section" id="demo-block-dropdowns">Dropdowns</h2>
       <div class="heading-section-block">
         <ul>
+          <li><a href="#dropdown-basic" class="js-scroll-smooth-link">Dropdown: Basic</a></li>
+          <li><a href="#dropdown-icons" class="js-scroll-smooth-link">Dropdown: Icons</a></li>
         </ul>
       </div>
     </div>
+
+    <div class="container">
+      <ul class="ul-base container-mid">
+        <li>The dropdowns are very flexible and have been used across the site for the main menu, the styleguide tree and generic dropdowns.</li>
+        <li>You can style the dropdown triggers and dropped down content as you please, with a border or an arrow or flying unicorns.</li>
+        <li>In theory, the dropdowns can have infinite levels of nesting, but you'd generally want to keep it shallow.</li>
+      </ul>
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="dropdown-basic">Dropdowns: Basic</h2>
+        <div class="style-block-demo">
+<ul class="dropdown-base js-dropdown">
+  <li>
+    <span class="bold">Users</span>
+    <span class="fa fa-angle-down"></span>
+    <ul>
+      <li>Dropdown item</li>
+      <li>Dropdown item
+        <ul>
+          <li>Nest children if you like</li>
+        </ul>
+      </li>
+      <li>Dropdown item</li>
+    </ul>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="dropdown-icons">Dropdowns: Icons</h2>
+        <div class="style-block-demo">
+<ul class="dropdown-base js-dropdown">
+  <li>
+    <span class="fa fa-user"></span>
+    <ul>
+      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</a></li>
+      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</a></li>
+      <li><span class="fa fa-plane icon-left"></span>Dropdown item</a></li>
+    </ul>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-icons">Icons</h2>
@@ -2055,9 +2111,12 @@
     </div>
 
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Bar Graphs: Custom</h2>
+      <h2 class="heading-secondary brand-purple" id="bar-default">Bar Graphs: Default</h2>
+      <p class="center-text">Refer to /templates/frontend_templates/school.html for an example of adding variables for bar graphs.
+      <br>
+      The markup below is indicative of the styling.
+      </p>
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="bar-default">Bar Graph: Default</div>
         <div class="style-block-demo center-text">
 <div class="bar-graph-wrap">
   <div class="bar-label">Bar Label</div>
@@ -2090,7 +2149,7 @@
 
     <div class="container">
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="bar-custom">Bar Graph: Overrides</div>
+        <div class="heading-secondary brand-purple" id="bar-custom">Bar Graph: Overrides</div>
         <div class="style-block-demo center-text">
 <div class="bar-graph-wrap">
   <div class="bar-label green-leaf">Bar Label</div>
