@@ -55,6 +55,11 @@
                 return false;
             }
         }).addClass('has_ul');
+
+        $(".js-dropdown li").click(function() {
+            $(".js-dropdown li").removeClass("selected");
+            $(this).addClass("selected");
+        });
     
         $(window).click(function(){
             //slide up an open menu if user clicks anywhere else on window        

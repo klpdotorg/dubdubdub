@@ -496,11 +496,15 @@ img, video {
     }
   }
 
+  li.selected {
+    @extend %grey-mist-bg;    
+  }
+
   a {
     @extend %grey-steel; 
     padding: $base-spacing;
 
-    &:hover{
+    &:hover {
       @extend %grey-mist-bg; 
     }
   }
