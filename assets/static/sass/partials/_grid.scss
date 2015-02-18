@@ -2,7 +2,7 @@
 
 
 // Containers
-.container, %container, .container-sm, %container-sm {
+.container, %container, .container-mid, %container-mid, .container-sm, %container-sm {
   margin-left: auto;
   margin-right: auto;
 }
@@ -13,12 +13,32 @@
   padding-right: $grid-padding;
 }
 
+.container-mid, %container-mid {
+  max-width: 750px;
+}
+
 .container-sm, %container-sm {
   max-width: 520px;
 }
 
 @mixin container {
   max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin container-mid {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin container-sm {
+  max-width: 520px;
   margin-left: auto;
   margin-right: auto;
   padding-left: $grid-padding;
