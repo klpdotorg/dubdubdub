@@ -2067,7 +2067,6 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
 /*
 
 // STYLEGUIDE:
-also, inline style on dropdown ul remove later if possible
 does datepicker need js docs? maybe a link?
 Same for select2? How to give docs?
 
@@ -3329,7 +3328,9 @@ body {
     .filter-school-each .select2-container {
       width: 140px; } }
 .dropdown-styleguide ul {
-  position: static; }
+  border: none;
+  position: static;
+  display: block; }
 
 .style-block .button-hollow {
   margin: 10px 0; }
