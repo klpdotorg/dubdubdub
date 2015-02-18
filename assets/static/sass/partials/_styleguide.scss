@@ -6,7 +6,7 @@
   ul {
     border: none;
     position: static;
-    display: block;
+    display: block !important;
   }
 }
 
@@ -61,7 +61,7 @@ code {
   display: block;
   font-family: monospace;
   @extend %font-small;
-  margin: $base-spacing-sm 0;
+  margin: $base-spacing 0;
 }
 
 .box-demo {
