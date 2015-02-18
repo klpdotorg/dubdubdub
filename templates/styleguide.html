@@ -1430,7 +1430,7 @@
       <div class="container-mid">
         <p>A more elegant way to do responsive tables is to reset them to a list view (using display block on a max-width media query), and append the table headings using generated content or JS.</p>
         <p>Since this varies from table to table, an example from the site has been added below for reference. You can resize the window to see what happens.</p>
-        <p><span class="demo-do">Do</span> <span class="bold">use the demo below only as a reference</span>, and create a new class if you need to create a similar table.</p>        
+        <p><span class="demo-do">Do</span> <span class="bold">use the demo below only as a reference</span>, and create a new class if you need to create a similar table.</p>
       </div> 
 
       <div class="style-block">
@@ -1496,7 +1496,7 @@
 
     <div class="container">
       <h2 class="heading-secondary brand-purple">Horizontal rules</h2>
-      <div class="center-text">Just a default hr tag.</div>
+      <div class="center-text">Styling for an HTML hr tag.</div>
       <div class="style-block">
         <div class="style-block-demo center-text">
 <hr>
@@ -1511,20 +1511,22 @@
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
       <div class="heading-section-block">
+        <ul>
+          <li><a href="#buttons-default" class="js-scroll-smooth-link">Buttons: Default</a></li>
+          <li><a href="#buttons-small" class="js-scroll-smooth-link">Buttons: Small</a></li>
+        </ul>
       </div>
     </div>
 
-    <div class="container">
-      <h2 class="heading-secondary brand-purple">Buttons</h2>
-      
+    <div class="container">    
       <div class="style-block">
-        <div class="heading-tertiary center-text">Buttons: Default</div>
+        <h2 class="heading-secondary brand-purple" id="buttons-default">Buttons: Default</h2>
         <div class="style-block-demo center-text">
-          <div class="button">Button: Default</div>    
-          <div class="button-orange">Button: Orange</div>    
-          <div class="button-grey">Button: Grey</div>    
-          <div class="button-hollow">Button: Hollow</div>    
-        </div> <!-- /style-block-demo -->
+<div class="button">Button: Default</div>    
+<div class="button-orange">Button: Orange</div>    
+<div class="button-grey">Button: Grey</div>    
+<div class="button-hollow">Button: Hollow</div>    
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -1532,13 +1534,13 @@
       </div> <!-- /style-block -->
 
       <div class="style-block">
-        <div class="heading-tertiary center-text">Buttons: Small</div>
+        <div class="heading-secondary brand-purple" id="buttons-small">Buttons: Small</div>
         <div class="style-block-demo center-text">
-          <div class="button button--sm">Button: Default: Small</div>    
-          <div class="button-orange button--sm">Button: Orange: Small</div>    
-          <div class="button-grey button--sm">Button: Grey: Small</div>
-          <div class="button-hollow button--sm">Button: Hollow: Small</div>        
-        </div> <!-- /style-block-demo -->
+<div class="button button--sm">Button: Default: Small</div>    
+<div class="button-orange button--sm">Button: Orange: Small</div>    
+<div class="button-grey button--sm">Button: Grey: Small</div>
+<div class="button-hollow button--sm">Button: Hollow: Small</div>        
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -1559,51 +1561,52 @@
     </div>
 
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Alerts</h2>
-      <div>All alerts are fixed to the top of the screen (below the header) and slide up after a few seconds. They are neither fixed nor slide up on the styleguide, purely for demo purposes.</div>
+      <div class="container-mid">
+        <div>The alerts below have been slightly modified for this demo. On the site, all alerts are fixed to the top of the screen (below the header) and slide up after a few seconds.</div>        
+      </div>
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="alert-default">Alert: Default</div>
+        <div class="heading-secondary brand-purple" id="alert-default">Alert: Default</div>
         <div class="style-block-demo center-text">
 <div class="alert">
   Alert: Default
 </div>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
         </div>    
       </div> <!-- /style-block -->
 
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="alert-success">Alert: Success</div>
+        <div class="heading-secondary brand-purple" id="alert-success">Alert: Success</div>
         <div class="style-block-demo center-text">
 <div class="alert success">
   Alert: Success
 </div>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
         </div>    
       </div> <!-- /style-block -->
 
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="alert-warning">Alert: Warning</div>
+        <div class="heading-secondary brand-purple" id="alert-warning">Alert: Warning</div>
         <div class="style-block-demo center-text">
 <div class="alert warning">
   Alert: Warning
 </div>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
         </div>    
       </div> <!-- /style-block -->
 
       <div class="style-block">
-        <div class="heading-tertiary center-text" id="alert-error">Alert: Error</div>
+        <div class="heading-secondary brand-purple" id="alert-error">Alert: Error</div>
         <div class="style-block-demo center-text">
 <div class="alert error">
   Alert: Error
 </div>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
         </div>    
@@ -1623,7 +1626,7 @@
       <div class="style-block">
         <div class="heading-tertiary center-text">Tooltip: Text</div>
         <div class="style-block-demo center-text">
-          <p><span class="tooltip" role="tooltip" aria-label="I am a tooltip">Hover over or tap me</span></p>
+          <p><span class="tooltip" aria-label="I am a tooltip">Hover over or tap me</span></p>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -1635,7 +1638,7 @@
       <div class="style-block">
         <div class="heading-tertiary center-text">Tooltip: Button icon</div>
         <div class="style-block-demo center-text">
-          <p><span class="icon-button-round tooltip" role="tooltip" aria-label="I am a tooltip"><span class="fa fa-check"></span></span></p>
+          <p><span class="icon-button-round tooltip" aria-label="I am a tooltip"><span class="fa fa-check"></span></span></p>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -1646,7 +1649,7 @@
       <div class="style-block">
         <div class="heading-tertiary center-text">Tooltip: Button</div>
         <div class="style-block-demo center-text">
-          <p class="button tooltip" role="tooltip" aria-label="I am a tooltip">Hover hover hover</p>
+          <p class="button tooltip" aria-label="I am a tooltip">Hover hover hover</p>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
@@ -1813,7 +1816,7 @@
           <p><span class="fa fa-user icon-left"></span> Font icon with right padding</p>
           <p>Font icon with left padding <span class="fa fa-user icon-right"></span></p>
           <p><span class="fa fa-user brand-blue">Font icon with color, using CSS color property.</span></p>
-          <p class="tooltip" role="tooltip" aria-label="tooltip">
+          <p class="tooltip" aria-label="tooltip">
             <span class="fa fa-user">Font icon with tooltip.</span>
           </p>
         </div> <!-- /style-block-demo -->
@@ -1934,7 +1937,7 @@
   <div class="bar-label">Bar Label</div>
   <div class="bar-graph">
     <div class="bar-percent">47%</div>
-    <div class="bar-custom tooltip" role="tooltip" aria-label="22.17%">
+    <div class="bar-custom tooltip" aria-label="22.17%">
         <div class="bar-value bar-value-47 grey-gravel-bg" style="width:22.17%;">
         </div>
     </div>
@@ -1945,7 +1948,7 @@
   <div class="bar-label">Bar Label</div>
   <div class="bar-graph">
     <div class="bar-percent">149%</div>
-    <div class="bar-custom tooltip" role="tooltip" aria-label="70.28%">
+    <div class="bar-custom tooltip" aria-label="70.28%">
         <div class="bar-value bar-value-70 grey-gravel-bg" style="width:70.28%;">
         </div>
     </div>
@@ -1967,7 +1970,7 @@
   <div class="bar-label green-leaf">Bar Label</div>
   <div class="bar-graph">
     <div class="bar-percent green-leaf">47%</div>
-    <div class="bar-custom tooltip" role="tooltip" aria-label="22.17%">
+    <div class="bar-custom tooltip" aria-label="22.17%">
         <div class="bar-value bar-value-47 green-leaf-bg" style="width:22.17%;">
         </div>
     </div>
@@ -1978,7 +1981,7 @@
   <div class="bar-label brand-purple">Bar Label</div>
   <div class="bar-graph">
     <div class="bar-percent brand-purple">47%</div>
-    <div class="bar-custom tooltip" role="tooltip" aria-label="22.17%">
+    <div class="bar-custom tooltip" aria-label="22.17%">
         <div class="bar-value bar-value-47 brand-purple-bg" style="width:22.17%;">
         </div>
     </div>

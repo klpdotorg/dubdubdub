@@ -107,10 +107,10 @@
     {% if has_basic_facilities %}
     <div class="facility-items">
       <h4 class="facility-icons-title">Facilities</h4>
-      {% if basic_facilities.computer_lab %}<span class="tooltip" role="tooltip" aria-label="Has Computers"><div class="k-icon fa fa-laptop"></div></span>{% endif %}
-      {% if basic_facilities.library %}<span class="tooltip" role="tooltip" aria-label="Has a Library"><span class="fa fa-book k-icon"></span></span>{% endif %}
-      {% if has_volunteer_activities %}<span class="tooltip" role="tooltip" aria-label="Needs Volunteers"><div class="k-icon fa fa-calendar"></div></span>{% endif %}
-      {% if basic_facilities.playground %}<span class="tooltip" role="tooltip" aria-label="Has a Playground"><div class="k-icon fa fa-soccer-ball-o"></div></span>{% endif %}
+      {% if basic_facilities.computer_lab %}<span class="tooltip" aria-label="Has Computers"><div class="k-icon fa fa-laptop"></div></span>{% endif %}
+      {% if basic_facilities.library %}<span class="tooltip" aria-label="Has a Library"><span class="fa fa-book k-icon"></span></span>{% endif %}
+      {% if has_volunteer_activities %}<span class="tooltip" aria-label="Needs Volunteers"><div class="k-icon fa fa-calendar"></div></span>{% endif %}
+      {% if basic_facilities.playground %}<span class="tooltip" aria-label="Has a Playground"><div class="k-icon fa fa-soccer-ball-o"></div></span>{% endif %}
     </div>
     {% endif %}
     {% if has_volunteer_activities %}
