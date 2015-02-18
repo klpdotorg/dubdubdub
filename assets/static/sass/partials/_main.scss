@@ -370,6 +370,28 @@ body {
 }
 
 /*-------------------------------------*/
+//MAP: MAP, SCHOOL, VOLUNTEER
+
+.map-canvas-full, .map-volunteer-canvas-full {
+  position:fixed; 
+  right:0; 
+  bottom: 0;
+
+  > div{
+    height: 100%;
+  }
+}
+
+.map-canvas-full {
+  left: 0; 
+  top: ($header-height + $map-subheader-height) - 5;  
+}
+
+.map-volunteer-canvas-full {
+  left: $sidebar-map-width;
+}
+
+/*-------------------------------------*/
 //MODALS: INNER ELEMENT STYLES
 
 .rbox_lightBox {
@@ -1030,7 +1052,6 @@ body {
   top: $base-spacing;
   right: $base-spacing;
   @extend %grey-steel;
-  z-index: 20;
 }
 
 .label-compare-block {

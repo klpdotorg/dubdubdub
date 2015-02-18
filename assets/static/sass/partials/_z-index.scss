@@ -3,6 +3,15 @@
   z-index: 1;
 }
 
+.icon-compare-close {
+  z-index: 20;
+}
+
+// Dropdown: base class
+.dropdown-base ul {
+  z-index: 1;
+}
+
 // Dropdown: login
 .options-list {
   z-index: 2;

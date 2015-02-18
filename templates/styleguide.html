@@ -90,13 +90,16 @@
 
     <div class="container-mid">
       <div class="heading-secondary brand-purple" id="css-structure">CSS: Structure</div>
-      <p>The <span class="bold">partials folder</span> inside /assets/static/sass contains all the small Sass files that are imported into the style.scss folder:</p>
+      <p>The <span class="bold">partials folder</span> inside /assets/static/sass contains all the small Sass files that are imported into the style.scss folder.</p>
+      <p>Important partials include: </p>
       <ul class="ul-base">
-        <li><span class="bold">media-queries: </span>Contains all the styles that make the app responsive.</li>
+        <li>All <span class="bold">variables</span> referenced in all other Sass files belong to the variables partial. A variable is always prefixed with a $ symbol. e.g. $header-height defines the height of the fixed height header, which is then re-used for positioning the main element, map, fixed alerts, etc.</li>
+        <li>Reference for <span class="bold">globals:</span> vendor prefixing mixins and global classes belong to the _globals.scss partial. These affect the entire app; handle with care if making changes.</li>
         <li><span class="bold">typography: </span> Contains styles for headings, links, lists, etc. These affect the entire app; handle with care if making changes.</li>
         <li><span class="bold">forms: </span> Contains styles for inputs, labels, selects, errors. All overrides for individual forms are also done here.</li>
-        <li>Reference for <span class="bold">globals:</span> vendor prefixing mixins and global classes belong to the _globals.scss partial. These affect the entire app; handle with care if making changes.</li>
-        <li>All <span class="bold">variables</span> referenced in all other Sass files belong to the variables partial. A variable is always prefixed with a $ symbol. e.g. $header-height defines the height of the fixed height header, which can then be re-used for positioning the main element, map, fixed alerts, etc.</li>
+        <li><span class="bold">z-index: </span>Contains all the z-index values for all selectors. Add new z-index values here.</li>
+        <li><span class="bold">map: </span>Contains all the z-index values for all selectors. Add new z-index values here.</li>
+        <li><span class="bold">media-queries: </span>Contains all the styles that make the app responsive.</li>
         <li>The <span class="bold">lib folder</span> inside the partials folder, contains all third party plugin sass partials</li>
         <li>If you need a new UI module that deserves its own partial file, e.g. some groovy animation library, you could <span class="bold">create a new partial</span> (e.g. _groovy.animation.scss) and import it into the style.scss file. <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials">Documentation here.</a></li>
       </ul>

@@ -484,7 +484,6 @@ img, video {
     @extend %border-base;
     position: absolute;
     left: 0;
-    z-index: 1;
 
     .has_ul:after {
       content: "\f107";
@@ -691,7 +690,7 @@ hr {
   line-height: 1;
 }
 
-// icon: vertified
+// icon: verified
 .verified {
   @extend %brand-green;
   @extend %uppercase;

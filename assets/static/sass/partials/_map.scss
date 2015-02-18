@@ -1,24 +1,3 @@
-
-//page: school map
-.map-canvas-full, .map-volunteer-canvas-full {
-  position:fixed; 
-  right:0; 
-  bottom: 0;
-
-  > div{
-    height: 100%;
-  }
-}
-
-.map-canvas-full {
-  left: 0; 
-  top: ($header-height + $map-subheader-height) - 5;  
-}
-
-.map-volunteer-canvas-full {
-  left: $sidebar-map-width;
-}
-
 //map: popup
 
 .leaflet-popup-content-wrapper .leaflet-popup-content {
