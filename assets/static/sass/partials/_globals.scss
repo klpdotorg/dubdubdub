@@ -671,6 +671,13 @@ hr {
   height: 28px;
 }
 
+.icon-button-round-lg {
+  @extend %icon-button-round;
+  font-size: 20px;
+  width: 70px;
+  height: 70px;
+}
+
 // icon-number
 .icon-number {
   @extend %white-bg;

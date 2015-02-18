@@ -1621,11 +1621,68 @@
       <h2 class="heading-section" id="demo-block-icons">Icons</h2>
       <div class="heading-section-block">
         <ul>
-          <li><a href="#paisa" class="js-scroll-smooth-link">Linear</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Ease in</a></li>
+          <li><a href="#icons-docs" class="js-scroll-smooth-link">Documentation</a></li>
+          <li><a href="#aser" class="js-scroll-smooth-link">Custom Icons</a></li>
         </ul>
       </div>
     </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-docs">Icons</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Documentation</div>
+        <p>The site uses the Font Awesome icon collection. All icons are vector and used like a font and can be styled so.</p>
+        <p>The documention for icons is <a href="http://fontawesome.io/icons/">here</a> and the <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/">cheatsheet is here.</a></p>
+        <p>To use icons in the CSS, you will need to catch the unicode value in the cheatsheet, escape it and add it as generated content using content :before.</p>
+        
+<pre><code>&lt;style&gt;
+.icon-boy {
+  &:before {
+    content: "\f183";
+    font-family: $font-icon;
+  }
+}
+&lt;/style&gt;</code></pre>
+        <p>To use icons in the markup, add a class of fa and fa-&lt;icon-name&gt; to an element.
+        </p>
+        <div class="style-block-demo">
+          <p><span class="fa fa-user"></span> Font icon</p>
+          <p><span class="fa fa-user icon-left"></span> Font icon with right padding</p>
+          <p>Font icon with left padding <span class="fa fa-user icon-right"></span></p>
+          <p><span class="fa fa-user brand-blue">Font icon with color, using CSS color property.</span></p>
+          <p class="tooltip" role="tooltip" aria-label="tooltip">
+            <span class="fa fa-user">Font icon with tooltip.</span>
+          </p>
+        </div> <!-- /style-block-demo -->
+ 
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-custom">Custom Icons</h2>
+      <div class="center-text">These icons have been created using the Font Awesome icon library are used throughout the site.</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Icon Round</div>
+        <div class="style-block-demo center-text">
+<div class="icon-button-round">
+  <span class="fa fa-twitter"></span>
+</div>
+<div class="icon-button-round-sm">
+  <span class="fa fa-twitter"></span>
+</div>
+<div class="icon-button-round-lg">
+  <span class="fa fa-twitter"></span>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-helpers">Global Helpers</h2>
