@@ -374,10 +374,10 @@ ol {
 .black-bg {
   background-color: #000; }
 
-.grey-mist, .dropdown-base a:hover {
+.grey-mist {
   color: #f6f6f6; }
 
-.grey-mist-bg, .heading-section-block, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, code {
+.grey-mist-bg, .heading-section-block, .dropdown-base a:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, code {
   background-color: #f6f6f6; }
 
 .grey-cloud, .circle-bullet.white:before, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover, .picker__day--outfocus, .picker__day--disabled,
@@ -541,7 +541,6 @@ img, video {
     .dropdown-base ul a {
       display: block; }
   .dropdown-base a {
-    display: inline-block;
     padding: 10px; }
 
 /*-------------------------------------*/

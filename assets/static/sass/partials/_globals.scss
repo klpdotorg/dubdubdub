@@ -497,12 +497,11 @@ img, video {
   }
 
   a {
-    display: inline-block;
     @extend %grey-steel; 
     padding: $base-spacing;
 
     &:hover{
-      @extend %grey-mist; 
+      @extend %grey-mist-bg; 
     }
   }
 }
