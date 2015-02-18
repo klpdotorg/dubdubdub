@@ -10,10 +10,6 @@
     font-family: 'Source Code Pro';
   }
 
-  p {
-    margin-bottom: 5px;
-  }
-
   .alert {
     position: static;
   }
@@ -298,62 +294,89 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-mid">
       <h2 class="heading-secondary brand-purple" id="media-queries">Grid: Media Queries</h2>
       <div class="style-block">
         <p>
           By and large, the site uses min-width media queries, on the assumption that the initial layout is mobile-first and stacked, and columns are added incrementally, as the screen size gets larger.
         </p>
         <ul class="ul-base">
-          <li>The 3 media min-width queries are 600px, 750px and 990px</li>
+          <li>The 3 media min-width queries are 600px, 750px and 990px.</li>
           <li>The 2 max-width media queries are 599px and 749px. These are used sparingly.</li>
         </ul>
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
+    <div class="container">
       <h2 class="heading-secondary brand-purple" id="grid-containers">Grid: Containers</h2>
       <div class="style-block">
-      <div class="container">
-        <ul class="ul-base">
-          <li>The site has 3 container sizes you can use.</li>
-          <li>.container, which is the widest the grid can get i.e. 1000px</li>
-          <li>.container-mid, which is a mid-sized container, i.e. 750px</li>
-          <li>.container-sm, which is a small container, i.e. 520px</li>
-        </ul>
-      </div> <!-- /container -->
-      <div class="style-block-demo">
+        <h2 class="heading-tertiary center-text">Grid: Container Sizes</h2>
+        <div class="center-text">
+          <p class="bold">The site has 3 container sizes you can use.</p>
+          <p>.container, which is the widest the grid can get i.e. 1000px</p>
+          <p>.container-mid, which is a mid-sized container, i.e. 750px</p>
+          <p>.container-sm, which is a small container, i.e. 520px</p>          
+        </div>
+      <div class="style-block-demo white">
 <div class="container brand-turquoise-bg">
-  <h2 class="center-text">Here's a container</h2>
-  <p class="center-text">It's the largest size the grid can get, i.e. 1000px.</p>
+  <div class="center-text">.container / %container / mixin container</div>
 </div>
-
-<div class="container-mid brand-turquoise-bg">
-  <h2 class="center-text">Here's a mid-sized container</h2>
-  <p class="center-text">It's 750px.</p>
-</div>
-
-<div class="container-sm brand-turquoise-bg">
-  <h2 class="center-text">Here's a small container</h2>
-  <p class="center-text">It's a humble 520px.</p>
-</div>
-
-<div class="brand-turquoise-bg">
-  <h2 class="center-text">Here's a full-width section.</h2>
-  <p class="center-text">For that gorgeous full-bleed effect, simply don't put the content inside a container.</p>
-</div>
-      </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
       <div class="center-text">
         <div class="button-hollow js-toggle">&lt;Code&gt;</div>
       </div>    
     </div> <!-- /style-block -->
+  </div> <!-- /container -->
 
     <div class="container">
+      <div class="style-block">
+      <div class="style-block-demo white">
+<div class="container-mid brand-turquoise-bg">
+  <div class="center-text">.container-mid / %container-mid / mixin container-mid</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+      <div class="style-block-demo white">
+<div class="container-sm brand-turquoise-bg">
+  <div class="center-text">.container-sm / %container-sm / mixin container-sm</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
+  <h2 class="heading-tertiary center-text">Grid: Full-width</h2>
+  <p class="center-text">For that gorgeous full-bleed effect, simply don't add a parent 'container'.</p>
+  <div class="style-block">
+  <div class="style-block-demo white">
+<div class="brand-turquoise-bg">
+  <h2 class="center-text">Here's a full-width section.</h2>
+</div>
+</div> <!-- /style-block-demo -->
+
+  <div class="center-text">
+    <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+  </div>    
+</div> <!-- /style-block -->
+
+    <div class="container-mid">
       <h2 class="heading-secondary brand-purple" id="grid-classes">Grid: Classes</h2>
       <p>There's no real grid, in case you were wondering. But there's enough stuff to build flexibly.</p>
       <p>You can add more classes as required in the grid partial; the current grid simply accommodates 1/2, 1/3rd, 2/3rds and 1/4th widths. </p>
-
-      <p><strong>Building Blocks:</strong></p>
+      <div class="base-spacing"></div>
+      <p class="center-text"><strong>Building Blocks</strong></p>
       <ul class="ul-base">
         <li>Firstly, add a section with a container class. (This is optional if a parent container class already exists in the DOM).</li>
         <li>Next, add a parent for your grid: with a class of grid-parent (this internally has a clearfix, so you don't need to worry about clearing floats).</li>
@@ -362,9 +385,10 @@
 
       <div class="style-block">
         <div class="center-text">
-          <h1>Barebones grid</h1>
+          <div class="heading-tertiary center-text">Barebones grid</div>
           <p><span class="demo-dont">This is not a good example in the real-world, but a great  example to learn how to use the grid.</span></p>
-          <p>It uses inline styles, but take a look, so you get an idea of the grid structure.</p>          
+          <p>It uses inline styles, but take a look, so you get an idea of the grid structure.</p>
+          <p>Resize the window to see how the boxes resize</p>          
         </div>
 
         <div class="style-block-demo center-text">
@@ -378,7 +402,7 @@
     </div>
   </div>
 </section>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -386,24 +410,24 @@
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
-    <div class="container">
+    <div class="container-mid">
       <div class="style-block">
         <div class="center-text">
-          <h2>Grid: 1/2</h2>
+          <div class="heading-tertiary center-text">Grid: 1/2</div>
           <p>Here's a better, real-world demo of a grid with two equal boxes, without inline styles.</p>          
         </div>
         <div class="style-block-demo">
 <section class="container">
   <div class="grid-parent">
     <div class="col-50-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-50-flt" alt="img-grid-demo">
     </div>
     <div class="col-50-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-50-flt" alt="img-grid-demo">
     </div>
   </div>
 </section>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -415,21 +439,21 @@
       <div class="style-block">
         <div class="style-block-demo center-text">
 <section class="container">
-  <h2>Grid: 1/3rd</h2>
+  <div class="heading-tertiary center-text">Grid: 1/3rd</div>
   <p>This demo has 3 floated boxes of equal width</p>
   <div class="grid-parent">
     <div class="col-33-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
     </div>
     <div class="col-33-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
     </div>
     <div class="col-33-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
     </div>
   </div>
 </section>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -441,24 +465,24 @@
       <div class="style-block">
         <div class="style-block-demo center-text">
 <section class="container">
-  <h2>Grid: 1/4th</h2>
+  <div class="heading-tertiary center-text">Grid: 1/4th</div>
   <p>This demo has 4 floated boxes of equal width</p>
   <div class="grid-parent">
     <div class="col-25-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
     </div>
     <div class="col-25-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
     </div>
     <div class="col-25-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
     </div>
     <div class="col-25-flt">
-      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
     </div>
   </div>
 </section>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -470,7 +494,7 @@
       <div class="style-block">
         <div class="style-block-demo center-text">
 <section class="container">
-  <h2>Grid: 2/3rds</h2>
+  <div class="heading-tertiary center-text">Grid: 2/3rds</div>
   <p>This demo has 2 floated boxes, one is 2/3rds and the other is 1/3rd the width</p>
   <div class="grid-parent">
     <div class="col-33-flt">
@@ -481,7 +505,7 @@
     </div>
   </div>
 </section>
-        </div> <!-- /style-block-demo -->
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
@@ -491,10 +515,10 @@
 
     <div class="container">
       <div class="style-block">
-        <h1 class="center-text">Mixins instead of grid classes</h1>
+        <div class="heading-tertiary center-text">Mixins instead of grid classes</div>
         <p>The demos above will work for sections that don't need to be stacked or have their grids changed on different media breakpoints.</p>
         <p>Since the site is built mobile first, it would be preferable not to add classes, as indicated in the demos above, since they would have to be reset for mobile, to become full-width sections (in most cases, but not all).</p>
-        <p>Instead, consider using the handy grid mixins available on media query breakpoints. The mixins have the same names as the grid classes, i.e. grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</p>
+        <p>Instead, consider using the handy grid mixins available on media query breakpoints. The mixins have the same names as the grid classes, i.e. <em>grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</em></p>
         <p>Let's look at a simple demo below, using classes from the existing site. On a media query breakpoint of 750px, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
         <p>Thus you can float columns of any widths (that add up to 100%) on any media query, to get a truly flexible grid.</p>
 
@@ -539,7 +563,7 @@
 
     <div class="container">
       <div class="style-block">
-        <h2>Below (in the code block) are different grid mixins you can use at media query bre2kpoints.</h2>
+        <div class="heading-tertiary center-text">Below are different grid mixins you can use at media query breakpoints.</div>
         <div class="style-block-demo">
 <style>
 // 1/2
