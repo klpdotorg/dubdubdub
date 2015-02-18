@@ -459,10 +459,10 @@ img, video {
   width: 100%; }
 
 /*-------------------------------------*/
-.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date, .demo-sidebar {
+.float-left, .bar-label, .bar-graph, .info-wrapper, .compare-gender-distribution .compare-section, .compare-each, .school-compare-each, .profile-volunteer-date {
   float: left; }
 
-.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified, .demo-main {
+.float-right, .button-compare-wrap, .school-compare-select, .profile-volunteer-verified {
   float: right; }
 
 .clear {
@@ -3328,18 +3328,8 @@ body {
       border-left: 1px solid #d8d8d8; }
     .filter-school-each .select2-container {
       width: 140px; } }
-.demo-sidebar {
-  width: 200px;
-  position: fixed;
-  left: 0;
-  top: 45px;
-  bottom: 0;
-  overflow: auto; }
-
-.demo-main {
-  width: 70%;
-  width: -webkit-calc(100% - 200px);
-  width: calc(100% - 200px); }
+.dropdown-styleguide ul {
+  position: static; }
 
 .style-block .button-hollow {
   margin: 10px 0; }
@@ -3380,5 +3370,24 @@ code {
 
 .demo-color-background p {
   padding: 5px; }
+
+@media only screen and (min-width: 990px) {
+  .dropdown-styleguide ul {
+    position: absolute; }
+
+  .demo-sidebar {
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 45px;
+    bottom: 0;
+    overflow: auto;
+    float: left; }
+
+  .demo-main {
+    width: 70%;
+    width: -webkit-calc(100% - 200px);
+    width: calc(100% - 200px);
+    float: right; } }
 
 /*# sourceMappingURL=style.css.map */
