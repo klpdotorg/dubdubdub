@@ -31,22 +31,21 @@
       <li>
         Menu
         <ul style="display: block !important;">
-          <li><a href="#demo-block-setup">CSS: Setup</a></li>
-          <li><a href="#demo-block-conventions">CSS: Conventions</a></li>
+          <li><a href="#demo-block-basics" class="js-scroll-smooth-link">CSS: Basics</a></li>
           <li><a href="#demo-block-colors" class="js-scroll-smooth-link">Colors</a></li>
           <li><a href="#demo-block-grid" class="js-scroll-smooth-link">Grid</a></li>
           <li><a href="#demo-block-typography" class="js-scroll-smooth-link">Typography</a></li>
           <li><a href="#demo-block-forms" class="js-scroll-smooth-link">Forms</a></li>
+          <li><a href="#demo-block-img" class="js-scroll-smooth-link">Images</a></li>
+          <li><a href="#demo-block-tables" class="js-scroll-smooth-link">Tables</a></li>
+          <li><a href="#demo-block-hr" class="js-scroll-smooth-link">Horizontal Rules</a></li>
           <li><a href="#demo-block-buttons" class="js-scroll-smooth-link">Buttons</a></li>
           <li><a href="#demo-block-alerts" class="js-scroll-smooth-link">Alerts</a></li>
           <li><a href="#demo-block-tooltips" class="js-scroll-smooth-link">Tooltips</a></li>
           <li><a href="#demo-block-tabs" class="js-scroll-smooth-link">Tabs</a></li>
           <li><a href="#demo-block-banners" class="js-scroll-smooth-link">Banners</a></li>
-          <li><a href="#demo-block-img" class="js-scroll-smooth-link">Images</a></li>
           <li><a href="#demo-block-imgtext" class="js-scroll-smooth-link">Module: Img Text</a></li>
           <li><a href="#demo-block-iframes" class="js-scroll-smooth-link">Responsive Iframe Videos</a></li>
-          <li><a href="#demo-block-tables" class="js-scroll-smooth-link">Tables</a></li>
-          <li><a href="#demo-block-hr" class="js-scroll-smooth-link">Horizontal Rules</a></li>
           <li><a href="#demo-block-dropdowns" class="js-scroll-smooth-link">Dropdowns</a></li>
           <li><a href="#demo-block-icons" class="js-scroll-smooth-link">Icons</a></li>
           <li><a href="#demo-block-bar" class="js-scroll-smooth-link">Bar Graphs: Custom</a></li>
@@ -60,7 +59,7 @@
 
   <div class="demo-main">    
     <div class="center-text" id="css-setup">
-      <h2 class="heading-section">CSS: Basics</h2>
+      <h2 class="heading-section" id="demo-block-basics">CSS: Basics</h2>
       <div class="heading-section-block">
         <ul>
           <li><a href="#css-setup" class="js-scroll-smooth-link">CSS: Setup</a></li>
@@ -1199,6 +1198,201 @@
     </div> <!-- /container -->
 
     <div class="center-text">
+      <h2 class="heading-section" id="demo-block-img">Images</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#img-responsive" class="js-scroll-smooth-link">Responsive</a></li>
+          <li><a href="#img-fullwidth" class="js-scroll-smooth-link">Full-width</a></li>
+          <li><a href="#img-floated" class="js-scroll-smooth-link">Floated</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Images</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="img-responsive">Images: Responsive</div>
+        <p class="center-text">All images are responsive by default. No need to add any classes. You can resize the window to test.</p>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<img src="/static/images/bg_header_reading_programme.jpg" alt="img-responsive">
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text" id="img-fullwidth">Images: Full-width</div>
+      <p class="center-text">Add the relevant class and ensure images are not inside a 'container' div</p>
+      <div class="base-spacing"></div>
+      <div class="style-block-demo center-text">
+<img src="/static/images/bg_header_reading_programme.jpg"  class="full-width">
+      </div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="img-floated">Images: Floated: Left</div>
+        <div class="style-block-demo">
+<img src="/static/images/lib-2.jpg" width="200" class="float-left-padding">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
+<div class="clear"></div>
+        </div> <!-- /style-block-demo --> 
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Images: Floated: Right</div>
+        <div class="style-block-demo">
+<img src="/static/images/lib-2.jpg" width="200" class="float-right-padding">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
+<div class="clear"></div>
+        </div> <!-- /style-block-demo --> 
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-tables">Tables</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#tables-base" class="js-scroll-smooth-link">Tables: Base</a></li>
+          <li><a href="#tables-data" class="js-scroll-smooth-link">Tables: Data</a></li>
+          <li><a href="#tables-legend" class="js-scroll-smooth-link">Tables: Legend</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Tables</h2>
+      <div class="center-text">The default HTML table is styled without any borders. <br> Use the table base styling classes below for base table styling.</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="tables-base">Tables: Base Styling</div>
+        <div class="style-block-demo">
+<table class="table-base">
+  <thead class="table-base-heading">
+    <th>A table heading</th>
+    <th>A table heading</th>
+    <th>A table heading</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A table row</td>
+      <td>A table row</td>
+      <td>A table row</td>
+    </tr>
+    <tr>
+      <td>A table row</td>
+      <td>A table row</td>
+      <td>A table row</td>
+    </tr>
+  </tbody>
+</table>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="tables-data">Tables: Data</div>
+        <div class="style-block-demo">
+<table class="table-data">
+  <tbody>
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>  
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>              
+  </tbody>
+</table>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text" id="tables-legend">Tables: Legend: Icon Left</div>
+        <div class="style-block-demo">
+<div class="table-infra-key-color brand-green table-infra-icon-left">Has Mid-day Meal facility</div>  
+<div class="table-infra-key-color brand-red table-infra-icon-left">Has Drinking Water Facilities</div>
+
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Tables: Legend: Icon Right</div>
+        <div class="style-block-demo">
+  <div class="table-infra-key-color brand-green table-infra-icon-right">Has Mid-day Meal facility</div>
+  <div class="table-infra-key-color brand-red table-infra-icon-right">Has Drinking Water Facilities</div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-hr">Horizontal rules</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Horizontal rules</h2>
+      <div class="center-text">Just a default hr tag.</div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+          <hr>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
       <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
       <div class="heading-section-block">
       </div>
@@ -1393,98 +1587,6 @@
     </div>
 
     <div class="center-text">
-      <h2 class="heading-section" id="demo-block-banners">Full-width banners</h2>
-      <div class="heading-section-block">
-        <ul>
-        </ul>
-      </div>
-    </div>
-    <div class="container">
-      <h2 class="heading-secondary brand-purple">Buttons</h2>
-      <div class="style-block">
-        <div class="heading-tertiary center-text">Buttons: Default</div>
-        <div class="style-block-demo center-text">
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="center-text">
-      <h2 class="heading-section" id="demo-block-img">Images</h2>
-      <div class="heading-section-block">
-        <ul>
-          <li><a href="#img-responsive" class="js-scroll-smooth-link">Responsive</a></li>
-          <li><a href="#img-fullwidth" class="js-scroll-smooth-link">Full-width</a></li>
-          <li><a href="#img-floated" class="js-scroll-smooth-link">Floated</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="container">
-      <h2 class="heading-secondary brand-purple">Images</h2>
-      <div class="style-block">
-        <div class="heading-tertiary center-text" id="img-responsive">Images: Responsive</div>
-        <p class="center-text">All images are responsive by default. No need to add any classes. You can resize the window to test.</p>
-        <div class="base-spacing"></div>
-        <div class="style-block-demo center-text">
-<img src="/static/images/bg_header_reading_programme.jpg" alt="img-responsive">
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="style-block">
-      <div class="heading-tertiary center-text" id="img-fullwidth">Images: Full-width</div>
-      <p class="center-text">Add the relevant class and ensure images are not inside a 'container' div</p>
-      <div class="base-spacing"></div>
-      <div class="style-block-demo center-text">
-<img src="/static/images/bg_header_reading_programme.jpg"  class="full-width">
-      </div> <!-- /style-block-demo -->
-
-      <div class="center-text">
-        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-      </div>    
-    </div> <!-- /style-block -->
-
-    <div class="container">
-      <div class="style-block">
-        <div class="heading-tertiary center-text" id="img-floated">Images: Floated: Left</div>
-        <div class="style-block-demo">
-<img src="/static/images/lib-2.jpg" width="200" class="float-left-padding">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
-<div class="clear"></div>
-        </div> <!-- /style-block-demo --> 
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="container">
-      <div class="style-block">
-        <div class="heading-tertiary center-text">Images: Floated: Right</div>
-        <div class="style-block-demo">
-<img src="/static/images/lib-2.jpg" width="200" class="float-right-padding">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
-<div class="clear"></div>
-        </div> <!-- /style-block-demo --> 
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="center-text">
       <h2 class="heading-section" id="demo-block-iframes">Responsive iframe videos</h2>
       <div class="heading-section-block">
         <ul>
@@ -1499,129 +1601,6 @@
           <div class="video-iframe-responsive">
             <iframe src="https://www.youtube.com/embed/BQBsAjlBTHw" allowfullscreen="" frameborder="0" width="850" height="500" class="video_frame"></iframe>
           </div>
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="center-text">
-      <h2 class="heading-section" id="demo-block-tables">Tables</h2>
-      <div class="heading-section-block">
-        <ul>
-          <li><a href="#tables-base" class="js-scroll-smooth-link">Tables: Base</a></li>
-          <li><a href="#tables-data" class="js-scroll-smooth-link">Tables: Data</a></li>
-          <li><a href="#tables-legend" class="js-scroll-smooth-link">Tables: Legend</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="container">
-      <h2 class="heading-secondary brand-purple">Tables</h2>
-      <div class="center-text">The default HTML table is styled without any borders. <br> Use the table base styling classes below for base table styling.</div>
-      <div class="style-block">
-        <div class="heading-tertiary center-text" id="tables-base">Tables: Base Styling</div>
-        <div class="style-block-demo">
-<table class="table-base">
-  <thead class="table-base-heading">
-    <th>A table heading</th>
-    <th>A table heading</th>
-    <th>A table heading</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td>A table row</td>
-      <td>A table row</td>
-      <td>A table row</td>
-    </tr>
-    <tr>
-      <td>A table row</td>
-      <td>A table row</td>
-      <td>A table row</td>
-    </tr>
-  </tbody>
-</table>
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="container">
-      <div class="style-block">
-        <div class="heading-tertiary center-text" id="tables-data">Tables: Data</div>
-        <div class="style-block-demo">
-<table class="table-data">
-  <tbody>
-    <tr>
-      <td>Category</td>
-      <td>Info</td>
-    </tr>
-    <tr>
-      <td>Category</td>
-      <td>Info</td>
-    </tr>  
-    <tr>
-      <td>Category</td>
-      <td>Info</td>
-    </tr>              
-  </tbody>
-</table>
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="container">
-      <div class="style-block">
-        <div class="heading-tertiary center-text" id="tables-legend">Tables: Legend: Icon Left</div>
-        <div class="style-block-demo">
-<div class="table-infra-key-color brand-green table-infra-icon-left">Has Mid-day Meal facility</div>  
-<div class="table-infra-key-color brand-red table-infra-icon-left">Has Drinking Water Facilities</div>
-
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="container">
-      <div class="style-block">
-        <div class="heading-tertiary center-text">Tables: Legend: Icon Right</div>
-        <div class="style-block-demo">
-  <div class="table-infra-key-color brand-green table-infra-icon-right">Has Mid-day Meal facility</div>
-  <div class="table-infra-key-color brand-red table-infra-icon-right">Has Drinking Water Facilities</div>
-        </div> <!-- /style-block-demo -->
-
-        <div class="center-text">
-          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
-        </div>    
-      </div> <!-- /style-block -->
-    </div> <!-- /container -->
-
-    <div class="center-text">
-      <h2 class="heading-section" id="demo-block-hr">Horizontal rules</h2>
-      <div class="heading-section-block">
-        <ul>
-        </ul>
-      </div>
-    </div>
-
-    <div class="container">
-      <h2 class="heading-secondary brand-purple">Horizontal rules</h2>
-      <div class="center-text">Just a default hr tag.</div>
-      <div class="style-block">
-        <div class="style-block-demo center-text">
-          <hr>
         </div> <!-- /style-block-demo -->
 
         <div class="center-text">
