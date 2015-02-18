@@ -137,7 +137,7 @@ a {
 .font-large, .alert, .volunteer-story-heading {
   font-size: 110%; }
 
-.font-larger, .tab-each .tab-heading:after, .icon-compare-gender .icon-button-round, .icon-compare-label {
+.font-larger, .tab-each .tab-heading:after, .icon-compare-label {
   font-size: 120%; }
 
 .font-largest {
@@ -2644,9 +2644,6 @@ body {
 
 .icon-compare-gender {
   letter-spacing: 1px; }
-  .icon-compare-gender .icon-button-round {
-    min-width: 70px;
-    min-height: 70px; }
 
 .icon-compare-girl {
   color: #f87c84; }

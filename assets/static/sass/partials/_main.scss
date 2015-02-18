@@ -1126,12 +1126,6 @@ body {
   letter-spacing: 1px;
   @extend %vertical-inline-top;
   @extend %center-text;
-
-  .icon-button-round {
-    @extend %font-larger;
-    min-width: 70px;
-    min-height: 70px;
-  }
 }
 
 .icon-compare-boy {
