@@ -380,7 +380,7 @@ ol {
 .grey-mist-bg, .heading-section-block, .dropdown-base li:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, .dropdown-styleguide li.selected, .styleguide-nav-trigger, code {
   background-color: #f6f6f6; }
 
-.grey-cloud, .circle-bullet.white:before, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover, .picker__day--outfocus, .picker__day--disabled,
+.grey-cloud, .circle-bullet.white:before, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover, .rbox_caption, .picker__day--outfocus, .picker__day--disabled,
 .picker__day--disabled:hover,
 .picker--focused .picker__day--disabled, .copyright {
   color: #d8d8d8; }
@@ -2098,6 +2098,8 @@ bar charts add js info
 
 // add current class to styleguide menu tree
 // FIX tabs demo not WORKING
+
+increase padding of lightbox icons
 
 // Sanj: Js docs for custom bar charts;
 

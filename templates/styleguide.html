@@ -1746,22 +1746,92 @@
       <h2 class="heading-section" id="demo-block-lightbox">Lightbox</h2>
       <div class="heading-section-block">
         <ul>
+          <li><a href="#lightbox-img" class="js-scroll-smooth-link">Lightbox: Image</a></li>
+          <li><a href="#lightbox-img-gal" class="js-scroll-smooth-link">Lightbox: Image Gallery</a></li>
+          <li><a href="#lightbox-iframe" class="js-scroll-smooth-link">Lightbox: Iframe</a></li>
         </ul>
       </div>
     </div>
   
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Lightbox</h2>
+      <div class="container-mid center-text">
+        <p>The plugin <em>jquery-rbox</em> has been used. Documentation is <a href="https://github.com/batpad/jquery-rbox">here</a>.</p>
+      </div>
+      <div class="base-spacing"></div>
+      <h2 class="heading-secondary brand-purple" id="lightbox-img">Lightbox: Image</h2>
     </div> <!-- /container -->
     <div class="style-block">
       <div class="style-block-demo center-text">
+<div class="rbox_img" data-rbox-image="http://placehold.it/400x400" data-rbox-caption="I am a caption">Single Image</div>
 
+<script>
+// Lightbox: single image
+$(document).ready(function(){
+  $(".rbox_img").rbox({
+    "type": "image",  
+  });
+});
+</script>
 </div> <!-- /style-block-demo -->
 
       <div class="center-text">
         <div class="button-hollow js-toggle">&lt;Code&gt;</div>
       </div>    
     </div> <!-- /style-block -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="lightbox-img-gal">Lightbox: Image Gallery</h2>
+      <ul class="ul-base container-mid">
+      </ul>
+    </div> <!-- /container -->
+    <div class="style-block">
+<div class="style-block-demo center-text">
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/400x400" data-rbox-caption="Caption: Image 1">Image 1</span>
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/300x400" data-rbox-caption="Caption: Image 2">Image 2</span>
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/400x200" data-rbox-caption="Caption: Image 3">Image 3</span>
+
+<script>
+// Lightbox: image gallery
+$(document).ready(function(){
+  $(".rbox_img_gal").rbox({
+    "type": "image",
+    "series": "image_gallery"
+  });
+});
+</script>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="lightbox-iframe">Lightbox: Iframe Embed</h2>
+      <ul class="ul-base container-mid">
+      </ul>
+    </div> <!-- /container -->
+    <div class="style-block">
+      <div class="style-block-demo center-text">
+<span class="rbox_iframe" data-rbox-width="960" data-rbox-height="565" data-rbox-iframe="//www.youtube.com/embed/BQBsAjlBTHw">Iframe</span>
+
+<script>
+// Lightbox iframe
+$(document).ready(function(){
+  $(".rbox_iframe").rbox({
+    "type": "iframe"
+  });
+});
+</script>
+</div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container-mid">
+      <p>Documentation for HTML, AJAX, INLINE and VIDEO is similar and can be seen <a href="https://github.com/batpad/jquery-rbox/blob/master/index.html">here</a>.</p>
+    </div>
 
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-imgtext">Module Img Text</h2>
