@@ -2290,16 +2290,16 @@ $(document).ready(function(){
       <h2 class="heading-section" id="demo-block-helpers">Global Helpers</h2>
       <div class="heading-section-block">
         <ul>
-          <li><a href="#paisa" class="js-scroll-smooth-link">Transitions</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Centering</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Alignment</a></li>
+          <li><a href="#helpers-transitions" class="js-scroll-smooth-link">Transitions</a></li>
+          <li><a href="#helpers-centering" class="js-scroll-smooth-link">Centering</a></li>
+          <li><a href="#helpers-alignment" class="js-scroll-smooth-link">Alignment</a></li>
+          <li><a href="#helpers-floats" class="js-scroll-smooth-link">Floats and Clearing</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Borders</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Border-radius</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Spacing</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Show and Hide</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Alignment</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Ellipsis</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Floats and Clearing</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Box info</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">No data</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">STATS ICON</a></li>
@@ -2310,9 +2310,108 @@ $(document).ready(function(){
     </div>
 
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Buttons</h2>
+      <h2 class="heading-secondary brand-purple" id="helpers-transitions">Helpers: Transitions</h2>
+      <div class="container-mid center-text">
+        <p>Below are two useful transition classes, to add a bit of smoothness for hover states, in general.</p>
+        <p>These are only available as Sass placeholders.</p>
+      </div>
       <div class="style-block">
-        <div class="heading-tertiary center-text">Buttons: Default</div>
+        <div class="heading-tertiary center-text">Transition: Linear</div>
+        <div class="style-block-demo center-text">
+<style>
+  .selecter {
+    @extend %transition-linear;  
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Transition: Ease-in</div>
+        <div class="style-block-demo center-text">
+<style>
+  .selecter {
+    @extend %transition-ease-in;  
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-centering">Helpers: Centering</h2>
+      <div class="container-mid center-text">
+        <p>These helpers are available as classes, placeholders and mixins and can be used any way, though the convention is to use placeholders as extends where possible.</p>
+        <p>The demo uses classes for convenience.</p>
+
+      </div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering text and inline children</div>
+        <div class="center-text">Simple helper for <em>text-align: center</em></div>
+        <div class="style-block-demo">
+<p class="center-text">Some text that's centered.</p>
+<div class="center-text">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering block elements</div>
+        <div class="center-text container-mid">Simple helper for setting left and right margins to auto. Demo uses inline styles, purely for demo.</div>
+        <div class="style-block-demo">
+<div class="center-element" style="width: 100px; height: 100px; background: black;"></div>
+</div> <!-- /style-block-demo -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering inline elements</div>
+        <div class="center-text container-mid">Simple helper for setting left and right margins to auto and resetting the display value to block, for inline elements like spans. Demo uses inline styles, purely for demo.</div>
+        <div class="style-block-demo">
+<span class="center-element-inline" style="width: 100px; height: 100px; background: black;"></span>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-alignment">Helpers: Alignment</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Transitions: Linear</div>
+        <div class="style-block-demo center-text">
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-floats">Helpers: Floats</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Transitions: Linear</div>
         <div class="style-block-demo center-text">
         </div> <!-- /style-block-demo -->
 
@@ -2334,11 +2433,71 @@ $(document).ready(function(){
     </div>
 
     <div class="container">
-      <h2 class="heading-secondary brand-purple">Buttons</h2>
+      <div class="container-mid">
+        <p>Since browsers are pretty much up-to-date, most CSS properties don't require vendor prefixing anymore, like border-radius and box-shadow.</p>
+        <p>The site uses sass mixins only for transitions, placeholders and box-sizing. The box-sizing property is universally used, so probably won't be required to be added elsewhere.</p>
+      </div>
+      <h2 class="heading-secondary brand-purple" id="vendor-transitions">Prefix: Transitions</h2>
       <div class="style-block">
-        <div class="heading-tertiary center-text">Buttons: Default</div>
+        <div class="center-text">
+          <p>This mixin for transitions includes a prefix for webkit.</p>
+          <p class="bold">Syntax below</p>
+        </div>
         <div class="style-block-demo center-text">
-        </div> <!-- /style-block-demo -->
+<style>
+  .selecter {
+    @include transition(all 0.3s ease-in);
+  }
+
+  .selecter {
+    @include transition(opacity 0.4s linear);
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="vendor-placeholders">Prefix: Placeholders for inputs</h2>
+      <div class="style-block">
+        <div class="center-text">
+          <p>This mixin for placeholders includes prefixes for webkit, moz and ms.</p>
+          <p class="bold">Syntax below</p>
+        </div>
+        <div class="style-block-demo center-text">
+<style>
+  .selecter {
+    @include placeholder {
+      color: $grey-silver;
+    }
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="prefix-boxsizing">Box Sizing</h2>
+      <div class="style-block">
+        <div class="center-text container-mid">
+          <p>This mixin for box-sizing includes prefixes for webkit and moz. Since it's used universally on all selecters, you will probably not need to use it.</p>
+          <p class="bold">Syntax below</p>
+        </div>
+        <div class="style-block-demo center-text">
+<style>
+  .selecter {
+    @include box-sizing; //resets box-sizing to border-box, the default
+  }
+</style>
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
