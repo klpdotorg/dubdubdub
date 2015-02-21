@@ -32,25 +32,46 @@
                 <div class="address-block mb-10 phn-mb-20">
                     <div class="info-item">
                         <div class="label">District</div>
-                        <div class="value">Bangalore</div>
+                        <div class="value">{{ object.school.schooldetails.admin1.name }}</div>
                     </div>
                     <div class="info-item ta-c">
-                        <div class="label">Block</div>
-                        <div class="value">North-2</div>
+                        <div class="label">
+                            {% if object.school.schooldetails.type == 1 %}
+                            Block
+                            {% else %}
+                            Project
+                            {% endif %}
+                        </div>
+                        <div class="value">
+                            {{ object.school.schooldetails.admin2.name }}
+                        </div>
                     </div>
                     <div class="info-item ta-r mr-0">
-                        <div class="label">Cluster</div>
-                        <div class="value">Malleswaram</div>
+                        <div class="label">
+                            {% if object.school.schooldetails.type == 1 %}
+                            Cluster
+                            {% else %}
+                            Circle
+                            {% endif %}
+                        </div>
+                        <div class="value">
+                            {{ object.school.schooldetails.admin3.name }}
+                        </div>
                     </div>
                     <div class="clr"></div>
                 </div>
             </div>
             <div class="clr"></div>
             <p class="color-grey desc mt-0 mb-0">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. Lorem Ipsum has been the industry's standard dummy text.
+                {{ object.description }}
             </p>
 
-            <div class="font-14 color-black-2 mt-20">Needed By: <span class="color-blue bold">15 Aug, 2014</span></div>
+            {% if object.end_date %}
+            <div class="font-14 color-black-2 mt-20">
+                Needed By: 
+                <span class="color-blue bold">{{ object.end_date|date:"j F, Y"}}</span>
+            </div>
+            {% endif %}
 
             <form method="post">
             <div class="items-wrapper ma mt-60 phn-width-full phn-mt-30">
