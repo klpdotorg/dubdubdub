@@ -94,6 +94,7 @@ class Story(TimestampedBaseModel):
     is_verified = models.BooleanField(default=False)
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
+    user_type = models.CharField(max_length=100, blank=True, null=True)
 
     # adding date_of_visit to replace date in future
     date = models.CharField(max_length=50, blank=True)
