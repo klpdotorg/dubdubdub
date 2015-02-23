@@ -2352,14 +2352,27 @@ $(document).ready(function(){
       <h2 class="heading-secondary brand-purple" id="helpers-centering">Helpers: Centering</h2>
       <div class="container-mid center-text">
         <p>These helpers are available as classes, placeholders and mixins and can be used any way, though the convention is to use placeholders as extends where possible.</p>
-        <p>The demo uses classes for convenience.</p>
+        <p>The demo below uses classes for convenience.</p>
 
       </div>
       <div class="style-block">
-        <div class="heading-tertiary center-text">Centering text and inline children</div>
-        <div class="center-text">Simple helper for <em>text-align: center</em></div>
+        <div class="heading-tertiary center-text">Centering text</div>
+        <div class="center-text"><em>Simple helper for text-align: center</em></div>
+        <div class="base-spacing"></div>
         <div class="style-block-demo">
 <p class="center-text">Some text that's centered.</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering inline children</div>
+        <div class="style-block-demo">
 <div class="center-text">
   <img src="http://placehold.it/60x60" alt="demo-img">
   <img src="http://placehold.it/60x60" alt="demo-img">
@@ -2376,15 +2389,20 @@ $(document).ready(function(){
     <div class="container">
       <div class="style-block">
         <div class="heading-tertiary center-text">Centering block elements</div>
-        <div class="center-text container-mid">Simple helper for setting left and right margins to auto. Demo uses inline styles, purely for demo.</div>
+        <p class="center-text container-mid">Simple helper for setting left and right margins to auto. <br>Demo uses inline styles, purely for demo.</p>
         <div class="style-block-demo">
 <div class="center-element" style="width: 100px; height: 100px; background: black;"></div>
 </div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
 
     <div class="container">
       <div class="style-block">
         <div class="heading-tertiary center-text">Centering inline elements</div>
-        <div class="center-text container-mid">Simple helper for setting left and right margins to auto and resetting the display value to block, for inline elements like spans. Demo uses inline styles, purely for demo.</div>
+        <p class="center-text container-mid">Simple helper for setting left and right margins to auto and resetting the display value to block, for inline elements like spans. <br>Demo uses inline styles, purely for demo.</p>
         <div class="style-block-demo">
 <span class="center-element-inline" style="width: 100px; height: 100px; background: black;"></span>
 </div> <!-- /style-block-demo -->
@@ -2396,11 +2414,87 @@ $(document).ready(function(){
     </div> <!-- /container -->
 
     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering: Vertical</div>
+        <p>Use this to vertical center icons, etc. The parent class requires position: relative for this work.</p>
+        <p>Demo uses inline styles, but you shouldn't.</p>
+
+        <div class="style-block-demo center-text">
+<div style="position: relative; width: 100px; height: 100px; border: 1px solid;">
+  <div class="vertical-center">V</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+ 
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering: Dead</div>
+        <p>Use this to dead center icons, etc. The parent class requires position: relative for this work.</p>
+        <p>Demo uses inline styles, but you shouldn't.</p>
+
+        <div class="style-block-demo center-text">
+<div style="position: relative; width: 100px; height: 100px; border: 1px solid;">
+  <div class="dead-center">V</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
       <h2 class="heading-secondary brand-purple" id="helpers-alignment">Helpers: Alignment</h2>
       <div class="style-block">
-        <div class="heading-tertiary center-text">Transitions: Linear</div>
+        <div class="heading-tertiary center-text">Alignment: Right</div>
         <div class="style-block-demo center-text">
+<div class="align-right">This text is aligned right</div>
         </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Middle</div>
+        <div class="container-mid center-text">
+          <p>Simple helper for adding an inline-block display, with vertical-align: middle</p>
+        </div>
+        <div class="style-block-demo center-text">
+<form>
+  <label class="vertical-inline-middle">This label is vertically centered.</label>
+  <textarea class="vertical-inline-middle"></textarea>  
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Top</div>
+        <div class="container-mid center-text">
+          <p>Simple helper for adding an inline-block display, with vertical-align: top</p>
+        </div>
+        <div class="style-block-demo center-text">
+<form>
+  <label class="vertical-inline-top">This label is vertically aligned to the top.</label>
+  <textarea class="vertical-inline-top"></textarea>  
+</form>
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
