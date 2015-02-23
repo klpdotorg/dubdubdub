@@ -25,6 +25,7 @@ class Answer(models.Model):
 class Question(models.Model):
     text = models.TextField()
     data_type = models.IntegerField()
+    user_type = models.ForeignKey('UserType', blank=True, null=True)
     question_type = models.ForeignKey('QuestionType')
     options = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
@@ -127,6 +128,7 @@ class Story(TimestampedBaseModel):
     is_verified = models.BooleanField(default=False)
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
+    user_type = models.ForeignKey('UserType', blank=True, null=True)
 
     # adding date_of_visit to replace date in future
     date = models.CharField(max_length=50, blank=True)
