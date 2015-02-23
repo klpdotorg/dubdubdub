@@ -2604,10 +2604,38 @@ $(document).ready(function(){
      <div class="container">
       <h2 class="heading-secondary brand-purple" id="helpers-spacing">Helpers: Spacing</h2>
       <div class="style-block">
-        <div class="heading-tertiary center-text">Alignment: Right</div>
+        <div class="heading-tertiary center-text">Spacing: Default</div>
         <div class="style-block-demo center-text">
-<div class="align-right">This text is aligned right</div>
-        </div> <!-- /style-block-demo -->
+<style>
+.selector {
+  padding: $base-spacing;           // 10px
+  margin: $base-spacing-sm;        // 5px
+  left: $base-spacing-mid;         // 15px
+  border-width: $base-spacing-lg;  // 20px
+  right: $base-spacing-lg-x;       // 25px
+  top: $base-spacing-lg-2x;        // 50px
+}  
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Spacing: Vertical</div>
+        <div class="container-mid center-text">This helper adds a top and bottom padding</div>
+        <div class="style-block-demo center-text">
+<div class="base-spacing border-base">Default vertical spacing</div>
+<div class="base-spacing-sm border-base">Small vertical spacing</div>
+<div class="base-spacing-mid border-base">Mid vertical spacing</div>
+<div class="base-spacing-lg border-base">Large vertical spacing</div>
+<div class="base-spacing-lg-x border-base">Larger vertical spacing</div>
+<div class="base-spacing-lg-2x border-base">Largest vertical spacing</div>
+</div> <!-- /style-block-demo -->
 
         <div class="center-text">
           <div class="button-hollow js-toggle">&lt;Code&gt;</div>
