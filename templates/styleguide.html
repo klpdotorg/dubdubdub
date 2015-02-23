@@ -2294,11 +2294,10 @@ $(document).ready(function(){
           <li><a href="#helpers-centering" class="js-scroll-smooth-link">Centering</a></li>
           <li><a href="#helpers-alignment" class="js-scroll-smooth-link">Alignment</a></li>
           <li><a href="#helpers-floats" class="js-scroll-smooth-link">Floats and Clearing</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Borders</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Border-radius</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Spacing</a></li>
+          <li><a href="#helpers-border" class="js-scroll-smooth-link">Borders</a></li>
+          <li><a href="#helpers-border-radius" class="js-scroll-smooth-link">Border-radius</a></li>
+          <li><a href="#helpers-spacing" class="js-scroll-smooth-link">Spacing</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Show and Hide</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">Alignment</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Ellipsis</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">Box info</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">No data</a></li>
@@ -2319,7 +2318,7 @@ $(document).ready(function(){
         <div class="heading-tertiary center-text">Transition: Linear</div>
         <div class="style-block-demo center-text">
 <style>
-  .selecter {
+  .selector {
     @extend %transition-linear;  
   }
 </style>
@@ -2336,7 +2335,7 @@ $(document).ready(function(){
         <div class="heading-tertiary center-text">Transition: Ease-in</div>
         <div class="style-block-demo center-text">
 <style>
-  .selecter {
+  .selector {
     @extend %transition-ease-in;  
   }
 </style>
@@ -2518,6 +2517,104 @@ $(document).ready(function(){
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-border">Helpers: Borders</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-color: Default</div>
+        <p class="container-mid center-text">
+          Use the variable <em>$border-color</em> when you need to set a border.
+        </p>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    border: 1px solid $border-color;
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border: On all sides</div>
+        <div class="container-mid center-text">Add the class or extend placeholder <em>border-base</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-border-radius">Helpers: Border Radius</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Default</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Small</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius-sm</em></div>
+        <div class="base-spacing"></div>
+
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius-sm"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Circle</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius-circle</em></div>
+        <div class="base-spacing"></div>
+
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius-circle"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-spacing">Helpers: Spacing</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Right</div>
+        <div class="style-block-demo center-text">
+<div class="align-right">This text is aligned right</div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
     <div class="center-text">
       <h2 class="heading-section" id="demo-block-prefixes">Vendor Prefixes: Sass</h2>
       <div class="heading-section-block">
@@ -2542,11 +2639,11 @@ $(document).ready(function(){
         </div>
         <div class="style-block-demo center-text">
 <style>
-  .selecter {
+  .selector {
     @include transition(all 0.3s ease-in);
   }
 
-  .selecter {
+  .selector {
     @include transition(opacity 0.4s linear);
   }
 </style>
@@ -2567,7 +2664,7 @@ $(document).ready(function(){
         </div>
         <div class="style-block-demo center-text">
 <style>
-  .selecter {
+  .selector {
     @include placeholder {
       color: $grey-silver;
     }
@@ -2585,12 +2682,12 @@ $(document).ready(function(){
       <h2 class="heading-secondary brand-purple" id="prefix-boxsizing">Box Sizing</h2>
       <div class="style-block">
         <div class="center-text container-mid">
-          <p>This mixin for box-sizing includes prefixes for webkit and moz. Since it's used universally on all selecters, you will probably not need to use it.</p>
+          <p>This mixin for box-sizing includes prefixes for webkit and moz. Since it's used universally on all selectors, you will probably not need to use it.</p>
           <p class="bold">Syntax below</p>
         </div>
         <div class="style-block-demo center-text">
 <style>
-  .selecter {
+  .selector {
     @include box-sizing; //resets box-sizing to border-box, the default
   }
 </style>

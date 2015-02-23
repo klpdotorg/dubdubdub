@@ -416,7 +416,7 @@ ol {
 
 /*-------------------------------------*/
 /* BORDER */
-.border-base, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .dropdown-base-trigger, .table-infra-key-color:after, .infra-key-legend, .border-grey-cloud, .tab-wrap, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container.select2-container-disabled .select2-choice, .select2-container-multi .select2-choices, .rbox_inline, .rbox_html, .picker__select--month,
+.border-base, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .dropdown-base-trigger, .table-infra-key-color:after, .infra-key-legend, .tab-wrap, input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container.select2-container-disabled .select2-choice, .select2-container-multi .select2-choices, .rbox_inline, .rbox_html, .picker__select--month,
 .picker__select--year, .nav, .options-list {
   border: 1px solid #d8d8d8; }
 
@@ -836,8 +836,6 @@ hr {
   left: 0;
   right: 0; }
 
-/*-------------------------------------*/
-/* BORDERS */
 /*-------------------------------------*/
 /* CIRCULAR BULLETS */
 .circle-bullet {
