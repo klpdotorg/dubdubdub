@@ -1,7 +1,8 @@
+from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
+    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -270,3 +271,39 @@ class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
+
+
+class AssessmentListSerializer(KLPSerializer):
+    assid= serializers.IntegerField(source='assessment.id')
+    studentgroup =  serializers.CharField(source='studentgroup')
+    assessmentname = serializers.CharField(source='assessment.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+
+    class Meta:
+        model = InstitutionAssessmentCohorts
+        fields = ('assid','assessmentname', 'studentgroup','academicyear_name')
+
+class AssessmentInfoSerializer(KLPSerializer):
+    schoolname=serializers.CharField(source='school.name')
+    studentgroup =  serializers.CharField(source='studentgroup')
+    assessmentname = serializers.CharField(source='assessment.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    singlescore=serializers.IntegerField(source='singlescore')
+    percentile=serializers.IntegerField(source='percentile')
+    cohorts= serializers.SerializerMethodField('get_cohorts_details')
+
+    class Meta:
+        model = InstitutionAssessmentSinglescore
+        fields = ('schoolname','assessmentname', 'studentgroup','academicyear_name','singlescore','percentile','cohorts')
+
+    def get_cohorts_details(self, obj):
+        data = {}
+        cohortssum= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).aggregate(Sum('cohortsnum'))
+        data['total']=cohortssum['cohortsnum__sum']
+        cohortsgender= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex').annotate(total=Sum('cohortsnum'))
+        data['gender']=cohortsgender
+        cohortsmt= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
+        data['mt']=cohortsmt
+        return data
+
+

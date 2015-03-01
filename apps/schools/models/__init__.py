@@ -3,16 +3,14 @@ from .education import AcademicYear, Address, BoundaryHierarchy, Boundary,\
     Teacher, TeacherStudentGroup, TeacherQualification, BoundaryPrimarySchool,\
     SchoolDetails
 
-from .assessments import Assessment, InstitutionAgg, InstitutionAssessmentAgg,\
-    InstitutionAssessmentAggCohorts, InstitutionAssessmentGenderSinglescore,\
-    InstitutionAssessmentMtSinglescore,\
-    InstitutionAssessmentReadingAggCohorts,\
+from .assessments import Assessment, \
+    InstitutionAssessmentCohorts, \
     InstitutionAssessmentSinglescore,\
     InstitutionAssessmentSinglescoreGender,\
-    InstitutionAssessmentSinglescoreMt, InstitutionBasicAssessmentInfo,\
-    InstitutionBasicAssessmentInfoCohorts, Partner, PreschoolAssessmentAgg,\
-    PreschoolBasicAssessmentInfo, Programme, Question, SchoolAgg,\
-    SchoolAssessmentAgg, SchoolBasicAssessmentInfo, StudentEval, SchoolEval,\
+    InstitutionAssessmentSinglescoreMt, \
+     Partner, \
+     Programme, Question, \
+    StudentEval, SchoolEval,\
     AngInfraAgg, AngDisplayMaster
 
 from .coords import InstCoord, BoundaryCoord, Assembly, Parliament, Postal
