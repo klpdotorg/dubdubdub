@@ -11,5 +11,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL('ALTER TABLE stories_question ADD COLUMN user_type INTEGER REFERENCES stories_usertype'),
+        migrations.RunSQL('ALTER TABLE stories_question ADD COLUMN user_type_id INTEGER REFERENCES stories_usertype'),
     ]
