@@ -19,7 +19,7 @@ class Command(BaseCommand):
         question_group = Questiongroup.objects.get_or_create(version=1, source=source)[0]
         UserType.objects.get_or_create(name=UserType.PARENTS)
         UserType.objects.get_or_create(name=UserType.TEACHERS)
-        UserType.objects.get_or_create(name=UserType.VOLUNTEERS)
+        UserType.objects.get_or_create(name=UserType.VOLUNTEER)
 
         f = open('communityv1.csv')
         csv_f = csv.reader(f)
@@ -96,14 +96,14 @@ class Command(BaseCommand):
                     text=row[answer_column],
                 )
 
-            # And one for the VOLUNTEERS who lives down the lane
+            # And one for the VOLUNTEER who lives down the lane
             story, created = Story.objects.get_or_create(
                 school=school,
                 group=question_group,
                 date_of_visit=timezone.make_aware(
                     date_of_visit, timezone.get_current_timezone()
                 ),
-                user_type=UserType.objects.get(name=UserType.VOLUNTEERS)
+                user_type=UserType.objects.get(name=UserType.VOLUNTEER)
             )
 
             communitys_question_sequence = [1, 2, 3, 4, 13, 14, 15, 16]
