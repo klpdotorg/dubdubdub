@@ -16,9 +16,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         source = Source.objects.get_or_create(name="community")[0]
-        question_group = Questiongroup.objects.get_or_create(version=1, source=s)[0]
-        user_type= UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
-    
+        question_group = Questiongroup.objects.get_or_create(version=1, source=source)[0]
+        UserType.objects.get_or_create(name=UserType.PARENTS)
+        UserType.objects.get_or_create(name=UserType.TEACHERS)
+        UserType.objects.get_or_create(name=UserType.VOLUNTEERS)
         f = open('communityv1.csv')
         csv_f = csv.reader(f)
         
