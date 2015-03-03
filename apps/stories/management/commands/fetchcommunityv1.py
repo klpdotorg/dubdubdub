@@ -10,9 +10,9 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Community Feedback questions
+    help = """Parse and store the Community Feedback V1 data
     
-    ./manage.py populateivrsdata"""
+    ./manage.py fetchcommunityv1"""
 
     def handle(self, *args, **options):
         source = Source.objects.get_or_create(name="community")[0]
@@ -20,6 +20,7 @@ class Command(BaseCommand):
         UserType.objects.get_or_create(name=UserType.PARENTS)
         UserType.objects.get_or_create(name=UserType.TEACHERS)
         UserType.objects.get_or_create(name=UserType.VOLUNTEERS)
+
         f = open('communityv1.csv')
         csv_f = csv.reader(f)
         
