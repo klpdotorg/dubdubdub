@@ -31,7 +31,8 @@ class Command(BaseCommand):
             year = row[3]
             name = row[6]
             school_id = row[10]
-            
+            acceptable_answers = ['0','1']
+
             # Skip first two rows
             if count == 0 or count == 1:
                 count += 1
@@ -61,16 +62,17 @@ class Command(BaseCommand):
             teachers_question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
             teachers_answer_columns = [13, 20, 27, 34, 42, 43, 44, 45]
             for sequence_number, answer_column in zip(teachers_question_sequence, teachers_answer_columns):
-                question = Question.objects.get(
-                    school_type=school.admin3.type,
-                    questiongroup__source=source,
-                    questiongroupquestions__sequence=sequence_number,
-                )
-                answer = Answer.objects.get_or_create(
-                    story=story,
-                    question=question,
-                    text=row[answer_column],
-                )
+                if row[answer_column] in accepted_answers:
+                    question = Question.objects.get(
+                        school_type=school.admin3.type,
+                        questiongroup__source=source,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=row[answer_column],
+                    )
                 
             # One for the PARENTS
             story, created = Story.objects.get_or_create(
@@ -85,16 +87,17 @@ class Command(BaseCommand):
             parents_question_sequence = [1, 2, 3, 4, 9, 10, 11, 12]
             parents_answer_columns = [14, 21, 28, 35, 48, 49, 50, 51]
             for sequence_number, answer_column in zip(parents_question_sequence, parents_answer_columns):
-                question = Question.objects.get(
-                    school_type=school.admin3.type,
-                    questiongroup__source=source,
-                    questiongroupquestions__sequence=sequence_number,
-                )
-                answer = Answer.objects.get_or_create(
-                    story=story,
-                    question=question,
-                    text=row[answer_column],
-                )
+                if row[answer_column] in accepted_answers:
+                    question = Question.objects.get(
+                        school_type=school.admin3.type,
+                        questiongroup__source=source,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=row[answer_column],
+                    )
 
             # And one for the VOLUNTEER who lives down the lane
             story, created = Story.objects.get_or_create(
@@ -109,13 +112,14 @@ class Command(BaseCommand):
             communitys_question_sequence = [1, 2, 3, 4, 13, 14, 15, 16]
             communitys_answer_columns = [15, 22, 29, 36, 54, 55, 56, 57]
             for sequence_number, answer_column in zip(communitys_question_sequence, communitys_answer_columns):
-                question = Question.objects.get(
-                    school_type=school.admin3.type,
-                    questiongroup__source=source,
-                    questiongroupquestions__sequence=sequence_number,
-                )
-                answer = Answer.objects.get_or_create(
-                    story=story,
-                    question=question,
-                    text=row[answer_column],
-                )
+                if row[answer_column] in accepted_answers:
+                    question = Question.objects.get(
+                        school_type=school.admin3.type,
+                        questiongroup__source=source,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=row[answer_column],
+                    )
