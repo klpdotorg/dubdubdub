@@ -10,14 +10,28 @@
 	}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 	.chart-athird-item{
 	  @include col-33-flt;
 	}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 	.chart-quarter-item{
 	  @include col-25-flt;
 	}
+}
+
+/* Defining a text align -left */
+
+.align-left {
+  text-align: left; 
+}
+
+.img-symbol {
+	margin-top:25px;
+}
+
+.bar-label {
+  width: 100%; 
 }
