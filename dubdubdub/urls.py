@@ -17,10 +17,15 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
 urlpatterns = patterns(
     '',
 
-    # home page
+    # story dashboard
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
         ), name='home'),
+    
+    # styleguide page
+    url(r'^stories/$', StaticPageView.as_view(
+        template_name='story_dashboard.html'
+        ), name='story_dashboard'),
 
     # styleguide page
     url(r'^styleguide/$', StaticPageView.as_view(
