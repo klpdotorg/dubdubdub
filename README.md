@@ -58,7 +58,7 @@ Unit tests are available for the schools and users endpoints. Below are instruct
 
 Clone the development database:
 
-sudo -u postgres createdb -T <existing_db_name> <test_db_name>
+sudo -u postgres createdb -T existing_db_name test_db_name
 
 Create a local test_local_settings file by doing the following:
 
