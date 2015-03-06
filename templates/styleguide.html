@@ -16,10 +16,22 @@
 </style>
 {% endblock %}
 
+
+
 {% block endbody %}
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script>
+
   {% endcompress %}
+  <script>
+  // Escape HTML strings
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+  </script>
 {% endblock %}
 
 {% block content %}
@@ -2340,7 +2352,6 @@ $(document).ready(function(){
           <li><a href="#helpers-show-hide" class="js-scroll-smooth-link">Show and Hide</a></li>
           <li><a href="#helpers-ellipsis" class="js-scroll-smooth-link">Ellipsis</a></li>
           <li><a href="#helpers-no-data" class="js-scroll-smooth-link">No data</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">STATS ICON</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">SMOOTH SCROLL</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">STICKY SCROLL</a></li>
         </ul>
@@ -2808,12 +2819,4 @@ $(document).ready(function(){
   </div> <!-- /demo-main -->
 </section>
 
-<script>
-// Escape HTML strings
-function escapeHtml(str) {
-  var div = document.createElement('div');
-  div.appendChild(document.createTextNode(str));
-  return div.innerHTML;
-};
-</script>
 {% endblock %}
