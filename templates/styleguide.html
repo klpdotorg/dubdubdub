@@ -397,7 +397,7 @@
         <div class="base-spacing"></div>
         <p class="center-text"><strong>Building Blocks</strong></p>
         <ul class="ul-base">
-          <li>Firstly, add a section with a container class. (This is optional if a parent container class already exists in the DOM).</li>
+          <li>Firstly, add a section with a container class or mixin or placeholder. (This is optional if a parent container class already exists in the DOM).</li>
           <li>Next, add a parent for your grid: with a class of grid-parent (this internally has a clearfix, so you don't need to worry about clearing floats).</li>
           <li>Add some children with a class of grid-child, to get some sweet grid gutters.</li>
         </ul>        
@@ -538,6 +538,7 @@
         <div class="heading-tertiary center-text">Mixins instead of grid classes</div>
         <div class="container-mid">
           <p>The demos above will work for sections that don't need to be stacked or have their grids changed on different media breakpoints.</p>
+          <p><span class="demo-do">Do</span> create responsive grids using the recommendations below.</p>
           <p>Since the site is built mobile first, it would be preferable not to add classes, as indicated in the demos above, since they would have to be reset for mobile, to become full-width sections (in most cases, but not all).</p>
           <p>Instead, consider using the <span class="bold">handy grid mixins</span> available on media query breakpoints. The mixins have the same names as the grid classes, i.e. <em>grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</em> and grid placeholders.</p>
           <p>Let's look at a simple demo below, using classes from the existing site. On a media query breakpoint of 750px, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
@@ -2352,7 +2353,7 @@ $(document).ready(function(){
           <li><a href="#helpers-show-hide" class="js-scroll-smooth-link">Show and Hide</a></li>
           <li><a href="#helpers-ellipsis" class="js-scroll-smooth-link">Ellipsis</a></li>
           <li><a href="#helpers-no-data" class="js-scroll-smooth-link">No data</a></li>
-          <li><a href="#aser" class="js-scroll-smooth-link">SMOOTH SCROLL</a></li>
+          <li><a href="#helpers-scroll-smooth" class="js-scroll-smooth-link">SMOOTH SCROLL</a></li>
           <li><a href="#aser" class="js-scroll-smooth-link">STICKY SCROLL</a></li>
         </ul>
       </div>
@@ -2724,6 +2725,24 @@ $(document).ready(function(){
       <div class="style-block">
         <div class="style-block-demo center-text">
 <p class="no-data">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-scroll-smooth">Helpers: Smooth scroll to anchors</h2>
+      <div class="container-mid center-text">
+        Add a class of js-scroll-smooth-link to an anchor. Then Match the href attribute of the anchor with an id of a selector on the page.
+      </div>
+      <div class="style-block">
+        <div class="style-block-demo center-text container-sm">
+<a href="#smooth-demos" class="js-scroll-smooth-link">Smooth to something demo</a>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti labore eveniet nihil fugiat doloribus rem libero tempore temporibus eaque, qui quia unde incidunt possimus quidem nesciunt, expedita reprehenderit ipsa nam.</p>
+<p id="smooth-demos">I SCROLLED TO HERE</p>
 </div> <!-- /style-block-demo -->
 
         <div class="center-text">
