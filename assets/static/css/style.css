@@ -913,6 +913,9 @@ hr {
 .module-stats-girl .module-stats-label {
   color: #f87c84; }
 
+.module-stats-boygirl .module-stats-label {
+  color: #2c3e50; }
+
 /*-------------------------------------*/
 .bar-graph-wrap {
   margin-bottom: 15px; }
@@ -2587,8 +2590,6 @@ body {
 .school-demo-tab .module-stats-icon {
   display: block;
   margin-left: 10px; }
-.school-demo-tab .module-stats-boygirl .module-stats-label {
-  color: #2c3e50; }
 
 .bar-tab-demo-block .bar-label {
   width: 120px; }
