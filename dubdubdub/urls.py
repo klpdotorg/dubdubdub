@@ -56,29 +56,34 @@ urlpatterns = patterns(
     url(r'text/data$', RedirectView.as_view(url='/data')),
     url(r'listFiles/2$', RedirectView.as_view(url='/data')),
 
-    # programme pages
-    url(r'^programmes/reading/$', StaticPageView.as_view(
-        template_name='reading_programme.html',
-        ), name='reading_programme'),
-    url(r'text/reading/$', RedirectView.as_view(url='/programmes/reading')),
+    # partners pages
 
-    url(r'^text/maths/$', StaticPageView.as_view(
+    url(r'^partners/akshara/reading/$', StaticPageView.as_view(
+        template_name='reading_programme.html',
+        ), name='reading_programme'),     
+    url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
+    url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
+
+    url(r'^partners/akshara/maths/$', StaticPageView.as_view(
         template_name='maths_programme.html',
         ), name='maths_programme'),
+    url(r'^text/maths/$', RedirectView.as_view(url='/partners/akshara/maths/')),
 
-    url(r'^text/library/$', StaticPageView.as_view(
+    url(r'^partners/akshara/library/$', StaticPageView.as_view(
         template_name='library_programme.html',
         ), name='library_programme'),
+    url(r'^text/library/$', RedirectView.as_view(url='/partners/akshara/library/')),
 
-    url(r'^text/preschool/$', StaticPageView.as_view(
+    url(r'^partners/akshara/preschool/$', StaticPageView.as_view(
         template_name='preschool_programme.html',
         ), name='preschool_programme'),
+    url(r'^text/preschool/$', RedirectView.as_view(url='/partners/akshara/preschool/')),
 
-    url(r'^programmes/sikshana/$', StaticPageView.as_view(
+    url(r'^partners/sikshana/reading/$', StaticPageView.as_view(
         template_name='sikshana_programme.html',
         ), name='sikshana_programme'),
-
-    url(r'^text/sikshana/$', RedirectView.as_view(url='/programmes/sikshana')),
+    url(r'^programmes/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
+    url(r'^text/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
 
     url(r'^partners/pratham/learn-out-of-the-box/$', StaticPageView.as_view(
         template_name='partners/pratham/learn.html',
