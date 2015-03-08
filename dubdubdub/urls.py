@@ -78,7 +78,11 @@ urlpatterns = patterns(
         template_name='sikshana_programme.html',
         ), name='sikshana_programme'),
 
-    url(r'text/sikshana/$', RedirectView.as_view(url='/programmes/sikshana')),
+    url(r'^text/sikshana/$', RedirectView.as_view(url='/programmes/sikshana')),
+
+    url(r'^partners/pratham/learn-out-of-the-box/$', StaticPageView.as_view(
+        template_name='partners/pratham/learn.html',
+        ), name='partners_pratham_learn'),
 
     url(r'^volunteer/$', StaticPageView.as_view(
         template_name='volunteer.html',
