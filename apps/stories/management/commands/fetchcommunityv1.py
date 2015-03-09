@@ -155,6 +155,8 @@ class Command(BaseCommand):
 
     def parse_date(self, value, month, year):
         day = self.get_day(value)
+        month = month
+        year = self.get_year(year)
         return day.strip()+"-"+month+"-"+year
 
     def get_day(self, value):
@@ -171,3 +173,13 @@ class Command(BaseCommand):
             return value
         except:
             return False
+
+    def get_year(self, value):
+        if self.is_year_correct(value):
+            return value
+        else:
+            return "2014"
+
+    def is_year_correct(self, year):
+        return (len(year) == 4 and int(year) <= timezone.now().year)
+
