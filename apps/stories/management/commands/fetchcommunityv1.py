@@ -26,19 +26,16 @@ class Command(BaseCommand):
         
         count = 0
         for row in csv_f:
-            day = row[1]
-            month = row[2]
-            year = row[3]
-            name = row[6]
-            school_id = row[10]
-            accepted_answers = ['0','1']
-
             # Skip first two rows
             if count == 0 or count == 1:
                 count += 1
                 continue
 
-            parsed_date = day+"-"+month+"-"+year
+            name = row[6]
+            school_id = row[10]
+            accepted_answers = ['0','1']
+            parsed_date = self.parse_date(row[1], row[2], row[3])
+
             date_of_visit = datetime.datetime.strptime(
                 parsed_date, '%d-%m-%Y'
             )
@@ -73,10 +70,11 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(teachers_question_sequence, teachers_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            school_type=school.admin3.type,
                             questiongroup__source=source,
                             questiongroupquestions__sequence=sequence_number,
                         )
+                        question.school_type = school.admin3.type
+                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
@@ -107,10 +105,11 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(parents_question_sequence, parents_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            school_type=school.admin3.type,
                             questiongroup__source=source,
                             questiongroupquestions__sequence=sequence_number,
                         )
+                        question.school_type = school.admin3.type
+                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
@@ -141,12 +140,32 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(communitys_question_sequence, communitys_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            school_type=school.admin3.type,
                             questiongroup__source=source,
                             questiongroupquestions__sequence=sequence_number,
                         )
+                        question.school_type = school.admin3.type
+                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
                             text=row[answer_column],
                         )
+
+    def parse_date(self, value, month, year):
+        day = self.get_day(value)
+        return day.strip()+"-"+month+"-"+year
+
+    def get_day(self, value):
+        if "/" in value:
+            return str(value.split("/")[0])
+        elif self.is_day_correct(value):
+            return str(value)
+        else:
+            return "1"
+
+    def is_day_correct(self, day):
+        try:
+            value = int(day) in range(1,32)
+            return value
+        except:
+            return False
