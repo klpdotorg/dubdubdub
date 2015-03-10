@@ -36,11 +36,7 @@ class Command(BaseCommand):
             name = row[6]
             school_id = row[10]
             accepted_answers = ['0','1']
-            parsed_date = self.parse_date(row[1], row[2], row[3])
-
-            date_of_visit = datetime.datetime.strptime(
-                parsed_date, '%d-%m-%Y'
-            )
+            date_of_visit = self.parse_date(row[1], row[2], row[3])
 
             try:
                 school = School.objects.get(id=school_id)
@@ -154,17 +150,30 @@ class Command(BaseCommand):
                         )
 
     def parse_date(self, value, month, year):
-        day = self.get_day(value)
-        month = month
         year = self.get_year(year)
-        return day.strip()+"-"+month+"-"+year
+        month = month
+        day = self.get_day(value, month, year)
 
-    def get_day(self, value):
+        date = day.strip()+"-"+month+"-"+year
+        date_of_visit = datetime.datetime.strptime(
+            date, '%d-%m-%Y'
+        )
+        return date_of_visit
+
+    def get_day(self, value, month, year):
         if "/" in value:
             return str(value.split("/")[0])
         elif self.is_day_correct(value):
             return str(value)
         else:
+            # Check to see whether assigning the default day
+            # as '1' might make the day a Sunday or not. If it
+            # is a Sunday, then use default as '2'.
+            date_of_visit = datetime.datetime.strptime(
+            "1"+"-"+month+"-"+year, '%d-%m-%Y'
+            )
+            if date_of_visit.strftime("%A") == "Sunday":
+                return "2"
             return "1"
 
     def is_day_correct(self, day):
