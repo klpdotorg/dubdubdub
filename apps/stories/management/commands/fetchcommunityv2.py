@@ -47,12 +47,12 @@ class Command(BaseCommand):
 
             name = row[6]
             dise_code = row[5]
-            accepted_answers = ['Y','N']
+            accepted_answers = {'Y':'1', 'N':'0'}
             user_type = self.get_user_type(row[7], user_types)
-            previous_date = parsed_date = self.parse_date(previous_date, row[16])
+            previous_date = date_of_visit = self.parse_date(previous_date, row[16])
     
             try:
-                dise_info = DiseInfo.objects.get(dise_code=dise_code):
+                dise_info = DiseInfo.objects.get(dise_code=dise_code)
             except Exception as ex:
                 print ex
                 print "DISE ERROR: CODE: %s" % dise_code
@@ -96,7 +96,7 @@ class Command(BaseCommand):
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
-                            text=row[answer_column],
+                            text=accepted_answers[row[answer_column]],
                         )
 
             
