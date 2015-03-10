@@ -7,9 +7,9 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Community Feedback questions
+    help = """Populate DB with v1 Community Feedback questions
     
-    ./manage.py populateivrsdata"""
+    ./manage.py populatecommunitydata"""
 
     def handle(self, *args, **options):
         s = Source.objects.get_or_create(name="community")[0]
