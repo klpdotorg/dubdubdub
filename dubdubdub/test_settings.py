@@ -13,6 +13,10 @@ DATABASES = {
     }
 }
 
+TESTS_STORIES_INPUT = {
+    'SCHOOLS_TEST_ID1': '29600'
+}
+
 try:
     from local_test_settings import *
 except:
