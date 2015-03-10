@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(teachers_question_sequence, teachers_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            questiongroup__source=source,
+                            questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
                         question.school_type = school.admin3.type
@@ -107,7 +107,7 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(parents_question_sequence, parents_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            questiongroup__source=source,
+                            questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
                         question.school_type = school.admin3.type
@@ -142,7 +142,7 @@ class Command(BaseCommand):
                 for sequence_number, answer_column in zip(communitys_question_sequence, communitys_answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
-                            questiongroup__source=source,
+                            questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
                         question.school_type = school.admin3.type
@@ -182,4 +182,3 @@ class Command(BaseCommand):
 
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
-
