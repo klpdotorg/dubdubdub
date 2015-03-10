@@ -1,0 +1,119 @@
+import csv
+import datetime
+
+from django.utils import timezone
+from django.core.management.base import BaseCommand
+
+from schools.models import (
+    School, BoundaryType, DiseInfo)
+from stories.models import (
+    Question, Questiongroup, QuestionType, 
+    QuestiongroupQuestions, Source, UserType,
+    Story, Answer)
+
+class Command(BaseCommand):
+    args = ""
+    help = """Parse and store the Community Feedback V1 data
+    
+    ./manage.py fetchcommunityv2"""
+
+    def handle(self, *args, **options):
+        source = Source.objects.get_or_create(name="community")[0]
+        question_group = Questiongroup.objects.get_or_create(version=2, source=source)[0]
+        user_types = {
+            'Parents': UserType.PARENTS,
+            'CBO Member': UserType.CBO_MEMBER,
+            'Local Leader ': UserType.VOLUNTEER,
+            'SDMC Member ': UserType.SDMC_MEMBER,
+            'Educated youth': UserType.EDUCATED_YOUTH,
+        }
+        UserType.objects.get_or_create(name=UserType.PARENTS)
+        UserType.objects.get_or_create(name=UserType.VOLUNTEER)
+        UserType.objects.get_or_create(name=UserType.CBO_MEMBER)
+        UserType.objects.get_or_create(name=UserType.SDMC_MEMBER)
+        UserType.objects.get_or_create(name=UserType.EDUCATED_YOUTH)
+
+        f = open('communityv2.csv')
+        csv_f = csv.reader(f)
+        
+        count = 0
+        previous_date = ""
+
+        for row in csv_f:
+            # Skip first two rows
+            if count == 0 or count == 1:
+                count += 1
+                continue
+
+            name = row[6]
+            dise_code = row[5]
+            accepted_answers = ['Y','N']
+            user_type = self.get_user_type(row[7], user_types)
+            previous_date = parsed_date = self.parse_date(previous_date, row[16])
+    
+            try:
+                dise_info = DiseInfo.objects.get(dise_code=dise_code):
+            except Exception as ex:
+                print ex
+                print "DISE ERROR: CODE: %s" % dise_code
+                continue
+
+            try:
+                school = School.objects.get(dise_info=dise_info)
+            except Exception as ex:
+                print ex
+                print "SCHOOL ERROR: DISE INFO: %s" % dise_code
+                continue
+
+            question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+            answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
+
+            for answer_column in answer_columns:
+                if row[answer_column] in accepted_answers:
+                    at_least_one_answer = True
+                    break
+            else:
+                at_least_one_answer = False
+
+            if at_least_one_answer:
+                story, created = Story.objects.get_or_create(
+                    school=school,
+                    group=question_group,
+                    date_of_visit=timezone.make_aware(
+                        date_of_visit, timezone.get_current_timezone()
+                    ),
+                    user_type=user_type,
+                )
+
+                for sequence_number, answer_column in zip(question_sequence, answer_columns):
+                    if row[answer_column] in accepted_answers:
+                        question = Question.objects.get(
+                            questiongroup=question_group,
+                            questiongroupquestions__sequence=sequence_number,
+                        )
+                        question.school_type = school.admin3.type
+                        question.save()
+                        answer = Answer.objects.get_or_create(
+                            story=story,
+                            question=question,
+                            text=row[answer_column],
+                        )
+
+            
+    def parse_date(self, previous_date,  date):
+        if date:
+            date_of_visit = datetime.datetime.strptime(
+                date, '%d/%m/%Y'
+            )
+            return date_of_visit
+        else:
+            return previous_date
+
+    def get_user_type(self, user_type, user_types):
+        if user_type:
+            return UserType.objects.get(
+                name=user_types[user_type]
+            )
+        else:
+            return None
+            
