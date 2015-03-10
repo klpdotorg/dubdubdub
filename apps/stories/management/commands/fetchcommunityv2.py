@@ -102,12 +102,14 @@ class Command(BaseCommand):
             
     def parse_date(self, previous_date,  date):
         if date:
-            date_of_visit = datetime.datetime.strptime(
-                date, '%d/%m/%Y'
-            )
-            return date_of_visit
-        else:
-            return previous_date
+            date_is_sane = self.check_date_sanity(date)
+            if date_is_sane:
+                date_of_visit = datetime.datetime.strptime(
+                    date, '%d/%m/%Y'
+                )
+                return date_of_visit
+
+        return previous_date
 
     def get_user_type(self, user_type, user_types):
         if user_type:
@@ -117,3 +119,31 @@ class Command(BaseCommand):
         else:
             return None
             
+    def check_date_sanity(self, date):
+        try:
+            day = date.split("/")[0]
+            month = date.split("/")[1]
+            year = date.split("/")[2]
+        except:
+            # Date format itself will be messed up
+            return False
+
+        if not self.is_day_correct(day):
+            return False
+
+        if not self.is_month_correct(month):
+            return False
+
+        if not self.is_year_correct(year):
+            return False
+
+        return True
+
+    def is_day_correct(self, day):
+        return int(day) in range(1,32)
+
+    def is_month_correct(self, month):
+        return int(month) in range(1,13)
+
+    def is_year_correct(self, year):
+        return (len(year) == 4 and int(year) <= timezone.now().year)
