@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -3915,5 +3916,15 @@ code {
 
 .bar-label {
   width: 100%; }
+
+/* CSS for accordian panels with accordian.js*/
+.accordion-toggle {
+  cursor: pointer; }
+
+.accordion-content {
+  display: none; }
+
+.accordion-content.default {
+  display: block; }
 
 /*# sourceMappingURL=style.css.map */

@@ -17,7 +17,7 @@ new Chartist.Bar('#chart_respondant', {
   }
 });
 
-new Chartist.Bar('#chart1', {
+new Chartist.Bar('#chart_volume', {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
   series: [
   {
@@ -31,28 +31,77 @@ new Chartist.Bar('#chart1', {
   axisY: {
     showGrid: true
   }
+}).on('draw', function(data) {
+  if(data.type === 'bar') {
+    data.element.attr({
+      style: 'stroke-width: 20px'
+    });
+  }
 });
 
-
-new Chartist.Line('#chart2', {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-  colors: ['$green-leaf','$orange-mild'],
+new Chartist.Bar('#chart_teacher', {
+  labels: ['Insufficient TLM','Relation with HM','Work Overload','Training Needs'],
   series: [
-    {
-      name: 'Green Level',
-      data: [100, 230, 50, 50, 80, 130, 90]
-    },
-    {
-      name: 'Orange Level',
-      data: [50, 30, 80, 70, 80, 100, 90]
-    }
-  ]
-  },{
-    axisX: {
+  {
+    name: 'Teachers\' Concern',
+    data: [200, 100, 250, 150]
+  }]
+}, {
+  axisX: {
     showGrid: false
   },
   axisY: {
     showGrid: true
   }
+}).on('draw', function(data) {
+  if(data.type === 'bar') {
+    data.element.attr({
+      style: 'stroke-width: 20px'
+    });
+  }
 });
 
+
+new Chartist.Bar('#chart_parent', {
+  labels: ['School Administration','Teacher Attendance','Academic Attention','Mid-day meals'],
+  series: [
+  {
+    name: 'Parents\' Concern',
+    data: [200, 100, 250, 150]
+  }]
+}, {
+  axisX: {
+    showGrid: false
+  },
+  axisY: {
+    showGrid: true
+  }
+}).on('draw', function(data) {
+  if(data.type === 'bar') {
+    data.element.attr({
+      style: 'stroke-width: 20px'
+    });
+  }
+});
+
+new Chartist.Bar('#chart_community', {
+  labels: ['Teacher Motivation','Govt. Involvement','PTR','Infrastructure'],
+  series: [
+  {
+    name: 'Community\'s Concern',
+    data: [200, 100, 250, 150]
+  }]
+}, {
+  axisX: {
+    showGrid: false
+  },
+  axisY: {
+    showGrid: true
+  }
+}).on('draw', function(data) {
+  if(data.type === 'bar') {
+    data.element.attr({
+      style: 'stroke-width: 20px'
+    });
+  }
+});
