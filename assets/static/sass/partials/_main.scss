@@ -649,7 +649,11 @@ body {
 }
 
 .banner-maths {
-  background-image: url('/static/images/bg_header_maths_programme.jpg');
+  background-image: url('/static/images/partners/AksharaMath1.jpg');
+}
+
+.banner-pratham-learn {
+  background-image: url('/static/images/partners/PrathamLearn1_resized.jpg'); 
 }
 
 .banner-library {
@@ -954,12 +958,6 @@ body {
   .module-stats-icon {
     display: block;
     margin-left: $base-spacing;
-  }
-
-  .module-stats-boygirl {
-    .module-stats-label {
-      color: $blue-ink;
-    }    
   }
 }
 

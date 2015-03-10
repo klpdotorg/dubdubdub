@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -912,6 +911,9 @@ hr {
 
 .module-stats-girl .module-stats-label {
   color: #f87c84; }
+
+.module-stats-boygirl .module-stats-label {
+  color: #2c3e50; }
 
 /*-------------------------------------*/
 .bar-graph-wrap {
@@ -2434,7 +2436,10 @@ body {
   padding-right: 5px; }
 
 .banner-maths {
-  background-image: url("/static/images/bg_header_maths_programme.jpg"); }
+  background-image: url("/static/images/partners/AksharaMath1.jpg"); }
+
+.banner-pratham-learn {
+  background-image: url("/static/images/partners/PrathamLearn1_resized.jpg"); }
 
 .banner-library {
   background-image: url("/static/images/bg_header_library_programme.jpg"); }
@@ -2587,8 +2592,6 @@ body {
 .school-demo-tab .module-stats-icon {
   display: block;
   margin-left: 10px; }
-.school-demo-tab .module-stats-boygirl .module-stats-label {
-  color: #2c3e50; }
 
 .bar-tab-demo-block .bar-label {
   width: 120px; }
