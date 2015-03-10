@@ -9,3 +9,6 @@ echo "Done with schools unit tests ----------"
 echo "Running users related unit tests..."
 python manage.py test users.tests --settings dubdubdub.test_settings
 echo "Done with users unit tests............."
+echo "Running stories related unit tests"
+python manage.py test stories --settings dubdubdub.test_settings
+echo "Done with stories unit tests"
