@@ -1,4 +1,4 @@
-<div class="profile-login-block">
+<!-- <div class="profile-login-block">
   <div class="profile-options-wrapper">
     <div class="profile-options" id="authUsername" data-state="anonymous">Login</div>
     <div id="signupModalTrigger" style="display:none;"></div>
@@ -13,5 +13,18 @@
         <a href="#" id="logoutUser"><span class="fa fa-sign-out icon-left"></span>Logout</a>
       </li>
     </ul>
-  </div> <!-- /profile-options-wrapper -->   
-</div> <!-- /profile-login-block -->
+  </div>
+</div> --> <!-- /profile-login-block -->
+
+<ul class="dropdown-base js-dropdown profile-login-block">
+  <!-- <div class="profile-options" id="authUsername" data-state="anonymous">Login</div> -->
+  <li>
+    <div id="signupModalTrigger" style="display:none"></div>
+    <span class="fa fa-user js-login-trigger" id="authUsername" data-state="anonymous">Login</span>
+    <ul>
+      <li><span class="fa fa-user icon-left"></span>Profile</li>
+      <li><span class="fa fa-edit icon-left"></span>Edit Profile</li>
+      <li><span class="fa fa-sign-out icon-left"></span>Logout</li>
+    </ul>
+  </li>
+</ul>

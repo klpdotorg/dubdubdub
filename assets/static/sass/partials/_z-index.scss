@@ -36,8 +36,12 @@
 }
 
 
-.main-header, .nav, .nav-trigger, .scroll-smooth-block {
+.main-header, .nav, .nav-trigger {
 	z-index: 3000;
+}
+
+.scroll-smooth-block {
+  z-index: 1900;
 }
 
 // Select 2

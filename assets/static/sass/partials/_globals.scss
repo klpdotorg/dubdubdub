@@ -468,11 +468,13 @@ img, video {
 .dropdown-base {
   position: relative;
   @extend %font-smaller;
+  text-align: left;
   
   > li {
     display: inline-block;
     @extend %border-radius-sm;
     @extend %border-base;
+    @extend %grey-mist-bg;
   }
 
   ul {
