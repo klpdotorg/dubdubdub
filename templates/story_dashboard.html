@@ -137,134 +137,420 @@
 		  	</div>
 		  </div>
 		</section>
-		<div id="accordion">
 			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
-			<section class="container">
-				<hr/>
-	  		<div class="accordion-toggle align-right">
-	  			<div class="heading-tiny-uppercase">IVRS <span class="fa fa-angle-down"></span></div>
-	  		</div>
-  		</section>
+		<section class="container">
+			<ul id='improved'>
+			  <hr/>
+				<li><a href='#' class='head align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="ivrs">
+						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+					  <div class="chart-parent">
+					  	<div class="chart-half-item">
+					  		<div class="chart-parent">
+					  	    <div class="chart-half-item">
+							  		<div class="heading-tiny-uppercase align-left" >Stories</div>
+							  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
+							  	</div>
+							  	<div class="chart-half-item">
+							  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+							  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
+							  	</div>
+							  </div><!--end inner parent-->
+				  			<div class="bar-label">How would you categorize schools in this boundary?</div>
+				  			<div class="bar-graph-wrap">
+									<div class="bar-label green-leaf">A Grade</div>
+					  			<div class="bar-graph">
+					    			<div class="bar-percent green-leaf">44%</div>
+					    			<div class="bar-custom tooltip" aria-label="440/1000">
+						        	<div class="bar-value bar-value-44 green-leaf-bg" style="width:44%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+								<div class="bar-graph-wrap">
+									<div class="bar-label orange-mild">B Grade</div>
+					  			<div class="bar-graph">
+					    			<div class="bar-percent orange-mild">36%</div>
+					    			<div class="bar-custom tooltip" aria-label="360/1000">
+						        	<div class="bar-value bar-value-360 orange-mild-bg" style="width:36%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+								<div class="bar-graph-wrap">
+									<div class="bar-label pink-salmon">C Grade</div>
+					  			<div class="bar-graph">
+					    			<div class="bar-percent pink-salmon">20%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 pink-salmon-bg" style="width:20%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
 
-			<div class="accordion-content default">
-				<section class="container" id="ivrs">
-					<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
-				  <div class="chart-parent">
-				  	<div class="chart-half-item">
-				  		<div class="chart-parent">
-				  	    <div class="chart-half-item">
-						  		<div class="heading-tiny-uppercase align-left" >Stories</div>
-						  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
+								<div class="bar-graph-wrap">
+									<div class="bar-label">In how many schools was the Headmaster present?</div>
+			  					<div class="bar-graph">
+			    					<div class="bar-percent green-leaf">67%</div>
+			    					<div class="bar-custom tooltip" aria-label="670/1000">
+				        			<div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+				        				<div class="bar-value bar-value-67 green-leaf-bg" style="width:67%;"></div>
+				        			</div>
+				        		</div>
+					  			</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+							</div><!-- /chart-half-item -->
+
+							<div class="chart-half-item">
+							  <div class="chart-parent">
+							  	<div class="chart-half-item">
+						  		<div class="heading-tiny-uppercase align-left" >Academic Year</div>
+						  		<h2 class="heading-secondary brand-blue align-left">2014-2015</h2> 
 						  	</div>
 						  	<div class="chart-half-item">
-						  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+						  		<div class="heading-tiny-uppercase align-left" >Calls Received</div>
 						  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
 						  	</div>
-						  </div><!--end inner parent-->
-			  			<div class="bar-label">How would you categorize schools in this boundary?</div>
-			  			<div class="bar-graph-wrap">
-								<div class="bar-label green-leaf">A Grade</div>
-				  			<div class="bar-graph">
-				    			<div class="bar-percent green-leaf">44%</div>
-				    			<div class="bar-custom tooltip" aria-label="440/1000">
-					        	<div class="bar-value bar-value-44 green-leaf-bg" style="width:44%;"></div>
-					        </div>
-						  	</div> <!-- /bar-graph -->
-							</div> <!-- /bar-graph-wrap -->
-							<div class="bar-graph-wrap">
-								<div class="bar-label orange-mild">B Grade</div>
-				  			<div class="bar-graph">
-				    			<div class="bar-percent orange-mild">36%</div>
-				    			<div class="bar-custom tooltip" aria-label="360/1000">
-					        	<div class="bar-value bar-value-360 orange-mild-bg" style="width:36%;"></div>
-					        </div>
-						  	</div> <!-- /bar-graph -->
-							</div> <!-- /bar-graph-wrap -->
-							<div class="bar-graph-wrap">
-								<div class="bar-label pink-salmon">C Grade</div>
-				  			<div class="bar-graph">
-				    			<div class="bar-percent pink-salmon">20%</div>
-				    			<div class="bar-custom tooltip" aria-label="200/1000">
-					        	<div class="bar-value bar-value-20 pink-salmon-bg" style="width:20%;"></div>
-					        </div>
-						  	</div> <!-- /bar-graph -->
-							</div> <!-- /bar-graph-wrap -->
+				  		</div><!--end inner parent-->
+								<div class="heading-tiny-uppercase">Call Volume distribution</div>
+								<div id="chart_volume" class="ct-chart ct-minor-seventh"></div>
+					    </div> <!-- /chart-half-item -->
 
-
-							<div class="bar-graph-wrap">
-								<div class="bar-label">In how many schools was the Headmaster present?</div>
-		  					<div class="bar-graph">
-		    					<div class="bar-percent green-leaf">67%</div>
-		    					<div class="bar-custom tooltip" aria-label="670/1000">
-			        			<div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-			        				<div class="bar-value bar-value-67 green-leaf-bg" style="width:67%;"></div>
-			        			</div>
-			        		</div>
-				  			</div> <!-- /bar-graph -->
-							</div> <!-- /bar-graph-wrap -->
-						</div><!-- /chart-half-item -->
-
-						<div class="chart-half-item">
-						  <div class="chart-parent">
-						  	<div class="chart-half-item">
+				  	</div> <!--/chart-parent-->
+					</div>
+				</li>
+				<hr/>
+				<li><a href='#' class='head align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="surveys">
+						<h2 class="heading-border brand-turquoise">Community Surveys</h2> 
+						<div class="chart-parent">
+			  	    <div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">2800</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
 					  		<div class="heading-tiny-uppercase align-left" >Academic Year</div>
 					  		<h2 class="heading-secondary brand-blue align-left">2014-2015</h2> 
 					  	</div>
-					  	<div class="chart-half-item">
-					  		<div class="heading-tiny-uppercase align-left" >Calls Received</div>
-					  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" ></div>
+					  		<h2 class="heading-secondary brand-blue align-left"></h2> 
 					  	</div>
-			  		</div><!--end inner parent-->
-							<div class="heading-tiny-uppercase">Call Volume distributtion</div>
-							<div id="chart_volume" class="ct-chart ct-minor-seventh"></div>
-				    </div> <!-- /chart-half-item -->
+					  </div><!--end inner parent-->
+					  <div class="chart-parent">
+					  	<div class="chart-athird-item">
+					  		<div class="heading-tertiary grey-steel">Teachers' Concerns</div>
+					  		<div id="teacher_concern">
+									<div class="circle-bullet brand-red"><span class='brand-red'>40% Insufficient TLM</span></div>
+									<div class="circle-bullet brand-orange"><span class='brand-orange'>30% Relation with HM</span></div>
+									<div class="circle-bullet brand-green"><span class='brand-green'>20% Work Overload</span></div>
+									<div class="circle-bullet green-pista"><span class='green-pista'>10% Training Needs</span></div>
+								</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class="heading-tertiary">Parents' Concerns</div>
+								<div id="parent_concern">
+									<div class="circle-bullet brand-red"><span class='brand-red'>40% School Administration</span></div>
+									<div class="circle-bullet brand-orange"><span class='brand-orange'>30% Teacher Attendance</span></div>
+									<div class="circle-bullet brand-green"><span class='brand-green'>20% Academic Attention</span></div>
+									<div class="circle-bullet green-pista"><span class='green-pista'>10% Mid-day Meals</span></div>
+								</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class="heading-tertiary">Community's Concerns</div>
+								<div id="community_concern">
+									<div class="circle-bullet brand-red"><span class='brand-red'>40% Govt. Involvement</span></div>
+									<div class="circle-bullet brand-orange"><span class='brand-orange'>30% Infrastructure and Safety</span></div>
+									<div class="circle-bullet brand-green"><span class='brand-green'>20% Teacher Motivation</span></div>
+									<div class="circle-bullet green-pista"><span class='green-pista'>10% Pupil Teacher Ratio</span></div>
+								</div>
+							</div><!-- /chart-athird-item -->
+				  	</div> <!--/chart-parent-->		
+				  	<hr/>
+				  	<div class="chart-parent">
+				  	 <div class="heading-secondary brand-blue">Involvement of stakeholders as perceived by</div>
+					  	
+				  	 <div class="chart-athird-item">
+					  		<div class="heading-tertiary center-text">Teachers</div>
+				  			<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-green">20%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-green-bg" style="width:20%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->		
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-turquoise">50%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-turquoise-bg" style="width:50%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-purple">10%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-purple-bg" style="width:10%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-blue">20%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-blue-bg" style="width:20%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
 
-			  	</div> <!--/chart-parent-->
-			  </section>
-	  	</div><!--close accordion div-->
+							</div><!--athird-item-->
+							<div class="chart-athird-item">
 
-  	  <section class="container">
+					  		<div class="heading-tertiary center-text">Parents</div>
+				  			<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-green">50%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-green-bg" style="width:50%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->		
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-turquoise">10%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-turquoise-bg" style="width:10%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-purple">10%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-purple-bg" style="width:10%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-blue">30%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-blue-bg" style="width:30%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+
+							</div><!--athird-item-->
+							<div class="chart-athird-item">
+
+					  		<div class="heading-tertiary center-text">Community</div>
+				  			<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-green">10%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-green-bg" style="width:10%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->		
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-turquoise">30%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-turquoise-bg" style="width:30%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-purple">40%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-purple-bg" style="width:40%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+								<div class="bar-graph-wrap">
+									<div class="bar-graph">
+					    			<div class="bar-percent brand-blue">30%</div>
+					    			<div class="bar-custom tooltip" aria-label="200/1000">
+						        	<div class="bar-value bar-value-20 brand-blue-bg" style="width:30%;"></div>
+						        </div>
+							  	</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->	
+
+							</div><!--athird-item ends-->
+						</div><!--chart parent ends-->
+						<div class="center-text">
+							<span class='circle-bullet brand-green'></span><span class='brand-green'>Teachers</span>
+							<span class='circle-bullet brand-turquoise'></span><span class='brand-turquoise'>Parents</span>
+							<span class='circle-bullet brand-purple'></span><span class='brand-purple'>SDMC</span>
+							<span class='circle-bullet brand-blue'></span><span class='brand-blue'>Community</span>
+						</div>
+					</div>
+				</li>	
 				<hr/>
-	  		<div class="accordion-toggle align-right">
-	  			<div class="heading-tiny-uppercase">SURVEYS <span class="fa fa-angle-down"></span></div>
-	  		</div>
-  		</section>
+				<li><a href='#' class='head align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="website">
+						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
+						<div class="chart-parent">
+			  	    <div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">1200</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Verified Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">200</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Academic Year</div>
+					  		<h2 class="heading-secondary brand-blue align-left">2014-2015</h2> 
+					  	</div>
+					  	
+					  </div><!--end inner parent-->			
+					  <div class="chart-parent">
+					  	<div class="heading-tertiary center-text">What percentage of schools have these facilities?</div>	
+					  	<div class="chart-athird-item"> 	
+					  		<div class=""><span class="fa fa-university"></span>&nbsp;All weather pucca building</div>
+					  		<div class="bold brand-orange">30%</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class=""><span class="fa fa-futbol-o"></span>&nbsp;Playground</div>
+					  		<div class="bold brand-orange">20%</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class=""><span class="fa  fa-tint"></span>&nbsp;Drinking Water</div>
+					  		<div class="bold brand-green">60%</div>
+							</div><!-- /chart-athird-item -->
+				  	</div> <!--/chart-parent-->	
+				  	<div class="chart-parent">
+					  	<div class="chart-athird-item"> 	
+					  		<div class=""><span class="fa fa-male"></span>|<span class="fa fa-female"></span>&nbsp;Toilets</div>
+					  		<div class="bold brand-green">70%</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class=""><span class="fa fa-book"></span>&nbsp;Library</div>
+					  		<div class="bold brand-green">60%</div>
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item">
+					  		<div class=""><span class="fa fa-circle-o-notch"></span>&nbsp;Boundary Wall</div>
+					  		<div class="bold brand-orange">30%</div>
+							</div><!-- /chart-athird-item -->
+				  	</div> <!--/chart-parent-->	
+				  	<hr/>
+				  	<div class="chart-parent">
+				  		<div class="heading-tertiary center-text">On the day of the visit, the percentage of schools</div>	
+					  	<div class="chart-athird-item"> 
+				  			<div class="bar-graph-wrap">
+									<div class="bar-label">Where there was evidence of a Mid-day meal served:</div>
+			  					<div class="bar-graph">
+			    					<div class="bar-percent green-leaf">67%</div>
+			    					<div class="bar-custom tooltip" aria-label="670/1000">
+				        			<div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+				        				<div class="bar-value bar-value-67 green-leaf-bg" style="width:67%;"></div>
+				        			</div>
+				        		</div>
+					  			</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item"> 
+				  			<div class="bar-graph-wrap">
+									<div class="bar-label">Where 50% of children enrolled in the school were present:</div>
+			  					<div class="bar-graph">
+			    					<div class="bar-percent green-leaf">80%</div>
+			    					<div class="bar-custom tooltip" aria-label="670/1000">
+				        			<div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+				        				<div class="bar-value bar-value-80 green-leaf-bg" style="width:80%;"></div>
+				        			</div>
+				        		</div>
+					  			</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+							</div><!-- /chart-athird-item -->
+							<div class="chart-athird-item"> 
+				  			<div class="bar-graph-wrap">
+									<div class="bar-label">Where all the teachers for all classes were present:</div>
+			  					<div class="bar-graph">
+			    					<div class="bar-percent green-leaf">73%</div>
+			    					<div class="bar-custom tooltip" aria-label="670/1000">
+				        			<div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+				        				<div class="bar-value bar-value-73 green-leaf-bg" style="width:73%;"></div>
+				        			</div>
+				        		</div>
+					  			</div> <!-- /bar-graph -->
+								</div> <!-- /bar-graph-wrap -->
+							</div><!-- /chart-athird-item -->
+				  	</div> <!--/chart-parent-->	
+					</div>
+				</li>	
+				<hr/>
+				<li><a href='#' class='head align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="comparison">
+						<table class="table-base">
+						  <thead class="table-base-heading">
+						    <tr>
+						    	<th></th>
+						      <th>Bangalore South</th>
+						      <th>Bangalore North</th>
+						      <th>Bangalore Central</th>
+						      <th>Bangalore Rural</th>
+						  </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>Schools</td>
+						      <td>1000</td>
+						      <td>1200</td>
+						      <td>1200</td>
+						      <td>1400</td>
+						    </tr>
+						    <tr>
+						      <td>Stories</td>
+						      <td>1000</td>
+						      <td>1200</td>
+						      <td>1200</td>
+						      <td>1400</td>
+						    </tr>
+						    <tr>
+						      <td>IVRS Calls</td>
+						      <td>1000</td>
+						      <td>1200</td>
+						      <td>1200</td>
+						      <td>1400</td>
+						    </tr>
+						    <tr>
+						      <td>Teachers' Concern</td>
+						      <td>Insuffiecient TLM</td>
+						      <td>Work Overload</td>
+						      <td>Work Overload</td>
+						      <td>Work Overload</td>
+						    </tr>
+						    <tr>
+						      <td>Parents' Concern</td>
+						      <td>Teacher Attendance</td>
+						      <td>School Administration</td>
+						      <td>Teacher Attendance</td>
+						      <td>School Administration</td>
+						    </tr>
+						    <tr>
+						      <td>Community' Concern</td>
+						      <td>Govt. Involvement</td>
+						      <td>Teacher Motivation</td>
+						      <td>Teacher Motivation</td>
+						      <td>Govt. Involvement</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</li>	
+			</ul>
 
-			<div class="accordion-content default">
-				<section class="container" id="ivrs">
-					<h2 class="heading-border brand-turquoise">Community Surveys</h2> 
-					<div class="chart-parent">
-		  	    <div class="chart-half-item">
-				  		<div class="heading-tiny-uppercase align-left" >Stories</div>
-				  		<h2 class="heading-secondary brand-blue align-left">2800</h2> 
-				  	</div>
-				  	<div class="chart-half-item">
-				  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
-				  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
-				  	</div>
-				  </div><!--end inner parent-->
-				  <div class="chart-parent">
-				  	<div class="chart-athird-item">
-				  		<div class="heading-tiny-uppercase">Teachers' Concerns</div>
-							<div id="chart_teacher" class="ct-chart ct-major-eleventh"></div>
-						</div><!-- /chart-athird-item -->
-						<div class="chart-athird-item">
-				  		<div class="heading-tiny-uppercase">Parents' Concerns</div>
-							<div id="chart_parent" class="ct-chart ct-major-eleventh"></div>
-						</div><!-- /chart-athird-item -->
-						<div class="chart-athird-item">
-				  		<div class="heading-tiny-uppercase">Community's Concerns</div>
-							<div id="chart_community" class="ct-chart ct-major-eleventh"></div>
-						</div><!-- /chart-athird-item -->
-			  	</div> <!--/chart-parent-->
-			  </section>
-	  	</div><!--close accordion div-->
+		</section>
 
-  		<h4 class="accordion-toggle">Accordion 3</h4>
-  		<div class="accordion-content">
-    		<p>Vivamus facilisisnibh scelerisque laoreet.</p>
-  		</div>
-		</div>
 		
 	</div>
 </section>

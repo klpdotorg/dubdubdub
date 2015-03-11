@@ -3918,13 +3918,14 @@ code {
   width: 100%; }
 
 /* CSS for accordian panels with accordian.js*/
-.accordion-toggle {
-  cursor: pointer; }
+.head {
+  display: block; }
 
-.accordion-content {
+.content {
   display: none; }
 
-.accordion-content.default {
-  display: block; }
+#improved li {
+  position: relative;
+  overflow: hidden; }
 
 /*# sourceMappingURL=style.css.map */
