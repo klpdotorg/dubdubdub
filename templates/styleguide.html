@@ -21,9 +21,9 @@
 {% block endbody %}
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script>
-
+ 
   {% endcompress %}
+   <!-- <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script> -->
   <script>
   // Escape HTML strings
   function escapeHtml(str) {
@@ -1976,9 +1976,9 @@ $(document).ready(function(){
   <li>
     <span class="fa fa-user"></span>
     <ul>
-      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</a></li>
-      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</a></li>
-      <li><span class="fa fa-plane icon-left"></span>Dropdown item</a></li>
+      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-plane icon-left"></span>Dropdown item</li>
     </ul>
   </li>
 </ul>
