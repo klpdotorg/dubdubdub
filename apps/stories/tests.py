@@ -11,7 +11,6 @@ class StoriesApiTestCase(TestCase):
     stories_base_url = "/api/v1/stories/"
 
     def setUp(self):
-        print "Hello world"
         self.client = Client()
         self.schools_lib_id = settings.TESTS_STORIES_INPUT['SCHOOLS_TEST_ID1']
 
@@ -83,6 +82,81 @@ class StoriesApiTestCase(TestCase):
         self.assertNotEqual(response.status_code, 200,
                          "Shoud return a 400 application error in case of invalid param")
 
+    def testGetAnswersForSchool(self):
+        query_url = self.stories_base_url + "?school_id=" + self.schools_lib_id + "&answers=yes"
+        print "Testing getting answers for school ID -- " + query_url
+        response = self.client.get(query_url)
+        print response.status_code
+        #print response
+        self.assertEqual(response.status_code, 200,
+                         "schools answers status code is 200")
+        results = json.loads(response.content)
+        sample_school = results['features'][0]
+        self.assertTrue('answers' in sample_school, "has no property called answers")
+
+    # Would be better if error is returned in case invalid params are entered for answers.
+    def testGetAnswersForSchool2(self):
+        query_url = self.stories_base_url + "?school_id=" + self.schools_lib_id + "&answers=something"
+        print "Checking parameter validation for answers param-- " + query_url
+        response = self.client.get(query_url)
+        print response.status_code
+        #print response
+        self.assertEqual(response.status_code, 200,
+                         "schools answers status code is 200")
+        results = json.loads(response.content)
+        sample_school = results['features'][0]
+        self.assertFalse('answers' in sample_school, "has no property called answers")
+
+    def testStoriesInformation(self):
+        query_url=self.stories_base_url + "info/"
+        print "Testing stories meta info..."
+        response=self.client.get(query_url)
+        print response.status_code
+        self.assertEqual(response.status_code, 200, "stories meta info is 200")
+        results=json.loads(response.content)
+        self.assertTrue('total_verified_stories' in results, "Has no property called total_verified_stories")
+        self.assertTrue('total_stories' in results, "has no property called total_stories")
+        self.assertTrue('total_images' in results, "has no property called total_images") 
+
+    def testStoriesMetaDataFail1(self):
+
+        query_url=self.stories_base_url + "meta/?source=web"
+        print "Testing stories meta data..." + query_url
+        response=self.client.get(query_url)
+        print response.status_code
+        self.assertEqual(response.status_code, 500, "Need school type")
+        
+    def testStoriesMetaDataPrimary(self):
+        schoolType="Primary School"
+        query_url=self.stories_base_url + "meta/?source=web&school_type="+schoolType
+        print "Testing stories meta data..." + query_url
+        response=self.client.get(query_url)
+        print response.status_code
+        self.assertEqual(response.status_code, 200, "Need school type")
+        results=json.loads(response.content)
+        self.assertTrue('school_type' in results, "Has no property called school_type")
+        self.assertTrue('total_responses' in results, "Has no property called total_responses")
+        self.assertTrue('responses_yesterday' in results, "has no property called responses_yesterday")
+        self.assertTrue('per_month_responses' in results, "has no property called per_month_responses")
+        self.assertTrue('questions' in results, "has no property questions")       
+        self.assertEqual(results['school_type'],schoolType)
+
+    def testStoriesMetaDataPreschool(self):
+        schoolType="Preschool"
+        query_url=self.stories_base_url + "meta/?source=web&school_type="+schoolType
+        print "Testing stories meta data..." + query_url
+        response=self.client.get(query_url)
+        print response.status_code
+        self.assertEqual(response.status_code, 200, "Need school type")
+        results=json.loads(response.content)
+        self.assertTrue('school_type' in results, "Has no property called school_type")
+        self.assertTrue('total_responses' in results, "Has no property called total_responses")
+        self.assertTrue('responses_yesterday' in results, "has no property called responses_yesterday")
+        self.assertTrue('per_month_responses' in results, "has no property called per_month_responses")
+        self.assertTrue('questions' in results, "has no property questions")       
+        self.assertEqual(results['school_type'],schoolType)
+    
     def tearDown(self):
-        print "teardown"
+        pass
+        
 
