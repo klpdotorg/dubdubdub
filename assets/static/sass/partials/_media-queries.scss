@@ -520,6 +520,12 @@
 }
 
 @media only screen and (min-width: 1200px) {
+	.profile-login-block {
+		ul {
+			left: 0;
+		}
+	}
+
 	.filter-school-block {
 	  border-top: 1px solid;
 	  border-bottom: 1px solid;
