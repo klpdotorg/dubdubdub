@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -127,7 +128,7 @@ a {
 .font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code {
   font-size: 90%; }
 
-.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .dropdown-base, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
+.font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .dropdown-base, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .profile-options, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
   font-size: 80%; }
 
 .font-smallest, .verified, .button--sm, .nav-trigger, .profile-options, .scroll-smooth-block, .tab-heading, .nav li li, .nav > li > a, .nav-footer-menu-links, .footer-copyright, .subheader-wrapper, .school-type-preschool .icon-number, .school-type-school .icon-number, .label-compare, .leaflet-container a.button--sm {
@@ -2268,21 +2269,13 @@ body {
 .profile-login-block {
   position: absolute;
   right: 55px;
-  top: 0; }
-
-.profile-options-wrapper {
-  position: relative;
-  text-align: left; }
-  .profile-options-wrapper.show-drop .profile-options {
-    background-color: rgba(0, 0, 0, 0.05); }
-  .profile-options-wrapper.show-drop .options-list {
-    display: block; }
+  top: 0;
+  margin-top: 9px; }
+  .profile-login-block.dropdown-base > li {
+    padding: 1.7px 10px; }
 
 .profile-options:before {
   content: "\f007"; }
-
-.profile-options {
-  margin: 10px 0 0 0; }
 
 .profile-logged-in:before {
   margin: 0; }

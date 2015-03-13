@@ -266,19 +266,10 @@ body {
   position: absolute;
   right: 55px;
   top: 0;
-}
+  margin-top: $base-spacing - 1;
 
-.profile-options-wrapper{
-  position: relative;
-  text-align: left;
-
-  &.show-drop{
-    .profile-options{
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    .options-list{
-      display: block;
-    }
+  &.dropdown-base > li {
+    padding: 1.7px $base-spacing;
   }
 }
 
@@ -286,16 +277,13 @@ body {
   @extend %button-hollow;
   @extend %button--sm;
   @extend %grey-silver;
+  @extend %font-smaller;
 
   &:before {
     content: "\f007";
     @extend %font-icon;
     @extend %icon-left;
   }
-}
-
-.profile-options{
-  margin: $base-spacing 0 0 0;
 }
 
 .profile-logged-in {
