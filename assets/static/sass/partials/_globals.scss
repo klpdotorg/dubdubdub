@@ -69,6 +69,13 @@
   }
 }
 
+// small: max-width: 599px
+@mixin media-sm-max-width {
+  @media only screen and (max-width: #{$mq-sm - 1}) {
+    @content;
+  }
+}
+
 /*-------------------------------------*/
 // CLASSES, PLACEHOLDERS AND MIXINS
 // mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
