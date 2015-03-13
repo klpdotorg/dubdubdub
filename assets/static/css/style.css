@@ -666,6 +666,33 @@ img, video {
       width: 30%; } }
 
 /*-------------------------------------*/
+@media only screen and (max-width: 749px) {
+  .table-base.table-list-view {
+    display: block; }
+    .table-base.table-list-view .table-base-heading {
+      display: none; }
+    .table-base.table-list-view tr, .table-base.table-list-view td, .table-base.table-list-view th {
+      display: block;
+      width: 100%;
+      padding: 5px 0; }
+    .table-base.table-list-view tr td:nth-of-type(1), .table-base.table-list-view tr td:nth-of-type(2) {
+      width: 100%; }
+    .table-base.table-list-view td {
+      border-bottom: none; }
+    .table-base.table-list-view tr {
+      border-bottom: 1px solid #d8d8d8;
+      padding: 15px 10px; }
+
+  .td-label-school:before {
+    content: "School";
+    margin-right: 5px;
+    color: #bbb; }
+
+  .td-label-items:before {
+    content: "Items";
+    margin-right: 5px;
+    color: #bbb; } }
+/*-------------------------------------*/
 /* HR */
 hr {
   display: block;
@@ -3186,33 +3213,6 @@ body {
 .table-volunteer-oppor tr td:nth-of-type(2) {
   width: 45%; }
 
-/*-------------------------------------*/
-@media only screen and (max-width: 599px) {
-  .table-base-volunteer, .table-base-donation, .table-volunteer-oppor {
-    display: block; }
-    .table-base-volunteer .table-base-heading, .table-base-donation .table-base-heading, .table-volunteer-oppor .table-base-heading {
-      display: none; }
-    .table-base-volunteer tr, .table-base-volunteer td, .table-base-volunteer th, .table-base-donation tr, .table-base-donation td, .table-base-donation th, .table-volunteer-oppor tr, .table-volunteer-oppor td, .table-volunteer-oppor th {
-      display: block;
-      width: 100%;
-      padding: 5px 0; }
-    .table-base-volunteer tr td:nth-of-type(1), .table-base-volunteer tr td:nth-of-type(2), .table-base-donation tr td:nth-of-type(1), .table-base-donation tr td:nth-of-type(2), .table-volunteer-oppor tr td:nth-of-type(1), .table-volunteer-oppor tr td:nth-of-type(2) {
-      width: 100%; }
-    .table-base-volunteer td, .table-base-donation td, .table-volunteer-oppor td {
-      border-bottom: none; }
-    .table-base-volunteer tr, .table-base-donation tr, .table-volunteer-oppor tr {
-      border-bottom: 1px solid #d8d8d8;
-      padding: 15px 10px; }
-
-  .td-label-school:before {
-    content: "School";
-    margin-right: 5px;
-    color: #bbb; }
-
-  .td-label-items:before {
-    content: "Items";
-    margin-right: 5px;
-    color: #bbb; } }
 .leaflet-popup-content-wrapper .leaflet-popup-content {
   margin: 0; }
 

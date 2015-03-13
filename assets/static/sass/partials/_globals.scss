@@ -62,6 +62,13 @@
   }
 }
 
+// small: max-width: 749px
+@mixin media-med-maxwidth {
+  @media only screen and (max-width: #{$mq-med - 1}) {
+    @content;
+  }
+}
+
 // small: 600px
 @mixin media-sm {
   @media only screen and  (min-width: #{$mq-sm}) {
@@ -69,12 +76,6 @@
   }
 }
 
-// small: max-width: 599px
-@mixin media-sm-max-width {
-  @media only screen and (max-width: #{$mq-sm - 1}) {
-    @content;
-  }
-}
 
 /*-------------------------------------*/
 // CLASSES, PLACEHOLDERS AND MIXINS
@@ -659,6 +660,57 @@ img, video {
     float: right;
     width: 30%;
   }
+}
+
+/*-------------------------------------*/
+//TABLES: LIST VIEW ON SMALLER SCREENS
+
+@include media-med-maxwidth {
+  .table-base.table-list-view {
+    display: block;
+
+    .table-base-heading {
+      display: none;
+    }
+
+    tr, td, th {
+      display: block;
+      width: 100%;
+      padding: $base-spacing-sm 0;
+    }
+
+    tr td:nth-of-type(1), tr td:nth-of-type(2) {
+      width: 100%;
+    }
+
+    td {
+      border-bottom: none;
+    }
+
+    tr {
+      border-bottom: 1px solid $border-color;
+      padding: $base-spacing-mid $base-spacing;
+    }
+  }  
+
+//labels for some td cells on smaller screens for list view tables
+
+  .td-label-school {
+    &:before {
+      content: "School";
+      margin-right: $base-spacing-sm;
+      color: $grey-silver;
+    }
+  }
+
+  .td-label-items {
+    &:before {
+      content: "Items";
+      margin-right: $base-spacing-sm;
+      color: $grey-silver;
+    }
+  }  
+
 }
 
 /*-------------------------------------*/
