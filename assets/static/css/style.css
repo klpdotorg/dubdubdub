@@ -671,9 +671,10 @@ img, video {
     display: block; }
     .table-base.table-list-view .table-base-heading {
       display: none; }
-    .table-base.table-list-view tr, .table-base.table-list-view td, .table-base.table-list-view th {
+    .table-base.table-list-view tbody, .table-base.table-list-view tr, .table-base.table-list-view td, .table-base.table-list-view th {
       display: block;
-      width: 100%;
+      width: 100%; }
+    .table-base.table-list-view tr, .table-base.table-list-view td, .table-base.table-list-view th {
       padding: 5px 0; }
     .table-base.table-list-view tr td:nth-of-type(1), .table-base.table-list-view tr td:nth-of-type(2) {
       width: 100%; }
