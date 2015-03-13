@@ -989,13 +989,27 @@ a.button {
 /* BANNERS: FULLWIDTH */
 
 .banner-full { 
-  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
+  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-x;  
   background-repeat: no-repeat;
   background-position: center center;
   @extend %grey-steel-bg;
   background-size: cover;
   @extend %center-text;
   position: relative;
+
+  .heading-primary {
+    font-size: 140%;
+    margin: $base-spacing-lg-x 0;
+  }
+
+  @include media-sm {
+    padding-bottom: $base-spacing-lg-2x;  
+
+    .heading-primary {
+      font-size: 220%;
+      margin: $base-spacing-lg-2x 0;
+    }
+  }
 }
 
 .banner-content {
