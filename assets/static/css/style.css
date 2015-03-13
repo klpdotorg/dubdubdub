@@ -268,6 +268,55 @@ ol {
 .text-bordered {
   padding: 10px 15px; }
 
+/* GRID STYLING */
+.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .nav-footer:after, .compare-each-block:after, .profile-volunteer-date-block:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .container-mid, .container-sm, .banner-full-caption {
+  margin-left: auto;
+  margin-right: auto; }
+
+.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper {
+  max-width: 1000px;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.container-mid {
+  max-width: 750px; }
+
+.container-sm, .banner-full-caption {
+  max-width: 520px; }
+
+.grid-parent, .footer-wrapper, .gender-icons {
+  margin-left: -20px;
+  margin-right: -20px; }
+  .grid-parent:after, .footer-wrapper:after, .gender-icons:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.grid-child, .col-25-flt, .col-33-flt, .col-50-flt, .col-66-flt, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.col-25-flt {
+  width: 25%;
+  float: left; }
+
+.col-33-flt {
+  width: 33.33%;
+  float: left; }
+
+.col-50-flt {
+  width: 50%;
+  float: left; }
+
+.col-66-flt {
+  width: 66.66%;
+  float: left; }
+
 /*-------------------------------------*/
 /* GLOBAL SITE STYLES */
 /*-------------------------------------*/
@@ -470,11 +519,6 @@ img, video {
 .clear {
   clear: both; }
 
-.clearfix:after, .heading-section-block:after, .bar-graph-wrap:after, .nav-footer:after, .compare-each-block:after, .profile-volunteer-date-block:after {
-  content: "";
-  display: table;
-  clear: both; }
-
 .align-right {
   text-align: right; }
 
@@ -616,6 +660,10 @@ img, video {
 .infra-key-legend {
   padding: 10px;
   margin-top: 40px; }
+  @media only screen and (min-width: 750px) {
+    .infra-key-legend {
+      float: right;
+      width: 30%; } }
 
 /*-------------------------------------*/
 /* HR */
@@ -827,6 +875,9 @@ hr {
   border-bottom: 1px solid #d8d8d8;
   letter-spacing: 1px;
   display: none; }
+  @media only screen and (min-width: 750px) {
+    .scroll-smooth-block {
+      display: block; } }
 
 .scroll-smooth-links {
   margin-bottom: 0; }
@@ -878,11 +929,29 @@ hr {
 /* NO DATA */
 /*-------------------------------------*/
 /* MODULE: IMG */
+@media only screen and (min-width: 750px) {
+  .module-img-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .module-img-block:after {
+      content: "";
+      display: table;
+      clear: both; } }
 .module-img-wrapper .heading-secondary {
   margin-bottom: 50px; }
 
 .module-img-each {
   margin-bottom: 50px; }
+  @media only screen and (min-width: 750px) {
+    .module-img-each {
+      width: 33.33%;
+      display: inline-block;
+      vertical-align: top;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-bottom: 0; }
+      .module-img-each h3:first-of-type {
+        padding: 10px 0; } }
   .module-img-each:last-of-type {
     margin-bottom: 0; }
   .module-img-each .icon-number {
@@ -942,13 +1011,13 @@ hr {
 .tab-wrap {
   border-bottom: none;
   margin-top: 25px; }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-wrap {
       border: none; } }
 
 .tab-wrap-widescreen {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-wrap-widescreen {
       display: block; } }
 
@@ -959,7 +1028,7 @@ hr {
   border-bottom: 1px solid;
   cursor: pointer;
   color: #fff; }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-heading {
       display: inline-block;
       vertical-align: top;
@@ -968,14 +1037,14 @@ hr {
       top: 1px;
       border-bottom: none;
       background: none; } }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-heading.tab-heading-active {
       background: #fff; } }
 
 .tab-heading, .tab-heading-active {
   border-color: #d8d8d8; }
 
-@media only screen and (min-width: 990px) {
+@media only screen and (min-width: 750px) {
   .tab-heading-active {
     border: 1px solid #d8d8d8;
     border-bottom: none; } }
@@ -987,7 +1056,7 @@ hr {
     position: absolute;
     right: 10px;
     top: 8px; }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-each .tab-heading {
       display: none; } }
 
@@ -995,7 +1064,7 @@ hr {
   display: none;
   padding: 25px 10px 10px 10px;
   border-bottom: 1px solid #d8d8d8; }
-  @media only screen and (min-width: 990px) {
+  @media only screen and (min-width: 750px) {
     .tab-content {
       border-top: 1px solid;
       border-bottom: 1px solid;
@@ -1027,50 +1096,6 @@ hr {
   background: #d8d8d8; }
 .scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
   border-radius: 10px; }
-
-/* GRID STYLING */
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper, .container-mid, .container-sm, .banner-full-caption {
-  margin-left: auto;
-  margin-right: auto; }
-
-.container, .heading-section-block > ul, .scroll-smooth-links, .tab-wrap-widescreen, .header-content, .banner-home-container, .subheader-content, .compare-block, .comparison-result-wrapper {
-  max-width: 1000px;
-  padding-left: 20px;
-  padding-right: 20px; }
-
-.container-mid {
-  max-width: 750px; }
-
-.container-sm, .banner-full-caption {
-  max-width: 520px; }
-
-.grid-parent, .footer-wrapper, .gender-icons {
-  margin-left: -20px;
-  margin-right: -20px; }
-  .grid-parent:after, .footer-wrapper:after, .gender-icons:after {
-    content: "";
-    display: table;
-    clear: both; }
-
-.grid-child, .col-25-flt, .col-33-flt, .col-50-flt, .col-66-flt, .main-footer, .info-wrapper, .button-compare-wrap, .school-compare-each, .gender-item {
-  padding-left: 20px;
-  padding-right: 20px; }
-
-.col-25-flt {
-  width: 25%;
-  float: left; }
-
-.col-33-flt {
-  width: 33.33%;
-  float: left; }
-
-.col-50-flt {
-  width: 50%;
-  float: left; }
-
-.col-66-flt {
-  width: 66.66%;
-  float: left; }
 
 .label-compare-block {
   z-index: 1; }
@@ -1241,6 +1266,9 @@ input.error {
 /* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
   padding: 25px; }
+  @media only screen and (min-width: 750px) {
+    .form-edit-password {
+      margin-top: 0; } }
 
 .form-edit-heading {
   letter-spacing: 1px; }
@@ -2410,7 +2438,7 @@ body {
   height: 35px; }
 
 .map-subheader-wrapper {
-  height: 55px; }
+  height: 53px; }
 
 .breadcrumb a {
   padding: 0 10px 0 0; }
@@ -2437,10 +2465,11 @@ body {
 
 .map-canvas-full {
   left: 0;
-  top: 100px; }
+  top: 93px; }
 
 .map-volunteer-canvas-full {
-  left: 300px; }
+  left: 300px;
+  top: 98px; }
 
 /*-------------------------------------*/
 .rbox_lightBox .heading-border {
@@ -2451,6 +2480,14 @@ body {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
   .banner-home .banner-full-caption {
     margin-left: 0; }
+    @media only screen and (min-width: 600px) {
+      .banner-home .banner-full-caption {
+        padding-bottom: 100px;
+        font-size: 110%;
+        font-weight: 300; } }
+    @media only screen and (min-width: 750px) {
+      .banner-home .banner-full-caption {
+        max-width: 480px; } }
     .banner-home .banner-full-caption a:hover, .banner-home .banner-full-caption a:focus {
       text-decoration: underline; }
 
@@ -2543,10 +2580,25 @@ body {
 
 .partners-list-block {
   margin: 50px 0; }
+  @media only screen and (min-width: 750px) {
+    .partners-list-block {
+      margin-left: -20px;
+      margin-right: -20px; }
+      .partners-list-block:after {
+        content: "";
+        display: table;
+        clear: both; } }
   .partners-list-block ul {
     line-height: 1.8; }
   .partners-list-block .partners-list {
     padding-bottom: 20px; }
+    @media only screen and (min-width: 750px) {
+      .partners-list-block .partners-list {
+        width: 50%;
+        float: left;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 0; } }
     .partners-list-block .partners-list:last-of-type {
       padding-bottom: 0; }
 
@@ -2683,7 +2735,7 @@ body {
     width: 300px;
     position: fixed;
     left: 0;
-    top: 100px;
+    top: 98px;
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto; } }
@@ -2769,6 +2821,30 @@ body {
   display: block;
   margin-left: 10px; }
 
+@media only screen and (min-width: 750px) {
+  .school-data-wrap, .tab-school-infra-block, .school-tab-story {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .school-data-wrap:after, .tab-school-infra-block:after, .school-tab-story:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .school-data-block, .school-photos-block, .school-infra-table, .infra-key-legend, .school-story-visits, .school-share-story {
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .school-photos-block, .school-share-story {
+    float: right;
+    width: 40%; }
+
+  .school-infra-table {
+    float: left;
+    width: 70%; }
+
+  .school-data-block, .school-story-visits {
+    float: left;
+    width: 60%; } }
 .bar-tab-demo-block .bar-label {
   width: 120px; }
 
@@ -2913,8 +2989,30 @@ body {
 .profile-meta-edit .heading-tertiary:first-of-type, .page-org-profile .heading-tertiary:first-of-type {
   margin: 5px 0; }
 
+@media only screen and (min-width: 750px) {
+  .profile-meta-edit, .org-meta-edit {
+    width: 65%; }
+
+  .profile-meta-activities, .org-meta-activities {
+    width: 35%; }
+    .profile-meta-activities .heading-tiny-uppercase:first-of-type, .org-meta-activities .heading-tiny-uppercase:first-of-type {
+      margin-top: 0; } }
 .profile-meta-block, .org-meta-block {
   margin: 50px 0 0 0; }
+  @media only screen and (min-width: 750px) {
+    .profile-meta-block, .org-meta-block {
+      margin-left: -20px;
+      margin-right: -20px; }
+      .profile-meta-block:after, .org-meta-block:after {
+        content: "";
+        display: table;
+        clear: both; } }
+
+@media only screen and (min-width: 750px) {
+  .org-meta-each, .profile-meta-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    float: left; } }
 
 .org-tab-content, .profile-tab-content {
   border-bottom: 1px solid #d8d8d8;
@@ -2930,6 +3028,9 @@ body {
   max-width: 200px;
   display: block;
   margin: 30px 0 0 0; }
+  @media only screen and (min-width: 750px) {
+    .org-profile-img {
+      margin: 0; } }
 
 .org-tab-button {
   margin: 10px 0 0 0; }
@@ -2952,6 +3053,17 @@ body {
   .table-base-donation-items input[type="number"] {
     width: 80px; }
 
+@media only screen and (min-width: 750px) {
+  .org-tab-org {
+    float: left; }
+
+  .org-tab-school {
+    float: right;
+    text-align: right;
+    width: 60%; }
+
+  .form-edit-profile-tab {
+    max-width: 50%; } }
 /*-------------------------------------*/
 .profile-meta-img {
   max-width: 80px;
@@ -2961,6 +3073,20 @@ body {
 .form-edit-password {
   margin-top: 25px; }
 
+@media only screen and (min-width: 750px) {
+  .edit-profile-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .edit-profile-block:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .edit-profile-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 50%;
+    float: left; } }
 /*-------------------------------------*/
 .table-volunteer-oppor tr td:nth-of-type(1) {
   width: 30%; }
@@ -3006,6 +3132,9 @@ body {
 
 .facility-items {
   display: none; }
+  @media only screen and (min-width: 750px) {
+    .facility-items {
+      display: block; } }
   .facility-items .k-icon {
     font-size: 18px;
     margin: 0 0 15px 0; }
@@ -3134,6 +3263,9 @@ body {
 
 .leaflet-control-container {
   display: none; }
+  @media only screen and (min-width: 750px) {
+    .leaflet-control-container {
+      display: block; } }
 
 .button-map-compare {
   display: none; }
@@ -3182,11 +3314,6 @@ body {
     margin-right: auto;
     padding-left: 20px;
     padding-right: 20px; }
-
-  .banner-full-caption {
-    padding-bottom: 100px;
-    font-size: 110%;
-    font-weight: 300; }
 
   .module-img img {
     max-width: none; }
@@ -3258,131 +3385,6 @@ body {
 
   .org-tab-button, .type-school {
     float: right; } }
-@media only screen and (min-width: 750px) {
-  .module-img-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .module-img-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .module-img-each {
-    width: 33.33%;
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 0; }
-    .module-img-each h3:first-of-type {
-      padding: 10px 0; }
-
-  .scroll-smooth-block {
-    display: block; }
-
-  .banner-home .banner-full-caption {
-    max-width: 480px; }
-
-  .partners-list-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .partners-list-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .partners-list {
-    width: 50%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 0; }
-
-  .profile-meta-block, .org-meta-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .profile-meta-block:after, .org-meta-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .profile-meta-each, .org-meta-each {
-    padding-left: 20px;
-    padding-right: 20px;
-    float: left; }
-
-  .profile-meta-edit, .org-meta-edit {
-    width: 65%; }
-
-  .profile-meta-activities, .org-meta-activities {
-    width: 35%; }
-    .profile-meta-activities .heading-tiny-uppercase:first-of-type, .org-meta-activities .heading-tiny-uppercase:first-of-type {
-      margin-top: 0; }
-
-  .org-tab-org {
-    float: left; }
-
-  .org-tab-school {
-    float: right;
-    text-align: right;
-    width: 60%; }
-
-  .form-edit-profile-tab {
-    max-width: 50%; }
-
-  .org-profile-img {
-    margin: 0; }
-
-  .leaflet-control-container {
-    display: block; }
-
-  .facility-items {
-    display: block; }
-
-  .edit-profile-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .edit-profile-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .edit-profile-each {
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 50%;
-    float: left; }
-
-  .form-edit-password {
-    margin-top: 0; }
-
-  .school-data-wrap, .tab-school-infra-block, .school-tab-story {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .school-data-wrap:after, .tab-school-infra-block:after, .school-tab-story:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .school-data-block, .school-photos-block, .school-infra-table, .infra-key-legend, .school-story-visits, .school-share-story {
-    padding-left: 20px;
-    padding-right: 20px; }
-
-  .school-data-block, .school-story-visits {
-    float: left;
-    width: 60%; }
-
-  .school-photos-block, .school-share-story {
-    float: right;
-    width: 40%; }
-
-  .school-infra-table {
-    float: left;
-    width: 70%; }
-
-  .infra-key-legend {
-    float: right;
-    width: 30%; } }
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }

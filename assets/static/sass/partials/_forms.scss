@@ -207,6 +207,10 @@ input.error {
   padding: $base-spacing-lg-x;
   @extend %border-base;
   @extend %border-radius-sm;
+
+  @include media-med {
+    margin-top: 0;    
+  }
 }
 
 .form-edit-heading {

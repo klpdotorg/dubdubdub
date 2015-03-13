@@ -55,16 +55,16 @@
   }
 }
 
-// medium: 990px
+// medium: 750px
 @mixin media-med {
-  @media only screen and  (min-width: #{$mq-lg}) {
+  @media only screen and  (min-width: #{$mq-med}) {
     @content;
   }
 }
 
 // small: 600px
 @mixin media-sm {
-  @media only screen and  (min-width: #{$mq-lg}) {
+  @media only screen and  (min-width: #{$mq-sm}) {
     @content;
   }
 }
@@ -363,24 +363,9 @@ img, video {
 
 //clearing floats
 .clear {
-    clear: both;
+  clear: both;
 }
 
-.clearfix, %clearfix {
-    &:after {
-      content: "";
-      display: table;
-      clear: both;
-  }
-}
-
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
 
 // Helpers: Alignment: Right
 
@@ -662,6 +647,11 @@ img, video {
   @extend %border-base;
   padding: $base-spacing;
   margin-top: ($base-spacing-lg-x) + 15;
+
+  @include media-med {
+    float: right;
+    width: 30%;
+  }
 }
 
 /*-------------------------------------*/
@@ -1037,6 +1027,10 @@ a.button {
   @extend %center-text;
   letter-spacing: 1px;
   display: none;
+
+  @include media-med {
+    display: block;    
+  }
 }
 
 .scroll-smooth-links {
@@ -1144,6 +1138,12 @@ a.button {
 /* MODULE: IMG */
 // e.g. home page and volunteer page
 
+@include media-med {
+  .module-img-block {
+    @include grid-parent;
+  }  
+}
+
 .module-img-wrapper {
   .heading-secondary {
     margin-bottom: $base-spacing-lg-2x;
@@ -1154,6 +1154,17 @@ a.button {
   @extend %center-text;
   @extend %font-light;
   margin-bottom: $base-spacing-lg-2x;
+
+  @include media-med {
+    width: 33.33%;
+    @include vertical-inline-top;
+    @include grid-child;
+    margin-bottom: 0;    
+
+    h3:first-of-type {
+      padding: $base-spacing 0;
+    }
+  }
 
   &:last-of-type {
     margin-bottom: 0;

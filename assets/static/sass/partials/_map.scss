@@ -80,6 +80,10 @@
   display: none;
   @extend %center-text;
 
+  @include media-med {
+    display: block;    
+  }
+
   .k-icon {
     @extend %brand-blue;
     @extend %vertical-inline-top;
@@ -276,6 +280,10 @@
 
 .leaflet-control-container {
   display: none;
+
+  @include media-med {
+    display: block;    
+  }
 }
 
 .button-map-compare {

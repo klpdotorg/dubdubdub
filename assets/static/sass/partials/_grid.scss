@@ -1,5 +1,21 @@
 /* GRID STYLING */
 
+// Clearfix
+.clearfix, %clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
 
 // Containers
 .container, %container, .container-mid, %container-mid, .container-sm, %container-sm {
