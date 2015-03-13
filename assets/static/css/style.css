@@ -942,9 +942,15 @@ hr {
 .tab-wrap {
   border-bottom: none;
   margin-top: 25px; }
+  @media only screen and (min-width: 990px) {
+    .tab-wrap {
+      border: none; } }
 
 .tab-wrap-widescreen {
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .tab-wrap-widescreen {
+      display: block; } }
 
 .tab-heading {
   text-decoration: none;
@@ -953,10 +959,26 @@ hr {
   border-bottom: 1px solid;
   cursor: pointer;
   color: #fff; }
+  @media only screen and (min-width: 990px) {
+    .tab-heading {
+      display: inline-block;
+      vertical-align: top;
+      color: #4d4d4d;
+      position: relative;
+      top: 1px;
+      border-bottom: none;
+      background: none; } }
+  @media only screen and (min-width: 990px) {
+    .tab-heading.tab-heading-active {
+      background: #fff; } }
 
 .tab-heading, .tab-heading-active {
   border-color: #d8d8d8; }
 
+@media only screen and (min-width: 990px) {
+  .tab-heading-active {
+    border: 1px solid #d8d8d8;
+    border-bottom: none; } }
 .tab-each .tab-heading {
   position: relative;
   padding: 10px 20px 10px; }
@@ -965,11 +987,19 @@ hr {
     position: absolute;
     right: 10px;
     top: 8px; }
+  @media only screen and (min-width: 990px) {
+    .tab-each .tab-heading {
+      display: none; } }
 
 .tab-content {
   display: none;
   padding: 25px 10px 10px 10px;
   border-bottom: 1px solid #d8d8d8; }
+  @media only screen and (min-width: 990px) {
+    .tab-content {
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+      border-color: #d8d8d8; } }
   .tab-content.tab-active {
     display: block; }
 
@@ -3229,35 +3259,6 @@ body {
   .org-tab-button, .type-school {
     float: right; } }
 @media only screen and (min-width: 750px) {
-  .tab-wrap {
-    border: none; }
-
-  .tab-wrap-widescreen {
-    display: block; }
-
-  .tab-each .tab-heading {
-    display: none; }
-
-  .tab-heading {
-    display: inline-block;
-    vertical-align: top;
-    color: #4d4d4d;
-    position: relative;
-    top: 1px;
-    border-bottom: none;
-    background: none; }
-    .tab-heading.tab-heading-active {
-      background: #fff; }
-
-  .tab-content {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: #d8d8d8; }
-
-  .tab-heading-active {
-    border: 1px solid #d8d8d8;
-    border-bottom: none; }
-
   .module-img-block {
     margin-left: -20px;
     margin-right: -20px; }

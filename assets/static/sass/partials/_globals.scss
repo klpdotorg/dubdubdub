@@ -1268,64 +1268,101 @@ a.button {
 /*-------------------------------------*/
 // TABS
 
-  .tab-wrap {
-    @extend %border-base;
+.tab-wrap {
+  @extend %border-base;
+  border-bottom: none;
+  margin-top: $base-spacing-lg-x;
+
+  @include media-med {
+    border: none;      
+  }
+}
+
+.tab-wrap-widescreen {
+  display: none;
+  @extend %container;
+
+  @include media-med {
+    display: block;    
+  }
+}
+
+.tab-heading {
+  text-decoration: none;
+  display: block;
+  padding: $base-spacing-sm $base-spacing;
+  @extend %uppercase;
+  @extend %font-smallest;
+  @extend %bold; 
+  border-bottom: 1px solid;
+  cursor: pointer;
+  color: $white;
+  @extend %grey-steel-bg;
+
+  @include media-med {
+    @include vertical-inline-top;
+    color: $grey-gravel;
+    position: relative;
+    top: 1px;
     border-bottom: none;
-    margin-top: $base-spacing-lg-x;
+    background: none;      
   }
 
-  .tab-wrap-widescreen {
-    display: none;
-    @extend %container;
-  }
+  &.tab-heading-active {
+    @extend %brand-blue-bg;
 
+    @include media-med {
+      background: $white;    
+    }
+  }
+}
+
+.tab-heading, .tab-heading-active {
+  border-color: $grey-cloud;
+}
+
+@include media-med {
+  .tab-heading-active {
+    border: 1px solid $border-color;
+    border-bottom: none;
+  }  
+}
+
+.tab-each {
   .tab-heading {
-    text-decoration: none;
-    display: block;
-    padding: $base-spacing-sm $base-spacing;
-    @extend %uppercase;
-    @extend %font-smallest;
-    @extend %bold; 
+    position: relative;
+    padding: $base-spacing $base-spacing-lg $base-spacing;
+
+    &:after {
+      content: "\f107";
+      @extend %font-icon;
+      position: absolute;
+      right: $base-spacing;
+      top: 8px;
+      @extend %font-larger;
+    }
+
+    @include media-med {
+      display: none;
+    }
+  }
+}
+
+.tab-content {
+  display: none;
+  padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
+  border-bottom: 1px solid $border-color;
+  
+  @include media-med {
+    border-top: 1px solid;
     border-bottom: 1px solid;
-    cursor: pointer;
-    color: $white;
-    @extend %grey-steel-bg;
-
-    &.tab-heading-active {
-      @extend %brand-blue-bg;
-    }
+    border-color:  $grey-cloud;    
   }
 
-  .tab-heading, .tab-heading-active {
-    border-color: $grey-cloud;
+  &.tab-active {
+    display: block;
   }
-
-
-  .tab-each {
-    .tab-heading {
-      position: relative;
-      padding: $base-spacing $base-spacing-lg $base-spacing;
-
-      &:after {
-        content: "\f107";
-        @extend %font-icon;
-        position: absolute;
-        right: $base-spacing;
-        top: 8px;
-        @extend %font-larger;
-      }
-    }
-  }
-
-  .tab-content {
-    display: none;
-    padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
-    border-bottom: 1px solid $border-color;
-    
-    &.tab-active {
-      display: block;
-    }
-  }
+}
 
 
 .float-left-padding, .float-right-padding {

@@ -178,45 +178,6 @@
 
 @media only screen and (min-width: 750px) {
 
-  // tabs
-  .tab-wrap {
-    border: none;
-  }
-
-  .tab-wrap-widescreen {
-    display: block;
-  }
-
-  .tab-each {
-    .tab-heading {
-      display: none;
-    }
-  }
-
-  .tab-heading {
-    @include vertical-inline-top;
-    color: $grey-gravel;
-    position: relative;
-    top: 1px;
-    border-bottom: none;
-    background: none;
-
-	  &.tab-heading-active {
-	    background: $white;
-	  }
-  }
-
-  .tab-content {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color:  $grey-cloud;
-  }
-
-  .tab-heading-active {
-    border: 1px solid $border-color;
-    border-bottom: none;
-  }
-
   //Module: Image block
   .module-img-block {
   	@include grid-parent;
