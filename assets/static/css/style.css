@@ -788,6 +788,15 @@ hr {
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
+  @media only screen and (min-width: 600px) {
+    .alert {
+      left: 20%;
+      right: 20%;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 20px;
+      padding-right: 20px; } }
   .alert:after {
     position: absolute;
     top: 10px;
@@ -969,6 +978,9 @@ hr {
   overflow: hidden; }
   .module-img img {
     max-width: 85%; }
+    @media only screen and (min-width: 600px) {
+      .module-img img {
+        max-width: none; } }
 
 /*-------------------------------------*/
 .module-stats-icon {
@@ -1072,10 +1084,19 @@ hr {
   .tab-content.tab-active {
     display: block; }
 
+/*-------------------------------------*/
 .float-left-padding, .float-right-padding {
   margin: 25px auto;
   display: block; }
 
+@media only screen and (min-width: 600px) {
+  .float-left-padding {
+    float: left;
+    margin: 10px 25px 10px 0; }
+
+  .float-right-padding {
+    float: right;
+    margin: 10px 0 10px 25px; } }
 /*-------------------------------------*/
 .hide {
   display: none; }
@@ -2368,6 +2389,15 @@ body {
 
 .nav-footer {
   margin-bottom: 10px; }
+  @media only screen and (min-width: 600px) {
+    .nav-footer {
+      float: left;
+      margin-bottom: 0;
+      margin-top: 17px; } }
+  .nav-footer ul {
+    float: left; }
+    .nav-footer ul:first-of-type {
+      padding-right: 20px; }
   .nav-footer li {
     padding: 0 20px 0 0; }
     .nav-footer li:last-of-type {
@@ -2377,6 +2407,12 @@ body {
 
 .nav-footer-menu-links {
   text-transform: uppercase; }
+
+@media only screen and (min-width: 600px) {
+  .footer-copyright {
+    float: right; }
+    .footer-copyright img {
+      float: right; } }
 
 .copyright {
   padding-top: 5px;
@@ -2478,6 +2514,12 @@ body {
 /*-------------------------------------*/
 .banner-home {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
+  @media only screen and (min-width: 600px) {
+    .banner-home .banner-caption-klp, .banner-home .banner-full-caption {
+      max-width: 340px; } }
+  @media only screen and (min-width: 600px) {
+    .banner-home {
+      padding-bottom: 0; } }
   .banner-home .banner-full-caption {
     margin-left: 0; }
     @media only screen and (min-width: 600px) {
@@ -2503,6 +2545,9 @@ body {
   right: 0;
   max-width: 200px;
   display: none; }
+  @media only screen and (min-width: 600px) {
+    .banner-home-student {
+      display: block; } }
   @media only screen and (min-width: 990px) {
     .banner-home-student {
       max-width: none; } }
@@ -2569,14 +2614,26 @@ body {
   border: 1px solid #cb0012;
   margin-right: 15px;
   max-width: 100px; }
+  @media only screen and (min-width: 600px) {
+    .about-map-image {
+      max-width: none;
+      display: inline-block;
+      vertical-align: middle; } }
 
 .about-map-url {
   display: block; }
+  @media only screen and (min-width: 600px) {
+    .about-map-url {
+      display: inline-block; } }
 
 /*-------------------------------------*/
 .logo-wrapper > img {
   padding: 20px;
   max-width: 130px; }
+  @media only screen and (min-width: 600px) {
+    .logo-wrapper > img {
+      padding: 25px;
+      max-width: none; } }
 
 .partners-list-block {
   margin: 50px 0; }
@@ -2668,6 +2725,22 @@ body {
   background-color: #e17e5b; }
 .volunteer-works-locate h3:first-of-type {
   color: #e17e5b; }
+
+@media only screen and (min-width: 600px) {
+  .volunteer-story-block {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .volunteer-story-block:after {
+      content: "";
+      display: table;
+      clear: both; } }
+@media only screen and (min-width: 600px) {
+  .volunteer-story-each {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 50%;
+    display: inline-block;
+    vertical-align: top; } }
 
 .volunteer-story-link {
   color: #5F5F5F; }
@@ -3064,6 +3137,17 @@ body {
 
   .form-edit-profile-tab {
     max-width: 50%; } }
+@media only screen and (min-width: 600px) {
+  .org-tab-date-block:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+  .org-tab-date, .type-activity {
+    float: left; }
+
+  .org-tab-button, .type-school {
+    float: right; } }
 /*-------------------------------------*/
 .profile-meta-img {
   max-width: 80px;
@@ -3305,86 +3389,6 @@ body {
     content: "Items";
     margin-right: 5px;
     color: #bbb; } }
-@media only screen and (min-width: 600px) {
-  .alert {
-    left: 20%;
-    right: 20%;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px; }
-
-  .module-img img {
-    max-width: none; }
-
-  .float-left-padding {
-    float: left;
-    margin: 10px 25px 10px 0; }
-
-  .float-right-padding {
-    float: right;
-    margin: 10px 0 10px 25px; }
-
-  .nav-footer {
-    float: left;
-    margin-bottom: 0;
-    margin-top: 17px; }
-    .nav-footer ul {
-      float: left; }
-      .nav-footer ul:first-of-type {
-        padding-right: 20px; }
-
-  .footer-copyright {
-    float: right; }
-    .footer-copyright img {
-      float: right; }
-
-  .banner-home {
-    padding-bottom: 0; }
-    .banner-home .banner-caption-klp, .banner-home .banner-full-caption {
-      max-width: 340px; }
-
-  .banner-home-student {
-    display: block; }
-
-  .about-map-image {
-    max-width: none;
-    display: inline-block;
-    vertical-align: middle; }
-
-  .about-map-url {
-    display: inline-block; }
-
-  .logo-wrapper > img {
-    padding: 25px;
-    max-width: none; }
-
-  .volunteer-story-block {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .volunteer-story-block:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .volunteer-story-each {
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 50%;
-    display: inline-block;
-    vertical-align: top; }
-
-  .org-tab-date-block:after {
-    content: "";
-    display: table;
-    clear: both; }
-
-  .org-tab-date, .type-activity {
-    float: left; }
-
-  .org-tab-button, .type-school {
-    float: right; } }
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }

@@ -289,6 +289,20 @@ body {
   margin-bottom: $base-spacing;
   @extend %clearfix;
 
+  @include media-sm {
+    float: left;
+    margin-bottom: 0;
+    margin-top: $base-spacing-mid + 2;    
+  }
+
+  ul {
+    float: left;
+
+    &:first-of-type {
+      padding-right: $base-spacing-lg;
+    }
+  }
+
   li {
     @extend %vertical-inline-top;
     padding: 0 $base-spacing-lg 0 0;
@@ -312,6 +326,14 @@ body {
 
 .footer-copyright {
   @extend %font-smallest;
+
+  @include media-sm {
+    float: right;    
+  
+    img {
+      float: right;
+    }
+  }
 }
 
 .copyright {
@@ -497,6 +519,16 @@ body {
 .banner-home {
   background-image: url('/static/images/bg_blackboard_big.jpg');
 
+  @include media-sm {
+    .banner-caption-klp, .banner-full-caption {
+      max-width: 340px;
+    } 
+  }
+
+  @include media-sm {
+    padding-bottom: 0;
+  }
+
   .banner-full-caption {
     margin-left: 0;  
   
@@ -540,6 +572,10 @@ body {
   right: 0;
   max-width: 200px;
   display: none;
+
+  @include media-sm {
+    display: block;    
+  }
 
   @include media-lg {
     max-width: none;    
@@ -704,10 +740,19 @@ body {
   border: 1px solid $brand-red;
   margin-right: $base-spacing-mid;
   max-width: 100px;
+
+  @include media-sm {
+    max-width: none;
+    @include vertical-inline-middle;    
+  }
 }
 
 .about-map-url {
   display: block;
+
+  @include media-sm {
+    display: inline-block;
+  }
 }
 
 
@@ -719,6 +764,11 @@ body {
   > img {
     padding: $base-spacing-lg;
     max-width: 130px;
+
+    @include media-sm {
+      padding: $base-spacing-lg-x;
+      max-width: none;
+    }
   }
 }
 
@@ -898,8 +948,20 @@ body {
   }
 }
 
+@include media-sm {
+  .volunteer-story-block {
+    @include grid-parent;
+  }
+}
+
 .volunteer-story-each {
   @extend %base-spacing-lg-x;
+
+  @include media-sm {
+    @include grid-child;
+    width: 50%;
+    @include vertical-inline-top;    
+  }
 }
 
 
@@ -1584,6 +1646,20 @@ body {
   }
 }
 
+
+@include media-sm {
+  .org-tab-date-block {
+    @include clearfix;
+  }
+
+  .org-tab-date, .type-activity {
+    float: left;
+  } 
+
+  .org-tab-button, .type-school {
+    float: right;
+  }  
+}
 
 /*-------------------------------------*/
 //PAGE: PROFILE

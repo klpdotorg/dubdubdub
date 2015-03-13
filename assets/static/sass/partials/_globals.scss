@@ -884,6 +884,12 @@ a.button {
   text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 
+  @include media-sm {
+    left: 20%;
+    right: 20%;
+    @include container;    
+  }
+
   &:after {
     @extend %font-icon;
     position: absolute;
@@ -1197,6 +1203,11 @@ a.button {
   img {
     @extend %dead-center;
     max-width: 85%;
+  
+    @include media-sm {
+      max-width: none;  
+    }
+
   }  
 }
 
@@ -1376,9 +1387,24 @@ a.button {
 }
 
 
+/*-------------------------------------*/
+// FLOATED LEFT AND RIGHT IMAGES
+
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;
   display: block;
+}
+
+@include media-sm {
+  .float-left-padding {
+    @include float-left;
+    margin: $base-spacing $base-spacing-lg-x $base-spacing 0;
+  }
+
+  .float-right-padding {
+    @include float-right;
+    margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
+  }  
 }
 
 
