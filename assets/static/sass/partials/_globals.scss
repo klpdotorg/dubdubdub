@@ -39,6 +39,37 @@
 
 
 /*-------------------------------------*/
+// MIXINS: MEDIA QUERIES
+
+// extra large: 1200px
+@mixin media-lg-x {
+  @media only screen and (min-width: #{$mq-lg-x}) {
+    @content;
+  }
+}
+
+// large: 990px
+@mixin media-lg {
+  @media only screen and  (min-width: #{$mq-lg}) {
+    @content;
+  }
+}
+
+// medium: 990px
+@mixin media-med {
+  @media only screen and  (min-width: #{$mq-lg}) {
+    @content;
+  }
+}
+
+// small: 600px
+@mixin media-sm {
+  @media only screen and  (min-width: #{$mq-lg}) {
+    @content;
+  }
+}
+
+/*-------------------------------------*/
 // CLASSES, PLACEHOLDERS AND MIXINS
 // mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
 

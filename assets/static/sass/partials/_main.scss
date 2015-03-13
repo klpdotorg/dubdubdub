@@ -274,8 +274,14 @@ body {
 
   ul {
     left: -38px;
+
+    @include media-lg-x {
+      left: 0;
+    }
   }
 }
+
+
 
 .profile-options {
   @extend %button-hollow;
