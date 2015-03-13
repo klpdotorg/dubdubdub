@@ -280,4 +280,8 @@
 
 .button-map-compare {
   display: none;
+
+  @include media-lg {
+    display: inline-block;    
+  }
 }

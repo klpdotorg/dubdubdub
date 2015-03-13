@@ -114,13 +114,13 @@ a {
 .bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
+.picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
   font-weight: 300; }
 
-.uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label, .demo-do, .demo-dont {
+.uppercase, .heading-primary, .heading-secondary, .heading-tertiary, .heading-section, .heading-section-ul-alt, .verified, .scroll-smooth-block, .module-img-each h3:first-of-type, .tab-heading, .form-edit-heading, .nav > li, .heading-volunteer-box, .filter-label, .compare-button-block a, .label-compare, .compare-section-heading, .icon-compare-label, .map-heading-main, .map-label-title, .gender-icons-title, .facility-icons-title, .leaflet-control-layers label, .demo-do, .demo-dont {
   text-transform: uppercase; }
 
 .font-base-size, body {
@@ -2196,6 +2196,9 @@ body {
   right: 10px;
   top: 10px;
   cursor: pointer; }
+  @media only screen and (min-width: 990px) {
+    .nav-trigger {
+      display: none; } }
 
 .nav {
   list-style-type: none;
@@ -2206,28 +2209,89 @@ body {
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
   height: 100%; }
-  .nav ul {
-    display: none; }
-  .nav li {
-    padding: 0 10px;
-    letter-spacing: 1px;
-    text-align: left; }
-    .nav li li {
-      text-transform: capitalize;
-      display: block;
-      font-weight: normal;
-      letter-spacing: normal; }
-      .nav li li a {
-        line-height: 1;
-        padding: 10px; }
-    .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
-      color: inherit; }
-  .nav > li > a {
-    border-left: 3px solid;
-    padding: 0 10px;
-    margin: 15px 0; }
+  @media only screen and (min-width: 990px) {
+    .nav {
+      position: static;
+      right: auto;
+      bottom: auto;
+      width: auto;
+      overflow: visible;
+      border: none;
+      box-shadow: none;
+      margin-left: -25px; } }
   .nav a {
     display: block; }
+
+.nav ul {
+  display: none; }
+  @media only screen and (min-width: 990px) {
+    .nav ul {
+      position: absolute;
+      left: 0;
+      top: 39px;
+      box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
+      border: 1px solid #d8d8d8;
+      border-top: none;
+      padding: 0 0 10px 0; } }
+
+.nav > li {
+  padding: 0 10px;
+  letter-spacing: 1px;
+  text-align: left; }
+  @media only screen and (min-width: 990px) {
+    .nav > li {
+      border-top: 5px solid;
+      border-left: none; } }
+
+.nav li {
+  padding: 0 10px; }
+  @media only screen and (min-width: 990px) {
+    .nav li {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 3px;
+      text-align: center;
+      position: relative;
+      min-width: 120px; } }
+  .nav li.brand-orange a, .nav li.brand-green a, .nav li.brand-blue a, .nav li.brand-turquoise a, .nav li.brand-purple a, .nav li.brand-red a {
+    color: inherit; }
+
+.nav li li {
+  text-transform: capitalize;
+  display: block;
+  font-weight: normal;
+  letter-spacing: normal; }
+  @media only screen and (min-width: 990px) {
+    .nav li li {
+      text-align: left; }
+      .nav li li:hover a:before {
+        background: currentColor; } }
+  .nav li li a {
+    line-height: 1;
+    padding: 10px; }
+    @media only screen and (min-width: 990px) {
+      .nav li li a {
+        padding: 10px;
+        position: relative; }
+        .nav li li a:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 10px;
+          width: 2px;
+          height: 10px;
+          background: transparent; } }
+
+.nav > li > a {
+  border-left: 3px solid;
+  padding: 0 10px;
+  margin: 15px 0; }
+  @media only screen and (min-width: 990px) {
+    .nav > li > a {
+      border-left: none;
+      position: relative;
+      top: 4px;
+      margin: 7px 0; } }
 
 .nav-open {
   right: 0;
@@ -2273,6 +2337,11 @@ body {
   right: 55px;
   top: 0;
   margin-top: 9px; }
+  @media only screen and (min-width: 990px) {
+    .profile-login-block {
+      float: right;
+      right: 0;
+      padding-right: 20px; } }
   .profile-login-block.dropdown-base > li {
     padding: 1.7px 10px; }
   .profile-login-block ul {
@@ -2315,6 +2384,9 @@ body {
 
 .breadcrumb a {
   padding: 0 10px 0 0; }
+  @media only screen and (min-width: 990px) {
+    .breadcrumb a {
+      font-size: 100%; } }
   .breadcrumb a:after {
     content: "\f105";
     padding-left: 10px; }
@@ -2335,7 +2407,7 @@ body {
 
 .map-canvas-full {
   left: 0;
-  top: 95px; }
+  top: 100px; }
 
 .map-volunteer-canvas-full {
   left: 300px; }
@@ -2364,7 +2436,13 @@ body {
   right: 0;
   max-width: 200px;
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .banner-home-student {
+      max-width: none; } }
 
+@media only screen and (min-width: 990px) {
+  .banner-logo-klp {
+    width: 170px; } }
 .banner-caption-klp {
   margin-top: 20px; }
 
@@ -2489,7 +2567,18 @@ body {
 
 .banner-volunteer-girl, .banner-volunteer-boy {
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .banner-volunteer-girl, .banner-volunteer-boy {
+      display: block;
+      position: absolute;
+      top: 0; } }
 
+@media only screen and (min-width: 990px) {
+  .banner-volunteer-girl {
+    left: 10px; }
+
+  .banner-volunteer-boy {
+    right: 10px; } }
 .volunteer-works-block {
   background-color: #c7e0f7; }
 
@@ -2513,9 +2602,15 @@ body {
   vertical-align: top;
   margin-left: 5px;
   padding-top: 12px; }
+  @media only screen and (min-width: 990px) {
+    .button-filter-volunteer {
+      display: none; } }
 
 .volunteer-filters-wrapper, .map-volunteer-canvas-full {
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .volunteer-filters-wrapper, .map-volunteer-canvas-full {
+      display: block; } }
 
 .volunteer-filters-wrapper.filter-toggle {
   display: block; }
@@ -2528,11 +2623,22 @@ body {
   position: absolute;
   left: 0;
   right: 0; }
+  @media only screen and (min-width: 990px) {
+    .volunteer-filters-wrapper {
+      border: none;
+      margin: 0;
+      position: static; } }
   .volunteer-filters-wrapper .filter-item {
     padding: 15px 20px; }
+    @media only screen and (min-width: 990px) {
+      .volunteer-filters-wrapper .filter-item {
+        padding: 0 10px 0 0; } }
 
 .filter-item {
   display: block; }
+  @media only screen and (min-width: 990px) {
+    .filter-item {
+      padding: 0 10px 0 0; } }
   .filter-item .input-text, .filter-item select {
     min-width: 180px;
     background: #f6f6f6; }
@@ -2541,6 +2647,16 @@ body {
   padding-right: 10px;
   min-width: 120px;
   display: inline-block; }
+
+@media only screen and (min-width: 990px) {
+  .sidebar-volunteer-map {
+    width: 300px;
+    position: fixed;
+    left: 0;
+    top: 100px;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto; } }
 
 .list-sidebar {
   border-top: 1px solid #fff;
@@ -2554,6 +2670,13 @@ body {
   width: -webkit-calc(100% - 300px);
   width: calc(100% - 300px); }
 
+@media only screen and (min-width: 990px) {
+  .filter-item, .volunteer-filters-wrapper, .volunteer-filters-wrapper.filter-toggle {
+    display: inline-block;
+    vertical-align: top; }
+
+  .filter-label, .filter-item .input-text, .filter-item select {
+    min-width: 0; } }
 .vol-oppor-item {
   border-bottom: 1px solid #d8d8d8; }
   .vol-oppor-item:last-of-type {
@@ -2587,6 +2710,9 @@ body {
 
 .button-compare-wrap {
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .button-compare-wrap {
+      display: block; } }
 
 .school-type-preschool, .school-type-school {
   letter-spacing: 1px;
@@ -2981,6 +3107,9 @@ body {
 
 .button-map-compare {
   display: none; }
+  @media only screen and (min-width: 990px) {
+    .button-map-compare {
+      display: inline-block; } }
 
 @media only screen and (max-width: 599px) {
   .banner-full {
@@ -3253,120 +3382,6 @@ body {
   .infra-key-legend {
     float: right;
     width: 30%; } }
-@media only screen and (min-width: 990px) {
-  .profile-login-block {
-    float: right;
-    right: 0;
-    padding-right: 20px; }
-
-  .breadcrumb a {
-    font-size: 100%; }
-
-  .nav-trigger {
-    display: none; }
-
-  .nav {
-    position: static;
-    right: auto;
-    bottom: auto;
-    width: auto;
-    overflow: visible;
-    border: none;
-    box-shadow: none;
-    margin-left: -25px; }
-    .nav ul {
-      position: absolute;
-      left: 0;
-      top: 39px;
-      box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
-      border: 1px solid #d8d8d8;
-      border-top: none;
-      padding: 0 0 10px 0; }
-    .nav > li {
-      border-top: 5px solid;
-      border-left: none; }
-      .nav > li > a {
-        border-left: none;
-        position: relative;
-        top: 4px;
-        margin: 7px 0; }
-    .nav li {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 3px;
-      text-align: center;
-      position: relative;
-      min-width: 120px; }
-      .nav li li {
-        text-align: left; }
-        .nav li li a {
-          padding: 10px;
-          position: relative; }
-          .nav li li a:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 10px;
-            width: 2px;
-            height: 10px;
-            background: transparent; }
-        .nav li li:hover a:before {
-          background: currentColor; }
-
-  .banner-logo-klp {
-    width: 170px; }
-
-  .banner-home-student {
-    max-width: none; }
-
-  .banner-volunteer-girl, .banner-volunteer-boy {
-    display: block;
-    position: absolute;
-    top: 0; }
-
-  .banner-volunteer-girl {
-    left: 10px; }
-
-  .banner-volunteer-boy {
-    right: 10px; }
-
-  .button-map-compare {
-    display: inline-block; }
-
-  .button-compare-wrap {
-    display: block; }
-
-  .button-filter-volunteer {
-    display: none; }
-
-  .volunteer-filters-wrapper, .map-volunteer-canvas-full {
-    display: block; }
-
-  .volunteer-filters-wrapper {
-    border: none;
-    margin: 0;
-    position: static; }
-    .volunteer-filters-wrapper .filter-item {
-      padding: 0 10px 0 0; }
-
-  .filter-item, .volunteer-filters-wrapper, .volunteer-filters-wrapper.filter-toggle {
-    display: inline-block;
-    vertical-align: top; }
-
-  .filter-item {
-    padding: 0 10px 0 0; }
-
-  .filter-label, .filter-item .input-text, .filter-item select {
-    min-width: 0; }
-
-  .sidebar-volunteer-map {
-    width: 300px;
-    position: fixed;
-    left: 0;
-    top: 100px;
-    bottom: 0;
-    overflow-x: hidden;
-    overflow-y: auto; } }
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }
