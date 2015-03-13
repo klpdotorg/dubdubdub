@@ -541,6 +541,12 @@ body {
 //PAGE: MAP
 .filter-school-block {
   @extend %border-radius-sm;
+
+  @include media-lg-x {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: $grey-cloud;
+  }
 }
 
 .filter-school-each {
@@ -551,6 +557,20 @@ body {
   .heading-tiny-uppercase {
     line-height: 1;
     margin-bottom: $base-spacing;
+  }
+
+  @include media-lg-x {
+    border-right: 1px solid;
+    border-color: $grey-cloud;  
+    @include vertical-inline-top;
+
+    &:first-of-type {
+      border-left: 1px solid $border-color;
+    }
+
+    .select2-container {
+      width: 140px;
+    }
   }
 }
 

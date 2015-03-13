@@ -2385,6 +2385,12 @@ body {
   background-color: #c7e0f7; }
 
 /*-------------------------------------*/
+@media only screen and (min-width: 1200px) {
+  .filter-school-block {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #d8d8d8; } }
+
 .filter-school-each {
   min-height: 87px;
   padding: 15px;
@@ -2392,6 +2398,16 @@ body {
   .filter-school-each .heading-tiny-uppercase {
     line-height: 1;
     margin-bottom: 10px; }
+  @media only screen and (min-width: 1200px) {
+    .filter-school-each {
+      border-right: 1px solid;
+      border-color: #d8d8d8;
+      display: inline-block;
+      vertical-align: top; }
+      .filter-school-each:first-of-type {
+        border-left: 1px solid #d8d8d8; }
+      .filter-school-each .select2-container {
+        width: 140px; } }
 
 /*-------------------------------------*/
 .about-map {
@@ -3351,21 +3367,6 @@ body {
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto; } }
-@media only screen and (min-width: 1200px) {
-  .filter-school-block {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: #d8d8d8; }
-
-  .filter-school-each {
-    border-right: 1px solid;
-    border-color: #d8d8d8;
-    display: inline-block;
-    vertical-align: top; }
-    .filter-school-each:first-of-type {
-      border-left: 1px solid #d8d8d8; }
-    .filter-school-each .select2-container {
-      width: 140px; } }
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }
