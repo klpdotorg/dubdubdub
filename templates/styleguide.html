@@ -319,9 +319,51 @@
           By and large, the site uses min-width media queries, on the assumption that the initial layout is mobile-first and stacked, and columns are added incrementally, as the screen size gets larger.
         </p>
         <ul class="ul-base">
-          <li>The 3 media min-width queries are 600px, 750px and 990px.</li>
-          <li>The 2 max-width media queries are 599px and 749px. These are used sparingly.</li>
+          <li>Media queries are added after the selector in question.</li>
+          <li>Media queries are available as Sass mixins and can be nested, which is an advantage.</li>
+          <li><span class="demo-do">Do</span> add min-width media queries in the order of smallest to largest.</li>
+          <li>The 4 min-width media queries available as mixins are:
+           <ul>
+             <li>media-sm: 600px</li>
+             <li>media-med: 750px</li>
+             <li>media-lg: 990px</li>
+             <li>media-lg-x: 1200px (<em>used sparingly</em>)</li>
+           </ul>
+          </li>
+          <li>The 1 max-width media query is 749px. This is used sparingly.</li>
         </ul>
+        <div class="center-text">
+          <p class="bold">Below is a slightly ridiculous example.</p>
+          <p>Note the nesting of the media queries and the four breakpoints.</p>
+          <p>You can always refer to the variables or globals partial to see the actual value of a media query mixin.</p>          
+        </div>
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+        <div class="style-block-demo">
+<style>
+  .selecter {
+    max-width: 250px;
+
+    @include media-sm {
+      max-width: 300px;
+    }
+
+    @include media-med {
+      max-width: 350px;
+    }
+
+    @include media-lg {
+      max-width: 400px;
+    }
+
+    @include media-lg-x {
+      max-width: 450px;
+    }
+  }
+</style>
+</div> <!-- /style-block-demo -->
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
@@ -541,13 +583,13 @@
           <p><span class="demo-do">Do</span> create responsive grids using the recommendations below.</p>
           <p>Since the site is built mobile first, it would be preferable not to add classes, as indicated in the demos above, since they would have to be reset for mobile, to become full-width sections (in most cases, but not all).</p>
           <p>Instead, consider using the <span class="bold">handy grid mixins</span> available on media query breakpoints. The mixins have the same names as the grid classes, i.e. <em>grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</em> and grid placeholders.</p>
-          <p>Let's look at a simple demo below, using classes from the existing site. On a media query breakpoint of 750px, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
+          <p>Let's look at a simple demo below, using classes from the existing site. On a medium media query breakpoint, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
           <p>Thus you can float columns of any widths (that add up to 100%) on any media query, to get a truly flexible grid.</p>          
         </div>
 
         <div class="style-block-demo center-text">
 <style>
-@media only screen and (min-width: 750px) {
+@include media-med {
   .partners-list-block {
     @include grid-parent;
   }
