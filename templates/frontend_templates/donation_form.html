@@ -1,0 +1,31 @@
+{% verbatim %}
+<script type="text/html" id="tplDonationItem">
+  <td>
+      
+  </td>
+  <td>
+    <input type="text" class="input-text js-name" value="{{ name }}">
+  </td>
+  <td>
+    <input type="number" class="input-text js-quantity" value="{{ quantity }}">
+  </td>
+  <td>
+    <input type="text" class="input-text js-unit" value="{{ unit }}">
+  </td>
+  <td>
+  {% endverbatim %}
+    <select name="partner" class="js-category">
+      {% for i in item_categories %}
+        <option value="{{ i.id }}">{{ i.name }}</option>
+      {% endfor %}
+    </select>
+  {% verbatim %}
+  </td>
+  <td>
+    <textarea class="input-text js-description">{{ description }}</textarea>
+  </td>
+  <td>
+    <a href="#" class="js-deleteItem icon-button-round-sm icon-close tooltip" aria-label="Remove item?"><span class="fa fa-close"></span></a>
+  </td>  
+</script>
+{% endverbatim %}

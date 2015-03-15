@@ -2,6 +2,17 @@
     var base = "/api/v1/";
     var cache = {};
     klp.api = {
+
+        /*
+        Call klp.api.do for unauthenticated requests.
+        Maintains a cache to avoid repeated calls to server.
+          Returns a Deferred object
+            eg: 
+            var deferred = klp.api.do("schools", {'type': 'primaryschools'});
+            deferred.done(function(data) {
+              ...
+              });
+        */
         do: function(endpoint, data, method) {
             if (typeof(method) === 'undefined') {
                 method = 'GET';
@@ -41,6 +52,12 @@
             return $deferred;
         },
 
+        /*
+            Make authenticated request. Called the same as 'do'.
+            Will use token if present, else raise an error
+            Code should ensure user is signed in before calling this.
+            See common/auth.js for auth functions
+         */
         'authDo': function(endpoint, data, method) {
             var token = klp.auth.getToken();
             if (!token) {
@@ -66,6 +83,9 @@
             return $xhr;
         },
 
+        /*
+            Signup API call
+         */
         'signup': function(data) {
             var url = base + 'users';
             var $xhr = $.ajax({
@@ -77,6 +97,9 @@
             return $xhr;
         },
 
+        /*
+            Login
+         */
         'login': function(data) {
             var url = base + 'users/login';
             var $xhr = $.ajax({

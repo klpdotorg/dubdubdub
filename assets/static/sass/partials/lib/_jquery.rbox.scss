@@ -1,0 +1,95 @@
+.rbox_overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: $black; //fallback for old IE
+  background: rgba($black, 0.8);
+  opacity: 0;
+  @extend %center-text;
+}
+
+.rbox_show {
+  opacity: 1;
+  @extend %transition-ease-in;
+}
+
+.rbox_lightBoxBlock {
+  max-width: 80%;
+  min-width: 280px;
+  margin: 3% auto;
+  position: relative;
+  @extend %center-text;
+  @extend %vertical-inline-middle;
+
+  .nextLightBox, .prevLightBox, .closeLightBox {
+    font-size: 25px; 
+  }
+}
+
+.rbox_lightBox {
+  padding: $base-spacing;
+  position: relative;
+}
+
+.nextLightBox, .prevLightBox, .closeLightBox {
+  @extend %grey-silver;
+  cursor: pointer;
+  
+  &:hover {
+    @extend %grey-cloud;
+    @extend %transition-ease-in;
+  }
+}
+
+.openLightBox {
+  position: relative;
+}
+
+.closeLightBox {
+  position: absolute;
+  right: -16px;
+  top: -16px;
+  padding: 4px; 
+}
+
+.nextLightBox, .prevLightBox {
+  position: absolute;
+  top: 44%; 
+}
+
+.nextLightBox {
+  right: $base-spacing-mid; 
+}
+
+.prevLightBox {
+  left:  $base-spacing-mid; 
+}
+
+.rbox_lightBoxContent iframe {
+  @extend %center-element-inline;
+  max-width: 100%;
+}
+
+.rbox_inline, .rbox_html {
+  @extend %white-bg;
+  padding: $base-spacing-lg;
+  @extend %border-base;
+  box-shadow: 0 2px 0 0 $grey-cloud;
+  @extend %border-radius-sm;
+
+}
+
+.rbox_caption {
+  @extend %grey-cloud;
+}
+
+@media only screen and (min-width: 600px) {
+  .nextLightBox {
+    right: -20px; }
+
+  .prevLightBox {
+    left: -20px; } }

@@ -1,127 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load compress %}
 {% block page_title %}Volunteer Opportunities {{ action }}{% endblock %}
-
 {% block endbody %}
-
-    {% block endbody_extra %} {% endblock %}
-    
+{% compress js %}
+<script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+{% endcompress %}
+{% block endbody_extra %} {% endblock %}
 {% endblock %}
-
 {% block content %}
+<section>
+  <div class="container">
+    <h1 class="heading-primary brand-blue">Volunteer Opportunities {{ action }}</h1>
+    <div id="activityDetails">
+    </div>  
+  </div>
+</section>
 
-    <section class="phn-pb-30">
-        <div class="container">
-            <h1 class="bordered blue">Volunteer Opportunities {{ action }}</h1>
+<div class="js-tab-wrap tab-wrap tab-org-edit">
+  <div class="tab-wrap-widescreen">
+    <div data-tab="details" class="js-tabs-link tab-heading tab-heading-active">{{ action }} Details</div>
+    {% if action != 'Add' %}
+    <div data-tab="volunteers" class="js-tabs-link tab-heading">Volunteers</div>
+    {% endif %}
+  </div>
 
-            <div class="mb-30" id="activityDetails">
-            </div>
+  <div class="tab-each">
+    <div data-tab="details" class="js-tab-content tab-content tab-active">
+      <div class="container">
+        <form class="form-base form-volunteer-oppor-edit" id="activityForm">
+          <div class="form-field-wrap">
+            <label>Activity Type</label>
+            <select id="activityType">
+              <option value="">Please select an activity type</option>
+              {% for typ in activity_types %}
+              <option value="{{ typ.id }}">{{ typ.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-field-wrap">
+            <label>School</label>
+            <input id="school" class="select2">
+          </div>
+          <div class="form-field-wrap">
+            <label>Date</label>
+            <input type="date" id="date" data-required="true" class="input-text js-input-date">
+          </div>
+          <div class="form-field-wrap">
+            <label>Text</label>
+            <textarea id="text" class="input-text"></textarea>
+          </div>
+          <input type="hidden" id="organization" />
+          <div class="form-field-wrap center-text">
+            <input type="submit" value="Submit" class="button">
+          </div>
+        </form>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
 
-            <ul class="tabs phn-hide">
-                <li data-tab="details" class="js-tab-link current">{{ action }} Details</li>
-                {% if action != 'Add' %}
-                <li data-tab="volunteers" class="js-tab-link">Volunteers</li>
-                {% endif %}
-            </ul>
-        </div>
-    </section>
+  {% if action != 'Add' %}
+  <div class="tab-each">
+    <div data-tab="volunteers" class="js-tab-content tab-content">
+      <div class="container" data-tab="volunteers">
+        <table class="table-base table-list-view table-volunteer-oppor" id="jsVolunteerTable">
+          <tr class="table-base-heading">
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </table>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+  {% endif %}
+</div> <!-- /tab-wrap -->
 
-    <div class="hr"></div>
-
-    <section class="pt-30 pb-60 phn-pt-0">
-        <div class="js-tabs-wrapper">
-
-            <div class="tab-heading">{{ action }} Details</div>
-            <div class="tab-content container current" data-tab="details">
-                <div>
-                    <form class="width-400" id="activityForm">
-                        <div class="mb-30">
-                            <label class="block bold mb-5">Activity Type</label>
-                            <select class="select2 width-full" id="activityType">
-                                <option value="">Please select an activity type</option>
-                                {% for typ in activity_types %}
-                                <option value="{{ typ.id }}">{{ typ.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="mb-30">
-                            <label class="block bold mb-5">School</label>
-                            <input id="school" class="select2 width-full" />
-                        </div>
-                        <div class="mb-30">
-                            <label class="block bold mb-5">Date</label>
-                            <input type="date" id="date" data-required="true" class="input">
-                        </div>
-                        <div class="mb-30">
-                            <label class="block bold mb-5">Text</label>
-                            <textarea id="text" class="input textarea"></textarea>
-                        </div>
-                        <input type="hidden" id="organization" />
-                        <div class="mb-30">
-                            <input type="submit" value="Submit" class="button blue">
-                        </div>
-                    </form>
-                </div>
-                <div class="clr"></div>
-            </div>  <!-- Edit Details Tab END -->
-
-            {% if action != 'Add' %}
-            <div class="tab-heading">Volunteer Opportunities</div>
-            <div class="tab-content container" data-tab="volunteers">
-                <div>
-                    <table class="tbl-common va-m users-list ta-l" id="volunteerTable">
-                <tr>
-                    <th class="cell-width-25">Name</th>
-                    <th>Status</th>
-                    <th class="cell-width-15 ta-r">Action</th>
-                </tr>
-            </table>
-                </div>
-            </div>  <!-- Volunteer Tab END -->
-            {% endif %}
-        </div>
-    </section>
-
-    {% include 'frontend_templates/volunteeractivity_form.html' %}
-
-    <script type="text/javascript">
-
-        function init_tabs(){
-            $(document).on("click", ".js-tab-link", function(e){
-                var $wrapper = $(".js-tabs-wrapper");
-                var $trigger = $(this).closest(".js-tab-link");
-                var tab_id = $trigger.attr('data-tab');
-
-                // Change current tab link
-                $trigger.parent().find("li.current").removeClass('current');
-                $trigger.addClass("current");
-
-                // Change current tab content
-                $wrapper.find(".tab-content.current").removeClass('current');
-                $wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
-            });
-            $(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
-                if($(document).width() < 768){
-                    return true;
-                }
-
-                e.preventDefault();
-
-                var $trigger = $(this).closest(".action-dropdown");
-
-                if(!$trigger.hasClass("show-drop")) {
-                    $trigger.addClass("show-drop");
-                } else {
-                    $trigger.removeClass("show-drop");
-                }
-            });
-        }
-
-        $(document).ready(function(){
-            init_tabs();
-        });
-
-    </script>
-
+{% include 'frontend_templates/volunteeractivity_form.html' %}
 {% endblock %}

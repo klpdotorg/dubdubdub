@@ -1,385 +1,221 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load compress %}
 {% block page_title %}Manage Organisation: {{ object.name }}{% endblock %}
 {% block endbody %}
-	<script type="text/javascript" src="{% static 'js/organization_edit/init.js' %}"></script>
-    <script>
-    	ORGANIZATION_ID = {{ object.id }}
-    </script>
-    
+{% compress js %}
+<script type="text/javascript" src="{% static 'js/organization_edit/init.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+{% endcompress %}
+<script>
+  ORGANIZATION_ID = {{ object.id }}
+</script>
 {% endblock %}
-
 {% block content %}
+<section>
+  <div class="container">
+    <h1 class="heading-primary brand-blue">Manage Organisation</h1>
+    <div class="h5">
+      Editing 
+      <span class="brand-turquoise" id="displayOrgName"> {{ object.name }}</span>
+    </div>
+  </div>
+</section>
 
-	<section class="phn-pb-30">
-		<div class="container">
-			<h1 class="bordered blue">Manage Organisation</h1>
+<section>
+  <div class="js-tab-wrap tab-wrap tab-org-edit">
+    <div class="tab-wrap-widescreen">
+      <div data-tab="details" class="js-tabs-link tab-heading tab-heading-active">Edit Details</div>
+      <!-- <li data-tab="members" class="js-tab-link">Members</li> -->
+      <div data-tab="volunteer" class="js-tabs-link tab-heading">Volunteer Opportunities</div>
+      <!-- <div data-tab="donation" class="js-tabs-link tab-heading">Donation Requests</div> -->
+    </div>
 
-			<div class="font-20">
-				Editing <span class="color-green-2" id="displayOrgName"> {{ object.name }}</span>
-			</div>
+    <div class="tab-each">
+      <div data-tab="details" class="js-tab-content tab-content tab-active">
+        <div class="container">
+          <div class="form-edit-profile-tab">
+            <form class="form-base form-edit-profile" id="orgForm">
+              <div class="form-field-wrap">
+                <label>Name</label>
+                <input class="input-text" data-required="true" id="orgName" type="text">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                URL
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgURL" type="url">
+              </div>
+              <div class="form-field-wrap">
+                <label>Email</label>
+                <input class="input-text" data-required="true" id="orgEmail" type="email">
+              </div>
+              <div class="form-field-wrap">
+                <label>Contact Person</label>
+                <input class="input-text" id="orgContactName" type="text">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                Logo
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input type="file" id="logo" data-type="image">
 
-			<ul class="tabs phn-hide">
-				<li data-tab="details" class="js-tab-link current">Edit Details</li>
-				<!-- <li data-tab="members" class="js-tab-link">Members</li> -->
-				<li data-tab="volunteer" class="js-tab-link">Volunteer Opportunities</li>
-				<!-- <li data-tab="donation" class="js-tab-link">Donation Requests</li> -->
-			</ul>
-		</div>
-	</section>
+                <img class="form-file-preview js-image-preview" width="100">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                About the Organization
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <textarea class="input-text" id="orgAbout"></textarea>
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                  <span class="fa fa-twitter icon-left"></span>Twitter Handle
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgTwitter" type="text">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                  <span class="fa fa-facebook icon-left"></span>Facebook URL
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgFacebook" type="url">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                  <span class="fa fa-book icon-left"></span>Blog URL
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgBlog" type="url">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                  <span class="fa fa-flickr icon-left"></span>Flickr / Photo Site URL
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgPhotos" type="url">
+              </div>
+              <div class="form-field-wrap">
+                <label>
+                  <span class="fa fa-youtube icon-left"></span>Youtube URL
+                  <span class="form-optional-text">(optional)</span>
+                </label>
+                <input class="input-text" id="orgYoutube" type="url">
+              </div>
+              <!--
+                <div class="mb-30">
+                  <label class="block bold mb-5">Address</label>
+                  <textarea class="input textarea" id="orgAddress"></textarea>
+                </div>
+                -->
+              <div class="form-field-wrap center-text">
+                <a class="button" href="#" id="submitBtn">Submit</a>
+              </div>
+            </form>
+          </div> <!-- /form-edit-profile-tab -->
+          <div class="grid_6 omega">
+            <!--
+              <form class="edit-profile-form grey-bg ma">
+                <div class="pad-30">
+                  <div class="edit-img">
+                    <img class="max-width-50 fl mr-20" src="/static/images/partners_logo_akshara.png" alt="Akshara Foundation">
+                    <div class="fr">
+                      <input type="submit" value="Select Image" class="button-hollow small mt-0">
+                      <div class="img-path ta-r mt-5">C:/img.jpg</div>
+                    </div>
+                    <div class="clr"></div>
+                  </div>
+                </div>
+              </form>
+              -->
+          </div>
 
-	<div class="hr"></div>
+        </div> <!-- /container -->
+      </div> <!-- /tab-content -->
+    </div> <!-- /tab-each -->
 
-	<section class="pt-30 pb-60 phn-pt-0">
-		<div class="js-tabs-wrapper">
+      <!--
+        <div class="tab-heading">Members</div>
+        <div class="tab-content container members-list" data-tab="members">
+        	<div class="title-purple fl mr-20">214 Members</div>
+        	<a class="button blue fr mt-0" href="#">Add New Member</a>
+        	<div class="clr"></div>
+        	<div class="div-table mt-30">
+        		<div class="div-table-row table-head">
+        			<div class="div-table-cell name uppercase">Title</div>
+        			<div class="div-table-cell status uppercase">Status</div>
+        			<div class="div-table-cell action uppercase ta-r">Action</div>
+        		</div>
+        		<div class="div-table-row">
+        			<div class="div-table-cell name">
+        				<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg">
+        				<a href="profile.php" class="user-name color-blue bold">Gurliv Sembhi</a>
+        				<div class="clr"></div>
+        			</div>
+        			<div class="div-table-cell status">
+        				<div class="color-green bold uppercase">Admin</div>
+        			</div>
+        			<div class="div-table-cell action ta-r">
+        				<a href="#" class="button small grey fr mt-0 mr-10">Remove Admin</a>
+        				<div class="clr"></div>
+        			</div>
+        		</div>
+        		<div class="div-table-row">
+        			<div class="div-table-cell name">
+        				<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg">
+        				<a href="profile.php" class="user-name color-blue bold">Gurliv Sembhi</a>
+        				<div class="clr"></div>
+        			</div>
+        			<div class="div-table-cell status">
+        				<div class="bold uppercase">Member</div>
+        			</div>
+        			<div class="div-table-cell action ta-r">
+        				<a href="#" class="button-hollow fr mt-0 mr-10">Make Admin</a>
+        				<div class="clr"></div>
+        			</div>
+        		</div>
+        	</div>
+        </div>	--><!-- Members Tab END -->
+    <div class="tab-each">
+      <div data-tab="volunteer" class="js-tab-content tab-content">
+        <div class="container">
+          <a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
+          Add Volunteer Activity
+          </a>
+          <table class="table-base table-list-view table-base-volunteer" id="jsVolunteerTable">
+            <tr class="table-base-heading">
+              <th>Title</th>
+              <th>School</th>
+              <th>Volunteers</th>
+              <th>Action</th>
+            </tr>
+          </table>
+        </div> <!-- /container -->
+      </div> <!-- /tab-content -->
+    </div> <!-- /tab-each -->
 
-			<div class="tab-heading">Edit Details</div>
-			<div class="tab-content container current" data-tab="details">
-				<div class="grid_6 alpha">
-					<form class="edit-profile-form" id="orgForm">
-						<div class="mb-30">
-							<label class="block bold mb-5">Name</label>
-							<input class="input" data-required="true" id="orgName" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								URL
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgURL" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">Email</label>
-							<input class="input" data-required="true" id="orgEmail" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">Contact Person</label>
-							<input class="input" id="orgContactName" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Logo
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input type="file" id="logo" data-type="image">
-							<img class="imagePreview js-image-preview" width="100">
-						</div>						
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								About the Organization
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<textarea class="input textarea" id="orgAbout"></textarea>
-						</div>
-						
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Twitter Handle
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgTwitter" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Facebook URL
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgFacebook" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Blog URL
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgBlog" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Flickr / Photo Site URL
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgPhotos" type="text">
-						</div>
-						<div class="mb-30">
-							<label class="block bold mb-5">
-								Youtube URL
-								<span class="color-grey-light">(optional)</span>
-							</label>
-							<input class="input" id="orgYoutube" type="text">
-						</div>
-
-						<!--
-						<div class="mb-30">
-							<label class="block bold mb-5">Address</label>
-							<textarea class="input textarea" id="orgAddress"></textarea>
-						</div>
-						-->
-						<div class="ta-c">
-							<a class="button blue mt-30 phn-mt-10" href="#" id="submitBtn">Submit</a>
-						</div>
-					</form>
-				</div>
-				<div class="grid_6 omega">
-					<!--
-					<form class="edit-profile-form grey-bg ma">
-						<div class="pad-30">
-							<div class="edit-img">
-								<img class="max-width-50 fl mr-20" src="/static/images/partners_logo_akshara.png" alt="Akshara Foundation">
-								<div class="fr">
-									<input type="submit" value="Select Image" class="button-hollow small mt-0">
-									<div class="img-path ta-r mt-5">C:/img.jpg</div>
-								</div>
-								<div class="clr"></div>
-							</div>
-						</div>
-					</form>
-					-->
-				</div>
-				<div class="clr"></div>
-			</div>	<!-- Details Tab END -->
-
-			<!--
-			<div class="tab-heading">Members</div>
-			<div class="tab-content container members-list" data-tab="members">
-				<div class="title-purple fl mr-20">214 Members</div>
-				<a class="button blue fr mt-0" href="#">Add New Member</a>
-				<div class="clr"></div>
-				<div class="div-table mt-30">
-					<div class="div-table-row table-head">
-						<div class="div-table-cell name uppercase">Title</div>
-						<div class="div-table-cell status uppercase">Status</div>
-						<div class="div-table-cell action uppercase ta-r">Action</div>
-					</div>
-					<div class="div-table-row">
-						<div class="div-table-cell name">
-							<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg">
-							<a href="profile.php" class="user-name color-blue bold">Gurliv Sembhi</a>
-							<div class="clr"></div>
-						</div>
-						<div class="div-table-cell status">
-							<div class="color-green bold uppercase">Admin</div>
-						</div>
-						<div class="div-table-cell action ta-r">
-							<div class="action-dropdown fr">
-								<a href="#" class="dropdown-trigger"></a>
-								<ul class="action-dropdown-list ta-l">
-									<li>
-										<a href="#">Option 1</a>
-									</li>
-									<li>
-										<a href="#">Option 2</a>
-									</li>
-									<li>
-										<a href="#">Option 3</a>
-									</li>
-									<li>
-										<a href="#">Option 4</a>
-									</li>
-								</ul>
-							</div>
-							<a href="#" class="button small grey fr mt-0 mr-10">Remove Admin</a>
-							<div class="clr"></div>
-						</div>
-					</div>
-					<div class="div-table-row">
-						<div class="div-table-cell name">
-							<img class="profile-img fl mr-10" src="images/thumb_reading_programme.jpg">
-							<a href="profile.php" class="user-name color-blue bold">Gurliv Sembhi</a>
-							<div class="clr"></div>
-						</div>
-						<div class="div-table-cell status">
-							<div class="bold uppercase">Member</div>
-						</div>
-						<div class="div-table-cell action ta-r">
-							<div class="action-dropdown fr">
-								<a href="#" class="dropdown-trigger"></a>
-								<ul class="action-dropdown-list ta-l">
-									<li>
-										<a href="#">Option 1</a>
-									</li>
-									<li>
-										<a href="#">Option 2</a>
-									</li>
-									<li>
-										<a href="#">Option 3</a>
-									</li>
-									<li>
-										<a href="#">Option 4</a>
-									</li>
-								</ul>
-							</div>
-							<a href="#" class="button-hollow fr mt-0 mr-10">Make Admin</a>
-							<div class="clr"></div>
-						</div>
-					</div>
-				</div>
-			</div>	--><!-- Members Tab END -->
-
-			<div class="tab-heading">Volunteer Opportunities</div>
-			<div class="tab-content container" data-tab="volunteer">
-				<div>
-					<a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
-						Add Volunteer Activity
-					</a>
-					<table class="tbl-common ta-l" id="volunteerTable">
-						<tr>
-							<th class="cell-width-40">Title</th>
-							<th class="cell-width-25">School</th>
-							<th class="cell-width-15">Volunteers</th>
-							<th class="cell-width-20 ta-r">Action</th>
-						</tr>
-
-					</table>
-				</div>
-			</div>	<!-- Volunteer Opportunites Tab END -->
-
-			<!--
-			<div class="tab-heading">Donation Requests</div>
-			<div class="tab-content container" data-tab="donation">
-				<div>
-					<table class="tbl-common ta-l">
-						<tr>
-							<th class="cell-width-40">Title</th>
-							<th class="cell-width-25">School</th>
-							<th class="cell-width-20">Volunteers</th>
-							<th class="cell-width-15 ta-r">Status</th>
-						</tr>
-						<tr>
-							<td>
-								<div class="bold">Required for Library</div>
-								<div class="color-grey-light-2 mt-5">In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</div>
-							</td>
-							<td>
-								<div class="color-green bold">Gian Jyoti Public School</div>
-								<div class="color-grey-light-2 mt-5">Street No-4, Banasawadi, Bangalore</div>
-							</td>
-							<td class="font-14">
-								<div>
-									5 X <span class="color-blue">Chairs</span>
-								</div>
-								<div>
-									3 X <span class="color-blue">Tables</span>
-								</div>
-								<div>
-									1 X <span class="color-blue">Cupboards</span>
-								</div>
-								<div>
-									8 X <span class="color-blue">Books</span>
-								</div>
-							</td>
-							<td class="ta-r">
-								<div class="action-dropdown fr">
-									<a href="#" class="dropdown-trigger small"></a>
-									<ul class="action-dropdown-list ta-l">
-										<li>
-											<a href="#">Option 1</a>
-										</li>
-										<li>
-											<a href="#">Option 2</a>
-										</li>
-										<li>
-											<a href="#">Option 3</a>
-										</li>
-										<li>
-											<a href="#">Option 4</a>
-										</li>
-									</ul>
-								</div>
-								<a href="donation-requests-edit.php" class="button-hollow fr mt-0 mr-10">Edit</a>
-								<div class="clr"></div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="bold">Required for Library</div>
-								<div class="color-grey-light-2 mt-5">In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</div>
-							</td>
-							<td>
-								<div class="color-green bold">Gian Jyoti Public School</div>
-								<div class="color-grey-light-2 mt-5">Street No-4, Banasawadi, Bangalore</div>
-							</td>
-							<td>
-								<div>
-									5 X <span class="color-blue">Chairs</span>
-								</div>
-								<div>
-									3 X <span class="color-blue">Tables</span>
-								</div>
-								<div>
-									1 X <span class="color-blue">Cupboards</span>
-								</div>
-								<div>
-									8 X <span class="color-blue">Books</span>
-								</div>
-							</td>
-							<td class="ta-r">
-								<div class="action-dropdown fr">
-									<a href="#" class="dropdown-trigger small"></a>
-									<ul class="action-dropdown-list ta-l">
-										<li>
-											<a href="#">Option 1</a>
-										</li>
-										<li>
-											<a href="#">Option 2</a>
-										</li>
-										<li>
-											<a href="#">Option 3</a>
-										</li>
-										<li>
-											<a href="#">Option 4</a>
-										</li>
-									</ul>
-								</div>
-								<a href="donation-requests-edit.php" class="button-hollow fr mt-0 mr-10">Edit</a>
-								<div class="clr"></div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div> -->	<!-- Donation Requests Tab END -->
-		</div>
-	</section>
-
-	{% include 'frontend_templates/organization-edit.html' %}
-
-	<script type="text/javascript">
-
-		function init_tabs(){
-    		$(document).on("click", ".js-tab-link", function(e){
-    			var $wrapper = $(".js-tabs-wrapper");
-				var $trigger = $(this).closest(".js-tab-link");
-				var tab_id = $trigger.attr('data-tab');
-
-				// Change current tab link
-				$trigger.parent().find("li.current").removeClass('current');
-				$trigger.addClass("current");
-
-				// Change current tab content
-				$wrapper.find(".tab-content.current").removeClass('current');
-				$wrapper.find('.tab-content[data-tab="'+ tab_id +'"]').addClass('current');
-			});
-			$(document).on("click", ".action-dropdown .dropdown-trigger", function(e){
-				if($(document).width() < 768){
-		            return true;
-		        }
-
-		        e.preventDefault();
-
-		        var $trigger = $(this).closest(".action-dropdown");
-
-		        if(!$trigger.hasClass("show-drop")) {
-		        	$trigger.addClass("show-drop");
-		        } else {
-		        	$trigger.removeClass("show-drop");
-		        }
-			});
-    	}
-
-    	$(document).ready(function(){
-			init_tabs();
-		});
-
-    </script>
-
+    <div class="tab-each">
+      <div data-tab="donation" class="js-tab-content tab-content">
+        <div class="container">
+          <a class="button" href="/organisation/{{ object.id }}/donation_requirement">
+          Add Donation Request
+          </a>
+          <table class="table-base table-list-view table-base-donation" id="donationTable">
+            <tr class="table-base-heading">
+              <th>Title</th>
+              <th>School</th>
+              <th>Items</th>
+              <th>Status</th>
+            </tr>
+          </table>
+        </div> <!-- /container -->
+      </div> <!-- /tab-content -->
+    </div> <!-- /tab-each -->
+  </div> <!-- /tab-wrap -->
+</section>
+{% include 'frontend_templates/organization-edit.html' %}
 {% endblock %}

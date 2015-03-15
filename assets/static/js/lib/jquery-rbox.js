@@ -6,8 +6,8 @@
         var $lightbox = $('<div />').addClass('rbox_lightBox').appendTo($lightboxBlock);
         var $content = $('<div />').addClass('rbox_lightBoxContent').appendTo($lightbox);
         var $close = $('<span />').attr('href', '').addClass('closeLightBox fa fa-times-circle').appendTo($lightbox);
-        var $next = $('<span />').attr('href', '').addClass('nextLightBox fa fa-arrow-circle-right').appendTo($lightbox);
-        var $prev = $('<span />').attr('href', '').addClass('prevLightBox fa fa-arrow-circle-left').appendTo($lightbox);
+        var $next = $('<a />').attr('href', '').addClass('nextLightBox fa fa-chevron-circle-right').appendTo($lightbox);
+        var $prev = $('<a />').attr('href', '').addClass('prevLightBox fa fa-chevron-circle-left').appendTo($lightbox);
         $('body').append($overlay);
     }
 

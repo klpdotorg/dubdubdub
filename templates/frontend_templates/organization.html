@@ -1,39 +1,84 @@
 {% verbatim %}
 <script type="text/html" id="tpl-volunteerActivity">
-    <div class="required pb-20">
-        <div class="fl phn-fn mt-5 mb-5">
-            <div class="font-20 color-red">{{ activity_type_details.name }}</div>
-            <span class="color-grey-light-2">For </span>
-            <span class="color-green-2 uppercase"> {{ organization_details.name }} </span>
-        </div>
-        <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-            <a href="/schoolpage/school/{{ school_details.id }}" class="font-20 color-green">{{ school_details.name }}</a>
-            <br/>
-            {% if school_details.address_full %}
-            <div class="color-grey-light-2">{{ school_details.address_full }}</div>
-            {% endif %}
-        </div>
-        <div class="clr"></div>
-        <p class="mt-10 mb-10">
-            {{ text|striptags|nl2br|autolink|safe }}
-        </p>
-        <div class="fl phn-fn">
-            <div class="color-black bold">
-                Date:
-            </div>
-            <div class="font-16 color-blue bold">{{ date|date('jS F, Y') }}</div>
-        </div>
-        <a class="button fr mt-5 phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ id }}" href="#">Volunteer Now</a>
-        <div class="clr"></div>
-    </div>
-</script>
+  <div class="org-tab-content">
+    <div class="clearfix"> 
+      <div class="org-tab-org">
+        <div class="h5 brand-red">{{ activity_type_details.name }}</div>
+        <span class="font-smallest"> 
+          <span class="grey-steel">For </span>
+          <span class="uppercase brand-turquoise"> {{ organization_details.name }} </span>
+        </span>
+      </div>
+      <div class="org-tab-school">
+        <div><a href="/schoolpage/school/{{ school_details.id }}" class="brand-green font-larger uppercase">{{ school_details.name }}</a></div>
 
-<script type="text/html" id="tpl-emptyVolunteerActivities">
-    <div class="required pb-20">
-        <div class="no-data">
-            This organisation does not have any volunteer activities.
+        {% if school_details.address_full %}
+        <p class="heading-tiny">{{ school_details.address_full }}</p>
+        {% endif %}
+      </div>
+    </div> <!-- /clearfix -->
+    
+    {% if text %}
+    <p class="font-small">
+      {{ text|striptags|nl2br|autolink|safe }}
+    </p>
+    {% endif %}
+    <div class="org-tab-date-block">
+      <div class="org-tab-date">
+        <div class="font-smallest black">
+          <strong>Date:</strong>
         </div>
-        <div class="clr">
+        <div class="brand-blue"><strong>{{ date|date('jS F, Y') }}</strong></div>
+      </div>
+      <a class="button js-volunteerHereBtn org-tab-button" data-id="{{ id }}" href="#">Volunteer Now</a>
     </div>
+  </div> <!-- /org-tab-content -->
+</script>
+<script type="text/html" id="tpl-emptyVolunteerActivities">
+  <div class="base-spacing">
+    <div class="grey-steel no-data">
+      This organisation does not have any volunteer activities.
+    </div>
+  </div>
+</script>
+<script type="text/html" id="tpl-donationRequirement">
+  <div class="org-tab-content">
+    <div class="clearfix"> 
+      <div class="org-tab-org">
+        <div class="h5 brand-red">{{ name }}</div>
+        <span class="font-smallest">
+          <span class="grey-steel">For </span>
+          <span class="uppercase brand-turquoise"> {{ organization_details.name }}</span>
+        </span>
+      </div>
+
+      <div class="org-tab-school">
+        <div class="brand-green font-larger uppercase">{{ school_details.name }}</div>
+        <div class="heading-tiny">{{ school_details.address_full }}</div>
+      </div>
+    </div> <!-- /clearfix -->
+
+    {% if description %}
+    <p class="font-small">
+      {{ description }}
+    </p>
+    {% endif %}
+
+    <div class="org-tab-date-block">
+      <div class="org-tab-date">
+        <div class="font-smallest black">
+          <strong>Needed Items:</strong>
+        </div>
+        {% for item in items %}
+        <div class="brand-blue bold">
+          <span>{{ item.name }} </span> x {{ item.quantity }} {{ item.unit }}{% if not loop.last %},{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="org-tab-button">
+        <a class="button" href="{{ }}">Donate Now</a>
+      </div>
+    </div>
+  </div> <!-- /org-tab-content -->
 </script>
 {% endverbatim %}

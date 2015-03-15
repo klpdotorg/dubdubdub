@@ -1,44 +1,47 @@
 {% verbatim %}
 <script type="text/template" id="tplVolunteerMapPopup">
-	<div class="map-pin-details vol-oppor">
+	<div class="map-pin-details">
 		<div class="content">
-			<div class="info school">
-				<div class="icon fr">S</div>
-				<h2 class="name mr-30">
-					<a href="/school/{{ features[0].school_details.id }}" class="color-green">
-						{{ features[0].school_details.name }}
-					</a>
-				</h2>
-				<div class="address">
+			<div>
+				<div class="icon-number">S</div>
+				<h3 class="map-heading-main"><a href="/school/{{ features[0].school_details.id }}" class="brand-green">
+						{{ features[0].school_details.name }}</a></h3>
+				<div class="grey-steel font-smaller">
 					{% if features[0].school_details.full_address %}
 						{{ features[0].school_details.full_address }}
 					{% endif %}
 				</div>
+				<div class="base-spacing-sm"></div>
 			</div>
 			<div class="vol-oppor-wrapper">
 				{% if features.length == 1 %}
-				<div class="vol-oppor-count ta-c">1 opportunity available</div>
+				<div class="vol-oppor-count">1 opportunity available</div>
 				{% else %}
-				<div class="vol-oppor-count ta-c">{{ features.length }} opportunity available</div>
+				<div class="vol-oppor-count">{{ features.length }} opportunities available</div>
 				{% endif %}
 				{% for f in features %}
 				<div class="vol-oppor-item">
-					<img class="thumb fl" src="{{ f.activity_type_details.image }}"/>
-					<a class="button blue small clickable fr js-trigger-volunteer-confirm js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
-					<div class="item-info">
-						<div class="item-title bold color-{{ f.activity_type_details.color }}">
-							{{ f.activity_type_details.name }}
-						</div>
-						<div class="item-org">For 
-							<span class="uppercase color-green-2">
-								<a href="/organisation/{{ f.organization_details.id }}">
+					<div class="clearfix">
+						<img class="vol-oppor-icon" src="{{ f.activity_type_details.image }}">
+						<span class="vertical-inline-top">
+							<span class="h5 brand-{{ f.activity_type_details.color }}">
+								<strong>{{ f.activity_type_details.name }}</strong>
+							</span>
+							<br>
+							<span class="font-small">
+								<span class="grey-steel">For</span> 
+								<a href="/organisation/{{ f.organization_details.id }}" class="uppercase brand-turquoise">
 									{{ f.organization_details.name }}
 								</a>
 							</span>
-						</div>
+						</span>
+						
+						<a class="button float-right js-volunteerHereBtn" data-id="{{ f.id }}">Volunteer</a>
 					</div>
-					<div class="clr"></div>
-					<div class="item-desc">
+
+					<div class="base-spacing-sm"></div>
+
+					<div class="grey-steel">
 						{{ f.text }}
 					</div>
 				</div>
@@ -49,39 +52,33 @@
 </script>
 
 <script type="text/html" id="tplVolunteerListItem">
-	<li class="place_item js-volunteerHereBtn" data-id="{{ id }}">
-		<div class="stats">
-			<div class="school bold color-green ellipsis">{{ school_details.name }}</div>
+	<li class="list-sidebar js-volunteerHereBtn" data-id="{{ id }}">
+		<div class="bold brand-{{ activity_type_details.color }}">
+			{{ activity_type_details.name }}
 		</div>
-		<div class="details">
-			<h3 class="bold color-{{ activity_type_details.color }} ellipsis">
-				{{ activity_type_details.name }}
-			</h3>
-		</div>
-		<div class="clr mb-5"></div>
 		<!--
 		<div class="stats">
 			<span class="distance">800m</span>
 		</div>
 		-->
-		<div class="details"> For 
-			<span class="uppercase color-green-2">
-				<a href="/organisation/{{ f.organization_details.id }}">
+		<div class="font-smallest"> 
+			<span class="grey-steel">For</span> 
+				<a href="/organisation/{{ f.organization_details.id }}" class="uppercase brand-turquoise">
 					{{ organization_details.name }}
 				</a>
-			</span>
 		</div>
-		<div class="clr mb-5"></div>
-		<div class="info">
+		<div class="brand-green uppercase font-smaller"><strong>{{ school_details.name }}</strong></div>
+		<div class="base-spacing-sm"></div>
+
+		<div class="font-smaller grey-steel">
 			{{ text|striptags|nl2br|autolink|safe }}
 		</div>
 	</li>
 </script>
 
 <script type="text/html" id="tplVolunteerEmptyList">
-	<li class="place_item empty">
-		Sorry, we did not find any volunteer opportunities that match your query.
+	<li class="list-sidebar">
+		<div class="font-smaller grey-steel">Sorry, we did not find any volunteer opportunities that match your query.</div>
 	</li>
-
 </script>
 {% endverbatim %}

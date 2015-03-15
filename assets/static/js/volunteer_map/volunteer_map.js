@@ -9,14 +9,6 @@
     t.init = function() {
         load_map();
 
-        var sidebar_height = $("#sidebar_wrapper").height();
-        $('#sidebar_wrapper ul').slimScroll({
-            height: sidebar_height+'px',
-            size: '5px',
-            color: '#8d8d8d',
-            railVisible: false
-        });
-
         // Google Geocode Search
         var searchInput = $('.search-input');
         searchInput.on('keypress', function(e) {
@@ -88,7 +80,7 @@
 
     function getFilters() {
         var filterParams = {};
-        var date = $('#vol-date-input').val();
+        var date = $('[name=date]').val();
         var org = $('#filterOrganization').val();
         var typ = $('#filterActivityType').val();
         if (date) {
@@ -120,7 +112,8 @@
             var html = tplVolunteerEmptyList(context);
             $('#volunteerActivityList').html(html);
         }
-        activitiesLayer.addData(activities);
+        var geojson = klp.utils.filterGeoJSON(data);
+        activitiesLayer.addData(geojson);
         map.fitBounds(activitiesLayer.getBounds());
     }
 
@@ -128,7 +121,7 @@
         var southWest = L.latLng(11.57, 73.87),
             northEast = L.latLng(18.45, 78.57),
             bounds = L.latLngBounds(southWest, northEast);
-        map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
@@ -145,7 +138,7 @@
 
     function markerPopup(marker, feature) {
         var school_id = feature.properties.school_details.id;
-        var date = $('#vol-date-input').val();
+        var date = $('[name=date]').val();
         var organisation = $('#filterOrganization').val();
         var type = $('#filterActivityType').val();
         var params = {

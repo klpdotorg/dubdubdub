@@ -6,28 +6,24 @@
 
 {% block endbody %}
     {% compress js %}
-    <script type="text/javascript" src="{% static 'js/lib/jquery.slimscroll.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/zebra_datepicker.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/iCheck/jquery.icheck.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/jquery.easydropdown.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/comparison.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/charts.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/common/share_story.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/marker-cluster/leaflet.markercluster.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/spin.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/lib/leaflet.spin.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/comparison.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/charts.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/share_story.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
+      <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
+      <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
+      <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script> -->
+      <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/marker-cluster/leaflet.markercluster.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/spin.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/leaflet.spin.js' %}"></script>
     {% endcompress %}
 
     <!--
@@ -44,140 +40,38 @@
     <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
-{% block subheader %}
-  <div class="map-subheader-wrapper">
-    <div class="subheader-content">
-      <input type="text" name="search" placeholder="Search" class="search-input fl"/>
-      {% include 'includes/_profile_options.html' %}
-<!--       <div class="volunteer-btn-wrapper fr">
-        <a class="button blue js-volunteer-trigger">Volunteer</a>
-      </div> -->
+{% block css_extra %}
+  <style>
+    .subheader-wrapper {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 42px; /* must match sass variable $header height */
+      z-index: 1;
+    }
+  </style>
+{% endblock %}
 
-      <div class="clr"></div>
+{% block subheader %}
+  <div class="map-subheader-wrapper subheader-wrapper">
+    <div class="subheader-content">
+      <div class="search-input-map">
+        <input type="text" name="search" placeholder="Search" class="search-input input-text">
+<!--       <div class="volunteer-btn-wrapper fr">
+          <a class="button blue js-volunteer-trigger">Volunteer</a>
+        </div> -->
+      </div>
     </div>
   </div>
 {% endblock %}
 
 {% block content %}
 
-  <div class="modal modal-map-filter">
-    <a class="button-close btn-modal-close"></a>
-    <h3 class="modal-heading">Filter Schools</h3>
-    <div class="page-section-menu">
-
-      <div class="options-wrapper">
-        <div class="klp-filter-select v-border">
-          <div class="label">School Type</div>
-          <select name="type" id="select-type" class="js-filters-dropdown">
-            <option></option>
-            <option>Primary School</option>
-            <option>Preschool</option>
-          </select>
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">District</div>
-          <input type="hidden" class="filter-dropdown" id="select-district" />
-          </select>
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">Block</div>
-          <input type="hidden" class="filter-dropdown" id="select-block" />
-        </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">Cluster</div>
-          <input type="hidden" class="filter-dropdown" id="select-cluster" />
-         </div>
-
-        <div class="klp-filter-select v-border">
-          <div class="label">School</div>
-          <input type="hidden" class="filter-dropdown" id="select-school" />
-        </div>
-      </div>
-    </div>
-    <div class="download-button center">
-    <a href="" class="button hide" id="download">Download CSV</a>
-    </div>
-  </div>
 
   <div class="map_page no-sidebar">
-    <section class="map_canvas_full">
-      <div id="map_canvas"></div>
+    <section class="map-canvas-full">
+      <div id="js-map-canvas"></div>
     </section>
-
-    <div class="filter-layers-list" id="filter-layers-list">
-      <label class="legend-item first">
-        <input type="checkbox" class="checkbox" />
-        <div class="en-icon small en-school">s</div>
-        <div class="label en-school">School</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox" class="checkbox"/>
-        <div class="en-icon small en-school-block">sb</div>
-        <div class="label en-school-block">School Block</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox"  class="checkbox"/>
-        <div class="en-icon small en-school-cluster">sc</div>
-        <div class="label en-school-cluster">School Cluster</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox"  class="checkbox"/>
-        <div class="en-icon small en-school-district">sd</div>
-        <div class="label en-school-district">School District</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox"  class="checkbox"/>
-        <div class="en-icon small en-preschool">p</div>
-        <div class="label en-preschool">Preschool</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox" class="checkbox"/>
-        <div class="en-icon small en-preschool-circle">pc</div>
-        <div class="label en-preschool-circle">Preschool Circles</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox" class="checkbox" />
-        <div class="en-icon small en-preschool-district">pd</div>
-        <div class="label en-preschool-district">Preschool District</div>
-        <div class="clr"></div>
-      </label>
-
-      <div class="hr"></div>
-
-      <label class="legend-item">
-        <input type="checkbox" class="checkbox" />
-        <div class="en-icon small en-preschool-project">pp</div>
-        <div class="label en-preschool-project">Preschool Project</div>
-        <div class="clr"></div>
-      </label>
-    </div>
 
 <!--     <div class="map-tools">
       <a class="tool tool-filter" id="filter-button"></a>
@@ -190,161 +84,13 @@
 
     <div class="msg-filter-radius hide" id="msg-filter-radius">Click and drag on the map to draw circle</div>
 
-    <section class="map-legend hide">
-      <div class="content">
-        <div class="legend">
-          <label class="legend-item first">
-            <input type="checkbox" class="checkbox" />
-            <div class="en-icon small en-school">s</div>
-            <div class="label en-school">School</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox"  class="checkbox" />
-            <div class="en-icon small en-school-block">sb</div>
-            <div class="label en-school-block">School Block</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox"  class="checkbox" />
-            <div class="en-icon small en-school-cluster">sc</div>
-            <div class="label en-school-cluster">School Cluster</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox"  class="checkbox" />
-            <div class="en-icon small en-school-district">sd</div>
-            <div class="label en-school-district">School District</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox"  class="checkbox" />
-            <div class="en-icon small en-preschool">p</div>
-            <div class="label en-preschool">Preschool</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox" class="checkbox" />
-            <div class="en-icon small en-preschool-circle">pc</div>
-            <div class="label en-preschool-circle">Preschool Circles</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox" class="checkbox" />
-            <div class="en-icon small en-preschool-district">pd</div>
-            <div class="label en-preschool-district">Preschool District</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr"></div>
-
-          <label class="legend-item">
-            <input type="checkbox" class="checkbox" />
-            <div class="en-icon small en-preschool-project">pp</div>
-            <div class="label en-preschool-project">Preschool Project</div>
-            <div class="clr"></div>
-          </label>
-
-          <div class="hr last"></div>
-
-        </div>
-        <div class="tool">
-          <a href="" class="tool-item first">
-            <div class="tool-icon">f</div>
-            <div class="label">Filter</div>
-            <div class="clr"></div>
-          </a>
-          <a href="" class="tool-item">
-            <div class="tool-icon">r</div>
-            <div class="label">Radius</div>
-            <div class="clr"></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="compare_flow" class="school-comparison-flow is-map-page hide">
-      <div class="content">
-        <div class="compare-box">
-          <a href="#" class="button-close js-comparison-close" title="Close"><span></span></a>
-
-          <div class="vs-separator">
-            <!-- <a href="" class="label fl js-comparison-clear-left">clear</a> -->
-            <div class="label bg fl">Comparing</div>
-            <a href="" class="label fl js-comparison-clear-right">clear</a>
-            <div class="vr"></div>
-            <div class="vs-label">vs</div>
-          </div>
-
-          <div class="info school left-align js-comparison-option-left">
-
-          </div>
-
-          <div class="info school-district right-align hide js-comparison-option-right">
-
-          </div>
-
-          <div class="info default right-align js-comparison-default-right">
-            <a href="" class="title-select ta-r mar_top_15 js-comparison-show-options-right">
-              <span class="button-hollow">Click to search for an entity</span>
-            </a>
-            <!-- <div class="text-select ta-r">or select one by clicking a pin on the map below</div> -->
-
-            <div class="clr"></div>
-          </div>
-          <div class="clr"></div>
-
-          <a href="" class="btn compare-now js-btn-compare">Compare now</a>
-          <a href="" class="btn cancel js-btn-cancel js-comparison-close show">Cancel</a>
-        </div>
-
-        <div class="comparison-result-wrapper js-comparison-result-wrapper">
-
-        </div>
-
-      </div>
-
-      <div class="dropdown-wrapper" id="dropdown_wrapper">
-        <div class="triangle"></div>
-        <div class="search-box">
-          <input type="text" id="comparison-search-select" class="input-search" placeholder="Search"/>
-          <!-- <a href="" class="icon"><i class="icon-search"></i></a> -->
-          <div class="clr"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="map_overlay" class="map_overlay hide">
-      <a href="" class="button-close js-close-info" title="Close"><span></span></a>
-      <div class="content"></div>
-    </section>
-
+    {% include 'includes/_compare_flow.html' %}
+    
     <div class="mobile-details-wrapper" id="mobile-details-wrapper"></div>
 
   </div>
 
   {% include 'frontend_templates/map.html' %}
-
-  <div id="modal_overlay" class="modal-overlay"></div>
-  <div id="modal_wrapper"></div>
 
   {% include 'frontend_templates/compare.html' %}
   

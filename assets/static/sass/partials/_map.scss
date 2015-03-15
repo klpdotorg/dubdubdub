@@ -1,0 +1,295 @@
+//map: popup
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0;  
+}
+
+.leaflet-popup-content {
+  padding: $base-spacing;
+}
+
+.map-pin-details {
+  .icon-number {
+    @extend %font-small;
+    padding: $base-spacing-sm 7px;
+    @extend %brand-green;
+    position: absolute;
+    right: $base-spacing-lg;
+  }    
+}
+
+.map-heading-main {
+  @extend %brand-green;
+  @extend %uppercase;
+  padding-right: $base-spacing-lg * 2;
+  word-wrap: break-word;
+  margin: 0 0 $base-spacing-sm 0;
+}
+
+.map-location-labels {
+  @extend %font-small;
+  @extend %bold; 
+  word-wrap: break-word;
+}
+
+.map-label-each {
+  @extend %vertical-inline-top;
+  padding-right: $base-spacing;
+
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.map-pin-details {
+  .map-label-each {
+    width: 33.33%;
+  }
+}
+
+.leaflet-container a {
+  &.brand-green {
+    @extend %brand-green;
+  }
+
+  &.brand-turquoise {
+    @extend %brand-turquoise;
+  }
+
+  &.button-grey, &.button {
+    color: white;
+    font-size: 85%;
+    padding: $base-spacing;    
+  }
+
+  &.button--sm {
+    @extend %white;
+    @extend %font-smallest;
+    padding: $base-spacing-sm $base-spacing;    
+  }
+}
+
+
+.map-label-title {
+  @extend %grey-steel;
+  @extend %uppercase;
+  letter-spacing: 1px;
+}
+
+.facility-items {
+  display: none;
+  @extend %center-text;
+
+  @include media-med {
+    display: block;    
+  }
+
+  .k-icon {
+    @extend %brand-blue;
+    @extend %vertical-inline-top;
+    @extend %font-icon;
+    font-size: 18px;
+    margin: 0 0 $base-spacing-mid 0;
+
+    &:before {
+      margin: $base-spacing-sm;
+    }
+  }
+}
+
+.gender-icons-title, .facility-icons-title {
+  @extend %uppercase;
+  @extend %font-small;
+  @extend %bold; 
+  @extend %center-text;
+  letter-spacing: 1px;
+  @extend %grey-steel;
+  margin-top: $base-spacing-mid;
+}
+
+.gender-icons {
+  @extend %grid-parent;
+  margin-bottom: $base-spacing;
+}
+
+.gender-item {
+  @extend %grid-child;
+  width: 33.33%;
+  float: left;
+
+  .k-icon {
+    margin-left: $base-spacing-mid;
+  }
+}
+
+.gender-item-count { 
+  @extend %bold; 
+  @extend %h2;
+  padding: $base-spacing-sm 0 0 0;
+}
+
+.gender-item-boy {
+  .gender-item-count {
+    @extend %brand-blue;
+  }
+}
+
+.gender-item-girl {
+  .gender-item-count {
+    color: $pink-salmon;
+  }
+}
+
+.gender-item-total {
+  .gender-item-count {
+    color: $blue-ink;
+  }
+}
+
+//leaflet map overrides
+.marker-cluster-school {
+  background-color: rgba($brand-green, 0.6);
+}
+.marker-cluster-school div {
+    background-color: rgba(38, 178, 98, 0.6);
+} //WHERE DOES THIS SHOW??????
+
+.marker-cluster-preschool {
+    background-color: rgba(133, 100, 216, 0.6);
+}  //WHERE DOES THIS SHOW??????
+.marker-cluster-preschool div {
+    background-color: rgba(133, 100, 216, 0.6);
+}  //WHERE DOES THIS SHOW??????
+
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+  margin-left: -20px !important;
+  margin-top: -20px !important;
+  width: 40px !important;
+  height: 40px !important;
+} //DO WE NEED ALL THIS?
+
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 15px;
+  font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+} //DO WE NEED ALL THIS?
+
+.marker-cluster span {
+  line-height: 30px;
+}  //DO WE NEED ALL THIS?
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+  border: none;
+}  //DO WE NEED ALL THIS?
+
+.leaflet-control-layers .leaflet-control-layers-toggle {
+  background-image: url("../images/map/layers.png");
+  width: 36px;
+  height: 36px;
+}
+
+.leaflet-control-layers-selector {
+  top: 5px;
+}
+
+.en-icon {
+  display: inline-block;
+}
+
+.leaflet-control-layers label {
+  font-size: 12px;
+  line-height: 26px;
+  @extend %bold; 
+  letter-spacing: 1px;
+  @extend %uppercase;
+  text-decoration: none;
+  padding: $base-spacing 0;
+  border-bottom: 1px solid $border-color;
+}
+
+.leaflet-control-layers label:last-of-type {
+  border-bottom: none;
+}
+
+.leaflet-control-layers.leaflet-control-layers-expanded {
+  box-shadow: 0px 3px 3px 0px rgba(77, 77, 77, 0.3);
+  width: 220px;
+  border-radius: 0px;
+  background: none repeat scroll 0% 0% #F4F4F4;
+}
+
+.leaflet-container {
+  @extend %font-base-family;
+}
+
+.leaflet-control-layers input {
+  float: right;
+}
+
+.filter-tool {
+  background-color: white;
+  background-position: 50% 50%;
+  background-image: url('../images/map/filters.png');
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 36px;
+  display: block;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+
+  &:hover {
+    @extend %grey-mist-bg;
+  }
+}
+
+.filter-tool.active {
+  background-image: url('../images/map/filters_active.png');
+}
+
+
+.leaflet-draw-toolbar .leaflet-draw-draw-circle {
+    width: 36px;
+    height: 36px;
+
+  &:hover {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.leaflet-draw .leaflet-draw-toolbar a {
+  background-image: url('../images/map/radius.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.leaflet-draw-toolbar a.active {
+    background-image: url('../images/map/radius_active.png');
+}
+
+.leaflet-right .leaflet-draw-actions {
+  right: 36px;
+}
+
+.leaflet-control-container {
+  display: none;
+
+  @include media-med {
+    display: block;    
+  }
+}
+
+.button-map-compare {
+  display: none;
+
+  @include media-lg {
+    display: inline-block;    
+  }
+}
