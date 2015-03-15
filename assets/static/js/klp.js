@@ -46,6 +46,7 @@
         //dropdown navigation - used for top menu navigation
         $(".js-dropdown li:has(ul)").click(function(event){
             event.stopPropagation();
+            $('ul.nav').removeClass("nav-open");
             var thisNav = $(this).closest(".js-dropdown").find('ul');
             $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
             if (this == event.target || this == $(event.target).parent()[0]) {
@@ -60,7 +61,7 @@
             $(".js-dropdown li").removeClass("selected");
             $(this).addClass("selected");
         });
-    
+
         $(window).click(function(){
             //slide up an open menu if user clicks anywhere else on window        
             $(".js-dropdown ul").slideUp(200).closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
@@ -72,6 +73,7 @@
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
             $('.js-dropdown').toggleClass('nav-open');
+            $('.profile-login-block ul:visible').hide();
         });
 
         $('.js-dropdown').click(function(event){
