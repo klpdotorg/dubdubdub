@@ -46,7 +46,6 @@
         //dropdown navigation - used for top menu navigation
         $(".js-dropdown li:has(ul)").click(function(event){
             event.stopPropagation();
-            $('ul.nav').removeClass("nav-open");
             var thisNav = $(this).closest(".js-dropdown").find('ul');
             $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
             if (this == event.target || this == $(event.target).parent()[0]) {
@@ -56,6 +55,10 @@
                 return false;
             }
         }).addClass('has_ul');
+
+        $('.profile-login-block li:has(ul)').click(function() {
+            $('ul.nav').removeClass("nav-open");
+        });
 
         $(".js-dropdown ul li").click(function() {
             $(".js-dropdown li").removeClass("selected");
