@@ -60,11 +60,9 @@ Clone the development database:
 
 sudo -u postgres createdb -T existing_db_name test_db_name
 
-Create a local test_local_settings file by doing the following:
+All test settings are in the test_settings.py file.
 
-    $ cp dubdubdub/local_test_settings.py.sample dubdubdub/local_test_settings.py
-
-Modify the database name in local_test_settings.py to reflect the name you gave to your test db.
+Modify the database name in test_settings.py to reflect the name you gave to your test db.
 
 Make sure the runtests.sh script has execute permissions. Then, run the shell script as follows to run the existing unit tests:
 
