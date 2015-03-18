@@ -21,9 +21,9 @@
 {% block endbody %}
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script>
-
+ 
   {% endcompress %}
+   <!-- <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script> -->
   <script>
   // Escape HTML strings
   function escapeHtml(str) {
@@ -312,16 +312,62 @@
       </div>
     </div>
 
-    <div class="container-mid">
+    <div class="container">
       <h2 class="heading-secondary brand-purple" id="media-queries">Grid: Media Queries</h2>
       <div class="style-block">
-        <p>
-          By and large, the site uses min-width media queries, on the assumption that the initial layout is mobile-first and stacked, and columns are added incrementally, as the screen size gets larger.
-        </p>
-        <ul class="ul-base">
-          <li>The 3 media min-width queries are 600px, 750px and 990px.</li>
-          <li>The 2 max-width media queries are 599px and 749px. These are used sparingly.</li>
-        </ul>
+        <div class="container-mid">
+          <p>
+            By and large, the site uses min-width media queries, on the assumption that the initial layout is mobile-first and stacked, and columns are added incrementally, as the screen size gets larger.
+          </p>
+          <ul class="ul-base">
+            <li>Media queries are added after the selector in question.</li>
+            <li>Media queries are available as Sass mixins and can be nested, which is an advantage.</li>
+            <li><span class="demo-do">Do</span> add min-width media queries in the order of smallest to largest.</li>
+            <li>The 4 min-width media queries available as mixins are:
+             <ul>
+               <li>media-sm: 600px</li>
+               <li>media-med: 750px</li>
+               <li>media-lg: 990px</li>
+               <li>media-lg-x: 1200px (<em>used sparingly</em>)</li>
+             </ul>
+            </li>
+            <li>The 1 max-width media query is 749px. This is used sparingly.</li>
+          </ul>
+
+          <div class="center-text">
+            <p class="bold">Below is a slightly ridiculous example.</p>
+            <p>Note the nesting of the media queries and the four breakpoints.</p>
+            <p>You can always refer to the variables or globals partial to see the actual value of a media query mixin.</p>          
+          </div>
+
+        </div> <!-- /container-mid -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+        <div class="style-block-demo">
+<style>
+  .selecter {
+    max-width: 250px;
+
+    @include media-sm {
+      max-width: 300px;
+    }
+
+    @include media-med {
+      max-width: 350px;
+    }
+
+    @include media-lg {
+      max-width: 400px;
+    }
+
+    @include media-lg-x {
+      max-width: 450px;
+    }
+  }
+</style>
+</div> <!-- /style-block-demo -->
       </div> <!-- /style-block -->
     </div> <!-- /container -->
 
@@ -541,13 +587,13 @@
           <p><span class="demo-do">Do</span> create responsive grids using the recommendations below.</p>
           <p>Since the site is built mobile first, it would be preferable not to add classes, as indicated in the demos above, since they would have to be reset for mobile, to become full-width sections (in most cases, but not all).</p>
           <p>Instead, consider using the <span class="bold">handy grid mixins</span> available on media query breakpoints. The mixins have the same names as the grid classes, i.e. <em>grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</em> and grid placeholders.</p>
-          <p>Let's look at a simple demo below, using classes from the existing site. On a media query breakpoint of 750px, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
+          <p>Let's look at a simple demo below, using classes from the existing site. On a medium media query breakpoint, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
           <p>Thus you can float columns of any widths (that add up to 100%) on any media query, to get a truly flexible grid.</p>          
         </div>
 
         <div class="style-block-demo center-text">
 <style>
-@media only screen and (min-width: 750px) {
+@include media-med {
   .partners-list-block {
     @include grid-parent;
   }
@@ -1392,7 +1438,8 @@
     <div class="container">
       <div class="style-block">
         <div class="heading-secondary brand-purple" id="tables-responsive">Tables: Responsive</div>
-        <div class="center-text">Wrap the table in a class of table-responsive-wrap</div>
+        <h3 class="heading-tertiary center-text">Option 1</h3>
+        <div class="center-text">Wrap the table in a class of <em>table-responsive-wrap</em></div>
         <div class="base-spacing"></div>
         <div class="style-block-demo">
 <div class="table-responsive-wrap">        
@@ -1443,14 +1490,19 @@
 
     <div class="container">
       <div class="container-mid">
-        <p>A more elegant way to do responsive tables is to reset them to a list view (using display block on a max-width media query), and append the table headings using generated content or JS.</p>
-        <p>Since this varies from table to table, an example from the site has been added below for reference. You can resize the window to see what happens.</p>
-        <p><span class="demo-do">Do</span> <span class="bold">use the demo below only as a reference</span>, and create a new class if you need to create a similar table.</p>
+        <h3 class="heading-tertiary center-text">Option 2</h3>
+        <ul class="ul-base">
+          <li>A more elegant way, with a little more effort, is to add an additional class of <em>table-list-view</em> to a table with class <em>table-base</em></li>
+          <li>Resize the window to less than 750px and see how the table below morphs into a list view.</li>
+          <li>You can add an additional class to create overrides, i.e. for setting widths to table cells (on larger screens) and appending headings to them via CSS generated content or JS.</li>
+          <li>The demo below reuses an example from the site. The class <em>table-base-volunteer</em> adds widths to some of the td elements on larger screens and appends a table heading to the <strong>School</strong> td cells on smaller screens.</li>
+          <li><span class="demo-do">Do</span> <span class="bold">use the demo below only as a reference</span>, and replace the <em>table-base-volunteer</em> class with one of your own.</li>
+        </ul>
       </div> 
 
       <div class="style-block">
         <div class="style-block-demo">
-<table class="table-base table-base-volunteer">
+<table class="table-base table-list-view table-base-volunteer">
   <tr class="table-base-heading">
     <th>Title</th>
     <th>School</th>
@@ -1976,9 +2028,9 @@ $(document).ready(function(){
   <li>
     <span class="fa fa-user"></span>
     <ul>
-      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</a></li>
-      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</a></li>
-      <li><span class="fa fa-plane icon-left"></span>Dropdown item</a></li>
+      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-plane icon-left"></span>Dropdown item</li>
     </ul>
   </li>
 </ul>

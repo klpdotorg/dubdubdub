@@ -56,11 +56,15 @@
             }
         }).addClass('has_ul');
 
+        $('.profile-login-block li:has(ul)').click(function() {
+            $('ul.nav').removeClass("nav-open");
+        });
+
         $(".js-dropdown ul li").click(function() {
             $(".js-dropdown li").removeClass("selected");
             $(this).addClass("selected");
         });
-    
+
         $(window).click(function(){
             //slide up an open menu if user clicks anywhere else on window        
             $(".js-dropdown ul").slideUp(200).closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
@@ -72,6 +76,7 @@
         $('.js-nav-trigger').click(function(event){
             event.stopPropagation();
             $('.js-dropdown').toggleClass('nav-open');
+            $('.profile-login-block ul:visible').hide();
         });
 
         $('.js-dropdown').click(function(event){

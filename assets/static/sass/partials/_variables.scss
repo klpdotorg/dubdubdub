@@ -12,10 +12,19 @@ $grid-padding: 20px;
 $header-height: 45px;
 $nav-width: 220px;
 $subheader-height: 35px;
-$map-subheader-height: 55px;
+$map-subheader-height: 53px;
 $form-input-height: 35px;
 $school-map-spacing: 160px;
 $sidebar-map-width: 300px;
+
+
+/*-------------------------------------*/
+// MEDIA QUERY BREAKPOINTS
+
+$mq-lg-x: 1200px;
+$mq-lg: 990px;
+$mq-med: 750px;
+$mq-sm: 600px;
 
 
 /*-------------------------------------*/

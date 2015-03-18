@@ -39,6 +39,45 @@
 
 
 /*-------------------------------------*/
+// MIXINS: MEDIA QUERIES
+
+// extra large: 1200px
+@mixin media-lg-x {
+  @media only screen and (min-width: #{$mq-lg-x}) {
+    @content;
+  }
+}
+
+// large: 990px
+@mixin media-lg {
+  @media only screen and  (min-width: #{$mq-lg}) {
+    @content;
+  }
+}
+
+// medium: 750px
+@mixin media-med {
+  @media only screen and  (min-width: #{$mq-med}) {
+    @content;
+  }
+}
+
+// small: max-width: 749px
+@mixin media-med-maxwidth {
+  @media only screen and (max-width: #{$mq-med - 1}) {
+    @content;
+  }
+}
+
+// small: 600px
+@mixin media-sm {
+  @media only screen and  (min-width: #{$mq-sm}) {
+    @content;
+  }
+}
+
+
+/*-------------------------------------*/
 // CLASSES, PLACEHOLDERS AND MIXINS
 // mixins may need to be used inside media queries, since placeholders are not supported inside a media query statement unless specified again there
 
@@ -332,24 +371,9 @@ img, video {
 
 //clearing floats
 .clear {
-    clear: both;
+  clear: both;
 }
 
-.clearfix, %clearfix {
-    &:after {
-      content: "";
-      display: table;
-      clear: both;
-  }
-}
-
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
 
 // Helpers: Alignment: Right
 
@@ -468,11 +492,13 @@ img, video {
 .dropdown-base {
   position: relative;
   @extend %font-smaller;
+  text-align: left;
   
   > li {
     display: inline-block;
     @extend %border-radius-sm;
     @extend %border-base;
+    @extend %grey-mist-bg;
   }
 
   ul {
@@ -629,6 +655,65 @@ img, video {
   @extend %border-base;
   padding: $base-spacing;
   margin-top: ($base-spacing-lg-x) + 15;
+
+  @include media-med {
+    float: right;
+    width: 30%;
+  }
+}
+
+/*-------------------------------------*/
+//TABLES: LIST VIEW ON SMALLER SCREENS
+
+@include media-med-maxwidth {
+  .table-base.table-list-view {
+    display: block;
+
+    .table-base-heading {
+      display: none;
+    }
+
+    tbody, tr, td, th {
+      display: block;
+      width: 100%;
+    }
+
+    tr, td, th {
+      padding: $base-spacing-sm 0;
+    }
+    
+    tr td:nth-of-type(1), tr td:nth-of-type(2) {
+      width: 100%;
+    }
+
+    td {
+      border-bottom: none;
+    }
+
+    tr {
+      border-bottom: 1px solid $border-color;
+      padding: $base-spacing-mid $base-spacing;
+    }
+  }  
+
+//labels for some td cells on smaller screens for list view tables
+
+  .td-label-school {
+    &:before {
+      content: "School";
+      margin-right: $base-spacing-sm;
+      color: $grey-silver;
+    }
+  }
+
+  .td-label-items {
+    &:before {
+      content: "Items";
+      margin-right: $base-spacing-sm;
+      color: $grey-silver;
+    }
+  }  
+
 }
 
 /*-------------------------------------*/
@@ -861,6 +946,12 @@ a.button {
   text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
 
+  @include media-sm {
+    left: 20%;
+    right: 20%;
+    @include container;    
+  }
+
   &:after {
     @extend %font-icon;
     position: absolute;
@@ -960,13 +1051,27 @@ a.button {
 /* BANNERS: FULLWIDTH */
 
 .banner-full { 
-  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-2x;
+  padding: $base-spacing-lg-x $base-spacing-lg $base-spacing-lg-x;  
   background-repeat: no-repeat;
   background-position: center center;
   @extend %grey-steel-bg;
   background-size: cover;
   @extend %center-text;
   position: relative;
+
+  .heading-primary {
+    font-size: 140%;
+    margin: $base-spacing-lg-x 0;
+  }
+
+  @include media-sm {
+    padding-bottom: $base-spacing-lg-2x;  
+
+    .heading-primary {
+      font-size: 220%;
+      margin: $base-spacing-lg-2x 0;
+    }
+  }
 }
 
 .banner-content {
@@ -1004,6 +1109,10 @@ a.button {
   @extend %center-text;
   letter-spacing: 1px;
   display: none;
+
+  @include media-med {
+    display: block;    
+  }
 }
 
 .scroll-smooth-links {
@@ -1111,6 +1220,12 @@ a.button {
 /* MODULE: IMG */
 // e.g. home page and volunteer page
 
+@include media-med {
+  .module-img-block {
+    @include grid-parent;
+  }  
+}
+
 .module-img-wrapper {
   .heading-secondary {
     margin-bottom: $base-spacing-lg-2x;
@@ -1121,6 +1236,17 @@ a.button {
   @extend %center-text;
   @extend %font-light;
   margin-bottom: $base-spacing-lg-2x;
+
+  @include media-med {
+    width: 33.33%;
+    @include vertical-inline-top;
+    @include grid-child;
+    margin-bottom: 0;    
+
+    h3:first-of-type {
+      padding: $base-spacing 0;
+    }
+  }
 
   &:last-of-type {
     margin-bottom: 0;
@@ -1153,6 +1279,11 @@ a.button {
   img {
     @extend %dead-center;
     max-width: 85%;
+  
+    @include media-sm {
+      max-width: none;  
+    }
+
   }  
 }
 
@@ -1235,69 +1366,121 @@ a.button {
 /*-------------------------------------*/
 // TABS
 
-  .tab-wrap {
-    @extend %border-base;
+.tab-wrap {
+  @extend %border-base;
+  border-bottom: none;
+  margin-top: $base-spacing-lg-x;
+
+  @include media-med {
+    border: none;      
+  }
+}
+
+.tab-wrap-widescreen {
+  display: none;
+  @extend %container;
+
+  @include media-med {
+    display: block;    
+  }
+}
+
+.tab-heading {
+  text-decoration: none;
+  display: block;
+  padding: $base-spacing-sm $base-spacing;
+  @extend %uppercase;
+  @extend %font-smallest;
+  @extend %bold; 
+  border-bottom: 1px solid;
+  cursor: pointer;
+  color: $white;
+  @extend %grey-steel-bg;
+
+  @include media-med {
+    @include vertical-inline-top;
+    color: $grey-gravel;
+    position: relative;
+    top: 1px;
     border-bottom: none;
-    margin-top: $base-spacing-lg-x;
+    background: none;      
   }
 
-  .tab-wrap-widescreen {
-    display: none;
-    @extend %container;
-  }
+  &.tab-heading-active {
+    @extend %brand-blue-bg;
 
+    @include media-med {
+      background: $white;    
+    }
+  }
+}
+
+.tab-heading, .tab-heading-active {
+  border-color: $grey-cloud;
+}
+
+@include media-med {
+  .tab-heading-active {
+    border: 1px solid $border-color;
+    border-bottom: none;
+  }  
+}
+
+.tab-each {
   .tab-heading {
-    text-decoration: none;
-    display: block;
-    padding: $base-spacing-sm $base-spacing;
-    @extend %uppercase;
-    @extend %font-smallest;
-    @extend %bold; 
+    position: relative;
+    padding: $base-spacing $base-spacing-lg $base-spacing;
+
+    &:after {
+      content: "\f107";
+      @extend %font-icon;
+      position: absolute;
+      right: $base-spacing;
+      top: 8px;
+      @extend %font-larger;
+    }
+
+    @include media-med {
+      display: none;
+    }
+  }
+}
+
+.tab-content {
+  display: none;
+  padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
+  border-bottom: 1px solid $border-color;
+  
+  @include media-med {
+    border-top: 1px solid;
     border-bottom: 1px solid;
-    cursor: pointer;
-    color: $white;
-    @extend %grey-steel-bg;
-
-    &.tab-heading-active {
-      @extend %brand-blue-bg;
-    }
+    border-color:  $grey-cloud;    
   }
 
-  .tab-heading, .tab-heading-active {
-    border-color: $grey-cloud;
+  &.tab-active {
+    display: block;
   }
+}
 
 
-  .tab-each {
-    .tab-heading {
-      position: relative;
-      padding: $base-spacing $base-spacing-lg $base-spacing;
-
-      &:after {
-        content: "\f107";
-        @extend %font-icon;
-        position: absolute;
-        right: $base-spacing;
-        top: 8px;
-        @extend %font-larger;
-      }
-    }
-  }
-
-  .tab-content {
-    display: none;
-    padding: $base-spacing-lg-x $base-spacing $base-spacing $base-spacing;
-    border-bottom: 1px solid $border-color;
-    
-    &.tab-active {
-      display: block;
-    }
-  }
-
+/*-------------------------------------*/
+// FLOATED LEFT AND RIGHT IMAGES
 
 .float-left-padding, .float-right-padding {
   margin: $base-spacing-lg-x auto;
   display: block;
+}
+
+@include media-sm {
+  .float-left-padding {
+    @include float-left;
+    margin: $base-spacing $base-spacing-lg-x $base-spacing 0;
+  }
+
+  .float-right-padding {
+    @include float-right;
+    margin: $base-spacing 0 $base-spacing $base-spacing-lg-x;
+  }  
 }
 
 

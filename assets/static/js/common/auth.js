@@ -85,35 +85,58 @@
         //profile options menu wrapper
         var $profile_options_wrapper = $('.profile-options-wrapper');
 
-        //hide menu on clicking window
-        $(window).on('click', function(e) {
-            if ($profile_options_wrapper.hasClass('show-drop')) {
-                $profile_options_wrapper.removeClass('show-drop');
-            }
-        });
+        // //hide menu on clicking window
+        // $(window).on('click', function(e) {
+        //     if ($profile_options_wrapper.hasClass('show-drop')) {
+        //         $profile_options_wrapper.removeClass('show-drop');
+        //     }
+        // });
 
-        //show profile menu on clicking button
-        $(document).on("click", ".profile-options-wrapper .profile-options", function(e){
+        $('.js-login-trigger').click(function(e){
             //console.log("clicked auth");
+            //console.log("hello");
             e.stopPropagation();
-
+            e.preventDefault();
             //get user login state (stored in DOM data)
             var $user = $('#authUsername');
             var state = $user.data('state');
-            
+            console.log("state", state);
             //if user is not logged in, open login modal
             if (state === 'anonymous') {
                 klp.login_modal.open();
             } else {
                 //else show profile drop-down
-                e.preventDefault();
-                if(!$(".profile-options-wrapper").hasClass("show-drop")) {
-                    $(".profile-options-wrapper").addClass("show-drop");
-                } else {
-                    $(".profile-options-wrapper").removeClass("show-drop");
-                }
+                // if(!$(".profile-options-wrapper").hasClass("show-drop")) {
+                //     $(".profile-options-wrapper").addClass("show-drop");
+                // } else {
+                //     $(".profile-options-wrapper").removeClass("show-drop");
+                // }
             }
         });
+
+        // //show profile menu on clicking button
+        // $(document).on("click", ".js-login-trigger", function(e){
+        //     //console.log("clicked auth");
+        //     console.log("hello");
+        //     e.stopPropagation();
+
+        //     //get user login state (stored in DOM data)
+        //     var $user = $('#authUsername');
+        //     var state = $user.data('state');
+        //     console.log("state", state);
+        //     //if user is not logged in, open login modal
+        //     if (state === 'anonymous') {
+        //         klp.login_modal.open();
+        //     } else {
+        //         //else show profile drop-down
+        //         e.preventDefault();
+        //         // if(!$(".profile-options-wrapper").hasClass("show-drop")) {
+        //         //     $(".profile-options-wrapper").addClass("show-drop");
+        //         // } else {
+        //         //     $(".profile-options-wrapper").removeClass("show-drop");
+        //         // }
+        //     }
+        // });
 
         //handle logout
         $('#logoutUser').click(function(e) {
@@ -129,9 +152,11 @@
             var lastName = data.last_name;
             var name = firstName + " " + lastName;
             var $user = $('#authUsername');
-            $user.text('');
+            //$user.text('');
             $user.data('state', 'loggedin');
-            $user.addClass("profile-logged-in");
+            //$user.addClass("profile-logged-in");
+            $('#preloginContainer').hide();
+            $('#postloginContainer').show();
             var profileURL = "/profile/" + data.id;
             var editProfileURL = profileURL + "/edit";
             $('#userProfileBtn').attr("href", profileURL);
@@ -141,9 +166,11 @@
         //handle UI state change on logout event
         t.events.on('logout', function(e) {
             var $user = $('#authUsername');
-            $user.text("Login");
+            //$user.text("Login");
             $user.data('state', 'anonymous');
-            $user.removeClass("profile-logged-in");
+            $('#preloginContainer').show();
+            $('#postloginContainer').hide();
+            //$user.removeClass("profile-logged-in");
         });
 
         //on initialization, check if user has a token

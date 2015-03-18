@@ -28,7 +28,7 @@
       <div data-tab="details" class="js-tabs-link tab-heading tab-heading-active">Edit Details</div>
       <!-- <li data-tab="members" class="js-tab-link">Members</li> -->
       <div data-tab="volunteer" class="js-tabs-link tab-heading">Volunteer Opportunities</div>
-      <div data-tab="donation" class="js-tabs-link tab-heading">Donation Requests</div>
+      <!-- <div data-tab="donation" class="js-tabs-link tab-heading">Donation Requests</div> -->
     </div>
 
     <div class="tab-each">
@@ -186,7 +186,7 @@
           <a class="button" href="/organisation/{{ object.id }}/volunteer_activity">
           Add Volunteer Activity
           </a>
-          <table class="table-base table-base-volunteer" id="jsVolunteerTable">
+          <table class="table-base table-list-view table-base-volunteer" id="jsVolunteerTable">
             <tr class="table-base-heading">
               <th>Title</th>
               <th>School</th>
@@ -204,7 +204,7 @@
           <a class="button" href="/organisation/{{ object.id }}/donation_requirement">
           Add Donation Request
           </a>
-          <table class="table-base table-base-donation" id="donationTable">
+          <table class="table-base table-list-view table-base-donation" id="donationTable">
             <tr class="table-base-heading">
               <th>Title</th>
               <th>School</th>

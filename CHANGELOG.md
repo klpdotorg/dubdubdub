@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.14: 4c8fbca1b9617a5015f8b620ef53ec030d8cfda8
+  - Front-end re-write + styleguide
+
 Release 0.13: f0688aca75e84cd5c0626e2073057e87fc8135e0
   - Additional profile fields for organisations / users
   - Some CSS clean-ups and template corrections
