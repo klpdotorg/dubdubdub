@@ -1,24 +1,22 @@
 /* Defining mixins for the chart trials page*/
 
-.chart-parent{
-  @include grid-parent;
-}
+@include media-med {
+	.chart-parent{
+	  @include grid-parent;
+	}
 
-@media only screen and (min-width: 600px) {
 	.chart-half-item{
 	  @include col-50-flt;
 	}
-}
 
-@media only screen and (min-width: 600px) {
+
 	.chart-athird-item{
-	  @include col-33-flt;
+		 @include col-33-flt;
 	}
-}
 
-@media only screen and (min-width: 600px) {
+
 	.chart-quarter-item{
-	  @include col-25-flt;
+		@include col-25-flt;
 	}
 }
 
@@ -29,7 +27,9 @@
 }
 
 .img-symbol {
-	margin-top:25px;
+	align: middle;
+	padding-top: 25px;
+	margin:auto;
 }
 
 .bar-label {

@@ -3912,27 +3912,27 @@ code {
     left: 0; }
 
 /* Defining mixins for the chart trials page*/
-.chart-parent {
-  margin-left: -20px;
-  margin-right: -20px; }
-  .chart-parent:after {
-    content: "";
-    display: table;
-    clear: both; }
+@media only screen and (min-width: 750px) {
+  .chart-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .chart-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
 
-@media only screen and (min-width: 600px) {
   .chart-half-item {
     width: 50%;
     float: left;
     padding-left: 20px;
-    padding-right: 20px; } }
-@media only screen and (min-width: 600px) {
+    padding-right: 20px; }
+
   .chart-athird-item {
     width: 33%;
     float: left;
     padding-left: 20px;
-    padding-right: 20px; } }
-@media only screen and (min-width: 600px) {
+    padding-right: 20px; }
+
   .chart-quarter-item {
     width: 25%;
     float: left;
@@ -3943,7 +3943,9 @@ code {
   text-align: left; }
 
 .img-symbol {
-  margin-top: 25px; }
+  align: middle;
+  padding-top: 25px;
+  margin: auto; }
 
 .bar-label {
   width: 100%; }
