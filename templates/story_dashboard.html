@@ -20,8 +20,8 @@
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/story/chartist/chartist-plugin-pointlabels.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/story/chartist/chartist.js' %}"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <!--script type="text/javascript" src="{% static 'js/story/chartist/chartist.js' %}"></script-->
   <script type="text/javascript" src="{% static 'js/story/story_dashboard.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/accordion.js' %}"></script>
 
@@ -144,18 +144,26 @@
 				<li><a href='#' class='head align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="ivrs">
 						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+						<div class="chart-parent">
+			  	    <div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+					  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+					  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
+					  	</div>
+					  	<div class="chart-quarter-item">
+				  			<div class="heading-tiny-uppercase align-left" >Academic Year</div>
+				  			<h2 class="heading-secondary brand-blue align-left">2014-2015</h2> 
+				  		</div>
+				  		<div class="chart-quarter-item">
+				  			<div class="heading-tiny-uppercase align-left" >Calls Received</div>
+				  			<h2 class="heading-secondary brand-blue align-left">800</h2> 
+				  		</div>
+				  	</div><!--end inner parent-->
 					  <div class="chart-parent">
 					  	<div class="chart-half-item">
-					  		<div class="chart-parent">
-					  	    <div class="chart-half-item">
-							  		<div class="heading-tiny-uppercase align-left" >Stories</div>
-							  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
-							  	</div>
-							  	<div class="chart-half-item">
-							  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
-							  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
-							  	</div>
-							  </div><!--end inner parent-->
 				  			<div class="bar-label">How would you categorize schools in this boundary?</div>
 				  			<div class="bar-graph-wrap">
 									<div class="bar-label green-leaf">A Grade</div>
@@ -199,18 +207,8 @@
 							</div><!-- /chart-half-item -->
 
 							<div class="chart-half-item">
-							  <div class="chart-parent">
-							  	<div class="chart-half-item">
-						  		<div class="heading-tiny-uppercase align-left" >Academic Year</div>
-						  		<h2 class="heading-secondary brand-blue align-left">2014-2015</h2> 
-						  	</div>
-						  	<div class="chart-half-item">
-						  		<div class="heading-tiny-uppercase align-left" >Calls Received</div>
-						  		<h2 class="heading-secondary brand-blue align-left">800</h2> 
-						  	</div>
-				  		</div><!--end inner parent-->
 								<div class="heading-tiny-uppercase">Call Volume distribution</div>
-								<div id="chart_volume" class="ct-chart ct-minor-seventh"></div>
+								<div id="chart_ivrs" class="ct-chart ct-minor-seventh"></div>
 					    </div> <!-- /chart-half-item -->
 
 				  	</div> <!--/chart-parent-->
