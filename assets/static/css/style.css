@@ -2713,7 +2713,8 @@ body {
   background-image: url("/static/images/partners/AksharaMath1.jpg"); }
 
 .banner-pratham-learn {
-  background-image: url("/static/images/partners/PrathamLearn1_resized.jpg"); }
+  background-image: url("/static/images/partners/PrathamLearn1.jpg");
+  background-position: top center; }
 
 .banner-library {
   background-image: url("/static/images/bg_header_library_programme.jpg"); }
