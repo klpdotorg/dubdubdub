@@ -65,7 +65,7 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
-    gender = models.CharField(max_length=128, choices=SEX_CHOICES)
+    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
     percentile= models.DecimalField(max_digits=6, decimal_places=2,
@@ -73,7 +73,7 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
 
     def __unicode__(self):
 
-        return "%s: %s: %s" (self.school, self.assessment,self.gender)
+        return "%s: %s" %(self.school, self.assessment,)
 
     class Meta:
 
@@ -94,7 +94,7 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
                                       blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
+        return "%s: %s: %s" %(self.school, self.assessment, self.mt,)
 
     class Meta:
 
@@ -102,6 +102,26 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
         verbose_name = 'InstAssSingleScoreMt'
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
+
+class BoundaryAssessmentSinglescore(BaseModel):
+    boundary= models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" %(self.boundary, self.assessment, self.studentgroup,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'BoundaryAssSingleScore'
+        managed = False
+        db_table = 'tb_boundary_assessment_singlescore'
+
 
 
 class Partner(BaseModel):

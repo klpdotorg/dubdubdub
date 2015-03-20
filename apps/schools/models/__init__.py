@@ -8,6 +8,7 @@ from .assessments import Assessment, \
     InstitutionAssessmentSinglescore,\
     InstitutionAssessmentSinglescoreGender,\
     InstitutionAssessmentSinglescoreMt, \
+    BoundaryAssessmentSinglescore, \
      Partner, \
      Programme, Question, \
     StudentEval, SchoolEval,\

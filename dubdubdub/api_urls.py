@@ -9,7 +9,7 @@ from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
-    PincodeDetails, SchoolNutrition, MergeEndpoints,AssessmentsList,AssessmentInfo)
+    PincodeDetails, SchoolNutrition, MergeEndpoints,AssessmentsList,AssessmentInfo,ProgrammesList,ProgrammeInfo)
 
 from users.api_views import (TestAuthenticatedView, UsersView,
     UserProfileView, OtherUserProfileView, OrganizationsView,
@@ -200,5 +200,7 @@ urlpatterns = patterns('',
 
     #Assessment urls
     url(r'^assessment/list/$',AssessmentsList.as_view(),name='api_assessment_list'),
+    url(r'^programme/list/$',ProgrammesList.as_view(),name='api_programme_list'),
     url(r'^assessment/info/$',AssessmentInfo.as_view(),name='api_assessment_info'),
+    url(r'^programme/info/$',ProgrammeInfo.as_view(),name='api_programme_info'),
 )

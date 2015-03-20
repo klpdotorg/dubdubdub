@@ -2,7 +2,7 @@ from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore)
+    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,BoundaryAssessmentSinglescore)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -290,11 +290,13 @@ class AssessmentInfoSerializer(KLPSerializer):
     academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
     singlescore=serializers.IntegerField(source='singlescore')
     percentile=serializers.IntegerField(source='percentile')
-    cohorts= serializers.SerializerMethodField('get_cohorts_details')
+    cohortsdetails= serializers.SerializerMethodField('get_cohorts_details')
+    singlescoredetails= serializers.SerializerMethodField('get_singlescore_details')
+
 
     class Meta:
         model = InstitutionAssessmentSinglescore
-        fields = ('schoolname','assessmentname', 'studentgroup','academicyear_name','singlescore','percentile','cohorts')
+        fields = ('schoolname','assessmentname', 'studentgroup','academicyear_name','singlescore','percentile','cohortsdetails','singlescoredetails')
 
     def get_cohorts_details(self, obj):
         data = {}
@@ -305,5 +307,77 @@ class AssessmentInfoSerializer(KLPSerializer):
         cohortsmt= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
         data['mt']=cohortsmt
         return data
+
+    def get_singlescore_details(self,obj):
+        singlescore={}
+        genderdata= InstitutionAssessmentSinglescoreGender.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore['gender']=genderdata
+
+        mtdata= InstitutionAssessmentSinglescoreMt.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore['mt']=mtdata
+
+        singlescore["boundary"]={}
+        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name')
+        singlescore["boundary"]["admin1"]=admin1data
+
+        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        singlescore["boundary"]["admin2"]=admin2data
+
+        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        singlescore["boundary"]["admin3"]=admin3data
+        return singlescore
+
+
+class ProgrammeListSerializer(KLPSerializer):
+    progid= serializers.IntegerField(source='assessment.programme.id')
+    progname = serializers.CharField(source='assessment.programme.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+
+    class Meta:
+        model = InstitutionAssessmentCohorts
+        fields = ('progid','progname','academicyear_name')
+
+class ProgrammeInfoSerializer(KLPSerializer):
+    studentgroup =  serializers.CharField(source='studentgroup')
+    assessmentname = serializers.CharField(source='assessment.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    singlescore=serializers.IntegerField(source='singlescore')
+    percentile=serializers.IntegerField(source='percentile')
+    cohortsdetails= serializers.SerializerMethodField('get_cohorts_details')
+    singlescoredetails= serializers.SerializerMethodField('get_singlescore_details')
+
+
+    class Meta:
+        model = InstitutionAssessmentSinglescore
+        fields = ('assessmentname', 'studentgroup','academicyear_name','singlescore','percentile','cohortsdetails','singlescoredetails')
+
+    def get_cohorts_details(self, obj):
+        data = {}
+        cohortssum= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).aggregate(Sum('cohortsnum'))
+        data['total']=cohortssum['cohortsnum__sum']
+        cohortsgender= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex').annotate(total=Sum('cohortsnum'))
+        data['gender']=cohortsgender
+        cohortsmt= InstitutionAssessmentCohorts.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
+        data['mt']=cohortsmt
+        return data
+
+    def get_singlescore_details(self,obj):
+        singlescore={}
+        genderdata= InstitutionAssessmentSinglescoreGender.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore['gender']=genderdata
+
+        mtdata= InstitutionAssessmentSinglescoreMt.objects.filter(school=obj.school,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore['mt']=mtdata
+
+        singlescore["boundary"]={}
+        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name')
+        singlescore["boundary"]["admin1"]=admin1data
+
+        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        singlescore["boundary"]["admin2"]=admin2data
+
+        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        singlescore["boundary"]["admin3"]=admin3data
+        return singlescore
 
 
