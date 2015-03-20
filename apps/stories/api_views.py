@@ -157,8 +157,10 @@ class StoriesView(KLPListAPIView):
 
         if get_answers == 'yes':
             return StoryWithAnswersSerializer
-        else:
+        elif get_answers == 'no':
             return StorySerializer
+        else:
+            raise ParseError("answers param must be either 'yes' or 'no'.")
 
     def get_queryset(self):
         qset = Story.objects.filter()
@@ -166,11 +168,14 @@ class StoriesView(KLPListAPIView):
         if school_id:
             qset = qset.filter(school__id=school_id)
 
-        verified = self.request.GET.get('verified', '')
-        if verified == 'yes':
-            qset = qset.filter(is_verified=True)
-        elif verified == 'no':
-            qset = qset.filter(is_verified=False)
+        verified = self.request.GET.get('verified', None)
+        if verified:
+            if verified == 'yes':
+                qset = qset.filter(is_verified=True)
+            elif verified == 'no':
+                qset = qset.filter(is_verified=False)
+            else:
+                raise ParseError("verified param must be either 'yes' or 'no' if provided.")
 
         source = self.request.GET.get('source', '')
         if source:
