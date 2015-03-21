@@ -231,6 +231,7 @@
 
 <script type="text/html" id="tpl-tab-programmes">
     <h4>Programme Information</h4>
+    {% if programmes|length > 0 %}
     <ul class="ul-base">
         {% for programme in programmes %}
         <li>
@@ -240,6 +241,11 @@
         </li>
         {% endfor %}
     </ul>
+    {% else %}
+    <div class="no-data">
+        No programme information for this school.
+    </div>
+    {% endif %}
     <table class="info_data_table label_small mar_top_25">
         <tr>
             <td>Source</td>
