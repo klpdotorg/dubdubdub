@@ -56,7 +56,13 @@
             },
             'programmes': {
                 getData: function() {
-                    return klp.api.do(schoolInfoURL + '/programmes');
+                    return klp.api.do('programme/list/', {
+                        'school_id': SCHOOL_ID
+                    });
+                },
+                getContext: function(data) {
+                    var programmes = data.features;
+                    return {'programmes': programmes};
                 }
             },
             'finances': {
