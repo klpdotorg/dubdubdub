@@ -63,3 +63,4 @@ gitignore/
 
 # data folder
 data
+*.log

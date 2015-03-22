@@ -186,7 +186,7 @@ class School(GeoBaseModel):
     status = models.IntegerField()
 
     def __unicode__(self):
-        return self.name
+        return "%s: %s" % (self.id, self.name)
 
     def get_absolute_url(self):
         return reverse('school_page', kwargs={'pk': self.id})
