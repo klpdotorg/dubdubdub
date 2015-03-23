@@ -249,7 +249,7 @@
       <ul>
           {% for programme in programmes %}
           <li class="circle-bullet yellow-mild">
-              <a href="/programme/?programme_id={{ programme.progid }}">
+              <a href="/programme/{{ programme.progid }}#?school={{ school_id }}">
                   {{ programme.progname }} - {{ programme.academicyear_name }}
               </a>
           </li>
