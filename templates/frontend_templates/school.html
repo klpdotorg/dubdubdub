@@ -244,12 +244,12 @@
 
 <script type="text/html" id="tpl-tab-programmes">
     <div class="container">
-      <h4>Programme Information</h4>
+      <h4 class="heading-tiny-uppercase">Programme Information</h4>
       {% if programmes|length > 0 %}
-      <ul class="ul-base">
+      <ul>
           {% for programme in programmes %}
-          <li>
-              <a href="/programme/?programme_id={{ programme.progid }}" class="black">
+          <li class="circle-bullet yellow-mild">
+              <a href="/programme/?programme_id={{ programme.progid }}">
                   {{ programme.progname }} - {{ programme.academicyear_name }}
               </a>
           </li>
