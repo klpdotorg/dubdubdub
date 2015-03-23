@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block endbody %}
+    <script>
+        PROGRAMME_ID = {{ object.id }};
+    </script>
+    <script src="{% static 'js/programme/init.js' %}"></script>
+
+{% endblock %}
+    
+
+    
+{% block content %}
+    <div class="container">
+        <h4>Programme: {{ object.name }}
+        <div id="assessmentsContainer">
+
+        </div>
+    </div>
+
+    {% include 'frontend_templates/programme.html' %}
+{% endblock %}
