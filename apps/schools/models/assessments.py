@@ -252,3 +252,35 @@ class AngDisplayMaster(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_ang_display_master'
+
+
+class InstitutionAgg(BaseModel):
+    school = models.ForeignKey('School', db_column='id', primary_key=True)
+    name = models.CharField(max_length=300, blank=True)
+    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        managed = False
+        db_table = 'tb_institution_agg'
+
+
+class SchoolAgg(BaseModel):
+    school = models.ForeignKey('School', db_column='id', primary_key=True)
+    name = models.CharField(max_length=300, blank=True)
+    boundary = models.ForeignKey('Boundary', blank=True, null=True, on_delete=models.SET_NULL)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.name,)
+
+    class Meta:
+        managed = False
+        db_table = 'tb_school_agg'
