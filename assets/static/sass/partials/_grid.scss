@@ -1,0 +1,138 @@
+/* GRID STYLING */
+
+// Clearfix
+.clearfix, %clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Containers
+.container, %container, .container-mid, %container-mid, .container-sm, %container-sm {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container, %container {
+  max-width: 1000px;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+.container-mid, %container-mid {
+  max-width: 750px;
+}
+
+.container-sm, %container-sm {
+  max-width: 520px;
+}
+
+@mixin container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin container-mid {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin container-sm {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+//Gutters inner
+.grid-parent, %grid-parent {
+  margin-left: -$grid-padding;
+  margin-right: -$grid-padding;
+  @include clearfix;
+}
+
+@mixin grid-parent {
+  margin-left: -$grid-padding;
+  margin-right: -$grid-padding;   
+  @include clearfix;
+}
+
+.grid-child, %grid-child {
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+@mixin grid-child {
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
+// 1/4th
+.col-25-flt, %col-25-flt {
+  width: 25%;
+  float: left;
+  @extend %grid-child;
+}
+
+// 1/3rd
+@mixin col-25-flt {
+  width: 25%;
+  float: left;
+  @include grid-child;  
+}
+
+.col-33-flt, %col-33-flt {
+  width: 33.33%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-33-flt {
+  width: 33%;
+  float: left;
+  @include grid-child;  
+}
+
+// 1/2
+.col-50-flt, %col-50-flt {
+  width: 50%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-50-flt {
+  width: 50%;
+  float: left;
+  @include grid-child;  
+}
+
+// 2/3rds
+.col-66-flt, %col-66-flt {
+  width: 66.66%;
+  float: left;
+  @extend %grid-child;
+}
+
+@mixin col-66-flt {
+  width: 66.66%;
+  float: left;
+  @include grid-child;  
+}
+

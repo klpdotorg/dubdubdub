@@ -35,14 +35,17 @@
                     editXHR.done(function(response) {
                         //console.log("saved", response);
                         //klp.utils.clearValidationErrors(profileFormID);
-                        klp.utils.alertMessage("Changes saved succesfully", "success");
+                        klp.utils.alertMessage("Changes saved successfully", "success");
                         klp.auth.loginUser(response);
                     });
                     editXHR.fail(function(err) {
                         //console.log("error saving", err);
                         var errors = JSON.parse(err.responseText);
+                        klp.utils.alertMessage("Please correct errors and re-submit", "error");
                         klp.utils.invalidateErrors(fields, errors);
                     });
+                } else {
+                    klp.utils.invalidateErrors(fields, errors);
                 }
             });
 

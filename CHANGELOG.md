@@ -10,8 +10,18 @@ Use required commands
 Changelog
 ---
 
+Release 0.14: 4c8fbca1b9617a5015f8b620ef53ec030d8cfda8
+  - Front-end re-write + styleguide
+
+Release 0.13: f0688aca75e84cd5c0626e2073057e87fc8135e0
+  - Additional profile fields for organisations / users
+  - Some CSS clean-ups and template corrections
+  - IVRS data import scripts + API
+
 Release 0.12:
   - Replaced all views with materialized views [psql mview.sql]
+  - Installed dateutil and created fields in story model to replace string date and entered_timestamp. Fake the 0003 migration of stories app.
+  - Migrated Story model to have created/Updated_at, fake 0003
 
 Release 0.11: 906821fac3c8cb03db7c4c965885d4c182b9a0d3
   - Replaced grapelli with Django Suit [pip install django-suit]

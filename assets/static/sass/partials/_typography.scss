@@ -1,0 +1,412 @@
+/* TYPOGRAPHY */
+
+/*-------------------------------------*/
+/* LINKS */
+
+a {
+  text-decoration: none;
+  @extend %link-color;
+
+  &:hover, &:focus, &:active {
+    @extend %link-hover-color;
+  }
+  
+  &:focus {
+    outline: none;        
+  }
+}
+
+// links: external 
+.link-external {
+  color: inherit;
+  display: inline-block;
+  @extend %transition-linear;
+
+  &:after {
+    content: "\f064";
+    @extend %font-icon;
+    font-size: 9px;
+    @extend %white;
+    background: $grey-steel;
+    padding: ($base-spacing-sm)-2;
+    margin: 0 $base-spacing-sm;
+    line-height: 1;
+    @extend %border-radius-circle;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+.link-external:hover, .link-external:focus {
+  text-decoration: underline;
+
+  &:after {
+    background: $link-hover-color;
+  }
+}
+
+
+/*-------------------------------------*/
+/* FONT_FAMILIES */
+
+// font-family: default: regular
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Reg-webfont.eot');
+  src: url('../fonts/lato/Lato-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/lato/Lato-Reg-webfont.woff') format('woff'),
+       url('../fonts/lato/Lato-Reg-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// font-family: default: italic
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-RegIta-webfont.eot');
+  src: url('../fonts/lato/Lato-RegIta-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/lato/Lato-RegIta-webfont.woff') format('woff'),
+       url('../fonts/lato/Lato-RegIta-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+// font-family: default: bold
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Bol-webfont.eot');
+  src: url('../fonts/lato/Lato-Bol-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/lato/Lato-Bol-webfont.woff') format('woff'),
+       url('../fonts/lato/Lato-Bol-webfont.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// font-family: default: light
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato/Lato-Lig-webfont.eot');
+  src: url('../fonts/lato/Lato-Lig-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/lato/Lato-Lig-webfont.woff') format('woff'),
+       url('../fonts/lato/Lato-Lig-webfont.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+//font family
+.font-base-family, %font-base-family {
+  font-family: $font-base-family;
+}
+
+//font-styles
+.italic, %italic {
+  font-style: italic;
+}
+
+.bold, %bold {
+  font-weight: 700;
+}
+
+.font-light, %font-light {
+  font-weight: 300;
+}
+
+.uppercase, %uppercase {
+  text-transform: uppercase;
+}
+
+//font-sizing
+.font-base-size, %font-base-size {
+  font-size: $font-base-size;
+}
+
+@mixin font-base-size {
+  font-size: $font-base-size;  
+}
+
+.font-small, %font-small {
+  font-size: 90%;
+}
+
+@mixin font-small {
+  font-size: 90%;  
+}
+
+.font-smaller, %font-smaller {
+  font-size: 80%;
+}
+
+@mixin font-smaller {
+  font-size: 80%;  
+}
+
+.font-smallest, %font-smallest {
+  font-size: 70%;
+}
+
+@mixin font-smallest {
+  font-size: 70%;  
+}
+
+.font-large, %font-large {
+    font-size: 110%;
+}
+
+@mixin font-large {
+  font-size: 110%;  
+}
+
+.font-larger, %font-larger {
+    font-size: 120%;
+}
+
+@mixin font-larger {
+  font-size: 120%;  
+}
+
+.font-largest, %font-largest {
+  font-size: 130%;
+}
+
+@mixin font-largest {
+  font-size: 130%;  
+}
+
+strong, b {
+  @extend %bold; 
+}
+
+em, i {
+  @extend %italic; 
+}
+
+h6, .h6, %h6 {
+  font-size: 90%;
+}
+
+h5, .h5, %h5 {
+  font-size: 120%;
+}
+
+h4, .h4, %h4 {
+  font-size: 130%;
+}
+
+h3, .h3, %h3 {
+  font-size: 140%;
+}
+
+h2, .h2, %h2 {
+	font-size: 150%;
+}
+
+h1, .h1, %h1 {
+	font-size: 170%;
+}
+
+h6, h5, h4, h3, h2, h1 {
+  margin: 0 0 $base-spacing-mid 0;
+}
+
+/*-------------------------------------*/
+/* HEADER: STRIP */
+
+.header-strip {
+  background: $purple-amethyst;
+  @extend %white;
+  padding: $base-spacing $base-spacing-lg;
+
+  .heading-tiny-uppercase {
+    @extend %white;
+    margin: 0;
+  }
+}
+
+p, ul, ol {
+  margin: 0 0 $base-spacing-mid 0;
+}
+
+sub, sup {
+  font-size: 65%;
+  position: relative;
+  line-height: 0;
+}
+
+sup {
+  top: -8px;
+}
+
+sub {
+  bottom: -8px;
+}
+
+/*-------------------------------------*/
+/* HEADINGS */
+
+.heading-border, %heading-border {
+  @extend %center-text;
+
+  &:after {
+  content: '';
+  display: block;
+  margin: $base-spacing auto 0;
+  width: 80px;
+  height: 5px;
+  background-color: currentColor;
+  }
+}
+
+.heading-primary, %heading-primary {
+  @extend %center-text;
+  font-size: 220%;
+  line-height: 1.5;
+  margin: 50px 0;
+  letter-spacing: 1px;
+  @extend %uppercase;
+
+  &:after {
+    @extend %heading-border;
+  }
+}
+
+.heading-secondary, %heading-secondary {
+  @extend %h2;
+  @extend %uppercase;
+  @extend %center-text;
+  @extend %font-light;
+}
+
+.heading-tertiary, %heading-tertiary {
+  @extend %bold;
+  @extend %h5;
+  @extend %uppercase;
+  @extend %grey-gravel;
+  margin-bottom: $base-spacing-lg-x;
+}
+
+.heading-tiny, %heading-tiny {
+  @extend %grey-steel;
+  @extend %font-smaller;
+}
+
+.heading-tiny-uppercase, %heading-tiny-uppercase {
+  @extend %grey-steel;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  @extend %bold;
+  margin-bottom: $base-spacing-sm;
+}
+
+.heading-section {
+  display: inline-block;
+  @extend %white-bg;
+  @extend %grey-steel;
+  @extend %h4;
+  @extend %center-text;
+  @extend %border-radius-sm;
+  @extend %uppercase;
+  @extend %border-base;
+  box-shadow: 0px 1px 1px 0px $grey-cloud;
+  padding: $base-spacing-sm $base-spacing-lg;
+  margin: $base-spacing-lg-2x $base-spacing-lg 0;
+  letter-spacing: 1px;
+}
+
+.heading-section-block {
+  @extend %font-smaller;
+  @extend %grey-mist-bg;
+  padding: $base-spacing-mid $base-spacing;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: $grey-cloud;
+  margin: -($base-spacing) 0 $base-spacing-lg-2x 0;
+  @extend %clearfix;
+
+  > ul {
+    @extend %container;
+    margin-bottom: 0;
+  }
+
+  li {
+    @extend %vertical-inline-top;
+    padding: 2px $base-spacing-lg 2px $base-spacing-sm;
+    position: relative;
+    top: 2px;
+
+    &:before {
+      content: "\f10c";
+      @extend %font-icon;
+      font-size: 5px;
+      position: absolute;
+      left: -($base-spacing-sm);
+      top: $base-spacing;
+    }
+  }
+
+  a {
+    display: block;
+    padding: 3px;
+
+    &:hover {
+      color: $link-hover-color;
+      @extend %transition-linear;
+    }
+  }
+}
+
+.heading-section-block, .heading-section-block a {
+  @extend %grey-steel;
+}
+
+.heading-section-ul-alt {
+  @extend %uppercase;
+  letter-spacing: 1px;
+  @extend %bold;
+  @extend %font-small;
+  margin-bottom: 0;
+
+  li:before {
+    content: "";
+  }
+
+  a {
+    @extend %grey-gravel;
+  }
+}
+
+
+/*-------------------------------------*/
+/* LISTS */
+
+// list: ul default
+.ul-base {
+  list-style-type: disc;
+  margin-left: $base-spacing-lg;
+  
+  li {
+    padding-left: $base-spacing;
+
+    ul {
+      list-style-type: circle;
+      list-style-position: inside;
+    }
+  }
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+
+
+/*-------------------------------------*/
+/* TEXT-BORDERED */
+
+.text-bordered {
+  @extend %border-base;
+  padding: $base-spacing $base-spacing-mid;
+  @extend %border-radius-sm;
+
+}
+

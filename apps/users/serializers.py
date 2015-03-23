@@ -121,6 +121,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True
     )
 
+    def __init__(self, *args, **kwargs):
+        super(OrganizationSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['url', 'blog_url', 'fb_url', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
     class Meta:
         #exclude = ('users',)
         model = Organization
@@ -139,6 +145,13 @@ class UserSerializer(serializers.ModelSerializer):
         read_only=True,
         many=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super(UserSerializer, self).__init__(*args, **kwargs)
+        url_fields = ['fb_url', 'website', 'photos_url', 'youtube_url']
+        for field in url_fields:
+            self.fields[field].error_messages['invalid'] = u'Please enter a valid URL'
+
 
     def restore_object(self, attrs, instance=None):
         user = super(UserSerializer, self).restore_object(attrs, instance)
@@ -201,17 +214,22 @@ class DonationItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DonationItem
+        read_only_fields = ('requirement',)
 
 
 class DonationRequirementSerializer(serializers.ModelSerializer):
-    items_count = serializers.IntegerField(source='items.count')
-    items_url = serializers.CharField(source='get_items_url')
+    items_count = serializers.IntegerField(source='items.count', read_only=True)
+    items_url = serializers.CharField(source='get_items_url', read_only=True)
     organization_details = OrganizationBasicSerializer(
         source='organization',
         read_only=True
     )
     school_details = SchoolListSerializer(
         source='school',
+        read_only=True
+    )
+    items = DonationItemSerializer(
+        source='items',
         read_only=True
     )
 

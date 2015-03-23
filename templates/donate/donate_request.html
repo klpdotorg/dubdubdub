@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}{{ object.title }}{% endblock %}
+
+{% block endbody %}
+    <script>
+        DONATION_REQUIREMENT_ID = {{ object.id }};
+    </script>
+    <script src="{% static 'js/donate_request/init.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    <section class="pb-30 phn-pb-20">
+        <div class="container">
+            <h1 class="bordered green">{{ object.school.name }}</h1>
+        </div>
+    </section>
+
+    <section class="page-donate-item pb-60">
+        <div class="container">
+            <div class="grid_9 alpha tab-grid-two-third phn-width-full phn-mh-0">
+                <div class="title color-black-2 mb-5">{{ object.title }}</div>
+                <div class="mb-20">
+                    <span class="color-grey-light-2">For </span>
+                    <span class="color-green-2 bold uppercase">{{ object.organization.name }}</span>
+                </div>
+            </div>
+            <div class="grid_3 omega tab-grid-one-third phn-width-full phn-mh-0">
+                <div class="address-block mb-10 phn-mb-20">
+                    <div class="info-item">
+                        <div class="label">District</div>
+                        <div class="value">{{ object.school.schooldetails.admin1.name }}</div>
+                    </div>
+                    <div class="info-item ta-c">
+                        <div class="label">
+                            {% if object.school.schooldetails.type == 1 %}
+                            Block
+                            {% else %}
+                            Project
+                            {% endif %}
+                        </div>
+                        <div class="value">
+                            {{ object.school.schooldetails.admin2.name }}
+                        </div>
+                    </div>
+                    <div class="info-item ta-r mr-0">
+                        <div class="label">
+                            {% if object.school.schooldetails.type == 1 %}
+                            Cluster
+                            {% else %}
+                            Circle
+                            {% endif %}
+                        </div>
+                        <div class="value">
+                            {{ object.school.schooldetails.admin3.name }}
+                        </div>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div class="clr"></div>
+            <p class="color-grey desc mt-0 mb-0">
+                {{ object.description }}
+            </p>
+
+            {% if object.end_date %}
+            <div class="font-14 color-black-2 mt-20">
+                Needed By: 
+                <span class="color-blue bold">{{ object.end_date|date:"j F, Y"}}</span>
+            </div>
+            {% endif %}
+
+            <form method="post">
+            <div class="items-wrapper ma mt-60 phn-width-full phn-mt-30">
+                <div class="circled bold ma ta-c mb-10">1</div>
+                <div class="ta-c color-black-2 bold uppercase mb-30">Enter quantities</div>
+                <div>
+                    <div class="quant-item bold fl">Chairs</div>
+                    <select name="type" class="dropdown">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5+</option>
+                    </select>
+                    <div class="needed fr color-grey-light mr-15">Needed - <span class="color-black-2 bold">5</span></div>
+                    <div class="clr"></div>
+                    <div class="width-400 color-grey mt-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                    <div class="hr mt-20 mb-10"></div>
+                </div>
+                <div>
+                    <div class="quant-item bold fl"> Tables</div>
+                    <input class="input small fr" type="textbox">
+                    <div class="needed fr color-grey-light mr-15">Needed - <span class="color-black-2 bold">5</span></div>
+                    <div class="clr"></div>
+                    <div class="width-400 color-grey mt-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting printing and typesetting industry.
+                    </div>
+                    <div class="hr mt-20 mb-10"></div>
+                </div>
+                <div>
+                    <div class="quant-item bold fl">Cupboards</div>
+                    <select name="type" class="dropdown">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5+</option>
+                    </select>
+                    <div class="needed fr color-grey-light mr-15">Needed - <span class="color-black-2 bold">5</span></div>
+                    <div class="clr"></div>
+                    <div class="width-400 color-grey mt-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                    <div class="hr mt-20 mb-10"></div>
+                </div>
+                <div>
+                    <div class="quant-item bold fl">Books</div>
+                    <select name="type" class="dropdown">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5+</option>
+                    </select>
+                    <div class="needed fr color-grey-light mr-15">Needed - <span class="color-black-2 bold">5</span></div>
+                    <div class="clr"></div>
+                    <div class="width-400 color-grey mt-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                    <div class="hr mt-20 mb-10"></div>
+                </div>
+            </div>
+
+            {% if not logged_in %}
+                <div class="mt-30 ta-c">
+                    <input type="submit" name="submit" value="Continue" class="button grey" />
+                </div>
+            {% else %}
+
+            <div class="hr mt-60 mb-60 phn-mt-30 phn-mb-30"></div>
+            <div class="circled bold ma ta-c mb-10">2</div>
+            <div class="ta-c bold uppercase mb-20">Fill details</div>
+            <div class="ta-c mb-30">You may provide alternate contact details</div>
+
+            <div class="signup-inner ma">
+                <div class="mb-30">
+                    <div class="label bold color-black-2 mb-5">Name</div>
+                    <input class="input" type="text" value="{{user_details.name}}">
+                </div>
+                <div class="mb-30">
+                    <div class="label bold color-black-2 mb-5">Email</div>
+                    <input class="input" type="text" value="{{user_details.email}}">
+                </div>
+                <div class="mb-30">
+                    <div class="label bold color-black-2 mb-5">Phone No</div>
+                    <input class="input" type="text" value="{{user_details.phone}}">
+                </div>
+                <div class="mb-30">
+                    <div class="label bold color-black-2 mb-5">Address</div>
+                    <textarea class="input textarea">{{user_details.address}}</textarea>
+                </div>
+                <div class="ta-c">
+                    <a class="button blue phn-mt-0" href="donate-confirmation.php">Submit</a>
+                </div>
+            </div>
+            {% endif %}
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+
+{% block page_title %}{{ heading }}{% endblock %}
+
+{% block breadcrumb %}
+	<a href="/">Home</a><span></span>
+	<a href="{% url 'donate' %}">Donation</a><span></span>
+	<a href="">{{ heading }}</a>
+{% endblock %}
+
+{% block endbody %}
+	<script src="{% static 'js/donate_requests/init.js' %}"></script>
+	<script>
+		SEARCH_PARAMS = {};
+		{% if category %}
+			SEARCH_PARAMS['category'] = {{ category.id }};
+		{% endif %}
+		{% if organization %}
+			SEARCH_PARAMS['organization'] = {{ organization.id }};
+		{% endif %}
+	</script>
+
+{% endblock %}
+
+{% block content %}
+
+	<section>
+		<div class="container">
+			<h1 class="bordered blue">{{ heading }}</h1>
+		</div>
+	</section>
+
+	<section class="page-donate-item pb-60">
+		<div class="container">
+
+		</div>
+	</section>
+	{% include 'frontend_templates/donate_requests.html' %}
+{% endblock %}

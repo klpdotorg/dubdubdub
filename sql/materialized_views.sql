@@ -24,6 +24,12 @@ CREATE MATERIALIZED VIEW mvw_postal AS
     the_geom
    FROM dblink('host=localhost dbname=spatial user=klp'::text, 'select gid, pin_id, pincode, the_geom from postal'::text) postal(gid integer, pin_id integer, pincode character varying(35), the_geom geometry);
 
+CREATE materialized VIEW mvw_inst_coord AS
+SELECT t2.instid,
+       t2.coord
+FROM dblink('host=localhost dbname=klp-coord user=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
+CREATE UNIQUE INDEX udx_instid ON mvw_inst_coord (instid);
+CREATE INDEX idx_inst_geom ON mvw_inst_coord USING gist(coord);
 
 CREATE materialized VIEW mvw_boundary_primary AS
 SELECT tb1.id AS cluster_id,
@@ -108,26 +114,6 @@ SELECT t1.dise_code,
    FROM dblink('host=localhost dbname=dise_all user=klp'::text, 'select * from tb_dise_facility_agg'::text) t1(dise_code character varying(32), df_metric character varying(30), score numeric(5,0), df_group character varying(30));
 CREATE INDEX dise_code_idx ON mvw_dise_facility_agg (dise_code);
 ANALYZE mvw_dise_facility_agg;
-
-CREATE MATERIALIZED VIEW mvw_school_class_total_year AS
-SELECT sg.sid AS schid,
-    btrim(sg.name::text) AS clas,
-    count(DISTINCT stu.id) AS total,
-    acyear.id AS academic_year
-   FROM tb_student_class stusg,
-    tb_class sg,
-    tb_student stu,
-    tb_academic_year acyear
-  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT mvw_lib_level_agg.year
-           FROM mvw_lib_level_agg))
-  GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
-
-CREATE materialized VIEW mvw_inst_coord AS
-SELECT t2.instid,
-       t2.coord
-FROM dblink('host=localhost dbname=klp-coord user=klp'::text, 'select * from inst_coord'::text) t2(instid integer, coord geometry);
-CREATE UNIQUE INDEX udx_instid ON mvw_inst_coord (instid);
-CREATE INDEX idx_inst_geom ON mvw_inst_coord USING gist(coord);
 
 CREATE materialized VIEW mvw_mdm_agg AS
 SELECT id as klpid, mon, wk, indent, attend
@@ -272,3 +258,16 @@ CREATE MATERIALIZED VIEW mvw_anginfra_agg AS SELECT t1.sid,
     t1.perc_score,
     t1.ai_group
    FROM dblink('host=localhost dbname=ang_infra user=klp'::text, 'select * from tb_ang_infra_agg'::text) t1(sid integer, ai_metric character varying(30), perc_score numeric(5,0), ai_group character varying(30));
+
+CREATE MATERIALIZED VIEW mvw_school_class_total_year AS
+SELECT sg.sid AS schid,
+    btrim(sg.name::text) AS clas,
+    count(DISTINCT stu.id) AS total,
+    acyear.id AS academic_year
+   FROM tb_student_class stusg,
+    tb_class sg,
+    tb_student stu,
+    tb_academic_year acyear
+  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT mvw_lib_level_agg.year
+           FROM mvw_lib_level_agg))
+  GROUP BY sg.sid, btrim(sg.name::text), acyear.id;

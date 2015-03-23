@@ -17,13 +17,14 @@ class StoryImageInline(admin.StackedInline):
 
 
 class StoryAdmin(admin.ModelAdmin):
-    list_display = ('email', 'entered_timestamp', 'school', 'is_verified',)
+    list_display = ('id', 'email', 'created_at', 'school', 'is_verified',)
     list_editable = ('is_verified',)
     list_filter = ('is_verified',)
     search_fields = ('school__name',)
     raw_id_fields = ('school',)
-    ordering = ['-entered_timestamp']
+    ordering = ['-created_at']
     inlines = [AnswerInline, StoryImageInline]
+    actions = ['mark_verified']
 
     def get_search_results(self, request, queryset, search_term):
         """Searching school_id: By default django doesn't support integer
@@ -39,14 +40,57 @@ class StoryAdmin(admin.ModelAdmin):
             queryset |= self.model.objects.filter(school_id=search_term_as_int)
         return queryset, use_distinct
 
+    def mark_verified(self, request, queryset):
+        rows_updated = queryset.update(is_verified=True)
+        if rows_updated == 1:
+            story_string = 'story'
+        else:
+            story_string = 'stories'
+        message = "%s %s marked as verified" % (rows_updated, story_string,)
+        self.message_user(request, message)
+
+    mark_verified.short_description = "Mark selected stories as verified"
+
 
 class StoryImageAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'image_tag', 'is_verified',)
+    search_fields = ('image', 'filename', 'story__name', 'story__email', 'story__user__email',)
+    list_filter = ('is_verified',)
     list_editable = ('is_verified',)
+    actions = ['mark_verified']
+
+    def mark_verified(self, request, queryset):
+        rows_updated = queryset.update(is_verified=True)
+        if rows_updated == 1:
+            image_string = 'image'
+        else:
+            image_string = 'images'
+        message = "%s %s marked as verified" % (rows_updated, image_string,)
+        self.message_user(request, message)
+
+    mark_verified.short_description = "Mark selected images as verified"
 
 
-admin.site.register([Answer, Question, Questiongroup, QuestiongroupQuestions,
+
+class QuestionAdmin(admin.ModelAdmin):
+    search_fields = ('text',)
+    list_display = ('text', 'question_type', 'is_active')
+    list_editable = ('is_active',)
+
+
+class QuestionInline(admin.TabularInline):
+    model = QuestiongroupQuestions
+    readonly_fields = ('question',)
+
+class QuestiongroupAdmin(admin.ModelAdmin):
+    list_display = ('source', 'version')
+    inlines = [QuestionInline, ]
+    readonly_fields = ('source', 'version',)
+
+admin.site.register([Answer,
                     QuestionType, Source])
 
 admin.site.register(Story, StoryAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Questiongroup, QuestiongroupAdmin)
 admin.site.register(StoryImage, StoryImageAdmin)

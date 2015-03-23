@@ -1,5 +1,6 @@
 (function() {
     klp.init = function() {
+        klp.basic_tabs.init();
         var $infoXHR = klp.api.authDo("volunteer_activities/" + VOLUNTEER_ACTIVITY_ID);
         var tplActivityDetails = swig.compile($('#tpl-activityDetails').html());
         var tplVolunteerDetails = swig.compile($('#tpl-volunteerDetails').html());
@@ -13,7 +14,7 @@
             if (userCount > 0) {
                 _(data.users).each(function(user) {
                     var userHTML = tplVolunteerDetails(user);
-                    $('#volunteerTable').append(userHTML);
+                    $('#jsVolunteerTable').append(userHTML);
                 });
             }
 

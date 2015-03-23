@@ -90,6 +90,13 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.created = self.changed
         return super(User, self).save(*args, **kwargs)
 
+    def has_links(self):
+        if self.twitter_handle or self.fb_url or self.website \
+            or self.photos_url or self.youtube_url:
+            return True
+        else:
+            return False
+
     def generate_email_token(self):
         token = uuid.uuid4().get_hex()
         self.email_verification_code = token
@@ -185,6 +192,13 @@ class Organization(models.Model):
         org_email = self.email
         users_emails = [u.email for u in self.users.all()]
         return [org_email] + users_emails
+
+    def has_links(self):
+        if self.twitter_handle or self.fb_url or self.blog_url \
+            or self.photos_url or self.youtube_url:
+            return True
+        else:
+            return False
 
     def has_read_perms(self, user):
         '''
@@ -375,7 +389,7 @@ class DonationRequirement(models.Model):
     organization = models.ForeignKey('Organization')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    end_date = models.DateField(null=True)
+    end_date = models.DateField(null=True, blank=True)
 
     def __unicode__(self):
         return self.description
@@ -386,6 +400,8 @@ class DonationRequirement(models.Model):
 
 class DonationItemCategory(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128, blank=True, null=True)
+    image = models.ImageField(upload_to='donation_type_images', blank=True)
     #add slug
 
     def __unicode__(self):

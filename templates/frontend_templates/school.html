@@ -1,232 +1,245 @@
 {% verbatim %}
-
 <script type="text/html" id="tpl-school-info">
-    <div class="en-icon big en-{{ type_name }} school-entity-icon">
-        {% if type_name == 'school' %} S {% else %} P {% endif %}
-    </div>
-    <h2 class="en-{{ type_name }}">{{ name }}</h2>
-
-    <div class="address-block">
-        <div class="info-item">
-            <div class="label">District</div>
-            <div class="value">{{ admin1.name|capitalize }}</div>
-        </div>
-        <div class="info-item">
-            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-            <div class="value">{{ admin2.name|capitalize }}</div>
-        </div>
-        <div class="info-item">
-            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-            <div class="value">{{ admin3.name|capitalize }}</div>
-        </div>
-        <div class="clr"></div>
-    </div>
-
-
+  <h4 class="school-type-{{ type_name }}">
+    <span class="icon-number">
+      {% if type_name == 'school' %} S {% else %} P {% endif %}
+    </span>
+    {{ name }}
+  </h4>
+  
+  <ul class="map-location-labels font-smallest">  
+    <li class="map-label-each">
+      <div class="map-label-title">District</div>
+      <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+    <li class="map-label-each">
+      <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+      <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+    <li class="map-label-each">
+      <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+      <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+  </ul>
 </script>
 
 <script type="text/html" id="tpl-tab-info">
-    <div class="fl-desktop">
+  <div class="container">
+    <div class="school-data-wrap">
+      <div class="school-data-block">
         {% if address_full %}
-        <h4>Address</h4>
+        <h4 class="heading-tiny-uppercase">Address</h4>
         <p>{{ address_full }}</p>
         {% endif %}
-
+    
         {% if landmark %}
-        <h4 class="mar_top_25">Landmark</h4>
+        <h4 class="heading-tiny-uppercase">Landmark</h4>
         <p>{{ landmark }}</p>
         {% endif %}
+      
+        <h4 class="heading-tiny-uppercase">School Information</h4>
+        <table class="table-data">
+          <tr>
+            <td>Category</td>
+            <td>{{ cat }}</td>
+          </tr>
+          {% if buses %}
+          <tr>
+            <td>Buses</td>
+            <td>{{ buses }}</td>
+          </tr>
+          {% endif %}
+          {% if identifiers %}
+          <tr>
+            <td>Identifiers</td>
+            <td>{{ identifiers }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td>Gender</td>
+            <td>{{ sex|capitalize }}</td>
+          </tr>
 
-        <h4 class="mar_top_25">School Information</h4>
-        <table class="info_data_table">
-            <tr>
-                <td>Category</td>
-                <td>{{ cat }}</td>
-            </tr>
-            {% if buses %}
-            <tr>
-                <td>Buses</td>
-                <td>{{ buses }}</td>
-            </tr>
+          {% if type.id == 1 %}
+          <tr>
+            <td>Medium</td>
+            <td>{{ moi|capitalize }}</td>
+          </tr>
+            {% if dise_code %}
+          <tr>
+            <td>DISE</td>
+            <td>{{ dise_code }}</td>
+          </tr>
             {% endif %}
-            {% if identifiers %}
+          {% endif %}
+        </table>
+      
+          <h4 class="heading-tiny-uppercase">Constituency Information</h4>
+          <table class="table-data">
             <tr>
-                <td>Identifiers</td>
-                <td>{{ identifiers }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <td>Gender</td>
-                <td>{{ sex|capitalize }}</td>
-            </tr>
-
-            {% if type.id == 1 %}
-            <tr>
-                <td>Medium</td>
-                <td>{{ moi|capitalize }}</td>
-            </tr>
-                {% if dise_code %}
-            <tr>
-                <td>DISE</td>
-                <td>{{ dise_code }}</td>
-            </tr>
+              <td>MLA Constituency</td>
+              <td>
+                {% if assembly %}
+                    {{ assembly.name }}
+                {% else %}
+                    Data unavailable.
                 {% endif %}
-            {% endif %}
+              </td>
+            </tr>
+            <!--
+            <tr>
+              <td>MLA Details</td>
+              <td>Dr. Ashwath Narayan (BJP)</td>
+            </tr>
+        -->
+            <tr>
+              <td>MP Constituency</td>
+              <td>
+                {% if parliament %}
+                    {{ parliament.name }}
+                {% else %}
+                    Data unavailable.
+                {% endif %}
+              </td>
+            </tr>
+              <!--
+          <tr>
+            <td>MLA Details</td>
+            <td>DB Chandre Gowada (BJP)</td>
+          </tr>
+        -->
         </table>
+      </div> <!-- school-data-block -->
 
-        <h4 class="mar_top_25">Constituency Information</h4>
-        <table class="info_data_table">
-            <tr>
-                <td>MLA Constituency</td>
-                <td>
-                    {% if assembly %}
-                        {{ assembly.name }}
-                    {% else %}
-                        Data unavailable.
-                    {% endif %}
-                </td>
-            </tr>
-            <!--
-            <tr>
-                <td>MLA Details</td>
-                <td>Dr. Ashwath Narayan (BJP)</td>
-            </tr>
-            -->
-            <tr>
-                <td>MP Constituency</td>
-                <td>
-                    {% if parliament %}
-                        {{ parliament.name }}
-                    {% else %}
-                        Data unavailable.
-                    {% endif %}
-                </td>
-            </tr>
-            <!--
-            <tr>
-                <td>MLA Details</td>
-                <td>DB Chandre Gowada (BJP)</td>
-            </tr>
-            -->
-        </table>
-    </div>
-    <div class="photos-block fr-desktop">
-        {% if images.length > 0 %}
-        <h4>Photos</h4>
+      <div class="school-photos-block">
+          {% if images.length > 0 %}
+          <h4 class="heading-tiny-uppercase">Photos</h4>
+          <div class="school-photos">
             {% for image in images %}
-            <a href="{{ image }}" class="gallery"><img src="{{ image }}" alt=""></a>
+              <span data-rbox-image="{{ image }}" class="rbox_img_gal image-preview-gallery"><img src="{{ image }}"></span>
             {% endfor %}
-        {% endif %}
-        <div class="clr"></div>
-    </div>
-    <div class="clr"></div>
-    <br /><br />
-    <table class="info_data_table label_small">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-        </tr>
+          </div>
+          {% endif %}
+      </div>
+      <div class="clear"></div> 
+    </div> <!-- /school-data-wrap -->
+    <div class="base-spacing"></div> 
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
     </table>
+  </div> <!-- /container -->
 </script>
-
 <script type="text/html" id="tpl-tab-demographics">
-    <div class="fl-desktop-tablet">
-        <h4>Student Information</h4>
-        <div class="no-data klp" style="display:none;">
+  
+  <div class="container">
+
+    <div class="grid-parent">
+      <div class="float-left grid-child">
+        <h4 class="heading-tiny-uppercase">Student Information</h4>
+        <div class="no-data js-klp" style="display:none;">
             <p> No data available </p>
         </div>
-
-        <div class="pie-chart-wrapper" id="boygirlChartWrapper">
-            <div class="pie-chart-inner fl">
-                <div id="num_students_piechart" class="chart fl"></div>
-                <div class="gender_icons absolute fl">
-                    <div class="stats_gender_item no_width total ta-c">
-                        <p class="label">Total</p>
-                        <p class="value">{{ total_students }}</p>
-                        <div class="clr"></div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="gender_icons fl ml-40">
-                <div class="stats_gender_item no_width boy">
-                    <span class="icon"></span>
-                    <p class="label">Boys</p>
-                    <p class="value">{{ num_boys }}</p>
-                    <div class="clr"></div>
-                </div>
-                <div class="stats_gender_item no_width girl">
-                    <span class="icon"></span>
-                    <p class="label">Girls</p>
-                    <p class="value">{{ num_girls }}</p>
-                    <div class="clr"></div>
-                </div>
-            </div>
-            <div class="clr"></div>
-        </div>
-    </div>
-    <div class="fr-desktop-tablet">
-        <h4>Languages</h4>
-        <div class="lang-marks fr phn-fn phn-width-full">
-            {% for mt, percent in mt_profile_percents %}
-            <div class="item">
-                <div class="label fl">{{ mt|capitalize }}</div>
-                <div class="percent color-gray fl">{{ mt_profile[mt] }}</div>
-                <div class="bar fr qtip" original-title="{{ percent }}%">
-                    <div class="bar-value bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
-                    </div>
-                </div>
-                <div class="clr"></div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="clr"></div>
-
-    {% if type_name != 'preschool' %}
-    <h4 class="mar_top_25">DISE Student Profile</h4>
-    <div class="no-data dise" style="display:none;">
-        <p> No data available </p>
-    </div>
-    <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
-        <div class="pie-chart-inner fl">
-            <div id="num_students_piechart_dise" class="chart fl"></div>
-            <div class="gender_icons absolute fl">
-                <div class="stats_gender_item no_width total ta-c">
-                    <p class="label">Total</p>
-                    <p class="value">{{ dise.total_students }}</p>
-                    <div class="clr"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="gender_icons fl ml-40">
-            <div class="stats_gender_item no_width boy">
-                <span class="icon"></span>
-                <p class="label">Boys</p>
-                <p class="value">{{ num_boys_dise }}</p>
-                <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width girl">
-                <span class="icon"></span>
-                <p class="label">Girls</p>
-                <p class="value">{{ num_girls_dise }}</p>
-                <div class="clr"></div>
-            </div>
-        </div>
-        <div class="clr"></div>
-    </div>
-    {% endif %}
     
-    <br /><br />
-    <table class="info_data_table label_small">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-        </tr>
-    </table>
+        <div class="pie-chart-wrapper" id="boygirlChartWrapper">
+          <div class="pie-chart-inner">
+            <div id="num_students_piechart" class="chart"></div>
+          </div>
+      
+          <div class="school-demo-tab">
+            <div class="module-stats-icon">
+              <span class="icon-boy"></span>
+              <div class="module-stats-info">
+                <div class="uppercase">Boys</div>
+                <p class="module-stats-label">{{ num_boys }}</p>
+              </div>
+            </div>
 
+            <div class="module-stats-icon module-stats-girl">
+              <span class="icon-girl"></span>
+              <div class="module-stats-info">
+                <div class="uppercase">Girls</div>
+                <p class="module-stats-label">{{ num_girls }}</p>
+              </div>
+            </div>
+
+            <div class="module-stats-icon module-stats-boygirl">
+              <span class="icon-boy-girl"></span>
+              <div class="module-stats-info">
+                <div class="uppercase">Total</div>
+                <p class="module-stats-label">{{ total_students }}</p>
+              </div>
+            </div>
+          </div> <!-- /school-demo-tab -->
+        </div> <!--/pie-chart-wrapper --> 
+      </div> 
+  
+      <div class="float-right grid-child bar-tab-demo-block">
+        <h4 class="heading-tiny-uppercase">Languages</h4>
+        <div>
+          {% for mt, percent in mt_profile_percents %}
+          <div class="bar-graph-wrap">
+            <div class="bar-label">{{ mt|capitalize }}</div>
+            <div class="bar-graph">
+              <div class="bar-percent">{{ mt_profile[mt] }}</div>
+              <div class="bar-custom tooltip" aria-label="{{ percent }}%">
+                  <div class="bar-value grey-gravel-bg bar-value-{{ percent|int }}" style="width:{{ percent }}%;">
+                  </div>
+              </div>
+            </div> <!-- /bar-graph -->
+          </div> <!-- /bar-graph-wrap -->
+          {% endfor %}
+          </div>
+        </div>
+      </div> <!-- /float-right -->
+    
+      {% if type_name != 'preschool' %}
+      <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
+      <div class="no-data js-dise" style="display:none;">
+          <p> No data available </p>
+      </div>
+  
+      <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
+        <div class="pie-chart-inner fl">
+          <div id="num_students_piechart_dise" class="chart fl"></div>
+        </div>
+    
+        <div class="school-demo-tab">
+          <div class="module-stats-icon">
+            <span class="icon-boy"></span>
+            <div class="module-stats-info">
+              <div class="uppercase">Boys</div>
+              <p class="module-stats-label">{{ num_boys_dise }}</p>
+            </div>
+          </div>
+
+          <div class="module-stats-icon module-stats-girl">
+            <span class="icon-girl"></span>
+            <div class="module-stats-info">
+              <div class="uppercase">Girls</div>
+              <p class="module-stats-label">{{ num_girls_dise }}</p>
+            </div>
+          </div>
+
+          <div class="module-stats-icon module-stats-boygirl">
+            <span class="icon-boy-girl"></span>
+            <div class="module-stats-info">
+              <div class="uppercase">Total</div>
+              <p class="module-stats-label">{{ dise.total_students }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+  
+    <div class="base-spacing"></div>
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
+    </table>
+  </div> <!-- /container -->
+  
 </script>
 
 <script type="text/html" id="tpl-tab-programmes">
@@ -255,482 +268,506 @@
 </script>
 
 <script type="text/html" id="tpl-tab-finances">
-    <h4>SSA GRANTS ALLOCATION</h4>
-
-    <div class="ta_c" id="pie_chart_finance">{ Chart here }</div>
-
-    <table class="info_data_table label_longer mar_top_25 mar_btm_25">
+  <div class="container">
+    <h4 class="heading-tiny-uppercase">SSA GRANTS ALLOCATION</h4>
+    
+    <div class="center-text" id="pie_chart_finance">{ Chart here }</div>
+    
+    <table class="table-data table-data-finances">
         <tr>
-            <td>School Maintence Grant (SMG)</td>
-            <td>₹ 5,000 for upto 3 classrooms and ₹ 10,000 for more than 3 classrooms.</td>
+          <td>School Maintence Grant (SMG)</td>
+          <td>₹ 5,000 for upto 3 classrooms and ₹ 10,000 for more than 3 classrooms.</td>
         </tr>
         <tr>
-            <td>School Grant (SG)</td>
-            <td>₹ 5,000 for lower primary schools and ₹ 7,000 for upper and model primary schools.</td>
+          <td>School Grant (SG)</td>
+          <td>₹ 5,000 for lower primary schools and ₹ 7,000 for upper and model primary schools.</td>
         </tr>
         <tr>
-            <td>Teacher Learning Material Grant (TLM)</td>
-            <td>₹ 500 per teacher.</td>
+          <td>Teacher Learning Material Grant (TLM)</td>
+          <td>₹ 500 per teacher.</td>
         </tr>
     </table>
-
+    <div class="base-spacing"></div>
     <p>
-        {% if classroom_count > 3 %}
-        This school with more than 3 classrooms has
-        {% else %}
-        This school with 3 classrooms or fewer has
-        {% endif %}
-        {{ teacher_count }} teachers as per DISE sources.<br/>
-        It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
+      {% if classroom_count > 3 %}
+      This school with more than 3 classrooms has
+      {% else %}
+      This school with 3 classrooms or fewer has
+      {% endif %}
+      {{ teacher_count }} teachers as per DISE sources.<br/>
+      It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
     </p>
-
-    <table class="info_data_table label_small">
+    
+    <table class="table-data">
         <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+          <td>Source</td>
+          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
         </tr>
     </table>
+  </div> <!-- /container -->
 </script>
 
 <script type="text/html" id="tpl-tab-infrastructure">
-    <h4>Infrastructure</h4>
-
-    <table class="infra_data_table mar_btm_25 fl-desktop">
-        {% for title, facs in facilities %}
-        <tr>
+  <div class="container">
+    
+    <div class="tab-school-infra-block">
+      <div class="school-infra-table">    
+        <h4 class="heading-tiny-uppercase">Infrastructure</h4>
+        <table class="table-data table-data-key">
+          {% for title, facs in facilities %}
+          <tr>
             <td>{{ title }}</td>
             <td>
-                {% for key, value in facs %}
-                <div class="{% if value %}green{% else %}red{% endif %}">
-                    {{ key }}
-                </div>
-                {% endfor %}
+              {% for key, value in facs %}
+              <div class="table-infra-key-color table-infra-icon-right brand-{% if value %}green{% else %}red{% endif %}">
+                  {{ key }}
+              </div>
+              {% endfor %}
             </td>
-        </tr>
-        {% endfor %}
-    </table>
+          </tr>
+          {% endfor %}
+        </table>
+      </div> <!-- /school-infra-table -->
+    
+      <div class="infra-key-legend">
+        <div class="table-infra-key-color table-infra-icon-right brand-green">Indicates infrastructure present</div>
+        <div class="table-infra-key-color table-infra-icon-right brand-red">Indicates infrastructure absent</div>
+        <div class="table-infra-key-color table-infra-icon-right brand-grey">Indicates information unavailable</div>
+      </div>
 
-    <div class="infra_data_indicators fr-desktop">
-        <div class="green item">Indicates infrastructure present</div>
-        <div class="red item">Indicates infrastructure absent</div>
-        <div class="grey item">Indicates information unavailable</div>
-    </div>
-    <div class="clr"></div>
-    <table class="info_data_table label_small">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-        </tr>
-    </table>
+    </div> <!-- /tab-school-infra-block -->
+      
+    <div class="base-spacing-lg"></div> 
 
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
+    </table>
+  </div> <!-- /container -->  
 </script>
-
 <script type="text/html" id="tpl-tab-library">
-
+  <div class="container">
+    <h4 class="heading-tiny-uppercase">Library</h4>
     <div class="hide no-data">
-        <p> No data available </p>
+      <p> No data available </p>
     </div>
 
-    <div class="options-wrapper">
-        <select name="" id="select_library_browse" class="apply-selectboxit">
-            <option value="level" selected>Borrow By Level</option>
-            <option value="language">Borrow By Language</option>
-            <option value="aggregate">Aggregate</option>
-        </select>
-
-        <select name="" id="select_library_year" class="apply-selectboxit">
-            {% for year in years %}
-                <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
-            {% endfor %}
-        </select>
-
-        <select name="" id="select_library_class" class="apply-selectboxit">
-        {% for klass in klasses %}
-            <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
+    <div class="options-wrapper center-text form-base">
+      <select name="" id="select_library_browse" class="grey-mist-bg">
+        <option value="level" selected>Borrow By Level</option>
+        <option value="language">Borrow By Language</option>
+        <option value="aggregate">Aggregate</option>
+      </select>
+    
+      <select name="" id="select_library_year" class="grey-mist-bg">
+        {% for year in years %}
+          <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
         {% endfor %}
-        </select>
+      </select>
+    
+      <select name="" id="select_library_class" class="grey-mist-bg">
+      {% for klass in klasses %}
+        <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
+      {% endfor %}
+      </select>
 
-        <button class="styled hide" id="library_graph_table_switch">Switch to Table View</button>
-
-    </div>
-
-    <div class="ta_c" id="graph_library">{ Graph here }</div>
-
-    <table id="table_library" class="basic_table mar_top_25" style="display:none;">
+      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button-->>  
+      <div class="base-spacing-mid"></div>
+    </div> <!-- /form-base -->
+  
+    <div id="graph_library">{ Graph here }</div>
+    
+    <!--<table id="table_library" class="table-data" style="display:none;">
+      <tr>
+        <th>Month</th>
+        <th>Kannada</th>
+        <th>Urdu</th>
+        <th>Telugu</th>
+        <th>Tamil</th>
+        <th>Hindi</th>
+        <th>English</th>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Feb</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Mar</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Apr</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>May</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Jun</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Jul</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Aug</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Sep</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Oct</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Nov</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Dec</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>0.4</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+    </table>-->
+    
+    <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
+    
+    <table class="table-data">
+      {% for value in lib_infra %}
         <tr>
-            <th>Month</th>
-            <th>Kannada</th>
-            <th>Urdu</th>
-            <th>Telugu</th>
-            <th>Tamil</th>
-            <th>Hindi</th>
-            <th>English</th>
+          <td>{{ loop.key }}</td>
+          <td>{% if value %} {{ value }} {% else %} - {% endif %}</td>
         </tr>
-        <tr>
-            <td>Jan</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Feb</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Mar</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Apr</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>May</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Jun</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Jul</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Aug</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Sep</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Oct</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Nov</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Dec</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>0.4</td>
-            <td>1</td>
-            <td>1</td>
-        </tr>
-    </table>
-
-    <h4 class="mar_top_25">Akshara Library Details</h4>
-
-    <table class="info_data_table label_long mar_top_25 mar_btm_25">
-        {% for value in lib_infra %}
-        <tr>
-            <td>{{ loop.key }}</td>
-            <td>{% if value %} {{ value }} {% else %} - {% endif %}</td>
-        </tr>
-        {% endfor %}
+      {% endfor %}
         <!--
-        <tr>
-            <td>Number of Books</td>
-            <td>1006</td>
-        </tr>
-        <tr>
-            <td>Number of UPS(s)</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>Status Library</td>
-            <td>Handed over</td>
-        </tr>
-        <tr>
-            <td>Number of Tables</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>Number of Racks</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>Number of Computers</td>
-            <td>-</td>
-        </tr>
-        -->
+      <tr>
+        <td>Number of Books</td>
+        <td>1006</td>
+      </tr>
+      <tr>
+        <td>Number of UPS(s)</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Status Library</td>
+        <td>Handed over</td>
+      </tr>
+      <tr>
+        <td>Number of Tables</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Number of Racks</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Number of Computers</td>
+        <td>-</td>
+      </tr>
+      -->
     </table>
-
-    <p>DISE Reports Number of Books as : <strong>175</strong></p>
-
-    <table class="info_data_table label_small">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
-        </tr>
+    
+    <div>DISE Reports Number of Books as : <strong>175</strong></div>
+    
+    <div class="base-spacing"></div>
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+      </tr>
     </table>
-
+  </div> <!-- /container -->
+    
 </script>
 
 <script type="text/html" id="tpl-tab-nutrition">
-    <h4>Mid-day Meal Summary</h4>
+
+  <div class="container">
+    <h4 class="heading-tiny-uppercase">Mid-day Meal Summary</h4>
     <div class="hide no-data">
-        <p> No data available </p>
+      <p> No data available </p>
     </div>
     <div class="hide data">
-        <div class="ta_c" id="graph_nutrition">{ Graph here }</div>
+      <div id="graph_nutrition">{ Graph here }</div>
     </div>
 
-    <table class="info_data_table label_small">
-        <tr>
-            <td>Source</td>
-            <td>KLP Database (2011-2012), <strong>Akshay Patra</strong></td>
-        </tr>
+    <div class="base-spacing"></div>
+    <table class="table-data">
+      <tr>
+        <td>Source</td>
+        <td>KLP Database (2011-2012), <strong>Akshay Patra</strong></td>
+      </tr>
     </table>
+  </div> <!-- /container -->
+  
 </script>
 
+
 <script type="text/html" id="tpl-tab-share-story">
-    <div class="fl-desktop-tablet width-48p-desktop-tablet">
-        <h4>Information from schools visits</h4>
-
-        <p>
-            This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:
-        </p>
-
-        <table class="info_data_table label_longer mar_top_25 mar_btm_25">
+  <div class="container">
+    <div class="school-tab-story">
+      <div class="school-story-visits">
+          <h4 class="heading-tiny-uppercase">Information from schools visits</h4>
+      
+          <p>This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:</p>
+      
+          <table class="table-data table-data-key">
             {% if latest_answers %}
                 {% for answer in latest_answers %}
-                <tr>
+                  <tr>
                     <td>{{ answer.question.text }}</td>
-                    <td class="{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
-                        {{ answer.text }}
+                    <td> 
+                      <div class="table-infra-key-color table-infra-icon-left brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
+                      {{ answer.text }}
+                      </div>
                     </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-            <tr>
+                  </tr>
+                  {% endfor %}
+              {% else %}
+              <tr>
                 <td>No answers available for school.</td>
                 <td></td>
-            </tr>
-            {% endif %}
-        </table>
-    </div>
-
-    <div class="fr-desktop-tablet width-48p-desktop-tablet">
+              </tr>
+              {% endif %}
+          </table>
+      </div> <!-- /school-story-visits -->
+       
+      <div class="school-share-story">
         <div class="share-your-story">
-            <a href="" id="trigger_share_story_form" class="button orange">Share your story</a>
-            <br/>
-            <!--
-            <div class="stats first">
-                <div class="number"></div>
-                <div class="text">Number of School Visits</div>
-            </div>
-            -->
-            <div class="stats">
-                <div class="number">{{ count }}</div>
-                <div class="text">Shared Stories</div>
-            </div>
+          <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
+          <div class="base-spacing-sm"></div>
+          <!--
+        <div class="stats first">
+          <div class="number"></div>
+          <div class="text">Number of School Visits</div>
         </div>
-    </div>
-    <!-- <div class="clr-phone-tablet"></div> -->
+        -->
+        <div class="base-spacing font-large">
+          <span class="icon-number icon-left">{{ count }}</span>
+          <span class="text">Shared Stories</span>
+        </div>
 
-    <div class="fr-desktop-tablet width-48p-desktop-tablet">
-
-        <div class="comments mar_top_25">
-            <h4>Visitor Comments</h4>
+        <div class="comments">
+            <h4 class="heading-tiny-uppercase">Visitor Comments</h4>
             {% for story in features %}
-            <div class="comment-item first">
-                <div class="name">
-                    {% if story.name %}
-                        {{ story.name }}
-                    {% else %}
-                        Anonymous
-                    {% endif %}
-                </div>
+            <div class="comment-item">
+                <p class="grey-gravel bold">
+                  {% if story.name %}
+                      {{ story.name }}
+                  {% else %}
+                    Anonymous
+                  {% endif %}
+                </p>
                 {% if story.comments %}
-                    <p class="text">{{ story.comments }}</p>
+                  <p>{{ story.comments|autolink|safe }}</p>
                 {% endif %}
-                {% if story.date %}
-                <div class="timestamp">Shared on : {{ story.date|date('jS F, Y') }}</div>
+                {% if story.date_of_visit %}
+                <div class="heading-tiny">Shared on : {{ story.date_of_visit|date('jS F, Y') }}</div>
                 {% endif %}
             </div>
             {% endfor %}
-        </div>
+        </div> <!-- /comments --> 
+      </div> <!-- /school-share-story -->
 
-    </div>
-
-    <div class="clr"></div>
-
-
+    </div> <!-- /school-tab-story --> 
+  </div> <!-- /container -->
 
 </script>
 
 <script type="text/html" id="tpl-tab-volunteer">
+  <div class="container">
     {% if features.length %}
-        {% for f in features %}
-        <div class="required pb-20">
-            <div class="fl phn-fn mt-5 mb-5">
-                <span class="font-20 color-red">{{ f.activity_type_details.name }}</span>
-                <br/>
-                <span class="color-grey-light-2">For </span>
-                <a href="/organisation/{{ f.organization_details.id }}">
-                    <span class="color-green-2 uppercase"> {{ f.organization_details.name }}</span>
-                </a>
-            </div>
-            <div class="tab-items fr ta-r phn-fn phn-ta-l phn-mb-10">
-                <!--
-                <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
-                <br/>
-                <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
-                -->
-            </div>
-            <div class="clr"></div>
-            <p>
-                {{ f.text|striptags|nl2br|autolink|safe }}
-            </p>
-            <div class="fl phn-fn">
-                <div class="color-black bold mt-10">
-                    Date:
-                </div>
-                <div class="font-16 color-blue bold">{{ f.date|date('jS F, Y') }}</div>
-            </div>
-            <a class="button fr phn-fn phn-mt-10 js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
-                Volunteer Now
-            </a>
-            <div class="clr"></div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="required pb-20">
-            No volunteering opportunities at this school.
-        </div>
-    {% endif %}
-</script>
+    {% for f in features %}
+    <div>
+      <div>
+        <div class="h5 brand-red">{{ f.activity_type_details.name }}</div>
 
+        <span class="font-smallest">
+          <span class="grey-steel">For </span>
+          <a href="/organisation/{{ f.organization_details.id }}" class="brand-turquoise uppercase">
+            {{ f.organization_details.name }}
+          </a>
+        </span>
+      </div>
+      <div class="tab-items">              <!--
+        <a href="#" class="font-20 color-green">Gian Jyoti Public School</a>
+        <br/>
+        <div class="color-grey-light-2 mb-5">Street No-4, Banasawadi, Bangalore</div>
+  -->
+      </div>
+      <p>
+          {{ f.text|striptags|nl2br|autolink|safe }}
+      </p>
+
+      <div class="clearfix grid-parent">
+        <div class="float-left grid-child">
+          <div class="black font-smallest bold">
+            Date:
+          </div>
+          <div class="brand-blue bold">{{ f.date|date('jS F, Y') }}</div>
+        </div>
+        <div class="float-right grid-child">
+          <a class="button js-volunteerHereBtn" data-id="{{ f.id }}" href="#">
+            Volunteer Now
+          </a>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <div>
+      No volunteering opportunities at this school.
+    </div>
+    {% endif %}
+
+  </div> <!-- /container -->
+
+</script>
 <script type="text/html" id="tpl-share-story-form">
-    <h2>Share Your Story</h2>
-    <form id="sysForm" class="form" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
-        <div class="field-container">
-            <label for="name_id">Name:</label>
-            <input type="text" name="name" id="name_id" />
+  <div class="container-sm">
+    <div class="base-spacing-lg">
+      <h2 class="heading-secondary brand-blue">Share Your Story</h2>
+    </div>
+    <form id="sysForm" class="form-base form-share-story" action="/api/v1/stories/{{ id }}" method="POST" enctype="multipart/form-data">
+        <div class="form-field-wrap">
+          <label for="name_id" class="label-inline">Name:</label>
+          <input type="text" name="name" id="name_id" class="input-text">
         </div>
-        <div class="field-container">
-            <label for="email_id">E-mail:</label>
-            <input type='email' name="email" id="email_id" />
+        <div class="form-field-wrap">
+          <label for="email_id" class="label-inline">E-mail:</label>
+          <input type='email' name="email" id="email_id" class="input-text">
         </div>
-        <div class="field-container">
-            <label for="telephone">Telephone:</label>
-            <input type='tel' name="telephone" id="telephone" />
+        <div class="form-field-wrap">
+          <label for="telephone" class="label-inline">Telephone:</label>
+          <input type='tel' name="telephone" id="telephone" class="input-text">
         </div>
-        <div class="field-container">
-            <label for="date">Date:</label>
-            <input type='date' name="date" id="date" />
-        </div>        
-        <div class="field-container">
-            <label for="comments_id">Comments:</label>
-            <textarea name="comments" id="comments_id" />
+        <div class="form-field-wrap">
+          <label for="date" class="label-inline">Date of Visit:</label>
+          <input type='date' name="date_of_visit" id="date" placeholder="YYYY-MM-DD" class="input-text js-input-date">
+        </div>
+        <div class="form-field-wrap">
+          <label for="comments_id" class="label-inline">Comments:</label>
+          <textarea name="comments" id="comments_id" class="input-text"></textarea>
         </div>
         {% for q in questions %}
-        <div class="field-container">
-            {% if q.question_type == 'checkbox' %}
-            <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" />
-            <label class='checkbox-text' for='id_question_{{ q.qid }}'>
-                {{ q.text }}
+        <div>
+          {% if q.question_type == 'checkbox' %}
+          <input type="checkbox" name="question_{{ q.qid }}" id="id_question_{{ q.qid }}" class="input-checkbox">
+          <label class="input-checkbox-label" for='id_question_{{ q.qid }}'>
+            {{ q.text }}
+          </label>
+          {% elseif q.question_type == 'radio' %}
+            <div class="base-spacing"></div>
+            <label><strong>{{ q.text }}</strong></label>
+          <div class='radio-options'>
+            {% for option in q.options %}
+            <div class="base-spacing">
+            <input type='radio' class="input-radio" value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
+            <label for="id_question_{{ q.qid }}_{{ option }}" class="input-radio-label">
+                {{ option }}
             </label>
-            {% elseif q.question_type == 'radio' %}
-            <div class='radio-text'>
-                <label>{{ q.text }}</label>
             </div>
-            <div class='radio-options'>
-                {% for option in q.options %}
-                <input type='radio' class='radio-option' value='{{ option }}' name='question_{{ q.qid }}' id="id_question_{{ q.qid }}_{{ option }}" />
-                <label for="id_question_{{ q.qid }}_{{ option }}">
-                    {{ option }}
-                </label>
-                <br />
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
         {% endfor %}
-        <div class="field-container">
-            <label>
-                Upload images:
-            </label>
+        <div class="form-field-wrap">
+          <label>
+            Upload images:
+          </label>
         </div>
-        <div class="field-container">
-            <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
         </div>
-        <div class="field-container">
-            <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
         </div>
-        <div class="field-container">
-            <input name="image" type="file" />
-            <img class="imagePreview" width="100" />
+        <div class="form-field-wrap">
+          <input name="image" type="file">
+          <img class="form-file-preview js-image-preview" width="100">
         </div>
-
-        <div class="field-container">
-            <button type="submit" class="button js-submit-btn">Submit</button>
-            <div class="js-submit-loading" style="display:none;">
-                Sending...
-            </div>
+    
+        <div class="form-field-wrap center-text">
+          <button type="submit" class="button js-submit-btn">Submit</button>
+          <div class="js-submit-loading" style="display:none;">
+            Sending...
+          </div>
         </div>
     </form>
 
+  </div> <!-- /container -->
+  
 </script>
-
 {% endverbatim %}

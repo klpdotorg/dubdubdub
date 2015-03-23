@@ -1,0 +1,240 @@
+/*-------------------------------------*/
+/* FORM: DEFAULT STYLES */
+
+input[type="submit"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+}
+
+textarea {
+  vertical-align: top;
+  height: 120px;
+}
+
+input[type="text"], input[type="email"], input[type="number"], input[type="tel"], input[type="password"], input[type="date"], input[type="url"], textarea, select {
+  @extend %border-base;
+  @extend %white-bg;
+
+  @include placeholder {
+    color: $grey-silver;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.label-inline {
+  @extend %vertical-inline-middle;
+  min-width: 100px;
+  padding-right: $base-spacing;
+}
+
+
+/*-------------------------------------*/
+/* FORM: BASE STYLES */
+// Wrap all forms with a class of form-base
+
+.form-base {
+  .input-text, textarea, select {
+    padding: $base-spacing - 2;
+    @extend %border-radius-sm;
+    @extend %font-base-family;
+
+    &:focus {
+      border-color: $brand-blue;
+    }
+  }
+
+  .select2 {
+    padding: 0;
+  }
+
+  .input-text, select {
+    min-height: $form-input-height;
+  }
+
+  .input-text {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+    
+  label {
+    padding: $base-spacing 0;
+  }
+}
+
+
+/*-------------------------------------*/
+/* CUSTOM CHECKBOXES AND RADIOS */
+.input-checkbox, .input-radio {
+  opacity: 0;
+  position: absolute;
+}
+
+.input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label {
+  @extend %vertical-inline-middle;  
+  cursor: pointer;
+}
+
+.input-checkbox-label, .input-radio-label {
+  position: relative;
+  cursor: pointer;
+}
+
+.input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before {
+  @extend %white-bg;
+  border: 2px solid $grey-silver;
+  content: "";
+  font-size: 12px;
+  line-height: 1.1;
+  @extend %vertical-inline-middle;  
+  width: 12px;
+  height: 12px;
+  padding: 2px;
+  @extend %center-text;
+  margin-right: $base-spacing-sm;
+}
+
+.input-checkbox + .input-checkbox-label:before {
+  @extend %border-radius-sm;    
+}
+
+.input-checkbox:checked + .input-checkbox-label:before {
+  content: "\f00c";
+  @extend %font-icon;
+  background: $grey-silver;
+  @extend %white;
+}
+
+.input-radio + .input-radio-label:before  {
+  @extend %border-radius-circle;
+}
+
+.input-radio:checked + .input-radio-label:before {
+  background: $grey-silver;
+  box-shadow: inset 0px 0px 0px 4px $white;
+}
+
+
+.form-field-wrap {
+  padding: 0 0 $base-spacing-lg 0;
+}
+
+
+/*-------------------------------------*/
+/* FORM: DISABLED INPUTS */
+
+input[disabled], input[disabled] + .input-checkbox-label, input[disabled] + .input-radio-label {
+  cursor: not-allowed;
+}
+
+input[disabled], .input-checkbox[disabled] + .input-checkbox-label:before, .input-radio[disabled] + .input-radio-label:before {
+  border-color: darken($grey-mist, 5%);  
+}
+
+input:checked[disabled], .input-checkbox[disabled]:checked + .input-checkbox-label:before, .input-radio[disabled]:checked + .input-radio-label:before, .input-text[disabled] {
+  background: darken($grey-mist, 5%);
+  border-color: darken($grey-mist, 5%);  
+}
+
+
+/*-------------------------------------*/
+/* FORM: INPUT FILE PREVIEW */
+
+.form-file-preview {
+  display: block;
+  margin: $base-spacing 0 0 0;
+  @extend %border-radius-sm;
+}
+
+
+/*-------------------------------------*/
+/* FORM: ERRORS */
+
+.error-message {
+  @extend %brand-red;
+  @extend %font-smaller;
+  padding-top: $base-spacing-sm;
+}
+
+input.error {
+  border-color: $brand-red;
+}
+
+
+/*-------------------------------------*/
+/* FORM: OPTIONAL TEXT */
+
+.form-optional-text {
+  @extend %grey-silver;
+}
+
+
+/*-------------------------------------*/
+/* FORM: LOGIN */
+
+.form-signup, .form-login {
+  .input-text {
+    @extend %full-width;
+  }
+}
+
+
+/*-------------------------------------*/
+/* FORM: ORGANIZATION, PROFILE EDIT, VOLUNTEER OPPORTUNITIES EDIT */
+.form-edit-profile, .form-volunteer-oppor-edit, .form-add-donation {
+  label {
+    display: block;
+    @extend %bold; 
+    @extend %font-smaller;
+    padding-bottom: $base-spacing-sm;
+  }
+
+  .input-text {
+    @extend %full-width;
+  }
+}
+
+
+/*-------------------------------------*/
+/* FORM: PROFILE EDIT PASSWORD */
+.form-edit-password {
+  @extend %grey-mist-bg;
+  padding: $base-spacing-lg-x;
+  @extend %border-base;
+  @extend %border-radius-sm;
+
+  @include media-med {
+    margin-top: 0;    
+  }
+}
+
+.form-edit-heading {
+  @extend %uppercase;
+  @extend %brand-blue;
+  @extend %center-text;
+  @extend %font-small;
+  letter-spacing: 1px;
+}
+
+
+/* FORM: VOLUNTEER OPPORTUNITIES EDIT */
+.form-volunteer-oppor-edit {
+  .select2 {
+    width: 100%;
+  }    
+}
+
+
+/*-------------------------------------*/
+/* FORM: FORM SHARE STORY */
+.form-share-story {
+  .input-text {
+    min-width: 300px;
+  }
+
+}

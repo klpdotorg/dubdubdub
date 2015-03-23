@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_title %}Learn, Out of the Box{% endblock %}
+{% block content %}
+<div class="page-pratham-learn-details">
+  <section class="banner-full banner-pratham-learn">
+    <div class="banner-content">
+      <h1 class="heading-primary white">Learn, Out of the Box</h1>
+      <div class="banner-full-caption">
+        <p>The Vodafone Foundation and the Pratham Education Foundation (Pratham) have formed a partnership to launch the 'Learn, Out of the Box' program which will work across 1000 low-income schools in India over 3 years.</p>
+        <div class="base-spacing"></div>
+      </div>
+    </div> <!-- /banner-content -->
+    <div class="banner-overlay"></div>
+  </section>
+
+  <nav class="js-scroll-smooth-block scroll-smooth-block">
+    <ul class="scroll-smooth-links">
+      <li><a href="#section-overview">Overview</a></li>      
+      <li><a href="#section-how-we-do-it">How We Do It</a></li>
+      <li><a href="#section-technology">The Technology</a></li>
+      <li><a href="#section-assessment">Assessments and Evaluation</a></li>
+      <li><a href="#section-programme-reports">Programme Reports</a></li>
+    </ul>
+  </nav>
+
+  <section id="section-overview">
+    <div class="center-text">
+      <h2 class="heading-section">Overview</h2>
+      <div class="heading-section-block"></div>
+    </div>
+    <div class="container">
+      <div class="center-text">
+        <img src="{% static 'images/partners/LOTB-Logo.jpg' %}" alt="Learn Out of the Box Logo" width="734" height="113">
+      </div>
+      <p>Our objectives:</p>
+      <ul class="ul-base">
+        <li>To enrich the lesson planning and in-class experiences of teachers;
+        <li>To engage students by making learning fun;
+        <li>To enhance students' classroom experiences by diversifying learning activities;
+        <li>To improve student learning outcomes, both subject specific and in a broader context
+      </ul>
+    </div>     
+  </section>
+
+  <section id="section-how-we-do-it">
+    <div class="center-text">
+      <h2 class="heading-section">How We Do It</h2>
+      <div class="heading-section-block"></div>
+    </div>
+    <div class="container">
+      
+      <img src="{% static 'images/partners/PrathamLearn2_resized.jpg' %}" class="float-right-padding" width="300" alt="Using technology tools" />
+      
+      <p>
+        To meet the goals of our program we provide the following:
+      </p>
+      <ul class="ul-base">
+        <li>A teacher technology tool with curriculum aligned content
+        <li>All supplementary hardware required
+        <li>Holistic teacher training designed to help teachers integrate technology into their classroom
+        <li>On-going teacher guidance including lesson-planning support
+        <li>Technical troubleshooting
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </section>
+
+  <section id="section-technology">
+    <div class="center-text">
+      <h2 class="heading-section">The Technology</h2>
+      <div class="heading-section-block"></div>
+    </div>
+    <div class="container">
+      <img src="{% static 'images/partners/PrathamLearn3_resized.jpg' %}" class="float-left-padding" width="200" alt="WebBox" />
+      <p>
+        The WebBox was designed by the Vodafone Group. It is essentially a smart phone repackaged as a keyboard – serving as a low cost smart class platform. The WebBox has AV cables that plug into a television, which is a part of the hardware package provided to schools. Additionally, it is internet-enabled through a SIM card.
+      </p>
+      
+      <p>
+        The WebBox is equipped with a learning application for the classroom that contains curriculum- aligned digital content. This includes videos, slideshows, and classroom activity ideas that are stored directly on the WebBox and can be used by the teacher both within the classroom and during lesson planning.
+      </p>
+      <div class="clear"></div>
+    </div>
+  </section>
+
+  <section id="section-assessment">
+    <div class="center-text">
+      <h2 class="heading-section">Assessments and Evaluation</h2>
+      <div class="heading-section-block"></div>
+    </div>
+    <div class="container center-text">
+      <p>
+        Will be made available after the post-test is completed.
+      </p>
+    </div>
+  </section>
+
+  <section id="section-programme-reports">
+   <div class="center-text">
+      <h2 class="heading-section">Programme Reports</h2>
+      <div class="heading-section-block"></div>
+    </div>
+    <div class="container center-text">
+      <p>
+        For more details please login to <a href="http://www.learn-outofthebox.org" target="_blank">http://www.learn-outofthebox.org</a>
+      </p>
+    </div>
+  </section>
+{% endblock %}

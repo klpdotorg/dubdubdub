@@ -14,7 +14,7 @@
             // console.log("context", context);
             var html = tplStories(context);
             // console.log("html", html);
-            $('#recentlySharedStories').html(html);
+            $('#jsRecentlySharedStories').html(html);
         });
     };
 
