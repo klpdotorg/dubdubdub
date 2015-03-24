@@ -1471,7 +1471,7 @@ a.button {
   display: block;
 }
 
-@include media-sm {
+@include media-med {
   .float-left-padding {
     @include float-left;
     margin: $base-spacing $base-spacing-lg-x $base-spacing 0;

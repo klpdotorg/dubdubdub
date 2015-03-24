@@ -96,7 +96,7 @@ class StoriesApiTestCase(TestCase):
 
     # Would be better if error is returned in case invalid params are entered for answers.
     def testGetAnswersForSchool2(self):
-        query_url = self.stories_base_url + "?school_id=" + self.schools_lib_id + "&answers=something"
+        query_url = self.stories_base_url + "?school_id=" + self.schools_lib_id + "&answers=no"
         print "Checking parameter validation for answers param-- " + query_url
         response = self.client.get(query_url)
         print response.status_code
@@ -106,6 +106,12 @@ class StoriesApiTestCase(TestCase):
         results = json.loads(response.content)
         sample_school = results['features'][0]
         self.assertFalse('answers' in sample_school, "has no property called answers")
+
+    def testAnswersUrlParamVerified(self):
+        query_url = self.stories_base_url + "?school_id=" + self.schools_lib_id + "&answers=something"
+        response = self.client.get(query_url)
+        self.assertEqual(response.status_code, 400,
+                         "schools answers invalid param status code is 400")
 
     def testStoriesInformation(self):
         query_url=self.stories_base_url + "info/"
