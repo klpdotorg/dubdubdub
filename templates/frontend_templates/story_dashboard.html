@@ -1,0 +1,34 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-gradeGraph">
+    {% for g in grades %}
+      <div class="bar-graph-wrap">
+        <div class="bar-label orange-mild">{{ g.value }} Grade</div>
+          <div class="bar-graph">
+            <div class="bar-percent orange-mild">{{ g.percent }}</div>
+            <div class="bar-custom tooltip" aria-label="{{ g.score }}/{{ g.total }}">
+            <div class="bar-value bar-value-{{ g.score }} orange-mild-bg" style="width:{{ g.percent }}%;"></div>
+          </div>
+        </div> <!-- /bar-graph -->
+      </div> <!-- /bar-graph-wrap -->
+    {% endfor %}
+  </script>
+
+  <script type="text/html" id="tpl-percentGraph">
+    {% for r in responses %}
+      <div class="bar-graph-wrap">
+        <div class="bar-label">{{ r.question }}</div>
+        <div class="bar-graph">
+          <div class="bar-percent green-leaf">{{ g.percent }}</div>
+          <div class="bar-custom tooltip" aria-label="{{ g.score }}/{{ g.total }}">
+            <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+              <div class="bar-value bar-value-{{ g.score }} green-leaf-bg" style="width:{{ g.score }}%;"></div>
+            </div>
+          </div>
+        </div> <!-- /bar-graph -->
+      </div> <!-- /bar-graph-wrap -->
+   {% endfor %}
+  </script>
+
+{% endverbatim %}
+
