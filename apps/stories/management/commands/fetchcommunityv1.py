@@ -71,8 +71,6 @@ class Command(BaseCommand):
                             questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
-                        question.school_type = school.admin3.type
-                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
@@ -106,8 +104,6 @@ class Command(BaseCommand):
                             questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
-                        question.school_type = school.admin3.type
-                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
@@ -141,8 +137,6 @@ class Command(BaseCommand):
                             questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
-                        question.school_type = school.admin3.type
-                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,

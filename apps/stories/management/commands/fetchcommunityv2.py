@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
             name = row[6]
             dise_code = row[5]
-            accepted_answers = {'Y':'1', 'N':'0'}
+            accepted_answers = {'Y':'Yes', 'N':'No'}
             user_type = self.get_user_type(row[7], user_types)
             previous_date = date_of_visit = self.parse_date(previous_date, row[16])
     
@@ -91,8 +91,6 @@ class Command(BaseCommand):
                             questiongroup=question_group,
                             questiongroupquestions__sequence=sequence_number,
                         )
-                        question.school_type = school.admin3.type
-                        question.save()
                         answer = Answer.objects.get_or_create(
                             story=story,
                             question=question,
