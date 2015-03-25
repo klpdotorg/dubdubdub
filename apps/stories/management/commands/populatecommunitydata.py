@@ -15,6 +15,7 @@ class Command(BaseCommand):
         s = Source.objects.get_or_create(name="community")[0]
         q = Questiongroup.objects.get_or_create(version=1, source=s)[0]
         question_type = QuestionType.objects.get(name="checkbox")
+        school_type = BoundaryType.objects.get(name="Primary School")
         user_type= UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         q1 = Question.objects.get_or_create(
@@ -22,6 +23,7 @@ class Command(BaseCommand):
             data_type=1,
             user_type=user_type,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q2 = Question.objects.get_or_create(
@@ -29,6 +31,7 @@ class Command(BaseCommand):
             data_type=1,
             user_type=user_type,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q3 = Question.objects.get_or_create(
@@ -36,6 +39,7 @@ class Command(BaseCommand):
             data_type=1,
             user_type=user_type,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q4 = Question.objects.get_or_create(
@@ -43,78 +47,91 @@ class Command(BaseCommand):
             data_type=1,
             user_type=user_type,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q5 = Question.objects.get_or_create(
             text="Is the TLM in the school sufficient?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q6 = Question.objects.get_or_create(
             text="Is the teacher overloaded with work?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q7 = Question.objects.get_or_create(
             text="Do the teachers need re-training/extra classes?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q8 = Question.objects.get_or_create(
             text="Is there a healthy relationship/understanding between the teacher and the school board(HM)?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q9 = Question.objects.get_or_create(
             text="Is the school board (HM) running the school efficiently?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q10 = Question.objects.get_or_create(
             text="Are the teachers consistent in their presence in school and do they take classes regularly?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q11 = Question.objects.get_or_create(
             text="Are the children getting the required academic attention in school by the teacher?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q12 = Question.objects.get_or_create(
             text="Is there any concern pertaining to the food served to the children in school?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q13 = Question.objects.get_or_create(
             text="Are the teachers in the school qualified/trained/motivated to teach?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]
         q14 = Question.objects.get_or_create(
             text="Is the student to teacher ratio high?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]        
         q15 = Question.objects.get_or_create(
             text="Is the government actively involved in the school's development?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]        
         q16 = Question.objects.get_or_create(
             text="Does the school have good infrastructure and is the location of the school safe for children?",
             data_type=1,
             question_type=question_type,
+            school_type=school_type,
             options="{Yes,No}",
         )[0]        
 
