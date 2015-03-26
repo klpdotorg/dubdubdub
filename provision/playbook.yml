@@ -12,7 +12,7 @@
       - electrep_new
       - dise_all
       - apmdm
-      - klpdise_olap
+#      - klpdise_olap
       - ang_infra
       - libinfra
       - library
@@ -24,10 +24,13 @@
   tasks:
     - command: "date --date='2 day ago' +'%Y-%m-%d'"
       register: yesterday
+
     - name: ensure locale en_US.UTF-8 exists
       locale_gen: name={{ locale }} state=present
+
     - name: update locale
       command: /usr/sbin/update-locale LANG={{ locale }}
+
     - name: Set timezone variables
       copy: content={{ timezone }}\n
             dest=/etc/timezone
@@ -40,6 +43,7 @@
 
     - name: update apt cache
       command: "/usr/bin/aptitude update"
+
     - name: "upgrade apt packages, about 200MB"
       command: "/usr/bin/aptitude safe-upgrade -y"
 
@@ -48,14 +52,19 @@
       with_items:
         - wget
         - ca-certificates
+
     - name: adding postgres repo
       apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
+
     - name: import postgresql repo key
       apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
     - name: ensure postgresql 9.3 is installed
       apt: pkg=postgresql-9.3 state=latest
+
     - name: ensure postgresql is running
       service: name=postgresql state=started
+
     - name: install all required packages
       apt: pkg={{ item }} state=latest
       with_items:
@@ -78,9 +87,11 @@
                      lc_collate='en_US.UTF-8'
                      lc_ctype='en_US.UTF-8'
                      template='template0'
+
     - name: create postgresql user and give privileges
       sudo_user: postgres
       postgresql_user: db=dubdubdub name=klp password=klp priv=ALL role_attr_flags=CREATEDB,CREATEROLE,SUPERUSER,LOGIN
+
     - name: create pgpass in postgres user
       sudo_user: postgres
       copy: content=*:5432:*:klp:klp
@@ -88,6 +99,7 @@
             owner=postgres
             group=postgres
             mode=0600
+
     - name: create pgpass in vagrant user
       sudo_user: vagrant
       copy: content=*:5432:*:klp:klp
@@ -95,11 +107,13 @@
             owner=vagrant
             group=vagrant
             mode=0600
+
     - name: dropping exiting databases
       sudo_user: postgres
       postgresql_db: name={{ item }}
                      state=absent
       with_items: dbs_required
+
     - name: creating required databases
       sudo_user: postgres
       postgresql_db: name={{ item }}
@@ -109,17 +123,21 @@
                      template='template0'
                      owner=klp
       with_items: dbs_required
+
     - name: downloading required databases
       sudo: False
       get_url: url=http://dev.klp.org.in/public/db_backups/{{ yesterday.stdout }}-daily/{{ item }}.custom dest=/home/vagrant/{{ item }}.custom
       with_items: dbs_required
+
     - name: restoring databases
       sudo: False
       command: pg_restore -h localhost -U klp -d {{ item }} -F c /home/vagrant/{{ item }}.custom
       with_items: dbs_required
+
     - name: dropping materialized views
       sudo_user: postgres
-      command: psql -h localhost -d dubdubdub -U klp -f /vagrant/sql/refresh_materialized_views.sql
+      command: psql -h localhost -d dubdubdub -U klp -f /vagrant/sql/drop_materialized_views.sql
+
     - name: creating materialized views
       sudo_user: postgres
       command: psql -h localhost -d dubdubdub -U klp -f /vagrant/sql/materialized_views.sql
@@ -130,8 +148,13 @@
 
     - name: ensure virtualenv is active when user logs in
       lineinfile: dest=/home/vagrant/.bashrc line='cd /vagrant && source {{ venv_path }}/bin/activate' state=present
+
     - name: create alias for runserver
       lineinfile: dest=/home/vagrant/.bashrc line='alias runserver="python manage.py runserver 0.0.0.0:8000"' state=present
+
+    - name: copy local_settings.py from sample
+      sudo: False
+      command: cp /vagrant/dubdubdub/local_settings.py.sample /vagrant/dubdubdub/local_settings.py
 
   handlers:
     - name: update timezone
