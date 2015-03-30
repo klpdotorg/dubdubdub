@@ -1,7 +1,10 @@
 import csv
 import datetime
 
+from optparse import make_option
+
 from django.utils import timezone
+from django.db import transaction
 from django.core.management.base import BaseCommand
 
 from schools.models import (
@@ -12,12 +15,23 @@ from stories.models import (
     Story, Answer)
 
 class Command(BaseCommand):
-    args = ""
-    help = """Parse and store the Community Feedback V1 data
+    args = "<path to file>"
+    help = """Parse and store the Community Feedback V2 data
     
-    ./manage.py fetchcommunityv2"""
+    ./manage.py fetchcommunityv2 --file=path/to/file"""
+    
+    option_list = BaseCommand.option_list + (
+        make_option('--file',
+                    help='Path to the csv file'),
+    )
 
+    @transaction.atomic
     def handle(self, *args, **options):
+        file_name = options.get('file', None)
+        if not file_name:
+            print "Please specify a filename with the --file argument"
+            return
+
         source = Source.objects.get_or_create(name="community")[0]
         question_group = Questiongroup.objects.get_or_create(version=2, source=source)[0]
         user_types = {
@@ -33,7 +47,7 @@ class Command(BaseCommand):
         UserType.objects.get_or_create(name=UserType.SDMC_MEMBER)
         UserType.objects.get_or_create(name=UserType.EDUCATED_YOUTH)
 
-        f = open('communityv2.csv')
+        f = open(file_name, 'r')
         csv_f = csv.reader(f)
         
         count = 0
