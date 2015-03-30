@@ -21,18 +21,18 @@ shift `expr $OPTIND - 1`
 
 if [ $recreate_tables = on ]; then
     echo "Dropping tables"
-    psql -U klp dubdubdub_bak < data/ems/droptables.sql
+    psql -U klp dubdubdub_bak2 < imports/sql/droptables.sql
     echo "Creating tables"
-    psql -U klp dubdubdub_bak < data/ems/createtables.sql
+    psql -U klp dubdubdub_bak2 < imports/sql/createtables.sql
 
     for f in `pwd`/data/ems/*.csv;
     do
         filename=$(basename $f .csv)
         echo "Inserting data to temp table: $filename"
-        psql -U klp -d dubdubdub_bak -c "copy ems_$filename from '$f' CSV HEADER"
+        psql -U klp -d dubdubdub_bak2 -c "copy ems_$filename from '$f' CSV HEADER"
     done
 fi
 
 # for f in data/ems/*.csv; do csv-to-table $f --sample 0.3 --header --table_name ems_$(basename $f .csv) >> data/ems/create.sql; done
 
-psql -1 -U klp -d dubdubdub_bak < data/ems/importdata.sql
+# psql -1 -U klp -d dubdubdub_bak < data/ems/importdata.sql
