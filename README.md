@@ -8,16 +8,14 @@ Home of KLP. Houses *most* of the data and APIs that powers the features on the 
 We use Vagrant for development. Here's everything you need to know about setting up dubdubdub for development.
 
 #### Install Vagrant
-1. [Download for Ubuntu](https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.1_x86_64.deb)
-2. [Download for OS X](https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.1.dmg)
+
+[Vagrant Downloads](https://www.vagrantup.com/downloads.html)
 
 #### Install Virtualbox
-1. Ubuntu
 
-        $ wget http://download.virtualbox.org/virtualbox/4.3.4/virtualbox-4.3_4.3.4-91027~Ubuntu~raring_amd64.deb
-        $ sudo dpkg -i virtualbox-4.3_4.3.4-91027~Ubuntu~raring_amd64.deb
+[Virtualbox Download](https://www.virtualbox.org/wiki/Downloads)
 
-2. [Download for OS X](http://download.virtualbox.org/virtualbox/4.3.8/VirtualBox-4.3.8-92456-OSX.dmg)
+(Please note it's recommended to use the virtualbox supplied by your package manager if you're running Linux)
 
 #### Clone the code
 
@@ -26,27 +24,23 @@ We use Vagrant for development. Here's everything you need to know about setting
 #### Setup Vagrant
 
     $ vagrant up
+
+(The above step will also provision the dev environment when it's running for the first time.)
+
     $ vagrant ssh
-
-#### Copy Local settings file
-
-    $ cp dubdubdub/local_settings.py{.sample,}
-
-When developing locally, add the following line to local_settings.py to output emails to console and not attempt to actually send them:
-
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #### Run:
 
     $ runserver
 
-and go to `http://localhost:8001`
+and go to `http://localhost:8088`
 
 #### CSS workflow:
+
 1. Add a partial to assets/static/sass/dev and import it in assets/static/sass/style.scss. For example, see [assets/static/sass/dev/_sample.scss](https://github.com/klpdotorg/dubdubdub/blob/develop/assets/static/sass/dev/_sample.scss).
 
 2. Run Sass before you commit the changes
-    
+
     $ sass assets/static/sass/style.scss assets/static/css/style.css
 
 3. Alternately, you can simply watch and compile the Sass outside vagrant by running this command:
