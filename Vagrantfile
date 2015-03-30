@@ -18,4 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.verbose = 'vv'
     ansible.playbook = "provision/playbook.yml"
   end
+
+  # config.vm.provision "shell",
+    #                  inline: "cd /vagrant && runserver"
 end

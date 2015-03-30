@@ -12,7 +12,7 @@
       - electrep_new
       - dise_all
       - apmdm
-#      - klpdise_olap
+      - klpdise_olap
       - ang_infra
       - libinfra
       - library
@@ -41,10 +41,16 @@
       notify:
         - update timezone
 
+    - name: adding postgres repo
+      apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
+
+    - name: import postgresql repo key
+      apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
     - name: update apt cache
       command: "/usr/bin/aptitude update"
 
-    - name: "upgrade apt packages, about 200MB"
+    - name: "upgrade apt packages"
       command: "/usr/bin/aptitude safe-upgrade -y"
 
     - name: install wget and ca-certificate
@@ -52,12 +58,6 @@
       with_items:
         - wget
         - ca-certificates
-
-    - name: adding postgres repo
-      apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
-
-    - name: import postgresql repo key
-      apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
 
     - name: ensure postgresql 9.3 is installed
       apt: pkg=postgresql-9.3 state=latest
@@ -77,6 +77,8 @@
         - libjpeg-dev
         - python-pip
         - python-psycopg2
+        - vim
+
     - name: install virtualenv
       pip: name=virtualenv
 
