@@ -1,4 +1,5 @@
 import csv
+import json
 import datetime
 
 from optparse import make_option
@@ -53,6 +54,10 @@ class Command(BaseCommand):
         count = 0
         previous_date = ""
 
+        dise_errors = {}
+        dise_errors['no_dise_code'] = []
+        dise_errors['no_school_for_dise'] = []
+
         for row in csv_f:
             # Skip first two rows
             if count == 0 or count == 1:
@@ -68,15 +73,13 @@ class Command(BaseCommand):
             try:
                 dise_info = DiseInfo.objects.get(dise_code=dise_code)
             except Exception as ex:
-                print ex
-                print "DISE ERROR: CODE: %s" % dise_code
+                dise_errors['no_dise_code'].append(dise_code)
                 continue
 
             try:
                 school = School.objects.get(dise_info=dise_info)
             except Exception as ex:
-                print ex
-                print "SCHOOL ERROR: DISE INFO: %s" % dise_code
+                dise_errors['no_school_for_dise'].append(dise_code)
                 continue
 
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -110,7 +113,10 @@ class Command(BaseCommand):
                             question=question,
                             text=accepted_answers[row[answer_column]],
                         )
-
+        f.close()
+        f = open('dise_error.log', 'w')
+        f.write(json.dumps(dise_errors, indent = 4))
+        f.close()
             
     def parse_date(self, previous_date,  date):
         if date:
