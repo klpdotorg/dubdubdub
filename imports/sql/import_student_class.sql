@@ -30,8 +30,8 @@ BEGIN
             ems_cl.student_group_id as clid,
             ems_cl.academic_id::integer as ayid,
             ems_cl.active::integer as status
-            FROM ems_tb_student_class as ems_cl
-            WHERE ems_cl.student_id = r.ems_id;
+        FROM ems_tb_student_class as ems_cl
+        WHERE ems_cl.student_id = r.ems_id;
     END LOOP;
     RAISE NOTICE 'END OF LOOP';
     RETURN;
