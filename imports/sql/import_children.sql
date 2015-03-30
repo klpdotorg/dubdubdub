@@ -36,8 +36,8 @@ BEGIN
             ems.dob as dob,
             ems.gender::sex as sex,
             ems.mt::school_moi as mt
-            FROM ems_tb_child as ems
-            WHERE ems.id = r.ems_id;
+        FROM ems_tb_child as ems
+        WHERE ems.id = r.ems_id;
     END LOOP;
     RETURN;
 END;

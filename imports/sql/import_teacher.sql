@@ -42,6 +42,8 @@ BEGIN
             ems.mt::school_moi
             ems.doj::date,
             ems.staff_type
+        FROM ems_tb_teacher as ems
+        WHERE ems.id = r.ems_id;
     END LOOP;
     RETURN;
 END;
