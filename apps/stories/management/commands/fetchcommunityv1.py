@@ -1,4 +1,5 @@
 import csv
+import json
 import datetime
 
 from optparse import make_option
@@ -40,6 +41,8 @@ class Command(BaseCommand):
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
         
+        school_errors = []
+
         count = 0
         for row in csv_f:
             # Skip first two rows
@@ -55,7 +58,7 @@ class Command(BaseCommand):
             try:
                 school = School.objects.get(id=school_id)
             except:
-                print "School with id %s not found" % school_id
+                school_errors.append(school_id)
                 continue
                 
             # One for the TEACHERS
@@ -156,6 +159,11 @@ class Command(BaseCommand):
                             question=question,
                             text=row[answer_column],
                         )
+
+        f.close()
+        f = open('school_errors.log', 'w')
+        f.write(json.dumps(school_errors, indent = 4))
+        f.close()
 
     def parse_date(self, value, month, year):
         year = self.get_year(year)
