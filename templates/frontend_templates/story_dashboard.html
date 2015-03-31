@@ -1,33 +1,95 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-gradeGraph">
-    {% for g in grades %}
-      <div class="bar-graph-wrap">
-        <div class="bar-label orange-mild">{{ g.value }} Grade</div>
-          <div class="bar-graph">
-            <div class="bar-percent orange-mild">{{ g.percent }}</div>
-            <div class="bar-custom tooltip" aria-label="{{ g.score }}/{{ g.total }}">
-            <div class="bar-value bar-value-{{ g.score }} orange-mild-bg" style="width:{{ g.percent }}%;"></div>
-          </div>
-        </div> <!-- /bar-graph -->
-      </div> <!-- /bar-graph-wrap -->
-    {% endfor %}
+    <div class="bar-graph-wrap">
+      <div class="bar-label {{ color }}">{{ value }} Grade</div>
+      <div class="bar-graph">
+        <div class="bar-percent {{ color }}">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-{{ score }} {{ color }}-bg" style="width:{{percent }}%;"></div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
   </script>
 
+
   <script type="text/html" id="tpl-percentGraph">
-    {% for r in responses %}
-      <div class="bar-graph-wrap">
-        <div class="bar-label">{{ r.question }}</div>
-        <div class="bar-graph">
-          <div class="bar-percent green-leaf">{{ g.percent }}</div>
-          <div class="bar-custom tooltip" aria-label="{{ g.score }}/{{ g.total }}">
-            <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-              <div class="bar-value bar-value-{{ g.score }} green-leaf-bg" style="width:{{ g.score }}%;"></div>
-            </div>
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ question }}</div>
+      <div class="bar-graph">
+        <div class="bar-percent green-leaf">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
           </div>
-        </div> <!-- /bar-graph -->
-      </div> <!-- /bar-graph-wrap -->
-   {% endfor %}
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+  </script>
+
+  <script type="text/html" id="tpl-colorText">
+    <div class="chart-athird-item">
+      <div>
+        {% for i in icon %}
+          <span class="{{ i }}"></span>
+        {% endfor %}
+        &nbsp;{{ facility }}
+      </div>
+      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
+        {{ percent }}%
+      </div>
+    </div>
+  </script>
+
+  <!-- There's probably a cleaner way of doing the below template without this many for loops-->
+  <script type="text/html" id="tpl-compareTable">
+    <table class="table-base">
+      <thead class="table-base-heading">
+        <tr>
+        <th></th>            
+          {% for n in neighbours %}
+            <th>{{ n.name }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Schools</td>
+          {% for n in neighbours %}
+            <td>{{ n.schools }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>Stories</td>
+          {% for n in neighbours %}
+            <td>{{ n.stories }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>IVRS Calls</td>
+          {% for n in neighbours %}
+            <td>{{ n.ivrs }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Volunteers say) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_volunteer }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Community says) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_community }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/html" id="tpl-countSummary">           
+    {% for s in summary %}
+      <div class="chart-quarter-item">
+        <div class="heading-tiny-uppercase align-left" >{{ s.label }}</div>
+        <h2 class="heading-secondary brand-blue align-left">{{ s.count }}</h2> 
+      </div>
+    {% endfor %}
   </script>
 
 {% endverbatim %}
