@@ -45,7 +45,7 @@
 
   }
 
-  function renderBarChart(chart_type, data) {
+  function renderBarChart(elementId, data) {
     var options = {
        axisX: {
         showGrid: false
@@ -55,7 +55,7 @@
       }
     };
 
-    var chart_element = Chartist.Bar(chart_type, data, options).on('draw', function(data) {
+    var chart_element = Chartist.Bar(elementId, data, options).on('draw', function(data) {
       if(data.type === 'bar') {
         data.element.attr({
           style: 'stroke-width: 20px'
