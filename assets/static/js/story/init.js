@@ -22,12 +22,12 @@
 
   function renderPage(data) {
     // Chartist charts get rendered here 
-    var data_respondant = {
+    var data_respondent = {
       labels: ['Parents', 'Teachers', 'Community', 'Staff', 'Volunteers', 'Others'],
       series: [[80,200,100,80,200,100]]
     };
 
-    renderBarChart('#chart_respondant',data_respondant);
+    renderBarChart('#chart_respondent',data_respondent);
     var data_ivrs = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       series: [[500, 1200, 1000, 700, 540, 1030, 360]]
