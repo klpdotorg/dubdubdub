@@ -26,14 +26,14 @@
       labels: ['Parents', 'Teachers', 'Community', 'Staff', 'Volunteers', 'Others'],
       series: [[80,200,100,80,200,100]]
     };
-    var respondant_chart;
-    renderBarChart(respondant_chart,'#chart_respondant',data_respondant);
+
+    renderBarChart('#chart_respondant',data_respondant);
     var data_ivrs = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       series: [[500, 1200, 1000, 700, 540, 1030, 360]]
     };
-    var ivrs_chart;
-    renderBarChart(ivrs_chart,'#chart_ivrs',data_ivrs);  
+    
+    renderBarChart('#chart_ivrs',data_ivrs);  
 
     //Binary graphs generated here
     renderSummary({});
@@ -45,7 +45,7 @@
 
   }
 
-  function renderBarChart(chart_element,chart_type,data) {
+  function renderBarChart(chart_type, data) {
     var options = {
        axisX: {
         showGrid: false
@@ -55,7 +55,7 @@
       }
     };
 
-    chart_element = Chartist.Bar(chart_type, data, options).on('draw', function(data) {
+    var chart_element = Chartist.Bar(chart_type, data, options).on('draw', function(data) {
       if(data.type === 'bar') {
         data.element.attr({
           style: 'stroke-width: 20px'
