@@ -2,32 +2,50 @@
 (function() {
   klp.init = function() {
 
+    klp.router = new KLPRouter();
+    klp.router.init();
+    loadData();
+    //get JS query params from URL
+
+  }
+
+  function loadData() {
+    var params = klp.router.getHash().queryParams;
+    var apiURL = ""; //FIXME: enter API url
+    var $xhr = klp.api.do(apiURL, params);
+
+    //TODO: do some loading behaviour
+    $xhr.done(function(data) {
+      renderPage(data);
+    });
+  }
+
+  function renderPage(data) {
     // Chartist charts get rendered here 
     var data_respondant = {
       labels: ['Parents', 'Teachers', 'Community', 'Staff', 'Volunteers', 'Others'],
       series: [[80,200,100,80,200,100]]
     };
     var respondant_chart;
-    klp.renderBarChart(respondant_chart,'#chart_respondant',data_respondant);
+    renderBarChart(respondant_chart,'#chart_respondant',data_respondant);
     var data_ivrs = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       series: [[500, 1200, 1000, 700, 540, 1030, 360]]
     };
     var ivrs_chart;
-    klp.renderBarChart(ivrs_chart,'#chart_ivrs',data_ivrs);  
+    renderBarChart(ivrs_chart,'#chart_ivrs',data_ivrs);  
 
     //Binary graphs generated here
-    klp.renderSummary({});
-    klp.renderFeatured({});
-    klp.renderIvrs({});
-    klp.renderSurvey({});
-    klp.renderWeb({});
-    klp.renderComparison({});
-  }//Close klp.init
-})();
+    renderSummary({});
+    renderFeatured({});
+    renderIvrs({});
+    renderSurvey({});
+    renderWeb({});
+    renderComparison({});
 
-(function() {
-  klp.renderBarChart= function(chart_element,chart_type,data) {
+  }
+
+  function renderBarChart(chart_element,chart_type,data) {
     var options = {
        axisX: {
         showGrid: false
@@ -45,10 +63,8 @@
       }
     });
   }
-})();
 
-(function() {
-  klp.renderSummary= function(data) {
+  function renderSummary(data) {
     var tplCountSummary = swig.compile($('#tpl-countSummary').html());
     
     var summaries = {'ivrs':[{
@@ -95,12 +111,10 @@
     html = tplCountSummary({'summary':summaries['survey']});
     $('#surveysummary').html(html);
     html = tplCountSummary({'summary':summaries['web']});
-    $('#websummary').html(html);
-  }//Close klp.summaryQuestions
-})();
+    $('#websummary').html(html);    
+  }
 
-(function() {
-  klp.renderFeatured= function(data) {
+  function renderFeatured(data) {
     var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
     
     var questions = [{
@@ -129,12 +143,10 @@
     for (var pos in questions) {
       html = html + tplPercentGraph(questions[pos]);
     } 
-    $('#quicksummary').html(html);
-  }//Close klp.summaryQuestions
-})();
+    $('#quicksummary').html(html);    
+  }
 
-(function() {
-  klp.renderIvrs= function(data) {
+  function renderIvrs(data) {
     var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
     var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
     //define your data
@@ -185,12 +197,10 @@
     for (var pos in questions) {
       html = html + tplPercentGraph(questions[pos]);
     } 
-    $('#ivrsquestions').html(html);
-  }//Close klp.ivrsCharts
-})();
+    $('#ivrsquestions').html(html);    
+  }
 
-(function() {
-  klp.renderSurvey= function(data) {
+  function renderSurvey(data) {
     var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
     
     var questions = [{
@@ -233,12 +243,10 @@
       html = html + tplPercentGraph(questions[pos]); 
     } 
     html = html + "</div>";
-    $('#surveyquestions').html(html);
-  }//Close klp.surveyQuestions
-})();
+    $('#surveyquestions').html(html);    
+  }
 
-(function() {
-  klp.renderWeb= function(data) {
+  function renderWeb(data) {
     var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
     
     var questions = [{
@@ -298,11 +306,9 @@
     } 
     $('#webfacilities').html(html);
     
-  }//Close klp.webQuestions
-})();
+  }
 
-(function() {
-  klp.renderComparison= function(data) {
+  function renderComparison(data) {
     var tplCompareTable = swig.compile($('#tpl-compareTable').html());
 
     var neighbours = [{
@@ -337,7 +343,7 @@
 
     var html = tplCompareTable({'neighbours':neighbours});
     $('#comparison').html(html);
-    
-  }//Close klp.renderComparison
-})();
 
+  }
+
+})();
