@@ -21,7 +21,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationRequirementListView, DonationRequirementDetailsView, PasswordChangeView,
     DonationItemListView, DonationItemDetailsView, DonationUsersView, DonationUserView)
 
-from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView, 
+from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView,
     ShareYourStoryView, StoryMetaView)
 
 urlpatterns = patterns('',
@@ -202,7 +202,7 @@ urlpatterns = patterns('',
 
     #Assessment urls
     url(r'^assessment/list/$',AssessmentsList.as_view(),name='api_assessment_list'),
-    url(r'^programme/list/$',ProgrammesList.as_view(),name='api_programme_list'),
     url(r'^assessment/info/$',AssessmentInfo.as_view(),name='api_assessment_info'),
+    url(r'^programme/list/$',ProgrammesList.as_view(),name='api_programme_list'),
     url(r'^programme/info/$',ProgrammeInfo.as_view(),name='api_programme_info'),
 )
