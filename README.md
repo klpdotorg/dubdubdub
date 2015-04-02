@@ -7,9 +7,21 @@ Home of KLP. Houses *most* of the data and APIs that powers the features on the 
 
 We use Vagrant for development. Here's everything you need to know about setting up dubdubdub for development.
 
+#### Install Ansible
+
+The details are on this page: [Install Ansible](http://docs.ansible.com/intro_installation.html)
+
+ * [Ubuntu](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu)
+ * [Mac](http://docs.ansible.com/intro_installation.html#latest-releases-via-homebrew-mac-osx)
+ * [Pip](http://docs.ansible.com/intro_installation.html#latest-releases-via-pip)
+
 #### Install Vagrant
 
 [Vagrant Downloads](https://www.vagrantup.com/downloads.html)
+
+You also need to install the vbguest plugin this way:
+
+    vagrant plugin install vagrant-vbguest
 
 #### Install Virtualbox
 
