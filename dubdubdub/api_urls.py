@@ -201,8 +201,8 @@ urlpatterns = patterns('',
 
 
     #Assessment urls
-    url(r'^assessment/list/$',AssessmentsList.as_view(),name='api_assessment_list'),
-    url(r'^assessment/info/$',AssessmentInfo.as_view(),name='api_assessment_info'),
-    url(r'^programme/list/$',ProgrammesList.as_view(),name='api_programme_list'),
-    url(r'^programme/info/$',ProgrammeInfo.as_view(),name='api_programme_info'),
+    url(r'^assessment/$',AssessmentsList.as_view(),name='api_assessment_list'),
+    url(r'^assessment/(?P<assessment_id>[0-9]+)/$',AssessmentInfo.as_view(),name='api_assessment_info'),
+    url(r'^programme/$',ProgrammesList.as_view(),name='api_programme_list'),
+    url(r'^programme/(?P<programme_id>[0-9]+)/$',ProgrammeInfo.as_view(),name='api_programme_info'),
 )

@@ -52,8 +52,8 @@ class AssessmentInfo(KLPListAPIView):
         else:
             return None
     def get_queryset(self):
-        if self.request.GET.get('assessment_id', ''):
-          assid= self.request.GET.get('assessment_id')
+        if self.kwargs.get('assessment_id'):
+          assid= self.kwargs.get('assessment_id')
         else:
           raise ParseError("Mandatory parameter assessment_id not passed.")
         if self.request.GET.get('studentgroup', ''):
@@ -139,8 +139,9 @@ class ProgrammeInfo(KLPListAPIView):
             return None
 
     def get_queryset(self):
-        if self.request.GET.get('programme_id', ''):
-          progid= self.request.GET.get('programme_id')
+        print self.request
+        if self.kwargs.get('programme_id'):
+          progid= self.kwargs.get('programme_id')
         else:
           raise ParseError("Mandatory parameter programme_id not passed.")
         if self.request.GET.get('school', ''):
