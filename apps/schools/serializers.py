@@ -318,13 +318,13 @@ class AssessmentInfoSerializer(KLPSerializer):
         singlescore['mt']=mtdata
 
         singlescore["boundary"]={}
-        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name')
+        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name')[0]
         singlescore["boundary"]["admin1"]=admin1data
 
-        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin2"]=admin2data
 
-        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin3"]=admin3data
         return singlescore
 
@@ -369,12 +369,12 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
 
         singlescore["boundary"]={}
         if obj.boundary.hierarchy.id==11 or obj.boundary.hierarchy.id==15:
-          admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin2"]=admin2data
-          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
         elif obj.boundary.hierarchy.id==10 or obj.boundary.hierarchy.id==14:
-          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
         return singlescore
 
@@ -421,13 +421,13 @@ class ProgrammeInfoSerializer(KLPSerializer):
         singlescore['mt']=mtdata
 
         singlescore["boundary"]={}
-        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin1"]=admin1data
 
-        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin2"]=admin2data
 
-        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+        admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin3"]=admin3data
         return singlescore
 
@@ -470,12 +470,12 @@ class BoundaryProgrammeInfoSerializer(KLPSerializer):
         singlescore={}
         singlescore["boundary"]={}
         if obj.boundary.hierarchy.id==11 or obj.boundary.hierarchy.id==15:
-          admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin2"]=admin2data
-          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
         elif obj.boundary.hierarchy.id==10 or obj.boundary.hierarchy.id==14:
-          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')
+          admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
         return singlescore
 
