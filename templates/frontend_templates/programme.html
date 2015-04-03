@@ -1,10 +1,77 @@
 {% verbatim %}
-    <script type="text/html" id="tpl-assessment">
-        <div class="container assessment-section">
+    <script type="text/html" id="tpl-assessment-class">
+        <div class="container assessment-class-section">
+            <h3>Class: {{ className }}</h3>
+            {% for a in assessments %}
+            <h4>{{ a.assessmentname }} {{ a.academicyear_name }}</h4>
+            <div class="overall-score">
+                <h5>Overall Score</h5>
+                <div class="overall-score-value">
+                    {{ a.singlescore }}
+                </div>
+            </div>
+            <div class="comparison">
+                <h5>Comparison</h5>
+                <ul class="base-ul">
+                    {% for c in a.compares %}
+                    <li>
+                        <span class="admin-name">
+                            {{ c.name }}
+                        </span>
+                        <span class="admin-score">
+                            {{ c.singlescore }}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div> <!-- end comparison -->
+            <div class="gender">
+                {% for gender in a.genders %}
+                <div>
+                    For {{ gender.cohorts }} {{ gender.name }}
+                    
+                    <div class="bar-graph-wrap">
+                        <div class="bar-label">
+                            {{ gender.name }}
+                        </div>
+                        <div class="bar-graph">
+                          <div class="bar-percent">{{ gender.singlescore }}</div>
+                          <div class="bar-custom tooltip" aria-label="{{ gender.singlescore }}%">
+                              <div class="bar-value grey-gravel-bg bar-value-{{ gender.singlescore|int }}" style="width:{{ gender.singlescore }}%;">
+                              </div>
+                          </div>
+                        </div> 
+                    </div>
+                </div>
+                {% endfor %}
+            </div> <!-- end gender -->
+            <div class="languages">
+                {% for mt in a.mts %}
+                    <div class="bar-graph-wrap">
+                        <div class="bar-label">
+                            {{ mt.name }}
+                        </div>
+                        <div class="bar-graph">
+                          <div class="bar-percent">{{ mt.singlescore }}</div>
+                          <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
+                              <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
+                              </div>
+                          </div>
+                        </div> 
+                    </div>                
+                {% endfor %}            
+
+            </div> <!-- end languages -->
+
+            {% endfor %}
+        </div>
+
+
+        <!-- <div class="container assessment-section">
             Assessment name: {{ assessmentname }} <br />
             Class: {{ studentgroup }} <br />
             Academic Year: {{ academicyear_name }} <br />
             Overall Percentage: {{ singlescore }}
-        </div>
+        </div> -->
     </script>
 {% endverbatim %}

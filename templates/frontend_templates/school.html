@@ -249,8 +249,8 @@
       <ul>
           {% for programme in programmes %}
           <li class="circle-bullet yellow-mild">
-              <a href="/programme/{{ programme.progid }}#?school={{ school_id }}">
-                  {{ programme.progname }} - {{ programme.academicyear_name }}
+              <a href="/programme/{{ programme.id }}#?school={{ school_id }}">
+                  {{ programme.name }} - {{ programme.academicyear_name }}
               </a>
           </li>
           {% endfor %}

@@ -64,8 +64,8 @@
             },
             'programmes': {
                 getData: function() {
-                    return klp.api.do('programme/list/', {
-                        'school_id': SCHOOL_ID
+                    return klp.api.do('programme/', {
+                        'school': SCHOOL_ID
                     });
                 },
                 getContext: function(data) {
