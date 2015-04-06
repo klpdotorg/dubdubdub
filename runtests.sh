@@ -1,5 +1,5 @@
 #!/bin/sh
-#This script runs all the existing unit tests for the users and schools apps. 
+#This script runs all the existing unit tests for the users, schools and stories apps.
 # You will need to create a "test" db by cloning the main databasee (eg. createdb -T klpwww_ver4 test_klpwww_ver4 )
 #The name of the "test" DB should be entered in the dubdubdub/local_test_settings.py file. Please see those files for further instructions. 
 
