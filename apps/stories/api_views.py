@@ -77,6 +77,19 @@ class StoryMetaView(KLPAPIView):
         ).count()
         response_json['total']['stories'] = Story.objects.all().count()
 
+        # IVRS summary
+        response_json['ivrs'] = {}
+        response_json['ivrs']['schools'] = School.objects.filter(
+            story__group__source__name="ivrs").count()
+        response_json['ivrs']['schools_with_stories'] = School.objects.filter(
+            story__group__source__name="ivrs",
+            story__isnull=False
+        ).count()
+        response_json['ivrs']['stories'] = Story.objects.filter(
+            group__source__name="ivrs",
+        ).count()
+
+
         response_json['school_type'] = school_type
 
         question_group = Questiongroup.objects.get(
