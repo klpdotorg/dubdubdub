@@ -69,26 +69,20 @@ class StoryMetaView(KLPAPIView):
 
         response_json = {}
 
-        # Total summary
-        response_json['total'] = {}
-        response_json['total']['schools'] = School.objects.all().count()
-        response_json['total']['schools_with_stories'] = School.objects.filter(
-            story__isnull=False
-        ).count()
-        response_json['total']['stories'] = Story.objects.all().count()
+        if source:
+            response_json[source] = self.get_count(source)
+        else:
+            # Total summary
+            response_json['total'] = {}
+            response_json['total']['schools'] = School.objects.all().count()
+            response_json['total']['schools_with_stories'] = School.objects.filter(
+                story__isnull=False
+            ).count()
+            response_json['total']['stories'] = Story.objects.all().count()
 
-        # IVRS summary
-        response_json['ivrs'] = {}
-        response_json['ivrs']['schools'] = School.objects.filter(
-            story__group__source__name="ivrs").count()
-        response_json['ivrs']['schools_with_stories'] = School.objects.filter(
-            story__group__source__name="ivrs",
-            story__isnull=False
-        ).count()
-        response_json['ivrs']['stories'] = Story.objects.filter(
-            group__source__name="ivrs",
-        ).count()
-
+            sources = Source.objects.all().values_list('name', flat=True)
+            for source in sources:
+                response_json[source] = self,get_count(source)
 
         response_json['school_type'] = school_type
 
@@ -152,6 +146,20 @@ class StoryMetaView(KLPAPIView):
             response_json['questions'].append(j)
 
         return Response(response_json)
+
+    def get_count(self, source):
+        json = {}
+        json['schools'] = School.objects.filter(
+            story__group__source__name=source).count()
+        json['schools_with_stories'] = School.objects.filter(
+            story__group__source__name=source,
+            story__isnull=False
+        ).count()
+        json['stories'] = Story.objects.filter(
+            group__source__name=source,
+        ).count()
+
+        return json
 
 
 class StoryQuestionsView(KLPDetailAPIView):
