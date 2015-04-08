@@ -84,8 +84,8 @@
 
             var compareObj = {
                 'type': key,
-                'name': boundary[key].length > 0 ? boundary[key][0].boundary__name : 'error', //FIXME
-                'singlescore': boundary[key].length > 0 ? boundary[key][0].singlescore : 0
+                'name': boundary[key].boundary__name,
+                'singlescore': boundary[key].singlescore
             };
             compares.push(compareObj);
         });
