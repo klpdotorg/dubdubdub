@@ -14,7 +14,7 @@
                 <h5>Comparison</h5>
                 <ul class="base-ul">
                     {% for c in a.compares %}
-                    <li>
+                    <li class="js-boundaryLink" data-type="{{ c.type }}" data-id="{{ c.id }}">
                         <span class="admin-name">
                             {{ c.name }}
                         </span>

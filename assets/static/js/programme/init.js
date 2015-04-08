@@ -111,6 +111,31 @@
             var assessmentsContext = getContext(data);
             //console.log("ass context", assessmentsContext);
             renderAssessments(assessmentsContext);
+            doPostRender();
+        });
+    }
+
+    function doPostRender() {
+        var typeMap = {
+            'admin1': 'admin_1',
+            'admin2': 'admin_2',
+            'admin3': 'admin_3'
+        };
+
+        $('.js-boundaryLink').click(function(e) {
+            console.log("clicked");
+            e.preventDefault();
+            var boundaryType = $(this).attr("data-type");
+            var boundaryId = $(this).attr("data-id");
+            var paramKey = typeMap[boundaryType];
+            var hashParams = {
+                'school': null,
+                'admin_1': null,
+                'admin_2': null,
+                'admin_3': null
+            };
+            hashParams[paramKey] = boundaryId;
+            klp.router.setHash(null, hashParams);
         });
     }
 
@@ -180,6 +205,7 @@
         _.each(boundaryKeys, function(key) {
 
             var compareObj = {
+                'id': boundary[key].boundary,
                 'type': key,
                 'name': boundary[key].boundary__name,
                 'singlescore': boundary[key].singlescore
