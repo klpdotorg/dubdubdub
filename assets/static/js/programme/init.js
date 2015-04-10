@@ -1,6 +1,7 @@
 (function() {
-    var tplAssessmentClass;
-    var tplSchool;
+    var tplAssessmentClass,
+        tplSchool,
+        tplBoundary;
     klp.init = function() {
         console.log("init programme page", PROGRAMME_ID);
         klp.router = new KLPRouter();
@@ -8,6 +9,7 @@
         initializeSelect2();
         tplAssessmentClass = swig.compile($('#tpl-assessment-class').html());
         tplSchool = swig.compile($('#tpl-school').html());
+        tplBoundary = swig.compile($('#tpl-boundary').html());
         //fetchProgrammeDetails();
         klp.router.events.on('hashchange', function(event, params) {
             fetchProgrammeDetails();
@@ -108,6 +110,7 @@
         var url = "programme/" + PROGRAMME_ID;
         var $xhr = klp.api.do(url, params);
         $('#assessmentsContainer').empty().text("Loading...");
+        $('#entityDetails').empty();
         fetchEntityDetails(params);
         $xhr.done(function(data) {
             var assessmentsContext = getContext(data);
@@ -127,7 +130,7 @@
     }
 
     function fetchSchoolDetails(id) {
-        console.log("school", id);
+        //console.log("school", id);
         var url = "schools/school/" + id;
         var $schoolXHR = klp.api.do(url, {});
         $schoolXHR.done(function(data) {
@@ -137,7 +140,12 @@
     }
 
     function fetchBoundaryDetails(id) {
-
+        var url = "boundary/admin/" + id;
+        var $boundaryXHR = klp.api.do(url, {});
+        $boundaryXHR.done(function(data) {
+            var html = tplBoundary(data);
+            $('#entityDetails').html(html);
+        });
     }
 
     function doPostRender() {
