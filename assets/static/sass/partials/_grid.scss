@@ -123,6 +123,19 @@
   @include grid-child;  
 }
 
+//FIXME: add classes
+@mixin col-20-flt {
+  width: 20%;
+  float: left;
+  @include grid-child;
+}
+
+@mixin col-40-flt {
+  width: 40%;
+  float: left;
+  @include grid-child;
+}
+
 // 2/3rds
 .col-66-flt, %col-66-flt {
   width: 66.66%;

@@ -134,9 +134,20 @@
         var url = "schools/school/" + id;
         var $schoolXHR = klp.api.do(url, {});
         $schoolXHR.done(function(data) {
+            var context = getSchoolContext(data);
             var html = tplSchool(data);
             $('#entityDetails').html(html);
         });
+    }
+
+    function getSchoolContext(data) {
+        //console.log("school", data);
+        if (data.type.id === 1) {
+            data.type_name = 'school';
+        } else {
+            data.type_name = 'preschool';
+        }
+        return data;
     }
 
     function fetchBoundaryDetails(id) {
@@ -215,6 +226,7 @@
             var cohortsDetails = assessmentData.cohortsdetails.gender[j];
             var gender = {
                 'name': scoreDetails.sex == 'male' ? 'Boys' : 'Girls',
+                'icon': scoreDetails.sex == 'male' ? 'boy' : 'girl',
                 'singlescore': scoreDetails.singlescore,
                 'cohorts': cohortsDetails.total
             };

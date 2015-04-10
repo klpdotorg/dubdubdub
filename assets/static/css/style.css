@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -3395,6 +3394,84 @@ body {
     .button-map-compare {
       display: inline-block; } }
 
+.entity-detail {
+  margin-top: 15px; }
+
+.school-type-school a.school-link {
+  color: #26b262; }
+
+.school-type-preschool a.school-link {
+  color: #7575bc; }
+
+.align-left {
+  text-align: left; }
+
+.programme-meta-parent {
+  margin-bottom: 20px; }
+
+.admin-score {
+  float: right; }
+
+.admin-score-li {
+  border-bottom: 1px solid #bbb;
+  cursor: pointer; }
+
+.overall-score-value {
+  position: relative; }
+
+.assessment-container {
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.assessment-gender-icon {
+  float: left; }
+
+@media only screen and (min-width: 750px) {
+  .programme-meta-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .programme-meta-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .programme-partner {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .programme-academic-year {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .assessment-score-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .assessment-score-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .overall-score {
+    width: 20%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .gender {
+    width: 40%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .languages {
+    width: 40%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }
