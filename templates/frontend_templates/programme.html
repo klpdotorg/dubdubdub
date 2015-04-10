@@ -22,13 +22,14 @@
                         <h5>Score by Gender</h5>
                         {% for gender in a.genders %}
                         <div>
+ 
                             <div class="bar-graph-wrap">
                                 <div class="module-stats-icon module-stats-{{ gender.icon }} assessment-gender-icon">
-                                  <span class="icon-{{ gender.icon }}"></span>
-                                  <div class="module-stats-info">
-                                    <div class="uppercase">{{ gender.name }}</div>
-                                    <p class="module-stats-label">{{ gender.cohorts }}</p>
-                                  </div>
+                                    <span class="icon-{{ gender.icon }}"></span>
+                                    <div class="module-stats-info">
+                                        <div class="uppercase">{{ gender.name }}</div>
+                                        <p class="module-stats-label">{{ gender.cohorts }}</p>
+                                    </div>
                                 </div>
                                 <div class="bar-graph">
                                   <div class="bar-percent">{{ gender.singlescore }}%</div>
@@ -38,27 +39,11 @@
                                   </div>
                                 </div> 
                             </div>
+                        
                         </div>
                         {% endfor %}
                     </div> <!-- end gender -->
-                    <div class="languages">
-                        <h5>Score by Mother-Tongue</h5>
-                        {% for mt in a.mts %}
-                            <div class="bar-graph-wrap">
-                                <div class="bar-label">
-                                    {{ mt.name }}
-                                </div>
-                                <div class="bar-graph">
-                                  <div class="bar-percent">{{ mt.singlescore }}</div>
-                                  <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
-                                      </div>
-                                  </div>
-                                </div> 
-                            </div>                
-                        {% endfor %}            
 
-                    </div> <!-- end languages -->
 
                 </div>
                 <div class="assessment-comparison-container">
@@ -77,7 +62,25 @@
                             {% endfor %}
                         </ul>
                     </div> <!-- end comparison -->
-                </div><!-- end assessment-graphs-container -->
+                    <div class="languages">
+                        <h5>Score by Mother-Tongue</h5>
+                        {% for mt in a.mts %}
+                            <div class="bar-graph-wrap">
+                                <div class="bar-label heading-tiny-uppercase">
+                                    {{ mt.name }}
+                                </div>
+                                <div class="bar-graph">
+                                  <div class="bar-percent">{{ mt.singlescore }}</div>
+                                  <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
+                                      </div>
+                                  </div>
+                                </div> 
+                            </div>                
+                        {% endfor %}            
+
+                    </div> <!-- end languages -->
+                </div><!-- end assessment-comparison-container -->
             </div><!-- end assessment-container -->
             {% endfor %}
         </div>
