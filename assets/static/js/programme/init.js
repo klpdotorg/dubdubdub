@@ -1,11 +1,13 @@
 (function() {
-    var tplAssessment;
+    var tplAssessmentClass;
+    var tplSchool;
     klp.init = function() {
         console.log("init programme page", PROGRAMME_ID);
         klp.router = new KLPRouter();
         klp.router.init();
         initializeSelect2();
         tplAssessmentClass = swig.compile($('#tpl-assessment-class').html());
+        tplSchool = swig.compile($('#tpl-school').html());
         //fetchProgrammeDetails();
         klp.router.events.on('hashchange', function(event, params) {
             fetchProgrammeDetails();
@@ -103,16 +105,39 @@
 
     function fetchProgrammeDetails() {
         var params = klp.router.getHash().queryParams;
-        var schoolId = klp.router.getHash().queryParams.school;
         var url = "programme/" + PROGRAMME_ID;
         var $xhr = klp.api.do(url, params);
         $('#assessmentsContainer').empty().text("Loading...");
+        fetchEntityDetails(params);
         $xhr.done(function(data) {
             var assessmentsContext = getContext(data);
             //console.log("ass context", assessmentsContext);
             renderAssessments(assessmentsContext);
             doPostRender();
         });
+    }
+
+    function fetchEntityDetails(params) {
+        var entityType = _.keys(params)[0];
+        if (entityType === 'school') {
+            fetchSchoolDetails(params.school)
+        } else {
+            fetchBoundaryDetails(params[entityType]);
+        }
+    }
+
+    function fetchSchoolDetails(id) {
+        console.log("school", id);
+        var url = "schools/school/" + id;
+        var $schoolXHR = klp.api.do(url, {});
+        $schoolXHR.done(function(data) {
+            var html = tplSchool(data);
+            $('#entityDetails').html(html);
+        });
+    }
+
+    function fetchBoundaryDetails(id) {
+
     }
 
     function doPostRender() {
