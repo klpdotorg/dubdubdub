@@ -4,9 +4,74 @@
 
     klp.router = new KLPRouter();
     klp.router.init();
+    initSelect2();
     loadData();
     //get JS query params from URL
 
+  }
+
+  function initSelect2() {
+      $('#select2search').select2({
+        placeholder: 'Search for schools and boundaries',
+        minimumInputLength: 3,
+        ajax: {
+            url: "/api/v1/search",
+            quietMillis: 300,
+            allowClear: true,
+            data: function (term, page) {
+                return {
+                    text: term,
+                    geometry: 'yes'
+                };
+            },
+            results: function (data, page) {
+                var searchResponse = {
+                    results: [
+                    {
+                        text: "Pre-Schools",
+                        children: makeResults(data.pre_schools.features, 'school')
+                    },
+                    {
+                        text: "Primary Schools",
+                        children: makeResults(data.primary_schools.features, 'school')
+                    },
+                    {
+                        text: "Boundaries",
+                        children: makeResults(data.boundaries.features, 'boundary')
+                    }
+                    ]
+                };
+                return {results: searchResponse.results};
+            }
+        }
+    });
+    $('#select2search').on("change", function(choice) { 
+      console.log(choice);
+    });
+  }
+
+  function makeResults(array, type) {
+      var schoolDistrictMap = {
+          'primaryschool': 'Primary School',
+          'preschool': 'Preschool'
+      };
+      return _(array).map(function(obj) {
+          var name = obj.properties.name;
+          if (type === 'boundary') {
+              if (obj.properties.type === 'district') {
+                  name = obj.properties.name + ' - ' + schoolDistrictMap[obj.properties.school_type] + ' ' + obj.properties.type;
+              } else {
+                  name = obj.properties.name + ' - ' + obj.properties.type;
+              }
+          }
+
+          obj.entity_type = type;
+          return {
+              id: obj.properties.id,
+              text: _.str.titleize(name),
+              data: obj
+          };
+      });
   }
 
   function loadData() {
