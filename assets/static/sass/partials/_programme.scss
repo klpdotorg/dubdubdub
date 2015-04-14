@@ -1,0 +1,83 @@
+.entity-detail {
+    margin-top: 15px;
+}
+
+.school-type-school a.school-link {
+    color: $brand-green;
+}
+
+.school-type-preschool a.school-link {
+    color: $brand-purple;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.programme-meta-parent {
+    margin-bottom: 20px;
+}
+
+.admin-score {
+    float: right;
+}
+
+.admin-score-li {
+    border-bottom: 1px solid $grey-silver;
+    cursor: pointer;
+}
+
+.overall-score-value {
+    position: relative;
+}
+
+.assessment-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.assessment-gender-icon {
+    float: left;
+}
+
+@include media-med {
+    .programme-meta-parent {
+      @include grid-parent;
+    }
+
+    .programme-partner {
+      @include col-50-flt;
+    }
+
+    .programme-academic-year {
+         @include col-50-flt;
+    }
+}
+
+@include media-med {
+    .assessment-score-parent {
+        @include grid-parent;
+    }
+
+    .overall-score {
+        @include col-33-flt;
+    }
+
+    .gender {
+        @include col-66-flt;
+    }
+}
+
+@include media-med {
+    .assessment-comparison-container {
+        @include grid-parent;
+    }
+
+    .comparison {
+        @include col-33-flt;
+    }
+
+    .languages {
+        @include col-66-flt;
+    }
+}
