@@ -1,7 +1,7 @@
 'use strict';
 (function() {
   klp.init = function() {
-
+    klp.accordion.init();
     klp.router = new KLPRouter();
     klp.router.init();
     initSelect2();

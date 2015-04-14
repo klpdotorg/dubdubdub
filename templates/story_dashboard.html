@@ -23,7 +23,7 @@
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
   <script type="text/javascript" src="{% static 'js/story/chartist/chartist.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/story/accordion.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
 
   {% endcompress %}
 {% endblock %}
@@ -96,9 +96,9 @@
 		</section>
 			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
 		<section class="container">
-			<ul id='improved'>
+			<ul id='improved' class="js-accordion-container">
 			  <hr/>
-				<li><a href='#' class='head align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="ivrs">
 						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
 						<div class="chart-parent">
@@ -122,7 +122,7 @@
 					</div>
 				</li>
 				<hr/>
-				<li><a href='#' class='head align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="surveys">
 						<h2 class="heading-border brand-turquoise">Community Surveys</h2> 
 						<div class="chart-parent">
@@ -134,7 +134,7 @@
 					</div>
 				</li>	
 				<hr/>
-				<li><a href='#' class='head align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="website">
 						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
 						<div class="chart-parent">
@@ -152,7 +152,7 @@
 					</div>
 				</li>	
 				<hr/>
-				<li><a href='#' class='head align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="comparison">
 						<div class="table-responsive-wrap">        
 							<div id="comparison"></div>
