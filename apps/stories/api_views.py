@@ -82,7 +82,7 @@ class StoryMetaView(KLPAPIView):
 
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
-                response_json[source] = self,get_count(source)
+                response_json[source] = self.get_count(source)
 
         response_json['school_type'] = school_type
 
@@ -158,6 +158,11 @@ class StoryMetaView(KLPAPIView):
         json['stories'] = Story.objects.filter(
             group__source__name=source,
         ).count()
+        if source == "web":
+            json['verified_stories'] = Story.object.filter(
+                group__source__name=source,
+                is_verified=True,
+            ).count()
 
         return json
 
