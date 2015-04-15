@@ -35,6 +35,78 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
+class StoryDetailView(KLPAPIView):
+    def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
+        admin1_id = self.request.QUERY_PARAMS.get('district', None)
+        admin2_id = self.request.QUERY_PARAMS.get('block', None)
+        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
+        school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        start_date = self.request.QUERY_PARAMS.get('from', None)
+        end_date = self.request.QUERY_PARAMS.get('to', None)
+        school_type = self.request.QUERY_PARAMS.get(
+            'school_type', 'Primary School')
+
+        response_json = {}
+
+        # Featured questions
+        response_json['featured'] = []
+        questions =  Question.objects.filter(
+            is_featured=True,
+        )
+
+        for question in questions:
+            j = {}
+            j['question'] = question.text
+            j['answers'] = {}
+            j['answers']['question_type'] = question.question_type.name
+            j['answers']['options'] = dict(
+                Counter([a.text for a in question.answer_set.all()])
+            )
+            response_json['featured'].append(j)
+
+        # Sources and filters
+        if source:
+            response_json[source] = self.get_que_and_ans(source, school_type)
+        else:
+            sources = Source.objects.all().values_list('name', flat=True)
+            for source in sources:
+                if source == "community":
+                    response_json[source+"v1"] = self.get_que_and_ans(
+                        source, school_type, version=1)
+                    response_json[source+"v2"] = self.get_que_and_ans(
+                        source, school_type, version=2)
+                else:
+                    response_json[source] = self.get_que_and_ans(
+                          source, school_type)
+
+        return Response(response_json)
+
+    def get_que_and_ans(self, source, school_type, version=1):
+        response_list = []
+        question_group = Questiongroup.objects.get(
+            source__name=source,
+            version=version
+        )
+        questions = Question.objects.filter(
+            questiongroup=question_group,
+            school_type__name=school_type,
+        ).select_related(
+            'question_type', 'school_type'
+        ).prefetch_related('answer_set')
+
+        for question in questions:
+            j = {}
+            j['question'] = question.text
+            j['answers'] = {}
+            j['answers']['question_type'] = question.question_type.name
+            j['answers']['options'] = dict(
+                Counter([a.text for a in question.answer_set.all()])
+            )
+
+            response_list.append(j)
+
+        return response_list
 
 class StoryMetaView(KLPAPIView):
     """Returns:
