@@ -124,8 +124,8 @@ class StoryMetaView(KLPAPIView):
         del json[None]
         return {usertypes[key]: value for key, value in json.iteritems()}
 
-    def get_datetime(date):
-        return datetime.strptime(date, '%m/%d/%Y')
+    def get_datetime(self, date):
+        return datetime.datetime.strptime(date, '%m/%d/%Y')
 
     def check_date_sanity(self, date):
         try:
