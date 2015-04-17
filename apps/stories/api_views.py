@@ -67,36 +67,21 @@ class StoryDetailView(KLPAPIView):
 
         # Sources and filters
         if source:
-            if source == "community":
-                response_json[source+"v1"] = self.get_que_and_ans(
-                    source, school_type, version=1)
-                response_json[source+"v2"] = self.get_que_and_ans(
-                    source, school_type, version=2)
-            else:
-                response_json[source] = self.get_que_and_ans(
-                    source, school_type)
+            response_json[source] = self.get_que_and_ans(
+                source, school_type)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
-                if source == "community":
-                    response_json[source+"v1"] = self.get_que_and_ans(
-                        source, school_type, version=1)
-                    response_json[source+"v2"] = self.get_que_and_ans(
-                        source, school_type, version=2)
-                else:
-                    response_json[source] = self.get_que_and_ans(
-                          source, school_type)
+                response_json[source] = self.get_que_and_ans(
+                    source, school_type)
 
         return Response(response_json)
 
-    def get_que_and_ans(self, source, school_type, version=1):
+    def get_que_and_ans(self, source, school_type):
         response_list = []
-        question_group = Questiongroup.objects.get(
-            source__name=source,
-            version=version
-        )
+
         questions = Question.objects.filter(
-            questiongroup=question_group,
+            questiongroup__source__name=source,
             school_type__name=school_type,
         ).select_related(
             'question_type', 'school_type'
