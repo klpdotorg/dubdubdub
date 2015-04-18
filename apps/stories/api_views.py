@@ -57,7 +57,10 @@ class StoryDetailView(KLPAPIView):
 
         for question in questions:
             j = {}
-            j['question'] = question.text
+            j['question'] = {}
+            j['question']['key'] = question.key
+            j['question']['text'] = question.text
+            j['question']['display_text'] = question.display_text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
@@ -89,7 +92,10 @@ class StoryDetailView(KLPAPIView):
 
         for question in questions:
             j = {}
-            j['question'] = question.text
+            j['question'] = {}
+            j['question']['key'] = question.key
+            j['question']['text'] = question.text
+            j['question']['display_text'] = question.display_text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
