@@ -1,0 +1,79 @@
+// Compare Modal 
+.label-compare-block {
+  z-index: 1;
+}
+
+.icon-compare-close {
+  z-index: 20;
+}
+
+// Dropdown: base class
+.dropdown-base ul {
+  z-index: 1;
+}
+
+// Dropdown: login
+.options-list {
+  z-index: 2;
+}
+
+.banner-content {
+  z-index: 1;
+}
+
+.school-map-info {
+  z-index: 1;
+}
+
+.tooltip {
+  &:before, &:after {
+    z-index: 100;
+  }
+}
+
+.alert {
+  z-index: 2500;
+}
+
+
+.main-header, .nav, .nav-trigger {
+	z-index: 3000;
+}
+
+.scroll-smooth-block {
+  z-index: 1900;
+}
+
+// Select 2
+.select2-drop-mask {
+  z-index: 9998;
+}
+
+.select2-drop {
+  z-index: 9999;
+}
+
+.select2-search {
+  z-index: 10000;
+}
+
+// Lightbox
+.rbox_overlay {
+  z-index: -1;
+}
+
+.rbox_show {
+  z-index: 9000;
+}
+
+// Module Image Each: Icon Number
+.module-img-each {
+  .icon-number {
+    z-index: 1;
+  }
+}
+
+// Date picker
+.picker {
+  z-index: 10000;  
+} 

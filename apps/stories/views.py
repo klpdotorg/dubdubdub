@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from common.views import StaticPageView
 
-# Create your views here.
+class IVRSPageView(StaticPageView):
+    template_name = 'ivrs.html'
+    

@@ -40,5 +40,5 @@ django-extra-fields==0.1
 
 python-dateutil==2.3
 pytz==2014.10
-
 prettytable==0.7.2
+requests==2.5

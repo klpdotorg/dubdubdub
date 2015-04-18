@@ -1,13 +1,23 @@
 (function() {
 
     var t = klp.filters_modal = {},
-        $_filter_button;
+        $_filter_button,
+        $trigger,
+        template;
 
     t.init = function() {
-        $_filter_button = $("#filter-button");
-        $_filter_button.on("click", t.open);
-        // $('.filters-dropdown').select2();
+        $trigger = $('<div />');
+        $trigger.rbox({
+            'type': 'inline',
+            'inline': '#tpl-filters-modal',
+            'onopen': onOpen,
+            'onclose': t.close
+        });
+    };
 
+    var onOpen = function() {
+        console.log("onOpen rbox");
+        // $('.js-filters-dropdown').select2();
         var $select_type = $("#select-type");
         var $select_district = $("#select-district");
         var $select_block = $("#select-block");
@@ -48,6 +58,7 @@
         }
 
         $select_type.on("change", function(selected) {
+            console.log("select type changed");
             if (selected.val == 'Primary School') {
                 districtsXHR('primaryschools').done(function (data) {
                     populateSelect($select_district, data);
@@ -112,15 +123,17 @@
     };
 
     t.open = function() {
+        console.log("open filter modal");
         klp.openModal = t;
-        var $modal_overlay = $("#modal_overlay");
-        var $modal = $(".modal-map-filter");
-        $modal_overlay.addClass("show");
-        $modal.addClass("show");
+        $trigger.click();
+        // var $modal_overlay = $("#modal_overlay");
+        // var $modal = $(".modal-map-filter");
+        // $modal_overlay.addClass("show");
+        // $modal.addClass("show");
     };
 
     t.close = function() {
-        var $filter_toggle = $(".filter-tool");
+        var $filter_toggle = $(".js-filter-tool");
         $filter_toggle.removeClass('active');
     };
 

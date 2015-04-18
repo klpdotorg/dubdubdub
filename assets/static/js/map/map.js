@@ -39,13 +39,7 @@
 
     var isMobile = $(window).width() < 768;
 
-    var filterGeoJSON = function(geojson) {
-        return geojson.features.filter(emptyGeom);
-
-        function emptyGeom(feature) {
-            return !_.isEmpty(feature.geometry);
-        }
-    };
+    var filterGeoJSON = klp.utils.filterGeoJSON;
 
     var getLayerFromName = function(name) {
         var invertedMapLayers = _.invert(mapLayers);
@@ -71,6 +65,10 @@
 
     t.init = function() {
 
+        $(document).on('click', '.js-map-popup-close', function(e) {
+            e.preventDefault();
+            map.closePopup();
+        });
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
@@ -132,20 +130,16 @@
             }
 
             selectedLayers.clearLayers();
-            // selectedMarkers.clearLayers();
 
             if (searchEntityType === 'school') {
-                // console.log('searched for schools');
                 searchPoint = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
                 var marker = L.marker(searchPoint, {icon: mapIcon(data.properties.type.name)});
                 markerPopup(marker, data);
                 map.setView(searchPoint, 14);
-                //setMarkerURL(data);
             }
 
             if (searchEntityType === 'boundary') {
                 klp.router.setHash(null, {marker: 'boundary-'+data.properties.id}, {trigger: false});
-                // console.log('boundary');
                 var boundaryType = data.properties.type;
                 searchPoint = L.latLng(searchGeometry[1], searchGeometry[0]);
                 setBoundaryResultsOnMap(boundaryType, searchPoint, data);
@@ -173,7 +167,6 @@
             }
             marker.bindPopup(data.properties.name);
             marker.addTo(selectedLayers).openPopup();
-            // console.log(boundaryZoomLevels[type]);
             map.setView(point, boundaryZoomLevels[type]);
         }
 
@@ -218,7 +211,6 @@
         });
 
         klp.router.events.on('hashchange:marker', function (event, params) {
-                //currentMarker = queryParams['marker'];
             var queryParams = params.queryParams,
                 changed = params.changed;
             if (map._popup) {
@@ -290,19 +282,6 @@
 
         });
 
-        // $('input').iCheck({
-        //  checkboxClass: 'icheckbox_minimal',
-        //  radioClass: 'iradio_minimal',
-        //  increaseArea: '20%' // optional
-        // });
-
-        var sidebar_height = $("#sidebar_wrapper").height();
-        $('#sidebar_wrapper ul').slimScroll({
-            height: sidebar_height + 'px',
-            size: '5px',
-            color: '#8d8d8d',
-            railVisible: false,
-        });
         var map_overlay_top = $(".main-header").height() + 20 + 100;
         $("#map_overlay").css({
             'top': map_overlay_top + 'px'
@@ -314,21 +293,6 @@
         enabledLayers = L.layerGroup().addTo(map);
         selectedLayers = L.featureGroup().addTo(map);
 
-        // var mapIcon = function (type) {
-
-        //     // FIXME: May be fix this in the icon name.
-        //     // This is Sanjay's fault.
-        //     if (type === 'primaryschool') {
-        //         type = 'school';
-        //     }
-        //     return L.icon({
-        //         iconUrl: 'static/images/map/icon_'+type+'.png',
-        //         iconSize: [20, 30],
-        //         iconAnchor: [10, 26],
-        //         popupAnchor: [0, -25]
-        //     });
-        // };
-
         preschoolCluster = L.markerClusterGroup({chunkedLoading: true,removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-preschool', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(enabledLayers);
@@ -337,10 +301,6 @@
         schoolCluster = L.markerClusterGroup({chunkedLoading: true, removeOutsideVisibleBounds: true, showCoverageOnHover: false, iconCreateFunction: function(cluster) {
             return new L.DivIcon({ className:'marker-cluster marker-cluster-school', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(enabledLayers);
-
-        // var preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': map.getBounds().toBBoxString()});
-
-        // var schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': map.getBounds().toBBoxString()});
 
         var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
@@ -387,24 +347,6 @@
             }
         }
 
-        // preschoolXHR.done(function (data) {
-        //     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
-        //         pointToLayer: function(feature, latlng) {
-        //             return L.marker(latlng, {icon: mapIcon('preschool')});
-        //         },
-        //         onEachFeature: onEachSchool
-        //     }).addTo(preschoolCluster);
-        // });
-
-        // schoolXHR.done(function (data) {
-        //     var schoolLayer = L.geoJson(filterGeoJSON(data), {
-        //         pointToLayer: function(feature, latlng) {
-        //             return L.marker(latlng, {icon: mapIcon('school')});
-        //         },
-        //         onEachFeature: onEachSchool
-        //     }).addTo(schoolCluster);
-        // });
-
         function loadPointsByBbox() {
             var bbox = map.getBounds();
             if (mapBbox && mapBbox.contains(bbox)) {
@@ -415,12 +357,10 @@
             mapBbox = bbox.pad(0.5);
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
-                // console.log('aborting preschool xhr');
                 preschoolXHR.abort();
             }
 
             if (schoolXHR && schoolXHR.state() === 'pending') {
-                // console.log("aborting school xhr");
                 schoolXHR.abort();
             }
 
@@ -531,19 +471,13 @@
         });
 
         function markerPopup(marker, feature) {
-            // console.log("marker popup called", marker, feature);
             var duplicateMarker;
             if (feature.properties.type.id === 1) {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('school')});
             } else {
                 duplicateMarker = L.marker(marker._latlng, {icon: mapIcon('preschool')});
             }
-            if (!isMobile) {
-                selectedLayers.addLayer(duplicateMarker);
-            }
-            // if (popupInfoXHR && popupInfoXHR.hasOwnProperty('state') && popupInfoXHR.state() === 'pending') {
-            //     popupInfoXHR.abort();
-            // }
+            selectedLayers.addLayer(duplicateMarker);
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
@@ -551,23 +485,11 @@
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
                 t.stopLoading();
-                //marker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
-                if (!isMobile) {
-                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:380, minWidth:380}).openPopup();
-                } else {
-                    // Its a phone
-                    //marker.closePopup(); // Close popup
-                    // duplicateMarker.closePopup();
-                    //map.closePopup();
-                    // map.setView(marker.getLatLng(), 15);
-                    setTimeout(function() {
-                        var details_ht = $mobile_details_wrapper.height();
-                        var pan_y = parseInt(details_ht / 2.5);
-                        map.panBy(L.point(0, pan_y));
-                    }, 300);
-                    var html = tpl_mobile_place_details(data);
-                    $mobile_details_wrapper.html(html).addClass("show");
-                }
+                data.has_basic_facilities = data.basic_facilities.computer_lab || 
+                                            data.basic_facilities.library ||
+                                            data.basic_facilities.playground ||
+                                            data.has_volunteer_activities;
+                duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
                 $('.js-trigger-compare').unbind('click');
@@ -579,14 +501,14 @@
         }
 
         var overlays = {
-            '<span class="en-icon small en-school">s</span> <span class="label en-school">SCHOOL</span>': schoolCluster,
-            '<span class="en-icon small en-preschool">p</span> <span class="label en-preschool">PRESCHOOL</span>': preschoolCluster,
-            '<span class="en-icon small en-school-district">sd</span> <span class="label en-school-district">SCHOOL DISTRICT</span>': districtLayer,
-            '<span class="en-icon small en-preschool-district">pd</span> <span class="label en-preschool-district">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
-            '<span class="en-icon small en-school-block">sb</span> <span class="label en-school-block">SCHOOL BLOCK</span>': blockLayer,
-            '<span class="en-icon small en-school-cluster">sc</span> <span class="label en-school-cluster">SCHOOL CLUSTER</span>': clusterLayer,
-            '<span class="en-icon small en-preschool-project">pp</span> <span class="label en-preschool-project">PRESCHOOL PROJECT</span>': projectLayer,
-            '<span class="en-icon small en-preschool-circle">pc</span> <span class="label en-preschool-circle">PRESCHOOL CIRCLE</span>': circleLayer
+            '<span class="brand-school"><span class="icon-button-round-sm"><span class="k-icon">s</span></span> <span class="font-small">SCHOOL</span></span>': schoolCluster,
+            '<span class="brand-preschool"><span class="icon-button-round-sm"><span class="k-icon">p</span></span> <span class="font-small">PRESCHOOL</span>': preschoolCluster,
+            '<span class="brand-school-district"><span class="icon-button-round-sm"><span class="k-icon">sd</span></span> <span class="font-small">SCHOOL DISTRICT</span>': districtLayer,
+            '<span class="brand-preschool-district"><span class="icon-button-round-sm"><span class="k-icon">pd</span></span> <span class="font-small">PRESCHOOL DISTRICT</span>': preschoolDistrictLayer,
+            '<span class="brand-school-block"><span class="icon-button-round-sm"><span class="k-icon">sb</span></span> <span class="font-small">SCHOOL BLOCK</span>': blockLayer,
+            '<span class="brand-school-cluster"><span class="icon-button-round-sm"><span class="k-icon">sc</span></span> <span class="font-small">SCHOOL CLUSTER</span>': clusterLayer,
+            '<span class="brand-preschool-project"><span class="icon-button-round-sm"><span class="k-icon">pp</span></span> <span class="font-small">PRESCHOOL PROJECT</span>': projectLayer,
+            '<span class="brand-preschool-circle"><span class="icon-button-round-sm"><span class="k-icon">pc</span></span> <span class="font-small">PRESCHOOL CIRCLE</span>': circleLayer
 
         };
 
@@ -603,17 +525,41 @@
 
         allLayers = L.layerGroup([preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, projectLayer, circleLayer]);
 
+ 
+       // Radius tool.
+        // Initialise the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        // Initialise the draw control and pass it the FeatureGroup of editable layers
+        var drawControl = new L.Control.Draw({
+            position: 'bottomright',
+            draw: {
+                polyline: false,
+                polygon: false,
+                rectangle: false,
+                marker: false,
+                circle: true
+            },
+            edit: {
+                featureGroup: drawnItems,
+                edit: false,
+                remove: false
+            }
+        });
+        map.addControl(drawControl);
+
         // Control for Filters.
 
         var filterControl = L.Control.extend({
             options: {
-                position: 'topright'
+                position: 'bottomright'
             },
 
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-control filter-control');
                 container.title = 'Filter Schools';
-                var button = "<a class='filter-tool' href='#'></a>";
+                var button = "<a class='js-filter-tool filter-tool' href='#'></a>";
                 container.innerHTML = button;
                 L.DomEvent
                 .addListener(container, 'click', L.DomEvent.stopPropagation)
@@ -631,28 +577,7 @@
 
         map.addControl(new filterControl());
 
-        // Radius tool.
-        // Initialise the FeatureGroup to store editable layers
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
-
-        // Initialise the draw control and pass it the FeatureGroup of editable layers
-        var drawControl = new L.Control.Draw({
-            position: 'topright',
-            draw: {
-                polyline: false,
-                polygon: false,
-                rectangle: false,
-                marker: false,
-                circle: true
-            },
-            edit: {
-                featureGroup: drawnItems,
-                edit: false,
-                remove: false
-            }
-        });
-        map.addControl(drawControl);
+ 
 
         // Map Events
         map.on('zoomend', updateLayers);
@@ -711,14 +636,6 @@
                 });
         });
 
-        // Close the popup on mobile when clicked elesewhere on the map.
-        if (isMobile) {
-            map.on('click', function() {
-                $('.js-close-details').trigger('click');
-            });
-        }
-
-        //t.map = map;
     };
 
     t.startLoading = function() {
@@ -763,39 +680,19 @@
         klp.router.setHash(mapURL, {}, {trigger: false, replace: true});
     }
 
-    // marker.bindPopup(tpl_map_popup({}), {maxWidth: 380, minWidth: 380}).openPopup();
 
     t.closePopup = function() {
         map.closePopup();
     };
 
-    $(window).resize(onWindowResize);
-
-    function onWindowResize() {
-        window_width = $(window).width();
-            // console.log(window_width);
-            if (window_width < 768) {
-                map.closePopup();
-            } else {
-                $mobile_details_wrapper.removeClass("show");
-            }
-        }
-
     function load_map() {
-        // var param_location = getUrlVar("location");
-        // var param_date = getUrlVar("date");
-        // var param_type = getUrlVar("type");
-        // // Some check to ensure values are valid and is set for every param
-        // if (param_date) {
-        //     map_voluteer_date = param_date;
-        //     // console.log("params set: "+map_voluteer_date);
-        // }
+
         var southWest = L.latLng(11.57, 73.87),
             northEast = L.latLng(18.45, 78.57),
             bounds = L.latLngBounds(southWest, northEast);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        t.map = map = L.map('map_canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        t.map = map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             attribution: 'OpenStreetMap, OSM-Bright'
@@ -816,83 +713,5 @@
             map_voluteer_date = false;
         });
     }
-
-        // t.loadPlaces = function(places) {
-        //     for (var place_id in places) {
-        //         if (places.hasOwnProperty(place_id)) {
-        //             add_place_marker(place_id);
-        //         }
-        //     }
-        // };
-
-        // function add_place_marker(place_id) {
-        //     var place = place_data[place_id];
-        //     var marker = L.marker(place.latlong, {
-        //         clickable: true
-        //     }).addTo(map);
-        //     marker.bindPopup("", {
-        //         maxWidth: 380,
-        //         minWidth: 380
-        //     });
-        //     marker.on('click', function(e) {
-        //         if (window_width < 768) {
-        //             // Its a phone
-        //             marker.closePopup(); // Close popup
-        //             console.log("open details from bottom");
-        //             show_mobile_place_details(place_id);
-        //             // show_place_details(place_id);
-        //         } else {
-        //             // Set popup content
-        //             console.log("show popup");
-        //             var content = build_popup_content(place_id);
-        //             marker.setPopupContent(content);
-        //         }
-        //     });
-        // }
-
-        // function show_mobile_place_details(place_id) {
-        //     var latlong = place_data[place_id].latlong;
-        //     map.setView(latlong, 15);
-        //     setTimeout(function() {
-        //         var details_ht = $mobile_details_wrapper.height();
-        //         var pan_y = parseInt(details_ht / 2.5);
-        //         map.panBy(L.point(0, pan_y));
-        //     }, 300);
-        //     var html = build_mobile_details_content(place_id);
-        //     $mobile_details_wrapper.html(html).addClass("show");
-        // }
-
-        // function build_popup_content(place_id) {
-        //     var ctx = {
-        //         date: map_voluteer_date
-        //     };
-        //     var html = tpl_map_popup(ctx);
-        //     return html;
-        // }
-
-        // function build_mobile_details_content(place_id) {
-        //     var ctx = {
-        //         name: place_data[place_id].name
-        //     }
-        //     var html = tpl_mobile_place_details(ctx);
-        //     return html;
-        // }
-
-        // function toggleFilterRadius(){
-        //     var $filter_radius_msg = $("#msg-filter-radius");
-
-        //     if(!$_filter_radius_button.hasClass("active")) {
-        //         // $_filter_radius_button.addClass("active");
-        //         $filter_radius_msg.removeClass("hide");
-        //     } else {
-        //         // $_filter_radius_button.removeClass("active");
-        //         $filter_radius_msg.addClass("hide");
-        //     }
-        // };
-
-        // function getUrlVar(key) {
-        //     var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
-        //     return result && unescape(result[1]) || "";
-        // }
 
 })();

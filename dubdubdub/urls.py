@@ -5,11 +5,14 @@ from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView
+from stories.views import IVRSPageView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
-    EmailVerificationView, VolunteerMapPageView)
+    EmailVerificationView, VolunteerMapPageView, DonatePageView,
+    DonationRequirementsView, DonationRequirementView,
+    DonationRequirementAddEditPageView)
 
 urlpatterns = patterns(
     '',
@@ -17,174 +20,84 @@ urlpatterns = patterns(
     # home page
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
-        extra_context={
-            # anything put into this dict will be availabe in template
-            'homepage': True
-            }
         ), name='home'),
+
+    # styleguide page
+    url(r'^styleguide/$', StaticPageView.as_view(
+        template_name='styleguide.html'
+        ), name='styleguide'),
 
     # about pages
     url(r'^about/$', StaticPageView.as_view(
         template_name='aboutus.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/about',
-                    'name': 'About'
-                }
-            ]
-        }
         ), name='aboutus'),
     url(r'text/aboutus/$', RedirectView.as_view(url='/about')),
 
     url(r'^partners/$', StaticPageView.as_view(
         template_name='partners.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/partners',
-                    'name': 'Partners'
-                }
-            ]
-        }
         ), name='partners'),
     url(r'text/partners/$', RedirectView.as_view(url='/partners')),
 
     url(r'^disclaimer/$', StaticPageView.as_view(
         template_name='disclaimer.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/disclaimer',
-                    'name': 'Disclaimer'
-                }
-            ]
-        }
         ), name='disclaimer'),
     url(r'text/disclaimer/$', RedirectView.as_view(url='/disclaimer')),
 
     # reports page
     url(r'^reports/$', StaticPageView.as_view(
         template_name='reports.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/reports',
-                    'name': 'Reports'
-                }
-            ]
-        }
         ), name='reports'),
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
 
     # data page
     url(r'^data/$', StaticPageView.as_view(
         template_name='data.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/data',
-                    'name': 'Data'
-                }
-            ]
-        }
         ), name='data'),
     url(r'text/data$', RedirectView.as_view(url='/data')),
     url(r'listFiles/2$', RedirectView.as_view(url='/data')),
 
-    # programme pages
-    url(r'^programmes/reading/$', StaticPageView.as_view(
-        template_name='reading_programme.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/programmes/reading',
-                    'name': 'Reading Programme'
-                }
-            ]
-        }
-        ), name='reading_programme'),
-    url(r'text/reading/$', RedirectView.as_view(url='/programmes/reading')),
+    # partners pages
 
-    url(r'^text/maths/$', StaticPageView.as_view(
-        template_name='maths_programme.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/text/maths',
-                    'name': 'Maths Programme'
-                }
-            ]
-        }
+    url(r'^partners/akshara/reading/$', StaticPageView.as_view(
+        template_name='partners/akshara/reading.html',
+        ), name='reading_programme'),     
+    url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
+    url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
+
+    url(r'^partners/akshara/maths/$', StaticPageView.as_view(
+        template_name='partners/akshara/maths.html',
         ), name='maths_programme'),
+    url(r'^text/maths/$', RedirectView.as_view(url='/partners/akshara/maths/')),
 
-    url(r'^text/library/$', StaticPageView.as_view(
-        template_name='library_programme.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/text/library',
-                    'name': 'Library Programme'
-                }
-            ]
-        }
+    url(r'^partners/akshara/library/$', StaticPageView.as_view(
+        template_name='partners/akshara/library.html',
         ), name='library_programme'),
+    url(r'^text/library/$', RedirectView.as_view(url='/partners/akshara/library/')),
 
-    url(r'^text/preschool/$', StaticPageView.as_view(
-        template_name='preschool_programme.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/text/preschool',
-                    'name': 'Preschool Programme'
-                }
-            ]
-        }
+    url(r'^partners/akshara/preschool/$', StaticPageView.as_view(
+        template_name='partners/akshara/preschool.html',
         ), name='preschool_programme'),
+    url(r'^text/preschool/$', RedirectView.as_view(url='/partners/akshara/preschool/')),
 
-    url(r'^programmes/sikshana/$', StaticPageView.as_view(
-        template_name='sikshana_programme.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/programmes/sikshana',
-                    'name': 'Sikshana Programme'
-                }
-            ]
-        }
+    url(r'^partners/sikshana/reading/$', StaticPageView.as_view(
+        template_name='partners/sikshana/reading.html',
         ), name='sikshana_programme'),
+    url(r'^programmes/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
+    url(r'^text/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
 
-    url(r'text/sikshana/$', RedirectView.as_view(url='/programmes/sikshana')),
+    url(r'^partners/pratham/learn-out-of-the-box/$', StaticPageView.as_view(
+        template_name='partners/pratham/learn.html',
+        ), name='partners_pratham_learn'),
 
     url(r'^volunteer/$', StaticPageView.as_view(
         template_name='volunteer.html',
-        extra_context={
-            'breadcrumbs': [
-                {
-                    'url': '/volunteer',
-                    'name': 'Volunteer'
-                }
-            ]
-        }
         ), name='volunteer'),
     url(r'text/volunteer/$', RedirectView.as_view(url='/volunteer/')),
-
-    url(r'^volunteer-register/$', StaticPageView.as_view(
-        template_name='volunteer-register.html',
-        ), name='volunteer_register'),
 
     url(r'^map/$', StaticPageView.as_view(
         template_name='map.html',
         extra_context={
-            'header_full_width': True,
-            'header_fixed': True,
             'hide_footer': True,
-            'breadcrumbs': [
-                {
-                    'url': '/map',
-                    'name': 'Map'
-                }
-            ]
         }), name='map'),
 
 
@@ -199,23 +112,40 @@ urlpatterns = patterns(
     url(r'^volunteer-map$', VolunteerMapPageView.as_view(
         template_name='volunteer-map.html',
         extra_context={
-            'header_full_width': True,
-            'header_fixed': True,
             'hide_footer': True,
-            'breadcrumbs': [
-                {
-                    'url': '/volunteer',
-                    'name': 'Volunteer'
-                },
-                {
-                    'url': '/volunteer-map',
-                    'name': 'Activities'
-                }
-            ]
         }), name='volunteer_map'),
+
+    url('^donate$', DonatePageView.as_view(
+        template_name = 'donate/donate.html',
+        ), name='donate'),
+
+    url('^donate/requests/$', DonationRequirementsView.as_view(
+        template_name = 'donate/donate_requests.html'
+        ), name='donate_requests'),
+
+    url('^donate/requests/(?P<pk>[0-9]+)$', DonationRequirementView.as_view(
+        template_name = 'donate/donate_request.html'
+        ), name='donate_request'),
+
+    url(r'^organisation/(?P<pk>[0-9]+)/donation_requirement$',
+        DonationRequirementAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Add'
+            }
+        ),
+        name='donationrequest_add_page'),
+
+    url(r'^organisation/(?P<org_pk>[0-9]+)/donation_requirement/(?P<pk>[0-9]+)$',
+        DonationRequirementAddEditPageView.as_view(
+            extra_context = {
+                'action': 'Edit'
+            }
+        ),
+        name='volunteeractivity_edit_page'),
 
     url(r'^school/(?P<pk>[0-9]+)/$',
         SchoolPageView.as_view(), name='school_page'),
+
     url(r'^schoolpage/school/(?P<pk>[0-9]*)$$', RedirectView.as_view(
         pattern_name='school_page',
         query_string=True
@@ -246,6 +176,8 @@ urlpatterns = patterns(
 
     url(r'^profile/(?P<pk>[0-9]+)/edit$',
         ProfileEditPageView.as_view(), name='profile_edit_page'),
+
+    url(r'^ivrs$', IVRSPageView.as_view(), name='ivrs_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {

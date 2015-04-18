@@ -1,0 +1,2893 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Styleguide{% endblock %}
+
+{% block css_extra %}
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+<style>
+  code {
+    font-family: 'Source Code Pro';
+  }
+
+  .alert {
+    position: static;
+  }
+</style>
+{% endblock %}
+
+
+
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/common/basic_tabs.js' %}"></script>
+ 
+  {% endcompress %}
+   <!-- <script type="text/javascript" src="{% static 'js/styleguide/init.js' %}"></script> -->
+  <script>
+  // Escape HTML strings
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+  </script>
+{% endblock %}
+
+{% block content %}
+<section class="clearfix">
+  <div class="demo-sidebar">
+    <ul class="dropdown-base js-dropdown dropdown-styleguide">
+      <li class="styleguide-nav-trigger">
+        <a href="#"><span class="fa fa-bars icon-left grey-steel vertical-inline-middle"></span>
+        <span class="heading-tiny-uppercase">Menu</span></a>
+        <ul>
+          <li><a href="#demo-block-basics" class="js-scroll-smooth-link">CSS: Basics</a></li>
+          <li><a href="#demo-block-colors" class="js-scroll-smooth-link">Colors</a></li>
+          <li><a href="#demo-block-grid" class="js-scroll-smooth-link">Grid</a></li>
+          <li><a href="#demo-block-typography" class="js-scroll-smooth-link">Typography</a></li>
+          <li><a href="#demo-block-forms" class="js-scroll-smooth-link">Forms</a></li>
+          <li><a href="#demo-block-img" class="js-scroll-smooth-link">Images</a></li>
+          <li><a href="#demo-block-tables" class="js-scroll-smooth-link">Tables</a></li>
+          <li><a href="#demo-block-hr" class="js-scroll-smooth-link">Horizontal Rules</a></li>
+          <li><a href="#demo-block-buttons" class="js-scroll-smooth-link">Buttons</a></li>
+          <li><a href="#demo-block-alerts" class="js-scroll-smooth-link">Alerts</a></li>
+          <li><a href="#demo-block-tooltips" class="js-scroll-smooth-link">Tooltips</a></li>
+          <li><a href="#demo-block-tabs" class="js-scroll-smooth-link">Tabs</a></li>
+          <li><a href="#demo-block-banners" class="js-scroll-smooth-link">Banners</a></li>       
+          <li><a href="#demo-block-lightbox" class="js-scroll-smooth-link">Lightbox</a></li>
+
+          <li><a href="#demo-block-imgtext" class="js-scroll-smooth-link">Module: Img Text</a></li>
+          <li><a href="#demo-block-iframes" class="js-scroll-smooth-link">Responsive Iframe Videos</a></li>
+          <li><a href="#demo-block-dropdowns" class="js-scroll-smooth-link">Dropdowns</a></li>
+          <li><a href="#demo-block-icons" class="js-scroll-smooth-link">Icons</a></li>
+          <li><a href="#demo-block-bar" class="js-scroll-smooth-link">Bar Graphs: Custom</a></li>
+          <li><a href="#demo-block-scrollbars" class="js-scroll-smooth-link">Scrollbars: Custom: Webkit</a></li>
+          <li><a href="#demo-block-helpers" class="js-scroll-smooth-link">Helpers: Globals</a></li>
+          <li><a href="#demo-block-prefixes" class="js-scroll-smooth-link">Vendor Prefixes: Sass</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div> <!-- /demo-sidebar -->
+
+  <div class="demo-main">    
+    <h1 class="heading-primary">Styleguide</h1>
+
+    <h2 class="heading-secondary brand-blue">CSS</h2>  
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-basics">CSS: Basics</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#css-setup" class="js-scroll-smooth-link">CSS: Setup</a></li>
+          <li><a href="#css-structure" class="js-scroll-smooth-link">CSS: Structure</a></li>
+          <li><a href="#css-conventions" class="js-scroll-smooth-link">CSS: Conventions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container-mid">
+      <div class="heading-secondary brand-purple" id="css-setup">CSS: Setup</div>
+      <p class="bold center-text">The project uses Sass to provide the CSS with some structure.</p>
+      <div class="base-spacing"></div>
+      <ul class="ul-base">
+        <li>You need to <a href="http://sass-lang.com/install" class="bold">install Ruby and Sass</a>.</li>
+        <li><span class="bold">Watching and compiling</span> is done with one single command, preferably outside the vagrant box: 
+        <pre><code>sass --watch assets/static/sass/style.scss:assets/static/css/style.css.</code></pre></li>
+        <li><span class="demo-dont">Don't</span> edit the generated style.css in /assets/static/css</li>
+      </ul>
+      <div class="base-spacing"></div>
+    </div> <!-- /container -->
+
+    <div class="container-mid">
+      <div class="heading-secondary brand-purple" id="css-structure">CSS: Structure</div>
+      <p>The <span class="bold">partials folder</span> inside /assets/static/sass contains all the small Sass files that are imported into the style.scss folder.</p>
+      <p class="bold center-text">Important partials include: </p>
+      <ul class="ul-base">
+        <li><span class="bold">Variables:</span> Contains all variables (or constants) referenced in all other Sass files. A variable is always prefixed with a $ symbol. e.g. $header-height defines the height of the fixed height header, which is then reused for positioning the main element, map, fixed alerts, etc.</li>
+        <li><span class="bold">Globals:</span> vendor prefixing mixins and global classes belong to the globals partial. These affect the entire app; handle with care if making changes.</li>
+        <li><span class="bold">Typography: </span> Contains styles for headings, links, lists, etc. These affect the entire app; handle with care if making changes.</li>
+        <li><span class="bold">Forms: </span> Contains styles for inputs, labels, selects, errors. All overrides for individual forms are also done here.</li>
+        <li><span class="bold">Z-index: </span>Contains all the z-index values for all selectors, for easy reference. Add new z-index values here.</li>
+        <li><span class="bold">Map: </span>Contains all leaflet map styles and overrides, including pop-ups and filters.</li>
+        <li><span class="bold">Media-queries: </span>Contains all the styles that make the app responsive.</li>
+        <li><span class="bold">Lib folder</span> Contains all third party plugin sass partials</li>
+      </ul>
+
+      <p>Most changes to pages or new pages can be done in the _main.scss or _media-queries partials, with helpful comments to indicate the page name</p>
+      <p><span class="demo-dont">Don't</span> carelessly edit the variables, globals or typography files, since those style changes will cascade throughout the site.</p>
+      <p><span class="demo-do">DO: </span>create a new partial, if you need a new UI module that deserves its own partial file, e.g. some groovy animations. The partials file should always be named _&lt;file-name&gt;.scss and import it into the style.scss file like this. </p>
+      <pre><code>@import 'partials/groovy.animation';</code></pre>
+      <p>As you can see above, in the import statement, neither the underscore nor the .scss extension of the file name is specified.</p>
+
+        <p><a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials">Import documentation here.</a></p>
+
+      <div class="base-spacing"></div>
+    </div> <!-- /container -->
+
+    <div class="container-mid">
+      <div class="heading-secondary brand-purple" id="css-conventions">CSS: Conventions</div>
+      <ul>
+        <li><span class="demo-do">Do </span> use <span class="bold">2 spaces</span> to indent.</li>
+        <li><span class="demo-dont">Don't </span> use <span class="bold">ids</span> for styling; they are used for JS</li>
+        <li><span class="demo-do">Do</span> use <span class="bold">variables, nesting, helper classes, mixins, extends and placeholders</span> in a manner that benefits the app. Some <a href="http://sass-lang.com/guide">documentation</a> if you're new to Sass.</li>
+        <li><span class="demo-do">Do </span> use <span class="bold">Sass comments</span> (similar to JS single line comments //) for comments that only other developers need to see. These do not get compiled into the final CSS stylesheet.</li>
+        <li><span class="demo-do">Do</span> use helpful comments for new sections inside a Sass partial, which are useful for documentation of the section in question. See below:
+                  
+<pre><code>/*-------------------------------------*/
+/* FORM: BASE STYLES */</code></pre>
+        </li>
+        <li><span class="demo-do">Do</span> spend a few minutes browsing through the globals, variables and typography partials. They contain plenty of reusable code.</li>
+        <li><span class="demo-dont">Don't</span> try to extend a Sass placeholder (e.g. %grid-parent) inside a media query, because you will get an error and the file won't compile. If a mixin is available, use that instead, inside the media query block.</li>
+      </ul>
+    </div> <!-- /container -->
+
+    <div class="center-text" id="demo-block-colors">
+      <h2 class="heading-section">Colors</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#colors-brand" class="js-scroll-smooth-link">Brand</a></li>
+          <li><a href="#colors-common" class="js-scroll-smooth-link">Common</a></li>
+          <li><a href="#colors-school" class="js-scroll-smooth-link">Schools</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container-mid">
+      <h2 class="heading-secondary brand-purple" id="colors-brand">Colors: Brand</h2>
+      <div class="base-spacing-lg center-text">
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-blue-bg"></div>   
+          <div class="font-smaller brand-blue">$brand-blue</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-green-bg"></div>
+          <div class="font-smaller brand-green">$brand-green</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-turquoise-bg"></div>
+          <div class="font-smaller brand-turquoise">$brand-turquoise</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-purple-bg"></div>
+          <div class="font-smaller brand-purple">$brand-purple</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-red-bg"></div>
+          <div class="font-smaller brand-red">$brand-red</div>   
+        </div>
+
+        <div class="vertical-inline-top">
+          <div class="box-demo brand-orange-bg"></div>
+          <div class="font-smaller brand-orange">$brand-orange</div>   
+        </div>
+      </div> <!-- /center-text -->
+    
+      <div class="base-spacing"></div>
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Brand</div>
+        <div class="style-block-demo center-text">
+<p class="brand-blue">$brand-blue</p>
+<p class="brand-green">$brand-green</p>
+<p class="brand-turquoise">$brand-turquoise</p>
+<p class="brand-purple">$brand-purple</p>
+<p class="brand-red">$brand-red</p>
+<p class="brand-orange">$brand-orange</p></div> <!-- /style-block-demo -->
+
+          <div class="center-text">
+            <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+          </div>
+        </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Background: Brand</div>
+        <div class="style-block-demo white demo-color-background">
+<p class="brand-blue-bg">$brand-blue-bg</p>
+<p class="brand-green-bg">$brand-green-bg</p>
+<p class="brand-turquoise-bg">$brand-turquoise-bg</p>
+<p class="brand-purple-bg">$brand-purple-bg</p>
+<p class="brand-red-bg">$brand-red-bg</p>
+<p class="brand-orange-bg">$brand-orange-bg</p>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+      <h2 class="heading-secondary brand-purple" id="colors-common">Colors: Common</h2>
+      <div class="heading-tertiary center-text">Colors: Common</div>
+        <div class="style-block-demo center-text">
+<p class="purple-amethyst">$purple-amethyst</p>
+<p class="maroon">$maroon</p>
+<p class="pink-salmon">$pink-salmon</p>
+<p class="yellow-mild">$yellow-mild</p>
+<p class="orange-mild">$orange-mild</p>  
+<p class="green-pista">$green-pista</p>  
+<p class="green-leaf">$green-leaf</p>  
+<p class="white" style="background: black;">$white</p>
+<p class="black">$black</p>  
+<p class="grey-gravel">$grey-gravel</p>
+<p class="grey-steel">$grey-steel</p>
+<p class="grey-silver">$grey-silver</p>  
+<p class="grey-mist">$grey-mist</p>
+</div><!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Background: Common</div>
+        <div class="style-block-demo center-text white demo-color-background">
+<p class="purple-amethyst-bg">$purple-amethyst</p>
+<p class="maroon-bg">$maroon</p>
+<p class="pink-salmon-bg">$pink-salmon</p>
+<p class="yellow-mild-bg">$yellow-mild</p>
+<p class="orange-mild-bg">$orange-mild</p>  
+<p class="green-pista-bg">$green-pista</p>  
+<p class="green-leaf-bg">$green-leaf</p>  
+<p class="white-bg" style="color: black;">$white</p>
+<p class="black-bg">$black</p>  
+<p class="grey-gravel-bg">$grey-gravel</p>
+<p class="grey-steel-bg">$grey-steel</p>
+<p class="grey-silver-bg">$grey-silver</p>  
+<p class="grey-mist-bg">$grey-mist</p>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
+      <h2 class="heading-secondary brand-purple" id="colors-school">Colors: Schools</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Schools</div>
+        <div class="style-block-demo center-text">
+<p class="brand-school">$brand-school</p>
+<p class="brand-preschool">$brand-preschool</p>
+<p class="brand-school-district">$brand-school-district</p>  
+<p class="brand-preschool-district">$brand-preschool-district</p>  
+<p class="brand-school-cluster">$brand-school-cluster</p>
+<p class="brand-school-block">$brand-school-block</p>
+<p class="brand-preschool-project">$brand-preschool-project</p>
+<p class="brand-preschool-circle">$brand-preschool-circle</p>  
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Colors: Background: Schools</div>
+        <div class="style-block-demo white demo-color-background">
+<p class="brand-school-bg">$brand-school-bg</p>
+<p class="brand-preschool-bg">$brand-preschool-bg</p>
+<p class="brand-school-district-bg">$brand-school-district-bg</p>  
+<p class="brand-preschool-district-bg">$brand-preschool-district-bg</p>  
+<p class="brand-school-cluster-bg">$brand-school-cluster-bg</p>
+<p class="brand-school-block-bg">$brand-school-block-bg</p>
+<p class="brand-preschool-project-bg">$brand-preschool-project-bg</p>
+<p class="brand-preschool-circle-bg">$brand-preschool-circle-bg</p>  
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+      </div> <!-- /style-block -->
+      
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-grid">Grid</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#media-queries" class="js-scroll-smooth-link">Media Queries</a></li>
+          <li><a href="#grid-containers" class="js-scroll-smooth-link">Containers</a></li>
+          <li><a href="#grid-classes" class="js-scroll-smooth-link">Grid: Classes</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="media-queries">Grid: Media Queries</h2>
+      <div class="style-block">
+        <div class="container-mid">
+          <p>
+            By and large, the site uses min-width media queries, on the assumption that the initial layout is mobile-first and stacked, and columns are added incrementally, as the screen size gets larger.
+          </p>
+          <ul class="ul-base">
+            <li>Media queries are added after the selector in question.</li>
+            <li>Media queries are available as Sass mixins and can be nested, which is an advantage.</li>
+            <li><span class="demo-do">Do</span> add min-width media queries in the order of smallest to largest.</li>
+            <li>The 4 min-width media queries available as mixins are:
+             <ul>
+               <li>media-sm: 600px</li>
+               <li>media-med: 750px</li>
+               <li>media-lg: 990px</li>
+               <li>media-lg-x: 1200px (<em>used sparingly</em>)</li>
+             </ul>
+            </li>
+            <li>The 1 max-width media query is 749px. This is used sparingly.</li>
+          </ul>
+
+          <div class="center-text">
+            <p class="bold">Below is a slightly ridiculous example.</p>
+            <p>Note the nesting of the media queries and the four breakpoints.</p>
+            <p>You can always refer to the variables or globals partial to see the actual value of a media query mixin.</p>          
+          </div>
+
+        </div> <!-- /container-mid -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>
+        <div class="style-block-demo">
+<style>
+  .selecter {
+    max-width: 250px;
+
+    @include media-sm {
+      max-width: 300px;
+    }
+
+    @include media-med {
+      max-width: 350px;
+    }
+
+    @include media-lg {
+      max-width: 400px;
+    }
+
+    @include media-lg-x {
+      max-width: 450px;
+    }
+  }
+</style>
+</div> <!-- /style-block-demo -->
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="grid-containers">Grid: Containers</h2>
+      <div class="style-block">
+        <h2 class="heading-tertiary center-text">Grid: Container Sizes</h2>
+        <div class="center-text">
+          <p class="bold">The site has 3 container sizes you can use.</p>
+          <p>.container, which is the widest the grid can get i.e. 1000px</p>
+          <p>.container-mid, which is a mid-sized container, i.e. 750px</p>
+          <p>.container-sm, which is a small container, i.e. 520px</p>          
+        </div>
+      <div class="style-block-demo white">
+<div class="container brand-turquoise-bg">
+  <div class="center-text">.container / %container / mixin container</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+      <div class="style-block-demo white">
+<div class="container-mid brand-turquoise-bg">
+  <div class="center-text">.container-mid / %container-mid / mixin container-mid</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+      <div class="style-block-demo white">
+<div class="container-sm brand-turquoise-bg">
+  <div class="center-text">.container-sm / %container-sm / mixin container-sm</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+  </div> <!-- /container -->
+
+  <h2 class="heading-tertiary center-text">Grid: Full-width</h2>
+  <p class="center-text">For that gorgeous full-bleed effect, simply don't add a parent 'container'.</p>
+  <div class="style-block">
+  <div class="style-block-demo white">
+<div class="brand-turquoise-bg">
+  <div class="center-text">Here's a full-width section.</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+  <div class="center-text">
+    <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+  </div>    
+</div> <!-- /style-block -->
+
+    <div class="container">
+      <div class="container-mid">
+        <h2 class="heading-secondary brand-purple" id="grid-classes">Grid: Classes</h2>
+        <p>There's no real grid, in case you were wondering. But there's enough stuff to build flexibly.</p>
+        <p>You can add more classes as required in the grid partial; the current grid simply accommodates 1/2, 1/3rd, 2/3rds and 1/4th widths. </p>
+        <div class="base-spacing"></div>
+        <p class="center-text"><strong>Building Blocks</strong></p>
+        <ul class="ul-base">
+          <li>Firstly, add a section with a container class or mixin or placeholder. (This is optional if a parent container class already exists in the DOM).</li>
+          <li>Next, add a parent for your grid: with a class of grid-parent (this internally has a clearfix, so you don't need to worry about clearing floats).</li>
+          <li>Add some children with a class of grid-child, to get some sweet grid gutters.</li>
+        </ul>        
+      </div>
+
+      <div class="style-block">
+        <div class="center-text container-mid">
+          <div class="heading-tertiary center-text">Barebones grid</div>
+          <p><span class="demo-dont">This is not a good example in the real-world, but a great  example to learn how to use the grid.</span></p>
+          <p>It uses inline styles, but take a look, so you get an idea of the grid structure.</p>
+          <p>Resize the window to see how the boxes resize</p>          
+        </div>
+
+        <div class="style-block-demo center-text">
+<section class="container">
+  <div class="grid-parent">
+    <div class="grid-child" style="width: 50%; float: left;">
+      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+    </div>
+    <div class="grid-child" style="width: 50%; float: left;">
+      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="center-text container-mid">
+          <div class="heading-tertiary center-text">Grid: 1/2</div>
+          <p>Here's a better, real-world demo of a grid with two equal boxes, without inline styles.</p>          
+        </div>
+        <div class="style-block-demo">
+<section class="container">
+  <div class="grid-parent">
+    <div class="col-50-flt">
+      <img src="http://placehold.it/500x300&text=col-50-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-50-flt">
+      <img src="http://placehold.it/500x300&text=col-50-flt" alt="img-grid-demo">
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<section class="container">
+  <div class="heading-tertiary center-text">Grid: 1/3rd</div>
+  <p>This demo has 3 floated boxes of equal width</p>
+  <div class="grid-parent">
+    <div class="col-33-flt">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-33-flt">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-33-flt">
+      <img src="http://placehold.it/500x300&text=col-33-flt" alt="img-grid-demo">
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<section class="container">
+  <div class="heading-tertiary center-text">Grid: 1/4th</div>
+  <p>This demo has 4 floated boxes of equal width</p>
+  <div class="grid-parent">
+    <div class="col-25-flt">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-25-flt">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-25-flt">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
+    </div>
+    <div class="col-25-flt">
+      <img src="http://placehold.it/500x300&text=col-25-flt" alt="img-grid-demo">
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<section class="container">
+  <div class="heading-tertiary center-text">Grid: 2/3rds</div>
+  <p>This demo has 2 floated boxes, one is 2/3rds and the other is 1/3rd the width</p>
+  <div class="grid-parent">
+    <div class="col-33-flt">
+      <img src="http://placehold.it/500x300" alt="img-grid-demo">
+    </div>
+    <div class="col-66-flt">
+      <img src="http://placehold.it/700x300" alt="img-grid-demo">
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Mixins instead of grid classes</div>
+        <div class="container-mid">
+          <p>The demos above will work for sections that don't need to be stacked or have their grids changed on different media breakpoints.</p>
+          <p><span class="demo-do">Do</span> create responsive grids using the recommendations below.</p>
+          <p>Since the site is built mobile first, it would be preferable not to add classes, as indicated in the demos above, since they would have to be reset for mobile, to become full-width sections (in most cases, but not all).</p>
+          <p>Instead, consider using the <span class="bold">handy grid mixins</span> available on media query breakpoints. The mixins have the same names as the grid classes, i.e. <em>grid-parent, grid-child, col-25-flt, col-50-flt, col-33-flt, col-66-flt</em> and grid placeholders.</p>
+          <p>Let's look at a simple demo below, using classes from the existing site. On a medium media query breakpoint, the parent class partners-list-block includes the mixin grid-parent, and the children partners-list include the mixin col-50-flt.</p>
+          <p>Thus you can float columns of any widths (that add up to 100%) on any media query, to get a truly flexible grid.</p>          
+        </div>
+
+        <div class="style-block-demo center-text">
+<style>
+@include media-med {
+  .partners-list-block {
+    @include grid-parent;
+  }
+
+  .partners-list {
+    @include col-50-flt;
+  }
+}
+</style>
+
+<section class="container">
+  <div class="partners-list-block">
+    <div class="partners-list">
+      <h2 class="heading-secondary brand-red">Gulbarga</h2>
+      <ul>
+        <li>Arunnodaya resource Center (Myrada), Nagaidalai</li>
+        <li>Jyoti Resource Center (Myrada), Kodli</li>
+      </ul>
+    </div>
+    <div class="partners-list">
+      <h2 class="heading-secondary brand-red">Bangalore</h2>
+      <ul>
+        <li>Bhoruka Charities</li>
+        <li>Grameen Abhiruddi Kendra Vasavadatta Cement, Sedam</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container-mid">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Different grid mixins you can use at media query breakpoints</div>
+        <p class="center-text">See the code block for more</p>
+        <div class="style-block-demo">
+<style>
+// 1/2
+.selector-parent {
+  @include grid-parent;
+}
+  
+.selector-child {
+  @include col-50-flt;
+}
+
+// 1/3rd
+.selector-parent {
+  @include grid-parent;
+}
+  
+.selector-child {
+  @include col-33-flt;
+}
+
+// 2/3rd
+.selector-parent {
+  @include grid-parent;
+}
+  
+.selector-child-a {
+  @include col-33-flt;
+}
+
+.selector-child-b {
+  @include col-66-flt;
+}
+
+// 1/4th
+.selector-parent {
+  @include grid-parent;
+}
+  
+.selector-child {
+  @include col-25-flt;
+}
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container-mid">
+      <p>All in all, the above floated classes can be used for convenience, but use the best layouting tool for the job, which is sometimes inline-block or flexbox or display: table. This is not a grid set in stone!</p>
+      <p>New columns can easily be created and added, following the conventions inside the grid partial.</p>
+    </div>
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-typography">Typography</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#font-families" class="js-scroll-smooth-link">Font Families</a></li>
+          <li><a href="#typo-headings" class="js-scroll-smooth-link">Headings</a></li>
+          <li><a href="#typo-links" class="js-scroll-smooth-link">Links</a></li>
+          <li><a href="#typo-lists" class="js-scroll-smooth-link">Lists</a></li>
+          <li><a href="#typo-helpers" class="js-scroll-smooth-link">Font Helpers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="font-families">Typography: Font Families</h2>
+      <div class="style-block">
+        <div class="center-text">The default and only font is Lato.</div>
+        <div class="style-block-demo center-text">
+<div class="font-base-family">$font-base-family, .font-base-family, %font-base-family</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="typo-headings">Typography: Headings</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Heading Primary</div>
+        <div class="center-text">Use this for the top level heading of a page</div>
+        <div class="style-block-demo center-text">
+<h1 class="heading-primary">Heading Primary: Default</h1>
+<h1 class="heading-primary brand-red">Heading Primary, with additional color class</h1>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Heading Secondary</div>
+        <div class="center-text">Use this as a second level heading, with an h2 tag if sematically appropriate.</div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<div class="heading-secondary">Heading Secondary: Default</div>
+<h2 class="heading-secondary brand-blue">Heading Secondary: Default with additional color class</h2>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Heading Tertiary</div>
+        <div class="style-block-demo center-text">
+<div class="heading-tertiary">Heading Tertiary</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Heading Tiny and Heading Tiny Uppercase</div>
+        <div class="style-block-demo center-text">
+<div class="heading-tiny">Heading Tiny</div>
+<div class="heading-tiny-uppercase">Heading Tiny Uppercase</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Heading with Border</div>
+        <div class="style-block-demo center-text">
+<div class="heading-secondary heading-border">Heading Secondary with bottom border</div>
+<h2 class="heading-border brand-turquoise">Any heading can have a bottom border</h2>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Header Strip</div>
+        <div class="style-block-demo center-text">
+<div class="header-strip">
+  <div class="heading-tiny-uppercase">Heading goes here</div>
+</div>        
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section</div>
+      <div class="style-block-demo center-text">
+<div class="center-text">
+  <h2 class="heading-section">Heading Section</h2>
+  <div class="heading-section-block"></div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section with List</div>
+<div class="style-block-demo">
+<div class="center-text">
+  <h2 class="heading-section">Heading Section</h2>
+  <div class="heading-section-block">
+    <ul>
+      <li><a href="#" class="js-scroll-smooth-link">General link or anchor example</a></li>
+      <li><a href="#smooth-demo-1" class="js-scroll-smooth-link">Smooth scrolling link example</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div id="smooth-demo-1">
+    <h3>Smoothness is coolness</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque ea iure repudiandae, debitis molestiae quas a, excepturi placeat non, numquam magni unde sed eligendi modi neque hic amet. Vitae.</p>
+  </div>
+</div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="style-block">
+      <div class="heading-tertiary center-text">Typography: Heading Section: Alternate List Style</div>
+      <div class="style-block-demo">
+  <div class="center-text">
+    <h2 class="heading-section">Heading Section</h2>
+    <div class="heading-section-block">
+      <ul class="heading-section-ul-alt">
+        <li><a href="#">Links to something</a></li>
+        <li><a href="#">Links to something</a></li>
+        <li><a href="#">Links to something</a></li>
+      </ul>
+    </div>
+  </div>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: HTML Headings</div>
+        <div class="style-block-demo center-text">
+<h1>H1</h1>
+<h2>H2</h2>
+<h3>H3</h3>
+<h4>H4</h4>
+<h5>H5</h5>
+<h6>H6</h6>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="typo-links">Typography: Links</div>
+        <div class="style-block-demo center-text">
+<a href="#">Default HTML link styling</a>
+<br>
+<a href="#" class="link-external">External Links</a>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="typo-lists">Typography: Lists</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Ordered: Base</div>
+
+        <div class="style-block-demo">
+<ol>
+  <li>List item</li>
+  <li>List item</li>
+  <li>List item</li>
+</ol>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Unordered: Base</div>
+
+        <div class="style-block-demo">
+<ul class="ul-base">
+  <li>List item
+    <ul>
+      <li>Nested list item</li>
+      <li>Nested list item</li>
+    </ul>
+  </li>
+  <li>List item</li>
+  <li>List item</li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Lists: Unordered: Pretty Circles</div>
+        <div class="center-text">You can add more colors, if required to the bullets, in the _globals.scss partial, to the circle bullet class.</div>
+        <div class="style-block-demo">
+<ul>
+  <li class="circle-bullet brand-red">List item</li>
+  <li class="circle-bullet brand-green">List item</li>
+  <li class="circle-bullet brand-orange">List item</li>
+  <li class="circle-bullet brand-blue">List item</li>
+  <li class="circle-bullet brand-turquoise">List item</li>
+  <li class="circle-bullet brand-purple">List item</li>
+  <li class="circle-bullet orange-mild">List item</li>
+  <li class="circle-bullet yellow-mild">List item</li>
+  <li class="circle-bullet green-pista">List item</li>
+  <li class="circle-bullet white">List item</li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="heading-secondary brand-purple" id="typo-helpers">Typography: Helpers</div>
+      <div class="center-text">Here are some helpers (could be classes, placeholders, mixins, variables) for typography</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography: Helpers: Bordered text</div>
+        <div class="style-block-demo center-text">
+<div class="text-bordered">
+  An example of bordered text
+</div>          
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography Helpers: Font: Weight and Style</div>
+        <div class="style-block-demo center-text">
+<div class="font-light">.font-light or %font-light. Defaults to 300 weight</div>          
+<div class="bold">.bold or %bold or &lt;strong&gt; &lt;/strong&gt; or &lt;b&gt;&lt;/b&gt;. Defaults to 700 weight</div>
+<div class="italic">.italic or %italic or &lt;em&gt; &lt;/em&gt; or &lt;i&gt;&lt;/i&gt;</div>
+<div class="uppercase">.uppercase or %uppercase</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Typography Helpers: Font: Sizes</div>
+        <div class="style-block-demo center-text">
+<div class="font-small">.font-small or %font-small</div>         
+<div class="font-smaller">.font-smaller or %font-smaller</div>         
+<div class="font-smallest">.font-smallest or %font-smallest</div>         
+<div class="font-base-size">.font-base-size or %font-base-size</div>          
+<div class="font-large">.font-large or %font-large</div>         
+<div class="font-larger">.font-larger or %font-larger</div>         
+<div class="font-largest">.font-larger or %font-largest</div>         
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-forms">Forms</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#form-base" class="js-scroll-smooth-link">Form: Base: Text Inputs</a></li>
+          <li><a href="#form-block-inline" class="js-scroll-smooth-link">Form: Base: Block Or Inline</a></li>
+          <li><a href="#form-errors" class="js-scroll-smooth-link">Form: Base: Errors</a></li>
+          <li><a href="#form-selects" class="js-scroll-smooth-link">Form: Base: Selects</a></li>
+          <li><a href="#form-submits" class="js-scroll-smooth-link">Form: Base: Submit</a></li>
+          <li><a href="#form-check" class="js-scroll-smooth-link">Custom Checkboxes</a></li>
+          <li><a href="#form-radio" class="js-scroll-smooth-link">Custom Radio Buttons</a></li>
+          <li><a href="#form-datepickers" class="js-scroll-smooth-link">Custom Datepicker</a></li>
+          <li><a href="#form-selects-custom" class="js-scroll-smooth-link">Custom selects</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <ul class="ul-base container-mid">
+        <li>All forms are styled inside _forms.scss (/assets/static/sass/partials)</li>
+        <li>All forms on the site have a class of form-base to provide default styling options</li>
+        <li><span class="demo-do">DO:</span> Add an additional class to the form tag, prefixed with &lt;form-&gt; to override styling</li>
+        <li><span class="demo-do">DO:</span> Add HTML types for input like email, tel, number and url where required, as seen in the demo below</li>
+        <li>You can then add additional styling for making labels bold, changing input padding, etc. Ideally, you could add the styling via CSS, for all inputs of a particular form.</li>        
+      </ul>
+
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-base">Form:  Text Inputs </div>
+        <div class="style-block-demo">
+<form class="form-base">
+  <div class="form-field-wrap">
+    <input type="text" class="input-text" placeholder="Input: Text">
+  </div>
+
+  <div class="form-field-wrap">
+    <input type="text" class="input-text" placeholder="Input: Text: Disabled" disabled>
+  </div>
+
+  <div class="form-field-wrap">
+    <input type="email" class="input-text" placeholder="Input: Email">
+  </div>
+
+  <div class="form-field-wrap">
+    <input type="tel" class="input-text" placeholder="Input: Telephone">
+  </div>
+
+  <div class="form-field-wrap">
+    <input type="number" class="input-text" placeholder="Input: Number">
+  </div>
+
+  <div class="form-field-wrap">
+    <textarea class="input-text"></textarea>
+  </div>
+
+  <div class="form-field-wrap">
+    <input type="url" class="input-text" placeholder="Input: URL">
+  </div>
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-block-inline">Form: Block or Inline</div>
+        <div class="style-block-demo">
+<form class="form-base">
+  <div class="form-field-wrap">
+    <label>Block</label>
+    <input type="text" class="input-text full-width">
+  </div>            
+
+  <div class="form-field-wrap">
+    <label class="label-inline">Inline</label>
+    <input type="text" class="input-text">
+  </div>            
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-errors">Form: Errors and Optional Text</div>
+        <div class="style-block-demo">
+<form class="form-base">
+  <div class="form-field-wrap">
+    <label>Input with error</label>
+    <input type="text" class="input-text error full-width" placeholder="Input with error styling">
+    <div class="js-error-message error-message">This field is required.</div>
+  </div>
+
+  <div class="form-field-wrap">
+    <label>Input with optional text in label <span class="form-optional-text">(optional)</span></label>
+    <input type="text" class="input-text full-width">
+  </div>
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-selects">Form: Select</div>
+        <div class="style-block-demo center-text">
+<form class="form-base">
+  <div class="form-field-wrap">
+    <label class="bold">Select: Full-width</label>
+    <select class="full-width">
+      <option>Option 1</option>
+      <option>Option 2</option>
+    </select>            
+  </div>
+
+  <div class="form-field-wrap">
+    <label class="label-inline bold">Select: Inline</label>
+    <select>
+      <option>Option 1</option>
+      <option>Option 2</option>
+    </select>
+  </div>
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+<div class="heading-secondary brand-purple" id="form-submits">Form: Submit</div>
+<div class="style-block-demo center-text">
+  <form class="form-base">
+    <div class="form-field-wrap center-text">
+      <input type="submit" value="Submit Button" class="button">
+    </div>
+
+    <div class="form-field-wrap center-text">
+      <input type="submit" value="Submit Button: Centered" class="button">
+    </div>
+
+    <div class="form-field-wrap">
+      <input type="submit" value="Submit Button: Full-width" class="button full-width">
+    </div>          
+  </form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-check">Form: Checkboxes: Custom</div>
+        <div class="style-block-demo">
+<div class="form-field-wrap">
+  <input type="checkbox" class="input-checkbox" id="check1">
+  <label for="check1" class="input-checkbox-label">Checkbox: Custom: Unchecked</label>
+</div>
+<div class="form-field-wrap">
+  <input type="checkbox" class="input-checkbox" id="check2" checked>
+  <label for="check2" class="input-checkbox-label">Checkbox: Custom: Checked</label>
+</div>
+<div class="form-field-wrap">
+  <input type="checkbox" class="input-checkbox" id="check3" disabled>
+  <label for="check3" class="input-checkbox-label">Checkbox: Custom: Disabled</label>
+</div>
+<div class="form-field-wrap">
+  <input type="checkbox" class="input-checkbox" id="check4" checked disabled>
+  <label for="check4" class="input-checkbox-label">Checkbox: Custom: Disabled and Checked</label>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+<div class="heading-secondary brand-purple" id="form-radio">Form: Radio Buttons: Custom</div>
+<div class="style-block-demo">
+  <div class="form-field-wrap">
+    <input type="radio" class="input-radio" id="radio1" name="radios">
+    <label for="radio1" class="input-radio-label">Radio: Custom: Unchecked</label>
+  </div>
+  <div class="form-field-wrap">
+    <input type="radio" class="input-radio" id="radio2" name="radios" checked>
+    <label for="radio2" class="input-radio-label">Radio: Custom: Checked</label>
+  </div>
+  <div class="form-field-wrap">
+    <input type="radio" class="input-radio" id="radio3" name="radios" disabled>
+    <label for="radio3" class="input-radio-label">Radio: Custom: Disabled</label>
+  </div>
+  <div class="form-field-wrap">
+    <input type="radio" class="input-radio" id="radio4" checked disabled>
+    <label for="radio4" class="input-radio-label">Radio: Custom: Disabled and Checked</label>
+  </div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="form-datepickers">Form: Datepicker: Custom</div>
+        <p class="center-text">Documentation <a href="http://amsul.ca/pickadate.js">here</a></p>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<form class="form-base">
+  <div class="form-field-wrap">
+    <label class="bold">Datepicker: Custom</label>
+    <input type="date" class="js-input-date input-text full-width">          
+  </div>
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+      <div class="base-spacing-lg"></div>
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-img">Images</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#img-responsive" class="js-scroll-smooth-link">Responsive</a></li>
+          <li><a href="#img-fullwidth" class="js-scroll-smooth-link">Full-width</a></li>
+          <li><a href="#img-floated" class="js-scroll-smooth-link">Floated</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="img-responsive">Images: Responsive</h2>
+        <p class="center-text">All images are responsive by default. No need to add any classes. You can resize the window to test.</p>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<img src="/static/images/bg_header_reading_programme.jpg" alt="img-responsive">
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="style-block">
+      <div class="heading-secondary brand-purple" id="img-fullwidth">Images: Full-width</div>
+      <p class="center-text">Add the relevant class and ensure images are not inside a 'container' div</p>
+      <div class="base-spacing"></div>
+      <div class="style-block-demo center-text">
+<img src="/static/images/bg_header_reading_programme.jpg" alt="img-full-width" class="full-width">
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="img-floated">Images: Floated: Left</div>
+        <div class="style-block-demo">
+<img src="/static/images/lib-2.jpg" width="200" class="float-left-padding" alt="img-demo-float">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
+<div class="clear"></div>
+</div> <!-- /style-block-demo --> 
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple">Images: Floated: Right</div>
+        <div class="style-block-demo">
+<img src="/static/images/lib-2.jpg" width="200" class="float-right-padding" alt="img-demo-float">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt magnam omnis nam tenetur dolor distinctio explicabo fugiat quae, ullam blanditiis velit voluptatibus facere non quod, aliquid laudantium iure dolore et!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum aperiam molestias natus suscipit doloribus distinctio accusamus quisquam mollitia, voluptates minima voluptate officia ipsam expedita nobis quibusdam placeat tempora officiis dolorem!</p>
+<div class="clear"></div>
+</div> <!-- /style-block-demo --> 
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-tables">Tables</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#tables-base" class="js-scroll-smooth-link">Tables: Base</a></li>
+          <li><a href="#tables-data" class="js-scroll-smooth-link">Tables: Data</a></li>
+          <li><a href="#tables-legend" class="js-scroll-smooth-link">Tables: Legend</a></li>
+          <li><a href="#tables-responsive" class="js-scroll-smooth-link">Tables: Responsive</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="center-text">The default HTML table is styled without any borders. <br> Use the table base styling classes below for base table styling.</div>
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="tables-base">Tables: Base Styling</div>
+        <div class="style-block-demo">
+<table class="table-base">
+  <thead class="table-base-heading">
+    <tr>
+      <th>A table heading</th>
+      <th>A table heading</th>
+      <th>A table heading</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A table row</td>
+      <td>A table row</td>
+      <td>A table row</td>
+    </tr>
+    <tr>
+      <td>A table row</td>
+      <td>A table row</td>
+      <td>A table row</td>
+    </tr>
+  </tbody>
+</table>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="tables-data">Tables: Data</div>
+        <div class="style-block-demo">
+<table class="table-data">
+  <tbody>
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>  
+    <tr>
+      <td>Category</td>
+      <td>Info</td>
+    </tr>              
+  </tbody>
+</table>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="tables-legend">Tables: Legend: Icon Left</div>
+        <div class="style-block-demo">
+<div class="table-infra-key-color brand-green table-infra-icon-left">Has Mid-day Meal facility</div>  
+<div class="table-infra-key-color brand-red table-infra-icon-left">Has Drinking Water Facilities</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple">Tables: Legend: Icon Right</div>
+        <div class="style-block-demo">
+<div class="table-infra-key-color brand-green table-infra-icon-right">Has Mid-day Meal facility</div>
+<div class="table-infra-key-color brand-red table-infra-icon-right">Has Drinking Water Facilities</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="tables-responsive">Tables: Responsive</div>
+        <h3 class="heading-tertiary center-text">Option 1</h3>
+        <div class="center-text">Wrap the table in a class of <em>table-responsive-wrap</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo">
+<div class="table-responsive-wrap">        
+  <table class="table-base">
+    <tbody>
+      <tr class="table-base-heading">
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+        <td>Heading</td>
+      </tr>
+      <tr>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+      </tr>              
+    </tbody>
+  </table>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="container-mid">
+        <h3 class="heading-tertiary center-text">Option 2</h3>
+        <ul class="ul-base">
+          <li>A more elegant way, with a little more effort, is to add an additional class of <em>table-list-view</em> to a table with class <em>table-base</em></li>
+          <li>Resize the window to less than 750px and see how the table below morphs into a list view.</li>
+          <li>You can add an additional class to create overrides, i.e. for setting widths to table cells (on larger screens) and appending headings to them via CSS generated content or JS.</li>
+          <li>The demo below reuses an example from the site. The class <em>table-base-volunteer</em> adds widths to some of the td elements on larger screens and appends a table heading to the <strong>School</strong> td cells on smaller screens.</li>
+          <li><span class="demo-do">Do</span> <span class="bold">use the demo below only as a reference</span>, and replace the <em>table-base-volunteer</em> class with one of your own.</li>
+        </ul>
+      </div> 
+
+      <div class="style-block">
+        <div class="style-block-demo">
+<table class="table-base table-list-view table-base-volunteer">
+  <tr class="table-base-heading">
+    <th>Title</th>
+    <th>School</th>
+    <th>Volunteers</th>
+    <th>Action</th>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="brand-red bold">A title</div>
+      <div>A sub-title</div>
+    </td>
+    <td>
+      <div class="brand-green td-label-school"><strong>GHPS DEVARAJU URS COLONY</strong></div>
+      
+    </td>
+    <td>
+      <a href="/organisation/1/volunteer_activity/1" class="brand-blue">2 volunteers</a>
+    </td>
+    <td>
+      <a href="/organisation/1/volunteer_activity/1" class="button--sm button-hollow">Edit</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="brand-red bold">A title</div>
+      <div>A sub-title</div>
+    </td>
+    <td>
+      <div class="brand-green td-label-school"><strong>GKLPS BATHLAYURU</strong></div>
+      
+      <div class="grey-steel font-small">School address</div>
+      
+    </td>
+    <td>
+      <a href="/organisation/1/volunteer_activity/2" class="brand-blue">1 volunteers</a>
+    </td>
+    <td>
+      <a href="/organisation/1/volunteer_activity/2" class="button--sm button-hollow">Edit</a>
+    </td>
+  </tr>
+</table>          
+</div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-hr">Horizontal rules</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Horizontal rules</h2>
+      <div class="center-text">Styling for an HTML hr tag.</div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<hr>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-buttons">Buttons</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#buttons-default" class="js-scroll-smooth-link">Buttons: Default</a></li>
+          <li><a href="#buttons-small" class="js-scroll-smooth-link">Buttons: Small</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">    
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="buttons-default">Buttons: Default</h2>
+        <div class="style-block-demo center-text">
+<div class="button">Button: Default</div>    
+<div class="button-orange">Button: Orange</div>    
+<div class="button-grey">Button: Grey</div>    
+<div class="button-hollow">Button: Hollow</div>    
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="buttons-small">Buttons: Small</div>
+        <div class="style-block-demo center-text">
+<div class="button button--sm">Button: Default: Small</div>    
+<div class="button-orange button--sm">Button: Orange: Small</div>    
+<div class="button-grey button--sm">Button: Grey: Small</div>
+<div class="button-hollow button--sm">Button: Hollow: Small</div>        
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-alerts">Alerts</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#alert-default" class="js-scroll-smooth-link">Alert: Default</a></li>
+          <li><a href="#alert-success" class="js-scroll-smooth-link">Alert: Success</a></li>
+          <li><a href="#alert-warning" class="js-scroll-smooth-link">Alert: Warning</a></li>
+          <li><a href="#alert-error" class="js-scroll-smooth-link">Alert: Error</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="container-mid">
+        <div>The alerts below have been slightly modified for this demo. On the site, all alerts are fixed to the top of the screen (below the header) and slide up after a few seconds.</div>        
+      </div>
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="alert-default">Alert: Default</div>
+        <div class="style-block-demo center-text">
+<div class="alert">
+  Alert: Default
+</div>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="alert-success">Alert: Success</div>
+        <div class="style-block-demo center-text">
+<div class="alert success">
+  Alert: Success
+</div>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="alert-warning">Alert: Warning</div>
+        <div class="style-block-demo center-text">
+<div class="alert warning">
+  Alert: Warning
+</div>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="alert-error">Alert: Error</div>
+        <div class="style-block-demo center-text">
+<div class="alert error">
+  Alert: Error
+</div>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-tooltips">Tooltips</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Tooltips</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Tooltip: Text</div>
+        <div class="style-block-demo center-text">
+<p><span class="tooltip" aria-label="I am a tooltip">Hover over or tap me</span></p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Tooltip: Button icon</div>
+        <div class="style-block-demo center-text">
+<p><span class="icon-button-round tooltip" aria-label="I am a tooltip"><span class="fa fa-check"></span></span></p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Tooltip: Button</div>
+        <div class="style-block-demo center-text">
+<p class="button tooltip" aria-label="I am a tooltip">Hover hover hover</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-tabs">Tabs</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Tabs</h2>
+      <ul class="ul-base container-mid">
+        <li>Tabs are responsive and become accordions on mobile.; resize to see the magic.</li>
+        <li>Tabs look nice when they are <span>not inside a container element</span>, as seen in the demo below</li>
+        <li><span class="demo-do">DO</span> add a reference to basic_tabs.js on the page.
+        Then use the markup below.</li>
+      </ul>
+    </div>
+
+      <div class="style-block">
+      
+      <div class="style-block-demo">
+<div class="tab-wrap js-tab-wrap">
+  <div class="tab-wrap-widescreen">
+    <div data-tab="tab-demo-1" class="js-tabs-link tab-heading tab-heading-active">Volunteer</div>
+    <div data-tab="tab-demo-2" class="js-tabs-link tab-heading">Donate</div>          
+  </div>
+
+  <div class="tab-each">
+    <div data-tab="tab-demo-1" class="js-tab-content tab-content tab-active">
+      <div class="container">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+
+  <div class="tab-each">
+    <div data-tab="tab-demo-2" class="js-tab-content tab-content">
+      <div class="container">
+        <p>Esse neque quasi nisi.</p>
+      </div> <!-- /container -->
+    </div> <!-- /tab-content -->
+  </div> <!-- /tab-each -->
+</div> <!-- /tab-wrap -->
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-banners">Banners: Full-width</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Banners, Heros and All</h2>
+      <div class="container-mid center-text"><span class="demo-do">DO:</span> Add an additional class to the div with class banner-full and add your background image to it. Currently uses an inline style for demo.</div>
+    </div> <!-- /container -->
+    <div class="style-block">
+      <div class="style-block-demo center-text">
+<section class="banner-full" style="background: url('/static/images/bg_header_reading_programme.jpg');">
+  <div class="banner-content">
+    <h1 class="heading-primary white">Banner Heading</h1>
+    <div class="banner-full-caption">
+      <p>Banner caption content: Lorem ipsum dolor sit amet, consectetur 
+      adipisicing elit. Inventore numquam quos aut earum id ratione.</p>
+      <div class="base-spacing"></div>
+    </div>
+  </div> <!-- /banner-content -->
+  <div class="banner-overlay"></div>
+</section>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-lightbox">Lightbox</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#lightbox-img" class="js-scroll-smooth-link">Lightbox: Image</a></li>
+          <li><a href="#lightbox-img-gal" class="js-scroll-smooth-link">Lightbox: Image Gallery</a></li>
+          <li><a href="#lightbox-iframe" class="js-scroll-smooth-link">Lightbox: Iframe</a></li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="container-mid center-text">
+        <p>The plugin <em>jquery-rbox</em> has been used. Documentation is <a href="https://github.com/batpad/jquery-rbox">here</a>.</p>
+      </div>
+      <div class="base-spacing"></div>
+      <h2 class="heading-secondary brand-purple" id="lightbox-img">Lightbox: Image</h2>
+    </div> <!-- /container -->
+    <div class="style-block">
+      <div class="style-block-demo center-text">
+<div class="rbox_img" data-rbox-image="http://placehold.it/400x400" data-rbox-caption="I am a caption">Single Image</div>
+
+<script>
+// Lightbox: single image
+$(document).ready(function(){
+  $(".rbox_img").rbox({
+    "type": "image",  
+  });
+});
+</script>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="lightbox-img-gal">Lightbox: Image Gallery</h2>
+      <ul class="ul-base container-mid">
+      </ul>
+    </div> <!-- /container -->
+    <div class="style-block">
+<div class="style-block-demo center-text">
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/400x400" data-rbox-caption="Caption: Image 1">Image 1</span>
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/300x400" data-rbox-caption="Caption: Image 2">Image 2</span>
+<span class="rbox_img_gal" data-rbox-image="http://placehold.it/400x200" data-rbox-caption="Caption: Image 3">Image 3</span>
+
+<script>
+// Lightbox: image gallery
+$(document).ready(function(){
+  $(".rbox_img_gal").rbox({
+    "type": "image",
+    "series": "image_gallery"
+  });
+});
+</script>
+</div> <!-- /style-block-demo -->
+
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="lightbox-iframe">Lightbox: Iframe Embed</h2>
+      <ul class="ul-base container-mid">
+      </ul>
+    </div> <!-- /container -->
+    <div class="style-block">
+      <div class="style-block-demo center-text">
+<span class="rbox_iframe" data-rbox-width="960" data-rbox-height="565" data-rbox-iframe="//www.youtube.com/embed/BQBsAjlBTHw">Iframe</span>
+
+<script>
+// Lightbox iframe
+$(document).ready(function(){
+  $(".rbox_iframe").rbox({
+    "type": "iframe"
+  });
+});
+</script>
+</div> <!-- /style-block-demo -->
+      <div class="center-text">
+        <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+      </div>    
+    </div> <!-- /style-block -->
+
+    <div class="container-mid">
+      <p>Documentation for HTML, AJAX, INLINE and VIDEO is similar and can be seen <a href="https://github.com/batpad/jquery-rbox/blob/master/index.html">here</a>.</p>
+    </div>
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-imgtext">Module Img Text</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Module: Images with text below</h2>
+      <ul class="ul-base container-mid">
+        <li>This module is used for round images with headings and text below</li>
+        <li>The module is quite flexible, and can be overriden with additional classes</li>
+        <li>The columns for this module stack on mobile and increase to 3 on larger screens.</li>
+        <li>The demo below shows the module without any additional classes.</li>
+        <li>To override, you can add additional classes to module-img-block and module-img-each items.</li>
+        <li>With additional classes, this module would appear just like the <em>How You Can Help</em> section on the home page.</li>
+      </ul>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<ul class="module-img-block">
+  <li class="module-img-each">
+    <div class="module-img">
+      <img src="/static/images/auto.png" alt="Icon: Auto">
+    </div>
+    <h3>Pay a visit</h3>
+    <p>Got some free time?<br>
+      Visit a school in your local area.<br>
+      Look around and offer to help.
+    </p>
+  </li><li class="module-img-each">
+    <div class="module-img">
+      <img src="/static/images/helpout.png" alt="Icon: Volunteer">
+    </div>
+    <h3>Volunteer</h3>
+    <p>Show your volunteer Spirit!
+      <br>
+      Spend some of your time teaching and helping children in nearby schools and make a difference to their lives.</p>
+  </li><li class="module-img-each">
+    <div class="module-img">            
+      <img src="/static/images/books.png" alt="Icon: Share">
+    </div>
+    <h3>Donate</h3>
+    <p>Donate books, computers, chairs, tables, sports equipment, etc. Your donations help the school provide a better learning environment for the children.</p>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-iframes">Responsive iframe videos</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Iframe: Responsive Video</h2>
+      <div class="center-text">
+        <p>Simply wrap the iframe embedded video in a div with a class of <em>video-iframe-responsive</em></p>
+      </div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<div class="video-iframe-responsive">
+  <iframe src="https://www.youtube.com/embed/BQBsAjlBTHw" allowfullscreen="" frameborder="0" width="850" height="500" class="video_frame"></iframe>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-dropdowns">Dropdowns</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#dropdown-basic" class="js-scroll-smooth-link">Dropdown: Basic</a></li>
+          <li><a href="#dropdown-icons" class="js-scroll-smooth-link">Dropdown: Icons</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <ul class="ul-base container-mid">
+        <li>The dropdowns are very flexible and have been used across the site for the main menu, the styleguide tree and generic dropdowns.</li>
+        <li>You can style the dropdown triggers and dropped down content as you please, with a border or an arrow or flying unicorns.</li>
+        <li>In theory, the dropdowns can have infinite levels of nesting, but you'd generally want to keep it shallow.</li>
+      </ul>
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="dropdown-basic">Dropdowns: Basic</h2>
+        <div class="style-block-demo">
+<ul class="dropdown-base js-dropdown">
+  <li>
+    <span class="bold">Users</span>
+    <span class="fa fa-angle-down"></span>
+    <ul>
+      <li>Dropdown item</li>
+      <li>Dropdown item
+        <ul>
+          <li>Nest children if you like</li>
+        </ul>
+      </li>
+      <li>Dropdown item</li>
+    </ul>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <h2 class="heading-secondary brand-purple" id="dropdown-icons">Dropdowns: Icons</h2>
+        <div class="style-block-demo">
+<ul class="dropdown-base js-dropdown">
+  <li>
+    <span class="fa fa-user"></span>
+    <ul>
+      <li><span class="fa fa-calendar icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-map-marker icon-left"></span>Dropdown item</li>
+      <li><span class="fa fa-plane icon-left"></span>Dropdown item</li>
+    </ul>
+  </li>
+</ul>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-icons">Icons</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#icons-docs" class="js-scroll-smooth-link">Icons: Documentation</a></li>
+          <li><a href="#icons-custom" class="js-scroll-smooth-link">Icons: Custom &amp; Styles</a></li>
+          <li><a href="#icons-stats" class="js-scroll-smooth-link">Icons: Stats: Gender</a></li>
+          <li><a href="#icons-common" class="js-scroll-smooth-link">Icons: Common</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-docs">Icons</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Documentation</div>
+        <p>The site uses the Font Awesome icon collection. All icons are vector and used and styled like a font.</p>
+        <p>Useful variables and helpers for icons include:</p>
+        
+          <pre><code>$font-icon / .font-icon / %font-icon; //extends Font Awesome
+.icon-left or %icon-left // adding padding to the right for icons on the left
+.icon-right or %icon-right // adding padding to the left for icons on the right</code></pre>
+        <p>The documention for icons is <a href="http://fontawesome.io/icons/">here</a> and the <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/">cheatsheet is here.</a></p>
+        <p>To use icons in the CSS, you will need to catch the unicode value in the cheatsheet, escape it and add it as generated content using content :before.</p>
+        
+<pre><code>&lt;style&gt;
+.icon-boy {
+  &amp;:before {
+    content: "\f183";
+    font-family: $font-icon;
+  }
+}
+&lt;/style&gt;</code></pre>
+        <p>To use icons in the markup, add a class of fa and fa-&lt;icon-name&gt; to an element.
+        </p>
+        <div class="style-block-demo">
+          <p><span class="fa fa-user"></span> Font icon</p>
+          <p><span class="fa fa-user icon-left"></span> Font icon with right padding</p>
+          <p>Font icon with left padding <span class="fa fa-user icon-right"></span></p>
+          <p><span class="fa fa-user brand-blue">Font icon with color, using CSS color property.</span></p>
+          <p class="tooltip" aria-label="tooltip">
+            <span class="fa fa-user">Font icon with tooltip.</span>
+          </p>
+        </div> <!-- /style-block-demo -->
+ 
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-custom">Custom Icons &amp; Styles</h2>
+      <div class="center-text">These icons have been created using the Font Awesome icon library are used throughout the site.</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Icon Round: with icons</div>
+        <div class="style-block-demo center-text">
+<div class="icon-button-round">
+  <span class="k-icon fa fa-twitter"></span>
+</div>
+<div class="icon-button-round-sm">
+  <span class="k-icon fa fa-twitter"></span>
+</div>
+<div class="icon-button-round-lg">
+  <span class="k-icon fa fa-twitter"></span>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Icon: Round: with numbers or letters</div>
+        <div class="style-block-demo center-text">
+<div class="icon-number">
+  <span class="k-icon">1</span>
+</div>
+<div class="icon-number brand-green">
+  <span class="k-icon">S</span>
+</div>
+<div class="icon-number brand-purple">
+  <span class="k-icon">P</span>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Icon: Verified</div>
+        <div class="style-block-demo center-text">
+<div class="verified"></div>
+<div class="verified">Verified</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Icons: Boy, Girl, Both</div>
+        <div class="style-block-demo center-text">
+        <div class="icon-boy"></div>
+        <div class="icon-girl"></div>
+        <div class="icon-boy-girl"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-stats">Icons: Stats: Gender</h2>
+      <p class="container-mid">
+        If you need to change the styling (e.g. larger labels or stacked displays), add a parent class and override the children, since this is a module used globally.
+      </p>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<div class="module-stats-icon">
+  <span class="icon-boy"></span>
+  <div class="module-stats-info">
+    <div class="uppercase">Boys</div>
+    <p class="module-stats-label">21</p>
+  </div>
+</div>
+
+<div class="module-stats-icon module-stats-girl">
+  <span class="icon-girl"></span>
+  <div class="module-stats-info">
+    <div class="uppercase">Girls</div>
+    <p class="module-stats-label">20</p>
+  </div>
+</div>
+
+<div class="module-stats-icon module-stats-boygirl">
+  <span class="icon-boy-girl"></span>
+  <div class="module-stats-info">
+    <div class="uppercase">Total</div>
+    <p class="module-stats-label">41</p>
+  </div>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="icons-common">Common Icons</h2>
+      <div class="center-text">Below are some of the icons commonly used across the site</div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Arrows</div>
+        <div class="style-block-demo center-text">
+<div class="fa fa-angle-left"></div>
+<div class="fa fa-angle-right"></div>
+<div class="fa fa-angle-down"></div>
+<div class="fa fa-angle-up"></div>
+<div class="fa fa-chevron-circle-left"></div>
+<div class="fa fa-chevron-circle-right"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Actions</div>
+        <div class="style-block-demo center-text">
+<div class="fa fa-check"></div>
+<div class="fa fa-check-square"></div>
+<div class="fa fa-close"></div>
+<div class="fa fa-close-circle"></div>
+<div class="fa fa-circle"></div>
+<div class="fa fa-user"></div>
+<div class="fa fa-edit"></div>
+<div class="fa fa-sign-out"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Schools</div>
+        <div class="style-block-demo center-text">
+<div class="fa fa-laptop"></div>
+<div class="fa fa-calendar"></div>
+<div class="fa fa-male"></div>
+<div class="fa fa-female"></div>
+<div class="fa fa-book"></div>
+<div class="fa fa-soccer-ball-o"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Social</div>
+        <div class="style-block-demo center-text">
+<div class="fa fa-facebook"></div>
+<div class="fa fa-twitter"></div>
+<div class="fa fa-rss"></div>
+<div class="fa fa-youtube"></div>
+<div class="fa fa-map-marker"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-bar">Custom Bar Graphs</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#bar-default" class="js-scroll-smooth-link">Bar: Default</a></li>
+          <li><a href="#bar-custom" class="js-scroll-smooth-link">Bar: Overrides</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="bar-default">Bar Graphs: Default</h2>
+      <p class="center-text">Refer to /templates/frontend_templates/school.html for an example of adding variables for bar graphs.
+      <br>
+      The markup below is indicative of the styling.
+      </p>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<div class="bar-graph-wrap">
+  <div class="bar-label">Bar Label</div>
+  <div class="bar-graph">
+    <div class="bar-percent">47%</div>
+    <div class="bar-custom tooltip" aria-label="22.17%">
+        <div class="bar-value bar-value-47 grey-gravel-bg" style="width:22.17%;">
+        </div>
+    </div>
+  </div> <!-- /bar-graph -->
+</div> <!-- /bar-graph-wrap -->
+
+<div class="bar-graph-wrap">
+  <div class="bar-label">Bar Label</div>
+  <div class="bar-graph">
+    <div class="bar-percent">149%</div>
+    <div class="bar-custom tooltip" aria-label="70.28%">
+        <div class="bar-value bar-value-70 grey-gravel-bg" style="width:70.28%;">
+        </div>
+    </div>
+  </div> <!-- /bar-graph -->
+</div> <!-- /bar-graph-wrap -->
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-secondary brand-purple" id="bar-custom">Bar Graph: Overrides</div>
+        <div class="style-block-demo center-text">
+<div class="bar-graph-wrap">
+  <div class="bar-label green-leaf">Bar Label</div>
+  <div class="bar-graph">
+    <div class="bar-percent green-leaf">47%</div>
+    <div class="bar-custom tooltip" aria-label="22.17%">
+        <div class="bar-value bar-value-47 green-leaf-bg" style="width:22.17%;">
+        </div>
+    </div>
+  </div> <!-- /bar-graph -->
+</div> <!-- /bar-graph-wrap -->
+
+<div class="bar-graph-wrap">
+  <div class="bar-label brand-purple">Bar Label</div>
+  <div class="bar-graph">
+    <div class="bar-percent brand-purple">47%</div>
+    <div class="bar-custom tooltip" aria-label="22.17%">
+        <div class="bar-value bar-value-47 brand-purple-bg" style="width:22.17%;">
+        </div>
+    </div>
+  </div> <!-- /bar-graph -->
+</div> <!-- /bar-graph-wrap -->
+
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-scrollbars">Custom Scrollbars for Webkit</h2>
+      <div class="heading-section-block">
+        <ul>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple">Custom Scrollbars: Webkit</h2>
+      <div class="center-text">Non-standard styling for webkit scrollbars</div>
+      <ul>
+        <li><span class="demo-do">DO:</span> add a Sass placeholder %scrollbar-webkit to the selector, although you can also add the class scrollbar-webkit, as seen in the demo below.</li>
+        <li></li>
+      </ul>
+      <div></div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+          <div class="scrollbar-webkit" style="height: 200px; width: 300px; overflow-y: auto;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam voluptates tempore inventore laudantium, magnam voluptatem reprehenderit impedit facere autem, nostrum minus ad vel labore ullam, perferendis doloremque molestiae, sunt explicabo!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat qui aperiam nihil odit laudantium atque, vel dignissimos impedit tempore. Quo culpa aliquam, doloremque atque tenetur eius ut veritatis odit architecto.</p>
+          </div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-helpers">Global Helpers</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#helpers-transitions" class="js-scroll-smooth-link">Transitions</a></li>
+          <li><a href="#helpers-centering" class="js-scroll-smooth-link">Centering</a></li>
+          <li><a href="#helpers-alignment" class="js-scroll-smooth-link">Alignment</a></li>
+          <li><a href="#helpers-floats" class="js-scroll-smooth-link">Floats and Clearing</a></li>
+          <li><a href="#helpers-border" class="js-scroll-smooth-link">Borders</a></li>
+          <li><a href="#helpers-border-radius" class="js-scroll-smooth-link">Border-radius</a></li>
+          <li><a href="#helpers-spacing" class="js-scroll-smooth-link">Spacing</a></li>
+          <li><a href="#helpers-show-hide" class="js-scroll-smooth-link">Show and Hide</a></li>
+          <li><a href="#helpers-ellipsis" class="js-scroll-smooth-link">Ellipsis</a></li>
+          <li><a href="#helpers-no-data" class="js-scroll-smooth-link">No data</a></li>
+          <li><a href="#helpers-scroll-smooth" class="js-scroll-smooth-link">Smooth scroll to anchors</a></li>
+          <li><a href="#aser" class="js-scroll-smooth-link">STICKY SCROLL</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-transitions">Helpers: Transitions</h2>
+      <div class="container-mid center-text">
+        <p>Below are two useful transition classes, to add a bit of smoothness for hover states, in general.</p>
+        <p>These are only available as Sass placeholders.</p>
+      </div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Transition: Linear</div>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    @extend %transition-linear;  
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Transition: Ease-in</div>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    @extend %transition-ease-in;  
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-centering">Helpers: Centering</h2>
+      <div class="container-mid center-text">
+        <p>These helpers are available as classes, placeholders and mixins and can be used any way, though the convention is to use placeholders as extends where possible.</p>
+        <p>The demo below uses classes for convenience.</p>
+
+      </div>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering text</div>
+        <div class="center-text"><em>Simple helper for text-align: center</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo">
+<p class="center-text">Some text that's centered.</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering inline children</div>
+        <div class="style-block-demo">
+<div class="center-text">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+  <img src="http://placehold.it/60x60" alt="demo-img">
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering block elements</div>
+        <p class="center-text container-mid">Simple helper for setting left and right margins to auto. <br>Demo uses inline styles, purely for demo.</p>
+        <div class="style-block-demo">
+<div class="center-element" style="width: 100px; height: 100px; background: black;"></div>
+</div> <!-- /style-block-demo -->
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering inline elements</div>
+        <p class="center-text container-mid">Simple helper for setting left and right margins to auto and resetting the display value to block, for inline elements like spans. <br>Demo uses inline styles, purely for demo.</p>
+        <div class="style-block-demo">
+<span class="center-element-inline" style="width: 100px; height: 100px; background: black;"></span>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering: Vertical</div>
+        <p>Use this to vertical center icons, etc. The parent class requires position: relative for this work.</p>
+        <p>Demo uses inline styles, but you shouldn't.</p>
+
+        <div class="style-block-demo center-text">
+<div style="position: relative; width: 100px; height: 100px; border: 1px solid;">
+  <div class="vertical-center">V</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+ 
+    <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Centering: Dead</div>
+        <p>Use this to dead center icons, etc. The parent class requires position: relative for this work.</p>
+        <p>Demo uses inline styles, but you shouldn't.</p>
+
+        <div class="style-block-demo center-text">
+<div style="position: relative; width: 100px; height: 100px; border: 1px solid;">
+  <div class="dead-center">V</div>
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-alignment">Helpers: Alignment</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Right</div>
+        <div class="style-block-demo center-text">
+<div class="align-right">This text is aligned right</div>
+        </div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Middle</div>
+        <div class="container-mid center-text">
+          <p>Simple helper for adding an inline-block display, with vertical-align: middle</p>
+        </div>
+        <div class="style-block-demo center-text">
+<form>
+  <label class="vertical-inline-middle">This label is vertically centered.</label>
+  <textarea class="vertical-inline-middle"></textarea>  
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Alignment: Top</div>
+        <div class="container-mid center-text">
+          <p>Simple helper for adding an inline-block display, with vertical-align: top</p>
+        </div>
+        <div class="style-block-demo center-text">
+<form>
+  <label class="vertical-inline-top">This label is vertically aligned to the top.</label>
+  <textarea class="vertical-inline-top"></textarea>  
+</form>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-floats">Helpers: Floats &amp; clearing</h2>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<div class="clearfix">
+  <div class="float-left">This text is floated left.</div>
+  <div class="float-right">This text is floated right.</div>  
+</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-border">Helpers: Borders</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-color: Default</div>
+        <p class="container-mid center-text">
+          Use the variable <em>$border-color</em> when you need to set a border.
+        </p>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    border: 1px solid $border-color;
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border: On all sides</div>
+        <div class="container-mid center-text">Add the class or extend placeholder <em>border-base</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-border-radius">Helpers: Border Radius</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Default</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius</em></div>
+        <div class="base-spacing"></div>
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Small</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius-sm</em></div>
+        <div class="base-spacing"></div>
+
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius-sm"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Border-radius: Circle</div>
+        <div class="container-mid center-text">Add the variable, class or extend placeholder <em>border-radius-circle</em></div>
+        <div class="base-spacing"></div>
+
+        <div class="style-block-demo center-text">
+<div class="box-demo border-base border-radius-circle"></div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-spacing">Helpers: Spacing</h2>
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Spacing</div>
+        <div class="style-block-demo center-text">
+<style>
+.selector {
+  padding: $base-spacing;           // 10px
+  margin: $base-spacing-sm;        // 5px
+  left: $base-spacing-mid;         // 15px
+  border-width: $base-spacing-lg;  // 20px
+  right: $base-spacing-lg-x;       // 25px
+  top: $base-spacing-lg-2x;        // 50px
+}  
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <div class="style-block">
+        <div class="heading-tertiary center-text">Spacing: Vertical</div>
+        <div class="container-mid center-text">
+          <p>This helper adds a top and bottom padding.</p>
+          <p>Classes have been used for demo, but placeholders are also available.</p>
+        </div>
+        <div class="style-block-demo center-text">
+<div class="base-spacing border-base">Default vertical spacing</div>
+<div class="base-spacing-sm border-base">Small vertical spacing</div>
+<div class="base-spacing-mid border-base">Mid vertical spacing</div>
+<div class="base-spacing-lg border-base">Large vertical spacing</div>
+<div class="base-spacing-lg-x border-base">Larger vertical spacing</div>
+<div class="base-spacing-lg-2x border-base">Largest vertical spacing</div>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-show-hide">Helpers: Show and Hide</h2>
+      <div class="heading-tertiary center-text">Show or Hide</div>
+      <div class="container-mid center-text">Add classes show or hide, as required.</div>
+      <div class="style-block">
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-ellipsis">Helpers: Ellipsis</h2>
+      <div class="container-mid center-text">Add a class or placeholder of <em>ellipsis</em></div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<p class="text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, illo magnam tempora necessitatibus sapiente maiores ipsum aperiam nobis repellendus, earum. Veniam vero iste omnis deserunt ipsa, autem, earum ex inventore!</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-no-data">Helpers: No Data</h2>
+      <div class="container-mid center-text">Add a class of <em>no-data</em> to provide styling when there's no information about a particular section.</div>
+      <div class="style-block">
+        <div class="style-block-demo center-text">
+<p class="no-data">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+     <div class="container">
+      <h2 class="heading-secondary brand-purple" id="helpers-scroll-smooth">Helpers: Smooth scroll to anchors</h2>
+      <div class="container-mid center-text">
+        Add a class of js-scroll-smooth-link to an anchor. Then Match the href attribute of the anchor with an id of a selector on the page.
+      </div>
+      <div class="style-block">
+        <div class="style-block-demo center-text container-sm">
+<a href="#smooth-demos" class="js-scroll-smooth-link">Smooth to something demo</a>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti labore eveniet nihil fugiat doloribus rem libero tempore temporibus eaque, qui quia unde incidunt possimus quidem nesciunt, expedita reprehenderit ipsa nam.</p>
+<p id="smooth-demos">I SCROLLED TO HERE</p>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="center-text">
+      <h2 class="heading-section" id="demo-block-prefixes">Vendor Prefixes: Sass</h2>
+      <div class="heading-section-block">
+        <ul>
+          <li><a href="#vendor-transitions" class="js-scroll-smooth-link">Prefix: Transitions</a></li>
+          <li><a href="#vendor-placeholders" class="js-scroll-smooth-link">Prefix: Placeholders</a></li>
+          <li><a href="#vendor-boxsizing" class="js-scroll-smooth-link">Prefix: Box-sizing</a></li>        
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="container-mid">
+        <p>Since browsers are pretty much up-to-date, most CSS properties don't require vendor prefixing anymore, like border-radius and box-shadow.</p>
+        <p>The site uses sass mixins only for transitions, placeholders and box-sizing. The box-sizing property is universally used, so probably won't be required to be added elsewhere.</p>
+      </div>
+      <h2 class="heading-secondary brand-purple" id="vendor-transitions">Prefix: Transitions</h2>
+      <div class="style-block">
+        <div class="center-text">
+          <p>This mixin for transitions includes a prefix for webkit.</p>
+          <p class="bold">Syntax below</p>
+        </div>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    @include transition(all 0.3s ease-in);
+  }
+
+  .selector {
+    @include transition(opacity 0.4s linear);
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="vendor-placeholders">Prefix: Placeholders for inputs</h2>
+      <div class="style-block">
+        <div class="center-text">
+          <p>This mixin for placeholders includes prefixes for webkit, moz and ms.</p>
+          <p class="bold">Syntax below</p>
+        </div>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    @include placeholder {
+      color: $grey-silver;
+    }
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+    <div class="container">
+      <h2 class="heading-secondary brand-purple" id="prefix-boxsizing">Box Sizing</h2>
+      <div class="style-block">
+        <div class="center-text container-mid">
+          <p>This mixin for box-sizing includes prefixes for webkit and moz. Since it's used universally on all selectors, you will probably not need to use it.</p>
+          <p class="bold">Syntax below</p>
+        </div>
+        <div class="style-block-demo center-text">
+<style>
+  .selector {
+    @include box-sizing; //resets box-sizing to border-box, the default
+  }
+</style>
+</div> <!-- /style-block-demo -->
+
+        <div class="center-text">
+          <div class="button-hollow js-toggle">&lt;Code&gt;</div>
+        </div>    
+      </div> <!-- /style-block -->
+    </div> <!-- /container -->
+
+  </div> <!-- /demo-main -->
+</section>
+
+{% endblock %}

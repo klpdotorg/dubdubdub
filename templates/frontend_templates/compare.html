@@ -1,125 +1,128 @@
 {% verbatim %}
-    <script type="text/html" id="tpl-compare-option">
-        <div class="en-icon big en-{{ type_name }} fl">
-            {% if type.id==1 %} S {% else %} P {% endif %}
-        </div>
-        <div class="ml">
-          <h2 class="name en-{{ type_name }}">{{ name }}</h2>
-        </div>
-        <div class="item">
-            <div class="label">District</div>
-            <div class="value">{{ admin1.name|capitalize }}</div>
-        </div>
-        <div class="item">
-            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
-            <div class="value">{{ admin2.name|capitalize }}</div>
-        </div>
-        <div class="item">
-            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
-            <div class="value">{{ admin3.name|capitalize }}</div>
-        </div>
-        <div class="clr"></div>
-    </script>
+  <script type="text/html" id="tpl-compare-option">
+    <span class="h4 brand-{{ type_name }}">
+      <span class="icon-number">
+        {% if type.id==1 %} S {% else %} P {% endif %}
+      </span>
+
+      {{ name }}
+
+    </span>
+
+    <ul class="map-location-labels font-smallest">
+      <li class="map-label-each">
+        <div class="map-label-title">District</div>
+        <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+        <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+        <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+    </ul>
+  </script>
 
 
   <script type="text/template" class="tpl-raw" id="tpl-comparison-result" data-tpl="comparison_result">
-    <div class="comparison-result gender-distribution">
-      <div class="result-header">
-        <div class="heading">Gender Distribution</div>
+    <div class="comparison-result compare-gender-distribution">
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Gender Distribution</div>
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
-        <div class="clr"></div>
       </div>
+      <div class="compare-section-block clearfix">
+        <div class="compare-section">
 
-      <div class="width-48p fl ta-c">
-        {% if school1.hasStudents %}
-        <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_boygirlchart_1"></div>
-          <div class="gender_icons">
-            <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ school1.num_boys }}</p>
-              <div class="clr"></div>
-            </div>
-            <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ school1.num_girls }}</p>
-              <div class="clr"></div>
-            </div>
+          {% if school1.hasStudents %}
+          <div class="pie-chart-wrapper">
+            <div class="pie-chart-gender" id="comparison_boygirlchart_1"></div>
+            <div class="compare-gender-pie">
+              <div class="module-stats-icon">
+                <span class="icon-boy"></span>
+                <div class="module-stats-info">
+                  <div class="uppercase">Boys</div>
+                  <p class="module-stats-label">{{ school1.num_boys }}</p>
+                </div>
+              </div>
+              <div class="module-stats-icon module-stats-girl">
+                <span class="icon-girl"></span>
+                <div class="module-stats-info">
+                  <div class="uppercase">Girls</div>
+                  <p class="module-stats-label">{{ school1.num_girls }}</p>
+                </div>
+              </div>
+            </div> <!-- /compare-gender-pie -->
           </div>
-        </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
-        <div class="stat-ratio">
-          <div class="stat-item boy">
-            Boys<br>
-            <span>{{ school1.num_boys }}</span>
-          </div>
-          <div class="fl">:</div>
-          <div class="stat-item girl">
-            Girls<br>
-            <span>{{ school1.num_girls }}</span>
-          </div>
-          <div class="clr"></div>
-        </div>
-      {% else %}
-        <div class="pie-chart-wrapper no-data">
-          No data available
-          <div class="clr"></div>
-        </div>
-      {% endif %}
-      </div>
-
-      <div class="width-48p fr ta-c">
-        {% if school2.hasStudents %}
-        <div class="pie-chart-wrapper">
-          <div class="chart" id="comparison_boygirlchart_2"></div>
-          <div class="gender_icons">
-            <div class="stats_gender_item no_width boy">
-              <span class="icon"></span>
-              <p class="label">Boys</p>
-              <p class="value">{{ school2.num_boys }}</p>
-              <div class="clr"></div>
+          <div class="grey-steel">Total Number of students <span class="bold">{{ school1.total_students }}</span></div>
+          <div>
+            <div class="icon-compare-gender icon-compare-boy">
+              <div class="icon-compare-label">Boys</div>
+              <div class="icon-button-round-lg"><span class="k-icon">{{ school1.num_boys }}<span></div>
             </div>
-            <div class="stats_gender_item no_width girl">
-              <span class="icon"></span>
-              <p class="label">Girls</p>
-              <p class="value">{{ school2.num_girls }}</p>
-              <div class="clr"></div>
+            <div class="vertical-inline-top">:</div>
+            <div class="icon-compare-gender icon-compare-girl">
+              <div class="icon-compare-label">Girls</div>
+              <div class="icon-button-round-lg"><span class="k-icon">{{ school1.num_girls }}</span></div>
             </div>
           </div>
-        </div>
-        <div class="text mar_btm_25">Total Number of students <span class="bold">{{ school2.total_students }}</span></div>
-        <div class="stat-ratio">
-          <div class="stat-item boy">
-            Boys<br>
-            <span>{{ school2.num_boys }}</span>
-          </div>
-          <div class="fl">:</div>
-          <div class="stat-item girl">
-            Girls<br>
-            <span>{{ school2.num_girls }}</span>
-          </div>
-          <div class="clr"></div>
-        </div>
         {% else %}
-        <div class="pie-chart-wrapper no-data">
-          No data available
-          <div class="clr"></div>
+          <div class="pie-chart-wrapper no-data">
+            No data available
+          </div>
+        {% endif %}
+        </div>
+
+        <div class="compare-section">
+          {% if school2.hasStudents %}
+          <div class="pie-chart-wrapper">
+            <div class="pie-chart-gender" id="comparison_boygirlchart_2"></div>
+            <div class="compare-gender-pie">
+              <div class="module-stats-icon">
+                <span class="icon-boy"></span>
+                <div class="module-stats-info">
+                  <div class="uppercase">Boys</div>
+                  <p class="module-stats-label">{{ school2.num_boys }}</p>
+                </div>
+              </div>
+              <div class="module-stats-icon module-stats-girl">
+                <span class="icon-girl"></span>
+                <div class="module-stats-info">
+                  <div class="uppercase">Girls</div>
+                  <p class="module-stats-label">{{ school2.num_girls }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grey-steel">Total Number of students: <span class="bold">{{ school2.total_students }}</span></div>
+          <div>
+            <div class="icon-compare-gender icon-compare-boy">
+              <div class="icon-compare-label">Boys</div>
+              <div class="icon-button-round-lg"><span class="k-icon">{{ school2.num_boys }}<span></div>
+            </div>
+            <div class="vertical-inline-top">:</div>
+            <div class="icon-compare-gender icon-compare-girl">
+              <div class="icon-compare-label">Girls</div>
+              <div class="icon-button-round-lg"><span class="k-icon">{{ school2.num_girls }}</span></div>
+            </div>
+          </div>
+          {% else %}
+          <div class="pie-chart-wrapper no-data">
+            No data available
         </div>        
         {% endif %}
       </div>
+    </div> <!-- /compare-section-block -->  
 
-      <div class="clr"></div>
-
-      <div class="aggregate-stats width-400">
-        <div class="text">
+      
+      <div class="center-text">        
+        <div class="compare-section-source">
           Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
         </div>
       </div>
@@ -137,87 +140,64 @@
         </div>
       </div>
       -->
-
     </div>
     <!-- Comparison Result ends -->
 
     <div class="comparison-result language-distribution">
-      <div class="result-header">
-        <div class="heading">Language Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Language Distribution</div>
+      </div>
+
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
         <div class="clr"></div>
       </div>
 
-      <div class="result-content">
+      <div class="compare-section">
         {% for mt, val in mt_profiles %}
-        <div class="comparison-item">
-          <div class="comparison-heading purple">
-            <div class="heading-text">{{ mt }}</div>
-          </div>
+          <div class="compare-each-block">
+            <div class="bar-graph-wrap float-left">
+              <div class="bar-custom">
+                <div class="bar-value green-leaf-bg float-right" style="width:{{ val.school1.percent }}%;"></div>
+                <div class="clear"></div>
+                <div class="green-leaf font-smaller center-text"><strong>{{ val.school1.total }} students</strong></div>
+              </div>
+              <div class="bar-percent green-leaf">{{ val.school1.percent }}%</div>
+            </div>
 
-          <div class="col-left ta-c">
-            <div class="bar_graph_hor green">
-              <div class="item">
-                <div class="label fr">{{ val.school1.percent }}%</div>
-                <div class="bar fl">
-                  <div class="value fr" style="width:{{ val.school1.percent }}%;"></div>
-                  <div class="clr"></div>
-                  <div class="count">{{ val.school1.total }} students</div>
-                </div>
-                <div class="clr"></div>
+            <div class="compare-section-heading">{{ mt }}</div>
+
+            <div class="bar-graph-wrap float-right">
+              <div class="bar-percent">{{ val.school2.percent }}%</div>
+              <div class="bar-custom">
+                <div class="bar-value grey-gravel-bg" style="width:{{ val.school2.percent }}%;"></div>
+                <div class="font-smaller center-text"><strong>{{ val.school2.total }} students</strong></div>
               </div>
             </div>
           </div>
-
-          <div class="col-right ta-c">
-            <div class="bar_graph_hor grey">
-              <div class="item">
-                <div class="label fl">{{ val.school2.percent }}%</div>
-                <div class="bar fr">
-                  <div class="value" style="width:{{ val.school2.percent }}%;"></div>
-                  <div class="count">{{ val.school2.total }} students</div>
-                </div>
-                <div class="clr"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="clr"></div>
-        </div>
         <!-- Bar item ends here -->
         {% endfor %}
 
-        <div class="comparison-item mar_top_60">
+        <div class="base-spacing-lg"></div>  
+        <div class="compare-each-block">
 
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">Medium of instruction</div>
-          </div>
-
+          <div class="compare-section-heading">Medium of instruction</div>
           
-          <div class="col-left width-37p ta-c">
-            <div class="text grey bold">{{ school1.moi|capitalize }}</div>
+          <div class="float-left">
+            <div class="grey-steel font-small"><strong>{{ school1.moi|capitalize }}</strong></div>
           </div>
 
-          <div class="col-right width-37p ta-c">
-            <div class="text grey bold">{{ school2.moi|capitalize }}</div>
+          <div class="float-right">
+            <div class="grey-steel font-small"><strong>{{ school2.moi|capitalize }}</strong></div>
           </div>
-          
-
-          <div class="clr"></div>
         </div>
         <!-- Bar item ends here -->
-
-        <div class="aggregate-stats width-400">
-          <div class="text">
-            Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
-          </div>
-        </div>
+  
         <!--
         <div class="aggregate-stats width-400">
           <div class="label">Aggregate stats</div>
@@ -237,18 +217,24 @@
         -->
 
       </div>
+      <div class="center-text">        
+        <div class="compare-section-source">
+          Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
+        </div>
+      </div>
+  
     </div>
     <!-- Comparison Result ends -->
 
     <!--
     <div class="comparison-result score-distribution">
-      <div class="result-header">
-        <div class="heading">Score Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Score Distribution</div>
         
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         
         <div class="clr"></div>
@@ -319,8 +305,8 @@
 
     <!--
     <div class="comparison-result grade-distribution">
-      <div class="result-header">
-        <div class="heading">Grade Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Grade Distribution</div>
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
             <option value="2">Year: 2012 -2013</option>
@@ -405,9 +391,7 @@
           <div class="clr"></div>
         </div>
 
-
         <div class="comparison-item">
-
           <div class="comparison-heading average">
             <div class="heading-text with-sub-text">
               Grade C
@@ -443,9 +427,7 @@
           <div class="clr"></div>
         </div>
 
-
         <div class="comparison-item">
-
           <div class="comparison-heading bad">
             <div class="heading-text with-sub-text">
               Grade D
@@ -483,7 +465,6 @@
 
 
         <div class="comparison-item">
-
           <div class="comparison-heading very-bad">
             <div class="heading-text with-sub-text">
               Grade E
@@ -543,8 +524,8 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result teacher-student-ratio">
-      <div class="result-header">
-        <div class="heading">Teacher student ratio</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Teacher student ratio</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -616,9 +597,9 @@
     </div>
     {% endif %}
 
-    <div class="comparison-result infrastructure">
-      <div class="result-header">
-        <div class="heading">Infrastructure</div>
+    <div class="comparison-result compare-infrastructure">
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Infrastructure</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -629,31 +610,28 @@
         <div class="clr"></div>
       </div>
 
-      <div class="result-content">
+      <div class="compare-section">
         {% for key, value in infrastructure %}
-        <div class="comparison-item">
-          <div class="comparison-heading purple width-25p">
-            <div class="heading-text">{{ key }}</div>
-          </div>
+        <div class="compare-each-block">
+          <div class="compare-section-heading">{{ key }}</div>
 
-          <div class="infra-indicator col-left width-37p">
+          <div class="compare-each">
             {% for k, v in value %}
-            <div class="infra-indicator-item {{ v.entity1 }}">{{ k }}</div>
+            <div class="table-infra-key-color brand-{{ v.entity1 }} table-infra-icon-left">{{ k }}</div>
             {% endfor %}
           </div>
 
-          <div class="infra-indicator col-right width-37p">
+          <div class="compare-each float-right">
             {% for k, v in value %}
-            <div class="infra-indicator-item {{ v.entity2 }}">{{ k }}</div>
+            <div class="table-infra-key-color brand-{{ v.entity2 }} table-infra-icon-right">{{ k }}</div>
             {% endfor %}
           </div>
-          <div class="clr"></div>
         </div>
         {% endfor %}
         <!-- Infra Item ends -->
       </div>
-      <div class="aggregate-stats width-400">
-        <div class="text">
+      <div class="center-text">
+        <div class="compare-section-source">
           Source: KLP Database (2011-2012), <strong>NUEPA-DISE</strong>
         </div>
       </div>
@@ -662,8 +640,8 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result basic-infrastructure">
-      <div class="result-header">
-        <div class="heading">Basic Infrastructure</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Basic Infrastructure</div>
         <!--
         <select class="dropdown">
             <option value="1" selected>Year: 2011 -2012</option>
@@ -708,11 +686,11 @@
           <div class="clr"></div>
 
         </div>
-        <!-- Infratstructure Item ends -->
+        <!-- Infrastructure Item ends -->
 
         <div class="comparison-item">
 
-          <div class="comparison-heading purple width-25p">
+          <div class="comparison-heading">
             <div class="heading-text with-img">
               <img src="/static/images/infrastructure/library.png" class="image"/>
               Library
@@ -755,13 +733,13 @@
 
     {% if not comparison_type == 'preschool' %}
     <div class="comparison-result grants-distribution">
-      <div class="result-header">
-        <div class="heading">Grants Distribution</div>
+      <div class="header-strip">
+        <div class="heading-tiny-uppercase">Grants Distribution</div>
         <!--
         <select class="dropdown">
-            <option value="1" selected>Year: 2011 -2012</option>
-            <option value="2">Year: 2012 -2013</option>
-            <option value="3">Year: 2013 -2014</option>
+          <option value="1" selected>Year: 2011 -2012</option>
+          <option value="2">Year: 2012 -2013</option>
+          <option value="3">Year: 2013 -2014</option>
         </select>
         -->
         <div class="clr"></div>

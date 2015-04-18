@@ -2,6 +2,8 @@ import json
 import requests
 import datetime
 
+from optparse import make_option
+
 from django.utils import timezone
 from django.db import transaction
 from django.core import serializers
@@ -14,41 +16,69 @@ class Command(BaseCommand):
     args = "<dates month year>"
     help = """Import data from IVRS
 
-    ./manage.py fetchivrs 12,13,14 12 2014"""
+    ./manage.py fetchivrs --from=20/12/2014 --to=21/12/2014"""
+
+    option_list = BaseCommand.option_list + (
+        make_option('--from',
+                    help='The date from which to start fetching ivrs data.'),
+        make_option('--to',
+                    help='The date until which to fetch ivrs data '),
+    )
+
+    try:
+        f = open('ivrs_error.log')
+        ivrs_errors = json.loads(f.read())
+        f.close()
+    except:
+        ivrs_errors = []
 
     @transaction.atomic
     def handle(self, *args, **options):
-        if args:
-            sane, message = self.sanity_check(args)
-            if sane:
-                print message
-                dates = self.get_dates(args)
+        from_date = options.get('from', None)
+        to_date = options.get('to', None)
+
+        if from_date or to_date:
+            if from_date and to_date:
+                sane, message = self.sanity_check(from_date, to_date)
+                if sane:
+                    print message
+                    from_date = self.transform_date(from_date)
+                    to_date = self.transform_date(to_date)
+                else:
+                    print message
+                    return
             else:
-                print message
+                print "Please specify either both --from and --to dates or neither"
                 return
         else:
-            dates = [timezone.now().date().strftime("%m/%d/%Y")]
+            from_date = to_date = timezone.now().date().strftime("%m/%d/%Y")
 
-        source = Source.objects.get(name = "ivrs")
-        for date in dates:
-            success, json_list = self.fetch_data(date)
-            if success:
-                for json in json_list:
-                    sane, message = self.sanity_check_json(json)
-                    if sane:
-                        self.process_json(source, json)
-                    else:
-                        print message
-                        continue
+        source = Source.objects.get(name="ivrs")
+        success, json_list = self.fetch_data(from_date, to_date)
+        if success:
+            for the_json in json_list:
+                sane, message = self.sanity_check_json(the_json)
+                if sane:
+                    self.process_json(source, the_json)
+                else:
+                    print message
+                    continue
             else:
-                return
+                print "All jsons processed!"
+        else:
+            return
 
-    def get_dates(self, args):
-        days = args[0].split(",")
-        month = args[1]
-        year = args[2]
-        dates = [month+"/"+day+"/"+year for day in days]
-        return dates
+        f = open('ivrs_error.log', 'w')
+        f.write(json.dumps(self.ivrs_errors, indent = 4))
+        f.close()
+
+
+    def transform_date(self, date):
+        day = date.split("/")[0]
+        month = date.split("/")[1]
+        year = date.split("/")[2]
+        date = month+"/"+day+"/"+year
+        return date
 
     def sanity_check_json(self, json):
         if not json.get('Date & Time', None):
@@ -65,31 +95,45 @@ class Command(BaseCommand):
             try:
                 school = School.objects.get(id=json['School ID'])
             except Exception as ex:
-                print ex, type(ex)
+                if json['School ID'] not in self.ivrs_errors:
+                    self.ivrs_errors.append(json['School ID'])
                 return (False, "School id: %s does not exist in the DB." % json['School ID'])
 
         return (True, "Json is sane. Proceeding with dissection.")
 
-    def sanity_check(self, args):
-        if len(args) < 3:
-            return (False, "Usage is $./manage.py fetchivrs [date,date,date month year]")
-        else:
-            days = args[0].split(",")
-            for day in days:
-                if int(day) not in range(1,32):
-                    return (False, "Please enter a valid day in between 1 and 31")
+    def sanity_check(self, from_date, to_date):
+        sane, message = self.check_date(from_date)
+        if not sane:
+            return (sane, message)
+        sane, message = self.check_date(to_date)
+        if not sane:
+            return (sane, message)
+        return (sane, message)
+        
+    def check_date(self, date):
+        day = date.split("/")[0]
+        month = date.split("/")[1]
+        year = date.split("/")[2]
 
-            month = args[1]
-            if int(month) not in range(1,13):
-                return (False, "Please enter a valid month in between 1 and 12")
+        if not self.is_day_correct(day):
+            return (False, "Please enter a valid day in between 1 and 31")
 
-            year = args[2]
-            if len(year) != 4:
-                return (False, "Please enter a valid date of the format 2014")
-            elif int(year) > timezone.now().year:
-                return (False, "Please enter a valid year. Not the future")
+        if not self.is_month_correct(month):
+            return (False, "Please enter a valid month in between 1 and 12")
+
+        if not self.is_year_correct(year):
+            return (False, "Please ensure year format is '2014' and it is <= current year")
 
         return (True, "Parameters accepted. Commencing data fetch")
+
+    def is_day_correct(self, day):
+        return int(day) in range(1,32)
+
+    def is_month_correct(self, month):
+        return int(month) in range(1,13)
+
+    def is_year_correct(self, year):
+        return (len(year) == 4 and int(year) <= timezone.now().year)
 
     def process_json(self, source, json):
         date = json['Date & Time']
@@ -127,9 +171,9 @@ class Command(BaseCommand):
             print "Date %s for school %s already processed" % (date, school)
             return
 
-    def fetch_data(self, date):
-        url = "http://89.145.83.72/akshara/json_feeds.php?fromdate=%s&enddate=%s" \
-              % (date, date)
+    def fetch_data(self, from_date, to_date):
+        url = "http://klpdata.mahiti.org/json_feeds.php?fromdate=%s&enddate=%s" \
+              % (from_date, to_date)
         try:
             response = requests.get(url)
             return (True, response.json())

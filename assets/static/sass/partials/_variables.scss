@@ -1,0 +1,106 @@
+// VARIABLES
+
+/*-------------------------------------*/
+// GRID: GUTTER
+
+$grid-padding: 20px;
+
+
+/*-------------------------------------*/
+// WIDTHS AND HEIGHT
+
+$header-height: 45px;
+$nav-width: 220px;
+$subheader-height: 35px;
+$map-subheader-height: 53px;
+$form-input-height: 35px;
+$school-map-spacing: 160px;
+$sidebar-map-width: 300px;
+
+
+/*-------------------------------------*/
+// MEDIA QUERY BREAKPOINTS
+
+$mq-lg-x: 1200px;
+$mq-lg: 990px;
+$mq-med: 750px;
+$mq-sm: 600px;
+
+
+/*-------------------------------------*/
+// COLORS
+
+// color: base font
+$font-base-color: #5F5F5F;
+
+// colors: brand
+$brand-orange: #ec6608;
+$brand-green: #26b262;
+$brand-blue: #3891e3;
+$brand-turquoise: #24b2b6;
+$brand-purple: #7575bc;
+$brand-red: #cb0012;
+
+// colors: common
+$black: #000;
+$white: #fff;
+$grey-mist: #f6f6f6;
+$grey-cloud: #d8d8d8;
+$grey-silver: #bbb;
+$grey-steel: #898989;
+$grey-gravel: #4d4d4d;
+
+$red-mild: #e17e5b;
+$maroon: #a31460;
+$pink-salmon: #f87c84;
+
+$yellow-mild: #ffeda0;
+$orange-mild: lighten($brand-orange, 20%);
+
+$green-pista: #addd8e;
+$green-leaf: #44c28c;
+
+$blue-ink: #2c3e50;
+$blue-sky: lighten($brand-blue, 32%);
+$purple-amethyst: #7b7795;
+
+// colors - links
+$link-color: $brand-blue;
+$link-hover-color: lighten($brand-blue, 15%);
+
+
+/*-------------------------------------*/
+// SPACING
+
+$base-spacing: 10px;
+$base-spacing-mid: $base-spacing * 1.5;				//15px
+$base-spacing-lg: $base-spacing * 2;					//20px
+$base-spacing-lg-x: $base-spacing * 2.5;			//25px
+$base-spacing-lg-2x: $base-spacing * 5;				//50px
+$base-spacing-sm: $base-spacing / 2;					//5px
+
+
+/*-------------------------------------*/
+// FONT BASE STYLES
+
+$font-base-size: 16px;
+$font-base-family: 'Lato', sans-serif;
+
+
+/*-------------------------------------*/
+// FONT ICON: FAMILY
+
+$font-icon: "FontAwesome";
+
+
+/*-------------------------------------*/
+// BORDER-RADIUS
+
+$border-radius: 6px;
+$border-radius-sm: $border-radius / 2;
+$border-radius-circle: 50%;
+
+
+/*-------------------------------------*/
+// BORDER-BASE-COLOR
+$border-color: $grey-cloud;

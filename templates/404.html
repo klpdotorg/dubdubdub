@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-
 {% block page_title %}404{% endblock %}
-
 {% block content %}
 
-	<section class="error-page pb-30">
-		<div class="container">
-			<h1 class="bordered red">Error 404</h1>
-			<div class="ta-c">
-				<img src="/static/images/kid_sad@2x.jpg" class="error-img">
+	<section>
+		<div class="container center-text">
+			<h1 class="heading-primary brand-red">Error 404</h1>
+			<img src="/static/images/kid_sad@2x.jpg" width="240">
+			<div class="base-spacing-mid"></div>
+			<div class="font-large italic">
+				<p>
+					Sorry, the page you are looking for doesn't exist.
+				</p>				
 			</div>
-			<p class="font-20 ta-c mt-60 mb-20">
-				Sorry, the page you are looking for doesn't exist.
-			</p>
-			<p class="ta-c mb-60">
-				Go to <a href="#">Home page</a>.
+			<div class="base-spacing-sm"></div>
+			<p>
+				<a href="/" class="button">Back to home</a>
 			</p>
 		</div>
 	</section>

@@ -1,3 +1,6 @@
+/*
+    FIXME: where is this used? I think we can delete it.
+ */
 (function(){
     var t = klp.share_story = {}; 
     var $modal_share_story;

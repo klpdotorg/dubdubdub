@@ -1,0 +1,141 @@
+.demo-sidebar {
+  @extend %scrollbar-webkit;
+}
+
+.dropdown-styleguide {
+  > li {
+    display: block;
+    border-radius: 0;
+  }
+
+  li {
+    &.selected {
+      @extend %grey-mist-bg;    
+    }
+  }
+
+  ul {
+    border: none;
+    position: static;
+    right: 0;
+    display: block !important;
+  }
+
+  .styleguide-nav-trigger {
+    border: none;
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.styleguide-nav-trigger {
+  @extend %grey-mist-bg;
+}
+
+.heading-secondary.brand-purple {
+  margin: 0 0 $base-spacing-lg-x 0;
+}
+
+.style-block {
+  @extend %base-spacing-lg;
+
+  .button-hollow {
+    margin: $base-spacing 0;
+  }
+}
+
+.style-block-demo {
+  position: relative;
+}
+
+.style-block-code {
+  display: none;
+  margin: $base-spacing-lg 0 0 0;
+}
+
+.demo-do {
+  @extend %brand-green;
+  @extend %uppercase;
+
+  &:before {
+    content: "\f00c";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
+
+.demo-dont {
+  @extend %brand-red;
+  @extend %uppercase;
+
+  &:before {
+    content: "\f00d";
+    @extend %font-icon;
+    @extend %icon-left;
+  }
+}
+
+code {
+  @extend %grey-mist-bg;
+  border-left: 3px solid $brand-purple;
+  overflow-y: auto;
+  padding: $base-spacing-lg;
+  display: block;
+  font-family: monospace;
+  @extend %font-small;
+  margin: $base-spacing 0;
+}
+
+.box-demo {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
+}
+
+#colors-brand {
+  code {
+    p, div, span {
+      color: $font-base-color;
+    }
+  }
+}
+
+.demo-color-blue {
+  color: $brand-blue;
+}
+
+.demo-color-blue-extend {
+  @extend %brand-blue;
+}
+
+.demo-color-background {
+  p {
+    padding: $base-spacing-sm;
+  }
+}
+
+@media only screen and (min-width: 990px) {
+  .dropdown-styleguide {
+    ul {
+      position: absolute;
+    }
+  }
+
+  .demo-sidebar {
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: $header-height;
+    bottom: 0;
+    overflow: auto;
+    float: left;
+  }
+
+  .demo-main {
+    width: 70%;
+    width: -webkit-calc(100% - 200px);
+    width: calc(100% - 200px);
+    float: right;
+  } 
+}

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-
 {% block page_title %}Error{% endblock %}
-
 {% block content %}
 
 	<section class="error-page pb-30">
-		<div class="container">
-			<h1 class="bordered red">Oops!</h1>
-			<div class="ta-c">
-				<img src="/static/images/kid_sad@2x.jpg" class="error-img">
-			</div>
-			<p class="font-20 ta-c mt-60 mb-20">
-				Some error occurred while loading the page.
-			</p>
-			<p class="ta-c mb-60">
-				<a href="#">Try agan</a> or go to <a href="#">Home page</a>.
-			</p>
+		<div class="container center-text">
+			<h1 class="heading-primary brand-red">Oops!</h1>
+				<img src="/static/images/kid_sad@2x.jpg" width="240">
+				<div class="base-spacing-mid"></div>
+				<div class="font-large italic">
+					<p>
+						Some error occurred while loading the page.
+					</p>					
+				</div>
+				<div class="base-spacing-sm"></div>
+				<p>
+					<a href="#" class="button icon-left">Back to home</a> or <a href="#" class="button-grey icon-right">Try again later</a>
+				</p>
 		</div>
 	</section>
 
