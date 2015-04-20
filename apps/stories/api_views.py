@@ -35,6 +35,96 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
+class StoryVolumeView(KLPAPIView):
+    def get(self, request):
+        admin1_id = self.request.QUERY_PARAMS.get('district', None)
+        admin2_id = self.request.QUERY_PARAMS.get('block', None)
+        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
+        school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        start_date = self.request.QUERY_PARAMS.get('from', None)
+        end_date = self.request.QUERY_PARAMS.get('to', None)
+        school_type = self.request.QUERY_PARAMS.get(
+            'school_type', 'Primary School')
+
+        if start_date:
+            sane = self.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format MM/DD/YYYY")
+            else:
+                start_date = self.get_datetime(start_date)
+        if end_date:
+            sane = self.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format MM/DD/YYYY")
+            else:
+                end_date = self.get_datetime(end_date)
+
+        response_json = {}
+
+        stories_qset = Story.objects.filter(
+            school__admin3__type__name=school_type)
+
+        if admin1_id:
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin1__id=admin1_id)
+
+        if admin2_id:
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin2__id=admin2_id)
+
+        if admin3_id:
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin3__id=admin3_id)
+
+        if start_date:
+            stories_qset = stories_qset.filter(
+                date_of_visit__gte=start_date)
+
+        if end_date:
+            stories_qset = stories_qset.filter(
+                date_of_visit__lte=end_date)
+
+        story_dates = stories_qset.values_list('date_of_visit', flat=True)
+
+        per_month_responses = dict(Counter(
+            [date.strftime('%B') for date in story_dates]))
+
+        response_json['volumes'] = per_month_responses
+
+        return Response(response_json)
+
+        def get_datetime(self, date):
+            return datetime.datetime.strptime(date, '%m/%d/%Y')
+
+        def check_date_sanity(self, date):
+            try:
+                month = date.split("/")[0]
+                day = date.split("/")[1]
+                year = date.split("/")[2]
+            except:
+                return False
+
+            if not self.is_day_correct(day):
+                return False
+
+            if not self.is_month_correct(month):
+                return False
+
+            if not self.is_year_correct(year):
+                return False
+
+            return True
+
+        def is_day_correct(self, day):
+            return int(day) in range(1,32)
+
+        def is_month_correct(self, month):
+            return int(month) in range(1,13)
+
+        def is_year_correct(self, year):
+            return (len(year) == 4 and int(year) <= timezone.now().year)
+
+
 class StoryDetailView(KLPAPIView):
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
