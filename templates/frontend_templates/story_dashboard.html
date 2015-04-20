@@ -1,5 +1,48 @@
 {% verbatim %}
 
+  <script type="text/html" id="tpl-topSummary">
+    <h2 class="heading-primary">Summary</h2> 
+    <div class="chart-half-item">
+      
+      <div class="heading-tiny-uppercase align-left" >MP Constituency</div>
+      <h2 class="heading-secondary brand-blue align-left">BANGALORE SOUTH</h2> 
+      
+      <div class="heading-tiny-uppercase align-left" >Stories</div>
+      <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2> 
+      <div class="chart-parent">
+        <div class="chart-half-item">
+          <div class="heading-tiny-uppercase align-left" >Schools</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.schools }}</h2> 
+        </div>
+        <div class="chart-half-item">
+          <div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.schools_with_stories }}</h2> 
+        </div>
+      </div><!--end inner parent-->
+    </div> 
+    <div class="chart-half-item">
+      <div class="chart-parent">
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/ivrs.png" alt="IVRS">
+          <div class="heading-tiny-uppercase center-text" >Stories</div>
+          <h2 class="heading-secondary brand-blue">{{ ivrs.stories }}</h2> 
+        </div>
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/survey.png" alt="Surveys">
+          <div class="heading-tiny-uppercase center-text" >Stories</div>
+          <h2 class="heading-secondary brand-blue">{{ community.stories }}</h2> 
+        </div>
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/website.png" alt="Website">
+          <div class="heading-tiny-uppercase center-text" >Stories</div>
+          <h2 class="heading-secondary brand-blue">{{ web.stories }}</h2> 
+        </div>
+      </div>
+    </div>
+
+
+  </script>
+
   <script type="text/html" id="tpl-gradeGraph">
     <div class="bar-graph-wrap">
       <div class="bar-label {{ color }}">{{ value }} Grade</div>

@@ -43,56 +43,20 @@
 <section class="clearfix">
 	<div class="bar-charts">    
 		<section class="container" id="summary">
-			<div class="chart-parent">
-				<h2 class="heading-primary">Summary</h2> 
-				<div class="chart-half-item">
-					<div class="heading-tiny-uppercase align-left" >MP Constituency</div>
-		  		<h2 class="heading-secondary brand-blue align-left">BANGALORE SOUTH</h2> 
-		  		<div class="heading-tiny-uppercase align-left" >Stories</div>
-		  		<h2 class="heading-secondary brand-blue align-left">5000</h2> 
-		  		<div class="chart-parent">
-		  			<div class="chart-half-item">
-				  		<div class="heading-tiny-uppercase align-left" >Schools</div>
-				  		<h2 class="heading-secondary brand-blue align-left">1500</h2> 
-				  	</div>
-				  	<div class="chart-half-item">
-				  		<div class="heading-tiny-uppercase align-left" >Schools with Stories</div>
-				  		<h2 class="heading-secondary brand-blue align-left">1000</h2> 
-				  	</div>
-			  	</div><!--end inner parent-->
-		  	</div> 
-		  	<div class="chart-half-item">
-		  		<div class="chart-parent">
-		  			<div class="chart-athird-item">
-		  				<img class="img-symbol" src="{% static 'images/story/ivrs.png' %}" alt="IVRS">
-		  				<div class="heading-tiny-uppercase center-text" >Stories</div>
-		  				<h2 class="heading-secondary brand-blue">1200</h2> 
-		  			</div>
-		  			<div class="chart-athird-item">
-		  				<img class="img-symbol" src="{% static 'images/story/survey.png' %}" alt="Surveys">
-		  				<div class="heading-tiny-uppercase center-text" >Stories</div>
-		  				<h2 class="heading-secondary brand-blue">2800</h2> 
-		  			</div>
-		  			<div class="chart-athird-item">
-		  				<img class="img-symbol" src="{% static 'images/story/website.png' %}" alt="Website">
-		  				<div class="heading-tiny-uppercase center-text" >Stories</div>
-		  				<h2 class="heading-secondary brand-blue">1000</h2> 
-		  			</div>
+			<div class="chart-parent" id="topSummary">
+		  	</div><!--end outer parent-->
+		    <hr/>
+		    <div class="chart-parent">
+		  	
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Quick Summary</div>
+					<div id="quicksummary"></div>
+		  		</div><!--end half item-->
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Types of Respondents</div>
+					<div id="chart_respondent" class="ct-chart ct-minor-seventh"></div>
 		  		</div>
 		  	</div>
-		  </div><!--end outer parent-->
-		  <hr/>
-		  <div class="chart-parent">
-		  	
-		  	<div class="chart-half-item">
-		  		<div class="heading-tiny-uppercase">Quick Summary</div>
-					<div id="quicksummary"></div>
-		  	</div><!--end half item-->
-		  	<div class="chart-half-item">
-		  		<div class="heading-tiny-uppercase">Types of Respondents</div>
-					<div id="chart_respondent" class="ct-chart ct-minor-seventh"></div>
-		  	</div>
-		  </div>
 		</section>
 			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
 		<section class="container">

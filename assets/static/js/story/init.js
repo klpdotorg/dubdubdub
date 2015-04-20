@@ -2,6 +2,7 @@
 
 'use strict';
 (function() {
+
     klp.init = function() {
         klp.accordion.init();
         klp.router = new KLPRouter();
@@ -76,13 +77,20 @@
 
     function loadData() {
         var params = klp.router.getHash().queryParams;
-        var apiURL = ""; //FIXME: enter API url
-        var $xhr = klp.api.do(apiURL, params);
+        var metaURL = "stories/meta/"; //FIXME: enter API url
+        var $metaXHR = klp.api.do(metaURL, params);
+
+        $metaXHR.done(function(data) {
+            console.log("summary data", data);
+            renderSummary(data);
+        });
+
+
 
         //TODO: do some loading behaviour
-        $xhr.done(function(data) {
-            renderPage(data);
-        });
+        // $xhr.done(function(data) {
+        //     renderPage(data);
+        // });
     }
 
     function renderPage(data) {
@@ -134,44 +142,47 @@
     }
 
     function renderSummary(data) {
+        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplCountSummary = swig.compile($('#tpl-countSummary').html());
+        var topSummaryHTML = tplTopSummary(data);
+        $('#topSummary').html(topSummaryHTML);
 
         var summaries = {
             'ivrs': [{
                 'label': 'Schools',
-                'count': 1000
+                'count': data.total.schools
             }, {
                 'label': 'Schools with Stories',
-                'count': 800
+                'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
-                'count': 3000
+                'count': data.ivrs.stories
             }, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
             }],
             'survey': [{
                 'label': 'Schools',
-                'count': 1000
+                'count': data.total.schools
             }, {
                 'label': 'Schools with Stories',
-                'count': 800
+                'count': data.community.schools
             }, {
                 'label': 'Stories',
-                'count': 3000
+                'count': data.community.stories
             }, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
             }],
             'web': [{
                 'label': 'Schools',
-                'count': 1000
+                'count': data.total.schools
             }, {
                 'label': 'Schools with Stories',
-                'count': 800
+                'count': data.web.schools
             }, {
                 'label': 'Verified Stories',
-                'count': 3000
+                'count': data.web.verified_stories
             }, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
