@@ -83,44 +83,60 @@
         $metaXHR.done(function(data) {
             console.log("summary data", data);
             renderSummary(data);
+            renderRespondentChart(data);
         });
 
 
+        var detailURL = "stories/details/";
+        var $detailXHR = klp.api.do(detailURL, params);
+
+        $detailXHR.done(function(data) {
+            console.log("detail data", data);
+            renderFeatured(data);
+            renderIVRS(data);
+            renderSurvey(data);
+            renderWeb(data);
+            //renderComparison(data);
+        });
+
+
+        var volumeURL = "stories/volume/";
+        var $volumeXHR = klp.api.do(volumeURL, params);
+        $volumeXHR.done(function(data) {
+            renderIVRSVolumeChart(data);
+        });
 
         //TODO: do some loading behaviour
-        // $xhr.done(function(data) {
-        //     renderPage(data);
-        // });
+
     }
 
-    function renderPage(data) {
-        // Chartist charts get rendered here 
+    function renderRespondentChart(data) {
+        var labels = _.keys(data.respondents);
+        var values = _.values(data.respondents);
+        //console.log(labels, values);
         var data_respondent = {
-            labels: ['Parents', 'Teachers', 'Community', 'Staff', 'Volunteers', 'Others'],
+            labels: labels,
             series: [
-                [80, 200, 100, 80, 200, 100]
+                values
             ]
         };
 
         renderBarChart('#chart_respondent', data_respondent);
-        var data_ivrs = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-            series: [
-                [500, 1200, 1000, 700, 540, 1030, 360]
-            ]
-        };
-
-        renderBarChart('#chart_ivrs', data_ivrs);
-
-        //Binary graphs generated here
-        renderSummary({});
-        renderFeatured({});
-        renderIvrs({});
-        renderSurvey({});
-        renderWeb({});
-        renderComparison({});
 
     }
+
+    function renderIVRSVolumeChart(data) {
+        var labels = _.keys(data.volumes);
+        var values = _.values(data.volumes);
+        var data_ivrs = {
+            labels: labels,
+            series: [
+                values
+            ]
+        };
+        renderBarChart('#chart_ivrs', data_ivrs);
+    }
+
 
     function renderBarChart(elementId, data) {
         var options = {
@@ -234,7 +250,7 @@
         $('#quicksummary').html(html);
     }
 
-    function renderIvrs(data) {
+    function renderIVRS(data) {
         var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         //define your data
