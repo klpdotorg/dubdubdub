@@ -6,6 +6,7 @@ from .education import (AcademicYear, Address, BoundaryHierarchy, Boundary,
 from .assessments import (Assessment, InstitutionAgg, InstitutionAssessmentCohorts,
     InstitutionAssessmentSinglescore, InstitutionAssessmentSinglescoreGender,
     InstitutionAssessmentSinglescoreMt, BoundaryAssessmentSinglescore,
+    BoundaryAssessmentSinglescoreMt,BoundaryAssessmentSinglescoreGender,
     Partner, Programme, Question, SchoolAgg,
     StudentEval, SchoolEval,
     AngInfraAgg, AngDisplayMaster)

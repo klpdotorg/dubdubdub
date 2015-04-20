@@ -123,6 +123,49 @@ class BoundaryAssessmentSinglescore(BaseModel):
         db_table = 'tb_boundary_assessment_singlescore'
 
 
+class BoundaryAssessmentSinglescoreGender(BaseModel):
+    boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
+    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+
+        return "%s: %s" %(self.boundary, self.assessment,self.gender,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'BoundaryAssSingleScoreGender'
+        managed = False
+        db_table = 'tb_boundary_assessment_singlescore_gender'
+
+
+class BoundaryAssessmentSinglescoreMt(BaseModel):
+    boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" %(self.boundary, self.assessment, self.mt,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'BoundaryAssSingleScoreMt'
+        managed = False
+        db_table = 'tb_boundary_assessment_singlescore_mt'
+
+
 
 class Partner(BaseModel):
     id = models.IntegerField(primary_key=True)

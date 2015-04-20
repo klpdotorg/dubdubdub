@@ -2,7 +2,7 @@ from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,BoundaryAssessmentSinglescore)
+    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,BoundaryAssessmentSinglescore,BoundaryAssessmentSinglescoreMt,BoundaryAssessmentSinglescoreGender)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -320,12 +320,30 @@ class AssessmentInfoSerializer(KLPSerializer):
         singlescore["boundary"]={}
         admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name')[0]
         singlescore["boundary"]["admin1"]=admin1data
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore["boundary"]["admin1"]["mt"]=mtdata
 
         admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin2"]=admin2data
 
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore["boundary"]["admin2"]["mt"]=mtdata
+
         admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin3"]=admin3data
+
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin3"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+
+        singlescore["boundary"]["admin3"]["mt"]=mtdata
         return singlescore
 
 
