@@ -4,11 +4,13 @@ date
 echo "##################################"
 
 recreate_tables=off
+dbname="dubdubdub_bak"
 
 while getopts ":t" opt
 do
     case "$opt" in
         t)  recreate_tables=on;;
+        d)  dbname="$OPTARG";;
         \?)       # unknown flag
             echo >&2
             echo "usage: $0 [-t]"
@@ -21,15 +23,15 @@ shift `expr $OPTIND - 1`
 
 if [ $recreate_tables = on ]; then
     echo "Dropping tables"
-    psql -U klp dubdubdub_bak2 < imports/sql/droptables.sql
+    psql -U klp $dbname < imports/sql/droptables.sql
     echo "Creating tables"
-    psql -U klp dubdubdub_bak2 < imports/sql/createtables.sql
+    psql -U klp $dbname < imports/sql/createtables.sql
 
     for f in `pwd`/data/ems/*.csv;
     do
         filename=$(basename $f .csv)
         echo "Inserting data to temp table: $filename"
-        psql -U klp -d dubdubdub_bak2 -c "copy ems_$filename from '$f' CSV HEADER"
+        psql -U klp -d $dbname -c "copy ems_$filename from '$f' CSV HEADER"
     done
 fi
 
