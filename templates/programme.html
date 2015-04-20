@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block page_title %}
+    Programme: {{ object.name }}
+{% endblock %}
+
 {% block endbody %}
     <script>
         PROGRAMME_ID = {{ object.id }};
@@ -13,7 +17,23 @@
     
 {% block content %}
     <div class="container">
-        <h4>Programme: {{ object.name }}
+        <h2 class="brand-turquoise heading-border">{{ object.name }}</h2>
+        <div class="programme-meta-parent">
+            <div class="programme-partner">
+                <div class="heading-secondary brand-blue align-left">Partner</div>
+                {{ object.partner.name }}
+            </div>
+            <div class="programme-academic-year">
+                <div class="heading-secondary brand-blue align-left">Academic Year</div>
+                {{ object.academic_year.name }}
+            </div>
+        </div>
+        <div class="search-bar">
+            <input id="select2search" />
+        </div>
+        <div id="entityDetails" class="entity-detail container">
+
+        </div>
         <div id="assessmentsContainer">
 
         </div>
