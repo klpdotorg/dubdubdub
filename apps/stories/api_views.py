@@ -47,6 +47,19 @@ class StoryDetailView(KLPAPIView):
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
 
+        if start_date:
+            sane = self.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format MM/DD/YYYY")
+            else:
+                start_date = self.get_datetime(start_date)
+        if end_date:
+            sane = self.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format MM/DD/YYYY")
+            else:
+                end_date = self.get_datetime(end_date)
+
         response_json = {}
 
         # Featured questions
@@ -71,26 +84,101 @@ class StoryDetailView(KLPAPIView):
         # Sources and filters
         if source:
             response_json[source] = self.get_que_and_ans(
-                source, school_type)
+                source, admin1_id, admin2_id, admin3_id, school_id,
+                start_date, end_date, school_type)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
                 response_json[source] = self.get_que_and_ans(
-                    source, school_type)
+                    source, admin1_id, admin2_id, admin3_id, school_id,
+                    start_date, end_date, school_type)
 
         return Response(response_json)
 
-    def get_que_and_ans(self, source, school_type):
+    def get_datetime(self, date):
+        return datetime.datetime.strptime(date, '%m/%d/%Y')
+
+    def check_date_sanity(self, date):
+        try:
+            month = date.split("/")[0]
+            day = date.split("/")[1]
+            year = date.split("/")[2]
+        except:
+            return False
+
+        if not self.is_day_correct(day):
+            return False
+
+        if not self.is_month_correct(month):
+            return False
+
+        if not self.is_year_correct(year):
+            return False
+
+        return True
+
+    def is_day_correct(self, day):
+        return int(day) in range(1,32)
+
+    def is_month_correct(self, month):
+        return int(month) in range(1,13)
+
+    def is_year_correct(self, year):
+        return (len(year) == 4 and int(year) <= timezone.now().year)
+
+    def get_que_and_ans(self, *args):
+        source = args[0]
+        admin1_id = args[1]
+        admin2_id = args[2]
+        admin3_id = args[3]
+        school_id = args[4]
+        start_date = args[5]
+        end_date = args[6]
+        school_type = args[7]
+
         response_list = []
 
-        questions = Question.objects.filter(
-            questiongroup__source__name=source,
-            school_type__name=school_type,
-        ).select_related(
-            'question_type', 'school_type'
-        ).prefetch_related('answer_set')
+        questions = Question.objects.all(
+            ).select_related(
+                'question_type', 'school_type'
+            ).prefetch_related('answer_set')
 
-        for question in questions:
+        if source:
+            questions = questions.filter(
+                questiongroup__source__name=source)
+
+        if school_type:
+            questions = questions.filter(
+                school_type__name=school_type)
+
+        if admin1_id:
+            questions = questions.filter(
+                questiongroup__story__school__schooldetails__admin1__id=admin1_id
+            )
+
+        if admin2_id:
+            questions = questions.filter(
+                questiongroup__story__school__schooldetails__admin2__id=admin2_id
+            )
+
+        if admin3_id:
+            questions = questions.filter(
+                questiongroup__story__school__schooldetails__admin3__id=admin3_id
+            )
+
+        if school_id:
+            questions = question.filter(
+                questiongroup__story__school__id=school_id)
+
+        if start_date:
+            questions = questions.filter(
+                questiongroup__story__date_of_visit__gte=start_date)
+
+        if end_date:
+            questions = questions.filter(
+                questiongroup__story__date_of_visit__lte=end_date)
+
+        for question in questions.distinct('id'):
             j = {}
             j['question'] = {}
             j['question']['key'] = question.key
