@@ -21,7 +21,7 @@ from rest_framework import authentication, permissions
 import random
 import datetime
 from base64 import b64decode
-from collections import Counter
+from collections import Counter, OrderedDict
 from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
@@ -87,9 +87,13 @@ class StoryVolumeView(KLPAPIView):
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
 
         per_month_responses = dict(Counter(
-            [date.strftime('%B') for date in story_dates]))
+            [date.strftime('%b') for date in story_dates]))
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+        ordered_per_month_responses = OrderedDict()
+        for month in months:
+            ordered_per_month_responses[month] = per_month_responses.get(month, 0)
 
-        response_json['volumes'] = per_month_responses
+        response_json['volumes'] = ordered_per_month_responses
 
         return Response(response_json)
 
