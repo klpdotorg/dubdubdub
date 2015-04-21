@@ -30,6 +30,8 @@ BEGIN
         LEFT JOIN tb_child ON ems_tb_child.id=tb_child.id
         WHERE tb_child.id IS NULL
     LOOP
+        RAISE NOTICE 'NEW CHILD: %', r.ems_id;
+
         INSERT INTO tb_child(id, name, dob, sex, mt) SELECT
             ems.id,
             regexp_replace(concat_ws(' ', ems.first_name, ems.middle_name, ems.last_name), '\s+', ' ', 'g') as name,

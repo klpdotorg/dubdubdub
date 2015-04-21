@@ -23,7 +23,7 @@ BEGIN
         WHERE tb_teacher_class.teacherid IS NULL
         ORDER BY ems_id
     LOOP
-        RAISE NOTICE 'NEW SCHOOL: %', r.ems_id;
+        RAISE NOTICE 'NEW TEACHER CLASS: %', r.ems_id;
 
         INSERT INTO tb_teacher_class SELECT
             ems_cl.staff_id as teacherid,
