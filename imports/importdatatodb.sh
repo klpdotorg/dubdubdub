@@ -6,7 +6,7 @@ echo "##################################"
 recreate_tables=off
 dbname="dubdubdub_bak"
 
-while getopts ":t" opt
+while getopts d:t opt
 do
     case "$opt" in
         t)  recreate_tables=on;;
