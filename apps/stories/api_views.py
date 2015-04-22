@@ -37,6 +37,17 @@ class StoryInfoView(KLPAPIView):
         })
 
 class StoryVolumeView(KLPAPIView):
+    """Returns the number of stories per month per year.
+
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    from -- MM/DD/YYYY from when the data should be filtered.
+    to -- MM/DD/YYYY till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
     def get(self, request):
         admin1_id = self.request.QUERY_PARAMS.get('district', None)
         admin2_id = self.request.QUERY_PARAMS.get('block', None)
@@ -144,6 +155,18 @@ class StoryVolumeView(KLPAPIView):
 
 
 class StoryDetailView(KLPAPIView):
+    """Returns questions and their corresponding answers.
+
+    source -- Source of data [web/ivrs].
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    from -- MM/DD/YYYY from when the data should be filtered.
+    to -- MM/DD/YYYY till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
         admin1_id = self.request.QUERY_PARAMS.get('district', None)
@@ -303,9 +326,8 @@ class StoryDetailView(KLPAPIView):
         return response_list
 
 class StoryMetaView(KLPAPIView):
-    """Returns:
-    1. Total number of Stories for Primary or Pre school for a
-    given source.
+    """Returns total number of stories and schools with stories
+    along with respondent types.
 
     source -- Source of data [web/ivrs].
     admin1 -- ID of the District.
