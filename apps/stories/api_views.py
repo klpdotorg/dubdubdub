@@ -19,6 +19,7 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
 from rest_framework import authentication, permissions
 
 import random
+import calendar
 import datetime
 from base64 import b64decode
 from collections import Counter, OrderedDict
@@ -86,15 +87,28 @@ class StoryVolumeView(KLPAPIView):
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
 
-        per_month_responses = dict(Counter(
-            [date.strftime('%b') for date in story_dates]))
+        json = {}
+        for date in story_dates:
+            if date.year in json:
+                json[date.year].append(date.month)
+            else:
+                json[date.year] = []
+                json[date.year].append(date.month)
+
+        per_month_json = {}
+        for year in json:
+            per_month_json[year] = dict(Counter(
+                [calendar.month_abbr[date] for date in json[year]])
+            )
+
+        ordered_per_month_json = {}
         months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-        ordered_per_month_responses = OrderedDict()
-        for month in months:
-            ordered_per_month_responses[month] = per_month_responses.get(month, 0)
+        for year in per_month_json:
+            ordered_per_month_json[year] = OrderedDict()
+            for month in months:
+                ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
 
-        response_json['volumes'] = ordered_per_month_responses
-
+        response_json['volumes'] = ordered_per_month_json
         return Response(response_json)
 
         def get_datetime(self, date):
