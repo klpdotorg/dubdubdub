@@ -261,46 +261,6 @@
 
     }
 
-    function getScore(answers, option) {
-        if (typeof(option) == 'undefined') {
-            option = 'Yes';
-        }
-        var options = answers.options;
-        if (options.hasOwnProperty(option)) {
-            return options[option];
-        } else {
-            return 0;
-        }
-    }
-
-    function getTotal(answers) {
-        return _.reduce(_.keys(answers.options), function(memo, answerKey) {
-            return memo + answers.options[answerKey];
-        }, 0);
-    }
-
-    function getPercent(score, total) {
-        if (total == 0) {
-            return 0;
-        }
-        return Math.round((score / total) * 100);
-    }
-
-    function getQuestionsArray(questions) {
-        return _.map(questions, function(question, seq) {
-            var score = getScore(question.answers, 'Yes');
-            var total = getTotal(question.answers);
-            var percent = getPercent(score, total);
-            //var qObj = featuredQuestions[seq];
-            //var displayText = qObj.source_prefix + question.question.display_text;
-            return {
-                'question': question.question.display_text,
-                'score': score,
-                'total': total,
-                'percent': percent
-            };
-        });
-    }
 
     function renderIVRS(data) {
         var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
@@ -359,16 +319,6 @@
         $('#ivrsquestions').html(html);
     }
 
-    function getQuestion(data, source, key) {
-        for (var i=0, len=data[source].length; i<len; i++) {
-            var question = data[source][i];
-            if (question.question.key === key) {
-                return question;
-            }
-        }
-        return false;
-    }
-
     function renderSurvey(data) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         var surveyQuestionKeys = [
@@ -397,23 +347,15 @@
 
     function renderWeb(data) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
-
-        var questions = [{
-            'question': 'Where there was evidence of a Mid-day meal served:',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }, {
-            'question': 'Where 50% of children enrolled in the school were present:',
-            'score': 260,
-            'total': 1000,
-            'percent': 26
-        }, {
-            'question': 'Where all the teachers for all classes were present:',
-            'score': 300,
-            'total': 1000,
-            'percent': 30
-        }];
+        var webQuestionKeys = [
+            'webs-food-being-cooked',
+            'webs-50percent-present',
+            'webs-teachers-present'
+        ];
+        var questionObjects = _.map(webQuestionKeys, function(key) {
+            return getQuestion(data, 'web', key);
+        });
+        var questions = getQuestionsArray(questionObjects);
 
         var html = ''
         for (var pos in questions) {
@@ -423,32 +365,46 @@
 
         var tplColorText = swig.compile($('#tpl-colorText').html());
 
-        var facilities = [{
+        var facilityQuestions = [{
             'facility': 'All weather pucca building',
             'icon': ['fa fa-university'],
-            'percent': 44
+            'key': 'webs-pucca-building'
         }, {
             'facility': 'Playground',
             'icon': ['fa fa-futbol-o'],
-            'percent': 45
+            'key': 'webs-playground'
         }, {
             'facility': 'Drinking Water',
             'icon': ['fa  fa-tint'],
-            'percent': 54
+            'key': 'webs-drinking-water'
         }, {
             'facility': 'Library',
             'icon': ['fa fa-book'],
-            'percent': 64
+            'key': 'webs-library'
         }, {
             'facility': 'Toilets',
             'icon': ['fa fa-male', 'fa fa-female'],
-            'percent': 74
+            'key': 'webs-separate-toilets'
         }, {
             'facility': 'Secure Boundary Wall',
             'icon': ['fa fa-circle-o-notch'],
-            'percent': 34
+            'key': 'webs-boundary-wall'
         }];
 
+        var questionObjects = _.map(facilityQuestions, function(question) {
+            return getQuestion(data, 'web', question.key);
+        });
+        console.log("facility question objects", questionObjects);
+        var questionsArray = getQuestionsArray(questionObjects);
+
+
+        var facilities = _.map(questionsArray, function(question, seq) {
+            var facility = facilityQuestions[seq];
+            facility.percent = question.percent;
+            return facility;
+        });
+
+        console.log("facilities", facilities);
         var html = ''
         for (var pos in facilities) {
             html = html + tplColorText(facilities[pos]);
@@ -495,6 +451,63 @@
         });
         $('#comparison').html(html);
 
+    }
+
+
+    /*
+        Helper functions
+            TODO: move to separate file and document.
+     */
+    
+    function getScore(answers, option) {
+        if (typeof(option) == 'undefined') {
+            option = 'Yes';
+        }
+        var options = answers.options;
+        if (options.hasOwnProperty(option)) {
+            return options[option];
+        } else {
+            return 0;
+        }
+    }
+
+    function getTotal(answers) {
+        return _.reduce(_.keys(answers.options), function(memo, answerKey) {
+            return memo + answers.options[answerKey];
+        }, 0);
+    }
+
+    function getPercent(score, total) {
+        if (total == 0) {
+            return 0;
+        }
+        return Math.round((score / total) * 100);
+    }
+
+    function getQuestion(data, source, key) {
+        for (var i=0, len=data[source].length; i<len; i++) {
+            var question = data[source][i];
+            if (question.question.key === key) {
+                return question;
+            }
+        }
+        return false;
+    }
+
+    function getQuestionsArray(questions) {
+        return _.map(questions, function(question, seq) {
+            var score = getScore(question.answers, 'Yes');
+            var total = getTotal(question.answers);
+            var percent = getPercent(score, total);
+            //var qObj = featuredQuestions[seq];
+            //var displayText = qObj.source_prefix + question.question.display_text;
+            return {
+                'question': question.question.display_text,
+                'score': score,
+                'total': total,
+                'percent': percent
+            };
+        });
     }
 
 })();
