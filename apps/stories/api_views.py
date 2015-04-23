@@ -19,9 +19,10 @@ from rest_framework.exceptions import (APIException, PermissionDenied,
 from rest_framework import authentication, permissions
 
 import random
+import calendar
 import datetime
 from base64 import b64decode
-from collections import Counter
+from collections import Counter, OrderedDict
 from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
@@ -36,6 +37,17 @@ class StoryInfoView(KLPAPIView):
         })
 
 class StoryVolumeView(KLPAPIView):
+    """Returns the number of stories per month per year.
+
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    from -- MM/DD/YYYY from when the data should be filtered.
+    to -- MM/DD/YYYY till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
     def get(self, request):
         admin1_id = self.request.QUERY_PARAMS.get('district', None)
         admin2_id = self.request.QUERY_PARAMS.get('block', None)
@@ -86,11 +98,28 @@ class StoryVolumeView(KLPAPIView):
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
 
-        per_month_responses = dict(Counter(
-            [date.strftime('%B') for date in story_dates]))
+        json = {}
+        for date in story_dates:
+            if date.year in json:
+                json[date.year].append(date.month)
+            else:
+                json[date.year] = []
+                json[date.year].append(date.month)
 
-        response_json['volumes'] = per_month_responses
+        per_month_json = {}
+        for year in json:
+            per_month_json[year] = dict(Counter(
+                [calendar.month_abbr[date] for date in json[year]])
+            )
 
+        ordered_per_month_json = {}
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+        for year in per_month_json:
+            ordered_per_month_json[year] = OrderedDict()
+            for month in months:
+                ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
+
+        response_json['volumes'] = ordered_per_month_json
         return Response(response_json)
 
         def get_datetime(self, date):
@@ -126,6 +155,18 @@ class StoryVolumeView(KLPAPIView):
 
 
 class StoryDetailView(KLPAPIView):
+    """Returns questions and their corresponding answers.
+
+    source -- Source of data [web/ivrs].
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    from -- MM/DD/YYYY from when the data should be filtered.
+    to -- MM/DD/YYYY till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
         admin1_id = self.request.QUERY_PARAMS.get('district', None)
@@ -285,9 +326,8 @@ class StoryDetailView(KLPAPIView):
         return response_list
 
 class StoryMetaView(KLPAPIView):
-    """Returns:
-    1. Total number of Stories for Primary or Pre school for a
-    given source.
+    """Returns total number of stories and schools with stories
+    along with respondent types.
 
     source -- Source of data [web/ivrs].
     admin1 -- ID of the District.
