@@ -1,15 +1,25 @@
 from django.core.management.base import BaseCommand
 import csv
 from stories.models import Question, Questiongroup, QuestiongroupQuestions
+from optparse import make_option
 
 class Command(BaseCommand):
-    args = "filename to import from"
+    args = "<path to file>"
     help = """Import Key and Display Text metadata for questions
-                python manage.py import_question_metadata <path/to/file.csv>
+                python manage.py import_question_metadata --file=<path/to/file.csv>
             """
 
+    option_list = BaseCommand.option_list + (
+        make_option('--file',
+                    help='Path to the csv file'),
+    )
+
     def handle(self, *args, **options):
-        filename = args[0]
+
+        filename = options.get('file', None)
+        if not filename:
+            print "Please specify a filename with the --file argument"
+            return
         reader = csv.reader(open(filename))
         i = 0
         for row in reader:
@@ -34,5 +44,5 @@ class Command(BaseCommand):
             question.display_text = new_display_text
             question.key = key
             question.save()
-            
+
 
