@@ -220,34 +220,101 @@
 
     function renderFeatured(data) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
+        var featuredQuestionsPrimary = [
+            {
+                'source': 'ivrs',
+                'key': 'ivrss-teachers-present',
+                'source_prefix': 'IVRS: '
+            },
+            {
+                'source': 'ivrs',
+                'key': 'ivrss-classes-proper',
+                'source_prefix': 'IVRS: '
+            },
+            {
+                'source': 'community',
+                'key': 'comms2-functioning-toilets',
+                'source_prefix': 'Surveys: '
+            },
+            {
+                'source': 'community',
+                'key': 'comms2-drinking-water',
+                'source_prefix': 'Surveys: '
+            }
+        ];
+        var featuredQuestions = featuredQuestionsPrimary; //TODO: add preschool
+        var questionObjects = _.map(featuredQuestions, function(obj) {
+            return getQuestion(data, obj.source, obj.key);
+        });
 
-        var questions = [{
-            'question': 'IVRS: How many schools had all teachers present on the Day of Visit?',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }, {
-            'question': 'IVRS: How many schools had classes being conducted?',
-            'score': 260,
-            'total': 1000,
-            'percent': 26
-        }, {
-            'question': 'Surveys: How many schools had functional toilets?',
-            'score': 300,
-            'total': 1000,
-            'percent': 30
-        }, {
-            'question': 'Surveys: How many schools had drinking water?',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }];
+        var questions = getQuestionsArray(questionObjects);
+        //console.log("questions", questions);
+
+        // var questions = [{
+        //     'question': 'IVRS: How many schools had all teachers present on the Day of Visit?',
+        //     'score': 440,
+        //     'total': 1000,
+        //     'percent': 44
+        // }, {
+        //     'question': 'IVRS: How many schools had classes being conducted?',
+        //     'score': 260,
+        //     'total': 1000,
+        //     'percent': 26
+        // }, {
+        //     'question': 'Surveys: How many schools had functional toilets?',
+        //     'score': 300,
+        //     'total': 1000,
+        //     'percent': 30
+        // }, {
+        //     'question': 'Surveys: How many schools had drinking water?',
+        //     'score': 440,
+        //     'total': 1000,
+        //     'percent': 44
+        // }];
 
         var html = ''
         for (var pos in questions) {
             html = html + tplPercentGraph(questions[pos]);
         }
         $('#quicksummary').html(html);
+
+        function getQuestionsArray(questions) {
+            return _.map(questions, function(question, seq) {
+                var score = getYesScore(question.answers);
+                var total = getTotal(question.answers);
+                var percent = getPercent(score, total);
+                var qObj = featuredQuestions[seq];
+                var displayText = qObj.source_prefix + question.question.display_text;
+                return {
+                    'question': displayText,
+                    'score': score,
+                    'total': total,
+                    'percent': percent
+                };
+            });
+        }
+    }
+
+    function getYesScore(answers) {
+        var options = answers.options;
+        if (options.hasOwnProperty('Yes')) {
+            return options['Yes'];
+        } else {
+            return 0;
+        }
+    }
+
+    function getTotal(answers) {
+        return _.reduce(_.keys(answers.options), function(memo, answerKey) {
+            return memo + answers.options[answerKey];
+        }, 0);
+    }
+
+    function getPercent(score, total) {
+        if (total == 0) {
+            return 0;
+        }
+        return Math.round((score / total) * 100);
     }
 
     function renderIVRS(data) {
@@ -302,6 +369,16 @@
             html = html + tplPercentGraph(questions[pos]);
         }
         $('#ivrsquestions').html(html);
+    }
+
+    function getQuestion(data, source, key) {
+        for (var i=0, len=data[source].length; i<len; i++) {
+            var question = data[source][i];
+            if (question.question.key === key) {
+                return question;
+            }
+        }
+        return false;
     }
 
     function renderSurvey(data) {
