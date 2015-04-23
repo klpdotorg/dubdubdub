@@ -41,8 +41,8 @@ BEGIN
             ems_cl.active::integer as status
         FROM ems_tb_student_class as ems_cl
         WHERE ems_cl.student_id = r.ems_stuid AND
-            ems.student_group_id = r.ems_clid AND
-            ems.academic_id = r.ems_ayid;
+            ems_cl.student_group_id = r.ems_clid AND
+            ems_cl.academic_id = r.ems_ayid;
     END LOOP;
     RAISE NOTICE 'END OF LOOP';
     RETURN;
