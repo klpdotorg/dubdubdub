@@ -18,7 +18,7 @@ BEGIN
             www.mt::text <> ems.mt
         );
 
-    RAISE NOTICE '%', found;
+    RAISE NOTICE 'UPDATED SOMETHING: %', found;
 
     -- not there, so try to insert the key
     -- if someone else inserts the same key concurrently,
