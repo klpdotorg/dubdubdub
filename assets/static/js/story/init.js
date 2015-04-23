@@ -126,8 +126,9 @@
     }
 
     function renderIVRSVolumeChart(data) {
-        var labels = _.keys(data.volumes);
-        var values = _.values(data.volumes);
+        var months = data.volumes['2014']; //FIXME: deal with with academic year.
+        var labels = _.keys(months);
+        var values = _.values(months);
         var data_ivrs = {
             labels: labels,
             series: [
@@ -248,29 +249,6 @@
         });
 
         var questions = getQuestionsArray(questionObjects);
-        //console.log("questions", questions);
-
-        // var questions = [{
-        //     'question': 'IVRS: How many schools had all teachers present on the Day of Visit?',
-        //     'score': 440,
-        //     'total': 1000,
-        //     'percent': 44
-        // }, {
-        //     'question': 'IVRS: How many schools had classes being conducted?',
-        //     'score': 260,
-        //     'total': 1000,
-        //     'percent': 26
-        // }, {
-        //     'question': 'Surveys: How many schools had functional toilets?',
-        //     'score': 300,
-        //     'total': 1000,
-        //     'percent': 30
-        // }, {
-        //     'question': 'Surveys: How many schools had drinking water?',
-        //     'score': 440,
-        //     'total': 1000,
-        //     'percent': 44
-        // }];
 
         var html = ''
         for (var pos in questions) {
@@ -280,7 +258,7 @@
 
         function getQuestionsArray(questions) {
             return _.map(questions, function(question, seq) {
-                var score = getYesScore(question.answers);
+                var score = getScore(question.answers, 'Yes');
                 var total = getTotal(question.answers);
                 var percent = getPercent(score, total);
                 var qObj = featuredQuestions[seq];
@@ -295,10 +273,13 @@
         }
     }
 
-    function getYesScore(answers) {
+    function getScore(answers, option) {
+        if (typeof(option) == 'undefined') {
+            option = 'Yes';
+        }
         var options = answers.options;
-        if (options.hasOwnProperty('Yes')) {
-            return options['Yes'];
+        if (options.hasOwnProperty(option)) {
+            return options[option];
         } else {
             return 0;
         }
@@ -321,23 +302,29 @@
         var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         //define your data
+        var gradeQuestion = getQuestion(data, 'ivrs', 'ivrss-grade');
+        var gradeAnswers = gradeQuestion.answers;
+        var total = getTotal(gradeAnswers);
+        var scoreA = getScore(gradeAnswers, "1");
+        var scoreB = getScore(gradeAnswers, "2");
+        var scoreC = getScore(gradeAnswers, "3");
         var grades = [{
             'value': 'A',
-            'score': 440,
-            'total': 1000,
-            'percent': 44,
+            'score': scoreA,
+            'total': total,
+            'percent': getPercent(scoreA, total),
             'color': 'green-leaf'
         }, {
             'value': 'B',
-            'score': 260,
-            'total': 1000,
-            'percent': 26,
+            'score': scoreB,
+            'total': total,
+            'percent': getPercent(scoreB, total),
             'color': 'orange-mild'
         }, {
             'value': 'C',
-            'score': 300,
-            'total': 1000,
-            'percent': 30,
+            'score': scoreC,
+            'total': total,
+            'percent': getPercent(scoreC, total),
             'color': 'pink-salmon'
         }];
 
