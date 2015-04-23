@@ -249,28 +249,16 @@
         });
 
         var questions = getQuestionsArray(questionObjects);
-
+        var questions = _.map(questions, function(question, seq) {
+            question.display_text = featuredQuestions[seq].source_prefix + question.display_text;
+            return question;
+        });
         var html = ''
         for (var pos in questions) {
             html = html + tplPercentGraph(questions[pos]);
         }
         $('#quicksummary').html(html);
 
-        function getQuestionsArray(questions) {
-            return _.map(questions, function(question, seq) {
-                var score = getScore(question.answers, 'Yes');
-                var total = getTotal(question.answers);
-                var percent = getPercent(score, total);
-                var qObj = featuredQuestions[seq];
-                var displayText = qObj.source_prefix + question.question.display_text;
-                return {
-                    'question': displayText,
-                    'score': score,
-                    'total': total,
-                    'percent': percent
-                };
-            });
-        }
     }
 
     function getScore(answers, option) {
@@ -296,6 +284,22 @@
             return 0;
         }
         return Math.round((score / total) * 100);
+    }
+
+    function getQuestionsArray(questions) {
+        return _.map(questions, function(question, seq) {
+            var score = getScore(question.answers, 'Yes');
+            var total = getTotal(question.answers);
+            var percent = getPercent(score, total);
+            //var qObj = featuredQuestions[seq];
+            //var displayText = qObj.source_prefix + question.question.display_text;
+            return {
+                'question': question.question.display_text,
+                'score': score,
+                'total': total,
+                'percent': percent
+            };
+        });
     }
 
     function renderIVRS(data) {
@@ -334,22 +338,19 @@
         }
         $('#ivrsgrades').html(html);
 
-        var questions = [{
-            'question': 'How many schools were open on the day of visit?',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }, {
-            'question': 'In how many schools was the Headmaster present?',
-            'score': 260,
-            'total': 1000,
-            'percent': 26
-        }, {
-            'question': 'In how many schools were the toilets in good condition?',
-            'score': 300,
-            'total': 1000,
-            'percent': 30
-        }];
+        var IVRSQuestionKeys = [
+            'ivrss-school-open',
+            'ivrss-headmaster-present',
+            'ivrss-toilets-condition'
+        ];
+
+        var questionObjects = _.map(IVRSQuestionKeys, function(key) {
+            return getQuestion(data, 'ivrs', key);
+        });
+        //console.log("ivrs question objects", questionObjects);
+
+        var questions = getQuestionsArray(questionObjects);
+        //console.log("ivrs questions", questions);
 
         html = ''
         for (var pos in questions) {
@@ -370,38 +371,18 @@
 
     function renderSurvey(data) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
-
-        var questions = [{
-            'question': 'How many schools are the teachers regular?',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }, {
-            'question': 'How many schools have sufficient teachers?',
-            'score': 260,
-            'total': 1000,
-            'percent': 26
-        }, {
-            'question': 'In how many schools are teachers taking classes regularly?',
-            'score': 300,
-            'total': 1000,
-            'percent': 30
-        }, {
-            'question': 'How many schools have children getting academic attenction?',
-            'score': 440,
-            'total': 1000,
-            'percent': 44
-        }, {
-            'question': 'In how many schools are SDMC members involved?',
-            'score': 260,
-            'total': 1000,
-            'percent': 26
-        }, {
-            'question': 'In how many schools are there no concerns about Mid-day Meals?',
-            'score': 300,
-            'total': 1000,
-            'percent': 30
-        }];
+        var surveyQuestionKeys = [
+            'comms2-teachers-regular',
+            'comms2-sufficient-teachers',
+            'comms2-classes-regular',
+            'comms2-children-attention',
+            'comms2-sdmc-involved',
+            'comms2-food-concern'
+        ]
+        var questionObjects = _.map(surveyQuestionKeys, function(key) {
+            return getQuestion(data, 'community', key);
+        });
+        var questions = getQuestionsArray(questionObjects);
 
         var html = "<div class='chart-half-item'>";
         for (var pos in questions) {
