@@ -32,7 +32,7 @@ BEGIN
         WHERE tb_student_class.stuid IS NULL
         ORDER BY ems_stuid
     LOOP
-        RAISE NOTICE 'NEW STUDENT CLASS: %', r.ems_id;
+        RAISE NOTICE 'NEW STUDENT CLASS: %', r.ems_stuid;
 
         INSERT INTO tb_student_class SELECT
             ems_cl.student_id as stuid,
@@ -40,7 +40,7 @@ BEGIN
             ems_cl.academic_id::integer as ayid,
             ems_cl.active::integer as status
         FROM ems_tb_student_class as ems_cl
-        WHERE ems_cl.student_id = r.ems_id AND
+        WHERE ems_cl.student_id = r.ems_stuid AND
             ems.student_group_id = r.ems_clid AND
             ems.academic_id = r.ems_ayid;
     END LOOP;
