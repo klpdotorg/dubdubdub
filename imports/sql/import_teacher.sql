@@ -8,7 +8,7 @@ BEGIN
     SET name = regexp_replace(concat_ws(' ', ems.first_name, ems.middle_name, ems.last_name), '\s+', ' ', 'g'),
         sex = ems.gender::sex,
         status = ems.active,
-        mt = ems.mt::school_moi
+        mt = ems.mt::school_moi,
         dateofjoining = ems.doj::date,
         type = ems.staff_type
     FROM ems_tb_teacher as ems

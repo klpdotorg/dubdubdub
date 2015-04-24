@@ -84,6 +84,10 @@ CREATE TABLE ems_tb_student_class (
 	academic_id smallint,
 	active smallint
 );
+CREATE INDEX ON ems_tb_student_class(student_id);
+CREATE INDEX ON ems_tb_student_class(student_group_id);
+CREATE INDEX ON ems_tb_student_class(academic_id);
+
 CREATE TABLE ems_tb_student (
 	id int,
 	child_id int,
@@ -115,6 +119,7 @@ CREATE TABLE ems_tb_teacher (
 	doj text,
 	staff_type text
 );
+CREATE INDEX on ems_tb_teacher(id);
 CREATE TABLE ems_tb_teacher_qual (
 	staff_id smallint,
 	qualification text
