@@ -7,7 +7,7 @@ BEGIN
     UPDATE tb_programme as www
     SET name = regexp_replace(ems.name, '\s+', ' ', 'g'),
         start = ems.start_date,
-        end = ems.end_date,
+        "end" = ems.end_date,
         type = ems.programme_institution_category_id::integer
     FROM ems_tb_programme as ems
     WHERE www.id=ems.id AND
@@ -30,7 +30,7 @@ BEGIN
         LEFT JOIN tb_programme ON ems_tb_programme.id=tb_programme.id
         WHERE tb_programme.id IS NULL
     LOOP
-        INSERT INTO tb_programme(id, name, start, end, type) SELECT
+        INSERT INTO tb_programme(id, name, start, "end", type) SELECT
             ems.id,
             regexp_replace(ems.name, '\s+', ' ', 'g'),
             ems.start_date,

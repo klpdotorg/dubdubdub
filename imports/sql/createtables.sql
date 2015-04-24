@@ -57,6 +57,7 @@ CREATE TABLE ems_tb_programme (
 	end_date date,
 	programme_institution_category_id smallint
 );
+CREATE INDEX ON ems_tb_programme(id);
 CREATE TABLE ems_tb_question (
 	id smallint,
 	assessment_id smallint,
