@@ -21,6 +21,7 @@ BEGIN
         LEFT JOIN tb_teacher_qual ON ems_tb_teacher_qual.staff_id=tb_teacher_qual.tid
         WHERE tb_teacher_qual.tid IS NULL
     LOOP
+        RAISE NOTICE 'NEW TEACHER QUAL: %', r.ems_id;
         INSERT INTO tb_teacher_qual(tid, qualification) SELECT
             ems.staff_id,
             ems.qualification

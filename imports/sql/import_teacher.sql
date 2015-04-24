@@ -34,6 +34,8 @@ BEGIN
         LEFT JOIN tb_teacher ON ems_tb_teacher.id=tb_teacher.id
         WHERE tb_teacher.id IS NULL
     LOOP
+        RAISE NOTICE 'NEW TEACHER: %', r.ems_id;
+
         INSERT INTO tb_teacher(id, name, sex, status, mt, dateofjoining, type) SELECT
             ems.id,
             regexp_replace(concat_ws(' ', ems.first_name, ems.middle_name, ems.last_name), '\s+', ' ', 'g'),
