@@ -68,6 +68,7 @@ CREATE TABLE ems_tb_question (
 	score_min text,
 	grade text
 );
+CREATE INDEX ON ems_tb_question(id);
 CREATE TABLE ems_tb_school (
 	id integer,
 	boundary_id smallint,

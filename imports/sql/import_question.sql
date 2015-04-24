@@ -8,8 +8,8 @@ BEGIN
     SET assid = ems.assessment_id,
         "desc" = regexp_replace(ems.name, '\s+', ' ', 'g'),
         qtype = ems.question_type,
-        maxmarks = ems.score_max,
-        minmarks = ems.score_min,
+        maxmarks = ems.score_max::numeric,
+        minmarks = ems.score_min::numeric,
         grade = ems.grade
     FROM ems_tb_question as ems
     WHERE www.id=ems.id AND
@@ -17,8 +17,8 @@ BEGIN
             assid <> ems.assessment_id OR
             "desc" <> regexp_replace(ems.name, '\s+', ' ', 'g') OR
             qtype <> ems.question_type OR
-            maxmarks <> ems.score_max OR
-            minmarks <> ems.score_min OR
+            maxmarks <> ems.score_max::numeric OR
+            minmarks <> ems.score_min::numeric OR
             grade <> ems.grade
         );
 
@@ -40,8 +40,8 @@ BEGIN
             ems.assessment_id,
             regexp_replace(ems.name, '\s+', ' ', 'g'),
             ems.question_type,
-            ems.score_max,
-            ems.score_min,
+            ems.score_max::numeric,
+            ems.score_min::numeric,
             ems.grade
         FROM ems_tb_question as ems
         WHERE ems.id = r.ems_id;
