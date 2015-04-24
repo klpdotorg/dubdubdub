@@ -33,6 +33,7 @@ BEGIN
             )
         WHERE tb_student_eval.qid IS NULL
     LOOP
+        RAISE NOTICE 'NEW STUDENT EVAL: %', r.ems_qid;
         INSERT INTO tb_student_eval(qid, stuid, mark, grade) SELECT
             ems.question_id,
             ems.object_id,

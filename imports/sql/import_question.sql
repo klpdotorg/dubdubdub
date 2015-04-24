@@ -34,6 +34,7 @@ BEGIN
         LEFT JOIN tb_question ON ems_tb_question.id=tb_question.id
         WHERE tb_question.id IS NULL
     LOOP
+        RAISE NOTICE 'NEW QUESTION: %', r.ems_id;
         INSERT INTO tb_question(id, assid, "desc", qtype, maxmarks, minmarks, grade) SELECT
             ems.id,
             ems.assessment_id,

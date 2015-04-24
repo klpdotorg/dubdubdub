@@ -20,6 +20,7 @@ CREATE TABLE ems_tb_assessment (
 	start_date date,
 	end_date date
 );
+CREATE INDEX on ems_tb_assessment(id);
 CREATE TABLE ems_tb_bhierarchy (
 	id smallint,
 	boundary_category text

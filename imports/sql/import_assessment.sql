@@ -30,6 +30,7 @@ BEGIN
         LEFT JOIN tb_assessment ON ems_tb_assessment.id=tb_assessment.id
         WHERE tb_assessment.id IS NULL
     LOOP
+        RAISE NOTICE 'NEW ASSESSMENT: %', r.ems_id;
         INSERT INTO tb_assessment(id, name, pid, start, "end") SELECT
             ems.id,
             regexp_replace(ems.name, '\s+', ' ', 'g'),

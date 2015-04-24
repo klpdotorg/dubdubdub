@@ -30,6 +30,7 @@ BEGIN
         LEFT JOIN tb_programme ON ems_tb_programme.id=tb_programme.id
         WHERE tb_programme.id IS NULL
     LOOP
+        RAISE NOTICE 'NEW PROGRAMME: %', r.ems_id;
         INSERT INTO tb_programme(id, name, start, "end", type) SELECT
             ems.id,
             regexp_replace(ems.name, '\s+', ' ', 'g'),
