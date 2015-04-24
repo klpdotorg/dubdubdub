@@ -6,11 +6,9 @@ BEGIN
     -- first try to update the key
     UPDATE tb_assessment as www
     SET name = regexp_replace(ems.name, '\s+', ' ', 'g'),
-        sex = ems.gender::sex,
-        status = ems.active,
-        mt = ems.mt::school_moi,
-        dateofjoining = ems.doj::date,
-        type = ems.staff_type
+        pid = ems.programme_id,
+        start = ems.start_date,
+        "end" = ems.end_date
     FROM ems_tb_assessment as ems
     WHERE www.id=ems.id AND
         (
@@ -32,7 +30,7 @@ BEGIN
         LEFT JOIN tb_assessment ON ems_tb_assessment.id=tb_assessment.id
         WHERE tb_assessment.id IS NULL
     LOOP
-        INSERT INTO tb_assessment(id, name, pid, start, end) SELECT
+        INSERT INTO tb_assessment(id, name, pid, start, "end") SELECT
             ems.id,
             regexp_replace(ems.name, '\s+', ' ', 'g'),
             ems.programme_id,
