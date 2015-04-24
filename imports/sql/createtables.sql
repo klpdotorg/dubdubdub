@@ -13,6 +13,7 @@ CREATE TABLE ems_tb_address (
 	instidentification2 text,
 	route_information text
 );
+CREATE INDEX on ems_tb_address(id);
 CREATE TABLE ems_tb_assessment (
 	id smallint,
 	name text,
@@ -51,6 +52,8 @@ CREATE TABLE ems_tb_class (
 	class text,
 	section text
 );
+CREATE INDEX on ems_tb_class(id);
+CREATE INDEX on ems_tb_class(institution_id);
 CREATE TABLE ems_tb_programme (
 	id smallint,
 	name text,
@@ -82,6 +85,7 @@ CREATE TABLE ems_tb_school (
 	management text,
 	active smallint
 );
+CREATE INDEX on ems_tb_school(id);
 CREATE TABLE ems_tb_student_class (
 	student_id int,
 	student_group_id int,
@@ -98,6 +102,8 @@ CREATE TABLE ems_tb_student (
 	other_student_id text,
 	active smallint
 );
+CREATE INDEX on ems_tb_student(id);
+CREATE INDEX on ems_tb_student(child_id);
 CREATE TABLE ems_tb_student_eval (
 	question_id smallint,
 	object_id int,
@@ -105,12 +111,15 @@ CREATE TABLE ems_tb_student_eval (
 	answer_score text,
 	answer_grade text
 );
+CREATE INDEX on ems_tb_student_eval(question_id);
+CREATE INDEX on ems_tb_student_eval(object_id);
 CREATE TABLE ems_tb_teacher_class (
 	staff_id smallint,
 	student_group_id int,
 	academic_id smallint,
 	active smallint
 );
+CREATE INDEX on ems_tb_teacher_class(staff_id);
 CREATE TABLE ems_tb_teacher (
 	id smallint,
 	institution_id int,
@@ -128,3 +137,23 @@ CREATE TABLE ems_tb_teacher_qual (
 	staff_id smallint,
 	qualification text
 );
+CREATE INDEX on ems_tb_teacher_qual(staff_id);
+
+-- Analyze the tables
+ANALYZE ems_tb_academic_year;
+ANALYZE ems_tb_address;
+ANALYZE ems_tb_assessment;
+ANALYZE ems_tb_bhierarchy;
+ANALYZE ems_tb_boundary;
+ANALYZE ems_tb_boundary_type;
+ANALYZE ems_tb_child;
+ANALYZE ems_tb_class;
+ANALYZE ems_tb_programme;
+ANALYZE ems_tb_question;
+ANALYZE ems_tb_school;
+ANALYZE ems_tb_student_class;
+ANALYZE ems_tb_student;
+ANALYZE ems_tb_student_eval;
+ANALYZE ems_tb_teacher_class;
+ANALYZE ems_tb_teacher;
+ANALYZE ems_tb_teacher_qual;
