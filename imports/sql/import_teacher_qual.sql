@@ -3,17 +3,7 @@ $$
 DECLARE
     r RECORD;
 BEGIN
-    -- first try to update the key
-    UPDATE tb_teacher_qual as www
-    SET qualification = ems.qualification
-    FROM ems_tb_teacher_qual as ems
-    WHERE www.tid=ems.staff_id AND www.qualification <> ems.qualification;
-
-    RAISE NOTICE '%', found;
-
-    -- not there, so try to insert the key
-    -- if someone else inserts the same key concurrently,
-    -- we could get a unique-key failure
+    -- there is no primary key, so can't update anything
     FOR r IN
         SELECT ems_tb_teacher_qual.staff_id AS ems_id,
                tb_teacher_qual.tid AS www_id
