@@ -39,7 +39,7 @@ BEGIN
             regexp_replace(concat_ws(' ', ems.first_name, ems.middle_name, ems.last_name), '\s+', ' ', 'g'),
             ems.gender::sex,
             ems.active,
-            ems.mt::school_moi
+            ems.mt::school_moi,
             ems.doj::date,
             ems.staff_type
         FROM ems_tb_teacher as ems
