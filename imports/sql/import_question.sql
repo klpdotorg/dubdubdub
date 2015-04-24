@@ -19,7 +19,7 @@ BEGIN
             qtype <> ems.question_type OR
             maxmarks <> ems.score_max::numeric OR
             minmarks <> ems.score_min::numeric OR
-            grade <> ems.grade
+            www.grade <> ems.grade
         );
 
     RAISE NOTICE '%', found;

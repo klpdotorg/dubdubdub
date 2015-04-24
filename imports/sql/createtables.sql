@@ -69,6 +69,7 @@ CREATE TABLE ems_tb_question (
 	grade text
 );
 CREATE INDEX ON ems_tb_question(id);
+ALTER TABLE tb_question ALTER COLUMN "desc" TYPE varchar (200);
 CREATE TABLE ems_tb_school (
 	id integer,
 	boundary_id smallint,
