@@ -8,7 +8,8 @@
         klp.router = new KLPRouter();
         klp.router.init();
         initSelect2();
-        loadData();
+        loadData('Primary School');
+        loadData('Preschool');
         //get JS query params from URL
 
     }
@@ -75,15 +76,16 @@
         });
     }
 
-    function loadData() {
+    function loadData(schoolType) {
         var params = klp.router.getHash().queryParams;
-        var metaURL = "stories/meta/"; //FIXME: enter API url
+        var metaURL = "stories/meta"; //FIXME: enter API url
+        params['school_type'] = schoolType
         var $metaXHR = klp.api.do(metaURL, params);
 
         $metaXHR.done(function(data) {
             console.log("summary data", data);
-            renderSummary(data);
-            renderRespondentChart(data);
+            renderSummary(data, schoolType);
+            renderRespondentChart(data, schoolType);
         });
 
 
@@ -92,10 +94,12 @@
 
         $detailXHR.done(function(data) {
             console.log("detail data", data);
-            renderFeatured(data);
-            renderIVRS(data);
-            renderSurvey(data);
-            renderWeb(data);
+            renderFeatured(data, schoolType);
+            renderIVRS(data, schoolType);
+            renderWeb(data, schoolType);
+            if (schoolType == "Primary School")
+                renderSurvey(data); // Community Surveys currently not done in Anganwadis
+            
             //renderComparison(data);
         });
 
@@ -103,14 +107,13 @@
         var volumeURL = "stories/volume/";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
-            renderIVRSVolumeChart(data);
+            renderIVRSVolumeChart(data, schoolType);
         });
 
-        //TODO: do some loading behaviour
 
     }
 
-    function renderRespondentChart(data) {
+    function renderRespondentChart(data, schoolType) {
         var labels = _.keys(data.respondents);
         var values = _.values(data.respondents);
         //console.log(labels, values);
@@ -120,12 +123,14 @@
                 values
             ]
         };
-
-        renderBarChart('#chart_respondent', data_respondent);
+        var suffix = '';
+        if (schoolType == 'Preschool')
+            suffix = '_ang';
+        renderBarChart('#chart_respondent' + suffix, data_respondent);
 
     }
 
-    function renderIVRSVolumeChart(data) {
+    function renderIVRSVolumeChart(data, schoolType) {
         var months = data.volumes['2014']; //FIXME: deal with with academic year.
         var labels = _.keys(months);
         var values = _.values(months);
@@ -135,7 +140,11 @@
                 values
             ]
         };
-        renderBarChart('#chart_ivrs', data_ivrs);
+        var suffix = '';
+        if (schoolType == "Preschool") {
+            suffix = '_ang';
+        }
+        renderBarChart('#chart_ivrs' + suffix, data_ivrs);
     }
 
 
@@ -158,18 +167,28 @@
         });
     }
 
-    function renderSummary(data) {
+    function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplCountSummary = swig.compile($('#tpl-countSummary').html());
-        var topSummaryHTML = tplTopSummary(data);
-        $('#topSummary').html(topSummaryHTML);
+        var suffix = '';
+        var summaryLabel = "Schools";
 
+        if (schoolType == "Preschool") {
+            summaryLabel = "Preschools";
+            suffix = '_ang';
+        }
+
+        var summaryData = data;
+        summaryData['school_type'] = summaryLabel;
+        var topSummaryHTML = tplTopSummary(summaryData);
+        $('#topSummary' + suffix).html(topSummaryHTML);
+          
+        var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
         var summaries = {
             'ivrs': [{
-                'label': 'Schools',
+                'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': 'Schools with Stories',
+                'label': summaryLabel + ' with Stories',
                 'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
@@ -179,10 +198,10 @@
                 'count': '2015-2016'
             }],
             'survey': [{
-                'label': 'Schools',
+                'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': 'Schools with Stories',
+                'label': summaryLabel + ' with Stories',
                 'count': data.community.schools
             }, {
                 'label': 'Stories',
@@ -192,10 +211,10 @@
                 'count': '2015-2016'
             }],
             'web': [{
-                'label': 'Schools',
+                'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': 'Schools with Stories',
+                'label': summaryLabel + ' with Stories',
                 'count': data.web.schools
             }, {
                 'label': 'Verified Stories',
@@ -205,21 +224,22 @@
                 'count': '2015-2016'
             }]
         };
+
         var html = tplCountSummary({
             'summary': summaries['ivrs']
         });
-        $('#ivrssummary').html(html);
+        $('#ivrssummary' + suffix).html(html);
         html = tplCountSummary({
             'summary': summaries['survey']
         });
-        $('#surveysummary').html(html);
+        $('#surveysummary' + suffix).html(html);
         html = tplCountSummary({
             'summary': summaries['web']
         });
-        $('#websummary').html(html);
+        $('#websummary' + suffix).html(html);
     }
 
-    function renderFeatured(data) {
+    function renderFeatured(data, schoolType) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         var featuredQuestionsPrimary = [
             {
@@ -243,7 +263,34 @@
                 'source_prefix': 'Surveys: '
             }
         ];
-        var featuredQuestions = featuredQuestionsPrimary; //TODO: add preschool
+        var featuredQuestionsPreschool = [
+            {
+                'source': 'web',
+                'key': 'weba-anganwadi-time',
+                'source_prefix': 'Website: '
+            },
+            {
+                'source': 'ivrs',
+                'key': 'ivrsa-worker-present',
+                'source_prefix': 'IVRS: '
+            },
+            {
+                'source': 'web',
+                'key': 'weba-tlm',
+                'source_prefix': 'Website: '
+            },
+            {
+                'source': 'ivrs',
+                'key': 'ivrsa-activities-conducted',
+                'source_prefix': 'IVRS: '
+            }
+        ];
+        var featuredQuestions;
+        if (schoolType == 'Primary School')
+            featuredQuestions = featuredQuestionsPrimary;
+        else
+            featuredQuestions = featuredQuestionsPreschool;
+
         var questionObjects = _.map(featuredQuestions, function(obj) {
             return getQuestion(data, obj.source, obj.key);
         });
@@ -257,16 +304,25 @@
         for (var pos in questions) {
             html = html + tplPercentGraph(questions[pos]);
         }
-        $('#quicksummary').html(html);
+
+        var suffix = '';
+        if (schoolType == "Preschool") {
+            suffix = '_ang';
+        }
+        $('#quicksummary' + suffix).html(html);
 
     }
 
 
-    function renderIVRS(data) {
+    function renderIVRS(data, schoolType) {
         var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         //define your data
-        var gradeQuestion = getQuestion(data, 'ivrs', 'ivrss-grade');
+        var ivrs_grade = 'ivrss-grade';
+        if (schoolType == "Preschool") {
+            ivrs_grade = 'ivrsa-grade';
+        }
+        var gradeQuestion = getQuestion(data, 'ivrs', ivrs_grade);
         var gradeAnswers = gradeQuestion.answers;
         var total = getTotal(gradeAnswers);
         var scoreA = getScore(gradeAnswers, "1");
@@ -296,13 +352,28 @@
         for (var pos in grades) {
             html = html + "<div class='chart-athird-item'>" + tplGradeGraph(grades[pos]) + "</div>";
         }
-        $('#ivrsgrades').html(html);
 
-        var IVRSQuestionKeys = [
-            'ivrss-school-open',
-            'ivrss-headmaster-present',
-            'ivrss-toilets-condition'
-        ];
+        var suffix = '';
+        if (schoolType == "Preschool") {
+            suffix = '_ang';
+        }
+        $('#ivrsgrades' + suffix).html(html);
+
+        var IVRSQuestionKeys = [];
+        if (schoolType == "Primary School")
+        {
+            IVRSQuestionKeys = [
+                'ivrss-school-open',
+                'ivrss-headmaster-present',
+                'ivrss-toilets-condition'
+            ];
+        } else {
+            IVRSQuestionKeys = [
+                'ivrsa-center-open',
+                'ivrsa-worker-present'//,
+                //'ivrsa-how-many-children'
+            ];
+        }
 
         var questionObjects = _.map(IVRSQuestionKeys, function(key) {
             return getQuestion(data, 'ivrs', key);
@@ -316,7 +387,8 @@
         for (var pos in questions) {
             html = html + tplPercentGraph(questions[pos]);
         }
-        $('#ivrsquestions').html(html);
+
+        $('#ivrsquestions' + suffix).html(html);
     }
 
     function renderSurvey(data) {
@@ -345,13 +417,22 @@
         $('#surveyquestions').html(html);
     }
 
-    function renderWeb(data) {
+    function renderWeb(data, schoolType) {
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
-        var webQuestionKeys = [
-            'webs-food-being-cooked',
-            'webs-50percent-present',
-            'webs-teachers-present'
-        ];
+        var webQuestionKeys = [];
+        if (schoolType == "Primary School") {
+            webQuestionKeys = [
+                'webs-food-being-cooked',
+                'webs-50percent-present',
+                'webs-teachers-present'
+            ];
+        } else {
+            webQuestionKeys = [
+                'weba-50percent-present',
+                'weba-teacher-trained-disability',
+                'weba-bal-vikas-meetings'
+            ];
+        }
         var questionObjects = _.map(webQuestionKeys, function(key) {
             return getQuestion(data, 'web', key);
         });
@@ -361,35 +442,68 @@
         for (var pos in questions) {
             html = html + "<div class='chart-athird-item'>" + tplPercentGraph(questions[pos]) + "</div>";
         }
-        $('#webquestions').html(html);
+        var suffix = '';
+        if (schoolType == "Preschool") {
+            suffix = '_ang';
+        }
+        $('#webquestions' + suffix).html(html);
 
         var tplColorText = swig.compile($('#tpl-colorText').html());
 
-        var facilityQuestions = [{
-            'facility': 'All weather pucca building',
-            'icon': ['fa fa-university'],
-            'key': 'webs-pucca-building'
-        }, {
-            'facility': 'Playground',
-            'icon': ['fa fa-futbol-o'],
-            'key': 'webs-playground'
-        }, {
-            'facility': 'Drinking Water',
-            'icon': ['fa  fa-tint'],
-            'key': 'webs-drinking-water'
-        }, {
-            'facility': 'Library',
-            'icon': ['fa fa-book'],
-            'key': 'webs-library'
-        }, {
-            'facility': 'Toilets',
-            'icon': ['fa fa-male', 'fa fa-female'],
-            'key': 'webs-separate-toilets'
-        }, {
-            'facility': 'Secure Boundary Wall',
-            'icon': ['fa fa-circle-o-notch'],
-            'key': 'webs-boundary-wall'
-        }];
+        var facilityQuestions = [];
+        if ( schoolType == "Primary School" ) {
+            facilityQuestions = [{
+                'facility': 'All weather pucca building',
+                'icon': ['fa fa-university'],
+                'key': 'webs-pucca-building'
+            }, {
+                'facility': 'Playground',
+                'icon': ['fa fa-futbol-o'],
+                'key': 'webs-playground'
+            }, {
+                'facility': 'Drinking Water',
+                'icon': ['fa  fa-tint'],
+                'key': 'webs-drinking-water'
+            }, {
+                'facility': 'Library',
+                'icon': ['fa fa-book'],
+                'key': 'webs-library'
+            }, {
+                'facility': 'Toilets',
+                'icon': ['fa fa-male', 'fa fa-female'],
+                'key': 'webs-separate-toilets'
+            }, {
+                'facility': 'Secure Boundary Wall',
+                'icon': ['fa fa-circle-o-notch'],
+                'key': 'webs-boundary-wall'
+            }];
+        } else {
+            facilityQuestions = [{
+                'facility': 'A proper designated building',
+                'icon': ['fa fa-university'],
+                'key': 'weba-proper-building'
+            }, {
+                'facility': 'Play Material',
+                'icon': ['fa fa-futbol-o'],
+                'key': 'weba-play-material'
+            }, {
+                'facility': 'Drinking Water',
+                'icon': ['fa  fa-tint'],
+                'key': 'weba-drinking-water'
+            }, {
+                'facility': 'Mid-day meal',
+                'icon': ['fa fa-spoon'],
+                'key': 'weba-food-ontime'
+            }, {
+                'facility': 'Toilets',
+                'icon': ['fa fa-male', 'fa fa-female'],
+                'key': 'weba-toilet'
+            }, {
+                'facility': 'Secure Boundary Wall',
+                'icon': ['fa fa-circle-o-notch'],
+                'key': 'weba-boundary-security'
+            }];
+        }
 
         var questionObjects = _.map(facilityQuestions, function(question) {
             return getQuestion(data, 'web', question.key);
@@ -409,7 +523,7 @@
         for (var pos in facilities) {
             html = html + tplColorText(facilities[pos]);
         }
-        $('#webfacilities').html(html);
+        $('#webfacilities' + suffix).html(html);
 
     }
 
