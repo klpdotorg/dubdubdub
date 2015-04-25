@@ -31,13 +31,13 @@
 	/*padding-top: 25px;*/
 	margin-left:auto;
 	margin-right:auto;
-	width: auto;
+	width: 100px;
 	display:block;
 }
 
 @include media-med {
 	.img-symbol {
-		width: 100px;
+		width: auto;
 	}
 }
 
