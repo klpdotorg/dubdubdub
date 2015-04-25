@@ -184,12 +184,45 @@ class StoryDetailView(KLPAPIView):
                 raise APIException("Please enter `from` in the format MM/DD/YYYY")
             else:
                 start_date = self.get_datetime(start_date)
+
         if end_date:
             sane = self.check_date_sanity(end_date)
             if not sane:
                 raise APIException("Please enter `to` in the format MM/DD/YYYY")
             else:
                 end_date = self.get_datetime(end_date)
+
+        stories = Story.objects.all()
+
+        if source:
+            stories = stories.filter(group__source__name=source)
+
+        if school_type:
+            stories = stories.filter(school__admin3__type__name=school_type)
+
+        if admin1_id:
+            stories = stories.filter(
+                school__schooldetails__admin1__id=admin1_id
+            )
+
+        if admin2_id:
+            stories = stories.filter(
+                school__schooldetails__admin2__id=admin2_id
+            )
+
+        if admin3_id:
+            stories = stories.filter(
+                school__schooldetails__admin3__id=admin3_id
+            )
+
+        if school_id:
+            stories = stories.filter(school__id=school_id)
+
+        if start_date:
+            stories = stories.filter(date_of_visit__gte=start_date)
+
+        if end_date:
+            stories = stories.filter(date_of_visit__lte=end_date)
 
         response_json = {}
 
@@ -208,21 +241,22 @@ class StoryDetailView(KLPAPIView):
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
-                Counter([a.text for a in question.answer_set.all()])
+                Counter(
+                    [a.text for a in question.answer_set.filter(
+                        story__in=stories)]
+                )
             )
             response_json['featured'].append(j)
 
         # Sources and filters
         if source:
             response_json[source] = self.get_que_and_ans(
-                source, admin1_id, admin2_id, admin3_id, school_id,
-                start_date, end_date, school_type)
+                stories, source, school_type)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
                 response_json[source] = self.get_que_and_ans(
-                    source, admin1_id, admin2_id, admin3_id, school_id,
-                    start_date, end_date, school_type)
+                    stories, source, school_type)
 
         return Response(response_json)
 
@@ -257,16 +291,7 @@ class StoryDetailView(KLPAPIView):
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
 
-    def get_que_and_ans(self, *args):
-        source = args[0]
-        admin1_id = args[1]
-        admin2_id = args[2]
-        admin3_id = args[3]
-        school_id = args[4]
-        start_date = args[5]
-        end_date = args[6]
-        school_type = args[7]
-
+    def get_que_and_ans(self, stories, source, school_type):
         response_list = []
 
         questions = Question.objects.all(
@@ -282,33 +307,6 @@ class StoryDetailView(KLPAPIView):
             questions = questions.filter(
                 school_type__name=school_type)
 
-        if admin1_id:
-            questions = questions.filter(
-                questiongroup__story__school__schooldetails__admin1__id=admin1_id
-            )
-
-        if admin2_id:
-            questions = questions.filter(
-                questiongroup__story__school__schooldetails__admin2__id=admin2_id
-            )
-
-        if admin3_id:
-            questions = questions.filter(
-                questiongroup__story__school__schooldetails__admin3__id=admin3_id
-            )
-
-        if school_id:
-            questions = question.filter(
-                questiongroup__story__school__id=school_id)
-
-        if start_date:
-            questions = questions.filter(
-                questiongroup__story__date_of_visit__gte=start_date)
-
-        if end_date:
-            questions = questions.filter(
-                questiongroup__story__date_of_visit__lte=end_date)
-
         for question in questions.distinct('id'):
             j = {}
             j['question'] = {}
@@ -318,7 +316,10 @@ class StoryDetailView(KLPAPIView):
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
             j['answers']['options'] = dict(
-                Counter([a.text for a in question.answer_set.all()])
+                Counter(
+                    [a.text for a in question.answer_set.filter(
+                        story__in=stories)]
+                )
             )
 
             response_list.append(j)
