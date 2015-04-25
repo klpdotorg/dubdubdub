@@ -3945,15 +3945,15 @@ code {
 
 .img-symbol {
   vertical-align: middle;
-  padding-top: 25px;
+  /*padding-top: 25px;*/
   margin-left: auto;
   margin-right: auto;
-  width: 100px;
+  width: auto;
   display: block; }
 
 @media only screen and (min-width: 750px) {
   .img-symbol {
-    width: auto; } }
+    width: 100px; } }
 .bar-label {
   width: 100%; }
 
