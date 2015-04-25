@@ -43,8 +43,8 @@ class StoryVolumeView(KLPAPIView):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
-    from -- MM/DD/YYYY from when the data should be filtered.
-    to -- MM/DD/YYYY till when the data should be filtered.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
     """
 
@@ -61,13 +61,14 @@ class StoryVolumeView(KLPAPIView):
         if start_date:
             sane = self.check_date_sanity(start_date)
             if not sane:
-                raise APIException("Please enter `from` in the format MM/DD/YYYY")
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
                 start_date = self.get_datetime(start_date)
+
         if end_date:
             sane = self.check_date_sanity(end_date)
             if not sane:
-                raise APIException("Please enter `to` in the format MM/DD/YYYY")
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
                 end_date = self.get_datetime(end_date)
 
@@ -123,13 +124,13 @@ class StoryVolumeView(KLPAPIView):
         return Response(response_json)
 
         def get_datetime(self, date):
-            return datetime.datetime.strptime(date, '%m/%d/%Y')
+            return datetime.datetime.strptime(date, '%Y-%m-%d')
 
         def check_date_sanity(self, date):
             try:
-                month = date.split("/")[0]
-                day = date.split("/")[1]
-                year = date.split("/")[2]
+                year = date.split("-")[0]
+                month = date.split("-")[1]
+                day = date.split("-")[2]
             except:
                 return False
 
@@ -162,8 +163,8 @@ class StoryDetailView(KLPAPIView):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
-    from -- MM/DD/YYYY from when the data should be filtered.
-    to -- MM/DD/YYYY till when the data should be filtered.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
     """
 
@@ -181,14 +182,14 @@ class StoryDetailView(KLPAPIView):
         if start_date:
             sane = self.check_date_sanity(start_date)
             if not sane:
-                raise APIException("Please enter `from` in the format MM/DD/YYYY")
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
                 start_date = self.get_datetime(start_date)
 
         if end_date:
             sane = self.check_date_sanity(end_date)
             if not sane:
-                raise APIException("Please enter `to` in the format MM/DD/YYYY")
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
                 end_date = self.get_datetime(end_date)
 
@@ -261,13 +262,13 @@ class StoryDetailView(KLPAPIView):
         return Response(response_json)
 
     def get_datetime(self, date):
-        return datetime.datetime.strptime(date, '%m/%d/%Y')
+        return datetime.datetime.strptime(date, '%Y-%m-%d')
 
     def check_date_sanity(self, date):
         try:
-            month = date.split("/")[0]
-            day = date.split("/")[1]
-            year = date.split("/")[2]
+            year = date.split("-")[0]
+            month = date.split("-")[1]
+            day = date.split("-")[2]
         except:
             return False
 
@@ -335,8 +336,8 @@ class StoryMetaView(KLPAPIView):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
-    from -- MM/DD/YYYY from when the data should be filtered.
-    to -- MM/DD/YYYY till when the data should be filtered.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
     """
 
@@ -354,13 +355,14 @@ class StoryMetaView(KLPAPIView):
         if start_date:
             sane = self.check_date_sanity(start_date)
             if not sane:
-                raise APIException("Please enter `from` in the format MM/DD/YYYY")
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
                 start_date = self.get_datetime(start_date)
+
         if end_date:
             sane = self.check_date_sanity(end_date)
             if not sane:
-                raise APIException("Please enter `to` in the format MM/DD/YYYY")
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
                 end_date = self.get_datetime(end_date)
 
@@ -414,13 +416,13 @@ class StoryMetaView(KLPAPIView):
         return {usertypes[key]: value for key, value in json.iteritems()}
 
     def get_datetime(self, date):
-        return datetime.datetime.strptime(date, '%m/%d/%Y')
+        return datetime.datetime.strptime(date, '%Y-%m-%d')
 
     def check_date_sanity(self, date):
         try:
-            month = date.split("/")[0]
-            day = date.split("/")[1]
-            year = date.split("/")[2]
+            year = date.split("-")[0]
+            month = date.split("-")[1]
+            day = date.split("-")[2]
         except:
             return False
 
