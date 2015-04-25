@@ -106,12 +106,12 @@ declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT innerloop.sid as id,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+    query:='SELECT innerloop.sid as id,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q WHERE se.stuid=stusg.stuid and se.qid=q.id and  stusg.clid=sg.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,sg.sid,sg.name,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||' and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%'') )as assmaxscore group by innerloop.sid,innerloop.sgname,assmaxscore.maxscore';
+        query=query||'group by se.stuid,sg.sid,sg.name,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||' and ("desc" !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.sid,innerloop.sgname,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -127,12 +127,12 @@ declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT innerloop.sid as id,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,q.assid as assid,c.sex as gender, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+    query:='SELECT innerloop.sid as id,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,q.assid as assid,c.sex as gender, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,sg.sid,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%''  or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.sid,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
+        query=query||'group by se.stuid,sg.sid,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.sid,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -149,12 +149,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.sid as id,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,c.mt as mt,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.sid as id,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, sg.sid as sid,c.mt as mt,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,sg.sid,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.sid,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
+        query=query||'group by se.stuid,sg.sid,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.sid,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -170,12 +170,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid,s.bid as admin3,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'' ) and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid,s.bid as admin3,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q WHERE se.stuid=stusg.stuid and se.qid=q.id and stusg.clid=sg.id and sg.sid=s.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'' ) and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null)and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,s.bid,sg.name,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin3,innerloop.sgname,assmaxscore.maxscore';
+        query=query||'group by se.stuid,s.bid,sg.name,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin3,innerloop.sgname,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -191,12 +191,12 @@ declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, s.bid  as admin3,q.assid as assid,c.sex as gender, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+    query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, s.bid  as admin3,q.assid as assid,c.sex as gender, sum(case when q.qtype=1 then se.mark else  se.grade::int end) as totscore,sg.name as sgname from tb_school s, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,s.bid,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%'' ))as assmaxscore group by innerloop.admin3,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
+        query=query||'group by se.stuid,s.bid,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin3,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -213,12 +213,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, s.bid as admin3,c.mt as mt,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%'')) and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin3 as admin3,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, s.bid as admin3,c.mt as mt,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_school s, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*'')) and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,s.bid,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin3,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
+        query=query||'group by se.stuid,s.bid,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin3,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -235,12 +235,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid,b.parent as admin2,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_boundary b, tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid,b.parent as admin2,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_boundary b, tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q WHERE se.stuid=stusg.stuid and se.qid=q.id and  stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null)and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b.parent,sg.name,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin2,innerloop.sgname,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b.parent,sg.name,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin2,innerloop.sgname,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -256,12 +256,12 @@ declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b.parent as admin2,q.assid as assid,c.sex as gender, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s, tb_boundary b, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'' )and (se.grade is not null or se.mark is not null)';
+    query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b.parent as admin2,q.assid as assid,c.sex as gender, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_school s, tb_boundary b, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'' )and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b.parent,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%''  or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin2,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b.parent,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin2,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -278,12 +278,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b.parent as admin2,c.mt as mt,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s,tb_boundary b, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin2 as admin2,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b.parent as admin2,c.mt as mt,q.assid as assid, sum(case when q.qtype=1 then se.mark else  se.grade::int end) as totscore,sg.name as sgname from tb_school s,tb_boundary b, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b.parent,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin2,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b.parent,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin2,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -301,12 +301,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_boundary b,tb_boundary b1, tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,q.assid as assid, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_boundary b,tb_boundary b1, tb_school s, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q WHERE se.stuid=stusg.stuid and se.qid=q.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null)and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b1.parent,sg.name,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin1,innerloop.sgname,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b1.parent,sg.name,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin1,innerloop.sgname,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -322,12 +322,12 @@ declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,q.assid as assid,c.sex as gender, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s, tb_boundary b,tb_boundary b1, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+    query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname,innerloop.gender as gender, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,q.assid as assid,c.sex as gender, sum(case when q.qtype=1 then se.mark else se.grade::int end) as totscore,sg.name as sgname from tb_school s, tb_boundary b,tb_boundary b1, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id and stu.cid=c.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b1.parent,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%''  or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin1,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b1.parent,sg.name,q.assid,c.sex ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin1,innerloop.sgname,innerloop.gender,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
@@ -344,12 +344,12 @@ declare
         schs RECORD;
         query text;
 begin
-        query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,c.mt as mt,q.assid as assid, sum(case when q.qtype=0 then se.grade::int else se.mark end) as totscore,sg.name as sgname from tb_school s,tb_boundary b,tb_boundary b1, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
+        query:='SELECT innerloop.admin1 as admin1,innerloop.sgname as sgname,innerloop.mt as mt, round((sum(innerloop.totscore)/count(innerloop.stuid))*100/assmaxscore.maxscore) as mean FROM( select distinct se.stuid as stuid, b1.parent as admin1,c.mt as mt,q.assid as assid, sum(case when q.qtype=1 then se.mark else  se.grade::int end) as totscore,sg.name as sgname from tb_school s,tb_boundary b,tb_boundary b1, tb_child c, tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and stu.cid=c.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and sg.sid=s.id and s.bid=b.id and b.parent=b1.id AND stusg.ayid = '||inayid||' and sg.name='||insgname||'::text and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.grade is not null or se.mark is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.grade is not null or se.mark is not null) and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by se.stuid,b1.parent,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=0 then 1 else maxmarks end) as maxscore from tb_question where assid='||inassid||'and ("desc" not like ''%AB%'' or "desc" not like ''%Attendance%'' or "desc" not like ''%Parihara%''))as assmaxscore group by innerloop.admin1,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
+        query=query||'group by se.stuid,b1.parent,sg.name,c.mt,q.assid ) as innerloop,(select sum(case when qtype=1 then maxmarks else 1 end) as maxscore from tb_question where assid='||inassid||'and ("desc"  !~ ''^.*(AB|Attendance|Parihara).*''))as assmaxscore group by innerloop.admin1,innerloop.sgname,innerloop.mt,assmaxscore.maxscore';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop

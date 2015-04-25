@@ -330,7 +330,7 @@ class AssessmentInfoSerializer(KLPSerializer):
         singlescore["boundary"]["admin2"]=admin2data
 
         genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
-        singlescore["boundary"]["admin1"]["gender"]=genderdata
+        singlescore["boundary"]["admin2"]["gender"]=genderdata
 
         mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
         singlescore["boundary"]["admin2"]["mt"]=mtdata
@@ -384,16 +384,40 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
 
     def get_singlescore_details(self,obj):
         singlescore={}
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore['gender']=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore['mt']=mtdata
 
         singlescore["boundary"]={}
         if obj.boundary.hierarchy.id==11 or obj.boundary.hierarchy.id==15:
           admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin2"]=admin2data
+
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin2"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin2"]["mt"]=mtdata
+
           admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
+
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["mt"]=mtdata
+
         elif obj.boundary.hierarchy.id==10 or obj.boundary.hierarchy.id==14:
           admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["mt"]=mtdata
         return singlescore
 
 
@@ -441,12 +465,31 @@ class ProgrammeInfoSerializer(KLPSerializer):
         singlescore["boundary"]={}
         admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin1"]=admin1data
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin1,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore["boundary"]["admin1"]["mt"]=mtdata
 
         admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin2"]=admin2data
 
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin2"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin2,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore["boundary"]["admin2"]["mt"]=mtdata
+
         admin3data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
         singlescore["boundary"]["admin3"]=admin3data
+
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore["boundary"]["admin3"]["gender"]=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.school.schooldetails.admin3,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+
+        singlescore["boundary"]["admin3"]["mt"]=mtdata
+
         return singlescore
 
 
@@ -486,14 +529,39 @@ class BoundaryProgrammeInfoSerializer(KLPSerializer):
 
     def get_singlescore_details(self,obj):
         singlescore={}
+        genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+        singlescore['gender']=genderdata
+
+        mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+        singlescore['mt']=mtdata
+
         singlescore["boundary"]={}
         if obj.boundary.hierarchy.id==11 or obj.boundary.hierarchy.id==15:
           admin2data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin2"]=admin2data
+
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin2"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin2"]["mt"]=mtdata
+
           admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["mt"]=mtdata
+
+
         elif obj.boundary.hierarchy.id==10 or obj.boundary.hierarchy.id==14:
           admin1data=BoundaryAssessmentSinglescore.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('singlescore','percentile','boundary__name','boundary')[0]
           singlescore["boundary"]["admin1"]=admin1data
+          genderdata= BoundaryAssessmentSinglescoreGender.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('sex','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["gender"]=genderdata
+
+          mtdata= BoundaryAssessmentSinglescoreMt.objects.filter(boundary=obj.boundary.parent,studentgroup=obj.studentgroup,assessment=obj.assessment).values('mt','singlescore','percentile')
+          singlescore["boundary"]["admin1"]["mt"]=mtdata
         return singlescore
 
