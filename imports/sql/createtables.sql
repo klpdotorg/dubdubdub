@@ -138,22 +138,3 @@ CREATE TABLE ems_tb_teacher_qual (
 	qualification text
 );
 CREATE INDEX on ems_tb_teacher_qual(staff_id);
-
--- Analyze the tables
-ANALYZE ems_tb_academic_year;
-ANALYZE ems_tb_address;
-ANALYZE ems_tb_assessment;
-ANALYZE ems_tb_bhierarchy;
-ANALYZE ems_tb_boundary;
-ANALYZE ems_tb_boundary_type;
-ANALYZE ems_tb_child;
-ANALYZE ems_tb_class;
-ANALYZE ems_tb_programme;
-ANALYZE ems_tb_question;
-ANALYZE ems_tb_school;
-ANALYZE ems_tb_student_class;
-ANALYZE ems_tb_student;
-ANALYZE ems_tb_student_eval;
-ANALYZE ems_tb_teacher_class;
-ANALYZE ems_tb_teacher;
-ANALYZE ems_tb_teacher_qual;

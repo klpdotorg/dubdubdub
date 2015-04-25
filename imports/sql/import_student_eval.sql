@@ -9,13 +9,13 @@ BEGIN
         grade = ems.answer_grade
     FROM ems_tb_student_eval as ems
     WHERE www.qid=ems.question_id AND
-        www.stuid=ems.student_id AND
+        www.stuid=ems.object_id AND
         (
             www.mark <> ems.answer_score::numeric(5,2) OR
             www.grade <> ems.answer_grade
         );
 
-    RAISE NOTICE '%', found;
+    RAISE NOTICE 'UPDATED SOMETHING: %', found;
 
     -- not there, so try to insert the key
     -- if someone else inserts the same key concurrently,
@@ -40,7 +40,7 @@ BEGIN
             ems.answer_score::numeric(5,2),
             ems.answer_grade
         FROM ems_tb_student_eval as ems
-        WHERE ems.id = r.ems_qid AND ems.object_id=r.ems_stuid;
+        WHERE ems.question_id = r.ems_qid AND ems.object_id=r.ems_stuid;
     END LOOP;
     RETURN;
 END;

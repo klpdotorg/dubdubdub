@@ -32,6 +32,7 @@ if [ $recreate_tables = on ]; then
         filename=$(basename $f .csv)
         echo "Inserting data to temp table: $filename"
         psql -U klp -d $dbname -c "copy ems_$filename from '$f' CSV HEADER"
+        psql -U klp -d $dbname -c "analyze ems_$filename"
     done
 fi
 
