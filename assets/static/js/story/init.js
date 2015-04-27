@@ -23,11 +23,21 @@
     function hashChanged(params) {
         //FIXME: clear all the things, do a loading state.
         console.log("hashchange called", params);
-        if (!params.school_type) {
-            loadData(preschoolString, params.queryParams);
-            loadData(schoolString, params.queryParams);
+        var queryParams = params.queryParams;
+        if (!queryParams.school_type) {
+            loadData(preschoolString, queryParams);
+            loadData(schoolString, queryParams);
+            $('#preschoolContainer').show();
+            $('#primarySchoolContainer').show();
         } else {
-            loadData(params.school_type, params.queryParams);
+            if (queryParams.school_type == preschoolString) {
+                $('#primarySchoolContainer').hide();
+                $('#preschoolContainer').show();
+            } else {
+                $('#primarySchoolContainer').show();
+                $('#preschoolContainer').hide();                
+            }
+            loadData(queryParams.school_type, queryParams);
         }
     }
 
@@ -85,7 +95,7 @@
             var schoolType = null;
 
             //FIXME: when back-end params get more sane
-            if (paramKey in ['admin1', 'admin2', 'admin3']) {
+            if (['admin1', 'admin2', 'admin3'].indexOf(paramKey) !== -1) {
                 schoolType = choice.added.data.properties.school_type;
                 schoolType = schoolType == 'preschool' ? preschoolString : schoolString;
             } else if (paramKey == 'school_id') {
