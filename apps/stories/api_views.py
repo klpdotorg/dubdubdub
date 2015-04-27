@@ -410,7 +410,9 @@ class StoryMetaView(KLPAPIView):
             'EO' : 'EDUCATION_OFFICIAL',
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
-        json = Counter(Story.objects.all().values_list(
+        json = Counter(Story.objects.filter(
+            school__admin3__type__name=school_type
+        ).values_list(
             'user_type__name', flat=True))
         del json[None]
         return {usertypes[key]: value for key, value in json.iteritems()}
