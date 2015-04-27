@@ -343,9 +343,9 @@ class StoryMetaView(KLPAPIView):
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
-        admin1_id = self.request.QUERY_PARAMS.get('district', None)
-        admin2_id = self.request.QUERY_PARAMS.get('block', None)
-        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
+        admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
+        admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
+        admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
         school_id = self.request.QUERY_PARAMS.get('school_id', None)
         start_date = self.request.QUERY_PARAMS.get('from', None)
         end_date = self.request.QUERY_PARAMS.get('to', None)
