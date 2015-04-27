@@ -19,9 +19,10 @@ do
 done
 shift `expr $OPTIND - 1`
 
+sudo -u postgres psql -d $dbname -f imports/sql/import_academic_year.sql
 sudo -u postgres psql -d $dbname -f imports/sql/import_boundary.sql
 python manage.py import_ems # import schools and address
-sudo -u postgres psql -d $dbname -f imports/sql/import_child.sql
+sudo -u postgres psql -d $dbname -f imports/sql/import_children.sql
 sudo -u postgres psql -d $dbname -f imports/sql/import_class.sql
 sudo -u postgres psql -d $dbname -f imports/sql/import_student.sql
 sudo -u postgres psql -d $dbname -f imports/sql/import_student_class.sql
