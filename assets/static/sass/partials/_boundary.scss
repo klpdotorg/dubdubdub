@@ -1,0 +1,76 @@
+/* Defining mixins for the chart trials page*/
+
+@mixin col-60-flt {
+  width: 60%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-20-flt {
+  width: 30%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-10-flt {
+  width: 10%;
+  float: left;
+  @include grid-child;  
+}
+
+
+@include media-med {
+
+	.page-parent{
+	  @include grid-parent;
+	}
+
+	.klp-summary{
+	  @include col-20-flt;
+	}
+
+	.dise-summary{
+	  @include col-60-flt;
+	}
+
+	.acad-year{
+	  @include col-20-flt;
+	}
+
+	.half-column{
+	  @include col-50-flt;
+	}
+
+	.third-column{
+	  @include col-33-flt;
+	}
+}
+
+/* Defining a text align -left */
+
+.align-left {
+  text-align: left; 
+}
+
+.img-symbol {
+	vertical-align: middle;
+	/*padding-top: 25px;*/
+	margin-left:auto;
+	margin-right:auto;
+	width: 100px;
+	display:block;
+}
+
+@include media-med {
+	.img-symbol {
+		width: auto;
+	}
+}
+
+.bar-label {
+  width: 100%; 
+}
+
+.taller {
+	height: 150px;
+}

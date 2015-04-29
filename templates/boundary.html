@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Boundary Details{% endblock %}
+
+{% block css_extra %}
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+<style>
+  code {
+    font-family: 'Source Code Pro';
+  }
+
+  .alert {
+    position: static;
+  }
+</style>
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
+  <script src="{% static 'js/school/tabs.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
+  <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
+  <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
+
+  {% endcompress %}
+{% endblock %}
+
+{% block subheader %}
+  <div class="subheader-wrapper">
+    <div class="subheader-content">
+      {% include 'includes/_breadcrumb.html' %}        
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+<section class="boundary-page">
+  <div class="school-map-wrapper">
+    <div class="map-canvas" id="map-canvas"></div>
+      <div class="school-map-info">
+        <div class="container">
+          <div class="grid-parent">
+            <div class="info-wrapper" id="boundary-info-wrapper">
+            </div>
+            <div class="button-compare-wrap">
+              <a class="button-grey js-trigger-compare" href="">Compare to</a>
+            </div>          
+        </div>
+      </div> <!-- /container -->
+    </div> <!-- /school-map-info -->      
+  </div> <!-- /boundary-map-wrapper -->
+
+  <div class="tab-wrap">
+    <div class="tab-wrap-widescreen">
+      <div data-tab="school" class="js-tab-link tab-heading tab-heading-active">Schools</div>
+      <div data-tab="preschool" class="js-tab-link tab-heading">Preschools</div>
+    </div> <!-- /tab-wrap-widescreen -->
+
+    <!--div class="tab-each">
+      <div class="tab-content font-small" data-tab="school"-->
+        <div class="container">
+          <div id="school-summary"></div> 
+        </div>
+      <!--/div-->
+      <!-- School Tab END -->            
+    </div>
+    <div class="tab-each">
+      <div class="tab-content tab-active" data-tab="preschool">
+        <div class="container">
+          Loading...        
+        </div>
+      </div>
+    </div>
+    <!-- Preschool Tab END -->  
+  </div> <!-- /tab-wrap -->
+</section>
+{% include 'frontend_templates/boundary.html' %}
+{% endblock %}

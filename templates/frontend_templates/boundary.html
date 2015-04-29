@@ -1,0 +1,75 @@
+{% verbatim %}
+<script type="text/html" id="tpl-boundary-info">
+  <h2 class="heading-secondary">
+    <span class="icon-number">
+      {% if type_name == 'school' %} C {% else %} C {% endif %}
+    </span>
+    {{ admin3.name|capitalize }}
+  </h2>
+  
+  <ul class="map-location-labels font-smallest">  
+    <li class="map-label-each">
+      <div class="map-label-title">District</div>
+      <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+    </li>
+    <li class="map-label-each">
+      <div class="map-label-title">{% if type.id==1 %}Block {% else %} Project {% endif %}</div>
+      <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+    </li>
+  </ul>
+</script>
+
+<script type="text/html" id="tpl-school-summary">
+    <div class="page-parent"
+        <div class="klp-summary">
+            <div class="top">
+                <div class="heading-tiny-uppercase align-left" >Source</div>
+                <h2 class="heading-secondary brand-blue align-left">KLP</h2>
+            </div> 
+            <div class="half-column">
+                <div class="heading-tiny-uppercase  align-left" >Schools</div>
+                <h2 class="heading-secondary brand-blue align-left">{{ klp.schools }}</h2> 
+            </div>
+            <div class="half-column">
+                <div class="heading-tiny-uppercase align-left" >Students</div>
+                <div class="module-stats-icon module-stats-boygirl">
+                  <span class="icon-boy-girl"></span>
+                  <div class="module-stats-info">
+                    <div class="uppercase">Total</div>
+                    <p class="module-stats-label">{{ klp.students }}</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="dise-summary">
+            <div class="top">
+                <div class="heading-tiny-uppercase align-left" >Source</div>
+                <h2 class="heading-secondary brand-blue align-left">DISE</h2>
+            </div> 
+            <div class="third-column">
+                <div class="heading-tiny-uppercase  align-left" >Schools</div>
+                <h2 class="heading-secondary brand-blue align-left">{{ dise.schools }}</h2> 
+            </div>
+            <div class="third-column">
+                <div class="heading-tiny-uppercase align-left" >Students</div>
+                <div class="module-stats-icon module-stats-boygirl">
+                  <span class="icon-boy-girl"></span>
+                  <div class="module-stats-info">
+                    <div class="uppercase">Total</div>
+                    <p class="module-stats-label">{{ dise.students }}</p>
+                  </div>
+                </div>
+            </div>
+            <div class="third-column">
+                <div class="heading-tiny-uppercase align-left" >Average PTR</div>
+                <h2 class="heading-secondary brand-blue align-left">{{ dise.ptr }}</h2> 
+            </div>
+        </div>
+        <div class="acad-year">
+            <div class="heading-tiny-uppercase align-left" >Academic Year</div>
+            <h2 class="heading-secondary brand-blue align-left">{{ dise.acadyear }}</h2> 
+        </div>
+    </div>
+
+</script>
+{% endverbatim %}

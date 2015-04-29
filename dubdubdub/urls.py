@@ -17,6 +17,11 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
 urlpatterns = patterns(
     '',
 
+    # story dashboard
+    url(r'^boundary/$', StaticPageView.as_view(
+        template_name='boundary.html'
+        ), name='boundary'),
+
     # home page
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
