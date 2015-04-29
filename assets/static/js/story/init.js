@@ -97,7 +97,8 @@
             var cacheKey = paramKey + '__' + objectId;
             var cacheValue = {
                 'type': entityType === 'school' ? choice.added.data.properties.type.name : choice.added.data.properties.type,
-                'name': choice.added.data.properties.name
+                'name': choice.added.data.properties.name,
+                'obj': choice.added.data
             };
             klp.data[cacheKey] = cacheValue;
 
@@ -131,6 +132,7 @@
             'preschool': 'Preschool'
         };
         return _(array).map(function(obj) {
+            console.log("obj", obj);
             var name = obj.properties.name;
             if (type === 'boundary') {
                 if (obj.properties.type === 'district') {
@@ -149,6 +151,26 @@
         });
     }
 
+    function fillSelect2(entityDetails) {
+        var currentData = $('#select2search').select2("data");
+
+        var boundaryTypes = ['district', 'block', 'cluster', 'circle', 'project'];
+        if (boundaryTypes.indexOf(entityDetails.type) !== -1) {
+            var typ = 'boundary';
+        } else {
+            var typ = 'school';
+        }
+        var obj = entityDetails.obj;
+        if (!obj.hasOwnProperty('properties')) {
+            obj = {
+                'properties': obj
+            };
+        }
+        var dataObj = makeResults([obj], typ)[0];
+        console.log("current data", currentData, dataObj);
+        $('#select2search').select2("data", dataObj);
+    }
+
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
         var metaURL = "stories/meta"; //FIXME: enter API url
@@ -156,6 +178,8 @@
 
         var entityDeferred = fetchEntityDetails(params);
         entityDeferred.done(function(entityDetails) {
+            fillSelect2(entityDetails);
+            console.log("entity details", entityDetails);
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
                 data.searchEntity = entityDetails;
@@ -723,7 +747,8 @@
             setTimeout(function() {
                 $deferred.resolve({
                     'type': 'All',
-                    'name': ''
+                    'name': '',
+                    'obj': {}
                 });
             }, 0);
             return $deferred;
@@ -747,7 +772,8 @@
         $entityXHR.done(function(data) {
             var entity = {
                 'name': data.name,
-                'type': entityType === 'school' ? data.type.name : data.type
+                'type': entityType === 'school' ? data.type.name : data.type,
+                'obj': data
             }
             $deferred.resolve(entity);
         });
