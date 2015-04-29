@@ -3502,6 +3502,22 @@ code {
     padding-left: 0;
     padding-right: 0; }
 
+  .category-summary {
+    width: 60%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 0;
+    padding-right: 0; }
+
+  .cat-margin {
+    width: 20%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 0;
+    padding-right: 0; }
+
   .half-column {
     width: 50%;
     float: left;
@@ -3515,10 +3531,18 @@ code {
     padding-right: 20px; }
 
   .top {
-    padding-left: 20px; } }
-/* Defining a text align -left */
+    padding-left: 20px; }
+
+  .bar-left {
+    padding-left: 5px; } }
 .align-left {
   text-align: left; }
+
+.align-right {
+  text-align: right; }
+
+.module-stats-icon {
+  margin: 0 0 0 0; }
 
 .img-symbol {
   vertical-align: middle;
@@ -3532,7 +3556,7 @@ code {
   .img-symbol {
     width: auto; } }
 .bar-label {
-  width: 100%; }
+  width: 20%; }
 
 .taller {
   height: 150px; }

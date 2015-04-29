@@ -18,6 +18,18 @@
   @include grid-child;  
 }
 
+@mixin col-20-flt {
+  width: 20%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-60-flt {
+  width: 60%;
+  float: left;
+  @include grid-child;  
+}
+
 
 @include media-med {
 
@@ -43,6 +55,18 @@
 	  padding-right: 0;
 	}
 
+	.category-summary{
+	  @include col-60-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.cat-margin{
+	  @include col-20-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
 	.half-column{
 	  @include col-50-flt;
 	}
@@ -54,15 +78,22 @@
 	.top{
 		padding-left:20px;
 	}
+	.bar-left{
+		padding-left:5px;
+	}
 }
-
-
-/* Defining a text align -left */
 
 .align-left {
   text-align: left; 
 }
 
+.align-right {
+  text-align: right; 
+}
+
+.module-stats-icon {
+	margin: 0 0 0 0;
+}
 .img-symbol {
 	vertical-align: middle;
 	/*padding-top: 25px;*/
@@ -79,7 +110,7 @@
 }
 
 .bar-label {
-  width: 100%; 
+  width: 20%; 
 }
 
 .taller {

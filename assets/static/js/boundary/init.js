@@ -52,6 +52,9 @@
         });
         klp.router.start();
         renderSummary();
+        renderGenderCharts();
+        renderCategories();
+        renderLanguages();
     };
 
     function renderSummary(){
@@ -70,10 +73,89 @@
             
         };
         var tpl = swig.compile($('#tpl-school-summary').html());
-            var html = tpl(data);
-            $('#school-summary').html(html);   
+        var html = tpl(data);
+        $('#school-summary').html(html);   
     }
 
+    function renderGenderCharts(){
+        var data =  
+            {"klp": {
+                'girl_count': 1000,
+                'girl_perc': 33,
+                "boy_count": 2000,
+                "boy_perc": 66,
+                "align":"right"
+            }, 
+            "dise" : {
+                'girl_count': 1500,
+                'girl_perc': 50,
+                "boy_count": 1500,
+                "boy_perc": 50,
+                "align":"left"
+            }
+            
+        };
+        var tpl = swig.compile($('#tpl-gender-summary').html());
+        var gender = {"gender":data["klp"]};
+        var html = tpl(gender);
+        $('#klp-gender').html(html);   
+        gender = {"gender":data["dise"]};
+        html = tpl(gender);
+        $('#dise-gender').html(html);  
+    }
+
+    function renderCategories(){
+        var data = { 
+            "model primary": {
+                "type_name":"model primary",
+                "klp_perc": 20,
+                "dise_perc": 21,
+                "klp_count": 40,
+                "dise_count": 42
+            },
+            "upper primary": {
+                "type_name":"upper primary",
+                "klp_perc": 50,
+                "dise_perc": 48,
+                "klp_count": 100,
+                "dise_count": 96
+            },
+            "lower primary": {
+                "type_name":"lower primary",
+                "klp_perc": 30,
+                "dise_perc": 31,
+                "klp_count": 60,
+                "dise_count": 62            }
+            
+        };
+        var tpl = swig.compile($('#tpl-category-summary').html());
+        var html = tpl({"categories":data});
+        $('#category-summary').html(html);  
+    }
+
+    function renderLanguages(){
+        var data = { 
+            "kannada": {
+                "typename":"kannada",
+                "count": 200,
+                "perc": 20
+            },
+            "urdu": {
+                "typename":"urdu",
+                "count": 400,
+                "perc": 41
+            },
+            "tamil": {
+                "typename":"tamil",
+                "count": 400,
+                "perc": 39
+            }
+            
+        };
+        var tpl = swig.compile($('#tpl-language').html());
+        var html = tpl({"languages":data});
+        $('#klp-language').html(html);  
+    }
 })();
 
 

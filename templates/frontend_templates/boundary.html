@@ -72,23 +72,85 @@
     </div>
 
 </script>
+
 <script type="text/html" id="tpl-gender-summary">
-    <div class="module-stats-icon module-stats-girl">
-      <div class="module-stats-info">
-        <div class="uppercase">Girls</div>
-        <p class="module-stats-label">{{ gender.girl }}</p>
+    <div class="float-{{ gender.align }}">
+      <div class="module-stats-icon module-stats-girl">
+        <div class="module-stats-info">
+          <div class="uppercase">Girls</div>
+          <p class="module-stats-label">{{ gender.girl_count }}</p>
+        </div>
+        <span class="icon-girl"></span>
       </div>
-      <span class="icon-girl"></span>
-    </div>
-    <div class="module-stats-icon">
-      <span class="icon-boy"></span>
-      <div class="module-stats-info">
-        <div class="uppercase">Boys</div>
-        <p class="module-stats-label">{{ gender.boy }}</p>
-      </div>
-    </div>
 
+      <div class="module-stats-icon">
+        <span class="icon-boy"></span>
+        <div class="module-stats-info">
+          <div class="uppercase">Boys</div>
+          <p class="module-stats-label">{{ gender.boy_count }}</p>
+        </div>
+      </div>
+    <div>
+
+    <div class="bar-graph-wrap float-{{ gender.align }}">
+      <div class="bar-graph">
+          <div class="clear-fix">
+            <div class="float-left pink-salmon">{{ gender.girl_perc }}%</div>
+            <div class="float-right brand-blue">{{ gender.boy_perc }}%</div>
+          </div>
+          <div class="bar-custom">
+            <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;">
+              <div class="bar-value bar-value-{{ gender.girl_perc }} pink-salmon-bg" style="width:{{ gender.girl_perc }}%;"></div>
+            </div>
+          </div>
+        </div>     
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
     
+</script>
 
+<script type="text/html" id="tpl-category-summary">
+  {% for cat in categories %}  
+
+    <div class=" compare-each-block">
+      <div class="bar-graph-wrap float-left">
+        <div class="bar-custom">
+          <div class="bar-value green-leaf-bg float-right" style="width:{{ cat.klp_perc }}%;"></div>
+          <div class="clear"></div>
+          <div class="green-leaf font-smaller center-text"><strong>{{ cat.klp_count }} schools</strong></div>
+        </div>
+        <div class="bar-percent green-leaf">{{ cat.klp_perc }}%</div>
+      </div>
+
+      <div class="compare-section-heading center-text">{{ cat.type_name|capitalize }}</div>
+
+      <div class="bar-graph-wrap float-right">
+        <div class="bar-percent">{{ cat.dise_perc }}%</div>
+        <div class="bar-custom">
+          <div class="bar-value grey-gravel-bg" style="width:{{ cat.dise_perc }}%;"></div>
+          <div class="font-smaller center-text"><strong>{{ cat.dise_count }} schools</strong></div>
+        </div>
+      </div>
+    </div>
+  {%endfor%}
+</script>
+
+<script type="text/html" id="tpl-language">
+  {% for language in languages %}  
+
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ language.typename|capitalize}}</div>
+      <div class="bar-graph">
+        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{language.count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    
+    
+  {%endfor%}
 </script>
 {% endverbatim %}
