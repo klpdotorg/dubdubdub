@@ -20,7 +20,7 @@
 </script>
 
 <script type="text/html" id="tpl-school-summary">
-    <div class="page-parent"
+    <div class="page-parent">
         <div class="klp-summary">
             <div class="top">
                 <div class="heading-tiny-uppercase align-left" >Source</div>
@@ -70,6 +70,25 @@
             <h2 class="heading-secondary brand-blue align-left">{{ dise.acadyear }}</h2> 
         </div>
     </div>
+
+</script>
+<script type="text/html" id="tpl-gender-summary">
+    <div class="module-stats-icon module-stats-girl">
+      <div class="module-stats-info">
+        <div class="uppercase">Girls</div>
+        <p class="module-stats-label">{{ gender.girl }}</p>
+      </div>
+      <span class="icon-girl"></span>
+    </div>
+    <div class="module-stats-icon">
+      <span class="icon-boy"></span>
+      <div class="module-stats-info">
+        <div class="uppercase">Boys</div>
+        <p class="module-stats-label">{{ gender.boy }}</p>
+      </div>
+    </div>
+
+    
 
 </script>
 {% endverbatim %}

@@ -1,19 +1,19 @@
 /* Defining mixins for the chart trials page*/
 
-@mixin col-60-flt {
-  width: 60%;
+@mixin col-55-flt {
+  width: 55%;
   float: left;
   @include grid-child;  
 }
 
-@mixin col-20-flt {
-  width: 30%;
+@mixin col-35-flt {
+  width: 35%;
   float: left;
   @include grid-child;  
 }
 
-@mixin col-10-flt {
-  width: 10%;
+@mixin col-15-flt {
+  width: 15%;
   float: left;
   @include grid-child;  
 }
@@ -26,15 +26,21 @@
 	}
 
 	.klp-summary{
-	  @include col-20-flt;
+	  @include col-35-flt;
+	  padding-left: 0;
+	  padding-right: 0;
 	}
 
 	.dise-summary{
-	  @include col-60-flt;
+	  @include col-50-flt;
+	  padding-left: 0;
+	  padding-right: 0;
 	}
 
 	.acad-year{
-	  @include col-20-flt;
+	  @include col-15-flt;
+	  padding-left: 0;
+	  padding-right: 0;
 	}
 
 	.half-column{
@@ -44,7 +50,12 @@
 	.third-column{
 	  @include col-33-flt;
 	}
+
+	.top{
+		padding-left:20px;
+	}
 }
+
 
 /* Defining a text align -left */
 
