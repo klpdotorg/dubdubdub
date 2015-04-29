@@ -178,7 +178,9 @@
     }
 
     function renderRespondentChart(data, schoolType) {
-        var labels = _.keys(data.respondents);
+        var labels = _.map(_.keys(data.respondents), function(label) {
+            return _.str.titleize(label);
+        });
         var values = _.values(data.respondents);
         //console.log(labels, values);
         var data_respondent = {
