@@ -579,6 +579,7 @@
         var facilities = _.map(questionsArray, function(question, seq) {
             var facility = facilityQuestions[seq];
             facility.percent = question.percent;
+            facility.total = question.total;
             return facility;
         });
 

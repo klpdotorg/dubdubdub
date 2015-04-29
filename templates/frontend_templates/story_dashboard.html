@@ -38,6 +38,7 @@
   </script>
 
   <script type="text/html" id="tpl-gradeGraph">
+    {% if total != 0 %}
     <div class="bar-graph-wrap">
       <div class="bar-label {{ color }}">{{ value }} Grade</div>
       <div class="bar-graph">
@@ -47,6 +48,11 @@
         </div>
       </div> <!-- /bar-graph -->
     </div> <!-- /bar-graph-wrap -->
+    {% else %}
+    <div class="no-data">
+      No respondents
+    </div>
+    {% endif %}
   </script>
 
 
@@ -78,9 +84,15 @@
         {% endfor %}
         &nbsp;{{ facility }}
       </div>
+      {% if facility.total != 0 %}
       <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
         {{ percent }}%
       </div>
+      {% else %}
+      <div class="no-data">
+        No data
+      </div>
+      {% endif %}
     </div>
   </script>
 
