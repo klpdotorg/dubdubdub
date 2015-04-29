@@ -53,6 +53,7 @@
   <script type="text/html" id="tpl-percentGraph">
     <div class="bar-graph-wrap">
       <div class="bar-label">{{ question }}</div>
+      {% if total != 0 %}
       <div class="bar-graph">
         <div class="bar-percent green-leaf">{{ percent }}%</div>
         <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
@@ -61,6 +62,11 @@
           </div>
         </div>
       </div> <!-- /bar-graph -->
+      {% else %}
+      <div class="no-data">
+        No respondents
+      </div> 
+      {% endif %}
     </div> <!-- /bar-graph-wrap -->
   </script>
 
