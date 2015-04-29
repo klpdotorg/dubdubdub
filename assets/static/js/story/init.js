@@ -259,7 +259,16 @@
         summaryData['school_type'] = summaryLabel;
         var topSummaryHTML = tplTopSummary(summaryData);
         $('#topSummary' + suffix).html(topSummaryHTML);
-          
+
+        var searchEntityType = data.searchEntity.type;
+        
+        //FIXME: better way to do this?
+        if (searchEntityType === schoolString || searchEntityType === preschoolString) {
+            $('.js-hide-school').css("visibility", "hidden");
+        } else {
+            $('.js-hide-school').css("visibility", "visible");                
+        }
+
         var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
         var summaries = {
             'ivrs': [{
