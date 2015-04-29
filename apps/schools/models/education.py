@@ -335,6 +335,18 @@ class School(GeoBaseModel):
         db_table = 'tb_school'
 
 
+class SchoolExtra(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey('AcademicYear')
+
+    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
+    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_extra'
+
+
 class SchoolDetails(BaseModel):
     school = models.OneToOneField('School', db_column='id', primary_key=True)
     admin3 = models.ForeignKey("Boundary", db_column="cluster_or_circle_id",
@@ -351,21 +363,30 @@ class SchoolDetails(BaseModel):
     def __unicode__(self):
         return str(self.pk)
 
+    @cached_property
+    def num_boys(self):
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        try:
+            extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
+            return extra.num_boys
+        except Exception, e:
+            print e
+            return None
+
+    @cached_property
+    def num_girls(self):
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        try:
+            extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
+            return extra.num_girls
+        except Exception, e:
+            print e
+            return None
+
+
     class Meta:
         managed = False
         db_table = 'mvw_school_details'
-
-
-class SchoolExtra(BaseModel):
-    school = models.ForeignKey('School')
-    academic_year = models.ForeignKey('AcademicYear')
-
-    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
-    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
-
-    class Meta:
-        managed = False
-        db_table = 'mvw_school_extra'
 
 
 class SchoolClassTotalYear(BaseModel):

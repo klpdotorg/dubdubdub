@@ -1,5 +1,6 @@
 REFRESH MATERIALIZED VIEW mvw_boundary_primary;
 REFRESH MATERIALIZED VIEW mvw_institution_aggregations;
+REFRESH MATERIALIZED VIEW mvw_school_extra;
 REFRESH MATERIALIZED VIEW mvw_school_details;
 REFRESH MATERIALIZED VIEW mvw_electedrep_master;
 REFRESH MATERIALIZED VIEW mvw_school_electedrep;
