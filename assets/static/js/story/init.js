@@ -92,6 +92,15 @@
                 var paramKey = 'error';
             }
 
+            //this prevents an un-needed lookup when we already have data for
+            //the entity user is filtering by
+            var cacheKey = paramKey + '__' + objectId;
+            var cacheValue = {
+                'type': entityType === 'school' ? choice.added.data.properties.type.name : choice.added.data.properties.type,
+                'name': choice.added.data.properties.name
+            };
+            klp.data[cacheKey] = cacheValue;
+
             var schoolType = null;
 
             //FIXME: when back-end params get more sane
@@ -144,14 +153,17 @@
         //var params = klp.router.getHash().queryParams;
         var metaURL = "stories/meta"; //FIXME: enter API url
         params['school_type'] = schoolType
-        var $metaXHR = klp.api.do(metaURL, params);
 
-        $metaXHR.done(function(data) {
-            console.log("summary data", data);
-            renderSummary(data, schoolType);
-            renderRespondentChart(data, schoolType);
+        var entityDeferred = fetchEntityDetails(params);
+        entityDeferred.done(function(entityDetails) {
+            var $metaXHR = klp.api.do(metaURL, params);
+            $metaXHR.done(function(data) {
+                data.searchEntity = entityDetails;
+                console.log("summary data", data);
+                renderSummary(data, schoolType);
+                renderRespondentChart(data, schoolType);
+            });
         });
-
 
         var detailURL = "stories/details/";
         var $detailXHR = klp.api.do(detailURL, params);
@@ -692,6 +704,60 @@
                 'percent': percent
             };
         });
+    }
+
+    function fetchEntityDetails(params) {
+        var $deferred = $.Deferred();
+        var paramKey = getParamKey(params);
+        console.log("param key", paramKey, params);
+        if (!paramKey) {
+            setTimeout(function() {
+                $deferred.resolve({
+                    'type': 'All',
+                    'name': ''
+                });
+            }, 0);
+            return $deferred;
+        }
+        var paramValue = params[paramKey];
+        var cacheKey = paramKey + '__' + paramValue;
+        if (klp.data.hasOwnProperty(cacheKey)) {
+            setTimeout(function() {
+                $deferred.resolve(klp.data[cacheKey]);
+            }, 0);
+            return $deferred;
+        }
+        if (paramKey == 'school_id') {
+            var entityType = 'school';
+            var entityURL = 'schools/school/' + paramValue;
+        } else {
+            var entityType = 'boundary';
+            var entityURL = 'boundary/admin/' + paramValue;
+        }
+        var $entityXHR = klp.api.do(entityURL, {});
+        $entityXHR.done(function(data) {
+            var entity = {
+                'name': data.name,
+                'type': entityType === 'school' ? data.type.name : data.type
+            }
+            $deferred.resolve(entity);
+        });
+        $entityXHR.fail(function(err) {
+            $deferred.reject(err);
+        });
+
+        return $deferred;
+    }
+
+    function getParamKey(params) {
+        var possibleParams = ['admin1', 'admin2', 'admin3', 'school_id'];
+        for (var i=0; i < possibleParams.length; i++) {
+            var param = possibleParams[i];
+            if (params[param]) {
+                return param;
+            }
+        }
+        return false;
     }
 
 })();

@@ -4,12 +4,24 @@
     <h2 class="heading-border brand-purple">{{school_type}} - Summary</h2> 
     <hr/>
     <div class="chart-half-item">
-      <div class="heading-tiny-uppercase align-left" >Stories</div>
-      <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2> 
       <div class="chart-parent">
+        <div class="chart-half-item js-entity-data">
+          <div class="heading-tiny-uppercase align-left">
+            {{ searchEntity.type}}
+          </div>
+          <h2 class="heading-secondary brand-blue align-left">
+            {{ searchEntity.name }}
+          </h2>
+        </div>
         <div class="chart-half-item">
           <div class="heading-tiny-uppercase align-left" >{{school_type}}</div>
           <h2 class="heading-secondary brand-blue align-left">{{ total.schools }}</h2> 
+        </div>
+      </div>
+      <div class="chart-parent">
+        <div class="chart-half-item">
+          <div class="heading-tiny-uppercase align-left" >Stories</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2>
         </div>
         <div class="chart-half-item">
           <div class="heading-tiny-uppercase align-left" >{{school_type}} with Stories</div>
