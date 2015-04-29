@@ -173,7 +173,7 @@ FROM dblink(
         school_code,
         lowest_class,
         highest_class,
-        (SELECT ''2011-12'') AS acyear,
+        (SELECT ''2013-14'') AS acyear,
         school_dev_grant_recd,
         school_dev_grant_expnd,
         tlm_grant_recd,
@@ -185,7 +185,7 @@ FROM dblink(
         (male_tch + female_tch) AS teacher_count,
         total_boys,
         total_girls
-    FROM dise_1112_basic_data'
+    FROM dise_1314_basic_data'
 ) t1(
     school_code character varying(32),
     lowest_class integer,
