@@ -152,6 +152,10 @@
     }
 
     function fillSelect2(entityDetails) {
+        if (entityDetails.name == '') {
+            //do nothing if name is empty
+            return;
+        }
         var currentData = $('#select2search').select2("data");
 
         var boundaryTypes = ['district', 'block', 'cluster', 'circle', 'project'];
