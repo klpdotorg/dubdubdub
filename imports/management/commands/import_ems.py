@@ -170,7 +170,7 @@ class Command(BaseCommand):
             # if www has address, dont bother
 
             if not www_school.address and ems_school.address:
-                ems_school_address = EMSAddress.objects.get(pk=ems_school.address_id)
+                ems_school_address = ems_school.address
 
                 matching_existing_address = Address.objects.filter(
                     address=ems_school_address.address,
