@@ -22,7 +22,6 @@
 
     function hashChanged(params) {
         //FIXME: clear all the things, do a loading state.
-        console.log("hashchange called", params);
         var queryParams = params.queryParams;
         if (!queryParams.school_type) {
             loadData(preschoolString, queryParams);
@@ -76,7 +75,6 @@
         });
 
         $('#select2search').on("change", function(choice) {
-            console.log(choice);
             var objectId = choice.added.data.properties.id;
             var entityType = choice.added.data.entity_type;
             var boundaryType = choice.added.data.properties.type;
@@ -120,7 +118,6 @@
                 'school_type': schoolType
             };
             hashParams[paramKey] = objectId;
-            console.log("hash params", hashParams);
             klp.router.setHash(null, hashParams);
         });
 
@@ -132,7 +129,6 @@
             'preschool': 'Preschool'
         };
         return _(array).map(function(obj) {
-            console.log("obj", obj);
             var name = obj.properties.name;
             if (type === 'boundary') {
                 if (obj.properties.type === 'district') {
@@ -171,7 +167,6 @@
             };
         }
         var dataObj = makeResults([obj], typ)[0];
-        console.log("current data", currentData, dataObj);
         $('#select2search').select2("data", dataObj);
     }
 
@@ -183,11 +178,9 @@
         var entityDeferred = fetchEntityDetails(params);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
-            //console.log("entity details", entityDetails);
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
                 data.searchEntity = entityDetails;
-                console.log("summary data", data);
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
             });
@@ -197,7 +190,6 @@
         var $detailXHR = klp.api.do(detailURL, params);
 
         $detailXHR.done(function(data) {
-            console.log("detail data", data);
             renderFeatured(data, schoolType);
             renderIVRS(data, schoolType);
             renderWeb(data, schoolType);
@@ -222,7 +214,6 @@
             return _.str.titleize(label);
         });
         var values = _.values(data.respondents);
-        //console.log(labels, values);
         var data_respondent = {
             labels: labels,
             series: [
@@ -500,10 +491,8 @@
         var questionObjects = _.map(IVRSQuestionKeys, function(key) {
             return getQuestion(data, 'ivrs', key);
         });
-        //console.log("ivrs question objects", questionObjects);
 
         var questions = getQuestionsArray(questionObjects);
-        //console.log("ivrs questions", questions);
 
         html = ''
         for (var pos in questions) {
@@ -630,7 +619,7 @@
         var questionObjects = _.map(facilityQuestions, function(question) {
             return getQuestion(data, 'web', question.key);
         });
-        console.log("facility question objects", questionObjects);
+
         var questionsArray = getQuestionsArray(questionObjects);
 
 
@@ -641,7 +630,6 @@
             return facility;
         });
 
-        console.log("facilities", facilities);
         var html = ''
         for (var pos in facilities) {
             html = html + tplColorText(facilities[pos]);
@@ -753,7 +741,6 @@
     function fetchEntityDetails(params) {
         var $deferred = $.Deferred();
         var paramKey = getParamKey(params);
-        console.log("param key", paramKey, params);
         if (!paramKey) {
             setTimeout(function() {
                 $deferred.resolve({
