@@ -282,6 +282,12 @@
             summaryLabel = "Preschools";
             suffix = '_ang';
         }
+        var entityType = data.searchEntity.type;
+
+        //if search is for a school, make summary label singular
+        if ([schoolString, preschoolString].indexOf(entityType) !== -1) {
+            summaryLabel = summaryLabel.substring(0, summaryLabel.length - 1);            
+        }
 
         var summaryData = data;
         summaryData['school_type'] = summaryLabel;
