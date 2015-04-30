@@ -110,7 +110,12 @@
 }
 
 .bar-label {
-  width: 20%; 
+  	width: 20%; 
+}
+
+.enrolment {
+	@extend .bar-label;
+  	width: 25%; 
 }
 
 .taller {

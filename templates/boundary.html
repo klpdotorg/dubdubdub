@@ -21,6 +21,8 @@
   <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
+  
   <script src="{% static 'js/school/tabs.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
   <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
@@ -78,6 +80,7 @@
               <h2 class="heading-secondary brand-blue align-right">DISE</h2>
             </div>
           </div>
+          <div class="base-spacing-mid"></div>
           <h2 class="heading-secondary">GENDER</h2>
           <div class="page-parent">
             <div class="half-column">
@@ -87,6 +90,7 @@
               <div id="dise-gender"></div>   
             </div>
           </div>     
+          <div class="base-spacing-mid"></div>
           <h2 class="heading-secondary">CATEGORY</h2>
           <div class="container page-parent">
             <div class="cat-margin"></div>
@@ -95,14 +99,15 @@
             </div>
             <div class="cat-margin"></div>
           </div>
+          <div class="base-spacing-mid"></div>
           <div class="page-parent">
             <div class="half-column">
               <h2 class="heading-secondary align-left">LANUAGES</h2>
               <div id="klp-language"></div>   
             </div>
             <div class="half-column">
-              <h2 class="heading-secondary align-left">ENROLLMENT</h2>
-              <div id="dise-enrollment"></div>   
+              <h2 class="heading-secondary align-right">AVERAGE ENROLMENT</h2>
+              <div id="dise-enrolment"></div>   
             </div>
           </div>
           <hr/>
@@ -117,7 +122,20 @@
               <h2 class="heading-secondary brand-blue align-right">DISE</h2>
             </div>
           </div>
-          <h2 class="heading-secondary">GENDER</h2>
+          <div class="page-parent">
+            <div class="half-column">
+              <h2 class="heading-secondary align-left">EXPECTED GRANT</h2>
+              <div id="chart-expected" class="ct-chart"></div>  
+              <div id="dise-expected"></div>   
+            </div>
+            <div class="half-column">
+              <h2 class="heading-secondary align-right">RECEIVED GRANT</h2>
+              <div id="chart-received" class="ct-chart"></div>  
+              <div id="dise-received"></div>   
+            </div>
+          </div>
+          <hr/>
+
         </div>
       <!--/div-->
       <!-- School Tab END>            

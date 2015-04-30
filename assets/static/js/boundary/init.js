@@ -55,6 +55,8 @@
         renderGenderCharts();
         renderCategories();
         renderLanguages();
+        renderEnrolment();
+        renderGrants();
     };
 
     function renderSummary(){
@@ -156,6 +158,94 @@
         var html = tpl({"languages":data});
         $('#klp-language').html(html);  
     }
+
+    function renderEnrolment(){
+        var data = { 
+            "model primary": {
+                "type_name":"model primary",
+                "count": 2000,
+                "perc": 21,
+                "avg": 80
+            },
+            "upper primary": {
+                "type_name":"upper primary",
+                "count": 4000,
+                "perc": 80,
+                "avg": 100
+            },
+            "lower primary": {
+                "type_name":"lower primary",
+                "count": 1000,
+                "perc": 19,
+                "avg": 90          
+            }
+            
+        };
+        var tpl = swig.compile($('#tpl-enrolment').html());
+        var html = tpl({"categories":data});
+        $('#dise-enrolment').html(html);  
+    }
+
+    function renderGrants(){
+        var data = { 
+            "received": {
+                "sg_perc": 35,
+                "sg_amt": 3500,
+                "smg_perc": 55,
+                "smg_amt": 5500,
+                "tlm_perc": 10,
+                "tlm_amt": 1000   
+            },
+            "expected": {
+                "sg_perc": 35,
+                "sg_amt": 3500,
+                "smg_perc": 55,
+                "smg_amt": 5500,
+                "tlm_perc": 10,
+                "tlm_amt": 1000 
+            }
+        };
+        drawStackedBar([ [data["expected"]["sg_perc"]],
+                         [data["expected"]["smg_perc"]],
+                         [data["expected"]["tlm_perc"]]
+                       ],"#chart-expected");
+        drawStackedBar([ [data["received"]["sg_perc"]],
+                         [data["received"]["smg_perc"]],
+                         [data["received"]["tlm_perc"]]
+                       ],"#chart-received");
+        
+        var tpl = swig.compile($('#tpl-grants').html());
+        var html = tpl({"grants":data["expected"]});
+        $('#dise-expected').html(html); 
+        html = tpl({"grants":data["received"]});
+        $('#dise-received').html(html);   
+    }
+
+    function drawStackedBar(data, element_id) {
+        new Chartist.Bar(element_id, {
+                labels: [''],
+                series: data
+            }, {
+            stackBars: true,
+            horizontalBars: true,
+            axisX: {
+                showGrid: false
+            },
+            axisY: {
+                showGrid: false,
+                labelInterpolationFnc: function(value) {
+                return (value / 1000) + 'k';
+            }
+        }
+        }).on('draw', function(data) {
+            if(data.type === 'bar') {
+                data.element.attr({
+                    style: 'stroke-width: 30px'
+                });
+            }
+        });
+    }
+
 })();
 
 

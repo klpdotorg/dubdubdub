@@ -137,20 +137,44 @@
 
 <script type="text/html" id="tpl-language">
   {% for language in languages %}  
-
     <div class="bar-graph-wrap">
-      <div class="bar-label">{{ language.typename|capitalize}}</div>
       <div class="bar-graph">
-        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+        
         <div class="bar-custom tooltip" aria-label="{{language.count}}">
           <div class="bar-value bar-value-100" style="width:100%;">
             <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
+          </div>
+        </div>
+        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+  {%endfor%}
+</script>
+
+<script type="text/html" id="tpl-enrolment">
+  {% for cat in categories %}  
+
+    <div class="bar-graph-wrap float-right">
+      <div class="bar-graph">       
+        <div class="bar-percent grey-gravel">{{ cat.avg }}</div>
+        <div class="bar-custom tooltip" aria-label="{{cat.count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ cat.perc }} grey-gravel-bg" style="width:{{ cat.perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ cat.type_name|capitalize}}</strong></div>
           </div>
         </div>
       </div> <!-- /bar-graph -->
     </div> <!-- /bar-graph-wrap -->
-    
-    
   {%endfor%}
 </script>
+
+<script type="text/html" id="tpl-grants">
+  <ul class="float-{{alignment}}">
+    <li class="circle-bullet grey-gravel">School Maintenance Grant : INR {{grants.smg_amt}}</li>
+    <li class="circle-bullet green-leaf">School Grant : INR {{grants.sg_amt}}</li>
+    <li class="circle-bullet brand-purple">TLM : INR {{grants.tlm_amt}}</li>
+  </ul>
+</script>
+
 {% endverbatim %}
