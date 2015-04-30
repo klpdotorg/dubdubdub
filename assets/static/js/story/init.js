@@ -183,7 +183,7 @@
         var entityDeferred = fetchEntityDetails(params);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
-            console.log("entity details", entityDetails);
+            //console.log("entity details", entityDetails);
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
                 data.searchEntity = entityDetails;
@@ -282,10 +282,12 @@
             summaryLabel = "Preschools";
             suffix = '_ang';
         }
-        var entityType = data.searchEntity.type;
+        var searchEntityType = data.searchEntity.type;
+        var isSchool = [schoolString, preschoolString].indexOf(searchEntityType) !== -1 ? true : false; 
 
-        //if search is for a school, make summary label singular
-        if ([schoolString, preschoolString].indexOf(entityType) !== -1) {
+        //if search is for a school, do some specific things:
+        if (isSchool) {
+            //make summary label singular
             summaryLabel = summaryLabel.substring(0, summaryLabel.length - 1);            
         }
 
@@ -294,13 +296,12 @@
         var topSummaryHTML = tplTopSummary(summaryData);
         $('#topSummary' + suffix).html(topSummaryHTML);
 
-        var searchEntityType = data.searchEntity.type;
-        
-        //FIXME: better way to do this?
-        if (searchEntityType === schoolString || searchEntityType === preschoolString) {
-            $('.js-hide-school').css("visibility", "hidden");
+        if (isSchool) {
+            //hide summary boxes for 'total schools' and 'total schools with stories'
+            $('.js-hide-school').css("visibility", "hidden");                
         } else {
-            $('.js-hide-school').css("visibility", "visible");                
+            //if this is not a school, make sure total schools, etc. is visible.
+            $('.js-hide-school').css("visibility", "visible");
         }
 
         var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
