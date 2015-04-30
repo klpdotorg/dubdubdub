@@ -21,9 +21,7 @@
   <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
-  
-  <script src="{% static 'js/school/tabs.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
   <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
   <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
@@ -56,99 +54,129 @@
     </div> <!-- /school-map-info -->      
   </div> <!-- /boundary-map-wrapper -->
 
-  <div class="tab-wrap">
-    <div class="tab-wrap-widescreen">
-      <div data-tab="school" class="js-tab-link tab-heading tab-heading-active">Schools</div>
-      <div data-tab="preschool" class="js-tab-link tab-heading">Preschools</div>
-    </div> <!-- /tab-wrap-widescreen -->
 
-    <!--div class="tab-each">
-      <div class="tab-content font-small" data-tab="school"-->
-        <div class="container">
-          <div class="base-spacing-mid"></div>
-          <div id="school-summary"></div> 
-          <hr/>
+  <div class="container hidden" id="school-data">
+    <div class="base-spacing-mid"></div>
+    <div id="school-summary"></div> 
+    <hr/>
 
-          <h2 class="heading-border brand-turquoise">Demographics</h2> 
-          <div class="page-parent">
-            <div class="half-column">
-              <div class="heading-tiny-uppercase align-left" >Source</div>
-              <h2 class="heading-secondary brand-blue align-left">KLP</h2> 
-            </div>
-            <div class="half-column">
-              <div class="heading-tiny-uppercase align-right" >Source</div>
-              <h2 class="heading-secondary brand-blue align-right">DISE</h2>
-            </div>
-          </div>
-          <div class="base-spacing-mid"></div>
-          <h2 class="heading-secondary">GENDER</h2>
-          <div class="page-parent">
-            <div class="half-column">
-              <div id="klp-gender"></div>   
-            </div>
-            <div class="half-column">
-              <div id="dise-gender"></div>   
-            </div>
-          </div>     
-          <div class="base-spacing-mid"></div>
-          <h2 class="heading-secondary">CATEGORY</h2>
-          <div class="container page-parent">
-            <div class="cat-margin"></div>
-            <div class="category">
-              <div id="category-summary"></div>  
-            </div>
-            <div class="cat-margin"></div>
-          </div>
-          <div class="base-spacing-mid"></div>
-          <div class="page-parent">
-            <div class="half-column">
-              <h2 class="heading-secondary align-left">LANUAGES</h2>
-              <div id="klp-language"></div>   
-            </div>
-            <div class="half-column">
-              <h2 class="heading-secondary align-right">AVERAGE ENROLMENT</h2>
-              <div id="dise-enrolment"></div>   
-            </div>
-          </div>
-          <hr/>
-          <h2 class="heading-border brand-turquoise">Finances</h2> 
-          <div class="page-parent">
-            <div class="half-column">
-              <div class="heading-tiny-uppercase align-left" >Source</div>
-              <h2 class="heading-secondary brand-blue align-left">DISE</h2> 
-            </div>
-            <div class="half-column">
-              <div class="heading-tiny-uppercase align-right" >Source</div>
-              <h2 class="heading-secondary brand-blue align-right">DISE</h2>
-            </div>
-          </div>
-          <div class="page-parent">
-            <div class="half-column">
-              <h2 class="heading-secondary align-left">EXPECTED GRANT</h2>
-              <div id="chart-expected" class="ct-chart"></div>  
-              <div id="dise-expected"></div>   
-            </div>
-            <div class="half-column">
-              <h2 class="heading-secondary align-right">RECEIVED GRANT</h2>
-              <div id="chart-received" class="ct-chart"></div>  
-              <div id="dise-received"></div>   
-            </div>
-          </div>
-          <hr/>
-
-        </div>
-      <!--/div-->
-      <!-- School Tab END>            
-    </div-->
-    <!--div class="tab-each">
-      <div class="tab-content tab-active" data-tab="preschool">
-        <div class="container">
-          Loading...        
-        </div>
+    <h2 class="heading-border brand-turquoise">Demographics</h2> 
+    <div class="page-parent">
+      <div class="half-column">
+        <div class="heading-tiny-uppercase align-left" >Source</div>
+        <h2 class="heading-secondary brand-blue align-left">KLP</h2> 
+      </div>
+      <div class="half-column">
+        <div class="heading-tiny-uppercase align-right" >Source</div>
+        <h2 class="heading-secondary brand-blue align-right">DISE</h2>
       </div>
     </div>
-    <!-- Preschool Tab END>  
-  </div--> <!-- /tab-wrap -->
+    <div class="base-spacing-mid"></div>
+    <h2 class="heading-secondary">GENDER</h2>
+    <div class="page-parent">
+      <div class="half-column">
+        <div id="klp-gender"></div>   
+      </div>
+      <div class="half-column">
+        <div id="dise-gender"></div>   
+      </div>
+    </div>     
+    <div class="base-spacing-mid"></div>
+    <h2 class="heading-secondary">CATEGORY</h2>
+    <div class="container page-parent">
+      <div class="cat-margin"></div>
+      <div class="category">
+        <div id="category-summary"></div>  
+      </div>
+      <div class="cat-margin"></div>
+    </div>
+    <div class="base-spacing-mid"></div>
+    <div class="page-parent">
+      <div class="half-column">
+        <h2 class="heading-secondary align-left">LANUAGES</h2>
+        <div id="klp-language"></div>   
+      </div>
+      <div class="half-column">
+        <h2 class="heading-secondary align-right">AVERAGE ENROLMENT</h2>
+        <div id="dise-enrolment"></div>   
+      </div>
+    </div>
+    <hr/>
+    <h2 class="heading-border brand-turquoise">Finances</h2> 
+    <div class="page-parent">
+      <div class="half-column">
+        <div class="heading-tiny-uppercase align-left" >Source</div>
+        <h2 class="heading-secondary brand-blue align-left">DISE</h2> 
+      </div>
+      <div class="half-column">
+        <div class="heading-tiny-uppercase align-right" >Source</div>
+        <h2 class="heading-secondary brand-blue align-right">DISE</h2>
+      </div>
+    </div>
+    <div class="page-parent">
+      <div class="half-column">
+        <h2 class="heading-secondary align-left">EXPECTED GRANT</h2>
+        <div id="chart-expected" class="ct-chart"></div>  
+        <div id="dise-expected" class="grant-text"></div>   
+      </div>
+      <div class="half-column">
+        <h2 class="heading-secondary align-right">RECEIVED GRANT</h2>
+        <div id="chart-received" class="ct-chart"></div>  
+        <div id="dise-received" class="grant-text"></div>   
+      </div>
+    </div>
+    <hr/>
+    <h2 class="heading-border brand-turquoise">Infrastructure</h2> 
+    <div class="heading-tiny-uppercase align-left" >Source</div>
+    <h2 class="heading-secondary brand-blue align-left">DISE</h2> 
+    <div id="infra-summary"></div>
+    <hr/>
+    <h2 class="heading-border brand-turquoise">Programmes</h2> 
+    <div id="program-summary"></div>
+  </div>
+
+
+  <div class="container hidden" id="preschool-data">
+    <div class="base-spacing-mid"></div>
+    <div id="preschool-summary"></div> 
+    <hr/>
+
+    <h2 class="heading-border brand-turquoise">Demographics</h2> 
+
+    <div class="heading-tiny-uppercase align-left" >Source</div>
+    <h2 class="heading-secondary brand-blue align-left">KLP</h2> 
+    <div class="base-spacing-mid"></div>
+    <div class="page-parent">
+      <div class="half-column">
+        <h2 class="heading-secondary align-left">GENDER</h2>
+        <div id="ang-klp-gender"></div>   
+      </div>
+      <div class="half-column">
+        <h2 class="heading-secondary align-right">LANUAGES</h2>
+        <div id="ang-klp-language"></div>   
+      </div>
+    </div>     
+    <div class="base-spacing-mid"></div>
+    <div class="page-parent">
+      <div class="half-column">
+        <h2 class="heading-secondary align-left">CATEGORY</h2>
+        <div id="ang-category-summary"></div>
+      </div>
+      <div class="half-column">
+        <h2 class="heading-secondary align-right">AVERAGE ENROLMENT</h2>
+        <div id="ang-enrolment"></div>   
+      </div>
+    </div>
+    <hr/>
+    <h2 class="heading-border brand-turquoise">Infrastructure</h2> 
+    <div class="heading-tiny-uppercase align-left" >Source</div>
+    <h2 class="heading-secondary brand-blue align-left">KLP</h2> 
+    <div id="ang-infra-summary"></div>
+    <hr/>
+    <h2 class="heading-border brand-turquoise">Programmes</h2> 
+    <div id="ang-program-summary"></div>
+  </div>        
+    
 </section>
 {% include 'frontend_templates/boundary.html' %}
 {% endblock %}

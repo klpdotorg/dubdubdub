@@ -51,15 +51,29 @@
             $('#boundary-info-wrapper').html(html);
         });
         klp.router.start();
-        renderSummary();
-        renderGenderCharts();
-        renderCategories();
-        renderLanguages();
-        renderEnrolment();
+
+        /*$('#school-data').removeClass("hidden");
+        renderSummary("school");
+        renderGenderCharts("school");
+        renderCategories("school");
+        renderLanguages("school");
+        renderEnrolment("school");
         renderGrants();
+        renderInfra("school");
+        renderPrograms("school"); */
+
+        
+        $('#preschool-data').removeClass("hidden");
+        renderSummary("preschool");
+        renderGenderCharts("preschool");
+        renderCategories("preschool");
+        renderLanguages("preschool");
+        renderEnrolment("preschool");
+        renderInfra("preschool");
+        renderPrograms("preschool");
     };
 
-    function renderSummary(){
+    function renderSummary(schoolType){
         var data =  
             {"klp": {
                 'schools': 1000,
@@ -71,15 +85,18 @@
                 'students': 4440,
                 'ptr' : '30:1',
                 "acadyear" : "2014-2015"
-            }
-            
+            }      
         };
         var tpl = swig.compile($('#tpl-school-summary').html());
+        data["school_type"] = schoolType;
         var html = tpl(data);
-        $('#school-summary').html(html);   
+        if (schoolType == "school")
+            $('#school-summary').html(html);   
+        else
+            $('#preschool-summary').html(html);  
     }
 
-    function renderGenderCharts(){
+    function renderGenderCharts(schoolType){
         var data =  
             {"klp": {
                 'girl_count': 1000,
@@ -98,16 +115,29 @@
             
         };
         var tpl = swig.compile($('#tpl-gender-summary').html());
-        var gender = {"gender":data["klp"]};
+        var gender = null;
         var html = tpl(gender);
-        $('#klp-gender').html(html);   
-        gender = {"gender":data["dise"]};
+        var prefix = '';
+        if (schoolType == "school") {
+            gender = {"gender":data["dise"]};
+            html = tpl(gender);
+            $('#dise-gender').html(html);
+            gender = {"gender":data["klp"]}; 
+        }
+        else {
+            prefix = "ang-";
+            gender = {"gender":data["klp"]};
+            gender["gender"]["align"] ="left";
+        }       
         html = tpl(gender);
-        $('#dise-gender').html(html);  
+        $('#' + prefix + 'klp-gender').html(html);   
+         
     }
 
-    function renderCategories(){
-        var data = { 
+    function renderCategories(schoolType){
+        var data = null;
+        if(schoolType == "school") {
+            data = { 
             "model primary": {
                 "type_name":"model primary",
                 "klp_perc": 20,
@@ -127,15 +157,45 @@
                 "klp_perc": 30,
                 "dise_perc": 31,
                 "klp_count": 60,
-                "dise_count": 62            }
-            
-        };
-        var tpl = swig.compile($('#tpl-category-summary').html());
+                "dise_count": 62 }
+            };
+        } else {
+            data = {
+                "anganwadi" : {
+                    "type_name": "anganwadi",
+                    "klp_perc" :70,
+                    "klp_count" : 200
+                },
+                "balwadi" : {
+                    "type_name": "balwadi",
+                    "klp_perc" :10,
+                    "klp_count" : 30
+                },
+                "independent balwadi" : {
+                    "type_name": "independent balwadi",
+                    "klp_perc" :11,
+                    "klp_count" : 32
+                },
+                "others" : {
+                    "type_name": "others",
+                    "klp_perc" :9,
+                    "klp_count" : 28
+                }
+            };
+        }
+        var tpl_func = '#tpl-category-summary';
+        var prefix = '';
+        if (schoolType == "preschool")
+        {
+            prefix = "ang-";  
+            tpl_func = '#tpl-ang-category-summary';
+        }
+        var tpl = swig.compile($(tpl_func).html());
         var html = tpl({"categories":data});
-        $('#category-summary').html(html);  
+        $('#' + prefix + 'category-summary').html(html);  
     }
 
-    function renderLanguages(){
+    function renderLanguages(schoolType){
         var data = { 
             "kannada": {
                 "typename":"kannada",
@@ -154,36 +214,77 @@
             }
             
         };
-        var tpl = swig.compile($('#tpl-language').html());
+        var tpl_func = "#tpl-language";
+        var prefix = '';
+        if(schoolType == "preschool"){
+            prefix ="ang-"
+            tpl_func = "#tpl-ang-language";
+        }
+        var tpl = swig.compile($(tpl_func).html());
         var html = tpl({"languages":data});
-        $('#klp-language').html(html);  
+        $('#' + prefix + 'klp-language').html(html);  
     }
 
-    function renderEnrolment(){
-        var data = { 
-            "model primary": {
-                "type_name":"model primary",
-                "count": 2000,
-                "perc": 21,
-                "avg": 80
-            },
-            "upper primary": {
-                "type_name":"upper primary",
-                "count": 4000,
-                "perc": 80,
-                "avg": 100
-            },
-            "lower primary": {
-                "type_name":"lower primary",
-                "count": 1000,
-                "perc": 19,
-                "avg": 90          
-            }
-            
-        };
+    function renderEnrolment(schoolType){
+        var data = null;
+        if(schoolType == "school") {
+            data = { 
+                "model primary": {
+                    "type_name":"model primary",
+                    "count": 2000,
+                    "perc": 21,
+                    "avg": 80
+                },
+                "upper primary": {
+                    "type_name":"upper primary",
+                    "count": 4000,
+                    "perc": 80,
+                    "avg": 100
+                },
+                "lower primary": {
+                    "type_name":"lower primary",
+                    "count": 1000,
+                    "perc": 19,
+                    "avg": 90          
+                }
+                
+            };
+        } else {
+            data = { 
+                "anganwadi": {
+                    "type_name":"anganwadi",
+                    "count": 2000,
+                    "perc": 21,
+                    "avg": 80
+                },
+                "balwadi": {
+                    "type_name":"balwadi",
+                    "count": 4000,
+                    "perc": 80,
+                    "avg": 100
+                },
+                "independent balwadi": {
+                    "type_name":"independent balwadi",
+                    "count": 1000,
+                    "perc": 19,
+                    "avg": 90          
+                },
+                "others": {
+                    "type_name":"others",
+                    "count": 1000,
+                    "perc": 19,
+                    "avg": 90          
+                }
+            };
+        }
+        
         var tpl = swig.compile($('#tpl-enrolment').html());
         var html = tpl({"categories":data});
-        $('#dise-enrolment').html(html);  
+        var prefix = 'dise-';
+        if(schoolType == "preschool"){
+            prefix ="ang-"
+        }
+        $('#' + prefix + 'enrolment').html(html);  
     }
 
     function renderGrants(){
@@ -213,7 +314,7 @@
                          [data["received"]["smg_perc"]],
                          [data["received"]["tlm_perc"]]
                        ],"#chart-received");
-        
+
         var tpl = swig.compile($('#tpl-grants').html());
         var html = tpl({"grants":data["expected"]});
         $('#dise-expected').html(html); 
@@ -234,16 +335,132 @@
             axisY: {
                 showGrid: false,
                 labelInterpolationFnc: function(value) {
-                return (value / 1000) + 'k';
+                return'';
             }
         }
         }).on('draw', function(data) {
             if(data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 30px'
+                    style: 'stroke-width: 20px'
                 });
             }
         });
+    }
+
+    function renderInfra(schoolType)
+    {
+        var tpl = swig.compile($('#tpl-infra-summary').html());
+
+        var facilities = [{
+                'facility': 'All weather pucca building',
+                'icon': ['fa fa-university'],
+                'percent': 70,
+                'total': 10
+            }, {
+                'facility': 'Playground',
+                'icon': ['fa fa-futbol-o'],
+                'percent': 50,
+                'total': 10
+            }, {
+                'facility': 'Drinking Water',
+                'icon': ['fa  fa-tint'],
+                'percent': 30,
+                'total': 10
+            },  {
+                'facility': 'Toilets',
+                'icon': ['fa fa-male', 'fa fa-female'],
+                'percent': 20,
+                'total': 20
+            }];
+        if ( schoolType == "school") {
+            facilities = facilities.concat(
+                [{
+                'facility': 'Library',
+                'icon': ['fa fa-book'],
+                'percent': 70,
+                'total': 10
+            },{
+                'facility': 'Secure Boundary Wall',
+                'icon': ['fa fa-circle-o-notch'],
+                'percent': 80,
+                'total': 10
+            }, {
+                'facility': 'Electricity',
+                'icon': ['fa fa-plug'],
+                'percent': 10,
+                'total': 10
+            }, {
+                'facility': 'Mid-day Meal',
+                'icon': ['fa fa-spoon'],
+                'percent': 90,
+                'total': 10
+            }, {
+                'facility': 'Computers',
+                'icon': ['fa fa-laptop'],
+                'percent': 15,
+                'total': 10
+            }])
+
+        } else {
+            facilities = facilities.concat(
+                [{
+                'facility': 'Healthy and Timely Meal',
+                'icon': ['fa fa-cutlery'],
+                'percent': 70,
+                'total': 10
+            },{
+                'facility': 'Functional Bal Vikas Samithis',
+                'icon': ['fa fa-users'],
+                'percent': 80,
+                'total': 10
+            }])            
+        }
+
+        var html = '<div class="page-parent">'
+        for (var pos in facilities) {
+            html = html + tpl(facilities[pos]);
+        }
+        var prefix = '';
+        if(schoolType == "preschool"){
+            prefix ="ang-"
+        }
+        $('#' + prefix + 'infra-summary').html(html + '</div>');
+        
+    }
+
+    function renderPrograms(schoolType)
+    {
+        var tpl = swig.compile($('#tpl-program-summary').html());
+        var programmes = null;
+        if (schoolType == "school") {
+            programmes ={ 
+                "Akshara Foundation" : [{"pname":"Akshara Ganitha", "url":"#"},
+                                        {"pname":"English", "url":"#"},
+                                        {"pname":"Oduve Naanu","url":"#"}],
+                "Akshaya Patra" : [{"pname":"Mid day meals", "url":"#"}],
+                "Sikshana Foundation" : [{"pname":"Math", "url":"#"},
+                                        {"pname":"English","url":"#"}]
+            };
+        } else {
+            programmes ={ 
+                "Akshara Foundation" : [{"pname":"Anganwadi", "url":"#"}],
+                "Akshaya Patra" : [{"pname":"Mid day meals", "url":"#"}]
+            };
+        }
+
+        var html = '<div class="page-parent">'
+        for (var program in programmes) {
+            html = html + '<div class="third-column">' 
+                        + '<div class="heading-tiny-uppercase">'
+                        + program + '</div>'
+                    + tpl({"programs":programmes[program]}) + '</div>'; 
+        }
+        var prefix = '';
+        if(schoolType == "preschool"){
+            prefix ="ang-"
+        }
+        $('#' + prefix + 'program-summary').html(html + '</div>');
+        
     }
 
 })();

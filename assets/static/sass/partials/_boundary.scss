@@ -6,6 +6,12 @@
   @include grid-child;  
 }
 
+@mixin col-65-flt {
+  width: 55%;
+  float: left;
+  @include grid-child;  
+}
+
 @mixin col-35-flt {
   width: 35%;
   float: left;
@@ -49,8 +55,14 @@
 	  padding-right: 0;
 	}
 
-	.acad-year{
+	.acad-year-school{
 	  @include col-15-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.acad-year-preschool{
+	  @include col-65-flt;
 	  padding-left: 0;
 	  padding-right: 0;
 	}
@@ -81,6 +93,27 @@
 	.bar-left{
 		padding-left:5px;
 	}
+
+	.grant-text {
+		padding-left:50px;
+	}
+
+	.grant-label {
+		padding-left:10px;
+	}
+
+	.dot-padding {
+		padding-top:3px;
+	}
+
+	.program-list {
+		padding-left:10px;
+	}
+
+	.dropdown-base {
+		text-align: right;
+	}
+	
 }
 
 .align-left {
@@ -94,20 +127,6 @@
 .module-stats-icon {
 	margin: 0 0 0 0;
 }
-.img-symbol {
-	vertical-align: middle;
-	/*padding-top: 25px;*/
-	margin-left:auto;
-	margin-right:auto;
-	width: 100px;
-	display:block;
-}
-
-@include media-med {
-	.img-symbol {
-		width: auto;
-	}
-}
 
 .bar-label {
   	width: 20%; 
@@ -118,6 +137,27 @@
   	width: 25%; 
 }
 
-.taller {
-	height: 150px;
+.hidden { 
+	display: none; 
 }
+
+
+
+$ct-series-colors: (
+  $brand-purple,
+  $brand-green,
+  $brand-blue,
+  $brand-orange,
+  $green-leaf,
+  $orange-mild,
+  $pink-salmon,
+  $brand-turquoise,
+  $red-mild,
+  $maroon,
+  $yellow-mild,
+  $green-pista,
+  $blue-ink,
+  $blue-sky,
+  $purple-amethyst,
+  $brand-red
+) !default;
