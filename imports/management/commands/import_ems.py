@@ -101,6 +101,7 @@ class Command(BaseCommand):
                 continue
             # insert new school
             log('Processing new school - %s' % new_school)
+            new_address = None
 
             if new_school.address_id:
                 ems_school_address = EMSAddress.objects.get(pk=new_school.address_id)
@@ -129,12 +130,11 @@ class Command(BaseCommand):
                         instidentification2=ems_school_address.instidentification2
                     )
                     log('Created new address %s' % new_address.id)
-                    new_school.address = new_address
 
             www_new_school = School.objects.create(
                 id=new_school.id,
                 admin3_id=new_school.admin3_id,
-                address=new_school.address,
+                address=new_address,
                 dise_info_id=new_school.dise_info_id,
                 name=new_school.name,
                 cat=new_school.cat,
