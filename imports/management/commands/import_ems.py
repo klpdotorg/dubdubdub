@@ -118,7 +118,7 @@ class Command(BaseCommand):
 
                 if matching_existing_address.count() > 0:
                     log('Found existing address %s' % matching_existing_address[0].id)
-                    new_school.address = matching_existing_address[0]
+                    new_address = matching_existing_address[0]
                 else:
                     new_address = Address.objects.create(
                         address=ems_school_address.address,
