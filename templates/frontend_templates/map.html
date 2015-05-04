@@ -80,30 +80,45 @@
         <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
         <div class="map-label-name">{{ admin3.name|capitalize }}</div>
     </ul>
+    {% if num_boys or num_girls %}
     <h4 class="gender-icons-title">Students</h4>
     <div class="gender-icons">
       <div class="gender-item gender-item-boy">
         <div class="icon-boy k-icon"></div>
         <div class="center-text">
-          <div class="gender-item-count">{{ num_boys }}</div>
+          <div class="gender-item-count">
+            {% if num_boys %}
+              {{ num_boys }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
           <div class="uppercase font-light font-larger">Boys</div>
         </div> 
       </div>
       <div class="gender-item gender-item-girl">
         <div class="icon-girl k-icon"></div>
         <div class="center-text">
-          <div class="gender-item-count">{{ num_girls }}</div>
+          <div class="gender-item-count">
+            {% if num_girls %}
+              {{ num_girls }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
           <div class="uppercase font-light font-larger">Girls</div>
         </div>
       </div>
       <div class="gender-item gender-item-total">
         <div class="icon-boy-girl k-icon"></div>
         <div class="center-text">
-          <div class="gender-item-count">{{ num_boys+num_girls }}</div>
+          <div class="gender-item-count">{{ total_students }}</div>
           <div class="uppercase font-light font-larger">Total</div>
         </div>
       </div>
     </div>
+    {% endif %}
+
     {% if has_basic_facilities %}
     <div class="facility-items">
       <h4 class="facility-icons-title">Facilities</h4>

@@ -489,6 +489,7 @@
                                             data.basic_facilities.library ||
                                             data.basic_facilities.playground ||
                                             data.has_volunteer_activities;
+                data.total_students = getTotalStudents(data);
                 duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
                 setMarkerURL(feature);
                 document.title = "School: " + feature.properties.name;
@@ -498,6 +499,13 @@
                     klp.comparison.open(data);
                 });
             });
+        }
+
+        function getTotalStudents(data) {
+            var boys = data.num_boys ? data.num_boys : 0;
+            var girls = data.num_girls ? data.num_girls : 0;
+            return parseInt(boys) + parseInt(girls);
+
         }
 
         var overlays = {
