@@ -74,7 +74,7 @@ class EMSBoundary(BaseModel):
 class EMSSchool(GeoBaseModel):
     admin3 = models.ForeignKey('schools.Boundary', db_column='boundary_id')
 
-    address = models.OneToOneField('schools.Address', db_column='inst_address_id',
+    address = models.OneToOneField('EMSAddress', db_column='inst_address_id',
                                    blank=True, null=True)
     dise_info = models.OneToOneField('schools.DiseInfo', db_column='dise_code',
                                      blank=True, null=True)

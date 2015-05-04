@@ -46,6 +46,7 @@ CREATE TABLE ems_tb_child (
 	gender text,
 	mt text
 );
+CREATE INDEX ON ems_tb_child(id);
 CREATE TABLE ems_tb_class (
 	id int,
 	institution_id int,
