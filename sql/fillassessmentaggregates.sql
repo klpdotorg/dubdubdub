@@ -4,6 +4,7 @@ select cohorts_wrapper(3);
 select cohorts_wrapper(6);
 select cohorts_wrapper(9);
 
+--pid 14
 select fill_inst_assess_cohorts(101,'4',41,ARRAY[41,42]);
 select fill_agg_singlescore(101,'4',41,ARRAY[41,42]);
 select fill_agg_singlescore_mt(101,'4',41,ARRAY[41,42]);
@@ -115,6 +116,8 @@ select fill_agg_singlescore_admin2_mt(101,'5',48,ARRAY[47,48]);
 select fill_agg_singlescore_admin3(101,'5',48,ARRAY[47,48]);
 select fill_agg_singlescore_admin3_gender(101,'5',48,ARRAY[47,48]);
 select fill_agg_singlescore_admin3_mt(101,'5',48,ARRAY[47,48]);
+
+
 select cohorts_wrapper(24);
 
 --grade
@@ -127,19 +130,137 @@ select cohorts_wrapper(30);
 select cohorts_wrapper(31);
 
 
---fill boundary
---marks
-select cohorts_wrapper_boundary(2);
-select cohorts_wrapper_boundary(3);
-select cohorts_wrapper_boundary(6);
-select cohorts_wrapper_boundary(9);
-select cohorts_wrapper_boundary(24);
+--anganwadi
 
---grade
+select cohorts_wrapper(5);
+select cohorts_wrapper(18);
+select cohorts_wrapper(25);
+select cohorts_wrapper(26);
+select cohorts_wrapper(27);
 
-select cohorts_wrapper_boundary(15);
-select cohorts_wrapper_boundary(23);
-select cohorts_wrapper_boundary(28);
-select cohorts_wrapper_boundary(29);
-select cohorts_wrapper_boundary(30);
-select cohorts_wrapper_boundary(31);
+--new ones
+
+select cohorts_wrapper(32);
+select cohorts_wrapper(34);
+select cohorts_wrapper(35);
+select cohorts_wrapper(36);
+--pid 37
+select fill_inst_assess_cohorts(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',125,ARRAY[125,148]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',125,ARRAY[125,148]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',148,ARRAY[125,148]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',148,ARRAY[125,148]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',149,ARRAY[126,149]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',149,ARRAY[126,149]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',126,ARRAY[126,149]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',126,ARRAY[126,149]);
+
+
+select cohorts_wrapper(38);
+select cohorts_wrapper(44);
+select cohorts_wrapper(45);
+-- pid 49
+select fill_inst_assess_cohorts(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',190,ARRAY[190,218]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',190,ARRAY[190,218]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',218,ARRAY[218,190]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',218,ARRAY[218,190]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',191,ARRAY[191,219]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',191,ARRAY[191,219]);
+
+select fill_inst_assess_cohorts(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_mt(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_gender(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin1(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin1_mt(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin1_gender(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin2(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin2_mt(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin2_gender(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin3(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin3_mt(121,'Anganwadi Class',219,ARRAY[219,191]);
+select fill_agg_singlescore_admin3_gender(121,'Anganwadi Class',219,ARRAY[219,191]);
+
+
+
