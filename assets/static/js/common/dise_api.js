@@ -6,6 +6,14 @@
             if (typeof(academicYear) === 'undefined') {
                 academicYear = DEFAULT_ACADEMIC_YEAR;
             }
+            if (!diseCode) {
+                var $deferred = $.Deferred();
+                //FIXME: Return a proper error, dont resolve with empty object
+                setTimeout(function() {
+                    $deferred.resolve({});
+                }, 0);
+                return $deferred;
+            }
             var url = base + academicYear + '/school/' + diseCode + '/infrastructure/';
             var params = {
                 'format': 'json'

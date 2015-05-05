@@ -484,21 +484,45 @@
             t.startLoading();
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
-                t.stopLoading();
-                data.has_basic_facilities = data.basic_facilities.computer_lab || 
-                                            data.basic_facilities.library ||
-                                            data.basic_facilities.playground ||
-                                            data.has_volunteer_activities;
-                data.total_students = getTotalStudents(data);
-                duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
-                setMarkerURL(feature);
-                document.title = "School: " + feature.properties.name;
-                $('.js-trigger-compare').unbind('click');
-                $('.js-trigger-compare').click(function(e) {
-                    e.preventDefault();
-                    klp.comparison.open(data);
+                var facilitiesXHR = fetchBasicFacilities(data);
+                facilitiesXHR.done(function(basicFacilities) {
+                    t.stopLoading();
+                    data.basic_facilities = basicFacilities;
+                    data.has_basic_facilities = data.basic_facilities.computer_lab || 
+                                                data.basic_facilities.library ||
+                                                data.basic_facilities.playground ||
+                                                data.has_volunteer_activities;
+                    data.total_students = getTotalStudents(data);
+                    duplicateMarker.bindPopup(tpl_map_popup(data), {maxWidth:300, minWidth:300}).openPopup();
+                    setMarkerURL(feature);
+                    document.title = "School: " + feature.properties.name;
+                    $('.js-trigger-compare').unbind('click');
+                    $('.js-trigger-compare').click(function(e) {
+                        e.preventDefault();
+                        klp.comparison.open(data);
+                    });
                 });
             });
+        }
+
+        function fetchBasicFacilities(data) {
+            var $deferred = $.Deferred();
+            if (data.type.id === 2) { //is a preschool
+                setTimeout(function() {
+                    $deferred.resolve(data.basic_facilities);
+                }, 0);
+            } else {
+                var facilitiesXHR = klp.dise_api.fetchSchoolInfra(data.dise_code);
+                facilitiesXHR.done(function(diseData) {
+                    if (diseData.hasOwnProperty('properties')) {
+                        var basicFacilities = klp.dise_infra.getBasicFacilities(diseData.properties);
+                        $deferred.resolve(basicFacilities);
+                    } else {
+                        $deferred.resolve({});    
+                    }
+                });
+            }
+            return $deferred;
         }
 
         function getTotalStudents(data) {

@@ -154,33 +154,44 @@
         }
     };
 
-    klp.dise_infra = {
-        'getFacilitiesData': function(diseData) {
-            if (_.isEmpty(diseData)) {
-                return {};
-            }
-            var facilities = {
-                'Nutrition and Hygiene': {},
-                'Basic Infrastructure': {},
-                'Learning Environment': {},
-                'Toilet Facilities': {}
-            };
-            var keys = _.keys(infraData);
-            _.each(keys, function(key) {
-                var obj = infraData[key];
-                var text = obj.text;
-                var section = obj.section;
-                if (_.isFunction(obj.answer_map)) {
-                    var value = obj.answer_map(diseData);
-                } else {
-                    var diseValue = diseData[key];
-                    var value = obj.answer_map[diseValue];
-                }
-                facilities[obj.section][text] = value;
-
-            });
-            return facilities;
+    var getFacilitiesData = function(diseData) {
+        if (_.isEmpty(diseData)) {
+            return {};
         }
+        var facilities = {
+            'Nutrition and Hygiene': {},
+            'Basic Infrastructure': {},
+            'Learning Environment': {},
+            'Toilet Facilities': {}
+        };
+        var keys = _.keys(infraData);
+        _.each(keys, function(key) {
+            var obj = infraData[key];
+            var text = obj.text;
+            var section = obj.section;
+            if (_.isFunction(obj.answer_map)) {
+                var value = obj.answer_map(diseData);
+            } else {
+                var diseValue = diseData[key];
+                var value = obj.answer_map[diseValue];
+            }
+            facilities[obj.section][text] = value;
+
+        });
+        return facilities;
+    };
+
+    var getBasicFacilities = function(diseData) {
+        return {
+            'playground': infraData.playground.answer_map[diseData.playground],
+            'library': infraData.library_yn.answer_map(diseData),
+            'computer_lab': infraData.computer_aided_learnin_lab.answer_map[diseData.computer_aided_learnin_lab] 
+        };
+    };
+
+    klp.dise_infra = {
+        'getFacilitiesData': getFacilitiesData,
+        'getBasicFacilities': getBasicFacilities
     };
 
 })();
