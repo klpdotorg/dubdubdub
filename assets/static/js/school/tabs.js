@@ -506,6 +506,9 @@
             dataCache[tabName] = data;
             callback(data);
         });
+        $xhr.fail(function(err) {
+            klp.utils.alertMessage("Temporary error loading data.");
+        });
     }
 
     function doPostRender(tabName, data) {

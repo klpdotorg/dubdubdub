@@ -42,6 +42,10 @@
                     var facilities = klp.dise_infra.getFacilitiesData(data.properties);
                     $deferred.resolve({'facilities': facilities});
                 });
+                $xhr.fail(function(err) {
+                    klp.utils.alertMessage("Temporary error loading infrastructure data.");
+                    $deferred.resolve({'factilities': {}});
+                });
             } else {
                 setTimeout(function() {
                     $deferred.resolve({'facilities': {}});
