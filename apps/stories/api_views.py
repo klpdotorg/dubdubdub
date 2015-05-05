@@ -371,6 +371,24 @@ class StoryMetaView(KLPAPIView):
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
 
+        if admin1_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin1__id=admin1_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin1__id=admin1_id)
+
+        if admin2_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin2__id=admin2_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin2__id=admin2_id)
+
+        if admin3_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin3__id=admin3_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin3__id=admin3_id)
+
         response_json = {}
 
         response_json['total'] = {}
