@@ -96,13 +96,25 @@
                         return klp.api.do(schoolInfoURL + '/infrastructure');
                     }
                     //for primary schools, fetch infra data from DISE
-                    return klp.dise_api.fetchSchoolInfra(DISE_CODE);
+                    if (DISE_CODE) {
+                        return klp.dise_api.fetchSchoolInfra(DISE_CODE);
+                    } else {
+                        var $deferred = $.Deferred();
+                        setTimeout(function() {
+                            $deferred.resolve({});
+                        }, 0);
+                        return $deferred;
+                    }
                 },
                 getContext: function(data) {
                     data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
                     if (SCHOOL_TYPE_ID === 1) {
-                        data = data.properties;
-                        data.facilities = klp.dise_infra.getFacilitiesData(data);
+                        if (data.hasOwnProperty('properties')) {
+                            data = data.properties;
+                            data.facilities = klp.dise_infra.getFacilitiesData(data);
+                        } else {
+                            data.facilities = null;
+                        }
                     }
                     return data;
                 }

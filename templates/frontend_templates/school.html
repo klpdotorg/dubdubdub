@@ -304,6 +304,7 @@
     <div class="tab-school-infra-block">
       <div class="school-infra-table">    
         <h4 class="heading-tiny-uppercase">Infrastructure</h4>
+        {% if facilities %}
         <table class="table-data table-data-key">
           {% for title, facs in facilities %}
           <tr>
@@ -318,6 +319,11 @@
           </tr>
           {% endfor %}
         </table>
+        {% else %}
+        <div class="no-data">
+          No data available.
+        </div>
+        {% endif %}
       </div> <!-- /school-infra-table -->
     
       <div class="infra-key-legend">

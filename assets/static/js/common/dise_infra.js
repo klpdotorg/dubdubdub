@@ -156,6 +156,9 @@
 
     klp.dise_infra = {
         'getFacilitiesData': function(diseData) {
+            if (_.isEmpty(diseData)) {
+                return {};
+            }
             var facilities = {
                 'Nutrition and Hygiene': {},
                 'Basic Infrastructure': {},

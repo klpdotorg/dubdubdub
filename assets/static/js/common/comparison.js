@@ -36,11 +36,17 @@
                 $deferred.resolve(data);
             });
         } else { // is primary school, fetch data from DISE API
-            var $xhr = klp.dise_api.fetchSchoolInfra(entity.dise_code);
-            $xhr.done(function(data) {
-                var facilities = klp.dise_infra.getFacilitiesData(data.properties);
-                $deferred.resolve({'facilities': facilities});
-            });
+            if (entity.dise_code) {
+                var $xhr = klp.dise_api.fetchSchoolInfra(entity.dise_code);
+                $xhr.done(function(data) {
+                    var facilities = klp.dise_infra.getFacilitiesData(data.properties);
+                    $deferred.resolve({'facilities': facilities});
+                });
+            } else {
+                setTimeout(function() {
+                    $deferred.resolve({'facilities': {}});
+                }, 0);
+            }
         }
         return $deferred;
     };
