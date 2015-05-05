@@ -521,6 +521,10 @@
                         $deferred.resolve({});    
                     }
                 });
+                facilitiesXHR.fail(function(err) {
+                    klp.utils.alertMessage("Temporary error fetching basic facilities data for this school.");
+                    $deferred.resolve({});
+                });
             }
             return $deferred;
         }
