@@ -21,8 +21,9 @@ from users.api_views import (TestAuthenticatedView, UsersView,
     DonationRequirementListView, DonationRequirementDetailsView, PasswordChangeView,
     DonationItemListView, DonationItemDetailsView, DonationUsersView, DonationUserView)
 
-from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView,
-    ShareYourStoryView, StoryMetaView)
+from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView, 
+    ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView)
+
 
 urlpatterns = patterns('',
 
@@ -107,6 +108,10 @@ urlpatterns = patterns('',
     url(r'^stories/info/$', StoryInfoView.as_view(),
         name="api_stories_info"),
     url(r'^stories/meta/$', StoryMetaView.as_view(),
+        name="api_stories_info"),
+    url(r'^stories/details/$', StoryDetailView.as_view(),
+        name="api_stories_info"),
+    url(r'^stories/volume/$', StoryVolumeView.as_view(),
         name="api_stories_info"),
 
     url('^organizations$', OrganizationsView.as_view(),
