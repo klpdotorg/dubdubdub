@@ -60,6 +60,11 @@ misc.sql
 
 # gitignore: added stuff to ignore here: e.g. screenshots
 gitignore/
+
+# data folder
+data
+*.log
+
 assets/static/css.old/
 assets/static/sass.old/
-.sass-cache/ 
+.sass-cache/
