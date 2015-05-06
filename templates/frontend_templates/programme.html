@@ -1,0 +1,125 @@
+{% verbatim %}
+    <script type="text/html" id="tpl-assessment-class">
+        <div class="container assessment-class-section">
+            <h3>Class: {{ className }}</h3>
+            {% for a in assessments %}
+            <div class="header-strip center-text">
+                <div class="heading-tiny-uppercase">
+                    {{ a.assessmentname }}
+                </div>
+            </div>
+            <div class="assessment-container">
+                <div class="assessment-score-parent">
+                    <div class="overall-score">
+                        <h5>Overall Score</h5>
+                        <div class="overall-score-value border-radius-circle border-base box-demo">
+                            <div class="dead-center">
+                                {{ a.singlescore|int }}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gender">
+                        <h5>Score by Gender</h5>
+                        {% for gender in a.genders %}
+                        <div>
+ 
+                            <div class="bar-graph-wrap">
+                                <div class="module-stats-icon module-stats-{{ gender.icon }} assessment-gender-icon">
+                                    <span class="icon-{{ gender.icon }}"></span>
+                                    <div class="module-stats-info">
+                                        <div class="uppercase">{{ gender.name }}</div>
+                                        <p class="module-stats-label">{{ gender.cohorts }}</p>
+                                    </div>
+                                </div>
+                                <div class="bar-graph">
+                                  <div class="bar-percent">{{ gender.singlescore|int }}%</div>
+                                  <div class="bar-custom tooltip" aria-label="{{ gender.singlescore }}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.singlescore|int }}" style="width:{{ gender.singlescore }}%;">
+                                      </div>
+                                  </div>
+                                </div> 
+                            </div>
+                        
+                        </div>
+                        {% endfor %}
+                    </div> <!-- end gender -->
+
+
+                </div>
+                <div class="assessment-comparison-container">
+                    <div class="comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            {% for c in a.compares %}
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                <span class="admin-name">
+                                    {{ c.name }}
+                                </span>
+                                <span class="admin-score">
+                                    {{ c.singlescore|int }}%
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div> <!-- end comparison -->
+                    <div class="languages bar-tab-demo-block">
+                        <h5>Score by Mother-Tongue</h5>
+                        {% for mt in a.mts %}
+                            <div class="bar-graph-wrap">
+                                <div class="bar-label heading-tiny-uppercase">
+                                    {{ mt.name }}
+                                </div>
+                                <div class="bar-graph">
+                                  <div class="bar-percent">{{ mt.singlescore|int }}%</div>
+                                  <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
+                                      </div>
+                                  </div>
+                                </div> 
+                            </div>                
+                        {% endfor %}            
+
+                    </div> <!-- end languages -->
+                </div><!-- end assessment-comparison-container -->
+            </div><!-- end assessment-container -->
+            {% endfor %}
+        </div>
+
+
+        <!-- <div class="container assessment-section">
+            Assessment name: {{ assessmentname }} <br />
+            Class: {{ studentgroup }} <br />
+            Academic Year: {{ academicyear_name }} <br />
+            Overall Percentage: {{ singlescore }}
+        </div> -->
+    </script>
+
+    <script type="text/html" id="tpl-school">
+        <h4 class="school-type-{{ type_name }}">
+            <span class="icon-number">
+              {% if type_name == 'school' %} S {% else %} P {% endif %}
+            </span>
+            <a class="school-link" href="/school/{{ id }}">
+                {{ name }}
+            </a>
+        </h4>
+  
+      <ul class="map-location-labels font-smallest">  
+        <li class="map-label-each">
+          <div class="map-label-title">District</div>
+          <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+        <li class="map-label-each">
+          <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+          <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+        <li class="map-label-each">
+          <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+          <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+      </ul>
+    </script>
+
+    <script type="text/html" id="tpl-boundary">
+        Boundary Type: {{ type }} <br />
+        Boundary Name: {{ name }}
+    </script>
+
+{% endverbatim %}

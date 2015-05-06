@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
-from schools.views import SchoolPageView
+from schools.views import SchoolPageView, ProgrammeView
 from stories.views import IVRSPageView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
@@ -98,6 +98,9 @@ urlpatterns = patterns(
         template_name='volunteer.html',
         ), name='volunteer'),
     url(r'text/volunteer/$', RedirectView.as_view(url='/volunteer/')),
+
+    #URL for assessment programme details
+    url(r'^programme/(?P<pk>[0-9]+)$', ProgrammeView.as_view(), name='programme'),
 
     url(r'^map/$', StaticPageView.as_view(
         template_name='map.html',

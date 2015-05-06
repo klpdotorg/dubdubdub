@@ -14,6 +14,7 @@ from .serializers import (SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer)
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+from common.mixins import CacheMixin
 from rest_framework.exceptions import (APIException, PermissionDenied,
     ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
@@ -36,7 +37,7 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
-class StoryVolumeView(KLPAPIView):
+class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
     admin1 -- ID of the District.
@@ -155,7 +156,7 @@ class StoryVolumeView(KLPAPIView):
             return (len(year) == 4 and int(year) <= timezone.now().year)
 
 
-class StoryDetailView(KLPAPIView):
+class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
 
     source -- Source of data [web/ivrs].
@@ -327,7 +328,7 @@ class StoryDetailView(KLPAPIView):
 
         return response_list
 
-class StoryMetaView(KLPAPIView):
+class StoryMetaView(KLPAPIView, CacheMixin):
     """Returns total number of stories and schools with stories
     along with respondent types.
 
