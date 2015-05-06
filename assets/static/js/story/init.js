@@ -174,6 +174,7 @@
         //var params = klp.router.getHash().queryParams;
         var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
+        params['school_type'] = schoolType;
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
             params['school_type'] = schoolType;
@@ -723,6 +724,7 @@
 
     function getQuestionsArray(questions) {
         return _.map(questions, function(question, seq) {
+            console.log("question", question);
             var score = getScore(question.answers, 'Yes');
             var total = getTotal(question.answers);
             var percent = getPercent(score, total);
