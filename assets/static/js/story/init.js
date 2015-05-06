@@ -172,13 +172,11 @@
 
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
-        var metaURL = "stories/meta"; //FIXME: enter API url
-        //params['school_type'] = schoolType
+        var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
             params['school_type'] = schoolType;
-            console.log("calling meta url", params);
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
                 data.searchEntity = entityDetails;
