@@ -371,7 +371,6 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_boys
         except Exception, e:
-            print e
             return None
 
     @cached_property
@@ -381,7 +380,6 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_girls
         except Exception, e:
-            print e
             return None
 
     class Meta:
