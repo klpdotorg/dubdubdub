@@ -243,19 +243,30 @@
 </script>
 
 <script type="text/html" id="tpl-tab-programmes">
-  <div class="container">
-    Coming soon.
-    <!-- <h4 class="heading-tiny-uppercase">Programme Information</h4>
-      <a href="" class="black external"><b>Akshara Foundation-Reading (2006)</b></a><br/>
-      <a href="" class="black external"><b>Akshara Foundation-Remedial_Math_Level2 (2008)</b></a>
-      
-      <table class="info_data_table label_small mar_top_25">
+    <div class="container">
+      <h4 class="heading-tiny-uppercase">Programme Information</h4>
+      {% if programmes|length > 0 %}
+      <ul>
+          {% for programme in programmes %}
+          <li class="circle-bullet white">
+              <a href="/programme/{{ programme.id }}#?school={{ school_id }}">
+                  {{ programme.name }} - {{ programme.academicyear_name }}
+              </a>
+          </li>
+          {% endfor %}
+      </ul>
+      {% else %}
+      <div class="no-data">
+          No programme information for this school.
+      </div>
+      {% endif %}
+      <table class="table-data">
           <tr>
               <td>Source</td>
               <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
           </tr>
-      </table> -->
-  </div> <!-- /container -->
+      </table>
+    </div>
 </script>
 
 <script type="text/html" id="tpl-tab-finances">

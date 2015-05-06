@@ -1,6 +1,6 @@
 #page views go here. For API views, use api_views.py
 from django.views.generic.detail import DetailView
-from .models import School
+from .models import School, Programme
 from django.conf import settings
 import urllib2
 from django.http import HttpResponse
@@ -31,6 +31,11 @@ class SchoolPageView(DetailView):
             }
         ]
         return context
+
+
+class ProgrammeView(DetailView):
+    model = Programme
+    template_name = 'programme.html'
 
 
 def blog_feed(request):
