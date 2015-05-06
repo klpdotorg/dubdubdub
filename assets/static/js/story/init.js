@@ -306,10 +306,10 @@
             }, {
                 'label': 'Calls received',
                 'count': data.ivrs.stories
-            }, {
+            }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
-            }],
+            }*/],
             'survey': [{
                 'label': summaryLabel,
                 'count': data.total.schools
@@ -319,10 +319,10 @@
             }, {
                 'label': 'Stories',
                 'count': data.community.stories
-            }, {
+            }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
-            }],
+            }*/],
             'web': [{
                 'label': summaryLabel,
                 'count': data.total.schools
@@ -332,10 +332,10 @@
             }, {
                 'label': 'Verified Stories',
                 'count': data.web.verified_stories
-            }, {
+            }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
-            }]
+            }*/]
         };
 
         var html = tplCountSummary({
