@@ -9,7 +9,7 @@ from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
-    PincodeDetails, SchoolNutrition, MergeEndpoints)
+    PincodeDetails, SchoolNutrition, MergeEndpoints,AssessmentsList,AssessmentInfo,ProgrammesList,ProgrammeInfo)
 
 from users.api_views import (TestAuthenticatedView, UsersView,
     UserProfileView, OtherUserProfileView, OrganizationsView,
@@ -23,6 +23,7 @@ from users.api_views import (TestAuthenticatedView, UsersView,
 
 from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView, 
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView)
+
 
 urlpatterns = patterns('',
 
@@ -203,4 +204,10 @@ urlpatterns = patterns('',
     #     DonationTypeView.as_view(),
     #     name='api_donationtype_view'),
 
+
+    #Assessment urls
+    url(r'^assessment/$',AssessmentsList.as_view(),name='api_assessment_list'),
+    url(r'^assessment/(?P<assessment_id>[0-9]+)/$',AssessmentInfo.as_view(),name='api_assessment_info'),
+    url(r'^programme/$',ProgrammesList.as_view(),name='api_programme_list'),
+    url(r'^programme/(?P<programme_id>[0-9]+)/$',ProgrammeInfo.as_view(),name='api_programme_info'),
 )
