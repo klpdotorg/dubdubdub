@@ -1,0 +1,163 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-topSummary">
+    <h2 class="heading-border brand-purple">{{school_type}} - Summary</h2> 
+    <hr/>
+    <div class="chart-half-item">
+      <div class="chart-parent">
+        <div class="chart-half-item js-entity-data">
+          <div class="heading-tiny-uppercase align-left">
+            {{ searchEntity.type}}
+          </div>
+          <h2 class="heading-secondary brand-blue align-left">
+            {{ searchEntity.name }}
+          </h2>
+        </div>
+        <div class="chart-half-item js-hide-school">
+          <div class="heading-tiny-uppercase align-left" >{{school_type}}</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.schools }}</h2> 
+        </div>
+      </div>
+      <div class="chart-parent">
+        <div class="chart-half-item">
+          <div class="heading-tiny-uppercase align-left" >Stories</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2>
+        </div>
+        <div class="chart-half-item js-hide-school">
+          <div class="heading-tiny-uppercase align-left" >{{school_type}} with Stories</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.schools_with_stories }}</h2> 
+        </div>
+      </div><!--end inner parent-->
+    </div> 
+    <div class="chart-half-item">
+      <div class="chart-parent">
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/ivrs.png" alt="IVRS">
+          <h2 class="heading-secondary brand-blue">{{ ivrs.stories }}</h2> 
+        </div>
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/survey.png" alt="Surveys">
+          <h2 class="heading-secondary brand-blue">{{ community.stories }}</h2> 
+        </div>
+        <div class="chart-athird-item">
+          <img class="img-symbol" src="/static/images/story/website.png" alt="Website">
+          <h2 class="heading-secondary brand-blue">{{ web.stories }}</h2> 
+        </div>
+      </div>
+    </div>
+
+
+  </script>
+
+  <script type="text/html" id="tpl-gradeGraph">
+    {% if total != 0 %}
+    <div class="bar-graph-wrap">
+      <div class="bar-label {{ color }}">{{ value }} Grade</div>
+      <div class="bar-graph">
+        <div class="bar-percent {{ color }}">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-{{ score }} {{ color }}-bg" style="width:{{percent }}%;"></div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    {% else %}
+    <div class="no-data">
+      No respondents
+    </div>
+    {% endif %}
+  </script>
+
+
+  <script type="text/html" id="tpl-percentGraph">
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ question }}</div>
+      {% if total != 0 %}
+      <div class="bar-graph">
+        <div class="bar-percent green-leaf">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+      {% else %}
+      <div class="no-data">
+        No respondents
+      </div> 
+      {% endif %}
+    </div> <!-- /bar-graph-wrap -->
+  </script>
+
+  <script type="text/html" id="tpl-colorText">
+    <div class="chart-athird-item">
+      <div>
+        {% for i in icon %}
+          <span class="{{ i }}"></span>
+        {% endfor %}
+        &nbsp;{{ facility }}
+      </div>
+      {% if facility.total != 0 %}
+      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
+        {{ percent }}%
+      </div>
+      {% else %}
+      <div class="no-data">
+        No data
+      </div>
+      {% endif %}
+    </div>
+  </script>
+
+  <!-- There's probably a cleaner way of doing the below template without this many for loops-->
+  <script type="text/html" id="tpl-compareTable">
+    <table class="table-base">
+      <thead class="table-base-heading">
+        <tr>
+        <th></th>            
+          {% for n in neighbours %}
+            <th>{{ n.name }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Schools</td>
+          {% for n in neighbours %}
+            <td>{{ n.schools }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>Stories</td>
+          {% for n in neighbours %}
+            <td>{{ n.stories }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>IVRS Calls</td>
+          {% for n in neighbours %}
+            <td>{{ n.ivrs }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Volunteers say) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_volunteer }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Community says) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_community }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/html" id="tpl-countSummary">           
+    {% for s in summary %}
+      <div class="chart-quarter-item">
+        <div class="heading-tiny-uppercase align-left" >{{ s.label }}</div>
+        <h2 class="heading-secondary brand-blue align-left">{{ s.count }}</h2> 
+      </div>
+    {% endfor %}
+  </script>
+
+{% endverbatim %}
+

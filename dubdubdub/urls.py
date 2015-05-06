@@ -21,6 +21,11 @@ urlpatterns = patterns(
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
         ), name='home'),
+    
+    # story dashboard
+    url(r'^stories/$', StaticPageView.as_view(
+        template_name='story_dashboard.html'
+        ), name='story_dashboard'),
 
     # styleguide page
     url(r'^styleguide/$', StaticPageView.as_view(
