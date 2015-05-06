@@ -239,7 +239,8 @@ class School(GeoBaseModel):
 
     def get_mt_profile(self):
         profile = {}
-        for agg in self.institutionagg_set.all():
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        for agg in self.institutionagg_set.filter(academic_year=acyear):
             if agg.mt in profile:
                 profile[agg.mt] += agg.num
             else:
@@ -370,7 +371,6 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_boys
         except Exception, e:
-            print e
             return None
 
     @cached_property
@@ -380,9 +380,7 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_girls
         except Exception, e:
-            print e
             return None
-
 
     class Meta:
         managed = False

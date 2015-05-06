@@ -298,19 +298,20 @@ class AngDisplayMaster(BaseModel):
 
 
 class InstitutionAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='id', primary_key=True)
-    name = models.CharField(max_length=300, blank=True)
-    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    id = models.CharField(max_length=20, primary_key=True)
+    academic_year = models.ForeignKey('AcademicYear')
+    school = models.ForeignKey('School')
+    boundary = models.ForeignKey("Boundary", blank=True, null=True, on_delete=models.SET_NULL)
+    gender = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return self.id
 
     class Meta:
         managed = False
-        db_table = 'tb_institution_agg'
+        db_table = 'mvw_institution_aggregations'
 
 
 class SchoolAgg(BaseModel):
