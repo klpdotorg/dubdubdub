@@ -12,10 +12,10 @@
       <div class="map-label-title">District</div>
       <div class="map-label-name">{{ admin1.name|capitalize }}</div>
     <li class="map-label-each">
-      <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+      <div class="map-label-title">{% if type.id==1 %}Block {% else %} Project {% endif %}</div>
       <div class="map-label-name">{{ admin2.name|capitalize }}</div>
     <li class="map-label-each">
-      <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+      <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Circle {% endif %}</div>
       <div class="map-label-name">{{ admin3.name|capitalize }}</div>
   </ul>
 </script>
@@ -124,7 +124,7 @@
     <table class="table-data">
       <tr>
         <td>Source</td>
-        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>KLP Database (2013-2014){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
     </table>
   </div> <!-- /container -->
@@ -235,7 +235,7 @@
     <table class="table-data">
       <tr>
         <td>Source</td>
-        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>KLP Database (2013-2014){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
       </tr>
     </table>
   </div> <!-- /container -->
@@ -292,7 +292,7 @@
     <table class="table-data">
         <tr>
           <td>Source</td>
-          <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+          <td>KLP Database (2013-2014){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
         </tr>
     </table>
   </div> <!-- /container -->
@@ -304,6 +304,7 @@
     <div class="tab-school-infra-block">
       <div class="school-infra-table">    
         <h4 class="heading-tiny-uppercase">Infrastructure</h4>
+        {% if facilities %}
         <table class="table-data table-data-key">
           {% for title, facs in facilities %}
           <tr>
@@ -318,6 +319,11 @@
           </tr>
           {% endfor %}
         </table>
+        {% else %}
+        <div class="no-data">
+          No data available.
+        </div>
+        {% endif %}
       </div> <!-- /school-infra-table -->
     
       <div class="infra-key-legend">

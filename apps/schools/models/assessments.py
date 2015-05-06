@@ -20,20 +20,55 @@ class Assessment(BaseModel):
         db_table = 'tb_assessment'
 
 
+# class InstitutionAgg(BaseModel):
+#     school = models.ForeignKey('School', db_column='id', primary_key=True)
+#     name = models.CharField(max_length=300, blank=True)
+#     bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
+#     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+#     mt = models.CharField(max_length=128, choices=MT_CHOICES)
+#     num = models.IntegerField(blank=True, null=True)
+
+#     def __unicode__(self):
+#         return self.name
+
+#     class Meta:
+#         managed = False
+#         db_table = 'tb_institution_agg'
+
 class InstitutionAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='id', primary_key=True)
+    id = models.CharField(max_length=20, primary_key=True)
+    academic_year = models.ForeignKey('AcademicYear')
+    school = models.ForeignKey('School')
+    boundary = models.ForeignKey("Boundary", blank=True, null=True, on_delete=models.SET_NULL)
+    gender = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.id
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_institution_aggregations'
+
+
+class InstitutionAggregation(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey(
+        'AcademicYear',
+        blank=True, null=True, default=102, on_delete=models.SET_NULL
+    )
+
     name = models.CharField(max_length=300, blank=True)
-    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
+    boundary = models.ForeignKey(
+        "Boundary", blank=True, null=True, on_delete=models.SET_NULL
+    )
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
-
-    class Meta:
-        managed = False
-        db_table = 'tb_institution_agg'
 
 
 class InstitutionAssessmentAgg(BaseModel):
@@ -60,8 +95,10 @@ class InstitutionAssessmentAgg(BaseModel):
 
 class InstitutionAssessmentAggCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
+    assessment = models.ForeignKey(
+        'Assessment', db_column='assid',
+        blank=True, null=True, on_delete=models.SET_NULL)
+
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
