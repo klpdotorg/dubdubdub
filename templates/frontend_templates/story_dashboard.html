@@ -2,33 +2,42 @@
 
   <script type="text/html" id="tpl-topSummary">
     <h2 class="heading-border brand-purple">{{school_type}} - Summary</h2> 
-    <hr/>
-    <div class="chart-half-item">
-      <div class="chart-parent">
-        <div class="chart-half-item js-entity-data">
+
+    <div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
             {{ searchEntity.type}}
           </div>
           <h2 class="heading-secondary brand-blue align-left">
             {{ searchEntity.name }}
           </h2>
+    <hr/>
+    </div>
+    <div class="chart-half-item">
+
+      <div class="chart-parent">
+        <div class="chart-half-item js-entity-data">
+          <div class="heading-tiny-uppercase align-left" >Stories</div>
+          <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2>
         </div>
         <div class="chart-half-item js-hide-school">
           <div class="heading-tiny-uppercase align-left" >{{school_type}}</div>
           <h2 class="heading-secondary brand-blue align-left">{{ total.schools }}</h2> 
         </div>
       </div>
-      <div class="chart-parent">
-        <div class="chart-half-item">
-          <div class="heading-tiny-uppercase align-left" >Stories</div>
-          <h2 class="heading-secondary brand-blue align-left">{{ total.stories }}</h2>
-        </div>
+
+      <div class="chart-parent">  
+        <div class="chart-half-item js-entity-data">
+          <div class="heading-tiny-uppercase align-left" >Academic Year(s)</div>
+          <h2 class="heading-secondary brand-blue align-left">2010-2014</h2> 
+        </div>     
         <div class="chart-half-item js-hide-school">
           <div class="heading-tiny-uppercase align-left" >{{school_type}} with Stories</div>
           <h2 class="heading-secondary brand-blue align-left">{{ total.schools_with_stories }}</h2> 
         </div>
+        
       </div><!--end inner parent-->
     </div> 
+
     <div class="chart-half-item">
       <div class="chart-parent">
         <div class="chart-athird-item">
@@ -36,8 +45,10 @@
           <h2 class="heading-secondary brand-blue">{{ ivrs.stories }}</h2> 
         </div>
         <div class="chart-athird-item">
+          {% if school_type == "Schools" %}
           <img class="img-symbol" src="/static/images/story/survey.png" alt="Surveys">
           <h2 class="heading-secondary brand-blue">{{ community.stories }}</h2> 
+          {%endif%}
         </div>
         <div class="chart-athird-item">
           <img class="img-symbol" src="/static/images/story/website.png" alt="Website">
@@ -157,6 +168,10 @@
         <h2 class="heading-secondary brand-blue align-left">{{ s.count }}</h2> 
       </div>
     {% endfor %}
+  </script>
+
+  <script type="text/html" id="tpl-ivrsVolume">           
+    <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
   </script>
 
 {% endverbatim %}

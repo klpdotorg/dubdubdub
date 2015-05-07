@@ -18,6 +18,14 @@
 	.chart-quarter-item{
 		@include col-25-flt;
 	}
+
+	.top-search{
+		@include col-75-flt;
+	}
+
+	.top-reset{
+		@include col-25-flt;
+	}
 }
 
 /* Defining a text align -left */
@@ -28,16 +36,15 @@
 
 .img-symbol {
 	vertical-align: middle;
-	/*padding-top: 25px;*/
 	margin-left:auto;
 	margin-right:auto;
-	width: 100px;
+	max-width: 100px;
 	display:block;
 }
 
 @include media-med {
 	.img-symbol {
-		width: auto;
+		max-width: 100px;
 	}
 }
 
@@ -45,6 +52,13 @@
   width: 100%; 
 }
 
-.taller {
-	height: 150px;
+@include media-med-maxwidth{
+	.ct-label.ct-horizontal {
+	  transform-origin: 0% 50%;
+	  transform: translateY(30px) rotate(-90deg);
+	  text-anchor: middle;
+	}
+	.ct-chart {
+	  margin-bottom: 30px;
+	}	
 }
