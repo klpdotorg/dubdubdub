@@ -106,6 +106,22 @@
           </tr>
         -->
         </table>
+
+        {% if meeting_reports.length > 0 %}
+        <h4 class="heading-tiny-uppercase">
+          {% if type.id == 1 %} SDMC {% else %} BVS {% endif %} Meeting Reports
+        </h4>
+        <div class="container">
+          <ul class="ul-base">
+            {% for m in meeting_reports %}
+            <li>
+              <a href="/media/{{ m.pdf }}" target="_blank">{{ m.language }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
       </div> <!-- school-data-block -->
 
       <div class="school-photos-block">
