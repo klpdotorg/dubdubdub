@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -4029,6 +4030,18 @@ code {
     width: 25%;
     float: left;
     padding-left: 20px;
+    padding-right: 20px; }
+
+  .top-search {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .top-reset {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
     padding-right: 20px; } }
 /* Defining a text align -left */
 .align-left {
@@ -4036,21 +4049,25 @@ code {
 
 .img-symbol {
   vertical-align: middle;
-  /*padding-top: 25px;*/
   margin-left: auto;
   margin-right: auto;
-  width: auto;
+  max-width: 100px;
   display: block; }
 
 @media only screen and (min-width: 750px) {
   .img-symbol {
-    width: 100px; } }
+    max-width: 100px; } }
 .bar-label {
   width: 100%; }
 
-.taller {
-  height: 150px; }
+@media only screen and (max-width: 749px) {
+  .ct-label.ct-horizontal {
+    transform-origin: 0% 50%;
+    transform: translateX(40px) translateY(30px) rotate(-90deg);
+    /*text-anchor: middle;*/ }
 
+  .ct-chart {
+    margin-bottom: 30px; } }
 /* CSS for accordian panels with accordian.js*/
 .head {
   display: block; }

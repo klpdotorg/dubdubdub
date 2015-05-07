@@ -17,6 +17,14 @@
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
+        $('#resetButton').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = klp.router.getHash().queryParams;
+            _.each(_.keys(currentQueryParams), function(key) {
+                currentQueryParams[key] = null;
+            });
+            klp.router.setHash('', currentQueryParams);
+        });
 
     }
 
@@ -149,7 +157,7 @@
 
     function fillSelect2(entityDetails) {
         if (entityDetails.name == '') {
-            //do nothing if name is empty
+            $('#select2search').select2("data", null);
             return;
         }
         var currentData = $('#select2search').select2("data");
@@ -210,8 +218,20 @@
     }
 
     function renderRespondentChart(data, schoolType) {
+        var labelMap = {
+            'SDMC_MEMBER': 'SDMC',
+            'CBO_MEMBER': 'CBO',
+            'PARENTS': 'Parents',
+            'TEACHERS': 'Teachers',
+            'VOLUNTEER': 'Volunteers',
+            'EDUCATED_YOUTH': 'Youth'
+        };
         var labels = _.map(_.keys(data.respondents), function(label) {
-            return _.str.titleize(label);
+            if (labelMap.hasOwnProperty(label)) {
+                return labelMap[label];
+            } else {
+                return _.str.titleize(label);
+            }
         });
         var values = _.values(data.respondents);
         var data_respondent = {
@@ -228,7 +248,12 @@
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
+
         var months = data.volumes['2014']; //FIXME: deal with with academic year.
+        var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
+        var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
+        $('#ivrsyears').html(ivrsVolTitle);
+
         var labels = _.keys(months);
         var values = _.values(months);
         var data_ivrs = {
@@ -247,19 +272,39 @@
 
     function renderBarChart(elementId, data) {
         var options = {
+            seriesBarDistance: 10,
             axisX: {
-                showGrid: false
+                showGrid: false,
+                offset: 60
             },
             axisY: {
-                showGrid: false
+                showGrid: false,
+                offset: 80,
+                scaleMinSpace: 15
             }
         };
 
-        var chart_element = Chartist.Bar(elementId, data, options).on('draw', function(data) {
+        var responsiveOptions = [
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+          }]
+        ];
+
+        var chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
                     style: 'stroke-width: 20px'
                 });
+            }
+            if (data.type === 'label' && data.axis === 'x') {
+                data.element.attr({
+                    width: 200
+                })
             }
         });
     }
@@ -602,7 +647,7 @@
                 'icon': ['fa  fa-tint'],
                 'key': 'weba-drinking-water'
             }, {
-                'facility': 'Mid-day meal',
+                'facility': 'Healthy and timely meal',
                 'icon': ['fa fa-spoon'],
                 'key': 'weba-food-ontime'
             }, {
@@ -750,7 +795,7 @@
         if (!paramKey) {
             setTimeout(function() {
                 $deferred.resolve({
-                    'type': 'All',
+                    'type': '',
                     'name': '',
                     'obj': {}
                 });

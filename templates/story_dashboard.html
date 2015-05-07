@@ -31,10 +31,16 @@
 {% block subheader %}
   <div class="map-subheader-wrapper subheader-wrapper">
     <div class="subheader-content">
-      <div class="search-input-map">
-        <input type="text" name="search" id="select2search" placeholder="Search" class="search-input input-text">
-      </div>
+    	<div class="chart-parent">
+		      <div class="top-search search-input-map">
+		        <input type="text" name="search" id="select2search" placeholder="Search" class="search-input input-text">
+		      </div>
+		      <div class="top-reset">
+		      	 <div class="button" id="resetButton">RESET <i class="fa fa-refresh"></i></div>
+		      </div>
+	    </div>
     </div>
+     
   </div>
 {% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
 
@@ -74,14 +80,14 @@
 							</div><!-- /chart-half-item -->
 
 							<div class="chart-half-item">
-								<div class="heading-tiny-uppercase">Call Volume distribution</div>
+								<div id="ivrsyears"></div>
 								<div id="chart_ivrs" class="ct-chart ct-minor-octave"></div>
 					    </div> <!-- /chart-half-item -->
 					  </div> <!--/chart-parent-->
 					  <hr/>
 					  <div class="bar-label">How would you categorize schools in this boundary?</div>
 					  <div class="chart-parent">
-				  		<div id="ivrsgrades" class="taller"></div>
+				  		<div id="ivrsgrades"></div>
 				  	</div> <!--/chart-parent-->
 					</div>
 				</li>
@@ -110,8 +116,8 @@
 				  	</div> <!--/chart-parent-->	
 				  	<hr/>
 				  	<div class="chart-parent">
-				  		<div class="heading-tertiary center-text">On the day of the visit, the percentage of schools</div>	
-					  	<div id="webquestions" class="taller"></div>
+				  		<div class="heading-tertiary center-text">On the day of the visit...</div>	
+					  	<div id="webquestions"></div>
 				  	</div> <!--/chart-parent-->	
 					</div>
 				</li>
@@ -169,7 +175,7 @@
 					  <hr/>
 					  <div class="bar-label">How would you categorize schools in this boundary?</div>
 					  <div class="chart-parent">
-				  		<div id="ivrsgrades_ang" class="taller"></div>
+				  		<div id="ivrsgrades_ang"></div>
 				  	</div> <!--/chart-parent-->
 					</div>
 				</li>
@@ -186,8 +192,8 @@
 				  	</div> <!--/chart-parent-->	
 				  	<hr/>
 				  	<div class="chart-parent">
-				  		<div class="heading-tertiary center-text">On the day of the visit, the percentage of preschools</div>	
-					  	<div id="webquestions_ang" class="taller"></div>
+				  		<div class="heading-tertiary center-text">On the day of the visit...</div>	
+					  	<div id="webquestions_ang"></div>
 				  	</div> <!--/chart-parent-->	
 					</div>
 				</li>
