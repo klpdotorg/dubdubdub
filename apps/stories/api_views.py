@@ -90,6 +90,10 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             stories_qset = stories_qset.filter(
                 school__schooldetails__admin3__id=admin3_id)
 
+        if school_id:
+            stories_qset = stories_qset.filter(
+                school=school_id)
+
         if start_date:
             stories_qset = stories_qset.filter(
                 date_of_visit__gte=start_date)
@@ -390,6 +394,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             stories_qset = stories_qset.filter(
                 school__schooldetails__admin3__id=admin3_id)
 
+        if school_id:
+            school_qset = school_qset.filter(id=school_id)
+            stories_qset = stories_qset.filter(
+                school=school_id)
+
         response_json = {}
 
         response_json['total'] = {}
@@ -412,11 +421,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                     start_date, end_date, school_type,
                 )
 
-        response_json['respondents'] = self.get_respondents(school_type)
+        response_json['respondents'] = self.get_respondents(school_type, stories_qset)
 
         return Response(response_json)
 
-    def get_respondents(self, school_type):
+    def get_respondents(self, school_type, stories_qset):
         usertypes = {
             'PR' : 'PARENTS',
             'TR' : 'TEACHERS',
@@ -429,9 +438,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'EO' : 'EDUCATION_OFFICIAL',
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
-        json = Counter(Story.objects.filter(
-            school__admin3__type__name=school_type
-        ).values_list(
+        json = Counter(stories_qset.values_list(
             'user_type__name', flat=True))
         del json[None]
         return {usertypes[key]: value for key, value in json.iteritems()}
