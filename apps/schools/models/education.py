@@ -470,3 +470,12 @@ class TeacherQualification(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'
+
+
+class MeetingReport(BaseModel):
+    school = models.ForeignKey('School')
+    pdf = models.FileField(upload_to='meeting_reports')
+    language = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return "%d: %s" % (self.school.id, self,language,)
