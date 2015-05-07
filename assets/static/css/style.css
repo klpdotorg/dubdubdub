@@ -4063,14 +4063,11 @@ code {
 @media only screen and (max-width: 749px) {
   .ct-label.ct-horizontal {
     transform-origin: 0% 50%;
-    transform: translateY(30px) rotate(-90deg);
-    text-anchor: middle; }
+    transform: translateX(40px) translateY(30px) rotate(-90deg);
+    /*text-anchor: middle;*/ }
 
   .ct-chart {
     margin-bottom: 30px; } }
-.taller {
-  height: 150px; }
-
 /* CSS for accordian panels with accordian.js*/
 .head {
   display: block; }
