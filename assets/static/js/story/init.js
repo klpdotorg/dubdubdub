@@ -17,6 +17,14 @@
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
+        $('#resetButton').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = klp.router.getHash().queryParams;
+            _.each(_.keys(currentQueryParams), function(key) {
+                currentQueryParams[key] = null;
+            });
+            klp.router.setHash('', currentQueryParams);
+        });
 
     }
 
@@ -149,7 +157,7 @@
 
     function fillSelect2(entityDetails) {
         if (entityDetails.name == '') {
-            //do nothing if name is empty
+            $('#select2search').select2("data", null);
             return;
         }
         var currentData = $('#select2search').select2("data");
