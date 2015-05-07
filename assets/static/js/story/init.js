@@ -218,8 +218,20 @@
     }
 
     function renderRespondentChart(data, schoolType) {
+        var labelMap = {
+            'SDMC_MEMBER': 'SDMC',
+            'CBO_MEMBER': 'CBO',
+            'PARENTS': 'Parents',
+            'TEACHERS': 'Teachers',
+            'VOLUNTEER': 'Volunteers',
+            'EDUCATED_YOUTH': 'Youth'
+        };
         var labels = _.map(_.keys(data.respondents), function(label) {
-            return _.str.titleize(label).replace("_"," ");
+            if (labelMap.hasOwnProperty(label)) {
+                return labelMap[label];
+            } else {
+                return _.str.titleize(label);
+            }
         });
         var values = _.values(data.respondents);
         var data_respondent = {
