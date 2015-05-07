@@ -783,7 +783,7 @@
         if (!paramKey) {
             setTimeout(function() {
                 $deferred.resolve({
-                    'type': 'All',
+                    'type': '',
                     'name': '',
                     'obj': {}
                 });
