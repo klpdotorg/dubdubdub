@@ -630,10 +630,16 @@
             return facility;
         });
 
-        var html = ''
-        for (var pos in facilities) {
+        var html = '';
+
+        _.each(facilities, function(f) {
+            html = html + tplColorText(f);
+        });
+        /*
+        for (var i=0, len=facilities.length;pos in facilities) {
             html = html + tplColorText(facilities[pos]);
         }
+        */
         $('#webfacilities' + suffix).html(html);
 
     }
@@ -724,7 +730,6 @@
 
     function getQuestionsArray(questions) {
         return _.map(questions, function(question, seq) {
-            console.log("question", question);
             var score = getScore(question.answers, 'Yes');
             var total = getTotal(question.answers);
             var percent = getPercent(score, total);
