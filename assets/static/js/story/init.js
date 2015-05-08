@@ -223,32 +223,43 @@
 
     function startSummaryLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-summary-container').empty().text("Loading...");
+        $container.find('.js-summary-container').startLoading();
     }
 
     function startDetailLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-detail-container').empty().text("Loading...");        
+        $container.find('.js-detail-container').startLoading();        
     }
 
     function startVolumeLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-volume-container').empty().text("Loading...");         
+        $container.find('.js-volume-container').startLoading();         
     }
 
     function stopSummaryLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-summary-container').empty();
+        $container.find('.js-summary-container').stopLoading();
     }
 
     function stopDetailLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-detail-container').empty();  
+        $container.find('.js-detail-container').stopLoading();  
     }
 
     function stopVolumeLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
-        $container.find('.js-volume-container').empty();       
+        $container.find('.js-volume-container').stopLoading();       
+    }
+
+    $.fn.startLoading = function() {
+        var $this = $(this);
+        var $loading = $('<div />').addClass('fa fa-cog fa-spin loading-icon-base js-loading');
+        $this.empty().append($loading);
+    }
+
+    $.fn.stopLoading = function() {
+        var $this = $(this);
+        $this.find('.js-loading').remove();
     }
 
     function getContainerDiv(schoolType) {
