@@ -321,7 +321,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             j['question']['display_text'] = question.display_text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
-            answer_counts = question.answer_set.values('text').annotate(answer_count=Count('text'))
+            answer_counts = question.answer_set.filter(story__in=stories).values('text').annotate(answer_count=Count('text'))
             options = {}
             for count in answer_counts:
                 options[count['text']] = count['answer_count']
