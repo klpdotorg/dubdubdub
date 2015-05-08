@@ -232,28 +232,6 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         response_json = {}
 
-        # Featured questions
-        response_json['featured'] = []
-        questions =  Question.objects.filter(
-            is_featured=True,
-        )
-
-        for question in questions:
-            j = {}
-            j['question'] = {}
-            j['question']['key'] = question.key
-            j['question']['text'] = question.text
-            j['question']['display_text'] = question.display_text
-            j['answers'] = {}
-            j['answers']['question_type'] = question.question_type.name
-            j['answers']['options'] = dict(
-                Counter(
-                    [a.text for a in question.answer_set.filter(
-                        story__in=stories)]
-                )
-            )
-            response_json['featured'].append(j)
-
         # Sources and filters
         if source:
             response_json[source] = self.get_que_and_ans(
@@ -300,10 +278,10 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     def get_que_and_ans(self, stories, source, school_type):
         response_list = []
 
-        questions = Question.objects.all(
-            ).select_related(
+        questions = Question.objects.filter(
+            is_featured=True).select_related(
                 'question_type', 'school_type'
-            ).prefetch_related('answer_set')
+            )
 
         if source:
             questions = questions.filter(
