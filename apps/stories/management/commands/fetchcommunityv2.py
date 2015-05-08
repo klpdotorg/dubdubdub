@@ -24,6 +24,8 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--file',
                     help='Path to the csv file'),
+        make_option('--format',
+                    help='Which format to use - Hosakote/v2/GKA'),
     )
 
     @transaction.atomic
@@ -31,6 +33,11 @@ class Command(BaseCommand):
         file_name = options.get('file', None)
         if not file_name:
             print "Please specify a filename with the --file argument"
+            return
+
+        csv_format = options.get('format', None)
+        if not csv_format or csv_format not in ['Hosakote', 'v2', 'GKA']:
+            print "Please specify a formate with the --format argument [Hosakote/v2/GKA]"
             return
 
         source = Source.objects.get_or_create(name="community")[0]
@@ -51,7 +58,11 @@ class Command(BaseCommand):
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
         
-        count = 0
+        if csv_format == "Hosakote":
+            count = -1
+        else:
+            count = 0
+
         previous_date = ""
 
         dise_errors = {}
@@ -59,31 +70,32 @@ class Command(BaseCommand):
         dise_errors['no_school_for_dise'] = []
 
         for row in csv_f:
-            # Skip first two rows
-            if count == 0 or count == 1:
+            # Skip first few rows
+            if count in [0, 1, -1]:
                 count += 1
                 continue
 
-            name = row[6]
-            dise_code = row[5]
-            accepted_answers = {'Y':'Yes', 'N':'No'}
-            user_type = self.get_user_type(row[7], user_types)
-            previous_date = date_of_visit = self.parse_date(previous_date, row[16])
-    
-            try:
-                dise_info = DiseInfo.objects.get(dise_code=dise_code)
-            except Exception as ex:
-                dise_errors['no_dise_code'].append(dise_code)
-                continue
+            if csv_format == "v2":
+                name = row[6]
+                dise_code = row[5]
+                accepted_answers = {'Y':'Yes', 'N':'No'}
+                user_type = self.get_user_type(row[7], user_types)
+                previous_date = date_of_visit = self.parse_date(previous_date, row[16])
 
-            try:
-                school = School.objects.get(dise_info=dise_info)
-            except Exception as ex:
-                dise_errors['no_school_for_dise'].append(dise_code)
-                continue
+                try:
+                    dise_info = DiseInfo.objects.get(dise_code=dise_code)
+                except Exception as ex:
+                    dise_errors['no_dise_code'].append(dise_code)
+                    continue
 
-            question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
-            answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
+                try:
+                    school = School.objects.get(dise_info=dise_info)
+                except Exception as ex:
+                    dise_errors['no_school_for_dise'].append(dise_code)
+                    continue
+
+                question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+                answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
 
             for answer_column in answer_columns:
                 if row[answer_column] in accepted_answers:
