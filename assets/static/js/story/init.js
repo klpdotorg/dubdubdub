@@ -183,11 +183,13 @@
         var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
+        startSummaryLoading(schoolType);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
             params['school_type'] = schoolType;
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
+                stopSummaryLoading(schoolType);
                 data.searchEntity = entityDetails;
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
@@ -196,8 +198,9 @@
 
         var detailURL = "stories/details/";
         var $detailXHR = klp.api.do(detailURL, params);
-
+        startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
+            stopDetailLoading(schoolType);
             renderFeatured(data, schoolType);
             renderIVRS(data, schoolType);
             renderWeb(data, schoolType);
@@ -207,14 +210,53 @@
             //renderComparison(data);
         });
 
-
+        startVolumeLoading(schoolType);
         var volumeURL = "stories/volume/";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
+            stopVolumeLoading(schoolType);
             renderIVRSVolumeChart(data, schoolType);
         });
 
 
+    }
+
+    function startSummaryLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-summary-container').empty().text("Loading...");
+    }
+
+    function startDetailLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-detail-container').empty().text("Loading...");        
+    }
+
+    function startVolumeLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-volume-container').empty().text("Loading...");         
+    }
+
+    function stopSummaryLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-summary-container').empty();
+    }
+
+    function stopDetailLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-detail-container').empty();  
+    }
+
+    function stopVolumeLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-volume-container').empty();       
+    }
+
+    function getContainerDiv(schoolType) {
+        if (schoolType === preschoolString) {
+            return $('#preschoolContainer');
+        } else {
+            return $('#primarySchoolContainer');
+        }        
     }
 
     function renderRespondentChart(data, schoolType) {
