@@ -37,6 +37,7 @@
             $('#preschoolContainer').show();
             $('#primarySchoolContainer').show();
         } else {
+            queryParams.school_type = window.decodeURIComponent(queryParams.school_type);
             if (queryParams.school_type == preschoolString) {
                 $('#primarySchoolContainer').hide();
                 $('#preschoolContainer').show();
