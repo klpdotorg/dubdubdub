@@ -10,6 +10,12 @@ Use required commands
 Changelog
 ---
 
+Release 0.20: 510080ca879663f61ab5b63d4c86eee9c14ea036 - 2015-05-08
+  - Data import scripts + updated data (13-14)
+  - Stories imports + Stories API + Stories Dashboard Frontend
+  - Assessment aggregation scripts and assessments
+  - SDMC / BVS meeting PDFs
+
 Release 0.14: 4c8fbca1b9617a5015f8b620ef53ec030d8cfda8
   - Front-end re-write + styleguide
 
