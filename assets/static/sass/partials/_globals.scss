@@ -288,6 +288,17 @@
 }
 
 /*-------------------------------------*/
+/* LOADING */
+.loading-icon-base {
+  color: $grey-steel;
+  padding: $base-spacing-lg;
+  &.fa {
+    @extend %h1;
+  }
+}
+
+
+/*-------------------------------------*/
 /* SPACING */
 
 .base-spacing, %base-spacing {
@@ -1471,7 +1482,7 @@ a.button {
   display: block;
 }
 
-@include media-sm {
+@include media-med {
   .float-left-padding {
     @include float-left;
     margin: $base-spacing $base-spacing-lg-x $base-spacing 0;

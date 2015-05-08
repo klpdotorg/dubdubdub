@@ -15,12 +15,13 @@ import json
 class AcademicYear(BaseModel):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True)
+    to_year = models.IntegerField(null=True, blank=True)
+    from_year = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return "%s-%s" % (self.from_year, self.to_year)
 
     class Meta:
-        managed = False
         db_table = 'tb_academic_year'
 
 
@@ -173,8 +174,6 @@ class StudentGroup(BaseModel):
 class School(GeoBaseModel):
     admin3 = models.ForeignKey('Boundary', db_column='bid')
 
-    # TODO: check if address should be ForeignKey or OneToOneField
-    # CHECK: http://hastebin.com/awotomoven aid appears once for each school
     address = models.OneToOneField('Address', db_column='aid',
                                    blank=True, null=True)
     dise_info = models.OneToOneField('DiseInfo', db_column='dise_code',
@@ -187,7 +186,7 @@ class School(GeoBaseModel):
     status = models.IntegerField()
 
     def __unicode__(self):
-        return self.name
+        return "%s: %s" % (self.id, self.name)
 
     def get_absolute_url(self):
         return reverse('school_page', kwargs={'pk': self.id})
@@ -240,7 +239,8 @@ class School(GeoBaseModel):
 
     def get_mt_profile(self):
         profile = {}
-        for agg in self.institutionagg_set.all():
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        for agg in self.institutionagg_set.filter(academic_year=acyear):
             if agg.mt in profile:
                 profile[agg.mt] += agg.num
             else:
@@ -336,6 +336,18 @@ class School(GeoBaseModel):
         db_table = 'tb_school'
 
 
+class SchoolExtra(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey('AcademicYear')
+
+    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
+    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_school_extra'
+
+
 class SchoolDetails(BaseModel):
     school = models.OneToOneField('School', db_column='id', primary_key=True)
     admin3 = models.ForeignKey("Boundary", db_column="cluster_or_circle_id",
@@ -349,11 +361,26 @@ class SchoolDetails(BaseModel):
     parliament = models.ForeignKey('Parliament', db_column='parliament_id')
     postal = models.ForeignKey('Postal', db_column='pin_id')
 
-    num_boys = models.IntegerField(blank=True, null=True, db_column='num_boys')
-    num_girls = models.IntegerField(blank=True, null=True, db_column='num_girls')
-
     def __unicode__(self):
         return str(self.pk)
+
+    @cached_property
+    def num_boys(self):
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        try:
+            extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
+            return extra.num_boys
+        except Exception, e:
+            return None
+
+    @cached_property
+    def num_girls(self):
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        try:
+            extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
+            return extra.num_girls
+        except Exception, e:
+            return None
 
     class Meta:
         managed = False
@@ -443,3 +470,12 @@ class TeacherQualification(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'
+
+
+class MeetingReport(BaseModel):
+    school = models.ForeignKey('School')
+    pdf = models.FileField(upload_to='meeting_reports')
+    language = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return "%d: %s" % (self.school.id, self,language,)

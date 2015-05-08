@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Story Dashboard{% endblock %}
+
+{% block css_extra %}
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+<style>
+  code {
+    font-family: 'Source Code Pro';
+  }
+
+  .alert {
+    position: static;
+  }
+</style>
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/story/init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
+
+  {% endcompress %}
+{% endblock %}
+
+{% block subheader %}
+  <div class="map-subheader-wrapper subheader-wrapper">
+    <div class="subheader-content">
+    	<div class="chart-parent">
+		      <div class="top-search search-input-map">
+		        <input type="text" name="search" id="select2search" placeholder="Search" class="search-input input-text">
+		      </div>
+		      <div class="top-reset">
+		      	 <div class="button" id="resetButton">RESET <i class="fa fa-refresh"></i></div>
+		      </div>
+	    </div>
+    </div>
+     
+  </div>
+{% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
+
+{% block content %}
+
+<section class="clearfix">
+	<div id="primarySchoolContainer">
+		<section class="container" id="school_summary">
+			<div class="chart-parent" id="topSummary" class="js-summary-container">
+		  	</div><!--end outer parent-->
+		    <hr/>
+		    <div class="chart-parent">
+		  	
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Quick Summary</div>
+					<div id="quicksummary" class="js-detail-container"></div>
+		  		</div><!--end half item-->
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Types of Respondents</div>
+					<div id="chart_respondent" class="ct-chart ct-minor-seventh js-summary-container"></div>
+		  		</div>
+		  	</div>
+		</section>
+			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
+		<section class="container">
+			<ul id='improved' class="js-accordion-container">
+			  <hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="ivrs">
+						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+						<div class="chart-parent">
+			  	    <div id="ivrssummary" class="js-summary-container"></div>
+				  	</div><!--end inner parent-->
+					  <div class="chart-parent">
+					  	<div class="chart-half-item">
+					  		<div id="ivrsquestions" class="js-detail-container"></div>
+							</div><!-- /chart-half-item -->
+
+							<div class="chart-half-item">
+								<div id="ivrsyears" class="js-volume-container"></div>
+								<div id="chart_ivrs" class="ct-chart ct-minor-octave js-volume-container"></div>
+					    </div> <!-- /chart-half-item -->
+					  </div> <!--/chart-parent-->
+					  <hr/>
+					  <div class="bar-label">How would you categorize schools in this boundary?</div>
+					  <div class="chart-parent">
+				  		<div id="ivrsgrades" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->
+					</div>
+				</li>
+				<hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="surveys">
+						<h2 class="heading-border brand-turquoise">Community Surveys</h2> 
+						<div class="chart-parent">
+			  	   	<div id="surveysummary" class="js-summary-container"></div>
+					  </div><!--end inner parent-->
+					 	<div class="chart-parent">
+			  	    <div id="surveyquestions" class="js-detail-container"></div>
+			  	  </div> <!-- End of Chart Parent -->
+					</div>
+				</li>	
+				<hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="website">
+						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
+						<div class="chart-parent">
+			  	    <div id="websummary" class="js-summary-container"></div>				  	
+					  </div><!--end inner parent-->			
+					  <div class="chart-parent">
+					  	<div class="heading-tertiary center-text">What percentage of schools have these facilities?</div>	
+					  	<div id="webfacilities" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->	
+				  	<hr/>
+				  	<div class="chart-parent">
+				  		<div class="heading-tertiary center-text">On the day of the visit...</div>	
+					  	<div id="webquestions" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->	
+					</div>
+				</li>
+				<!--
+				<hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="comparison">
+						<div class="table-responsive-wrap">        
+							<div id="compare_table"></div>
+						</div>
+					</div>
+				</li>
+				-->	
+			</ul>
+
+		</section>
+	</div>
+	<div id="preschoolContainer">
+		<section class="container" id="ang_summary">
+			<div class="chart-parent" id="topSummary_ang">
+		  	</div><!--end outer parent-->
+		    <hr/>
+		    <div class="chart-parent">
+		  	
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Quick Summary</div>
+					<div id="quicksummary_ang" class="js-detail-container"></div>
+		  		</div><!--end half item-->
+		  		<div class="chart-half-item">
+		  			<div class="heading-tiny-uppercase">Types of Respondents</div>
+					<div id="chart_respondent_ang" class="ct-chart ct-minor-seventh js-summary-container"></div>
+		  		</div>
+		  	</div>
+		</section>
+			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
+		<section class="container">
+			<ul id='improved' class="js-accordion-container">
+			  <hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="ivrs">
+						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+						<div class="chart-parent">
+			  	    <div id="ivrssummary_ang" class="js-summary-container"></div>
+				  	</div><!--end inner parent-->
+					  <div class="chart-parent">
+					  	<div class="chart-half-item">
+					  		<div id="ivrsquestions_ang" class="js-detail-container"></div>
+							</div><!-- /chart-half-item -->
+
+							<div class="chart-half-item">
+								<div class="heading-tiny-uppercase">Call Volume distribution</div>
+								<div id="chart_ivrs_ang" class="ct-chart ct-minor-octave js-volume-container"></div>
+					    </div> <!-- /chart-half-item -->
+					  </div> <!--/chart-parent-->
+					  <hr/>
+					  <div class="bar-label">How would you categorize schools in this boundary?</div>
+					  <div class="chart-parent">
+				  		<div id="ivrsgrades_ang" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->
+					</div>
+				</li>
+				<hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="website">
+						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
+						<div class="chart-parent">
+			  	    <div id="websummary_ang" class="js-summary-container"></div>				  	
+					  </div><!--end inner parent-->			
+					  <div class="chart-parent">
+					  	<div class="heading-tertiary center-text">What percentage of preschools have these facilities?</div>	
+					  	<div id="webfacilities_ang" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->	
+				  	<hr/>
+				  	<div class="chart-parent">
+				  		<div class="heading-tertiary center-text">On the day of the visit...</div>	
+					  	<div id="webquestions_ang" class="js-detail-container"></div>
+				  	</div> <!--/chart-parent-->	
+					</div>
+				</li>
+				<!--	
+				<hr/>
+				<li><a href='#' class='head js-accordion-header align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="comparison_ang">
+						<div class="table-responsive-wrap">        
+							<div id="compare_table"></div>
+						</div>
+					</div>
+				</li>
+				-->
+			</ul>
+
+		</section>
+	</div>
+</section>
+{% include 'frontend_templates/story_dashboard.html' %} 
+{% endblock %}

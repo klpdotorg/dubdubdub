@@ -1,0 +1,64 @@
+/* Defining mixins for the chart trials page*/
+
+@include media-med {
+	.chart-parent{
+	  @include grid-parent;
+	}
+
+	.chart-half-item{
+	  @include col-50-flt;
+	}
+
+
+	.chart-athird-item{
+		 @include col-33-flt;
+	}
+
+
+	.chart-quarter-item{
+		@include col-25-flt;
+	}
+
+	.top-search{
+		@include col-75-flt;
+	}
+
+	.top-reset{
+		@include col-25-flt;
+	}
+}
+
+/* Defining a text align -left */
+
+.align-left {
+  text-align: left; 
+}
+
+.img-symbol {
+	vertical-align: middle;
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 100px;
+	display:block;
+}
+
+@include media-med {
+	.img-symbol {
+		max-width: 100px;
+	}
+}
+
+.bar-label {
+  width: 100%; 
+}
+
+@include media-med-maxwidth{
+	.ct-label.ct-horizontal {
+	  transform-origin: 0% 50%;
+	  transform: translateX(40px) translateY(30px) rotate(-90deg);
+	  /*text-anchor: middle;*/
+	}
+	.ct-chart {
+	  margin-bottom: 30px;
+	}	
+}

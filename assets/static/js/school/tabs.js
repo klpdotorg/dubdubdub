@@ -64,7 +64,16 @@
             },
             'programmes': {
                 getData: function() {
-                    return klp.api.do(schoolInfoURL + '/programmes');
+                    return klp.api.do('programme/', {
+                        'school': SCHOOL_ID
+                    });
+                },
+                getContext: function(data) {
+                    var programmes = data.features;
+                    return {
+                        'programmes': programmes,
+                        'school_id': SCHOOL_ID
+                    };
                 }
             },
             'finances': {
@@ -92,10 +101,30 @@
             },
             'infrastructure': {
                 getData: function() {
-                    return klp.api.do(schoolInfoURL + '/infrastructure');
+                    if (SCHOOL_TYPE_ID === 2) { //is a preschool
+                        return klp.api.do(schoolInfoURL + '/infrastructure');
+                    }
+                    //for primary schools, fetch infra data from DISE
+                    if (DISE_CODE) {
+                        return klp.dise_api.fetchSchoolInfra(DISE_CODE);
+                    } else {
+                        var $deferred = $.Deferred();
+                        setTimeout(function() {
+                            $deferred.resolve({});
+                        }, 0);
+                        return $deferred;
+                    }
                 },
                 getContext: function(data) {
                     data.type_name = klp.utils.getSchoolType(SCHOOL_TYPE_ID);
+                    if (SCHOOL_TYPE_ID === 1) {
+                        if (data.hasOwnProperty('properties')) {
+                            data = data.properties;
+                            data.facilities = klp.dise_infra.getFacilitiesData(data);
+                        } else {
+                            data.facilities = null;
+                        }
+                    }
                     return data;
                 }
             },
@@ -485,6 +514,9 @@
         $xhr.done(function(data) {
             dataCache[tabName] = data;
             callback(data);
+        });
+        $xhr.fail(function(err) {
+            klp.utils.alertMessage("Temporary error loading data.");
         });
     }
 

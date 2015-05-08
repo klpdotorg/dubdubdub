@@ -1,0 +1,17 @@
+DROP TABLE ems_tb_academic_year;
+DROP TABLE ems_tb_address;
+DROP TABLE ems_tb_assessment;
+DROP TABLE ems_tb_bhierarchy;
+DROP TABLE ems_tb_boundary;
+DROP TABLE ems_tb_boundary_type;
+DROP TABLE ems_tb_child;
+DROP TABLE ems_tb_class;
+DROP TABLE ems_tb_programme;
+DROP TABLE ems_tb_question;
+DROP TABLE ems_tb_school;
+DROP TABLE ems_tb_student_class;
+DROP TABLE ems_tb_student;
+DROP TABLE ems_tb_student_eval;
+DROP TABLE ems_tb_teacher_class;
+DROP TABLE ems_tb_teacher;
+DROP TABLE ems_tb_teacher_qual;
