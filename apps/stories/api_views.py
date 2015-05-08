@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils import timezone
 
 from schools.models import School, SchoolDetails
@@ -321,12 +321,17 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             j['question']['display_text'] = question.display_text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
-            j['answers']['options'] = dict(
-                Counter(
-                    [a.text for a in question.answer_set.filter(
-                        story__in=stories)]
-                )
-            )
+            answer_counts = question.answer_set.values('text').annotate(answer_count=Count('text'))
+            options = {}
+            for count in answer_counts:
+                options[count['text']] = count['answer_count']
+            j['answers']['options'] = options
+            # j['answers']['options'] = dict(
+            #     Counter(
+            #         [a.text for a in question.answer_set.filter(
+            #             story__in=stories)]
+            #     )
+            # )
 
             response_list.append(j)
 
