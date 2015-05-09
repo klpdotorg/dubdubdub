@@ -135,7 +135,8 @@ class Command(BaseCommand):
                         'parents': ['parent'],
                         'cbo member': ['cbo member', 'cbo membar'],
                         'local leader': ['elected/ local leader', 'elected- local leader',
-                                         'elected/local leader', 'elected-local leader'],
+                                         'elected/local leader', 'elected-local leader',
+                                         'elected /local leader', 'elected local leader'],
                         'sdmc member': ['sdmc-1', 'sdmc-2', 'sdmc -2', 'sdmc -1'],
                         'educated youth': ['educated youth'],
                     }
@@ -147,6 +148,7 @@ class Command(BaseCommand):
                     for user in users:
                         if user_type in users[user]:
                             user_type = user
+                    user_type = self.get_user_type(user_type, user_types)
                     previous_date = date_of_visit = self.parse_date(previous_date, row[8])
 
                     try:
@@ -168,21 +170,22 @@ class Command(BaseCommand):
                         user_type=user_type,
                     )
 
-                    answer_text = None
                     for sequence_number, answer_column in zip(question_sequence, answer_columns):
+                        answer_text = None
                         for i in range(0, 3):
                             if row[answer_column+i].strip() in accepted_answers:
                                 answer_text = row[answer_column+i].strip()
                                 break
-                        question = Question.objects.get(
-                            questiongroup=question_group,
-                            questiongroupquestions__sequence=sequence_number,
-                        )
-                        answer = Answer.objects.get_or_create(
-                            story=story,
-                            question=question,
-                            text=accepted_answers[answer_text],
-                        )
+                        if answer_text:
+                            question = Question.objects.get(
+                                questiongroup=question_group,
+                                questiongroupquestions__sequence=sequence_number,
+                            )
+                            answer = Answer.objects.get_or_create(
+                                story=story,
+                                question=question,
+                                text=accepted_answers[answer_text],
+                            )
 
                     continue
 
