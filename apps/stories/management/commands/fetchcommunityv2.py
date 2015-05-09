@@ -101,7 +101,7 @@ class Command(BaseCommand):
             elif csv_format == "Hosakote":
                 num_to_user_type = {
                     '':None,
-                    '1':'Parent',
+                    '1':'Parents',
                     '2':'SDMC Member',
                     '3':'Local Leader',
                     '4':'CBO Member',
@@ -158,7 +158,7 @@ class Command(BaseCommand):
             
     def parse_date(self, previous_date,  date):
         if date:
-            date_is_sane = self.check_date_sanity(date)
+            date, date_is_sane = self.check_date_sanity(date)
             if date_is_sane:
                 date_of_visit = datetime.datetime.strptime(
                     date, '%d/%m/%Y'
@@ -181,21 +181,22 @@ class Command(BaseCommand):
             month = date.split("/")[1]
             year = date.split("/")[2]
             if len(year) == 2:
-                year = int("20"+str(year))
+                year = "20"+year
         except:
             # Date format itself will be messed up
-            return False
+            return (date, False)
 
         if not self.is_day_correct(day):
-            return False
+            return (date, False)
 
         if not self.is_month_correct(month):
-            return False
+            return (date, False)
 
         if not self.is_year_correct(year):
-            return False
+            return (date, False)
 
-        return True
+        date = day+"/"+month+"/"+year
+        return (date, True)
 
     def is_day_correct(self, day):
         return int(day) in range(1,32)
