@@ -37,7 +37,7 @@ class Command(BaseCommand):
 
         csv_format = options.get('format', None)
         if not csv_format or csv_format not in ['Hosakote1', 'Hosakote2', 'v2', 'GKA1', 'GKA2']:
-            print "Please specify a formate with the --format argument [Hosakote/v2/GKA]"
+            print "Please specify a formate with the --format argument [Hosakote1/Hosakote2/v2/GKA1/GKA2]"
             return
 
         source = Source.objects.get_or_create(name="community")[0]
