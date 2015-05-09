@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.21: 6bace7a8ee245b452ff90120824b96d28c8f67b2 - 2015-05-09
+  - Minor bugfixes
+
 Release 0.20: 510080ca879663f61ab5b63d4c86eee9c14ea036 - 2015-05-08
   - Data import scripts + updated data (13-14)
   - Stories imports + Stories API + Stories Dashboard Frontend
