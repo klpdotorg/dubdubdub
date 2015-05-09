@@ -120,7 +120,7 @@ class Command(BaseCommand):
                     continue
 
                 question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
-                answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
+                answer_columns = [14, 15, 16, 17, 18, 19, 20, 21]
 
             for answer_column in answer_columns:
                 if row[answer_column] in accepted_answers:
