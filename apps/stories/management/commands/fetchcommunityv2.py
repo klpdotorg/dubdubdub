@@ -79,7 +79,7 @@ class Command(BaseCommand):
             count = 0
 
         previous_date = ""
-        m = {}
+
         for row in csv_f:
             # Skip first few rows
             if count in [0, 1, -1]:
@@ -137,7 +137,8 @@ class Command(BaseCommand):
                         'local leader': ['elected/ local leader', 'elected- local leader',
                                          'elected/local leader', 'elected-local leader',
                                          'elected /local leader', 'elected local leader',
-                                         'local leader'],
+                                         'local leader', 'elected / local leader',
+                                         'educated /local leader'],
                         'sdmc member': ['sdmc-1', 'sdmc-2', 'sdmc -2', 'sdmc -1'],
                         'educated youth': ['educated youth'],
                         None:['na']
