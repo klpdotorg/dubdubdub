@@ -25,7 +25,7 @@ class Command(BaseCommand):
         make_option('--file',
                     help='Path to the csv file'),
         make_option('--format',
-                    help='Which format to use - Hosakote/v2/GKA1/GKA2'),
+                    help='Which format to use - Hosakote1/Hosakote2/v2/GKA1/GKA2'),
     )
 
     @transaction.atomic
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             return
 
         csv_format = options.get('format', None)
-        if not csv_format or csv_format not in ['Hosakote', 'v2', 'GKA1', 'GKA2']:
+        if not csv_format or csv_format not in ['Hosakote1', 'Hosakote2', 'v2', 'GKA1', 'GKA2']:
             print "Please specify a formate with the --format argument [Hosakote/v2/GKA]"
             return
 
@@ -68,7 +68,7 @@ class Command(BaseCommand):
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
 
-        if csv_format == "Hosakote":
+        if csv_format in ["Hosakote1", "Hosakote2"]:
             dise_errors = {}
             dise_errors['no_school_code'] = []
             count = -1
@@ -113,21 +113,78 @@ class Command(BaseCommand):
                 question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
                 answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
 
-            elif csv_format == "Hosakote":
-                name = row[13]
-                school_id = row[9]
-                accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
-                user_type = self.get_user_type(num_to_user_type[row[14]], user_types)
-                previous_date = date_of_visit = self.parse_date(previous_date, row[11])
+            elif csv_format in ["Hosakote1", "Hosakote2"]:
+                if csv_format == "Hosakote1":
+                    name = row[13]
+                    school_id = row[9]
+                    accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
+                    user_type = self.get_user_type(num_to_user_type[row[14]], user_types)
+                    previous_date = date_of_visit = self.parse_date(previous_date, row[11])
 
-                try:
-                    school = School.objects.get(id=school_id)
-                except Exception as ex:
-                    dise_errors['no_school_code'].append(school_id)
+                    try:
+                        school = School.objects.get(id=school_id)
+                    except Exception as ex:
+                        dise_errors['no_school_code'].append(school_id)
+                        continue
+
+                    question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+                    answer_columns = [14, 15, 16, 17, 18, 19, 20, 21]
+
+                else:
+                    users = {
+                        'parents': ['parent'],
+                        'cbo member': ['cbo member', 'cbo membar'],
+                        'local leader': ['elected/ local leader', 'elected- local leader',
+                                         'elected/local leader', 'elected-local leader'],
+                        'sdmc member': ['sdmc-1', 'sdmc-2', 'sdmc -2', 'sdmc -1'],
+                        'educated youth': ['educated youth'],
+                    }
+
+                    name = row[10]
+                    school_id = row[6]
+                    accepted_answers = {'Yes':'Yes', 'No':'No', 'Unaware':'Unknown'}
+                    user_type = row[9].strip().lower()
+                    for user in users:
+                        if user_type in users[user]:
+                            user_type = user
+                    previous_date = date_of_visit = self.parse_date(previous_date, row[8])
+
+                    try:
+                        school = School.objects.get(id=school_id)
+                    except Exception as ex:
+                        dise_errors['no_school_code'].append(school_id)
+                        continue
+
+                    question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+                    answer_columns = [11, 14, 17, 20, 23, 26, 29, 32]
+
+                    story, created = Story.objects.get_or_create(
+                        school=school,
+                        name=name,
+                        group=question_group,
+                        date_of_visit=timezone.make_aware(
+                            date_of_visit, timezone.get_current_timezone()
+                        ),
+                        user_type=user_type,
+                    )
+
+                    answer_text = None
+                    for sequence_number, answer_column in zip(question_sequence, answer_columns):
+                        for i in range(0, 3):
+                            if row[answer_column+i].strip() in accepted_answers:
+                                answer_text = row[answer_column+i].strip()
+                                break
+                        question = Question.objects.get(
+                            questiongroup=question_group,
+                            questiongroupquestions__sequence=sequence_number,
+                        )
+                        answer = Answer.objects.get_or_create(
+                            story=story,
+                            question=question,
+                            text=accepted_answers[answer_text],
+                        )
+
                     continue
-
-                question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
-                answer_columns = [14, 15, 16, 17, 18, 19, 20, 21]
 
             else:
                 name = row[8]
@@ -188,7 +245,7 @@ class Command(BaseCommand):
         f = open('dise_error.log', 'w')
         f.write(json.dumps(dise_errors, indent = 4))
         f.close()
-            
+
     def parse_date(self, previous_date,  date):
         if date:
             if date == "99":
