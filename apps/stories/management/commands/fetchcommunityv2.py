@@ -91,7 +91,11 @@ class Command(BaseCommand):
                 dise_code = row[5]
                 accepted_answers = {'Y':'Yes', 'N':'No'}
 
-                user_type = self.get_user_type(row[7], user_types)
+                if row[7] in ['1', '2', '3', '4', '5']:
+                    user_type = self.get_user_type(num_to_user_type[row[7]], user_types)
+                else:
+                    user_type = self.get_user_type(row[7], user_types)
+
                 previous_date = date_of_visit = self.parse_date(previous_date, row[16])
 
                 try:
@@ -127,10 +131,13 @@ class Command(BaseCommand):
 
             else:
                 name = row[8]
-                dise_code = row[5]
                 accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
                 user_type = self.get_user_type(num_to_user_type[row[9]], user_types)
                 previous_date = date_of_visit = self.parse_date(previous_date, row[18])
+                if csv_format == "GKA1":
+                    dise_code = row[5]
+                else:
+                    dise_code = row[7]
 
                 try:
                     dise_info = DiseInfo.objects.get(dise_code=dise_code)
