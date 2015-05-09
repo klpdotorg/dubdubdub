@@ -79,7 +79,7 @@ class Command(BaseCommand):
             count = 0
 
         previous_date = ""
-
+        m = {}
         for row in csv_f:
             # Skip first few rows
             if count in [0, 1, -1]:
@@ -132,19 +132,22 @@ class Command(BaseCommand):
 
                 else:
                     users = {
-                        'parents': ['parent'],
+                        'parents': ['parent', 'parents'],
                         'cbo member': ['cbo member', 'cbo membar'],
                         'local leader': ['elected/ local leader', 'elected- local leader',
                                          'elected/local leader', 'elected-local leader',
-                                         'elected /local leader', 'elected local leader'],
+                                         'elected /local leader', 'elected local leader',
+                                         'local leader'],
                         'sdmc member': ['sdmc-1', 'sdmc-2', 'sdmc -2', 'sdmc -1'],
                         'educated youth': ['educated youth'],
+                        None:['na']
                     }
 
                     name = row[10]
                     school_id = row[6]
                     accepted_answers = {'Yes':'Yes', 'No':'No', 'Unaware':'Unknown'}
                     user_type = row[9].strip().lower()
+
                     for user in users:
                         if user_type in users[user]:
                             user_type = user
