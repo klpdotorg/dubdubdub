@@ -45,8 +45,8 @@ class Command(BaseCommand):
         user_types = {
             'Parents': UserType.PARENTS,
             'CBO Member': UserType.CBO_MEMBER,
-            'Local Leader ': UserType.VOLUNTEER,
-            'SDMC Member ': UserType.SDMC_MEMBER,
+            'Local Leader': UserType.VOLUNTEER,
+            'SDMC Member': UserType.SDMC_MEMBER,
             'Educated youth': UserType.EDUCATED_YOUTH,
         }
         UserType.objects.get_or_create(name=UserType.PARENTS)
@@ -59,15 +59,16 @@ class Command(BaseCommand):
         csv_f = csv.reader(f)
         
         if csv_format == "Hosakote":
+            dise_errors = {}
+            dise_errors['no_school_code'] = []
             count = -1
         else:
+            dise_errors = {}
+            dise_errors['no_dise_code'] = []
+            dise_errors['no_school_for_dise'] = []
             count = 0
 
         previous_date = ""
-
-        dise_errors = {}
-        dise_errors['no_dise_code'] = []
-        dise_errors['no_school_for_dise'] = []
 
         for row in csv_f:
             # Skip first few rows
@@ -92,6 +93,30 @@ class Command(BaseCommand):
                     school = School.objects.get(dise_info=dise_info)
                 except Exception as ex:
                     dise_errors['no_school_for_dise'].append(dise_code)
+                    continue
+
+                question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+                answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
+
+            elif csv_format == "Hosakote":
+                num_to_user_type = {
+                    '':None,
+                    '1':'Parent',
+                    '2':'SDMC Member',
+                    '3':'Local Leader',
+                    '4':'CBO Member',
+                    '5':'Educated youth'
+                }
+                name = row[13]
+                school_id = row[9]
+                accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unkown'}
+                user_type = self.get_user_type(num_to_user_type[row[14]], user_types)
+                previous_date = date_of_visit = self.parse_date(previous_date, row[11])
+
+                try:
+                    school = School.objects.get(id=school_id)
+                except Exception as ex:
+                    dise_errors['no_school_code'].append(school_id)
                     continue
 
                 question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -155,6 +180,8 @@ class Command(BaseCommand):
             day = date.split("/")[0]
             month = date.split("/")[1]
             year = date.split("/")[2]
+            if len(year) == 2:
+                year = int("20"+str(year))
         except:
             # Date format itself will be messed up
             return False
