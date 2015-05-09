@@ -25,7 +25,7 @@ class Command(BaseCommand):
         make_option('--file',
                     help='Path to the csv file'),
         make_option('--format',
-                    help='Which format to use - Hosakote/v2/GKA'),
+                    help='Which format to use - Hosakote/v2/GKA1/GKA2'),
     )
 
     @transaction.atomic
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             return
 
         csv_format = options.get('format', None)
-        if not csv_format or csv_format not in ['Hosakote', 'v2', 'GKA']:
+        if not csv_format or csv_format not in ['Hosakote', 'v2', 'GKA1', 'GKA2']:
             print "Please specify a formate with the --format argument [Hosakote/v2/GKA]"
             return
 
@@ -56,9 +56,18 @@ class Command(BaseCommand):
         UserType.objects.get_or_create(name=UserType.LOCAL_LEADER)
         UserType.objects.get_or_create(name=UserType.EDUCATED_YOUTH)
 
+        num_to_user_type = {
+            '':None,
+            '1':'Parents',
+            '2':'SDMC Member',
+            '3':'Local Leader',
+            '4':'CBO Member',
+            '5':'Educated youth'
+        }
+
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
-        
+
         if csv_format == "Hosakote":
             dise_errors = {}
             dise_errors['no_school_code'] = []
@@ -101,14 +110,6 @@ class Command(BaseCommand):
                 answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
 
             elif csv_format == "Hosakote":
-                num_to_user_type = {
-                    '':None,
-                    '1':'Parents',
-                    '2':'SDMC Member',
-                    '3':'Local Leader',
-                    '4':'CBO Member',
-                    '5':'Educated youth'
-                }
                 name = row[13]
                 school_id = row[9]
                 accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
@@ -123,6 +124,29 @@ class Command(BaseCommand):
 
                 question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
                 answer_columns = [14, 15, 16, 17, 18, 19, 20, 21]
+
+            else:
+                name = row[8]
+                dise_code = row[5]
+                accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
+                user_type = self.get_user_type(num_to_user_type[row[9]], user_types)
+                previous_date = date_of_visit = self.parse_date(previous_date, row[18])
+
+                try:
+                    dise_info = DiseInfo.objects.get(dise_code=dise_code)
+                except Exception as ex:
+                    dise_errors['no_dise_code'].append(dise_code)
+                    continue
+
+                try:
+                    school = School.objects.get(dise_info=dise_info)
+                except Exception as ex:
+                    dise_errors['no_school_for_dise'].append(dise_code)
+                    continue
+
+                question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
+                answer_columns = [10, 11, 12, 13, 14, 15, 16, 17]
+
 
             for answer_column in answer_columns:
                 if row[answer_column] in accepted_answers:
@@ -160,6 +184,8 @@ class Command(BaseCommand):
             
     def parse_date(self, previous_date,  date):
         if date:
+            if date == "99":
+                return previous_date
             date, date_is_sane = self.check_date_sanity(date)
             if date_is_sane:
                 date_of_visit = datetime.datetime.strptime(
@@ -178,15 +204,34 @@ class Command(BaseCommand):
             return None
             
     def check_date_sanity(self, date):
-        try:
-            day = date.split("/")[0]
-            month = date.split("/")[1]
-            year = date.split("/")[2]
-            if len(year) == 2:
-                year = "20"+year
-        except:
-            # Date format itself will be messed up
-            return (date, False)
+        if "." in date:
+            try:
+                day = date.split(".")[0]
+                month = date.split(".")[1]
+                year = date.split(".")[2]
+            except:
+                return (date, False)
+        elif "//" in date:
+            try:
+                day = date.split("/")[0]
+                month = date.split("/")[2]
+                year = date.split("/")[3]
+                if len(year) == 2:
+                    year = "20"+year
+            except:
+                # Date format itself will be messed up
+                return (date, False)
+        else:
+            try:
+                day = date.split("/")[0]
+                month = date.split("/")[1]
+                year = date.split("/")[2]
+                if len(year) == 2:
+                    year = "20"+year
+            except:
+                # Date format itself will be messed up
+                return (date, False)
+
 
         if not self.is_day_correct(day):
             return (date, False)
