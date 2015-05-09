@@ -43,16 +43,17 @@ class Command(BaseCommand):
         source = Source.objects.get_or_create(name="community")[0]
         question_group = Questiongroup.objects.get_or_create(version=2, source=source)[0]
         user_types = {
-            'Parents': UserType.PARENTS,
-            'CBO Member': UserType.CBO_MEMBER,
-            'Local Leader': UserType.VOLUNTEER,
-            'SDMC Member': UserType.SDMC_MEMBER,
-            'Educated youth': UserType.EDUCATED_YOUTH,
+            'parents': UserType.PARENTS,
+            'cbo member': UserType.CBO_MEMBER,
+            'local leader': UserType.LOCAL_LEADER,
+            'elcted/local leader': UserType.LOCAL_LEADER,
+            'sdmc member': UserType.SDMC_MEMBER,
+            'educated youth': UserType.EDUCATED_YOUTH,
         }
         UserType.objects.get_or_create(name=UserType.PARENTS)
-        UserType.objects.get_or_create(name=UserType.VOLUNTEER)
         UserType.objects.get_or_create(name=UserType.CBO_MEMBER)
         UserType.objects.get_or_create(name=UserType.SDMC_MEMBER)
+        UserType.objects.get_or_create(name=UserType.LOCAL_LEADER)
         UserType.objects.get_or_create(name=UserType.EDUCATED_YOUTH)
 
         f = open(file_name, 'r')
@@ -80,6 +81,7 @@ class Command(BaseCommand):
                 name = row[6]
                 dise_code = row[5]
                 accepted_answers = {'Y':'Yes', 'N':'No'}
+
                 user_type = self.get_user_type(row[7], user_types)
                 previous_date = date_of_visit = self.parse_date(previous_date, row[16])
 
@@ -109,7 +111,7 @@ class Command(BaseCommand):
                 }
                 name = row[13]
                 school_id = row[9]
-                accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unkown'}
+                accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
                 user_type = self.get_user_type(num_to_user_type[row[14]], user_types)
                 previous_date = date_of_visit = self.parse_date(previous_date, row[11])
 
@@ -170,7 +172,7 @@ class Command(BaseCommand):
     def get_user_type(self, user_type, user_types):
         if user_type:
             return UserType.objects.get(
-                name=user_types[user_type]
+                name=user_types[user_type.strip().lower()]
             )
         else:
             return None
