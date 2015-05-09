@@ -249,7 +249,8 @@ class Command(BaseCommand):
                             text=accepted_answers[row[answer_column]],
                         )
         f.close()
-        f = open('dise_error.log', 'w')
+        file_name = "error_"+csv_format+".log"
+        f = open(file_name, 'w')
         f.write(json.dumps(dise_errors, indent = 4))
         f.close()
 
