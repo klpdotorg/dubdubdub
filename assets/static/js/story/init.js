@@ -185,6 +185,7 @@
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
         startSummaryLoading(schoolType);
+        startDetailLoading(schoolType);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
             params['school_type'] = schoolType;
@@ -194,22 +195,25 @@
                 data.searchEntity = entityDetails;
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
+
+                var detailURL = "stories/details/";
+                var $detailXHR = klp.api.do(detailURL, params);
+                console.log("data", data);
+                $detailXHR.done(function(detailData) {
+                    stopDetailLoading(schoolType);
+                    detailData.web_stories = data.web.verified_stories;
+                    renderFeatured(detailData, schoolType);
+                    renderIVRS(detailData, schoolType);
+                    renderWeb(detailData, schoolType);
+                    if (schoolType == schoolString) {
+                        renderSurvey(data); // Community Surveys currently not done in Anganwadis
+                    }
+                    //renderComparison(data);
+                });
+
             });
         });
 
-        var detailURL = "stories/details/";
-        var $detailXHR = klp.api.do(detailURL, params);
-        startDetailLoading(schoolType);
-        $detailXHR.done(function(data) {
-            stopDetailLoading(schoolType);
-            renderFeatured(data, schoolType);
-            renderIVRS(data, schoolType);
-            renderWeb(data, schoolType);
-            if (schoolType == schoolString) {
-                renderSurvey(data); // Community Surveys currently not done in Anganwadis
-            }
-            //renderComparison(data);
-        });
 
         startVolumeLoading(schoolType);
         var volumeURL = "stories/volume/";
@@ -629,6 +633,7 @@
     }
 
     function renderWeb(data, schoolType) {
+        var totalStories = data.web_stories;
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         var webQuestionKeys = [];
         if (schoolType == schoolString) {
@@ -716,12 +721,12 @@
             }];
         }
 
+        //console.log("facilities data", data);
         var questionObjects = _.map(facilityQuestions, function(question) {
             return getQuestion(data, 'web', question.key);
         });
 
-        var questionsArray = getQuestionsArray(questionObjects);
-
+        var questionsArray = getFacilityQuestionsArray(questionObjects, totalStories);
 
         var facilities = _.map(questionsArray, function(question, seq) {
             var facility = facilityQuestions[seq];
@@ -825,12 +830,14 @@
                 return question;
             }
         }
+        console.log("KEY NOT FOUND", key);
         return false;
     }
 
     function getQuestionsArray(questions) {
         return _.map(questions, function(question, seq) {
             var score = getScore(question.answers, 'Yes');
+            //console.log("question", question);
             var total = getTotal(question.answers);
             var percent = getPercent(score, total);
             //var qObj = featuredQuestions[seq];
@@ -842,6 +849,22 @@
                 'percent': percent
             };
         });
+    }
+
+    function getFacilityQuestionsArray(questions, total) {
+        return _.map(questions, function(question, seq) {
+            var score = getScore(question.answers, 'Yes');
+            var total = total;
+            var percent = getPercent(score, total);
+            //var qObj = featuredQuestions[seq];
+            //var displayText = qObj.source_prefix + question.question.display_text;
+            return {
+                'question': question.question.display_text,
+                'score': score,
+                'total': total,
+                'percent': percent
+            };
+        });       
     }
 
     function fetchEntityDetails(params) {
