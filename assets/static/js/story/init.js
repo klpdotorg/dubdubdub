@@ -634,6 +634,7 @@
     }
 
     function renderWeb(data, schoolType) {
+        //console.log("web data", data);
         var totalStories = data.web_stories;
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         var webQuestionKeys = [];
@@ -852,10 +853,10 @@
         });
     }
 
-    function getFacilityQuestionsArray(questions, total) {
+    function getFacilityQuestionsArray(questions, totalStories) {
         return _.map(questions, function(question, seq) {
             var score = getScore(question.answers, 'Yes');
-            var total = total;
+            var total = totalStories;
             var percent = getPercent(score, total);
             //var qObj = featuredQuestions[seq];
             //var displayText = qObj.source_prefix + question.question.display_text;
