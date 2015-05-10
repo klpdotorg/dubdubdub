@@ -86,6 +86,7 @@ class UserType(models.Model):
     CBO_MEMBER = "CM"
     HEADMASTER = "HM"
     SDMC_MEMBER = "SM"
+    LOCAL_LEADER = "LL"
     AKSHARA_STAFF = "AS"
     EDUCATED_YOUTH = "EY"
     EDUCATION_OFFICIAL = "EO"
@@ -98,6 +99,7 @@ class UserType(models.Model):
         (CBO_MEMBER, 'CBO_Member'),
         (HEADMASTER, 'Headmaster'),
         (SDMC_MEMBER, 'SDMC_Member'),
+        (LOCAL_LEADER, 'Local Leader'),
         (AKSHARA_STAFF, 'Akshara_Staff'),
         (EDUCATED_YOUTH, 'Educated_Youth'),
         (EDUCATION_OFFICIAL, 'Education_Official'),

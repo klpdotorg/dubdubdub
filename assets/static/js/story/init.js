@@ -278,7 +278,8 @@
             'PARENTS': 'Parents',
             'TEACHERS': 'Teachers',
             'VOLUNTEER': 'Volunteers',
-            'EDUCATED_YOUTH': 'Youth'
+            'EDUCATED_YOUTH': 'Youth',
+            'LOCAL_LEADER': 'Local Leader'
         };
         var labels = _.map(_.keys(data.respondents), function(label) {
             if (labelMap.hasOwnProperty(label)) {
