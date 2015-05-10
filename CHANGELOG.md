@@ -10,6 +10,10 @@ Use required commands
 Changelog
 ---
 
+Release 0.22: b8f372defb054cd8e95555c252fc3cd52e2bb375 - 2015-05-10
+  - Import scripts for different SYS feedback formats
+  - minor bugfixes
+
 Release 0.21: 6bace7a8ee245b452ff90120824b96d28c8f67b2 - 2015-05-09
   - Minor bugfixes
 
