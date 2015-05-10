@@ -422,10 +422,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'EO' : 'EDUCATION_OFFICIAL',
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
-        json = Counter(stories_qset.values_list(
-            'user_type__name', flat=True))
-        del json[None]
-        return {usertypes[key]: value for key, value in json.iteritems()}
+        user_counts = UserType.objects.filter(
+            story__in=stories_qset
+        ).annotate(
+            story_count=Count('story')
+        )
+        return {usertypes[user.name]: user.story_count for user in user_counts}
 
     def get_datetime(self, date):
         return datetime.datetime.strptime(date, '%Y-%m-%d')
