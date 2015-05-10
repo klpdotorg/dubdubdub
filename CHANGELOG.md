@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.23: 71c48f34fb08cba3aa6d12d2ffcc4e9f73f155b1 - 2015-05-10
+  - Minor, see https://github.com/klpdotorg/dubdubdub/pull/502
+
 Release 0.22: b8f372defb054cd8e95555c252fc3cd52e2bb375 - 2015-05-10
   - Import scripts for different SYS feedback formats
   - minor bugfixes

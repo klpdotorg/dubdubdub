@@ -130,7 +130,19 @@
             },
             'library': {
                 getData: function() {
-                    return klp.api.do(schoolInfoURL + '/library');
+                    var $deferred = $.Deferred();
+                    var $klpXHR = klp.api.do(schoolInfoURL + "/library");
+                    $klpXHR.done(function(data) {
+                        var $diseXHR = klp.dise_api.fetchSchoolInfra(DISE_CODE);
+                        $diseXHR.done(function(diseData)  {
+                            data.dise_books = diseData.properties.books_in_library;
+                            $deferred.resolve(data);
+                        });
+                        $diseXHR.fail(function(err) {
+                            $deferred.resolve(data);
+                        });
+                    });
+                    return $deferred;
                 },
 
                 getContext: function(data) {
