@@ -416,6 +416,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'CM' : 'CBO_MEMBER',
             'HM' : 'HEADMASTER',
             'SM' : 'SDMC_MEMBER',
+            'LL' : 'LOCAL_LEADER',
             'AS' : 'AKSHARA_STAFF',
             'EY' : 'EDUCATED_YOUTH',
             'EO' : 'EDUCATION_OFFICIAL',
