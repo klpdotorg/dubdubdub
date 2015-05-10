@@ -189,6 +189,7 @@
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
             params['school_type'] = schoolType;
+            var thisParams = _.clone(params);
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
                 stopSummaryLoading(schoolType);
@@ -197,7 +198,7 @@
                 renderRespondentChart(data, schoolType);
 
                 var detailURL = "stories/details/";
-                var $detailXHR = klp.api.do(detailURL, params);
+                var $detailXHR = klp.api.do(detailURL, thisParams);
                 console.log("data", data);
                 $detailXHR.done(function(detailData) {
                     stopDetailLoading(schoolType);
@@ -206,7 +207,7 @@
                     renderIVRS(detailData, schoolType);
                     renderWeb(detailData, schoolType);
                     if (schoolType == schoolString) {
-                        renderSurvey(data); // Community Surveys currently not done in Anganwadis
+                        renderSurvey(detailData); // Community Surveys currently not done in Anganwadis
                     }
                     //renderComparison(data);
                 });
