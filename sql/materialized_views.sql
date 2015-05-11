@@ -298,6 +298,5 @@ SELECT sg.sid AS schid,
     tb_class sg,
     tb_student stu,
     tb_academic_year acyear
-  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT mvw_lib_level_agg.year
-           FROM mvw_lib_level_agg))
+  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;

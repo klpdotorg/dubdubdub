@@ -54,8 +54,16 @@
 
 @include media-med-maxwidth{
 	.ct-label.ct-horizontal {
+
+		-ms-transform-origin: 0% 50%;
+	  -ms-transform: translateX(0px) translateY(30px) rotate(-45deg); /* IE 9 */
+
+	  -webkit-transform-origin: 0% 50%;
+   	-webkit-transform: translateX(0px) translateY(30px) rotate(-45deg); /* Safari */
+
 	  transform-origin: 0% 50%;
-	  transform: translateX(40px) translateY(30px) rotate(-90deg);
+	  transform: translateX(0px) translateY(30px) rotate(-45deg);
+
 	  /*text-anchor: middle;*/
 	}
 	.ct-chart {

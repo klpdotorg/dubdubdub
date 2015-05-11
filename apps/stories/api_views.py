@@ -471,7 +471,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         school_type = args[7]
 
         school_qset = School.objects.filter(
-            admin3__type__name=school_type)
+            admin3__type__name=school_type, status=2)
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
 
