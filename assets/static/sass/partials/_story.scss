@@ -71,7 +71,7 @@
 	}	
 }
 
-.tooltip{
+.chartist-tooltip{
 	position:absolute;
 	display:inline-block;
 	min-width:5em;
@@ -83,7 +83,7 @@
 	pointer-events:none;z-index:1
 }
 
-.tooltip:after {
+.chartist-tooltip:after {
 	content:"";
 	position:absolute;
 	top:100%;
