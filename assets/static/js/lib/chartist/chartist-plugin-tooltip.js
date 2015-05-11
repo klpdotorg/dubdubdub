@@ -49,8 +49,8 @@
 
         var $chart = $(chart.container);
         var $toolTip = $chart
-        .append('<div class="tooltip"></div>')
-        .find('.tooltip')
+        .append('<div class="chartist-tooltip"></div>')
+        .find('.chartist-tooltip')
         .hide();
 
         $chart.on('mouseenter', tooltipSelector, function() {
