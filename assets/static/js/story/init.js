@@ -290,10 +290,10 @@
             }
         });
         var values = _.values(data.respondents);
-        /*var meta_values = [];
+        var meta_values = [];
         for( var i=0; i < labels.length; i++) {
             meta_values.push({'meta': labels[i],'value': values[i]});
-        }*/ /* chartist tooltip transformations */ 
+        } /* chartist tooltip transformations */ 
         var data_respondent = {
             labels: labels,
             series: [
@@ -339,7 +339,10 @@
             },
             axisY: {
                 showGrid: false,
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var responsiveOptions = [
