@@ -278,7 +278,8 @@
             'PARENTS': 'Parents',
             'TEACHERS': 'Teachers',
             'VOLUNTEER': 'Volunteers',
-            'EDUCATED_YOUTH': 'Youth'
+            'EDUCATED_YOUTH': 'Youth',
+            'LOCAL_LEADER': 'Local Leader'
         };
         var labels = _.map(_.keys(data.respondents), function(label) {
             if (labelMap.hasOwnProperty(label)) {
@@ -658,88 +659,89 @@
         }
         $('#webquestions' + suffix).html(html);
 
-        var tplColorText = swig.compile($('#tpl-colorText').html());
+        
+        // var tplColorText = swig.compile($('#tpl-colorText').html());
 
-        var facilityQuestions = [];
-        if ( schoolType == schoolString ) {
-            facilityQuestions = [{
-                'facility': 'All weather pucca building',
-                'icon': ['fa fa-university'],
-                'key': 'webs-pucca-building'
-            }, {
-                'facility': 'Playground',
-                'icon': ['fa fa-futbol-o'],
-                'key': 'webs-playground'
-            }, {
-                'facility': 'Drinking Water',
-                'icon': ['fa  fa-tint'],
-                'key': 'webs-drinking-water'
-            }, {
-                'facility': 'Library',
-                'icon': ['fa fa-book'],
-                'key': 'webs-library'
-            }, {
-                'facility': 'Toilets',
-                'icon': ['fa fa-male', 'fa fa-female'],
-                'key': 'webs-separate-toilets'
-            }, {
-                'facility': 'Secure Boundary Wall',
-                'icon': ['fa fa-circle-o-notch'],
-                'key': 'webs-boundary-wall'
-            }];
-        } else {
-            facilityQuestions = [{
-                'facility': 'A proper designated building',
-                'icon': ['fa fa-university'],
-                'key': 'weba-proper-building'
-            }, {
-                'facility': 'Play Material',
-                'icon': ['fa fa-futbol-o'],
-                'key': 'weba-play-material'
-            }, {
-                'facility': 'Drinking Water',
-                'icon': ['fa  fa-tint'],
-                'key': 'weba-drinking-water'
-            }, {
-                'facility': 'Healthy and timely meal',
-                'icon': ['fa fa-spoon'],
-                'key': 'weba-food-ontime'
-            }, {
-                'facility': 'Toilets',
-                'icon': ['fa fa-male', 'fa fa-female'],
-                'key': 'weba-toilet'
-            }, {
-                'facility': 'Secure Boundary Wall',
-                'icon': ['fa fa-circle-o-notch'],
-                'key': 'weba-boundary-security'
-            }];
-        }
+        // var facilityQuestions = [];
+        // if ( schoolType == schoolString ) {
+        //     facilityQuestions = [{
+        //         'facility': 'All weather pucca building',
+        //         'icon': ['fa fa-university'],
+        //         'key': 'webs-pucca-building'
+        //     }, {
+        //         'facility': 'Playground',
+        //         'icon': ['fa fa-futbol-o'],
+        //         'key': 'webs-playground'
+        //     }, {
+        //         'facility': 'Drinking Water',
+        //         'icon': ['fa  fa-tint'],
+        //         'key': 'webs-drinking-water'
+        //     }, {
+        //         'facility': 'Library',
+        //         'icon': ['fa fa-book'],
+        //         'key': 'webs-library'
+        //     }, {
+        //         'facility': 'Toilets',
+        //         'icon': ['fa fa-male', 'fa fa-female'],
+        //         'key': 'webs-separate-toilets'
+        //     }, {
+        //         'facility': 'Secure Boundary Wall',
+        //         'icon': ['fa fa-circle-o-notch'],
+        //         'key': 'webs-boundary-wall'
+        //     }];
+        // } else {
+        //     facilityQuestions = [{
+        //         'facility': 'A proper designated building',
+        //         'icon': ['fa fa-university'],
+        //         'key': 'weba-proper-building'
+        //     }, {
+        //         'facility': 'Play Material',
+        //         'icon': ['fa fa-futbol-o'],
+        //         'key': 'weba-play-material'
+        //     }, {
+        //         'facility': 'Drinking Water',
+        //         'icon': ['fa  fa-tint'],
+        //         'key': 'weba-drinking-water'
+        //     }, {
+        //         'facility': 'Healthy and timely meal',
+        //         'icon': ['fa fa-spoon'],
+        //         'key': 'weba-food-ontime'
+        //     }, {
+        //         'facility': 'Toilets',
+        //         'icon': ['fa fa-male', 'fa fa-female'],
+        //         'key': 'weba-toilet'
+        //     }, {
+        //         'facility': 'Secure Boundary Wall',
+        //         'icon': ['fa fa-circle-o-notch'],
+        //         'key': 'weba-boundary-security'
+        //     }];
+        // }
 
-        var questionObjects = _.map(facilityQuestions, function(question) {
-            return getQuestion(data, 'web', question.key);
-        });
+        // var questionObjects = _.map(facilityQuestions, function(question) {
+        //     return getQuestion(data, 'web', question.key);
+        // });
 
-        var questionsArray = getQuestionsArray(questionObjects);
+        // var questionsArray = getQuestionsArray(questionObjects);
 
 
-        var facilities = _.map(questionsArray, function(question, seq) {
-            var facility = facilityQuestions[seq];
-            facility.percent = question.percent;
-            facility.total = question.total;
-            return facility;
-        });
+        // var facilities = _.map(questionsArray, function(question, seq) {
+        //     var facility = facilityQuestions[seq];
+        //     facility.percent = question.percent;
+        //     facility.total = question.total;
+        //     return facility;
+        // });
 
-        var html = '';
+        // var html = '';
 
-        _.each(facilities, function(f) {
-            html = html + tplColorText(f);
-        });
-        /*
-        for (var i=0, len=facilities.length;pos in facilities) {
-            html = html + tplColorText(facilities[pos]);
-        }
-        */
-        $('#webfacilities' + suffix).html(html);
+        // _.each(facilities, function(f) {
+        //     html = html + tplColorText(f);
+        // });
+        // /*
+        // for (var i=0, len=facilities.length;pos in facilities) {
+        //     html = html + tplColorText(facilities[pos]);
+        // }
+        // */
+        // $('#webfacilities' + suffix).html(html);
 
     }
 

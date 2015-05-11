@@ -355,7 +355,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                 end_date = self.get_datetime(end_date)
 
         school_qset = School.objects.filter(
-            admin3__type__name=school_type)
+            admin3__type__name=school_type, status=2)
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
 
@@ -416,15 +416,18 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'CM' : 'CBO_MEMBER',
             'HM' : 'HEADMASTER',
             'SM' : 'SDMC_MEMBER',
+            'LL' : 'LOCAL_LEADER',
             'AS' : 'AKSHARA_STAFF',
             'EY' : 'EDUCATED_YOUTH',
             'EO' : 'EDUCATION_OFFICIAL',
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
-        json = Counter(stories_qset.values_list(
-            'user_type__name', flat=True))
-        del json[None]
-        return {usertypes[key]: value for key, value in json.iteritems()}
+        user_counts = UserType.objects.filter(
+            story__in=stories_qset
+        ).annotate(
+            story_count=Count('story')
+        )
+        return {usertypes[user.name]: user.story_count for user in user_counts}
 
     def get_datetime(self, date):
         return datetime.datetime.strptime(date, '%Y-%m-%d')
