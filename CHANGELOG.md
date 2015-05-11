@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.24: ff2ee5d66c9729439512108ebaeb16385ebd1f39 - 2015-05-11
+  - Minor - hide facilities, dont consider inactive schools in stories page
+
 Release 0.23: 71c48f34fb08cba3aa6d12d2ffcc4e9f73f155b1 - 2015-05-10
   - Minor, see https://github.com/klpdotorg/dubdubdub/pull/502
 
