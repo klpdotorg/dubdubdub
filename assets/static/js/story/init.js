@@ -279,7 +279,8 @@
             'TEACHERS': 'Teachers',
             'VOLUNTEER': 'Volunteers',
             'EDUCATED_YOUTH': 'Youth',
-            'LOCAL_LEADER': 'Local Leader'
+            'LOCAL_LEADER': 'Local Leader',
+            'AKSHARA_STAFF': 'Akshara'
         };
         var labels = _.map(_.keys(data.respondents), function(label) {
             if (labelMap.hasOwnProperty(label)) {
@@ -289,6 +290,10 @@
             }
         });
         var values = _.values(data.respondents);
+       /*var meta_values = [];
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        }*/ /* chartist tooltip transformations */ 
         var data_respondent = {
             labels: labels,
             series: [
@@ -326,6 +331,7 @@
 
 
     function renderBarChart(elementId, data) {
+
         var options = {
             seriesBarDistance: 10,
             axisX: {
@@ -350,7 +356,7 @@
           }]
         ];
 
-        var chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
+        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
                     style: 'stroke-width: 20px'
