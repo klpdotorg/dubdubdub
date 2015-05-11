@@ -290,7 +290,7 @@
             }
         });
         var values = _.values(data.respondents);
-       /*var meta_values = [];
+        /*var meta_values = [];
         for( var i=0; i < labels.length; i++) {
             meta_values.push({'meta': labels[i],'value': values[i]});
         }*/ /* chartist tooltip transformations */ 
@@ -336,12 +336,9 @@
             seriesBarDistance: 10,
             axisX: {
                 showGrid: false,
-                offset: 60
             },
             axisY: {
                 showGrid: false,
-                offset: 80,
-                scaleMinSpace: 15
             }
         };
 
@@ -359,7 +356,7 @@
         var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 20px'
+                    style: 'stroke-width: 15px'
                 });
             }
             if (data.type === 'label' && data.axis === 'x') {
