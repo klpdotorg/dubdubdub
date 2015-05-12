@@ -167,6 +167,7 @@ class Command(BaseCommand):
                     story, created = Story.objects.get_or_create(
                         school=school,
                         name=name,
+                        is_verified=True,
                         group=question_group,
                         date_of_visit=timezone.make_aware(
                             date_of_visit, timezone.get_current_timezone()
@@ -230,6 +231,7 @@ class Command(BaseCommand):
                 story, created = Story.objects.get_or_create(
                     school=school,
                     name=name,
+                    is_verified=True,
                     group=question_group,
                     date_of_visit=timezone.make_aware(
                         date_of_visit, timezone.get_current_timezone()
