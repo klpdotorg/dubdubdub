@@ -313,13 +313,16 @@
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
         var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
         $('#ivrsyears').html(ivrsVolTitle);
-
+        var meta_values = [];
         var labels = _.keys(months);
         var values = _.values(months);
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        } /* chartist tooltip transformations */ 
         var data_ivrs = {
             labels: labels,
             series: [
-                values
+                meta_values
             ]
         };
         var suffix = '';
