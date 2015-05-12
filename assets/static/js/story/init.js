@@ -297,7 +297,10 @@
         var data_respondent = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-g',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -322,7 +325,10 @@
         var data_ivrs = {
             labels: labels,
             series: [
-                meta_values
+                { 
+                    className: 'ct-series-e',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -362,7 +368,7 @@
         var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 15px'
+                    style: 'stroke-width: 15px;'
                 });
             }
             if (data.type === 'label' && data.axis === 'x') {

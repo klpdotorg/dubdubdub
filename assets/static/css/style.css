@@ -3733,9 +3733,9 @@ code {
 .ct-chart .ct-series.ct-series-f .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-f .ct-area {
   fill: #e17e5b; }
 .ct-chart .ct-series.ct-series-g .ct-point, .ct-chart .ct-series.ct-series-g .ct-line, .ct-chart .ct-series.ct-series-g .ct-bar, .ct-chart .ct-series.ct-series-g .ct-slice.ct-donut {
-  stroke: #a31460; }
+  stroke: #898989; }
 .ct-chart .ct-series.ct-series-g .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-g .ct-area {
-  fill: #a31460; }
+  fill: #898989; }
 .ct-chart .ct-series.ct-series-h .ct-point, .ct-chart .ct-series.ct-series-h .ct-line, .ct-chart .ct-series.ct-series-h .ct-bar, .ct-chart .ct-series.ct-series-h .ct-slice.ct-donut {
   stroke: #ffeda0; }
 .ct-chart .ct-series.ct-series-h .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-h .ct-area {
@@ -4206,6 +4206,9 @@ code {
 
 .chartist-container {
   position: relative; }
+
+.subheader-wrapper {
+  text-transform: none; }
 
 /* CSS for accordian panels with accordian.js*/
 .head {

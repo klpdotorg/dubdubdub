@@ -34,9 +34,9 @@
     <div class="subheader-content">
     	<div class="chart-parent">
 		      <div class="top-search search-input-map">
-		        <input type="text" name="search" id="select2search" placeholder="Search" class="search-input input-text">
+		        <input type="text" name="search" id="select2search" placeholder="Search by primary school, preschool or boundary" class="search-input input-text">
 		      </div>
-		      <div class="top-reset">
+		      <div class="top-reset center-text">
 		      	 <div class="button" id="resetButton">RESET <i class="fa fa-refresh"></i></div>
 		      </div>
 	    </div>
@@ -48,6 +48,7 @@
 {% block content %}
 
 <section class="clearfix">
+	<div class="base-spacing-mid"></div>
 	<div id="primarySchoolContainer">
 		<section class="container" id="school_summary">
 			<div class="chart-parent" id="topSummary" class="js-summary-container">
@@ -69,9 +70,9 @@
 		<section class="container">
 			<ul id='improved' class="js-accordion-container">
 			  <hr/>
-				<li><a href='#' class='head js-accordion-header align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header brand-purple align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="ivrs">
-						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+						<h2 class="heading-border brand-purple">IVRS Summary</h2> 
 						<div class="chart-parent">
 			  	    <div id="ivrssummary" class="js-summary-container"></div>
 				  	</div><!--end inner parent-->
@@ -93,21 +94,9 @@
 					</div>
 				</li>
 				<hr/>
-				<li><a href='#' class='head js-accordion-header align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
-					<div class='content' id="surveys">
-						<h2 class="heading-border brand-turquoise">Community Surveys</h2> 
-						<div class="chart-parent">
-			  	   	<div id="surveysummary" class="js-summary-container"></div>
-					  </div><!--end inner parent-->
-					 	<div class="chart-parent">
-			  	    <div id="surveyquestions" class="js-detail-container"></div>
-			  	  </div> <!-- End of Chart Parent -->
-					</div>
-				</li>	
-				<hr/>
-				<li><a href='#' class='head js-accordion-header align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header brand-red align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="website">
-						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
+						<h2 class="heading-border brand-red">Volunteer Observations</h2> 
 						<div class="chart-parent">
 			  	    <div id="websummary" class="js-summary-container"></div>				  	
 					  </div><!--end inner parent-->	
@@ -124,6 +113,19 @@
 				  	</div> <!--/chart-parent-->	
 					</div>
 				</li>
+				<hr/>
+				<li><a href='#' class='head js-accordion-header brand-blue align-right'>SURVEYS  <span class="fa fa-angle-down"></span></a>
+					<div class='content' id="surveys">
+						<h2 class="heading-border brand-blue">Community Surveys</h2> 
+						<div class="chart-parent">
+			  	   	<div id="surveysummary" class="js-summary-container"></div>
+					  </div><!--end inner parent-->
+					 	<div class="chart-parent">
+			  	    <div id="surveyquestions" class="js-detail-container"></div>
+			  	  </div> <!-- End of Chart Parent -->
+					</div>
+				</li>	
+				<hr/>
 				<!--
 				<hr/>
 				<li><a href='#' class='head js-accordion-header align-right'>COMPARISON  <span class="fa fa-angle-down"></span></a>
@@ -159,9 +161,9 @@
 		<section class="container">
 			<ul id='improved' class="js-accordion-container">
 			  <hr/>
-				<li><a href='#' class='head js-accordion-header align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header brand-purple align-right'>IVRS  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="ivrs">
-						<h2 class="heading-border brand-turquoise">IVRS Summary</h2> 
+						<h2 class="heading-border brand-purple">IVRS Summary</h2> 
 						<div class="chart-parent">
 			  	    <div id="ivrssummary_ang" class="js-summary-container"></div>
 				  	</div><!--end inner parent-->
@@ -176,16 +178,16 @@
 					    </div> <!-- /chart-half-item -->
 					  </div> <!--/chart-parent-->
 					  <hr/>
-					  <div class="bar-label">How would you categorize schools in this boundary?</div>
+					  <div class="bar-label">How would you categorize preschools in this boundary?</div>
 					  <div class="chart-parent">
 				  		<div id="ivrsgrades_ang" class="js-detail-container"></div>
 				  	</div> <!--/chart-parent-->
 					</div>
 				</li>
 				<hr/>
-				<li><a href='#' class='head js-accordion-header align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
+				<li><a href='#' class='head js-accordion-header brand-red align-right'>WEBSITE  <span class="fa fa-angle-down"></span></a>
 					<div class='content' id="website">
-						<h2 class="heading-border brand-turquoise">Volunteer Observations</h2> 
+						<h2 class="heading-border brand-red">Volunteer Observations</h2> 
 						<div class="chart-parent">
 			  	    <div id="websummary_ang" class="js-summary-container"></div>				  	
 					  </div><!--end inner parent-->	
