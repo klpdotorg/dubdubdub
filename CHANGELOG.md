@@ -10,6 +10,25 @@ Use required commands
 Changelog
 ---
 
+Release 0.24: ff2ee5d66c9729439512108ebaeb16385ebd1f39 - 2015-05-11
+  - Minor - hide facilities, dont consider inactive schools in stories page
+
+Release 0.23: 71c48f34fb08cba3aa6d12d2ffcc4e9f73f155b1 - 2015-05-10
+  - Minor, see https://github.com/klpdotorg/dubdubdub/pull/502
+
+Release 0.22: b8f372defb054cd8e95555c252fc3cd52e2bb375 - 2015-05-10
+  - Import scripts for different SYS feedback formats
+  - minor bugfixes
+
+Release 0.21: 6bace7a8ee245b452ff90120824b96d28c8f67b2 - 2015-05-09
+  - Minor bugfixes
+
+Release 0.20: 510080ca879663f61ab5b63d4c86eee9c14ea036 - 2015-05-08
+  - Data import scripts + updated data (13-14)
+  - Stories imports + Stories API + Stories Dashboard Frontend
+  - Assessment aggregation scripts and assessments
+  - SDMC / BVS meeting PDFs
+
 Release 0.14: 4c8fbca1b9617a5015f8b620ef53ec030d8cfda8
   - Front-end re-write + styleguide
 

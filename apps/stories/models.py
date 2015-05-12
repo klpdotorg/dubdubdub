@@ -25,7 +25,11 @@ class Answer(models.Model):
 class Question(models.Model):
     text = models.TextField()
     data_type = models.IntegerField()
+    user_type = models.ForeignKey('UserType', blank=True, null=True)
     question_type = models.ForeignKey('QuestionType')
+    is_featured = models.BooleanField(default=False)
+    display_text = models.TextField()
+    key = models.CharField(max_length=100, blank=True, null=True)
     options = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
@@ -75,6 +79,41 @@ class QuestionType(models.Model):
         managed = False
         db_table = 'stories_questiontype'
 
+class UserType(models.Model):
+    PARENTS = "PR"
+    TEACHERS = "TR"
+    VOLUNTEER = "VR"
+    CBO_MEMBER = "CM"
+    HEADMASTER = "HM"
+    SDMC_MEMBER = "SM"
+    LOCAL_LEADER = "LL"
+    AKSHARA_STAFF = "AS"
+    EDUCATED_YOUTH = "EY"
+    EDUCATION_OFFICIAL = "EO"
+    ELECTED_REPRESENTATIVE = "ER"
+
+    USER_TYPE_CHOICES = (
+        (PARENTS, 'Parents'),
+        (TEACHERS, 'Teachers'),
+        (VOLUNTEER, 'Volunteer'),
+        (CBO_MEMBER, 'CBO_Member'),
+        (HEADMASTER, 'Headmaster'),
+        (SDMC_MEMBER, 'SDMC_Member'),
+        (LOCAL_LEADER, 'Local Leader'),
+        (AKSHARA_STAFF, 'Akshara_Staff'),
+        (EDUCATED_YOUTH, 'Educated_Youth'),
+        (EDUCATION_OFFICIAL, 'Education_Official'),
+        (ELECTED_REPRESENTATIVE, 'Elected_Representative'),
+    )
+
+    name = models.CharField(
+        max_length=2,
+        choices=USER_TYPE_CHOICES,
+        default=VOLUNTEER,
+    )
+
+    def __unicode__(self):
+        return self.name
 
 class Source(models.Model):
     name = models.CharField(max_length=64)
@@ -94,6 +133,7 @@ class Story(TimestampedBaseModel):
     is_verified = models.BooleanField(default=False)
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
+    user_type = models.ForeignKey('UserType', blank=True, null=True)
 
     # adding date_of_visit to replace date in future
     date = models.CharField(max_length=50, blank=True)

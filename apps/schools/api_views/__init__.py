@@ -1,6 +1,7 @@
 from .school import (SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
     SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
     SchoolLibrary, SchoolNutrition)
+from .assessment import (AssessmentsList,AssessmentInfo,ProgrammesList,ProgrammeInfo)
 from .boundary import (Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails, AssemblyDetails,
     ParliamentDetails, PincodeDetails)

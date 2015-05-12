@@ -25,6 +25,13 @@ class Command(BaseCommand):
                     help='The date until which to fetch ivrs data '),
     )
 
+    try:
+        f = open('ivrs_error.log')
+        ivrs_errors = json.loads(f.read())
+        f.close()
+    except:
+        ivrs_errors = []
+
     @transaction.atomic
     def handle(self, *args, **options):
         from_date = options.get('from', None)
@@ -49,10 +56,10 @@ class Command(BaseCommand):
         source = Source.objects.get(name="ivrs")
         success, json_list = self.fetch_data(from_date, to_date)
         if success:
-            for json in json_list:
-                sane, message = self.sanity_check_json(json)
+            for the_json in json_list:
+                sane, message = self.sanity_check_json(the_json)
                 if sane:
-                    self.process_json(source, json)
+                    self.process_json(source, the_json)
                 else:
                     print message
                     continue
@@ -60,6 +67,11 @@ class Command(BaseCommand):
                 print "All jsons processed!"
         else:
             return
+
+        f = open('ivrs_error.log', 'w')
+        f.write(json.dumps(self.ivrs_errors, indent = 4))
+        f.close()
+
 
     def transform_date(self, date):
         day = date.split("/")[0]
@@ -83,7 +95,8 @@ class Command(BaseCommand):
             try:
                 school = School.objects.get(id=json['School ID'])
             except Exception as ex:
-                print ex, type(ex)
+                if json['School ID'] not in self.ivrs_errors:
+                    self.ivrs_errors.append(json['School ID'])
                 return (False, "School id: %s does not exist in the DB." % json['School ID'])
 
         return (True, "Json is sane. Proceeding with dissection.")
@@ -159,7 +172,7 @@ class Command(BaseCommand):
             return
 
     def fetch_data(self, from_date, to_date):
-        url = "http://89.145.83.72/akshara/json_feeds.php?fromdate=%s&enddate=%s" \
+        url = "http://klpdata.mahiti.org/json_feeds.php?fromdate=%s&enddate=%s" \
               % (from_date, to_date)
         try:
             response = requests.get(url)
