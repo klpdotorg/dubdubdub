@@ -116,10 +116,10 @@ class Command(BaseCommand):
         year = date.split("/")[2]
 
         if not self.is_day_correct(day):
-            return (False, "Please enter a valid day in between 1 and 31")
+            return (False, "Please enter a valid day in between 1 and 31 in the format DD")
 
         if not self.is_month_correct(month):
-            return (False, "Please enter a valid month in between 1 and 12")
+            return (False, "Please enter a valid month in between 1 and 12 in the format MM")
 
         if not self.is_year_correct(year):
             return (False, "Please ensure year format is '2014' and it is <= current year")
@@ -127,10 +127,10 @@ class Command(BaseCommand):
         return (True, "Parameters accepted. Commencing data fetch")
 
     def is_day_correct(self, day):
-        return int(day) in range(1,32)
+        return (len(day) == 2 and int(day) in range(1,32))
 
     def is_month_correct(self, month):
-        return int(month) in range(1,13)
+        return (len(month) == 2 and int(month) in range(1,13))
 
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
