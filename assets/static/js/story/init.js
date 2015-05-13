@@ -326,7 +326,7 @@
             labels: labels,
             series: [
                 { 
-                    className: 'ct-series-e',
+                    className: 'ct-series-d',
                     data: meta_values,
                 }
             ]
