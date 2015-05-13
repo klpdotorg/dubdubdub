@@ -16,7 +16,7 @@ class Command(BaseCommand):
     args = "<dates month year>"
     help = """Import data from IVRS
 
-    ./manage.py fetchivrs --from=20/12/2014 --to=21/12/2014"""
+    ./manage.py fetchivrs --from=31/08/2014 --to=05/12/2014"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
