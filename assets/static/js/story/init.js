@@ -297,7 +297,10 @@
         var data_respondent = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-g',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -322,7 +325,10 @@
         var data_ivrs = {
             labels: labels,
             series: [
-                meta_values
+                { 
+                    className: 'ct-series-d',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -362,7 +368,7 @@
         var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 15px'
+                    style: 'stroke-width: 15px;'
                 });
             }
             if (data.type === 'label' && data.axis === 'x') {
@@ -410,7 +416,7 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
@@ -423,10 +429,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.community.schools
             }, {
-                'label': 'Stories',
+                'label': 'Surveys',
                 'count': data.community.stories
             }/*, {
                 'label': 'Academic Year',
@@ -436,10 +442,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.web.schools
             }, {
-                'label': 'Verified Stories',
+                'label': 'Verified Surveys',
                 'count': data.web.verified_stories
             }/*, {
                 'label': 'Academic Year',
