@@ -4,7 +4,6 @@ from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
 from django.db.models import Q, Count
-from django.utils import timezone
 
 from schools.models import School, SchoolDetails
 from users.models import User
@@ -15,6 +14,7 @@ from .serializers import (SchoolQuestionsSerializer, StorySerializer,
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 from common.mixins import CacheMixin
+from common.utils import Date
 from rest_framework.exceptions import (APIException, PermissionDenied,
     ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
@@ -59,19 +59,20 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
 
+        date = Date()
         if start_date:
-            sane = self.check_date_sanity(start_date)
+            sane = date.check_date_sanity(start_date)
             if not sane:
                 raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
-                start_date = self.get_datetime(start_date)
+                start_date = date.get_datetime(start_date)
 
         if end_date:
-            sane = self.check_date_sanity(end_date)
+            sane = date.check_date_sanity(end_date)
             if not sane:
                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
-                end_date = self.get_datetime(end_date)
+                end_date = date.get_datetime(end_date)
 
         response_json = {}
 
@@ -128,37 +129,6 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         response_json['volumes'] = ordered_per_month_json
         return Response(response_json)
 
-        def get_datetime(self, date):
-            return datetime.datetime.strptime(date, '%Y-%m-%d')
-
-        def check_date_sanity(self, date):
-            try:
-                year = date.split("-")[0]
-                month = date.split("-")[1]
-                day = date.split("-")[2]
-            except:
-                return False
-
-            if not self.is_day_correct(day):
-                return False
-
-            if not self.is_month_correct(month):
-                return False
-
-            if not self.is_year_correct(year):
-                return False
-
-            return True
-
-        def is_day_correct(self, day):
-            return int(day) in range(1,32)
-
-        def is_month_correct(self, month):
-            return int(month) in range(1,13)
-
-        def is_year_correct(self, year):
-            return (len(year) == 4 and int(year) <= timezone.now().year)
-
 
 class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
@@ -184,19 +154,20 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
 
+        date = Date()
         if start_date:
-            sane = self.check_date_sanity(start_date)
+            sane = date.check_date_sanity(start_date)
             if not sane:
                 raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
-                start_date = self.get_datetime(start_date)
+                start_date = date.get_datetime(start_date)
 
         if end_date:
-            sane = self.check_date_sanity(end_date)
+            sane = date.check_date_sanity(end_date)
             if not sane:
                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
-                end_date = self.get_datetime(end_date)
+                end_date = date.get_datetime(end_date)
 
         stories = Story.objects.all()
 
@@ -244,37 +215,6 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         return Response(response_json)
 
-    def get_datetime(self, date):
-        return datetime.datetime.strptime(date, '%Y-%m-%d')
-
-    def check_date_sanity(self, date):
-        try:
-            year = date.split("-")[0]
-            month = date.split("-")[1]
-            day = date.split("-")[2]
-        except:
-            return False
-
-        if not self.is_day_correct(day):
-            return False
-
-        if not self.is_month_correct(month):
-            return False
-
-        if not self.is_year_correct(year):
-            return False
-
-        return True
-
-    def is_day_correct(self, day):
-        return int(day) in range(1,32)
-
-    def is_month_correct(self, month):
-        return int(month) in range(1,13)
-
-    def is_year_correct(self, year):
-        return (len(year) == 4 and int(year) <= timezone.now().year)
-
     def get_que_and_ans(self, stories, source, school_type):
         response_list = []
 
@@ -299,17 +239,15 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             j['question']['display_text'] = question.display_text
             j['answers'] = {}
             j['answers']['question_type'] = question.question_type.name
-            answer_counts = question.answer_set.filter(story__in=stories).values('text').annotate(answer_count=Count('text'))
+
+            answer_counts = question.answer_set.filter(
+                story__in=stories
+            ).values('text').annotate(answer_count=Count('text'))
+
             options = {}
             for count in answer_counts:
                 options[count['text']] = count['answer_count']
             j['answers']['options'] = options
-            # j['answers']['options'] = dict(
-            #     Counter(
-            #         [a.text for a in question.answer_set.filter(
-            #             story__in=stories)]
-            #     )
-            # )
 
             response_list.append(j)
 
@@ -340,19 +278,20 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
 
+        date = Date()
         if start_date:
-            sane = self.check_date_sanity(start_date)
+            sane = date.check_date_sanity(start_date)
             if not sane:
                 raise APIException("Please enter `from` in the format YYYY-MM-DD")
             else:
-                start_date = self.get_datetime(start_date)
+                start_date = date.get_datetime(start_date)
 
         if end_date:
-            sane = self.check_date_sanity(end_date)
+            sane = date.check_date_sanity(end_date)
             if not sane:
                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
-                end_date = self.get_datetime(end_date)
+                end_date = date.get_datetime(end_date)
 
         school_qset = School.objects.filter(
             admin3__type__name=school_type, status=2)
@@ -428,37 +367,6 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             story_count=Count('story')
         )
         return {usertypes[user.name]: user.story_count for user in user_counts}
-
-    def get_datetime(self, date):
-        return datetime.datetime.strptime(date, '%Y-%m-%d')
-
-    def check_date_sanity(self, date):
-        try:
-            year = date.split("-")[0]
-            month = date.split("-")[1]
-            day = date.split("-")[2]
-        except:
-            return False
-
-        if not self.is_day_correct(day):
-            return False
-
-        if not self.is_month_correct(month):
-            return False
-
-        if not self.is_year_correct(year):
-            return False
-
-        return True
-
-    def is_day_correct(self, day):
-        return int(day) in range(1,32)
-
-    def is_month_correct(self, month):
-        return int(month) in range(1,13)
-
-    def is_year_correct(self, year):
-        return (len(year) == 4 and int(year) <= timezone.now().year)
 
     def get_count(self, *args):
         source = args[0]
