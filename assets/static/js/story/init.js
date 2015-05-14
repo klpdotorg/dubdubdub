@@ -416,7 +416,7 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
@@ -429,10 +429,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.community.schools
             }, {
-                'label': 'Stories',
+                'label': 'Surveys',
                 'count': data.community.stories
             }/*, {
                 'label': 'Academic Year',
@@ -442,10 +442,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.web.schools
             }, {
-                'label': 'Verified Stories',
+                'label': 'Verified Surveys',
                 'count': data.web.verified_stories
             }/*, {
                 'label': 'Academic Year',
