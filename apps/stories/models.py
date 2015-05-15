@@ -27,6 +27,9 @@ class Question(models.Model):
     data_type = models.IntegerField()
     user_type = models.ForeignKey('UserType', blank=True, null=True)
     question_type = models.ForeignKey('QuestionType')
+    is_featured = models.BooleanField(default=False)
+    display_text = models.TextField()
+    key = models.CharField(max_length=100, blank=True, null=True)
     options = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
@@ -83,6 +86,7 @@ class UserType(models.Model):
     CBO_MEMBER = "CM"
     HEADMASTER = "HM"
     SDMC_MEMBER = "SM"
+    LOCAL_LEADER = "LL"
     AKSHARA_STAFF = "AS"
     EDUCATED_YOUTH = "EY"
     EDUCATION_OFFICIAL = "EO"
@@ -95,6 +99,7 @@ class UserType(models.Model):
         (CBO_MEMBER, 'CBO_Member'),
         (HEADMASTER, 'Headmaster'),
         (SDMC_MEMBER, 'SDMC_Member'),
+        (LOCAL_LEADER, 'Local Leader'),
         (AKSHARA_STAFF, 'Akshara_Staff'),
         (EDUCATED_YOUTH, 'Educated_Youth'),
         (EDUCATION_OFFICIAL, 'Education_Official'),

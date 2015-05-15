@@ -20,142 +20,38 @@ class Assessment(BaseModel):
         db_table = 'tb_assessment'
 
 
-class InstitutionAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='id', primary_key=True)
-    name = models.CharField(max_length=300, blank=True)
-    bid = models.ForeignKey("Boundary", db_column='bid', blank=True, null=True, on_delete=models.SET_NULL)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    num = models.IntegerField(blank=True, null=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        managed = False
-        db_table = 'tb_institution_agg'
-
-
-class InstitutionAssessmentAgg(BaseModel):
+class InstitutionAssessmentCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
                                    blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    domain = models.CharField(max_length=100, blank=True)
-    domain_order = models.IntegerField(blank=True, null=True)
-    aggtext = models.CharField(max_length=100)
-    aggtext_order = models.IntegerField()
-    aggval = models.DecimalField(max_digits=6, decimal_places=2,
-                                 blank=True, null=True)
+    cohortsnum= models.IntegerField()
 
     def __unicode__(self):
-        return "%s: %s: %s" % (self.school, self.sex, self.mt,)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_institution_assessment_agg'
-
-
-class InstitutionAssessmentAggCohorts(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    domain = models.CharField(max_length=100, blank=True)
-    domain_order = models.IntegerField(blank=True, null=True)
-    aggtext = models.CharField(max_length=100)
-    aggtext_order = models.IntegerField()
-    cohortsval = models.DecimalField(max_digits=6, decimal_places=2,
-                                     blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" % (self.school, self.sex, self.mt,)
+        return "%s: %s: %s: %s" % (self.school,self.assessment, self.sex, self.mt,)
 
     class Meta:
 
         #workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssAggCohorts'
         managed = False
-        db_table = 'tb_institution_assessment_agg_cohorts'
-
-
-class InstitutionAssessmentGenderSinglescore(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid')
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.sex,)
-
-    class Meta:
-
-        #workaround for https://code.djangoproject.com/ticket/8162
-        verbose_name = 'InstAssGenderSingleScore'
-        managed = False
-        db_table = 'tb_institution_assessment_gender_singlescore'
-
-
-class InstitutionAssessmentMtSinglescore(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid')
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
-
-    class Meta:
-
-        #workaround for https://code.djangoproject.com/ticket/8162
-        verbose_name = 'InstAssMtSingleScore'
-        managed = False
-        db_table = 'tb_institution_assessment_mt_singlescore'
-
-
-class InstitutionAssessmentReadingAggCohorts(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    domain = models.CharField(max_length=100, blank=True)
-    domain_order = models.IntegerField(blank=True, null=True)
-    aggtext = models.CharField(max_length=100)
-    aggtext_order = models.IntegerField()
-    cohortsval = models.DecimalField(max_digits=6, decimal_places=2,
-                                     blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
-
-    class Meta:
-
-        #workaround for https://code.djangoproject.com/ticket/8162
-        verbose_name = 'InstAssReadingAggCohorts'
-        managed = False
-        db_table = 'tb_institution_assessment_reading_agg_cohorts'
+        db_table = 'tb_institution_assessment_cohorts'
 
 
 class InstitutionAssessmentSinglescore(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    programme = models.ForeignKey('Programme', db_column='pid')
-    asstext = models.CharField(max_length=50)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
 
     def __unicode__(self):
 
-        #FIXME: add singlescore?
-        return "%s: %s" (self.school, self.programme,)
+        return "%s: %s" %(self.school, self.assessment,)
 
     class Meta:
 
@@ -167,17 +63,17 @@ class InstitutionAssessmentSinglescore(BaseModel):
 
 class InstitutionAssessmentSinglescoreGender(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    programme = models.ForeignKey('Programme', db_column='pid')
-    asstext = models.CharField(max_length=50)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
+    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
 
     def __unicode__(self):
 
-        #FIXME: add singlescore?
-        return "%s: %s" (self.school, self.programme,)
+        return "%s: %s" %(self.school, self.assessment,)
 
     class Meta:
 
@@ -189,15 +85,16 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
 
 class InstitutionAssessmentSinglescoreMt(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    programme = models.ForeignKey('Programme', db_column='pid')
-    asstext = models.CharField(max_length=50)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    order = models.IntegerField(blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.programme, self.mt,)
+        return "%s: %s: %s" %(self.school, self.assessment, self.mt,)
 
     class Meta:
 
@@ -206,45 +103,68 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
 
-
-class InstitutionBasicAssessmentInfo(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
+class BoundaryAssessmentSinglescore(BaseModel):
+    boundary= models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    num = models.IntegerField(blank=True, null=True)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
+        return "%s: %s: %s" %(self.boundary, self.assessment, self.studentgroup,)
 
     class Meta:
 
         #workaround for https://code.djangoproject.com/ticket/8162
-        verbose_name = 'InstBasicAssInfo'
+        verbose_name = 'BoundaryAssSingleScore'
         managed = False
-        db_table = 'tb_institution_basic_assessment_info'
+        db_table = 'tb_boundary_assessment_singlescore'
 
 
-class InstitutionBasicAssessmentInfoCohorts(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
+class BoundaryAssessmentSinglescoreGender(BaseModel):
+    boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    cohortsnum = models.IntegerField(blank=True, null=True)
+    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
+
+        return "%s: %s" %(self.boundary, self.assessment,self.gender,)
 
     class Meta:
 
         #workaround for https://code.djangoproject.com/ticket/8162
-        verbose_name = 'InstBasicAssInfoCohorts'
+        verbose_name = 'BoundaryAssSingleScoreGender'
         managed = False
-        db_table = 'tb_institution_basic_assessment_info_cohorts'
+        db_table = 'tb_boundary_assessment_singlescore_gender'
+
+
+class BoundaryAssessmentSinglescoreMt(BaseModel):
+    boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    studentgroup = models.CharField(max_length=50, blank=True)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    singlescore = models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" %(self.boundary, self.assessment, self.mt,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'BoundaryAssSingleScoreMt'
+        managed = False
+        db_table = 'tb_boundary_assessment_singlescore_mt'
+
 
 
 class Partner(BaseModel):
@@ -259,42 +179,6 @@ class Partner(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_partner'
-
-
-class PreschoolAssessmentAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    agegroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    aggtext = models.CharField(max_length=100)
-    aggval = models.DecimalField(max_digits=6, decimal_places=2,
-                                 blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_preschool_assessment_agg'
-
-
-class PreschoolBasicAssessmentInfo(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    agegroup = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    num = models.IntegerField(blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s: %s" (self.school, self.assessment, self.mt,)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_preschool_basic_assessment_info'
 
 
 class Programme(BaseModel):
@@ -335,59 +219,6 @@ class Question(BaseModel):
         managed = False
         db_table = 'tb_question'
 
-
-class SchoolAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='id', primary_key=True)
-    name = models.CharField(max_length=300, blank=True)
-    boundary = models.ForeignKey('Boundary', blank=True, null=True, on_delete=models.SET_NULL)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    num = models.IntegerField(blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s" % (self.school, self.name,)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_school_agg'
-
-
-class SchoolAssessmentAgg(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    student_group = models.ForeignKey('StudentGroup', db_column='clid',
-                                      blank=True, null=True, on_delete=models.SET_NULL)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    aggtext = models.CharField(max_length=100)
-    aggval = models.DecimalField(max_digits=6, decimal_places=2,
-                                 blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s" % (self.school, self.assessment)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_school_assessment_agg'
-
-
-class SchoolBasicAssessmentInfo(BaseModel):
-    school = models.ForeignKey('School', db_column='sid', primary_key=True)
-    assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True, on_delete=models.SET_NULL)
-    student_group = models.ForeignKey('StudentGroup', db_column='clid',
-                                      blank=True, null=True, on_delete=models.SET_NULL)
-    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
-    mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    num = models.IntegerField(blank=True, null=True)
-
-    def __unicode__(self):
-        return "%s: %s" % (self.school, self.assessment)
-
-    class Meta:
-        managed = False
-        db_table = 'tb_school_basic_assessment_info'
 
 
 class StudentEval(BaseModel):
@@ -464,3 +295,36 @@ class AngDisplayMaster(BaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_ang_display_master'
+
+
+class InstitutionAgg(BaseModel):
+    id = models.CharField(max_length=20, primary_key=True)
+    academic_year = models.ForeignKey('AcademicYear')
+    school = models.ForeignKey('School')
+    boundary = models.ForeignKey("Boundary", blank=True, null=True, on_delete=models.SET_NULL)
+    gender = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.id
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_institution_aggregations'
+
+
+class SchoolAgg(BaseModel):
+    school = models.ForeignKey('School', db_column='id', primary_key=True)
+    name = models.CharField(max_length=300, blank=True)
+    boundary = models.ForeignKey('Boundary', blank=True, null=True, on_delete=models.SET_NULL)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s" % (self.school, self.name,)
+
+    class Meta:
+        managed = False
+        db_table = 'tb_school_agg'

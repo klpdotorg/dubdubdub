@@ -48,6 +48,32 @@ WHERE tb1.hid=11
     AND tb2.parent=tb3.id;
 
 
+CREATE MATERIALIZED VIEW mvw_institution_aggregations AS
+SELECT format('A%sS%s', sc.ayid, s.id) as id,
+       sc.ayid AS academic_year_id,
+       s.id AS school_id,
+       s.bid AS boundary_id,
+       c.sex AS gender,
+       c.mt AS mt,
+       count(DISTINCT stu.id) AS num
+FROM tb_student stu,
+     tb_class cl,
+     tb_student_class sc,
+     tb_child c,
+     tb_school s
+WHERE cl.sid = s.id
+    AND sc.clid = cl.id
+    AND sc.stuid = stu.id
+    AND sc.status=1
+    AND stu.cid = c.id
+    AND s.status=2
+GROUP BY academic_year_id,
+         school_id,
+         boundary_id,
+         gender,
+         mt;
+
+
 -- details about the school(both primary and preschools)
 -- putting the locations in a view to save query time
 -- assembly and parliament IDs as well.
@@ -59,24 +85,28 @@ SELECT tbs.id as id,
     tb1.type as stype,
     assembly.ac_id as assembly_id,
     assembly.pc_id as parliament_id,
-    assembly.pin_id as pin_id,
-    SUM(CASE tb_institution_agg.sex WHEN 'male' THEN tb_institution_agg.num ELSE 0 END) as num_boys,
-    SUM(CASE tb_institution_agg.sex WHEN 'female' THEN tb_institution_agg.num ELSE 0 END) as num_girls
+    assembly.pin_id as pin_id
     FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs
-        LEFT JOIN tb_institution_agg ON tb_institution_agg.id=tbs.id
-        LEFT JOIN (SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id FROM mvw_assembly mva, mvw_parliament mvp, mvw_inst_coord vic, mvw_postal postal WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom) AND ST_Within(vic.coord, postal.the_geom)) AS assembly
-    ON assembly.instid=tbs.id
+    LEFT JOIN (
+        SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id
+        FROM mvw_assembly mva, mvw_parliament mvp, mvw_inst_coord vic, mvw_postal postal
+        WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom)
+            AND ST_Within(vic.coord, postal.the_geom)
+    ) AS assembly ON assembly.instid=tbs.id
     WHERE tbs.bid=tb1.id AND
     tb1.parent=tb2.id AND
-    tb2.parent=tb3.id
-    GROUP BY tbs.id,
-        cluster_or_circle_id,
-        block_or_project_id,
-        district_id,
-        stype,
-        assembly_id,
-        parliament_id,
-        pin_id;
+    tb2.parent=tb3.id;
+
+
+CREATE MATERIALIZED VIEW mvw_school_extra AS
+SELECT
+    format('A%sS%s', tia.academic_year_id, tia.school_id) as id,
+    tia.academic_year_id as academic_year_id,
+    tia.school_id as school_id,
+    SUM(CASE tia.gender WHEN 'male' THEN tia.num ELSE 0 END) as num_boys,
+    SUM(CASE tia.gender WHEN 'female' THEN tia.num ELSE 0 END) as num_girls
+    FROM mvw_institution_aggregations as tia
+    GROUP BY academic_year_id, school_id;
 
 -- Materialized view for electedrep views
 
@@ -143,7 +173,7 @@ FROM dblink(
         school_code,
         lowest_class,
         highest_class,
-        (SELECT ''2011-12'') AS acyear,
+        (SELECT ''2013-14'') AS acyear,
         school_dev_grant_recd,
         school_dev_grant_expnd,
         tlm_grant_recd,
@@ -155,7 +185,7 @@ FROM dblink(
         (male_tch + female_tch) AS teacher_count,
         total_boys,
         total_girls
-    FROM dise_1112_basic_data'
+    FROM dise_1314_basic_data'
 ) t1(
     school_code character varying(32),
     lowest_class integer,
@@ -268,6 +298,5 @@ SELECT sg.sid AS schid,
     tb_class sg,
     tb_student stu,
     tb_academic_year acyear
-  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid AND (acyear.name::text IN ( SELECT DISTINCT mvw_lib_level_agg.year
-           FROM mvw_lib_level_agg))
+  WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
