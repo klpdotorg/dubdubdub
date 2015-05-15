@@ -1,0 +1,50 @@
+/* Defining mixins for the chart trials page*/
+
+@include media-med {
+	.chart-parent{
+	  @include grid-parent;
+	}
+
+	.chart-half-item{
+	  @include col-50-flt;
+	}
+
+
+	.chart-athird-item{
+		 @include col-33-flt;
+	}
+
+
+	.chart-quarter-item{
+		@include col-25-flt;
+	}
+}
+
+/* Defining a text align -left */
+
+.align-left {
+  text-align: left; 
+}
+
+.img-symbol {
+	vertical-align: middle;
+	/*padding-top: 25px;*/
+	margin-left:auto;
+	margin-right:auto;
+	width: 100px;
+	display:block;
+}
+
+@include media-med {
+	.img-symbol {
+		width: auto;
+	}
+}
+
+.bar-label {
+  width: 100%; 
+}
+
+.taller {
+	height: 150px;
+}

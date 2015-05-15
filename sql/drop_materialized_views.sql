@@ -1,4 +1,5 @@
 DROP MATERIALIZED VIEW mvw_boundary_primary;
+DROP MATERIALIZED VIEW mvw_institution_aggregations;
 DROP MATERIALIZED VIEW mvw_school_details;
 DROP MATERIALIZED VIEW mvw_electedrep_master;
 DROP MATERIALIZED VIEW mvw_school_electedrep;

@@ -27,10 +27,39 @@
         return templates['compare-option'](data);
     };
 
+    var fetchInfraFacilities = function(entity) {
+        var $deferred = $.Deferred();
+        var isPreschool = entity.type.id === 2;
+        if (isPreschool) {
+            var $xhr = klp.api.do("/schools/school/" + entity.id + "/infrastructure");
+            $xhr.done(function(data) {
+                $deferred.resolve(data);
+            });
+        } else { // is primary school, fetch data from DISE API
+            if (entity.dise_code) {
+                var $xhr = klp.dise_api.fetchSchoolInfra(entity.dise_code);
+                $xhr.done(function(data) {
+                    var facilities = klp.dise_infra.getFacilitiesData(data.properties);
+                    $deferred.resolve({'facilities': facilities});
+                });
+                $xhr.fail(function(err) {
+                    klp.utils.alertMessage("Temporary error loading infrastructure data.");
+                    $deferred.resolve({'factilities': {}});
+                });
+            } else {
+                setTimeout(function() {
+                    $deferred.resolve({'facilities': {}});
+                }, 0);
+            }
+        }
+        return $deferred;
+    };
+
     var fetchData = function(entity) {
+        console.log("compare entity", entity);
         var schoolURL = '/schools/school/' + entity.id;
         var endpoints = [
-            schoolURL + '/infrastructure',
+            //schoolURL + '/infrastructure',
             schoolURL + '/finance',
             schoolURL + '/demographics'
         ];
@@ -41,10 +70,13 @@
         var apiURL = 'merge?' + endpointsParamsString;
         var apiXHR = klp.api.do(apiURL);
         apiXHR.done(function(data) {
-            entity.infrastructure_data = data[endpoints[0]];
-            entity.finance_data = data[endpoints[1]];
-            entity.demographics_data = data[endpoints[2]];
-            $deferred.resolve(entity);
+            var facilitiesXHR = fetchInfraFacilities(entity);
+            facilitiesXHR.done(function(facilities) {
+                entity.infrastructure_data = facilities;
+                entity.finance_data = data[endpoints[0]];
+                entity.demographics_data = data[endpoints[1]];
+                $deferred.resolve(entity);
+            });
         });
         apiXHR.fail(function(err) {
             alert("failed to load school data");
