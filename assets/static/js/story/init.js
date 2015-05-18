@@ -290,14 +290,17 @@
             }
         });
         var values = _.values(data.respondents);
-        /*var meta_values = [];
+        var meta_values = [];
         for( var i=0; i < labels.length; i++) {
             meta_values.push({'meta': labels[i],'value': values[i]});
-        }*/ /* chartist tooltip transformations */ 
+        } /* chartist tooltip transformations */ 
         var data_respondent = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-g',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -313,13 +316,19 @@
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
         var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
         $('#ivrsyears').html(ivrsVolTitle);
-
+        var meta_values = [];
         var labels = _.keys(months);
         var values = _.values(months);
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        } /* chartist tooltip transformations */ 
         var data_ivrs = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-d',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -339,7 +348,10 @@
             },
             axisY: {
                 showGrid: false,
-            }
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
         var responsiveOptions = [
@@ -356,7 +368,7 @@
         var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 15px'
+                    style: 'stroke-width: 15px;'
                 });
             }
             if (data.type === 'label' && data.axis === 'x') {
@@ -404,7 +416,7 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
@@ -417,10 +429,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.community.schools
             }, {
-                'label': 'Stories',
+                'label': 'Surveys',
                 'count': data.community.stories
             }/*, {
                 'label': 'Academic Year',
@@ -430,10 +442,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.web.schools
             }, {
-                'label': 'Verified Stories',
+                'label': 'Verified Surveys',
                 'count': data.web.verified_stories
             }/*, {
                 'label': 'Academic Year',

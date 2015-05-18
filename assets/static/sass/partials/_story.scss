@@ -55,18 +55,53 @@
 @include media-med-maxwidth{
 	.ct-label.ct-horizontal {
 
-		-ms-transform-origin: 0% 50%;
-	  -ms-transform: translateX(0px) translateY(30px) rotate(-45deg); /* IE 9 */
+		-ms-transform-origin: 50% 50%;
+	  -ms-transform: translateX(0px) translateY(20px) rotate(-45deg); /* IE 9 */
 
-	  -webkit-transform-origin: 0% 50%;
-   	-webkit-transform: translateX(0px) translateY(30px) rotate(-45deg); /* Safari */
+	  -webkit-transform-origin: 50% 50%;
+   	-webkit-transform: translateX(0px) translateY(20px) rotate(-45deg); /* Safari */
 
-	  transform-origin: 0% 50%;
-	  transform: translateX(0px) translateY(30px) rotate(-45deg);
+	  transform-origin: 50% 50%;
+	  transform: translateX(0px) translateY(20px) rotate(-45deg);
 
 	  /*text-anchor: middle;*/
 	}
 	.ct-chart {
 	  margin-bottom: 30px;
 	}	
+}
+
+.chartist-tooltip{
+	position:absolute;
+	display:inline-block;
+	min-width:5em;
+	padding:.5em;
+	background:$black;
+	color:$white;
+	font-size:16px;
+	font-weight:300;
+	text-align:center;
+	pointer-events:none;
+	z-index:1;
+	border-radius: 5px;
+}
+
+.chartist-tooltip:after {
+	content:"";
+	position:absolute;
+	top:100%;
+	left:50%;
+	width:0;
+	height:0;
+	margin-left:-15px;
+	border:15px solid transparent;
+	border-top-color:$black;
+}
+
+.chartist-container {
+	position:relative;
+}
+
+.subheader-wrapper { 
+	text-transform: none; 
 }
