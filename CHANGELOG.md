@@ -10,6 +10,11 @@ Use required commands
 Changelog
 ---
 
+Release 0.25: 9c220816f8055e37fb4ce469a69a66949fe8650e - 2015-05-18
+  - Stories design changes
+  - Assessment fixes
+  - Cleanups to story import scripts
+
 Release 0.24: ff2ee5d66c9729439512108ebaeb16385ebd1f39 - 2015-05-11
   - Minor - hide facilities, dont consider inactive schools in stories page
 
