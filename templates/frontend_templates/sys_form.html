@@ -1,0 +1,34 @@
+ {% verbatim %}
+
+ <script type="text/html" id="tpl-sysSchool">
+    {% for q in questions %}
+    <fieldset id="{{q.id}}">
+      <tr>
+        <td>
+          <div>{{ q.question }}</div>
+        </td>
+        <td>
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="{{q.id}}_y" name="{{q.id}}">
+            <label for="{{q.id}}_y" class="input-radio-label">Yes
+          </div>             
+        </td>
+        <td>
+          <div class="form-field-wrap">
+              <input type="radio" class="input-radio" id="{{q.id}}_n" name="{{q.id}}">
+              <label for="{{q.id}}_n" class="input-radio-label">No
+          </div> 
+        </td>
+        <td>
+          <div class="form-field-wrap">
+              <input type="radio" class="input-radio" id="{{q.id}}_uk" name="{{q.id}}" checked="">
+              <label for="{{q.id}}_uk" class="input-radio-label">Don''t know
+          </div> 
+        </td>
+    </tr>
+    </fieldset>
+    {% endfor %}
+       
+  </script>
+{% endverbatim %}
+

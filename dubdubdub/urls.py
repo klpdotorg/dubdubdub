@@ -16,6 +16,10 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
 
 urlpatterns = patterns(
     '',
+    # share your story form
+    url(r'^sys/$', StaticPageView.as_view(
+        template_name='sys_form.html',
+        ), name='sys'),
 
     # home page
     url(r'^$', StaticPageView.as_view(
