@@ -245,6 +245,16 @@
                         [1, 'rgba(255,255,255,0.3)']
                     ]
                 }
+            },
+            'aggregate': {
+                'color': '#ef5754',
+                'fillColor': {
+                    'linearGradient': chart_gradient_param,
+                    'stops': [
+                        [0, '#f9c2c1'],
+                        [1, 'rgba(255,255,255,0.3)']
+                    ]
+                }
             }
         };
 
@@ -255,8 +265,11 @@
                 'color': colorMap[parameter].color,
                 'fillColor': colorMap[parameter].fillColor
             };
+            //console.log("series data", series);
+            //console.log("data", data);
             _.each(monthMap, function(value, key) {
                 var arrgh = data[parameter];
+                //console.log("arrgh", arrgh);
                 var matchedObj = _.find(arrgh, function(obj) {
                     if (obj.month == key && parseInt(obj.class_name) === parseInt(klass)) {
                         return true;
@@ -292,6 +305,15 @@
             });
         }
 
+        if (options.parameter === 'aggregate') {
+            _.each(data.lib_borrow_agg, function(obj) {
+                obj.month = obj.trans_month;
+                obj.year = obj.trans_year;
+            });
+            chartSeries.push(getSeries('aggregate', options.klass, {'aggregate': data.lib_borrow_agg}, data.classtotal));
+        }
+
+        //console.log("series", chartSeries);
         return this.highcharts({
             chart: {
                 type: 'area',
