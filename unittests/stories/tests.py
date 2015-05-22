@@ -124,13 +124,6 @@ class StoriesApiTestCase(TestCase):
         self.assertTrue('total_stories' in results, "has no property called total_stories")
         self.assertTrue('total_images' in results, "has no property called total_images") 
 
-    def testStoriesMetaDataFail1(self):
-
-        query_url=self.stories_base_url + "meta/?source=web"
-        print "Testing stories meta data..." + query_url
-        response=self.client.get(query_url)
-        print response.status_code
-        self.assertEqual(response.status_code, 500, "Need school type")
         
     def testStoriesMetaDataPrimary(self):
         schoolType="Primary School"
@@ -140,27 +133,29 @@ class StoriesApiTestCase(TestCase):
         print response.status_code
         self.assertEqual(response.status_code, 200, "Need school type")
         results=json.loads(response.content)
-        self.assertTrue('school_type' in results, "Has no property called school_type")
-        self.assertTrue('total_responses' in results, "Has no property called total_responses")
-        self.assertTrue('responses_yesterday' in results, "has no property called responses_yesterday")
-        self.assertTrue('per_month_responses' in results, "has no property called per_month_responses")
-        self.assertTrue('questions' in results, "has no property questions")       
-        self.assertEqual(results['school_type'],schoolType)
+        total_schools = results['total']['schools']
+        total_schools_with_stories = results['total']['schools_with_stories']
+        self.assertTrue('total' in results, "Has no property called total")
+        self.assertTrue('respondents' in results, "Has no property called respondents")
+        self.assertTrue(total_schools > total_schools_with_stories, "Does not have more schools than schools with stories")   
+        #self.assertEqual(results['school_type'],schoolType)     
+        #self.assertEqual(results['school_type'],schoolType)
 
     def testStoriesMetaDataPreschool(self):
-        schoolType="Preschool"
+        schoolType="PreSchool"
         query_url=self.stories_base_url + "meta/?source=web&school_type="+schoolType
         print "Testing stories meta data..." + query_url
         response=self.client.get(query_url)
         print response.status_code
         self.assertEqual(response.status_code, 200, "Need school type")
         results=json.loads(response.content)
-        self.assertTrue('school_type' in results, "Has no property called school_type")
-        self.assertTrue('total_responses' in results, "Has no property called total_responses")
-        self.assertTrue('responses_yesterday' in results, "has no property called responses_yesterday")
-        self.assertTrue('per_month_responses' in results, "has no property called per_month_responses")
-        self.assertTrue('questions' in results, "has no property questions")       
-        self.assertEqual(results['school_type'],schoolType)
+        #self.assertTrue('school_type' in results, "Has no property called school_type")
+        total_schools = results['total']['schools']
+        total_schools_with_stories = results['total']['schools_with_stories']
+        self.assertTrue('total' in results, "Has no property called total")
+        self.assertTrue('respondents' in results, "Has no property called respondents")
+        self.assertTrue(total_schools > total_schools_with_stories, "Does not have more schools than schools with stories")   
+        #self.assertEqual(results['school_type'],schoolType)
     
     def tearDown(self):
         pass

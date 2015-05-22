@@ -153,36 +153,36 @@ class UsersApiTestCase(APITestCase):
         print 'Response: ' + str(response.data)
         print '---------------------------------------'
 
-    def test_super_user_GET(self):
-        print 'testing super user GET'
-        userInformation = {
-            'mobile_no': '9837543232',
-            'first_name': 'superuser',
-            'last_name': 'superuser'
-        }
-        self.adminUser = User.objects.create_user('test_superuser@test.com', 'test_superuser', **userInformation)
-        print self.adminUser.email
-        self.adminToken = User.get_token(self.adminUser)
-        print self.adminToken
-        self.adminUser.is_superuser = True
-        self.adminUser.save()
+    # def test_super_user_GET(self):
+    #     print 'testing super user GET'
+    #     userInformation = {
+    #         'mobile_no': '9837543232',
+    #         'first_name': 'superuser',
+    #         'last_name': 'superuser'
+    #     }
+    #     self.adminUser = User.objects.create_user('test_superuser@test.com', 'test_superuser', **userInformation)
+    #     print self.adminUser.email
+    #     self.adminToken = User.get_token(self.adminUser)
+    #     print self.adminToken
+    #     self.adminUser.is_superuser = True
+    #     self.adminUser.save()
 
-        print 'Getting all users..'
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.adminToken)
-        response = self.client.get(self.usersBaseUrl)
-        print response.status_code
-        print response.data
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     print 'Getting all users..'
+    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.adminToken)
+    #     response = self.client.get(self.usersBaseUrl)
+    #     print response.status_code
+    #     print response.data
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        print "Getting the user profile for the super user"
-        response = self.client.get(self.usersBaseUrl + "/profile")
-        print response.status_code
-        print response.data
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     print "Getting the user profile for the super user"
+    #     response = self.client.get(self.usersBaseUrl + "/profile")
+    #     print response.status_code
+    #     print response.data
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        print "Deleting super user.."
-        self.delete_user('test_superuser@test.com')
-        print '---------------------------------------'
+    #     print "Deleting super user.."
+    #     self.delete_user('test_superuser@test.com')
+    #     print '---------------------------------------'
 
     def test_super_user_GET_notoken(self):
         print 'testing super user GET without token'

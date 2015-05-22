@@ -15,6 +15,12 @@ DATABASES = {
 
 TESTS_STORIES_INPUT = {
     'SCHOOLS_TEST_ID1': '29600'
+
+}
+
+TESTS_ACTIVITIES_INPUT = {
+    'ACTIVITY_ID': '4',
+    'ORG_ID': '1'
 }
 
 try:
