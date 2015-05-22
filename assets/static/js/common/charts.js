@@ -258,7 +258,7 @@
             }
         };
 
-        function getSeries(parameter, klass, data, klassTotal) {
+        function getSeries(parameter, klass, data, klassTotal, year) {
             var series = {
                 'name': parameter,
                 'data': [],
@@ -271,7 +271,7 @@
                 var arrgh = data[parameter];
                 //console.log("arrgh", arrgh);
                 var matchedObj = _.find(arrgh, function(obj) {
-                    if (obj.month == key && parseInt(obj.class_name) === parseInt(klass)) {
+                    if (obj.month == key && parseInt(obj.class_name) === parseInt(klass) && year === obj.year) {
                         return true;
                     }
                 });
@@ -295,13 +295,13 @@
 
         if (options.parameter === 'level') {
             _.each(data.levels, function(level) {
-                chartSeries.push(getSeries(level, options.klass, data.lib_level_agg, data.classtotal));
+                chartSeries.push(getSeries(level, options.klass, data.lib_level_agg, data.classtotal, options.year));
             });
         }
 
         if (options.parameter === 'language') {
             _.each(data.languages, function(language) {
-                chartSeries.push(getSeries(language, options.klass, data.lib_lang_agg, data.classtotal));
+                chartSeries.push(getSeries(language, options.klass, data.lib_lang_agg, data.classtotal, options.year));
             });
         }
 
@@ -310,7 +310,7 @@
                 obj.month = obj.trans_month;
                 obj.year = obj.trans_year;
             });
-            chartSeries.push(getSeries('aggregate', options.klass, {'aggregate': data.lib_borrow_agg}, data.classtotal));
+            chartSeries.push(getSeries('aggregate', options.klass, {'aggregate': data.lib_borrow_agg}, data.classtotal, options.year));
         }
 
         //console.log("series", chartSeries);
