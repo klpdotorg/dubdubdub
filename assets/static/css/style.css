@@ -4393,6 +4393,9 @@ code {
 .stepy-step textarea {
   height: 100px; }
 
+.stepy-step input[type="radio"] {
+  width: 10%; }
+
 .button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"] {

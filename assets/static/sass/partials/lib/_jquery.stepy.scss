@@ -53,6 +53,9 @@
 
   .stepy-step textarea { height: 100px }
 
+  .stepy-step input[type="radio"] { 
+    width: 10%;
+  }
 
 %button-base {
   font-weight: bold; 
