@@ -21,9 +21,10 @@
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  <!--script type="text/javascript" src="{% static 'js/lib/jquery.validate.min.js' %}"></script-->
+  <script type="text/javascript" src="{% static 'js/lib/jquery.stepy.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/sys/init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/lib/dropzone.js' %}"></script>
-
+  
   {% endcompress %}
 {% endblock %}
 
@@ -59,59 +60,82 @@
           </div>
         </div>
         <div class="quarter-item">
-          <div class="module-img">
+          <!--div class="module-img">
             <img src="/static/images/auto.png" class="auto-img" alt="Icon: Auto">
-          </div>
+          </div-->
+          <p class="center-text grey-silver">We have 126400 Stories and 10070 Images across all schools and preschools, so far. Thanks to visitors like you!</p>
+
         </div>                  
       </div>      
 
       <div class="form-parent container">
+      
        <h2 class="heading-border brand-green">Share a story on your Visit</h2>
-        <hr/> 
-        <div id="userinfo">
-          <form id="sys_school" action="/sysuserinfo" name="sys_school" class="form-base form-share-story">
-            <div class="half-item">
+       <hr/>   
+        <form id="sys_school" action="/sysuserinfo" name="sys_school">
+          <fieldset title="1">
+            <legend>Personal Details</legend>
+            <input type="hidden" name="id" />
+            <div class="heading-tiny-uppercase">Please provide accurate information</div>
+            <div class="form-field-wrap required">
+              <input type="text" class="input-text" placeholder="Type Full Name">
+            </div>
 
-              <div class="base-spacing-mid"></div>
-              <div class="heading-tiny-uppercase">Please provide accurate information</div>
-              
-              <div class="form-field-wrap required">
-                <input type="text" class="input-text" placeholder="Type Full Name">
+            <div class="form-field-wrap required">
+              <input type="email" class="input-text" placeholder="Type Email">
+            </div>
+
+            <div class="form-field-wrap required">
+              <input type="tel" class="input-text" placeholder="Type Mobile Phone">
+            </div>
+
+            <div class="form-field-wrap required">
+              <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
+              <input type="date" class="js-input-date input-text" placeholder=''>
+            </div>
+
+          </fieldset>
+          <fieldset title="2">
+            <legend>Comments and Images</legend>
+
+            <div class="form-field-wrap required">
+              <div class="heading-tiny-uppercase">Additional Comments <span class="fa fa-comments"></span></div>
+              <textarea class="input-text"></textarea>
+            </div>
+            <div class="center-text">
+              <div id="images" class="button-orange fileupload">
+                <div>Upload upto 5 Images</div>
+                <input type="file" multiple="multiple" class="upload">
               </div>
+            </div>
 
-              <div class="form-field-wrap required">
-                <input type="email" class="input-text" placeholder="Type Email">
-              </div>
+          </fieldset>
 
-              <div class="form-field-wrap required">
-                <input type="tel" class="input-text" placeholder="Type Mobile Phone">
-              </div>
+          <fieldset title="3">
+            <legend>Academics</legend>
+            <div id="sysqset1_school"></div>
+          </fieldset>
 
-            </div><!-- end of half-item -->
-            <div class="half-item">
-              <div class="base-spacing-mid"></div>
-              <div class="form-field-wrap required">
-                <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
-                <input type="date" class="js-input-date input-text" placeholder=''>
-              </div>
+          <fieldset title="4">
+            <legend>Basic Infrastructure</legend>
+            <div id="sysqset2_school"></div>
+          </fieldset>
 
-              <div class="form-field-wrap required">
-                <div class="heading-tiny-uppercase">Additional Comments <span class="fa fa-comments"></span></div>
-                <textarea class="input-text"></textarea>
-              </div>
-            </div> <!-- end of half-item -->
-          </form>
-        </div><!-- end of userinfo-->    
-      </div><!-- end of Parent-->
+          <fieldset title="5">
+            <legend>Nutrition and Hygiene</legend>
+            <div id="sysqset3_school"></div>
+          </fieldset>
 
-      <div id="fileupload" class="container">
-        <div class="heading-tiny-uppercase">Upload images from your visit</div>
-        <form action="/upload-target" class="dropzone dz-clickable"><div class="dz-default dz-message"><span>Drop files here to upload</span></div></form>
-        <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
-        <div class="base-spacing-mid"></div>
+          <fieldset title="6">
+            <legend>Learning Environment</legend>
+            <div id="sysqset4_school"></div>
+          </fieldset>
+
+          <input type="submit" value="Finish!" />
+        </form>
       </div>
 
-      <div id="sysq_school"></div>
+      
     </section>
 </section>
 

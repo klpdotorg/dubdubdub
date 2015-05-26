@@ -1,18 +1,13 @@
 
-.module-img{
-  background-color: $brand-green;
-  border-radius:50%;
-  max-width:120px;
-  max-height:120px;
-}
 
-.auto-img{
-  width:100px;
-}
 
-.required::after { 
-  content:" *"; 
-  color:$brand-red;
+.required:after { 
+  content:"\f069"; 
+  color:$brand-orange;
+  font-family: $font-icon;
+  vertical-align: super;
+  font-size: 60%;
+  margin-left:5px;
 }
 
 @include media-med {
@@ -33,14 +28,8 @@
         &:nth-of-type(4) {
           width: 15%;
         }
+        
       }
-    }
-  }
-
-
-  .form-share-story {
-    .input-text {
-      min-width: 350px;
     }
   }
   .form-parent{
@@ -60,4 +49,33 @@
   }
 }
 
+  
+@include media-med-maxwidth {
+  .table-base-sys {
+    tr {
+      th,td {
+        padding: 0 0;
+      }
+    }
+  }
+  .form-field-wrap {
+    padding: 5px 0;
+  }
+}
 
+.fileupload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileupload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
