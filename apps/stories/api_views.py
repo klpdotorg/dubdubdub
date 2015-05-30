@@ -330,24 +330,35 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         ).distinct('id').count()
         response_json['total']['stories'] = stories_qset.count()
 
+        if start_date:
+            school_qset = school_qset.filter(
+                story__date_of_visit__gte=start_date)
+            stories_qset = stories_qset.filter(
+                date_of_visit__gte=start_date)
+
+        if end_date:
+            school_qset = school_qset.filter(
+                story__date_of_visit__lte=end_date)
+            stories_qset = stories_qset.filter(
+                date_of_visit__lte=end_date)
+
         if source:
-             response_json[source] = self.get_count(
-                 source, admin1_id, admin2_id, admin3_id, school_id,
-                 start_date, end_date, school_type,
-             )
+            school_qset, stories_qset = self.source_filter(
+                source, school_qset, stories_qset)
+
+            response_json[source] = self.get_json(source, school_qset, stories_qset)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
-                response_json[source] = self.get_count(
-                    source, admin1_id, admin2_id, admin3_id, school_id,
-                    start_date, end_date, school_type,
-                )
+                school, stories = self.source_filter(
+                    source, school_qset, stories_qset)
+                response_json[source] = self.get_json(source, school, stories)
 
-        response_json['respondents'] = self.get_respondents(school_type, stories_qset)
+        response_json['respondents'] = self.get_respondents(stories_qset)
 
         return Response(response_json)
 
-    def get_respondents(self, school_type, stories_qset):
+    def get_respondents(self, stories_qset):
         usertypes = {
             'PR' : 'PARENTS',
             'TR' : 'TEACHERS',
@@ -368,61 +379,15 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         )
         return {usertypes[user.name]: user.story_count for user in user_counts}
 
-    def get_count(self, *args):
-        source = args[0]
-        admin1_id = args[1]
-        admin2_id = args[2]
-        admin3_id = args[3]
-        school_id = args[4]
-        start_date = args[5]
-        end_date = args[6]
-        school_type = args[7]
+    def source_filter(self, source, school_qset, stories_qset):
+        school_qset = school_qset.filter(
+            story__group__source__name=source)
+        stories_qset = stories_qset.filter(
+            group__source__name=source)
 
-        school_qset = School.objects.filter(
-            admin3__type__name=school_type, status=2)
-        stories_qset = Story.objects.filter(
-            school__admin3__type__name=school_type)
+        return (school_qset, stories_qset)
 
-        if source:
-            school_qset = school_qset.filter(
-                story__group__source__name=source)
-            stories_qset = stories_qset.filter(
-                group__source__name=source)
-
-        if admin1_id:
-            school_qset = school_qset.filter(
-                schooldetails__admin1__id=admin1_id)
-            stories_qset = stories_qset.filter(
-                school__schooldetails__admin1__id=admin1_id)
-
-        if admin2_id:
-            school_qset = school_qset.filter(
-                schooldetails__admin2__id=admin2_id)
-            stories_qset = stories_qset.filter(
-                school__schooldetails__admin2__id=admin2_id)
-
-        if admin3_id:
-            school_qset = school_qset.filter(
-                schooldetails__admin3__id=admin3_id)
-            stories_qset = stories_qset.filter(
-                school__schooldetails__admin3__id=admin3_id)
-
-        if school_id:
-            school_qset = school_qset.filter(id=school_id)
-            stories_qset = stories_qset.filter(school__id=school_id)
-
-        if start_date:
-            school_qset = school_qset.filter(
-                story__date_of_visit__gte=start_date)
-            stories_qset = stories_qset.filter(
-                date_of_visit__gte=start_date)
-
-        if end_date:
-            school_qset = school_qset.filter(
-                story__date_of_visit__lte=end_date)
-            stories_qset = stories_qset.filter(
-                date_of_visit__lte=end_date)
-
+    def get_json(self, source, school_qset, stories_qset):
         json = {}
         json['schools'] = school_qset.filter(
             story__isnull=False
