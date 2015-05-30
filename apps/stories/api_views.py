@@ -44,6 +44,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
@@ -54,6 +56,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
         school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
         start_date = self.request.QUERY_PARAMS.get('from', None)
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
@@ -94,6 +98,14 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if school_id:
             stories_qset = stories_qset.filter(
                 school=school_id)
+
+        if mp_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
+
+        if mla_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
 
         if start_date:
             stories_qset = stories_qset.filter(
@@ -138,6 +150,8 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
@@ -149,6 +163,8 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
         school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
         start_date = self.request.QUERY_PARAMS.get('from', None)
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
@@ -194,6 +210,14 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         if school_id:
             stories = stories.filter(school__id=school_id)
+
+        if mp_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
+
+        if mla_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
 
         if start_date:
             stories = stories.filter(date_of_visit__gte=start_date)
@@ -262,6 +286,8 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
     school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
@@ -273,6 +299,8 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
         school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
         start_date = self.request.QUERY_PARAMS.get('from', None)
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
@@ -320,6 +348,18 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             school_qset = school_qset.filter(id=school_id)
             stories_qset = stories_qset.filter(
                 school=school_id)
+
+        if mp_id:
+            school_qset = school_qset.filter(
+                electedrep__mp_const__id=mp_id)
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
+
+        if mla_id:
+            school_qset = school_qset.filter(
+                electedrep__mla_const__id=mla_id)
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
 
         response_json = {}
 
