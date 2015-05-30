@@ -47,6 +47,8 @@ class Questiongroup(models.Model):
     version = models.IntegerField()
     source = models.ForeignKey('Source')
     questions = models.ManyToManyField('Question', through='QuestiongroupQuestions')
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
