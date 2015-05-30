@@ -26,7 +26,7 @@ class Command(BaseCommand):
     )
 
     try:
-        f = open('ivrs_error.log')
+        f = open('/var/log/ivrs/error.log')
         ivrs_errors = json.loads(f.read())
         f.close()
     except:
