@@ -26,6 +26,11 @@
 	.top-reset{
 		@include col-25-flt;
 	}
+
+	.align-fromdate{
+		text-align: right;
+	}
+
 }
 
 /* Defining a text align -left */
@@ -68,8 +73,30 @@
 	}
 	.ct-chart {
 	  margin-bottom: 30px;
-	}	
+	}
+
+	.dateform{
+		margin-top: 20px;
+		text-align: left;
+	}
+
+	.js-input-date{
+		margin-top:10px;
+	}
+
+	.align-fromdate{
+		text-align:left;
+	}
 }
+
+.button {
+	margin-top: 5px;
+}	
+
+::-webkit-input-placeholder::before { font-family: $font-icon; content:'\f073    ';}
+::-moz-placeholder::before  { font-family: $font-icon; content:'\f073    ';} /* firefox 19+ */
+:-ms-input-placeholder::before  { font-family: $font-icon; content:'\f073    '; } /* ie */
+input:-moz-placeholder::before  { font-family: $font-icon; content:'\f073    ';}
 
 .chartist-tooltip{
 	position:absolute;
@@ -86,7 +113,7 @@
 	border-radius: 5px;
 }
 
-.chartist-tooltip:after {
+.chartist-tooltip:before {
 	content:"";
 	position:absolute;
 	top:100%;

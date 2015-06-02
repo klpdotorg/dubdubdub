@@ -4147,7 +4147,10 @@ code {
     width: 25%;
     float: left;
     padding-left: 20px;
-    padding-right: 20px; } }
+    padding-right: 20px; }
+
+  .align-fromdate {
+    text-align: right; } }
 /* Defining a text align -left */
 .align-left {
   text-align: left; }
@@ -4178,7 +4181,38 @@ code {
     /*text-anchor: middle;*/ }
 
   .ct-chart {
-    margin-bottom: 30px; } }
+    margin-bottom: 30px; }
+
+  .dateform {
+    margin-top: 20px;
+    text-align: left; }
+
+  .js-input-date {
+    margin-top: 10px; }
+
+  .align-fromdate {
+    text-align: left; } }
+.button {
+  margin-top: 5px; }
+
+::-webkit-input-placeholder::before {
+  font-family: "FontAwesome";
+  content: '\f073    '; }
+
+::-moz-placeholder::before {
+  font-family: "FontAwesome";
+  content: '\f073    '; }
+
+/* firefox 19+ */
+:-ms-input-placeholder::before {
+  font-family: "FontAwesome";
+  content: '\f073    '; }
+
+/* ie */
+input:-moz-placeholder::before {
+  font-family: "FontAwesome";
+  content: '\f073    '; }
+
 .chartist-tooltip {
   position: absolute;
   display: inline-block;
@@ -4193,7 +4227,7 @@ code {
   z-index: 1;
   border-radius: 5px; }
 
-.chartist-tooltip:after {
+.chartist-tooltip:before {
   content: "";
   position: absolute;
   top: 100%;

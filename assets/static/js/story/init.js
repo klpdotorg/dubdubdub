@@ -9,7 +9,7 @@
         klp.accordion.init();
         klp.router = new KLPRouter();
         klp.router.init();
-        initSelect2();
+       initSelect2();
         klp.router.events.on('hashchange', function(event, params) {
             hashChanged(params);
         });
@@ -26,6 +26,16 @@
             klp.router.setHash('', currentQueryParams);
         });
 
+        $('#dateSummary').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = klp.router.getHash().queryParams;
+            _.each(_.keys(currentQueryParams), function(key) {
+                currentQueryParams[key] = null;
+            });
+            currentQueryParams['from'] = $('#fromdate').val();
+            currentQueryParams['to'] = $('#todate').val();
+            hashChanged({'queryParams':currentQueryParams});
+        });
     }
 
     function hashChanged(params) {
