@@ -8,21 +8,21 @@
       display: inline-block;
       vertical-align: middle;
     }
-    .stepy-header li div { @extend %icon-button-round; @extend %center-text; max-width:40px; max-height:50px; display:block; background-color:$brand-orange; color: $white; font: bold 2.8em ; margin: 0 auto; }
+    .stepy-header li div { @extend %icon-button-round; @extend %center-text; max-width:40px; max-height:50px; display:block; background-color:$brand-green; color: $white; font: bold 2.8em ; margin: 0 auto; }
     
 
     .stepy-header li.stepy-active div{
         @extend %icon-button-round; 
         max-width:40px; 
         max-height:50px; 
-        background-color:$brand-green;
+        background-color:$brand-orange;
         display:block; 
         color: $white; 
         cursor: auto; 
         margin: 0 auto;
     }
     .stepy-header li span { color: $grey-silver; font: 1.4em  }
-    .stepy-header li.stepy-active span { color: $brand-green }
+    .stepy-header li.stepy-active span { color: $brand-orange }
 
 @include media-med-maxwidth{
     .stepy-header li div {display:none;}
@@ -39,7 +39,7 @@
     font-style: normal;
     font-variant: normal;
     font-weight: normal;
-    color: $brand-green;
+    color: $brand-orange;
     padding: 0 5px;
   }
 

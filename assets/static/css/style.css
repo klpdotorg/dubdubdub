@@ -4317,7 +4317,7 @@ code {
   max-width: 40px;
   max-height: 50px;
   display: block;
-  background-color: #ec6608;
+  background-color: #26b262;
   color: #fff;
   font: bold 2.8em;
   margin: 0 auto; }
@@ -4325,7 +4325,7 @@ code {
 .stepy-header li.stepy-active div {
   max-width: 40px;
   max-height: 50px;
-  background-color: #26b262;
+  background-color: #ec6608;
   display: block;
   color: #fff;
   cursor: auto;
@@ -4336,7 +4336,7 @@ code {
   font: 1.4em; }
 
 .stepy-header li.stepy-active span {
-  color: #26b262; }
+  color: #ec6608; }
 
 @media only screen and (max-width: 749px) {
   .stepy-header li div {
@@ -4369,7 +4369,7 @@ code {
   font-style: normal;
   font-variant: normal;
   font-weight: normal;
-  color: #26b262;
+  color: #ec6608;
   padding: 0 5px; }
 
 .stepy-step label {
