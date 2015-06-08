@@ -112,3 +112,5 @@ class Command(BaseCommand):
 
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
+
+        print "Anganwadi Bangalore questions populated."
