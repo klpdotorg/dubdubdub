@@ -70,7 +70,7 @@ class Command(BaseCommand):
         source = Source.objects.get_or_create(name="community")[0]
         question_group = Questiongroup.objects.get_or_create(
             version=3,
-            source=s,
+            source=source,
             start_date=start_date,
             end_date=end_date,
         )[0]
