@@ -573,6 +573,6 @@ class Command(BaseCommand):
 
         for count, question in enumerate(questions): 
             QuestiongroupQuestions.objects.get_or_create(
-                questiongroup=q, question=question, sequence=count)
+                questiongroup=q, question=question, sequence=count+1)
 
         print "Anganwadi Mallur questions populated."
