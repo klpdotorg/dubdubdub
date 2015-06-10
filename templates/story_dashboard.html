@@ -30,7 +30,9 @@
 {% endblock %}
 
 {% block subheader %}
-  <div class="map-subheader-wrapper subheader-wrapper">
+<div id="searchmodal" class="modalDialog">
+ <div class="map-subheader-wrapper subheader-wrapper">
+ 	<a href="#close" title="Close" class="close">X</a>
     <div class="subheader-content">
     	<div class="chart-parent">
 		      <div class="top-search search-input-map">
@@ -43,26 +45,58 @@
     </div>
      
   </div>
+ </div>
 {% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
 
 {% block content %}
-<div class="grey-mist-bg">
-	<div class="center-text">
-		<div class="base-spacing-sm"></div>					
-		<form class="form-base">
-			<div class="form-field-wrap">
-			  	<div class="chart-parent dateform">
-					<div class="chart-half-item align-fromdate">
-						<input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"> 
-					</div>
-					<div class="chart-half-item align-left">
-						<input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"> 
-					</div>
-				</div>    
-				<div class="button-orange" id="dateSummary">Apply Date Filter</div>       
-			</div>
-		</form>
+<div id="datemodal" class="modalDialog">
+	<div class="grey-mist-bg">
+		<a href="#close" title="Close" class="close">X</a>
+		<div class="center-text">
+			<div class="base-spacing-sm"></div>					
+			<form class="form-base">
+				<div class="form-field-wrap">
+				  	<div class="chart-parent dateform">
+						<div class="chart-half-item align-fromdate">
+							<!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
+							<div class="form-field-wrap">
+							    <label class="label-inline bold">Start Date:</label>
+							    <select>
+							      <option>Jun</option>
+							      <option>Option 2</option>
+							    </select>
+							    <select>
+							      <option>2014</option>
+							      <option>Option 2</option>
+							    </select>
+							 </div>
+						</div>
+						<div class="chart-half-item align-left">
+							<!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
+							<div class="form-field-wrap">
+							    <label class="label-inline bold">End Date:</label>
+							    <select>
+							      <option>Jun</option>
+							      <option>Option 2</option>
+							    </select>
+							    <select>
+							      <option>2015</option>
+							      <option>Option 2</option>
+							    </select>
+							 </div>
+						</div>
+					</div>    
+					<div class="button-orange" id="dateSummary">Apply Date Filter</div>       
+				</div>
+			</form>
+		</div>
 	</div>
+</div>
+<div class="side-button-bar">
+	<div class="square-button brand-blue-bg tooltip" aria-label="Search"><a href="#searchmodal"><span class="fa fa-search"></span></a></div>
+	<div class="base-spacing-sm"></div>
+	<div class="square-button brand-orange-bg tooltip" aria-label="Filter by Date"><a href="#datemodal"><span class="fa fa-calendar"></span></a></div>
+	<div class="square-button green-leaf-bg tooltip" aria-label="Compare"><a href="#datemodal"><span class="fa fa-columns"></span></a></div>
 </div>
 <section class="clearfix">
 	<div id="primarySchoolContainer">
