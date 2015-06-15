@@ -75,6 +75,7 @@ class MeetingReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = MeetingReport
 
+
 class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
     admin3 = BoundarySerializer(source='schooldetails.admin3')
@@ -283,8 +284,8 @@ class SchoolDetailsSerializer(KLPSerializer):
 
 
 class AssessmentListSerializer(KLPSerializer):
-    assid= serializers.IntegerField(source='assessment.id')
-    studentgroup =  serializers.CharField(source='studentgroup')
+    assid = serializers.IntegerField(source='assessment.id')
+    studentgroup = serializers.CharField(source='studentgroup')
     assessmentname = serializers.CharField(source='assessment.name')
     academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
 

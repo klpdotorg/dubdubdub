@@ -1,35 +1,42 @@
 from django.conf.urls import patterns, url
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 
 from common.views import URLConfigView
 
-from schools.api_views import (SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
+from schools.api_views import (
+    SchoolsList, SchoolsInfo, SchoolInfo, Admin1s,
     SchoolsDiseInfo, SchoolDemographics, SchoolProgrammes, SchoolFinance,
     Admin2s, Admin3s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin3sInsideAdmin2, Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
-    SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails, ParliamentDetails,
-    PincodeDetails, SchoolNutrition, MergeEndpoints,AssessmentsList,AssessmentInfo,ProgrammesList,ProgrammeInfo)
+    SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
+    ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
+    PincodeDetails, SchoolNutrition, MergeEndpoints,
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
+)
 
-from users.api_views import (TestAuthenticatedView, UsersView,
+from users.api_views import (
+    TestAuthenticatedView, UsersView,
     UserProfileView, OtherUserProfileView, OrganizationsView,
     OrganizationView, OrganizationUsersView, OrganizationUserView,
     VolunteerActivitiesView, VolunteerActivityView,
     VolunteerActivityTypesView,
     VolunteerActivityTypeView, VolunteerActivityUsersView,
     VolunteerActivityUserView, DonationItemCategoriesView,
-    DonationRequirementListView, DonationRequirementDetailsView, PasswordChangeView,
-    DonationItemListView, DonationItemDetailsView, DonationUsersView, DonationUserView)
+    DonationRequirementListView, DonationRequirementDetailsView,
+    PasswordChangeView, DonationItemListView, DonationItemDetailsView,
+    DonationUsersView, DonationUserView
+)
 
-from stories.api_views import (StoryQuestionsView, StoriesView, StoryInfoView, 
-    ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView)
+from stories.api_views import (
+    StoryQuestionsView, StoriesView, StoryInfoView,
+    ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView
+)
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
 
-    # Caches the results of the url for 60 seconds
-    # url(r'^schools/list', cache_page(60)(SchoolsList.as_view()),
-    #    name='api_schools_list'),
     url(r'^$', 'schools.api_views.api_root', name='api_root'),
 
     url(r'^merge$', MergeEndpoints.as_view(), name='api_merge'),
@@ -57,11 +64,21 @@ urlpatterns = patterns('',
     url(r'^schools/school/(?P<pk>[0-9]+)/nutrition$',
         SchoolNutrition.as_view(), name='api_school_nutrition'),
 
-    url(r'^boundary/assembly/(?P<id>[0-9]+)$', AssemblyDetails.as_view(), name="api_assembly_details"),
-    url(r'^boundary/parliament/(?P<id>[0-9]+)$', ParliamentDetails.as_view(), name="api_parliament_details"),
-    url(r'^boundary/pincode/(?P<pincode>[0-9]+)$', PincodeDetails.as_view(), name="api_pincode_details"),
+    url(r'^boundary/assemblies$',
+        AssemblyList.as_view(), name="api_assembly_list"),
+    url(r'^boundary/assembly/(?P<id>[0-9]+)$',
+        AssemblyDetails.as_view(), name="api_assembly_details"),
+    url(r'^boundary/parliaments$',
+        ParliamentList.as_view(), name="api_parliament_list"),
+    url(r'^boundary/parliament/(?P<id>[0-9]+)$',
+        ParliamentDetails.as_view(), name="api_parliament_details"),
+    url(r'^boundary/parliament/(?P<id>[0-9]+)/assemblies$',
+        AssemblyInParliament.as_view(), name="api_parliament_assemblies"),
+    url(r'^boundary/pincode/(?P<pincode>[0-9]+)$',
+        PincodeDetails.as_view(), name="api_pincode_details"),
 
-    url(r'^boundary/admin/(?P<id>[0-9]+)$', AdminDetails.as_view(), name="api_admin_details"),
+    url(r'^boundary/admin/(?P<id>[0-9]+)$',
+        AdminDetails.as_view(), name="api_admin_details"),
     url(r'^boundary/admin1s$', Admin1s.as_view(), name="api_admin1s"),
     url(r'^boundary/admin1/(?P<id>[0-9]+)/admin2$',
         Admin2sInsideAdmin1.as_view(), name="api_admin1s_admin2"),
@@ -91,7 +108,8 @@ urlpatterns = patterns('',
     url('^users/logout$', 'users.api_views.logout', name='api_user_logout'),
     url('^users/test_authenticated', TestAuthenticatedView.as_view(),
         name='api_test_authenticated'),
-    url('^users/(?P<pk>[0-9]+)$', OtherUserProfileView.as_view(), name='api_other_user_profile'),
+    url('^users/(?P<pk>[0-9]+)$',
+        OtherUserProfileView.as_view(), name='api_other_user_profile'),
 
     url(r'^password-reset/request$', 'users.api_views.password_reset_request',
         name="api_password_reset_request"),
@@ -205,9 +223,13 @@ urlpatterns = patterns('',
     #     name='api_donationtype_view'),
 
 
-    #Assessment urls
-    url(r'^assessment/$',AssessmentsList.as_view(),name='api_assessment_list'),
-    url(r'^assessment/(?P<assessment_id>[0-9]+)/$',AssessmentInfo.as_view(),name='api_assessment_info'),
-    url(r'^programme/$',ProgrammesList.as_view(),name='api_programme_list'),
-    url(r'^programme/(?P<programme_id>[0-9]+)/$',ProgrammeInfo.as_view(),name='api_programme_info'),
+    # Assessment urls
+    url(r'^assessment/$',
+        AssessmentsList.as_view(), name='api_assessment_list'),
+    url(r'^assessment/(?P<assessment_id>[0-9]+)/$',
+        AssessmentInfo.as_view(), name='api_assessment_info'),
+    url(r'^programme/$',
+        ProgrammesList.as_view(), name='api_programme_list'),
+    url(r'^programme/(?P<programme_id>[0-9]+)/$',
+        ProgrammeInfo.as_view(), name='api_programme_info'),
 )
