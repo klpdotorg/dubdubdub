@@ -14,7 +14,7 @@ class Command(BaseCommand):
     ./manage.py populateanganwadibangalore"""
 
     def handle(self, *args, **options):
-        s = Source.objects.get_or_create(name="community")[0]
+        s = Source.objects.get_or_create(name="anganwadi")[0]
         start_date = datetime.strptime('2014-01-13', '%Y-%m-%d')
         end_date = datetime.strptime('2014-05-30', '%Y-%m-%d')
         question_group = Questiongroup.objects.get_or_create(

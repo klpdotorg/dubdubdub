@@ -39,14 +39,30 @@ class Command(BaseCommand):
             print "Please specify a formate with the --format argument [v1/mallur/bangalore]"
             return
 
+        source = Source.objects.get_or_create(name="anganwadi")[0]
+        user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
+
         if csv_format == 'v1':
             start_date = datetime.datetime.strptime('2013-06-04', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
+            question_group = Questiongroup.objects.get_or_create(
+                version=1,
+                source=source,
+                start_date=start_date,
+                end_date=end_date,
+            )[0]
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
             answer_columns = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+
         elif csv_format == 'mallur':
             start_date = datetime.datetime.strptime('2013-08-06', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-12-30', '%Y-%m-%d')
+            question_group = Questiongroup.objects.get_or_create(
+                version=2,
+                source=source,
+                start_date=start_date,
+                end_date=end_date,
+            )[0]
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                                  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
                                  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
@@ -58,6 +74,12 @@ class Command(BaseCommand):
         else:
             start_date = datetime.datetime.strptime('2014-01-13', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
+            question_group = Questiongroup.objects.get_or_create(
+                version=3,
+                source=source,
+                start_date=start_date,
+                end_date=end_date,
+            )[0]
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                                  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
                                  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
@@ -66,16 +88,6 @@ class Command(BaseCommand):
                              28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
                              49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
                              70, 71, 72, 73, 74, 75, 76, 77]
-
-        source = Source.objects.get_or_create(name="community")[0]
-        question_group = Questiongroup.objects.get_or_create(
-            version=3,
-            source=source,
-            start_date=start_date,
-            end_date=end_date,
-        )[0]
-
-        user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         f = open(file_name, 'r')
         csv_f = csv.reader(f)

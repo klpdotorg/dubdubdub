@@ -14,11 +14,11 @@ class Command(BaseCommand):
     ./manage.py populateanganwadimallur"""
 
     def handle(self, *args, **options):
-        s = Source.objects.get_or_create(name="community")[0]
+        s = Source.objects.get_or_create(name="anganwadi")[0]
         start_date = datetime.strptime('2013-08-06', '%Y-%m-%d')
         end_date = datetime.strptime('2014-12-30', '%Y-%m-%d')
         q = Questiongroup.objects.get_or_create(
-            version=3,
+            version=2,
             source=s,
             start_date=start_date,
             end_date=end_date,
