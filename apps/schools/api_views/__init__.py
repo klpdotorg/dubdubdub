@@ -6,6 +6,7 @@ from .school import (
 from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
 )
+from .aggregations import (BoundaryLibLangAggView, BoundaryLibLevelAggView)
 from .boundary import (
     Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails, AssemblyDetails,
@@ -239,6 +240,17 @@ def api_root(request, format=None):
                                          format=format, kwargs={'id': 8889}),
 
             'Admin3s': reverse('api_admin3s', request=request, format=format)
+        },
+
+        'Aggregation': {
+            'Boundary Library Language': reverse(
+                'api_aggregation_boundary_liblang',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
+            'Boundary Library Level': reverse(
+                'api_aggregation_boundary_liblevel',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
         },
 
         'Geo': {

@@ -12,7 +12,8 @@ from schools.api_views import (
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
     PincodeDetails, SchoolNutrition, MergeEndpoints,
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
+    BoundaryLibLevelAggView, BoundaryLibLangAggView
 )
 
 from users.api_views import (
@@ -222,6 +223,11 @@ urlpatterns = patterns(
     #     DonationTypeView.as_view(),
     #     name='api_donationtype_view'),
 
+    # Aggregation Views
+    url(r'^aggregation/boundary/(?P<id>[0-9]+)/library-level/$',
+        BoundaryLibLevelAggView.as_view(), name='api_aggregation_boundary_liblevel'),
+    url(r'^aggregation/boundary/(?P<id>[0-9]+)/library-language/$',
+        BoundaryLibLangAggView.as_view(), name='api_aggregation_boundary_liblang'),
 
     # Assessment urls
     url(r'^assessment/$',
