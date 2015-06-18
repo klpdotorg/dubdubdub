@@ -1,9 +1,9 @@
 from schools.models import Boundary, Assembly, Parliament, Postal
 from common.views import KLPListAPIView, KLPDetailAPIView
 from common.mixins import CacheMixin
-from schools.serializers import (BoundarySerializer,
-    BoundaryWithParentSerializer, AssemblySerializer, ParliamentSerializer,
-    PincodeSerializer)
+from schools.serializers import (
+    BoundarySerializer, BoundaryWithParentSerializer, AssemblySerializer,
+    ParliamentSerializer, PincodeSerializer)
 from django.db.models import Q
 
 
@@ -18,6 +18,52 @@ class AdminDetails(KLPDetailAPIView, CacheMixin):
 
     def get_queryset(self):
         return Boundary.objects.all()
+
+
+class AssemblyList(KLPListAPIView):
+    """Returns list of assemblies"""
+    serializer_class = AssemblySerializer
+    bbox_filter_field = 'coord'
+
+    def get_queryset(self):
+        qset = Assembly.objects.all()
+
+        query = self.request.GET.get('query', '')
+        if query:
+            qset = qset.filter(name__icontains=query)
+
+        return qset
+
+
+class ParliamentList(KLPListAPIView):
+    """Returns list of assemblies"""
+    serializer_class = ParliamentSerializer
+    bbox_filter_field = 'coord'
+
+    def get_queryset(self):
+        qset = Parliament.objects.all()
+
+        query = self.request.GET.get('query', '')
+        if query:
+            qset = qset.filter(name__icontains=query)
+
+        return qset
+
+
+class AssemblyInParliament(KLPListAPIView):
+    """Returns list of assemblies"""
+    serializer_class = AssemblySerializer
+    bbox_filter_field = 'coord'
+
+    def get_queryset(self):
+        parliament_id = self.kwargs.get('id')
+        try:
+            parliament = Parliament.objects.get(id=parliament_id)
+        except Exception, e:
+            raise e
+
+        assemblies = Assembly.objects.filter(coord__contained=parliament.coord)
+        return assemblies
 
 
 class AssemblyDetails(KLPDetailAPIView, CacheMixin):
