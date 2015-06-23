@@ -34,18 +34,13 @@
  <div class="map-subheader-wrapper subheader-wrapper">
  	<a href="#close" title="Close" class="close">X</a>
     <div class="subheader-content">
-    	<div class="chart-parent">
-		      <div class="top-search search-input-map">
-		        <input type="text" name="search" id="select2search" placeholder="Search by primary school, preschool or boundary" class="search-input input-text">
-		      </div>
-		      <div class="top-reset center-text">
-		      	 <div class="button" id="resetButton">RESET <i class="fa fa-refresh"></i></div>
-		      </div>
-	    </div>
+      <div class="top-search search-input-map">
+        <input type="text" name="search" id="select2search" placeholder="Search by primary school, preschool or boundary" class="search-input input-text"/>
+      </div>
     </div>
-     
   </div>
- </div>
+</div>
+
 {% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
 
 {% block content %}
@@ -60,7 +55,7 @@
 						<div class="chart-half-item align-fromdate">
 							<!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
 							<div class="form-field-wrap">
-							    <label class="label-inline bold">Start Date:</label>
+							    <label class="label-inline bold">Start Date</label><br/>
 							    <select>
 							      <option>Jun</option>
 							      <option>Option 2</option>
@@ -74,7 +69,7 @@
 						<div class="chart-half-item align-left">
 							<!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
 							<div class="form-field-wrap">
-							    <label class="label-inline bold">End Date:</label>
+							    <label class="label-inline bold">End Date</label><br/>
 							    <select>
 							      <option>Jun</option>
 							      <option>Option 2</option>
@@ -93,10 +88,13 @@
 	</div>
 </div>
 <div class="side-button-bar">
-	<div class="square-button brand-blue-bg tooltip" aria-label="Search"><a href="#searchmodal"><span class="fa fa-search"></span></a></div>
+	<a href="#searchmodal"><div class="button square sq-tooltip" aria-label="Search"><span class="white fa fa-search"></span></div></a>
 	<div class="base-spacing-sm"></div>
-	<div class="square-button brand-orange-bg tooltip" aria-label="Filter by Date"><a href="#datemodal"><span class="fa fa-calendar"></span></a></div>
-	<div class="square-button green-leaf-bg tooltip" aria-label="Compare"><a href="#datemodal"><span class="fa fa-columns"></span></a></div>
+	<a href="#resetButton"><div class="button-orange square sq-tooltip" aria-label="Reset" ><span class="white fa fa-refresh"></span></div></a>
+	<div class="base-spacing-sm"></div>
+	<a href="#datemodal"><div class="button-grey square sq-tooltip" aria-label="Date Filter"><span class="white fa fa-calendar"></span></div></a>
+	<div class="base-spacing-sm"></div>
+	<a href="#datemodal"><div class="button square green-leaf-bg sq-tooltip" aria-label="Compare"><span class="white fa fa-columns"></span></div></a>
 </div>
 <section class="clearfix">
 	<div id="primarySchoolContainer">
