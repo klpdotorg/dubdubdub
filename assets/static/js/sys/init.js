@@ -10,6 +10,38 @@
         klp.router.init();
         loadQuestions('schoolString',[]);
         $('form').stepy();
+        initImageUploader();
+        $('#sys_school').submit(function(e) {
+            if (e) {
+                e.preventDefault();
+            }
+            var $this = $(this);
+            var dataArray = $this.serializeArray();
+            var dataObj = {};
+            _(dataArray).each(function(a) {
+                dataObj[a.name] = a.value;
+            });
+            // var commentsChars = $('#comments_id').val().length;
+            // if (commentsChars > 2000) {
+            //     klp.utils.alertMessage("Comments field longer than allowed length. Please fix and try again.", "error");
+            //     return;
+            // }
+            dataObj['images'] = getImagesData();
+            console.log("data obj", dataObj);
+            //var postURL = "stories/" + SCHOOL_ID;
+            
+            //var $xhr = klp.api.do(postURL, dataObj, 'POST');
+            //klp.utils.startSubmit('sysForm');
+            // $xhr.done(function() {
+            //     klp.utils.alertMessage("Thank you for submitting your story!", "success");
+            //     //klp.router.setHash(null, {state: null});
+            //     //klp.utils.stopSubmit('sysForm');
+            // });
+            // $xhr.fail(function() {
+            //     //klp.utils.stopSubmit('sysForm');
+            //     klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
+            // });
+        });
     }
 
     
@@ -71,6 +103,57 @@
         $('#sysqset3_school').html(html);
         html = table_start + tplSysSchool({'questions':questions["learning"]}) + table_end;      
         $('#sysqset4_school').html(html);
+    }
+
+    function initImageUploader() {
+        var dropZone = $('#images_dropzone').get(0);
+        dropZone.addEventListener("dragenter", function(e) { e.stopPropagation(); e.preventDefault(); return false; }, false);
+        dropZone.addEventListener("dragover", function(e) { e.stopPropagation(); e.preventDefault(); return false; }, false);
+        dropZone.addEventListener("drop", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.dataTransfer.files;
+            for (var i=0; i<files.length; i++) {
+                var fil = files[i];
+                console.log(fil);
+                addImagePreview(fil);
+            }
+        });
+        $('#multiImageUpload').change(function(e) {
+            var t = this;
+            for (var i=0; i<t.files.length; i++) {
+                var f = t.files[i];
+                addImagePreview(f);
+            }
+        });
+    }
+
+    function addImagePreview(image) {
+        if (!image.type.match('image.*')) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = (function(imageFile) {
+            return function(e) {
+                var $img = $('<img />')
+                            .prop("height", "100")
+                            .addClass('js-image-preview')
+                            .attr("src", e.target.result)
+                            .appendTo('#imagePreviews');
+            };
+        })(image);  
+        reader.readAsDataURL(image);
+    }
+
+    function getImagesData() {
+        var images = [];
+        $('.js-image-preview').each(function() {
+            var src = $(this).attr('src');
+            if (src) {
+                images.push(src);
+            }
+        });
+        return images;
     }
 
 })();

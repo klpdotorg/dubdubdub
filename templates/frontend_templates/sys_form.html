@@ -9,20 +9,20 @@
         </td>
         <td>
           <div class="form-field-wrap">
-            <input type="radio" class="input-radio" id="{{q.id}}_y" name="{{q.id}}">
+            <input type="radio" class="input-radio" id="{{q.id}}_y" value="Yes" name="question_{{q.id}}">
             <label for="{{q.id}}_y" class="input-radio-label">Yes
           </div>             
         </td>
         <td>
           <div class="form-field-wrap">
-              <input type="radio" class="input-radio" id="{{q.id}}_n" name="{{q.id}}">
+              <input type="radio" class="input-radio" value="No" id="{{q.id}}_n" name="question_{{q.id}}">
               <label for="{{q.id}}_n" class="input-radio-label">No
           </div> 
         </td>
         <td>
           <div class="form-field-wrap">
-              <input type="radio" class="input-radio" id="{{q.id}}_uk" name="{{q.id}}" checked="">
-              <label for="{{q.id}}_uk" class="input-radio-label">Don''t know
+              <input type="radio" class="input-radio" value="Unknown" id="{{q.id}}_uk" name="question_{{q.id}}" checked="">
+              <label for="{{q.id}}_uk" class="input-radio-label">Don't know
           </div> 
         </td>
     </tr>
