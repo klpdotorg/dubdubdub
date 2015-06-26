@@ -43,6 +43,7 @@ When developing locally, add the following line to local_settings.py to output e
 and go to `http://localhost:8001`
 
 #### CSS workflow:
+
 1. Add a partial to assets/static/sass/dev and import it in assets/static/sass/style.scss. For example, see [assets/static/sass/dev/_sample.scss](https://github.com/klpdotorg/dubdubdub/blob/develop/assets/static/sass/dev/_sample.scss).
 
 2. Run Sass before you commit the changes
