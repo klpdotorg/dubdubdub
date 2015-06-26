@@ -137,6 +137,7 @@
             return function(e) {
                 var $img = $('<img />')
                             .prop("height", "100")
+                            .prop("width", "100")
                             .addClass('js-image-preview')
                             .attr("src", e.target.result)
                             .appendTo('#imagePreviews');
