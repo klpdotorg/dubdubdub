@@ -300,3 +300,87 @@ SELECT sg.sid AS schid,
     tb_academic_year acyear
   WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
+
+CREATE materialized VIEW mvw_boundary_school_agg AS
+SELECT academic_year_id,
+       sd.district_id,
+       sd.block_or_project_id,
+       sd.cluster_or_circle_id,
+       count(se.school_id) AS num_school,
+       sum(CASE WHEN sd.stype = 2 THEN 1 ELSE 0 END) AS sum_preschool,
+       sum(CASE WHEN s.sex='boys' THEN 1 ELSE 0 END) AS sum_boys_school,
+       sum(CASE WHEN s.sex='girls' THEN 1 ELSE 0 END) AS sum_girls_school,
+       se.num_boys,
+       se.num_girls
+FROM tb_school AS s,
+     mvw_school_extra AS se,
+     mvw_school_details AS sd
+WHERE se.school_id=sd.id
+    AND se.school_id=s.id
+GROUP BY academic_year_id,
+         sd.district_id,
+         sd.block_or_project_id,
+         sd.cluster_or_circle_id,
+         num_boys,
+         num_girls
+ORDER BY academic_year_id DESC;
+
+CREATE materialized VIEW mvw_assembly_school_agg AS
+SELECT academic_year_id,
+       sd.assembly_id,
+       count(se.school_id) AS num_school,
+       sum(CASE WHEN sd.stype = 2 THEN 1 ELSE 0 END) AS sum_preschool,
+       sum(CASE WHEN s.sex='boys' THEN 1 ELSE 0 END) AS sum_boys_school,
+       sum(CASE WHEN s.sex='girls' THEN 1 ELSE 0 END) AS sum_girls_school,
+       se.num_boys,
+       se.num_girls
+FROM tb_school AS s,
+     mvw_school_extra AS se,
+     mvw_school_details AS sd
+WHERE se.school_id=sd.id
+    AND se.school_id=s.id
+GROUP BY academic_year_id,
+         sd.assembly_id,
+         num_boys,
+         num_girls
+ORDER BY academic_year_id DESC;
+
+CREATE materialized VIEW mvw_parliament_school_agg AS
+SELECT academic_year_id,
+       sd.parliament_id,
+       count(se.school_id) AS num_school,
+       sum(CASE WHEN sd.stype = 2 THEN 1 ELSE 0 END) AS sum_preschool,
+       sum(CASE WHEN s.sex='boys' THEN 1 ELSE 0 END) AS sum_boys_school,
+       sum(CASE WHEN s.sex='girls' THEN 1 ELSE 0 END) AS sum_girls_school,
+       se.num_boys,
+       se.num_girls
+FROM tb_school AS s,
+     mvw_school_extra AS se,
+     mvw_school_details AS sd
+WHERE se.school_id=sd.id
+    AND se.school_id=s.id
+GROUP BY academic_year_id,
+         sd.parliament_id,
+         num_boys,
+         num_girls
+ORDER BY academic_year_id DESC;
+
+CREATE materialized VIEW mvw_pincode_school_agg AS
+SELECT academic_year_id,
+       sd.pin_id,
+       count(se.school_id) AS num_school,
+       sum(CASE WHEN sd.stype = 2 THEN 1 ELSE 0 END) AS sum_preschool,
+       sum(CASE WHEN s.sex='boys' THEN 1 ELSE 0 END) AS sum_boys_school,
+       sum(CASE WHEN s.sex='girls' THEN 1 ELSE 0 END) AS sum_girls_school,
+       se.num_boys,
+       se.num_girls
+FROM tb_school AS s,
+     mvw_school_extra AS se,
+     mvw_school_details AS sd
+WHERE se.school_id=sd.id
+    AND se.school_id=s.id
+GROUP BY academic_year_id,
+         sd.pin_id,
+         num_boys,
+         num_girls
+ORDER BY academic_year_id DESC;
