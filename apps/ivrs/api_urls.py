@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from .api_views import CheckSchool
+from .api_views import CheckSchool, ReadSchool
 
 urlpatterns = patterns(
     '',
