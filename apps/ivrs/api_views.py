@@ -25,3 +25,21 @@ class CheckSchool(KLPAPIView):
                 status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
+
+
+class ReadSchool(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            state = State.objects.get(session_id=session_id)
+            school = School.objects.get(id=state.school_id)
+            data = "The ID you have entered is " + \
+                   " ".join(str(school.id)) + \
+                   " and school name is " + \
+                   school.name
+            status_code = status.HTTP_200_OK
+        else:
+            data = ''
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response(data, status=status_code, content_type="text/plain")
