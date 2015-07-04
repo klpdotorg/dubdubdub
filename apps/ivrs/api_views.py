@@ -45,3 +45,15 @@ class ReadSchool(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response(data, status=status_code, content_type="text/plain")
+
+
+class Verify(KLPAPIView):
+    def get(self, request):
+        response = request.QUERY_PARAMS.get('digits', None)
+        response = response.strip('"')
+        if int(response) == 1:
+            status_code = status.HTTP_200_OK
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response("", status=status_code)
