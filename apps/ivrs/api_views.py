@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import APIException
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
@@ -12,11 +13,12 @@ class CheckSchool(KLPAPIView):
         status_code = status.HTTP_200_OK
 
         session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if session_id:
-            state = State.objects.create(session_id=session_id)
+        state = State.objects.create(session_id=session_id)
 
         school_id = request.QUERY_PARAMS.get('digits', None)
-        if school_id:
+        if not school_id:
+            status_code = status.HTTP_404_NOT_FOUND
+        else:
             school_id = school_id.strip('"')
             if School.objects.filter(id=school_id).exists():
                 state.school_id = school_id
