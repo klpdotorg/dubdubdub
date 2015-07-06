@@ -57,3 +57,27 @@ class Verify(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
+
+class AskQuestion(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            status_code = status.HTTP_200_OK
+            state = State.objects.get(session_id=session_id)
+            question_group = Questiongroup.objects.get(
+                version=2,
+                source__name='ivrs'
+            )
+            question_number = state.question_number
+            question = Question.objects.get(
+                questiongroup=question_group
+                questiongroupquestions__sequence=question_number,
+            )
+            data = question.text + " Please enter 1 for yes, 2 for no."
+
+            state.update(question_number=F('question_number') + 1)
+        else:
+            data = ''
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response(data, status=status_code, content_type="text/plain")
