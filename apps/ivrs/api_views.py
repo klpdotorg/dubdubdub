@@ -91,8 +91,16 @@ class VerifyAnswer(KLPAPIView):
             response = request.QUERY_PARAMS.get('digits', None)
 
             if response:
-                response = response.strip('"')
-                if int(response) in eval(question.options):
+                response = int(response.strip('"'))
+                if question.question_type == 'checkbox':
+                    try:
+                        accepted_answers = {1: 'Yes', 2: 'No'}
+                        response = accepted_answers[response]
+                    except:
+                        response = None
+                        status_code = status.HTTP_404_NOT_FOUND
+
+                if response in eval(question.options):
                     state.answers.append(response)
                     state.update(question_number=F('question_number') + 1)
                 else:
