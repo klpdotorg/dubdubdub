@@ -86,17 +86,15 @@ class VerifyAnswer(KLPAPIView):
         if State.objects.filter(session_id=session_id).exists():
             state = State.objects.get(session_id=session_id)
 
-            question = get_question(state.question_number)
-
             status_code = status.HTTP_200_OK
+            question = get_question(state.question_number)
             response = request.QUERY_PARAMS.get('digits', None)
+
             if response:
                 response = response.strip('"')
-                if int(response) == 1:
+                if int(response) in eval(question.options):
                     state.answers.append(response)
                     state.update(question_number=F('question_number') + 1)
-                elif int(response) == 2:
-                    # Save the story and delete record
                 else:
                     status_code = status.HTTP_404_NOT_FOUND
             else:
