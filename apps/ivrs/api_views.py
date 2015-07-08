@@ -58,6 +58,7 @@ class Verify(KLPAPIView):
 
         return Response("", status=status_code)
 
+
 class AskQuestion(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -81,3 +82,20 @@ class AskQuestion(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response(data, status=status_code, content_type="text/plain")
+
+
+class VerifyAnswer(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            status_code = status.HTTP_200_OK
+            response = request.QUERY_PARAMS.get('digits', None)
+            response = response.strip('"')
+            if int(response) == 1:
+                state.answers.append(response)
+            elif int(response) == 2:
+                # Save the story
+            else:
+                status_code = status.HTTP_404_NOT_FOUND
+
+        return Response("", status=status_code)
