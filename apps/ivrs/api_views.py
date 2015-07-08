@@ -51,9 +51,12 @@ class ReadSchool(KLPAPIView):
 class Verify(KLPAPIView):
     def get(self, request):
         response = request.QUERY_PARAMS.get('digits', None)
-        response = response.strip('"')
-        if int(response) == 1:
-            status_code = status.HTTP_200_OK
+        if response:
+            response = response.strip('"')
+            if int(response) == 1:
+                status_code = status.HTTP_200_OK
+            else:
+                status_code = status.HTTP_404_NOT_FOUND
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
@@ -93,14 +96,18 @@ class VerifyAnswer(KLPAPIView):
 
             status_code = status.HTTP_200_OK
             response = request.QUERY_PARAMS.get('digits', None)
-            response = response.strip('"')
-
-            if int(response) == 1:
-                state.answers.append(response)
-                state.update(question_number=F('question_number') + 1)
-            elif int(response) == 2:
-                # Save the story and delete record
+            if response:
+                response = response.strip('"')
+                if int(response) == 1:
+                    state.answers.append(response)
+                    state.update(question_number=F('question_number') + 1)
+                elif int(response) == 2:
+                    # Save the story and delete record
+                else:
+                    status_code = status.HTTP_404_NOT_FOUND
             else:
                 status_code = status.HTTP_404_NOT_FOUND
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
