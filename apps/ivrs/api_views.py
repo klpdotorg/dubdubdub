@@ -2,12 +2,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 
-from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+from django.db.models import F
 
 from .models import State
 from .utils import get_options, get_question
 from schools.models import School, SchoolDetails
-
+from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
@@ -98,7 +98,7 @@ class VerifyAnswer(KLPAPIView):
                 # 2, then we have to skip 5 questions.
                 if state.question_number == 3 and response == 2:
                     response = None
-                    for i in range(0, 5):
+                    for i in range(0, 6):
                         state.answers.append('NA')
                         state.question_number = F('question_number') + 1
                         state.save()
