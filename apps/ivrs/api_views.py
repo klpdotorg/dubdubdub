@@ -92,6 +92,19 @@ class VerifyAnswer(KLPAPIView):
 
             if response:
                 response = int(response.strip('"'))
+
+                # Special case for question 3 (Was Math class happening
+                # on the day of your visit?). If 1, then fine. Else if
+                # 2, then we have to skip 5 questions.
+                if state.question_number == 3 and response == 2:
+                    response = None
+                    for i in range(0, 5):
+                        state.answers.append('NA')
+                        state.question_number = F('question_number') + 1
+                        state.save()
+
+                # Mapping integers to Yes/No and checking if the user
+                # entered anything other than 1 or 2.
                 if question.question_type == 'checkbox':
                     try:
                         accepted_answers = {1: 'Yes', 2: 'No'}
@@ -100,9 +113,12 @@ class VerifyAnswer(KLPAPIView):
                         response = None
                         status_code = status.HTTP_404_NOT_FOUND
 
+                # The above two 'if's are special cases. The authentic
+                # answer checking is below.
                 if response in eval(question.options):
                     state.answers.append(response)
-                    state.update(question_number=F('question_number') + 1)
+                    state.question_number = F('question_number') + 1
+                    state.save()
                 else:
                     status_code = status.HTTP_404_NOT_FOUND
             else:
