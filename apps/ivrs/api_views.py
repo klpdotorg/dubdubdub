@@ -5,7 +5,7 @@ from rest_framework.exceptions import APIException
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
 from .models import State
-from .utils import get_options
+from .utils import get_options, get_question
 from schools.models import School, SchoolDetails
 
 
@@ -70,16 +70,8 @@ class AskQuestion(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
-            question_group = Questiongroup.objects.get(
-                version=2,
-                source__name='ivrs'
-            )
-            question_number = state.question_number
-            question = Question.objects.get(
-                questiongroup=question_group
-                questiongroupquestions__sequence=question_number,
-            )
-            options = get_options(question_number)
+            question = get_question(state.question_number)
+            options = get_options(state.question_number)
             data = question.text + options
         else:
             status_code = status.HTTP_404_NOT_FOUND
@@ -93,6 +85,8 @@ class VerifyAnswer(KLPAPIView):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
             state = State.objects.get(session_id=session_id)
+
+            question = get_question(state.question_number)
 
             status_code = status.HTTP_200_OK
             response = request.QUERY_PARAMS.get('digits', None)
