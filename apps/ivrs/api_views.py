@@ -11,11 +11,10 @@ from schools.models import School, SchoolDetails
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
-        status_code = status.HTTP_200_OK
-
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         state = State.objects.create(session_id=session_id)
 
+        status_code = status.HTTP_200_OK
         school_id = request.QUERY_PARAMS.get('digits', None)
         if not school_id:
             status_code = status.HTTP_404_NOT_FOUND
@@ -35,15 +34,16 @@ class ReadSchool(KLPAPIView):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
             state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
             data = "The ID you have entered is " + \
                    " ".join(str(school.id)) + \
                    " and school name is " + \
                    school.name
-            status_code = status.HTTP_200_OK
         else:
-            data = ''
             status_code = status.HTTP_404_NOT_FOUND
+            data = ''
 
         return Response(data, status=status_code, content_type="text/plain")
 
@@ -64,8 +64,9 @@ class AskQuestion(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
-            status_code = status.HTTP_200_OK
             state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
             question_group = Questiongroup.objects.get(
                 version=2,
                 source__name='ivrs'
@@ -75,14 +76,11 @@ class AskQuestion(KLPAPIView):
                 questiongroup=question_group
                 questiongroupquestions__sequence=question_number,
             )
-
             options = get_options(question_number)
             data = question.text + options
-
-            state.update(question_number=F('question_number') + 1)
         else:
-            data = ''
             status_code = status.HTTP_404_NOT_FOUND
+            data = ''
 
         return Response(data, status=status_code, content_type="text/plain")
 
@@ -91,13 +89,17 @@ class VerifyAnswer(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
+            state = State.objects.get(session_id=session_id)
+
             status_code = status.HTTP_200_OK
             response = request.QUERY_PARAMS.get('digits', None)
             response = response.strip('"')
+
             if int(response) == 1:
                 state.answers.append(response)
+                state.update(question_number=F('question_number') + 1)
             elif int(response) == 2:
-                # Save the story
+                # Save the story and delete record
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
