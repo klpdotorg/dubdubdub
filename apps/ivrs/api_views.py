@@ -5,6 +5,7 @@ from rest_framework.exceptions import APIException
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
 from .models import State
+from .utils import get_options
 from schools.models import School, SchoolDetails
 
 
@@ -74,7 +75,9 @@ class AskQuestion(KLPAPIView):
                 questiongroup=question_group
                 questiongroupquestions__sequence=question_number,
             )
-            data = question.text + " Please enter 1 for yes, 2 for no."
+
+            options = get_options(question_number)
+            data = question.text + options
 
             state.update(question_number=F('question_number') + 1)
         else:
