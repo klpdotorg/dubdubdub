@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='state',
             name='answers',
-            field=djorm_pgarray.fields.TextArrayField(default=[], dbtype='text'),
+            field=djorm_pgarray.fields.TextArrayField(default={}, dbtype='text'),
             preserve_default=True,
         ),
     ]
