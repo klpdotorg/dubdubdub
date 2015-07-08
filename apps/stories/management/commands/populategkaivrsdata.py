@@ -27,6 +27,7 @@ class Command(BaseCommand):
             text="Class visited",
             data_type=1,
             question_type=qtype_numeric,
+            options="{4,5}",
             school_type=b
         )[0]
         q3 = Question.objects.get_or_create(
@@ -40,54 +41,63 @@ class Command(BaseCommand):
             text="Which chapter of the textbook was taught?",
             data_type=1,
             question_type=qtype_numeric,
+            options="{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}",
             school_type=b
         )[0]
         q5 = Question.objects.get_or_create(
             text="Which Ganitha Kalika Andolana TLM was being used by teacher?",
             data_type=1,
             question_type=qtype_numeric,
+            options="{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}",
             school_type=b
         )[0]
         q6 = Question.objects.get_or_create(
             text="Did you see children using the Ganitha Kalika Andolana TLM?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q7 = Question.objects.get_or_create(
             text="Was group work happening in the class on the day of your visit?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q8 = Question.objects.get_or_create(
             text="Were children using square line book during math class?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q9 = Question.objects.get_or_create(
             text="Are all the toilets in the school functional?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q10 = Question.objects.get_or_create(
             text="Does the school have a separate functional toilet for girls?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q11 = Question.objects.get_or_create(
             text="Does the school have drinking water?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
         q12 = Question.objects.get_or_create(
             text="Is a Mid Day Meal served in the school?",
             data_type=1,
             question_type=qtype_checkbox,
+            options="{Yes,No}",
             school_type=b
         )[0]
 
