@@ -8,7 +8,7 @@ from django.db.models import F
 from django.utils import timezone
 
 from .models import State
-from .utils import get_options, get_question
+from .utils import get_question
 from schools.models import School, SchoolDetails
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
@@ -65,23 +65,6 @@ class Verify(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
-
-
-class AskQuestion(KLPAPIView):
-    def get(self, request):
-        session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if State.objects.filter(session_id=session_id).exists():
-            state = State.objects.get(session_id=session_id)
-
-            status_code = status.HTTP_200_OK
-            question = get_question(state.question_number)
-            options = get_options(state.question_number)
-            data = question.text + options
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
-            data = ''
-
-        return Response(data, status=status_code, content_type="text/plain")
 
 
 class VerifyAnswer(KLPAPIView):
