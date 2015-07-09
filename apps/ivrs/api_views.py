@@ -113,13 +113,36 @@ class ReadGKATLM(KLPAPIView):
 
 class Verify(KLPAPIView):
     def get(self, request):
-        response = request.QUERY_PARAMS.get('digits', None)
-        if response:
-            response = response.strip('"')
-            if int(response) == 1:
-                status_code = status.HTTP_200_OK
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
+            response = request.QUERY_PARAMS.get('digits', None)
+            if response:
+                response = response.strip('"')
+                if int(response) == 1:
+                    status_code = status.HTTP_200_OK
+                else:
+                    if state.question_number in [5, 6]:
+                        # The User has rejected the Chapter or TLM title
+                        # and hence we need to remove the corresponding
+                        # entry from the state.answers list as well as
+                        # reduce the question number. We are checking for
+                        # 5 or 6 instead of 4 or 5 because once the user
+                        # enters the value in the api request before this,
+                        # we increment and save the question nnumber.
+
+                        if state.question_number == 5:
+                            # Index 3 has the answer to Q:4.
+                            del state.answers[3]
+                        else:
+                            # Index 4 has the answer to Q:5.
+                            del state.answers[4]
+                        state.question_number = F('question_number') - 1
+                        state.save()
+
+                    status_code = status.HTTP_404_NOT_FOUND
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
