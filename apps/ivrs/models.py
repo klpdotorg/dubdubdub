@@ -12,8 +12,23 @@ class State(models.Model):
         dimension=1,
         null=True,
         blank=True,
-        default=[]
+        default={}
     )
 
     def __unicode__(self):
         return self.session_id
+
+class Chapter(models.Model):
+    class_number = models.IntegerField()
+    chapter_number = models.IntegerField()
+    title = models.CharField(max_length=300)
+
+    def __unicode__(self):
+        return self.title
+
+class GKATLM(models.Model):
+    number = models.IntegerField()
+    title = models.CharField(max_length=300)
+
+    def __unicode__(self):
+        return self.title
