@@ -1,8 +1,11 @@
+import datetime
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 
 from django.db.models import F
+from django.utils import timezone
 
 from .models import State
 from .utils import get_options, get_question
@@ -123,6 +126,51 @@ class VerifyAnswer(KLPAPIView):
                     status_code = status.HTTP_404_NOT_FOUND
             else:
                 status_code = status.HTTP_404_NOT_FOUND
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response("", status=status_code)
+
+class HangUp(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            telephone = request.QUERY_PARAMS.get('From', None)
+            date = request.QUERY_PARAMS.get('StartTime', None)
+
+            state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
+            school = School.objects.get(id=state.school_id)
+            date = datetime.datetime.strptime(
+                date, '%Y-%m-%d %H:%M:%S'
+            )
+            akshara_staff = UserType.objects.get_or_create(
+                name=UserType.AKSHARA_STAFF
+            )[0]
+            question_group = Questiongroup.objects.get(
+                version=2,
+                source__name='ivrs'
+            )
+
+            story, created = Story.objects.get_or_create(
+                school=school,
+                group=question_group,
+                date_of_visit=timezone.make_aware(
+                    date, timezone.get_current_timezone()
+                ),
+                telephone=telephone,
+                user_type=akshara_staff
+            )
+
+            for (question_number, answer) in enumerate(state.answers):
+                if answer != 'NA':
+                    question = get_question(question_number)
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=answer
+                    )
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
