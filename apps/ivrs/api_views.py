@@ -7,8 +7,8 @@ from rest_framework.exceptions import APIException
 from django.db.models import F
 from django.utils import timezone
 
-from .models import State
 from .utils import get_question
+from .models import State, Chapter, GKATLM
 from schools.models import School, SchoolDetails
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
@@ -48,6 +48,65 @@ class ReadSchool(KLPAPIView):
         else:
             status_code = status.HTTP_404_NOT_FOUND
             data = ''
+
+        return Response(data, status=status_code, content_type="text/plain")
+
+
+class ReadChapter(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
+
+            # Get the class, which is the 2nd question and hence
+            # will be there in the 1st index.
+            class_number = state.answers[1]
+
+            # Get the chapter number, which is the 4th question
+            # and hence the 3rd index.
+            chapter_number = state.answers[3]
+
+            chapter = Chapter.objects.get(
+                class_number=class_number,
+                chapter_number=chapter_number
+            )
+
+            data = "Chapter number is " + \
+                   chapter_number + \
+                   " and the title is " + \
+                   chapter.title
+        else:
+            data = ''
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response(data, status=status_code, content_type="text/plain")
+
+
+class ReadGKATLM(KLPAPIView):
+    def get(self, request):
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if State.objects.filter(session_id=session_id).exists():
+            state = State.objects.get(session_id=session_id)
+
+            status_code = status.HTTP_200_OK
+
+            # Get the GKATLM number, which is the 5th question
+            # and hence the 4th index.
+            number = state.answers[4]
+
+            gkatlm = GKATLM.objects.get(
+                number=number,
+            )
+
+            data = "T L M number is " + \
+                   number + \
+                   " and the title is " + \
+                   gkatlm.title
+        else:
+            data = ''
+            status_code = status.HTTP_404_NOT_FOUND
 
         return Response(data, status=status_code, content_type="text/plain")
 
