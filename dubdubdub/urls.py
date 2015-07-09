@@ -5,7 +5,7 @@ from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView, ProgrammeView
-from stories.views import IVRSPageView
+from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
@@ -17,9 +17,7 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
 urlpatterns = patterns(
     '',
     # share your story form
-    url(r'^sys/$', StaticPageView.as_view(
-        template_name='sys_form.html',
-        ), name='sys'),
+    url(r'^sys/(?P<pk>[0-9]+)$', SYSView.as_view(), name='sys'),
 
     # home page
     url(r'^$', StaticPageView.as_view(

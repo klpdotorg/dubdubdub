@@ -28,19 +28,21 @@
             // }
             dataObj['images'] = getImagesData();
             console.log("data obj", dataObj);
-            //var postURL = "stories/" + SCHOOL_ID;
+            var schoolID = dataObj['id'];
+            delete dataObj['id'];
+            var postURL = "stories/" + schoolID;
             
-            //var $xhr = klp.api.do(postURL, dataObj, 'POST');
-            //klp.utils.startSubmit('sysForm');
-            // $xhr.done(function() {
-            //     klp.utils.alertMessage("Thank you for submitting your story!", "success");
-            //     //klp.router.setHash(null, {state: null});
-            //     //klp.utils.stopSubmit('sysForm');
-            // });
-            // $xhr.fail(function() {
-            //     //klp.utils.stopSubmit('sysForm');
-            //     klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
-            // });
+            var $xhr = klp.api.do(postURL, dataObj, 'POST');
+            klp.utils.startSubmit('sysForm');
+            $xhr.done(function() {
+                klp.utils.alertMessage("Thank you for submitting your story!", "success");
+                //klp.router.setHash(null, {state: null});
+                //klp.utils.stopSubmit('sysForm');
+            });
+            $xhr.fail(function() {
+                //klp.utils.stopSubmit('sysForm');
+                klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
+            });
         });
     }
 

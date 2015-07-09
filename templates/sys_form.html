@@ -38,23 +38,47 @@
       <div class="form-parent">
         <div class="threefourth-item">
           <div class="info-wrapper" id="school-info-wrapper">
-            <h4 class="school-type-school">
+            <h4 class="school-type-{{ school_type }}">
               <span class="icon-number">
+                {% if school_type == 'school' %}
                  S 
+                {% else %}
+                P
+                {% endif %}
               </span>
-              GKLPS RAJBHAVAN ROAD
+              {{ object.name }}
             </h4>
             
             <ul class="map-location-labels font-smallest">  
               <li class="map-label-each">
-                <div class="map-label-title">District</div>
-                <div class="map-label-name">Bangalore</div>
+                <div class="map-label-title">
+                  District
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin1.name|capfirst }}
+                </div>
               </li><li class="map-label-each">
-                <div class="map-label-title">Block </div>
-                <div class="map-label-name">North-3</div>
+                <div class="map-label-title">
+                  {% if school_type == 'school' %}
+                    Block
+                  {% else %}
+                    Project
+                  {% endif %}
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin2.name|capfirst }}
+                </div>
               </li><li class="map-label-each">
-                <div class="map-label-title">Cluster </div>
-                <div class="map-label-name">Vasanthnagar</div>
+                <div class="map-label-title">
+                  {% if school_type == 'school' %}
+                    Cluster
+                  {% else %}
+                    Circle
+                  {% endif %}
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin3.name|capfirst }}
+                </div>
               </li>
             </ul>
           </div>
@@ -63,7 +87,7 @@
           <!--div class="module-img">
             <img src="/static/images/auto.png" class="auto-img" alt="Icon: Auto">
           </div-->
-          <p class="center-text grey-silver">We have 126400 Stories and 10070 Images across all schools and preschools, so far. Thanks to visitors like you!</p>
+          <p class="center-text grey-silver">We have {{ total_verified_stories }} Stories and {{ total_images }} Images across all schools and preschools, so far. Thanks to visitors like you!</p>
 
         </div>                  
       </div>      
@@ -75,7 +99,7 @@
         <form id="sys_school" action="/sysuserinfo" name="sys_school">
           <fieldset title="1">
             <legend>Personal Details</legend>
-            <input type="hidden" name="id" />
+            <input type="hidden" name="id" value="{{ object.id }}" />
             <div class="heading-tiny-uppercase">Please provide accurate information</div>
             <div class="form-field-wrap required">
               <input type="text" class="input-text" name="name" placeholder="Type Full Name">
