@@ -12,6 +12,7 @@ from .utils import get_options, get_question
 from schools.models import School, SchoolDetails
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
+
 class CheckSchool(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -130,6 +131,7 @@ class VerifyAnswer(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
+
 
 class HangUp(KLPAPIView):
     def get(self, request):

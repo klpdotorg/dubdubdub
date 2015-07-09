@@ -14,3 +14,6 @@ class State(models.Model):
         blank=True,
         default=[]
     )
+
+    def __unicode__(self):
+        return self.session_id
