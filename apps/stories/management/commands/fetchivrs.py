@@ -144,7 +144,7 @@ class Command(BaseCommand):
         telephone = json['Mobile Number']
 
         school = School.objects.get(id=school_id)
-        question_group = Questiongroup.objects.get(source__name="ivrs")
+        question_group = Questiongroup.objects.get(version=1, source__name="ivrs")
         date = datetime.datetime.strptime(
             date, '%Y-%m-%d %H:%M:%S'
         )
