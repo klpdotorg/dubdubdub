@@ -84,7 +84,7 @@ class ReadChapter(KLPAPIView):
         return Response(data, status=status_code, content_type="text/plain")
 
 
-class ReadGKATLM(KLPAPIView):
+class ReadTLM(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
