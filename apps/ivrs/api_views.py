@@ -165,7 +165,7 @@ class HangUp(KLPAPIView):
 
             for (question_number, answer) in enumerate(state.answers):
                 if answer != 'NA':
-                    question = get_question(question_number)
+                    question = get_question(question_number+1)
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
