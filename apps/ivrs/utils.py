@@ -1,4 +1,4 @@
-from .models import (
+from stories.models import (
     Question, Questiongroup
 )
 
@@ -15,7 +15,7 @@ def get_question(question_number):
     )
     question_number = question_number
     question = Question.objects.get(
-        questiongroup=question_group
+        questiongroup=question_group,
         questiongroupquestions__sequence=question_number,
     )
 
