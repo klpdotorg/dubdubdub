@@ -5,7 +5,7 @@ from django.db import models, migrations
 from django.core.management import call_command
 
 def forwards(apps, schema_editor):
-    call_command('loaddata', 'gkatlm')
+    call_command('loaddata', 'tlm')
     call_command('loaddata', 'chapters')
 
 class Migration(migrations.Migration):
