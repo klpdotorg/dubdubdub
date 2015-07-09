@@ -7,9 +7,10 @@ from rest_framework.exceptions import APIException
 from django.db.models import F
 from django.utils import timezone
 
-from .utils import get_question
 from .models import State, Chapter, GKATLM
+from .utils import get_question, skip_questions
 from schools.models import School, SchoolDetails
+from stories.models import Story, UserType, Questiongroup, Answer
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
 
@@ -162,32 +163,35 @@ class VerifyAnswer(KLPAPIView):
             if response:
                 response = int(response.strip('"'))
 
+                # Special case for question 1 (Was the School Open).
+                # If 1, the fine. Else if 2, then skip the rest of
+                # the 11 questions.
+                if state.question_number == 1 and response == 2:
+                    response = None
+                    skip_questions(state, number=11)
+
                 # Special case for question 3 (Was Math class happening
                 # on the day of your visit?). If 1, then fine. Else if
                 # 2, then we have to skip 5 questions.
                 if state.question_number == 3 and response == 2:
                     response = None
-                    for i in range(0, 6):
-                        state.answers.append('NA')
-                        state.question_number = F('question_number') + 1
-                        state.save()
+                    skip_questions(state, number=5)
 
-                # Mapping integers to Yes/No and checking if the user
-                # entered anything other than 1 or 2.
-                if question.question_type == 'checkbox':
-                    try:
-                        accepted_answers = {1: 'Yes', 2: 'No'}
-                        response = accepted_answers[response]
-                    except:
-                        response = None
-                        status_code = status.HTTP_404_NOT_FOUND
+                # Mapping integers to Yes/No.
+                if question.question_type.name == 'checkbox' and response:
+                    accepted_answers = {1: 'Yes', 2: 'No'}
+                    response = accepted_answers[response]
 
-                # The above two 'if's are special cases. The authentic
+                # The above three 'if's are special cases. The authentic
                 # answer checking is below.
                 if response in eval(question.options):
                     state.answers.append(response)
                     state.question_number = F('question_number') + 1
                     state.save()
+                elif response == None:
+                    # Here response becomes None only when the skipping
+                    # happens.
+                    status_code = status.HTTP_200_OK
                 else:
                     status_code = status.HTTP_404_NOT_FOUND
             else:
