@@ -16,7 +16,7 @@ from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 class CheckSchool(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
-        state = State.objects.create(session_id=session_id)
+        state = State.objects.get_or_create(session_id=session_id)[0]
 
         status_code = status.HTTP_200_OK
         school_id = request.QUERY_PARAMS.get('digits', None)
