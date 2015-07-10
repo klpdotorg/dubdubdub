@@ -123,9 +123,15 @@
         });
         $('#multiImageUpload').change(function(e) {
             var t = this;
+            var currentImageCount = $('.js-image-preview').length;
             for (var i=0; i<t.files.length; i++) {
+                if (currentImageCount >= 5) {
+                    klp.utils.alertMessage("Cannot add more than 5 images.", "error");
+                    break;
+                }
                 var f = t.files[i];
                 addImagePreview(f);
+                currentImageCount++;
             }
         });
     }
@@ -134,11 +140,7 @@
         if (!image.type.match('image.*')) {
             return;
         }
-        var existingPreviews = $('.js-image-preview').length;
-        if (existingPreviews >= 5) {
-            klp.utils.alertMessage("Cannot add more than 5 images", "error");
-            return;
-        } 
+
         var reader = new FileReader();
         reader.onload = (function(imageFile) {
             return function(e) {
