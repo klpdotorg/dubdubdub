@@ -42,6 +42,7 @@
             $xhr.fail(function() {
                 klp.utils.stopSubmit('sysForm');
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
+                $('#sys_school').stepy('step', 1);
             });
         });
     }
