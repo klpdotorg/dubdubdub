@@ -11,6 +11,7 @@
         loadQuestions('schoolString',[]);
         $('form').stepy();
         initImageUploader();
+        initializeUser();
         $('#sys_school').submit(function(e) {
             if (e) {
                 e.preventDefault();
@@ -106,6 +107,16 @@
         $('#sysqset3_school').html(html);
         html = table_start + tplSysSchool({'questions':questions["learning"]}) + table_end;      
         $('#sysqset4_school').html(html);
+    }
+
+    function initializeUser() {
+        if (klp.auth.getToken()) {
+            klp.api.authDo("users/profile").done(function(data) {
+                $('#name_id').val(data.first_name + " " + data.last_name);
+                $('#email_id').val(data.email);
+                $('#telephone_id').val(data.mobile_no);
+            });
+        }
     }
 
     function initImageUploader() {
