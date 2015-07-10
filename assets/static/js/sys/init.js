@@ -134,6 +134,11 @@
         if (!image.type.match('image.*')) {
             return;
         }
+        var existingPreviews = $('.js-image-preview').length;
+        if (existingPreviews >= 5) {
+            klp.utils.alertMessage("Cannot add more than 5 images", "error");
+            return;
+        } 
         var reader = new FileReader();
         reader.onload = (function(imageFile) {
             return function(e) {
@@ -141,6 +146,7 @@
                             .prop("height", "100")
                             .prop("width", "100")
                             .addClass('js-image-preview')
+                            .addClass('image-preview')
                             .attr("src", e.target.result)
                             .appendTo('#imagePreviews');
             };
