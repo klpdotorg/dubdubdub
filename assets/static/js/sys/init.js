@@ -108,6 +108,7 @@
     }
 
     function initImageUploader() {
+        var MAX_IMAGES = 5;
         var dropZone = $('#images_dropzone').get(0);
         dropZone.addEventListener("dragenter", function(e) { e.stopPropagation(); e.preventDefault(); return false; }, false);
         dropZone.addEventListener("dragover", function(e) { e.stopPropagation(); e.preventDefault(); return false; }, false);
@@ -125,8 +126,8 @@
             var t = this;
             var currentImageCount = $('.js-image-preview').length;
             for (var i=0; i<t.files.length; i++) {
-                if (currentImageCount >= 5) {
-                    klp.utils.alertMessage("Cannot add more than 5 images.", "error");
+                if (currentImageCount >= MAX_IMAGES) {
+                    klp.utils.alertMessage("Cannot add more than " + MAX_IMAGES + " images.", "error");
                     break;
                 }
                 var f = t.files[i];
