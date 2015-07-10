@@ -35,12 +35,12 @@
             var $xhr = klp.api.do(postURL, dataObj, 'POST');
             klp.utils.startSubmit('sysForm');
             $xhr.done(function() {
-                klp.utils.alertMessage("Thank you for submitting your story!", "success");
-                //klp.router.setHash(null, {state: null});
-                //klp.utils.stopSubmit('sysForm');
+                var tplSysThanks = swig.compile($('#tpl-sysThanks').html());
+                var thanksHTML = tplSysThanks({'id': schoolID});
+                $('.js-form-parent').html(thanksHTML);
             });
             $xhr.fail(function() {
-                //klp.utils.stopSubmit('sysForm');
+                klp.utils.stopSubmit('sysForm');
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
             });
         });
