@@ -60,6 +60,8 @@ class ReadChapter(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
+            state.is_title_verified = False
+            state.save()
 
             # Get the class, which is the 2nd question and hence
             # will be there in the 1st index.
@@ -92,6 +94,8 @@ class ReadTLM(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
+            state.is_title_verified = False
+            state.save()
 
             # Get the GKATLM number, which is the 5th question
             # and hence the 4th index.
@@ -123,6 +127,13 @@ class Verify(KLPAPIView):
             if response:
                 response = response.strip('"')
                 if int(response) == 1:
+                    if state.question_number in [5, 6]:
+                        # The User has accepted the Chapter or TLM title
+                        # and we need to make the is_title_verified to
+                        # True.
+
+                        state.is_title_verified = True
+                        state.save()
                     status_code = status.HTTP_200_OK
                 else:
                     if state.question_number in [5, 6]:
@@ -141,6 +152,7 @@ class Verify(KLPAPIView):
                             # Index 4 has the answer to Q:5.
                             del state.answers[4]
                         state.question_number = F('question_number') - 1
+                        state.is_title_verified = False
                         state.save()
 
                     status_code = status.HTTP_404_NOT_FOUND
@@ -185,6 +197,22 @@ class VerifyAnswer(KLPAPIView):
                 # The above three 'if's are special cases. The authentic
                 # answer checking is below.
                 if response in eval(question.options):
+                    if state.question_number in [5, 6] and not state.is_title_verified:
+                        # Handling the api down / unreachable error for
+                        # question numbers 4 & 5 when the api has not 
+                        # received the user verification for the Chapter
+                        # / TLM title. The question numbers would have
+                        # already been incremented and hence we use 5 &
+                        # 6 instead of 4 & 5.
+
+                        # The previously entered answer will be stored
+                        # at index 3 for Q4 and 4 for Q5.
+                        answer_index = state.question_number - 2
+
+                        del state.answers[answer_index]
+                        state.question_number = F('question_number') - 1
+                        state.save()
+
                     state.answers.append(response)
                     state.question_number = F('question_number') + 1
                     state.save()
