@@ -148,11 +148,16 @@ class Verify(KLPAPIView):
                         if state.question_number == 5:
                             # Index 3 has the answer to Q:4.
                             del state.answers[3]
+                            state.is_title_verified = False
                         else:
                             # Index 4 has the answer to Q:5.
                             del state.answers[4]
+
+                            # Return to previous state where Chapter
+                            # Title is confirmed for Q4.
+                            state.is_title_verified = True
+
                         state.question_number = F('question_number') - 1
-                        state.is_title_verified = False
                         state.save()
 
                     status_code = status.HTTP_404_NOT_FOUND
