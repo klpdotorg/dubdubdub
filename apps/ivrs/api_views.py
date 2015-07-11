@@ -19,6 +19,19 @@ class CheckSchool(KLPAPIView):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         state = State.objects.get_or_create(session_id=session_id)[0]
 
+        telephone = request.QUERY_PARAMS.get('From', None)
+        date = request.QUERY_PARAMS.get('StartTime', None)
+        date = datetime.datetime.strptime(
+            date, '%Y-%m-%d %H:%M:%S'
+        )
+        date = timezone.make_aware(
+            date, timezone.get_current_timezone()
+        )
+
+        state.telephone = telephone
+        state.date = date
+        state.save()
+
         status_code = status.HTTP_200_OK
         school_id = request.QUERY_PARAMS.get('digits', None)
         if not school_id:
@@ -239,16 +252,12 @@ class HangUp(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
-            telephone = request.QUERY_PARAMS.get('From', None)
-            date = request.QUERY_PARAMS.get('StartTime', None)
-
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
-            date = datetime.datetime.strptime(
-                date, '%Y-%m-%d %H:%M:%S'
-            )
+            telephone = state.telephone
+            date = state.date_of_visit
             akshara_staff = UserType.objects.get_or_create(
                 name=UserType.AKSHARA_STAFF
             )[0]
@@ -260,9 +269,7 @@ class HangUp(KLPAPIView):
             story = Story.objects.create(
                 school=school,
                 group=question_group,
-                date_of_visit=timezone.make_aware(
-                    date, timezone.get_current_timezone()
-                ),
+                date_of_visit=date,
                 telephone=telephone,
                 user_type=akshara_staff
             )
