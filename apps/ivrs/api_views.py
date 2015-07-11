@@ -257,7 +257,7 @@ class HangUp(KLPAPIView):
                 source__name='ivrs'
             )
 
-            story, created = Story.objects.get_or_create(
+            story = Story.objects.create(
                 school=school,
                 group=question_group,
                 date_of_visit=timezone.make_aware(
