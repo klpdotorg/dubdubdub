@@ -7,6 +7,7 @@ from djorm_pgarray.fields import TextArrayField
 class State(models.Model):
     session_id = models.CharField(max_length=100,unique=True)
     school_id = models.IntegerField(null=True, blank=True)
+    is_title_verified = models.BooleanField(default=False)
     question_number = models.IntegerField(default=1)
     answers = TextArrayField(
         dimension=1,
