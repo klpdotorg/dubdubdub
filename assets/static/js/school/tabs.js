@@ -349,6 +349,7 @@
                     } else {
                         data.latest_answers = null;
                     }
+                    data['school_id'] = SCHOOL_ID;
                     // console.log("sys data", data);
                     return data;
 
