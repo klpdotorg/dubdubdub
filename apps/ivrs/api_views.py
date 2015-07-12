@@ -19,6 +19,19 @@ class CheckSchool(KLPAPIView):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         state = State.objects.get_or_create(session_id=session_id)[0]
 
+        telephone = request.QUERY_PARAMS.get('From', None)
+        date = request.QUERY_PARAMS.get('StartTime', None)
+        date = datetime.datetime.strptime(
+            date, '%Y-%m-%d %H:%M:%S'
+        )
+        date = timezone.make_aware(
+            date, timezone.get_current_timezone()
+        )
+
+        state.telephone = telephone
+        state.date = date
+        state.save()
+
         status_code = status.HTTP_200_OK
         school_id = request.QUERY_PARAMS.get('digits', None)
         if not school_id:
@@ -148,11 +161,16 @@ class Verify(KLPAPIView):
                         if state.question_number == 5:
                             # Index 3 has the answer to Q:4.
                             del state.answers[3]
+                            state.is_title_verified = False
                         else:
                             # Index 4 has the answer to Q:5.
                             del state.answers[4]
+
+                            # Return to previous state where Chapter
+                            # Title is confirmed for Q4.
+                            state.is_title_verified = True
+
                         state.question_number = F('question_number') - 1
-                        state.is_title_verified = False
                         state.save()
 
                     status_code = status.HTTP_404_NOT_FOUND
@@ -234,16 +252,12 @@ class HangUp(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
-            telephone = request.QUERY_PARAMS.get('From', None)
-            date = request.QUERY_PARAMS.get('StartTime', None)
-
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
-            date = datetime.datetime.strptime(
-                date, '%Y-%m-%d %H:%M:%S'
-            )
+            telephone = state.telephone
+            date = state.date_of_visit
             akshara_staff = UserType.objects.get_or_create(
                 name=UserType.AKSHARA_STAFF
             )[0]
@@ -252,12 +266,10 @@ class HangUp(KLPAPIView):
                 source__name='ivrs'
             )
 
-            story, created = Story.objects.get_or_create(
+            story = Story.objects.create(
                 school=school,
                 group=question_group,
-                date_of_visit=timezone.make_aware(
-                    date, timezone.get_current_timezone()
-                ),
+                date_of_visit=date,
                 telephone=telephone,
                 user_type=akshara_staff
             )
