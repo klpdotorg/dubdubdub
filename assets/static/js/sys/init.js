@@ -155,18 +155,60 @@
         }
 
         var reader = new FileReader();
+        var resizeOptions = {
+            'maxWidth': 800,
+            'maxHeight': 600
+        };
         reader.onload = (function(imageFile) {
             return function(e) {
-                var $img = $('<img />')
-                            .prop("height", "100")
-                            .prop("width", "100")
-                            .addClass('js-image-preview')
-                            .addClass('image-preview')
-                            .attr("src", e.target.result)
-                            .appendTo('#imagePreviews');
+                resizeImage(e.target.result, resizeOptions, function(resizedImage) {
+                    var $img = $('<img />')
+                                .prop("height", "100")
+                                .prop("width", "100")
+                                .addClass('js-image-preview')
+                                .addClass('image-preview')
+                                .attr("src", resizedImage)
+                                .appendTo('#imagePreviews');
+                });
+
             };
         })(image);  
         reader.readAsDataURL(image);
+    }
+
+    function resizeImage(imageDataURI, options, callback) {
+        var opts = $.extend({
+            'maxWidth': 800,
+            'maxHeight': 600
+        }, options);
+    var tempImg = new Image();
+    tempImg.src = imageDataURI;
+    tempImg.onload = function() {
+ 
+        var MAX_WIDTH = opts.maxWidth;
+        var MAX_HEIGHT = opts.maxHeight;
+        var tempW = tempImg.width;
+        var tempH = tempImg.height;
+        if (tempW > tempH) {
+            if (tempW > MAX_WIDTH) {
+               tempH *= MAX_WIDTH / tempW;
+               tempW = MAX_WIDTH;
+            }
+        } else {
+            if (tempH > MAX_HEIGHT) {
+               tempW *= MAX_HEIGHT / tempH;
+               tempH = MAX_HEIGHT;
+            }
+        }
+ 
+        var canvas = document.createElement('canvas');
+        canvas.width = tempW;
+        canvas.height = tempH;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(this, 0, 0, tempW, tempH);
+        var dataURL = canvas.toDataURL("image/jpeg");
+        callback(dataURL);
+      }
     }
 
     function getImagesData() {
