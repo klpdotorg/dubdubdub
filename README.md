@@ -70,3 +70,11 @@ Make sure the runtests.sh script has execute permissions. Then, run the shell sc
 ./runtests.sh
 
 All the unit tests should pass.
+
+#### Skipping DB creation when unit tests execute
+
+The unit test script creates a test database and then executes tests against it. To skip creation of a database and leverage existing ones, run the script like so:
+
+./runtests.sh skipdbcreate
+
+The DB to use should be updated in the test_settings file.
