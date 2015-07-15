@@ -9,7 +9,7 @@ class State(models.Model):
     session_id = models.CharField(max_length=100,unique=True)
     school_id = models.IntegerField(null=True, blank=True)
     telephone = models.CharField(max_length=50, blank=True)
-    date_of_visit = models.DateField(default=timezone.now)
+    date_of_visit = models.DateTimeField(default=timezone.now)
     is_title_verified = models.BooleanField(default=False)
     question_number = models.IntegerField(default=1)
     answers = TextArrayField(
