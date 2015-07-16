@@ -7,6 +7,7 @@ from djorm_pgarray.fields import TextArrayField
 
 class State(models.Model):
     session_id = models.CharField(max_length=100,unique=True)
+    is_processed = models.BooleanField(default=False)
     school_id = models.IntegerField(null=True, blank=True)
     telephone = models.CharField(max_length=50, blank=True)
     date_of_visit = models.DateTimeField(default=timezone.now)
