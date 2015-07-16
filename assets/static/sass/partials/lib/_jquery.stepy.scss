@@ -43,7 +43,7 @@
     padding: 0 5px;
   }
 
-  .stepy-step label { color: $grey-silver; display: block; font-weight: 300; margin: 10px 0 3px 1px }
+  .stepy-step label { color: $black; display: block; font-weight: 300; margin: 10px 0 3px 1px }
 
   .stepy-step input,
   .stepy-step textarea,
@@ -55,22 +55,8 @@
 
   .stepy-step input[type="radio"] { 
     width: 10%;
+    color: $black;
   }
-
-%button-base {
-  font-weight: bold; 
-  font-size: 75%;
-  text-align: center;
-  border: $border-radius-sm;
-  display: inline-block;
-  vertical-align: middle;
-  text-transform: uppercase;
-  line-height: 1;
-  letter-spacing: 1px;
-  padding: $base-spacing $base-spacing-lg;
-  cursor: pointer;
-  outline: none;
-}
 
   .stepy-navigator { height: 33px; margin-top: 20px }
     .button-back { float: left }
@@ -102,7 +88,7 @@
       box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
       background-color: $brand-orange;
       color: $white;
-      width: 10%;
+      width: 90px;
     }
 
     .button-back:hover,

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -4375,7 +4376,7 @@ code {
   padding: 0 5px; }
 
 .stepy-step label {
-  color: #bbb;
+  color: #000;
   display: block;
   font-weight: 300;
   margin: 10px 0 3px 1px; }
@@ -4396,23 +4397,8 @@ code {
   height: 100px; }
 
 .stepy-step input[type="radio"] {
-  width: 10%; }
-
-.button, .button-grey, .button-filter-volunteer, .button-orange, .button-hollow, .nav-trigger, .profile-options, .button-back,
-.button-next,
-.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"] {
-  font-weight: bold;
-  font-size: 75%;
-  text-align: center;
-  border: 3px;
-  display: inline-block;
-  vertical-align: middle;
-  text-transform: uppercase;
-  line-height: 1;
-  letter-spacing: 1px;
-  padding: 10px 20px;
-  cursor: pointer;
-  outline: none; }
+  width: 10%;
+  color: #000; }
 
 .stepy-navigator {
   height: 33px;
@@ -4444,7 +4430,7 @@ code {
   box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
   background-color: #ec6608;
   color: #fff;
-  width: 10%; }
+  width: 90px; }
 
 .button-back:hover,
 .button-next:hover,

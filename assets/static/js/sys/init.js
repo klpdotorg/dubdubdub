@@ -169,6 +169,11 @@
                                 .addClass('image-preview')
                                 .attr("src", resizedImage)
                                 .appendTo('#imagePreviews');
+                    $img.click(function(e) {
+                        if (confirm("Do you wish to remove this image?")) {
+                            $(this).remove();
+                        }
+                    });
                 });
 
             };
