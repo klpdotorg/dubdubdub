@@ -151,7 +151,7 @@ class VerifyAnswer(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
-            question = get_question(question_number)
+            question = get_question(int(question_number))
             response = request.QUERY_PARAMS.get('digits', None)
 
             if response:
@@ -163,7 +163,7 @@ class VerifyAnswer(KLPAPIView):
                     response = accepted_answers[response]
 
                 if response in eval(question.options):
-                    state.answers[question_number] = response
+                    state.answers[int(question_number)] = response
                     state.save()
                 else:
                     status_code = status.HTTP_404_NOT_FOUND
