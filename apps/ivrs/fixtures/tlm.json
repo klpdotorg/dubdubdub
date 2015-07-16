@@ -115,20 +115,34 @@
 	"model": "ivrs.gkatlm",
 	"fields":{
 	    "number": 17,
-	    "title": "Play money and coins"
+	    "title": "Play money"
 	}
     },
     {
 	"model": "ivrs.gkatlm",
 	"fields":{
 	    "number": 18,
-	    "title": "Tangram"
+	    "title": "Coins"
 	}
     },
     {
 	"model": "ivrs.gkatlm",
 	"fields":{
 	    "number": 19,
+	    "title": "Tangram"
+	}
+    },
+    {
+	"model": "ivrs.gkatlm",
+	"fields":{
+	    "number": 20,
+	    "title": "Measuring Tape"
+	}
+    },
+    {
+	"model": "ivrs.gkatlm",
+	"fields":{
+	    "number": 21,
 	    "title": "Maths Concept Cards"
 	}
     }
