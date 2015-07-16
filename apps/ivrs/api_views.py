@@ -31,7 +31,7 @@ class CheckSchool(KLPAPIView):
         # Ignoring index 0 since question_numbers start from 1
         state.answers.append('IGNORED_INDEX')
         # Initializing answer slots 1 to 12 with NA
-        for i in range(0,11):
+        for i in range(0,12):
             state.answers.append('NA')
 
         state.telephone = telephone
