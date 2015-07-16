@@ -48,7 +48,7 @@ class Command(BaseCommand):
             text="Which Ganitha Kalika Andolana TLM was being used by teacher?",
             data_type=1,
             question_type=qtype_numeric,
-            options="{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}",
+            options="{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}",
             school_type=b
         )[0]
         q6 = Question.objects.get_or_create(
