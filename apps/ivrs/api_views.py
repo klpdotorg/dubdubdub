@@ -28,6 +28,7 @@ class CheckSchool(KLPAPIView):
             date, timezone.get_current_timezone()
         )
 
+        state.answers = []
         # Ignoring index 0 since question_numbers start from 1
         state.answers.append('IGNORED_INDEX')
         # Initializing answer slots 1 to 12 with NA
