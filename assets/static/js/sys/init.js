@@ -67,7 +67,7 @@
                 $input.addClass("error");
             } else {
                 if ($input.hasClass("error")) {
-                    $div.removeClass("error");
+                    $input.removeClass("error");
                 }
             }
         });
