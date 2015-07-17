@@ -1,7 +1,13 @@
 from settings import *
 
 DBNAME = DATABASES['default']['NAME']
-print DBNAME
+USER = DATABASES['default']['USER']
+PASSWORD = DATABASES['default']['PASSWORD']
+print "Inside test_settings.."
+print "Database name:" + DBNAME
+print "User name:" + USER
+print "Using password from the settings file..."
+
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 
@@ -9,8 +15,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'test_' + DBNAME,
-        'USER': 'klp',
-        'PASSWORD': 'klp',
+        'USER': USER,
+        'PASSWORD': PASSWORD,
         'HOST': '',
         'PORT': '',
     }
