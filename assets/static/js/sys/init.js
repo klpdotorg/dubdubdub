@@ -65,6 +65,10 @@
             if ($input.val() === '') {
                 isValid = false;
                 $div.addClass("invalid");
+            } else {
+                if ($div.hasClass("invalid")) {
+                    $div.removeClass("invalid");
+                }
             }
         });
         if (!isValid) {
