@@ -1,11 +1,14 @@
 from settings import *
 
+DBNAME = DATABASES['default']['NAME']
+print DBNAME
+
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'test_klpwww_ver4',
+        'NAME': 'test_' + DBNAME,
         'USER': 'klp',
         'PASSWORD': 'klp',
         'HOST': '',
