@@ -47,7 +47,7 @@
 
   .stepy-step input,
   .stepy-step textarea,
-  .stepy-step select { border: 1px solid $grey-silver; min-height: 35px; padding: 8px; width: 90% }
+  .stepy-step select { min-height: 35px; padding: 8px; width: 90% }
 
   .stepy-step select { height: 34px; padding-top: 5px }
 
@@ -57,6 +57,8 @@
     width: 10%;
     color: $black;
   }
+
+  .stepy-step input error {border: 1px solid $brand-red;}
 
   .stepy-navigator { height: 33px; margin-top: 20px }
     .button-back { float: left }
