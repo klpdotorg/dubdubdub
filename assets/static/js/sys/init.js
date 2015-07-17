@@ -64,10 +64,10 @@
             var $input = $div.find('input');
             if ($input.val() === '') {
                 isValid = false;
-                $div.addClass("invalid");
+                $input.addClass("error");
             } else {
-                if ($div.hasClass("invalid")) {
-                    $div.removeClass("invalid");
+                if ($input.hasClass("error")) {
+                    $div.removeClass("error");
                 }
             }
         });
