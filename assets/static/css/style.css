@@ -4384,7 +4384,6 @@ code {
 .stepy-step input,
 .stepy-step textarea,
 .stepy-step select {
-  border: 1px solid #bbb;
   min-height: 35px;
   padding: 8px;
   width: 90%; }
@@ -4399,6 +4398,9 @@ code {
 .stepy-step input[type="radio"] {
   width: 10%;
   color: #000; }
+
+.stepy-step input error {
+  border: 1px solid #cb0012; }
 
 .stepy-navigator {
   height: 33px;
