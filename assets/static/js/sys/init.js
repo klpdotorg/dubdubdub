@@ -9,7 +9,16 @@
         klp.router = new KLPRouter();
         klp.router.init();
         loadQuestions('schoolString',[]);
-        $('form').stepy();
+        $('form').stepy({
+            next: function(index) {
+                var isValid = true;
+                if (index == 2) {
+                    //validate first step
+                    isValid = validatePersonalDetails();
+                }
+                return isValid;
+            }
+        });
         initImageUploader();
         initializeUser();
         $('#sys_school').submit(function(e) {
@@ -48,6 +57,21 @@
         });
     }
 
+    function validatePersonalDetails() {
+        var isValid = true;
+        $('#sys_school-step-0').find('.required').each(function() {
+            var $div = $(this);
+            var $input = $div.find('input');
+            if ($input.val() === '') {
+                isValid = false;
+                $div.addClass("invalid");
+            }
+        });
+        if (!isValid) {
+            klp.utils.alertMessage("Please fill in all required fields before proceeding.", "error");
+        }
+        return isValid;
+    }
     
     function loadQuestions(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
