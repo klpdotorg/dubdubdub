@@ -43,18 +43,31 @@
             var postURL = "stories/" + schoolID;
             
             var $xhr = klp.api.do(postURL, dataObj, 'POST');
-            klp.utils.startSubmit('sysForm');
+            startFormLoading();
+            klp.utils.startSubmit('sys_school');
             $xhr.done(function() {
                 var tplSysThanks = swig.compile($('#tpl-sysThanks').html());
                 var thanksHTML = tplSysThanks({'id': schoolID});
                 $('.js-form-parent').html(thanksHTML);
             });
             $xhr.fail(function() {
-                klp.utils.stopSubmit('sysForm');
+                stopFormLoading();
                 klp.utils.alertMessage("Failed submitting form. Please check errors and re-submit.", "error");
                 $('#sys_school').stepy('step', 1);
             });
         });
+    }
+
+    function startFormLoading() {
+        klp.utils.startSubmit('sys_school');
+        $('.js-finish-btn').prop("disabled", "disabled");
+        $('.js-finish-btn').val("Wait...");
+    }
+
+    function stopFormLoading() {
+        klp.utils.stopSubmit('sys_school');
+        $('.js-finish-btn').removeAttr("disabled");
+        $('.js-finish-btn').val("Finish!");
     }
 
     function validatePersonalDetails() {
