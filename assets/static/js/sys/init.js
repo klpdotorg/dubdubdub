@@ -37,7 +37,6 @@
             //     return;
             // }
             dataObj['images'] = getImagesData();
-            console.log("data obj", dataObj);
             var schoolID = dataObj['id'];
             delete dataObj['id'];
             var postURL = "stories/" + schoolID;
@@ -91,13 +90,6 @@
     }
     
     function loadQuestions(schoolType, params) {
-        //var params = klp.router.getHash().queryParams;
-        /*var detailURL = "sys/version/school";
-        var $detailXHR = klp.api.do(detailURL, params);
-        startDetailLoading(schoolType);
-        $detailXHR.done(function(data) {*/
-            
-        //});
         var questions = {
             "academic":
             [
@@ -171,7 +163,6 @@
             var files = e.dataTransfer.files;
             for (var i=0; i<files.length; i++) {
                 var fil = files[i];
-                console.log(fil);
                 addImagePreview(fil);
             }
         });
@@ -227,34 +218,34 @@
             'maxWidth': 800,
             'maxHeight': 600
         }, options);
-    var tempImg = new Image();
-    tempImg.src = imageDataURI;
-    tempImg.onload = function() {
+        var tempImg = new Image();
+        tempImg.src = imageDataURI;
+        tempImg.onload = function() {
  
-        var MAX_WIDTH = opts.maxWidth;
-        var MAX_HEIGHT = opts.maxHeight;
-        var tempW = tempImg.width;
-        var tempH = tempImg.height;
-        if (tempW > tempH) {
-            if (tempW > MAX_WIDTH) {
-               tempH *= MAX_WIDTH / tempW;
-               tempW = MAX_WIDTH;
+            var MAX_WIDTH = opts.maxWidth;
+            var MAX_HEIGHT = opts.maxHeight;
+            var tempW = tempImg.width;
+            var tempH = tempImg.height;
+            if (tempW > tempH) {
+                if (tempW > MAX_WIDTH) {
+                   tempH *= MAX_WIDTH / tempW;
+                   tempW = MAX_WIDTH;
+                }
+            } else {
+                if (tempH > MAX_HEIGHT) {
+                   tempW *= MAX_HEIGHT / tempH;
+                   tempH = MAX_HEIGHT;
+                }
             }
-        } else {
-            if (tempH > MAX_HEIGHT) {
-               tempW *= MAX_HEIGHT / tempH;
-               tempH = MAX_HEIGHT;
-            }
+ 
+            var canvas = document.createElement('canvas');
+            canvas.width = tempW;
+            canvas.height = tempH;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0, tempW, tempH);
+            var dataURL = canvas.toDataURL("image/jpeg");
+            callback(dataURL);
         }
- 
-        var canvas = document.createElement('canvas');
-        canvas.width = tempW;
-        canvas.height = tempH;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(this, 0, 0, tempW, tempH);
-        var dataURL = canvas.toDataURL("image/jpeg");
-        callback(dataURL);
-      }
     }
 
     function getImagesData() {
