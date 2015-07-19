@@ -47,6 +47,8 @@ class Questiongroup(models.Model):
     version = models.IntegerField()
     source = models.ForeignKey('Source')
     questions = models.ManyToManyField('Question', through='QuestiongroupQuestions')
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -162,6 +164,10 @@ class Story(TimestampedBaseModel):
 @receiver(post_save, sender=Story)
 def story_updated(sender, instance=None, created=False, **kwargs):
     if not created:
+        return
+
+    #if the story is not created from the web, don't send an email.
+    if not instance.group.source.name == 'web':
         return
 
     send_templated_mail(

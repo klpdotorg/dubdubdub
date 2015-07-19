@@ -1,0 +1,44 @@
+ {% verbatim %}
+
+ <script type="text/html" id="tpl-sysSchool">
+    {% for q in questions %}
+    <fieldset id="{{q.id}}">
+      <tr>
+        <td>
+          <div>{{ q.question }}</div>
+        </td>
+        <td>
+          <div class="form-field-wrap">
+            <input type="radio" class="input-radio" id="{{q.key}}_y" value="Yes" name="question_{{q.key}}">
+            <label for="{{q.key}}_y" class="input-radio-label">Yes
+          </div>             
+        </td>
+        <td>
+          <div class="form-field-wrap">
+              <input type="radio" class="input-radio" value="No" id="{{q.key}}_n" name="question_{{q.key}}">
+              <label for="{{q.key}}_n" class="input-radio-label">No
+          </div> 
+        </td>
+        <td>
+          <div class="form-field-wrap">
+              <input type="radio" class="input-radio" value="Unknown" id="{{q.key}}_uk" name="question_{{q.key}}" checked="">
+              <label for="{{q.key}}_uk" class="input-radio-label">Don't know
+          </div> 
+        </td>
+    </tr>
+    </fieldset>
+    {% endfor %}
+       
+  </script>
+
+  <script type="text/html" id="tpl-sysThanks">
+    <div class="thanks">
+    Thank you for taking the time and making the effort to do this. Please expect an e-mail confirmation shortly. <br /><br />
+
+    We appreciate your continued help in ensuring that every child is in school and learning well.<br /><br />
+
+    <a href="/school/{{ id }}">Click to go back to the school page</a>
+    </div>
+  </script>
+{% endverbatim %}
+

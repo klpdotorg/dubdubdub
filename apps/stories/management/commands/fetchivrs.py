@@ -25,17 +25,20 @@ class Command(BaseCommand):
                     help='The date until which to fetch ivrs data '),
     )
 
-    try:
-        f = open('ivrs_error.log')
-        ivrs_errors = json.loads(f.read())
-        f.close()
-    except:
-        ivrs_errors = []
-
     @transaction.atomic
     def handle(self, *args, **options):
         from_date = options.get('from', None)
         to_date = options.get('to', None)
+
+        error_file = '/var/log/ivrs/error_' + \
+                     timezone.now().date().strftime("%m%d%Y") + '.log'
+
+        try:
+            f = open(error_file)
+            ivrs_errors = json.loads(f.read())
+            f.close()
+        except:
+            ivrs_errors = []
 
         if from_date or to_date:
             if from_date and to_date:
@@ -141,7 +144,7 @@ class Command(BaseCommand):
         telephone = json['Mobile Number']
 
         school = School.objects.get(id=school_id)
-        question_group = Questiongroup.objects.get(source__name="ivrs")
+        question_group = Questiongroup.objects.get(version=1, source__name="ivrs")
         date = datetime.datetime.strptime(
             date, '%Y-%m-%d %H:%M:%S'
         )

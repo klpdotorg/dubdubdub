@@ -183,6 +183,7 @@
                     // Step 4: Array of languages.
                     data.languages = _.keys(data.lib_lang_agg);
 
+                    data.aggregate = ['aggregate']
                     // console.log('years', data.years);
                     // console.log('klasses', data.klasses);
                     // console.log('levels', data.levels);
@@ -192,6 +193,7 @@
                 },
                 onRender: function(data) {
                     if (data.years.length === 0 || data.klasses.length === 0 || data.levels.length === 0) {
+                        //FIXME: If no levels, still show chart, just hide level drop-down
                         $(".options-wrapper").addClass('hide');
                         $("#graph_library").addClass('hide');
                         $('.no-data').removeClass('hide');
@@ -347,6 +349,8 @@
                     } else {
                         data.latest_answers = null;
                     }
+                    data['school_id'] = SCHOOL_ID;
+                    data['school_type_id'] = SCHOOL_TYPE_ID;
                     // console.log("sys data", data);
                     return data;
 
