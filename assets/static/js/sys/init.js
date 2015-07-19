@@ -88,32 +88,32 @@
         var questions = {
             "academic":
             [
-                {'question':'Was the school open?','id':1 },
-                {'question':'Was the teacher present in each class?','id':2 },
-                {'question':'Are there Sufficient number of class rooms?','id':17 },
-                {'question':'Were at least 50% of the children enrolled present on the day you visited the school?','id':19 },
-                {'question':'Is there a Separate office for Headmaster?','id':11 }
+                //{'question':'Was the school open?','id':1 },
+                {'question':'Was the teacher present in each class?','id':2, 'key': 'webs-teachers-present' },
+                {'question':'Are there Sufficient number of class rooms?','id':17, 'key': 'webs-number-classrooms' },
+                {'question':'Were at least 50% of the children enrolled present on the day you visited the school?','id':19, 'key': 'webs-50percent-present' },
+                {'question':'Is there a Separate office for Headmaster?','id':11, 'key': 'webs-headmaster-office' }
             ],
             "infra":
             [
-                {'question':'Is there a Boundary wall/ Fencing?','id':8 },
-                {'question':'Is there Accessibility to students with disabilities?','id':10 },
-                {'question':'Is there a Play ground?','id':9 },
-                {'question':'Are there Play Materials or Sports Equipments?','id':14 }
+                {'question':'Is there a Boundary wall/ Fencing?','id':8, 'key': 'webs-boundary-wall' },
+                {'question':'Is there Accessibility to students with disabilities?','id':10, 'key': 'webs-access-disability' },
+                {'question':'Is there a Play ground?','id':9, 'key': 'webs-playground' },
+                {'question':'Are there Play Materials or Sports Equipments?','id':14, 'key': 'webs-play-material' }
             ],   
             "hygiene":
             [            
-                {'question':'Are all the toilets in the school functional?','id':4 },
-                {'question':'Does the school have a separate functional toilet for girls?','id':5 },
-                {'question':'Does the school have drinking water?','id':6 },
-                {'question':'Is a Mid Day Meal served in the school?','id':7 },
-                {'question':'Is there a Separate room as Kitchen / Store for Mid day meals?','id':12 }
+                //{'question':'Are all the toilets in the school functional?','id':4 },
+                {'question':'Does the school have a separate functional toilet for girls?','id':5, 'key': 'webs-separate-toilets' },
+                {'question':'Does the school have drinking water?','id':6, 'key': 'webs-drinking-water' },
+                {'question':'Is a Mid Day Meal served in the school?','id':7, 'key': 'webs-food-being-cooked' },
+                {'question':'Is there a Separate room as Kitchen / Store for Mid day meals?','id':12, 'key': 'webs-separate-food-store' }
             ],
             "learning":
             [
-                {'question':'Is there Teaching and Learning material?','id':16 },
-                {'question':'Is there a Library?','id':13 },
-                {'question':'Is there a Designated Librarian/Teacher?','id':15 }
+                {'question':'Is there Teaching and Learning material?','id':16, 'key': 'webs-tlm' },
+                {'question':'Is there a Library?','id':13, 'key': 'webs-library' },
+                {'question':'Is there a Designated Librarian/Teacher?','id':15, 'key': 'webs-designated-librarian' }
                 
             ]              
         };

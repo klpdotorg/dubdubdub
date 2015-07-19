@@ -550,10 +550,10 @@ class ShareYourStoryView(KLPAPIView):
             if not key.startswith('question_'):
                 continue
 
-            _, qid = key.split('_')
+            qkey = key.replace("question_", "")
             try:
                 question = Question.objects.get(
-                    qid=qid,
+                    key=qkey,
                     school_type=school.schooldetails.type,
                     is_active=True
                 )
