@@ -88,7 +88,7 @@
         var questions = {
             "academic":
             [
-                //{'question':'Was the school open?','id':1 },
+                {'question':'Was the school open?','id':1, 'key': 'webs-school-open' },
                 {'question':'Was the teacher present in each class?','id':2, 'key': 'webs-teachers-present' },
                 {'question':'Are there Sufficient number of class rooms?','id':17, 'key': 'webs-number-classrooms' },
                 {'question':'Were at least 50% of the children enrolled present on the day you visited the school?','id':19, 'key': 'webs-50percent-present' },
@@ -103,7 +103,7 @@
             ],   
             "hygiene":
             [            
-                //{'question':'Are all the toilets in the school functional?','id':4 },
+                {'question':'Are all the toilets in the school functional?','id':4, 'key': 'webs-all-toilets-functional' },
                 {'question':'Does the school have a separate functional toilet for girls?','id':5, 'key': 'webs-separate-toilets' },
                 {'question':'Does the school have drinking water?','id':6, 'key': 'webs-drinking-water' },
                 {'question':'Is a Mid Day Meal served in the school?','id':7, 'key': 'webs-food-being-cooked' },

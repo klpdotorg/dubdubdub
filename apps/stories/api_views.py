@@ -520,7 +520,7 @@ class ShareYourStoryView(KLPAPIView):
         comments = request.POST.get('comments', '')
         telephone = request.POST.get('telephone', '')
         date_of_visit = date_parse(request.POST.get('date_of_visit', ''), yearfirst=True)
-
+        question_group = Questiongroup.objects.get(source__name='web', version=2)
         try:
             school = School.objects.get(pk=pk)
         except Exception, e:
@@ -534,7 +534,7 @@ class ShareYourStoryView(KLPAPIView):
             school=school,
             telephone=telephone,
             date_of_visit=date_of_visit,
-            group_id=1,
+            group=question_group,
             comments=comments.strip()
         )
         story.save()
