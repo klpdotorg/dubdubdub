@@ -36,7 +36,7 @@ class CheckSchool(KLPAPIView):
             state.answers.append('NA')
 
         state.telephone = telephone
-        state.date = date
+        state.date_of_visit = date
         state.save()
 
         status_code = status.HTTP_200_OK
