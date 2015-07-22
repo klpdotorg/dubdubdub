@@ -51,6 +51,9 @@ class Command(BaseCommand):
                                 text=answer
                             )
 
+                state.is_processed = True
+                state.save()
+
 def sane_state(state):
     # A State is not sane if it has:
     # 1. No answers for any questions.
