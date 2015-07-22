@@ -512,6 +512,7 @@
                 boundaryData["num_boys"] = 3000;
                 boundaryData["num_girls"] = 2560;
                 boundaryData["total_students"] = 5560;
+                boundaryData["num_schools"] = 100;
 
                 var tpl_map_boundary_popup = swig.compile($("#tpl-map-boundary-popup").html());
                 duplicatemarker.bindPopup(tpl_map_boundary_popup(boundaryData),{maxWidth:300, minWidth:300}).openPopup();

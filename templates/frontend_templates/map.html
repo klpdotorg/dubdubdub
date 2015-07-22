@@ -210,7 +210,16 @@
     <h3 class="map-heading-main">{{ name }}</h3>
     <div class="map-label-name">{{ parentType|capitalize }}</div>
     <div class="heading-tiny-uppercase">{{ parentName|capitalize }}</div>
-    
+    {% if num_schools %}
+      {% if school_type == "primaryschool" %}
+        <div class="heading-tiny-uppercase center-text">Schools</div>      
+      {% else %}
+        <div class="heading-tiny-uppercase center-text">Preschools</div>
+      {% endif %}
+      <div class="center-text">
+         <h4 class="gender-item-count brand-turquoise">{{ num_schools }}<h4>
+      </div>
+    {% endif %}
     {% if num_boys or num_girls %}
     <h3 class="gender-icons-title">Students</h3>
     <div class="gender-icons">
