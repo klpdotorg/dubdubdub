@@ -1,17 +1,26 @@
 from settings import *
 
-# TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
+DBNAME = DATABASES['default']['NAME']
+USER = DATABASES['default']['USER']
+PASSWORD = DATABASES['default']['PASSWORD']
+print "Inside test_settings.."
+print "Database name:" + DBNAME
+print "User name:" + USER
+print "Using password from the settings file..."
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'test_klpwww_ver4',
-#         'USER': 'klp',
-#         'PASSWORD': 'klp',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
+
+TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'test_' + DBNAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': '',
+        'PORT': '',
+    }
+}
 
 TESTS_STORIES_INPUT = {
     'SCHOOLS_TEST_ID1': '29600'

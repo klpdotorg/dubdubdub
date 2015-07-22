@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'users',
     'stories',
     'imports',
+    'ivrs',
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP

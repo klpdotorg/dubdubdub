@@ -626,14 +626,15 @@
        
       <div class="school-share-story">
         <div class="share-your-story">
-          <!-- <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
-          <div class="base-spacing-sm"></div> -->
-          <!--
+          {% if school_type_id == 1 %}
+          <a href="/sys/{{ school_id }}" class="button-orange">Share your story</a>
+          <div class="base-spacing-sm"></div>
+          {% endif %}
         <div class="stats first">
           <div class="number"></div>
           <div class="text">Number of School Visits</div>
         </div>
-        -->
+        
         <div class="base-spacing font-large">
           <span class="icon-number icon-left">{{ count }}</span>
           <span class="text">Shared Stories</span>

@@ -10,6 +10,11 @@ Use required commands
 Changelog
 ---
 
+Release 0.3.0: ae99bfc240b352108a84701227fb3fe8b8ca75af - 2015-07-19
+  - Revamped SYS form
+  - New IVRS app to talk to Exotel IVRS
+  - Improve tests work-flow
+
 Release 0.25: 9c220816f8055e37fb4ce469a69a66949fe8650e - 2015-05-18
   - Stories design changes
   - Assessment fixes
