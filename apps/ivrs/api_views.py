@@ -7,8 +7,8 @@ from rest_framework.exceptions import APIException
 from django.db.models import F
 from django.utils import timezone
 
+from .utils import get_question
 from .models import State, Chapter, GKATLM
-from .utils import get_question, skip_questions
 from schools.models import School, SchoolDetails
 from stories.models import Story, UserType, Questiongroup, Answer
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
