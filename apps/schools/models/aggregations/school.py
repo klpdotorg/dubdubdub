@@ -28,6 +28,7 @@ class BoundarySchoolAgg(AggregationBase):
 
     class Meta:
         db_table = 'mvw_boundary_school_agg'
+        unique_together = ('academic_year', 'admin1', 'admin2', 'admin3')
 
 
 class AssemblySchoolAgg(AggregationBase):
@@ -35,6 +36,7 @@ class AssemblySchoolAgg(AggregationBase):
 
     class Meta:
         db_table = 'mvw_assembly_school_agg'
+        unique_together = ('academic_year', 'assembly')
 
 
 class ParliamentSchoolAgg(AggregationBase):
@@ -42,6 +44,7 @@ class ParliamentSchoolAgg(AggregationBase):
 
     class Meta:
         db_table = 'mvw_parliament_school_agg'
+        unique_together = ('academic_year', 'parliament')
 
 
 class PincodeSchoolAgg(AggregationBase):
@@ -49,6 +52,7 @@ class PincodeSchoolAgg(AggregationBase):
 
     class Meta:
         db_table = 'mvw_pincode_school_agg'
+        unique_together = ('academic_year', 'pincode')
 
 
 # class BoundarySchoolAggMoi(BaseModel):

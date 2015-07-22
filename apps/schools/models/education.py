@@ -6,7 +6,7 @@ from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from .partners import LibLevelAgg
 from django.contrib.gis.db import models
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 from django.conf import settings
 from django.core.urlresolvers import reverse
 import json
@@ -96,6 +96,11 @@ class Boundary(BaseModel):
             return json.loads(self.boundarycoord.coord.geojson)
         else:
             return {}
+
+    def schools(self):
+        return School.objects.filter(
+            Q(schooldetails__admin1=self) | Q(schooldetails__admin2=self) | Q(schooldetails__admin3=self)
+        )
 
     class Meta:
         managed = False

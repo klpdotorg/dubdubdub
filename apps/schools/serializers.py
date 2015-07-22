@@ -8,7 +8,7 @@ from schools.models import (
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescoreGender, MeetingReport,
-    BoundaryLibLangAgg, BoundaryLibLevelAgg
+    BoundaryLibLangAgg, BoundaryLibLevelAgg, BoundarySchoolAgg
 )
 
 
@@ -294,6 +294,15 @@ class BoundaryLibLangAggSerializer(KLPSerializer):
 class BoundaryLibLevelAggSerializer(KLPSerializer):
     class Meta:
         model = BoundaryLibLevelAgg
+
+
+class BoundarySchoolAggSerializer(KLPSerializer):
+    admin1 = BoundarySerializer(source='admin1')
+    admin2 = BoundarySerializer(source='admin2')
+    admin3 = BoundarySerializer(source='admin3')
+
+    class Meta:
+        model = BoundarySchoolAgg
 
 
 class AssessmentListSerializer(KLPSerializer):
