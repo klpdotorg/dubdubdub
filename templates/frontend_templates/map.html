@@ -185,4 +185,81 @@
   </div>
 
 </script>
+
+<script type="text/template" id="tpl-map-boundary-popup">
+  <div class="map-pin-details">
+    <span class="icon-number">
+      {% if school_type == "primaryschool" %}
+        {% if type == "district" %} 
+          D 
+        {% elif type == "block" %} 
+          B
+        {% else %}
+          C
+        {% endif %}
+      {% else %}
+        {% if type == "district" %} 
+          D
+        {% elif type == "project" %} 
+          P
+        {% else %}
+          C
+        {% endif %}
+      {% endif %}
+    </span>
+    <h3 class="map-heading-main">{{ name }}</h3>
+    <div class="map-label-name">{{ type |capitalize }}</div>
+    <div class="map-label-title">{{ parentName|capitalize }}</div>
+    <div class="map-label-name">{{ parentType|capitalize }}</div>
+    
+    {% if num_boys or num_girls %}
+    <h4 class="gender-icons-title">Students</h4>
+    <div class="gender-icons">
+      <div class="gender-item gender-item-boy">
+        <div class="icon-boy k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">
+            {% if num_boys %}
+              {{ num_boys }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
+          <div class="uppercase font-light font-larger">Boys</div>
+        </div> 
+      </div>
+      <div class="gender-item gender-item-girl">
+        <div class="icon-girl k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">
+            {% if num_girls %}
+              {{ num_girls }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
+          <div class="uppercase font-light font-larger">Girls</div>
+        </div>
+      </div>
+      <div class="gender-item gender-item-total">
+        <div class="icon-boy-girl k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">{{ total_students }}</div>
+          <div class="uppercase font-light font-larger">Total</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    
+    <div class="center-text">
+      <!--a class="button button-map-compare js-trigger-compare" href="">Compare to</a-->
+      <!-- Change URLs below -->
+      <a class="button Xjs-trigger-info" href="/school/{{ id }}/">More Info</a>
+      <a class="button-grey js-map-popup-close" href="#">Close</a>
+    </div>
+  </div>
+  </div>
+</script>
+
 {% endverbatim %}
