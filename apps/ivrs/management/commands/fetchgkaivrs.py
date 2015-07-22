@@ -16,7 +16,7 @@ class Command(BaseCommand):
         fifteen_minutes = datetime.now() - timedelta(minutes=15)
         states = State.objects.filter(
             is_processed=False,
-            date_of_vist__lte=fifteen_minutes
+            date_of_visit__lte=fifteen_minutes
         )
         if states:
             for state in states:
