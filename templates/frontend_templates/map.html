@@ -208,12 +208,11 @@
       {% endif %}
     </span>
     <h3 class="map-heading-main">{{ name }}</h3>
-    <div class="map-label-name">{{ type |capitalize }}</div>
-    <div class="map-label-title">{{ parentName|capitalize }}</div>
     <div class="map-label-name">{{ parentType|capitalize }}</div>
+    <div class="heading-tiny-uppercase">{{ parentName|capitalize }}</div>
     
     {% if num_boys or num_girls %}
-    <h4 class="gender-icons-title">Students</h4>
+    <h3 class="gender-icons-title">Students</h3>
     <div class="gender-icons">
       <div class="gender-item gender-item-boy">
         <div class="icon-boy k-icon"></div>
@@ -225,7 +224,7 @@
               0
             {% endif %}
           </div>
-          <div class="uppercase font-light font-larger">Boys</div>
+          <div class="uppercase font-light font-large">Boys</div>
         </div> 
       </div>
       <div class="gender-item gender-item-girl">
@@ -238,14 +237,14 @@
               0
             {% endif %}
           </div>
-          <div class="uppercase font-light font-larger">Girls</div>
+          <div class="uppercase font-light font-large">Girls</div>
         </div>
       </div>
       <div class="gender-item gender-item-total">
         <div class="icon-boy-girl k-icon"></div>
         <div class="center-text">
           <div class="gender-item-count">{{ total_students }}</div>
-          <div class="uppercase font-light font-larger">Total</div>
+          <div class="uppercase font-light font-large">Total</div>
         </div>
       </div>
     </div>
