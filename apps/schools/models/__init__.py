@@ -11,7 +11,8 @@ from .assessments import (Assessment, InstitutionAgg, InstitutionAssessmentCohor
     StudentEval, SchoolEval,
     AngInfraAgg, AngDisplayMaster)
 
-from .coords import (InstCoord, BoundaryCoord, Assembly, Parliament, Postal)
+from .coords import (InstCoord, BoundaryCoord, Assembly, Parliament, Postal,
+                     SchoolGIS)
 
 from .partners import (DiseDisplayMaster, DiseFacilityAgg, DiseInfo, PaisaData,
     DiseRteAgg, LibBorrow, LibLangAgg, LibLevelAgg, Libinfra,
