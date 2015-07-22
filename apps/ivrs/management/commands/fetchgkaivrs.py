@@ -52,4 +52,20 @@ class Command(BaseCommand):
                             )
 
 def sane_state(state):
-    return 1
+    # A State is not sane if it has:
+    # 1. No answers for any questions.
+    # 2. An answer to the 2nd question (class visited),
+    # but no answers thereafter
+
+    NOT_SANE = False
+    SANE = True
+
+    # Checking condition 1.
+    if all(answer == 'NA' for answer in state.answers[1:]):
+        return NOT_SANE
+    # Checking condition 2.
+    elif state.answers[2] != 'NA':
+        if all(answer == 'NA' for answer in state.answers[2:]):
+            return NOT_SANE
+    else:
+        return SANE
