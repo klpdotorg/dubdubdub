@@ -40,9 +40,9 @@ class Command(BaseCommand):
                 multipoint_wkt = "MULTIPOINT(%s)" % multipoint_string
                 hierarchy_cap = hierarchy_name.capitalize()
                 if BoundaryCoord.objects.filter(boundary=boundary).exists():
-                    sql = "UPDATE boundary_coord SET coord=ST_Centroid('%s') WHERE id_bndry=%d;" % (multipoint_wkt, boundary.id,)
+                    sql = "UPDATE boundary_coord SET coord=ST_SetSRID(ST_Centroid('%s'), 4326) WHERE id_bndry=%d;" % (multipoint_wkt, boundary.id,)
                 else:
-                    sql = "INSERT INTO boundary_coord (id_bndry, type, coord) VALUES (%d, %s, ST_Centroid('%s'));" % (boundary.id, hierarchy_cap, multipoint_wkt,)
+                    sql = "INSERT INTO boundary_coord (id_bndry, type, coord) VALUES (%d, '%s', ST_SetSRID(ST_Centroid('%s'), 4326));" % (boundary.id, hierarchy_cap, multipoint_wkt,)
                 print sql
                 output_sql.write(sql + "\n")
         output_sql.close()
