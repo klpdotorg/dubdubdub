@@ -91,6 +91,16 @@ class Boundary(BaseModel):
         else:
             return 'school'
 
+    def get_admin_level(self):
+        if self.hierarchy_id in [9, 13]:
+            return 1
+        elif self.hierarchy_id in [10, 14]:
+            return 2
+        elif self.hierarchy_id in [11, 15]:
+            return 3
+        else:
+            return False
+
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
             return json.loads(self.boundarycoord.coord.geojson)

@@ -296,15 +296,6 @@ class BoundaryLibLevelAggSerializer(KLPSerializer):
         model = BoundaryLibLevelAgg
 
 
-class BoundarySchoolAggSerializer(KLPSerializer):
-    admin1 = BoundarySerializer(source='admin1')
-    admin2 = BoundarySerializer(source='admin2')
-    admin3 = BoundarySerializer(source='admin3')
-
-    class Meta:
-        model = BoundarySchoolAgg
-
-
 class AssessmentListSerializer(KLPSerializer):
     assid = serializers.IntegerField(source='assessment.id')
     studentgroup = serializers.CharField(source='studentgroup')

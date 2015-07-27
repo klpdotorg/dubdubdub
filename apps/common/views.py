@@ -1,7 +1,6 @@
 from django import http
 from django.views.generic.base import TemplateView
 from django.core.exceptions import PermissionDenied
-from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
