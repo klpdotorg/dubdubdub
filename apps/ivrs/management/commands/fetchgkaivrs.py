@@ -22,7 +22,7 @@ class Command(BaseCommand):
         if states:
             for state in states:
                 if not sane_state(state):
-                    continue
+                    state.is_invalid = True
                 else:
                     school = School.objects.get(id=state.school_id)
                     telephone = state.telephone
@@ -61,8 +61,7 @@ def sane_state(state):
     # 2. An answer to the 2nd question (class visited),
     # but no answers thereafter
 
-    NOT_SANE = False
-    SANE = True
+    SANE, NOT_SANE = True, False
 
     # Checking condition 1.
     if all(answer == 'NA' for answer in state.answers[1:]):
