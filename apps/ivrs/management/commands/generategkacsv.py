@@ -16,8 +16,11 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        today = datetime.now().date()
         states = State.objects.filter(
-            date_of_visit__lte=datetime.now()
+            date_of_visit__year=today.year,
+            date_of_visit__month=today.month,
+            date_of_visit__day=today.day
         )
 
         date = datetime.now().date().strftime("%d_%b_%Y")
