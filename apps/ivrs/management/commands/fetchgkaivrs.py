@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django.core.management.base import BaseCommand
 
-from .models import State
+from ivrs.models import State
 from stories.models import Story, UserType, Questiongroup, Answer
 
 class Command(BaseCommand):
