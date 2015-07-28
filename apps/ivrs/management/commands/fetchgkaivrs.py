@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.db import transaction
 from django.core.management.base import BaseCommand
 
 from ivrs.models import State
