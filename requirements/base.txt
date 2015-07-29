@@ -38,6 +38,9 @@ django-compressor==1.4
 #https://github.com/Hipo/drf-extra-fields (for Base64ImageField)
 django-extra-fields==0.1
 
+#https://github.com/niwinz/djorm-pgarray (for list storage in ivrs app)
+djorm-pgarray==1.2
+
 python-dateutil==2.3
 pytz==2014.10
 prettytable==0.7.2

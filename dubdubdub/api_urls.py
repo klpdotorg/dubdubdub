@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 # from django.views.decorators.cache import cache_page
 
 from common.views import URLConfigView
@@ -232,4 +232,5 @@ urlpatterns = patterns(
         ProgrammesList.as_view(), name='api_programme_list'),
     url(r'^programme/(?P<programme_id>[0-9]+)/$',
         ProgrammeInfo.as_view(), name='api_programme_info'),
+    url(r'^ivrs/', include('ivrs.api_urls')),
 )

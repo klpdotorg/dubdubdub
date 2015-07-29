@@ -349,6 +349,8 @@
                     } else {
                         data.latest_answers = null;
                     }
+                    data['school_id'] = SCHOOL_ID;
+                    data['school_type_id'] = SCHOOL_TYPE_ID;
                     // console.log("sys data", data);
                     return data;
 

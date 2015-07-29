@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -111,7 +110,9 @@ a {
 .italic, em, i {
   font-style: italic; }
 
-.bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
+.bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button-next,
+.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
 .picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
@@ -501,10 +502,12 @@ ol {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
+.border-radius-sm, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button-next,
+.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
 
-.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .icon-number, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
+.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -528,7 +531,9 @@ img, video {
 .align-right {
   text-align: right; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .icon-number, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button-next,
+.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
 
 .center-element, .box-info, .module-img-each, .module-img {
@@ -547,7 +552,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .icon-boy:before, .icon-girl:before, .module-img img, .compare-section-heading {
+.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .stepy-header li div .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .stepy-header li div .k-icon, .icon-boy:before, .icon-girl:before, .module-img img, .compare-section-heading {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -559,7 +564,9 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1, .pie-chart-gender, .compare-gender-pie {
+.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button-next,
+.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1, .pie-chart-gender, .compare-gender-pie {
   display: inline-block;
   vertical-align: middle; }
 
@@ -719,7 +726,7 @@ hr {
 .icon-left, .profile-options:before, .vol-oppor-icon, .label-compare-clear:before, .demo-do:before, .demo-dont:before {
   margin-right: 5px; }
 
-.icon-button-round, .icon-button-round-sm, .icon-button-round-lg {
+.icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div {
   padding: 5px;
   border: 2px solid;
   position: relative;
@@ -782,7 +789,9 @@ hr {
     right: 7px; }
 
 /*-------------------------------------*/
-.button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options {
+.button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button-next,
+.stepy-navigator input[type="submit"], .stepy-navigator input[type="file"] {
   font-size: 75%;
   text-transform: uppercase;
   line-height: 1;
@@ -4354,5 +4363,227 @@ input:-moz-placeholder::before {
 #improved li {
   position: relative;
   overflow: hidden; }
+
+.required:after {
+  content: "\f069";
+  color: #ec6608;
+  font-family: "FontAwesome";
+  vertical-align: super;
+  font-size: 60%;
+  margin-left: 5px; }
+
+@media only screen and (min-width: 750px) {
+  .table-base-sys tr td:nth-of-type(1) {
+    width: 65%; }
+  .table-base-sys tr td:nth-of-type(2) {
+    width: 10%; }
+  .table-base-sys tr td:nth-of-type(3) {
+    width: 10%; }
+  .table-base-sys tr td:nth-of-type(4) {
+    width: 15%; }
+
+  .form-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .form-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .half-item {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .quarter-item {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .threefourth-item {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (max-width: 749px) {
+  .table-base-sys tr th, .table-base-sys tr td {
+    padding: 0 0; }
+
+  .form-field-wrap {
+    padding: 5px 0; } }
+.fileupload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px; }
+
+.fileupload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0); }
+
+.image-preview {
+  padding-left: 15px; }
+
+@CHARSET "UTF-8";
+.stepy-header {
+  list-style: none;
+  padding: 0;
+  width: 100%; }
+
+.stepy-header li {
+  cursor: pointer;
+  float: left;
+  padding: 10px; }
+
+.stepy-header li.stepy-error {
+  content: "\f00d";
+  font-family: "FontAwesome";
+  display: inline-block;
+  vertical-align: middle; }
+
+.stepy-header li div {
+  max-width: 40px;
+  max-height: 50px;
+  display: block;
+  background-color: #26b262;
+  color: #fff;
+  font: bold 2.8em;
+  margin: 0 auto; }
+
+.stepy-header li.stepy-active div {
+  max-width: 40px;
+  max-height: 50px;
+  background-color: #ec6608;
+  display: block;
+  color: #fff;
+  cursor: auto;
+  margin: 0 auto; }
+
+.stepy-header li span {
+  color: #bbb;
+  font: 1.4em; }
+
+.stepy-header li.stepy-active span {
+  color: #ec6608; }
+
+@media only screen and (max-width: 749px) {
+  .stepy-header li div {
+    display: none; }
+
+  .stepy-header li.stepy-active div {
+    display: none; }
+
+  .stepy-header li span {
+    display: none; }
+
+  .stepy-header li.stepy-active span {
+    display: none; } }
+.stepy-step {
+  border: 1px solid #bbb;
+  clear: left;
+  padding: 15px 20px;
+  width: 100%;
+  -khtml-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -opera-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  margin-top: 25px; }
+
+.stepy-step legend {
+  font-family: Lato, sans-serif;
+  font-size: 140%;
+  font-stretch: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  color: #ec6608;
+  padding: 0 5px; }
+
+.stepy-step label {
+  color: #000;
+  display: block;
+  font-weight: 300;
+  margin: 10px 0 3px 1px; }
+
+.stepy-step input,
+.stepy-step textarea,
+.stepy-step select {
+  min-height: 35px;
+  padding: 8px;
+  width: 90%; }
+
+.stepy-step select {
+  height: 34px;
+  padding-top: 5px; }
+
+.stepy-step textarea {
+  height: 100px; }
+
+.stepy-step input[type="radio"] {
+  width: 10%;
+  color: #000; }
+
+.stepy-step input error {
+  border: 1px solid #cb0012; }
+
+.stepy-navigator {
+  height: 33px;
+  margin-top: 20px; }
+
+.button-back {
+  float: left; }
+
+.button-next,
+.stepy-navigator input[type="submit"] {
+  float: right; }
+
+.button-back,
+.button-next,
+.stepy-navigator input[type="submit"] {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
+  background-color: #ec6608;
+  color: #fff; }
+
+.stepy-navigator input[type="file"] {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
+  background-color: #26b262;
+  color: #fff; }
+
+.stepy-navigator input[type="submit"] {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
+  background-color: #ec6608;
+  color: #fff;
+  width: 90px; }
+
+.button-back:hover,
+.button-next:hover,
+.stepy-navigator input[type="submit"]:hover {
+  background-color: #faa060;
+  color: #4d4d4d; }
+
+/*--- with font awesome icons ----*/
+/*.stepy-header li.stepy-active div {visibility: collapse;} 
+    .stepy-header li.stepy-active div:after { 
+        visibility: visible;
+        margin: -30px auto;
+        content: "\f21c"; 
+        background-image: url(/static/images/story/auto.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        font-family: $font-icon;
+        position: absolute;*/
 
 /*# sourceMappingURL=style.css.map */

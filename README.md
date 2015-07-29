@@ -43,6 +43,7 @@ When developing locally, add the following line to local_settings.py to output e
 and go to `http://localhost:8001`
 
 #### CSS workflow:
+
 1. Add a partial to assets/static/sass/dev and import it in assets/static/sass/style.scss. For example, see [assets/static/sass/dev/_sample.scss](https://github.com/klpdotorg/dubdubdub/blob/develop/assets/static/sass/dev/_sample.scss).
 
 2. Run Sass before you commit the changes
@@ -69,3 +70,11 @@ Make sure the runtests.sh script has execute permissions. Then, run the shell sc
 ./runtests.sh
 
 All the unit tests should pass.
+
+#### Skipping DB creation when unit tests execute
+
+The unit test script creates a test database and then executes tests against it. To skip creation of a database and leverage existing ones, run the script like so:
+
+./runtests.sh skipdbcreate
+
+The DB to use should be updated in the test_settings file.

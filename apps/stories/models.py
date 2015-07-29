@@ -166,6 +166,10 @@ def story_updated(sender, instance=None, created=False, **kwargs):
     if not created:
         return
 
+    #if the story is not created from the web, don't send an email.
+    if not instance.group.source.name == 'web':
+        return
+
     send_templated_mail(
         from_email=settings.EMAIL_DEFAULT_FROM,
         to_emails=[instance.email, 'team@klp.org.in'],

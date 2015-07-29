@@ -1,0 +1,113 @@
+@CHARSET "UTF-8";
+
+.stepy-header { list-style: none; padding: 0; width: 100% }
+  .stepy-header li { cursor: pointer; float: left; padding: 10px; }
+    .stepy-header li.stepy-error { 
+      content: "\f00d";
+      font-family: $font-icon;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .stepy-header li div { @extend %icon-button-round; @extend %center-text; max-width:40px; max-height:50px; display:block; background-color:$brand-green; color: $white; font: bold 2.8em ; margin: 0 auto; }
+    
+
+    .stepy-header li.stepy-active div{
+        @extend %icon-button-round; 
+        max-width:40px; 
+        max-height:50px; 
+        background-color:$brand-orange;
+        display:block; 
+        color: $white; 
+        cursor: auto; 
+        margin: 0 auto;
+    }
+    .stepy-header li span { color: $grey-silver; font: 1.4em  }
+    .stepy-header li.stepy-active span { color: $brand-orange }
+
+@include media-med-maxwidth{
+    .stepy-header li div {display:none;}
+    .stepy-header li.stepy-active div {display:none;}
+    .stepy-header li span {display:none;}
+    .stepy-header li.stepy-active span {display:none;}
+}
+
+.stepy-step { border: 1px solid $grey-silver; clear: left; padding: 15px 20px; width: 100%; -khtml-border-radius: 3px; -moz-border-radius: 3px; -opera-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin-top:25px; }
+  .stepy-step legend { 
+    font-family: Lato, sans-serif;
+    font-size: 140%;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    color: $brand-orange;
+    padding: 0 5px;
+  }
+
+  .stepy-step label { color: $black; display: block; font-weight: 300; margin: 10px 0 3px 1px }
+
+  .stepy-step input,
+  .stepy-step textarea,
+  .stepy-step select { min-height: 35px; padding: 8px; width: 90% }
+
+  .stepy-step select { height: 34px; padding-top: 5px }
+
+  .stepy-step textarea { height: 100px }
+
+  .stepy-step input[type="radio"] { 
+    width: 10%;
+    color: $black;
+  }
+
+  .stepy-step input error {border: 1px solid $brand-red;}
+
+  .stepy-navigator { height: 33px; margin-top: 20px }
+    .button-back { float: left }
+
+    .button-next,
+    .stepy-navigator input[type="submit"] { float: right }
+
+    .button-back,
+    .button-next,
+    .stepy-navigator input[type="submit"] { 
+      @extend %button-base;
+      text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+      box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
+      background-color: $brand-orange;
+      color: $white;
+    }
+
+    .stepy-navigator input[type="file"] { 
+      @extend %button-base;
+      text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+      box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
+      background-color: $brand-green;
+      color: $white;
+    }
+
+    .stepy-navigator input[type="submit"] { 
+      @extend %button-base;
+      text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+      box-shadow: 0px -3px 0px rgba(0,0,0,0.2) inset;
+      background-color: $brand-orange;
+      color: $white;
+      width: 90px;
+    }
+
+    .button-back:hover,
+    .button-next:hover,
+    .stepy-navigator input[type="submit"]:hover { background-color: $orange-mild;
+      color: $grey-gravel;
+ }
+
+/*--- with font awesome icons ----*/
+/*.stepy-header li.stepy-active div {visibility: collapse;} 
+    .stepy-header li.stepy-active div:after { 
+        visibility: visible;
+        margin: -30px auto;
+        content: "\f21c"; 
+        background-image: url(/static/images/story/auto.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        font-family: $font-icon;
+        position: absolute;*/
