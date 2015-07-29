@@ -9,11 +9,13 @@
         klp.accordion.init();
         klp.router = new KLPRouter();
         klp.router.init();
-       initSelect2();
+        initSelect2();
         klp.router.events.on('hashchange', function(event, params) {
             hashChanged(params);
         });
         klp.router.start();
+        $('#startDate').yearMonthSelect("init");
+        $('#endDate').yearMonthSelect("init");
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
@@ -32,9 +34,11 @@
             _.each(_.keys(currentQueryParams), function(key) {
                 currentQueryParams[key] = null;
             });
-            currentQueryParams['from'] = $('#fromdate').val();
-            currentQueryParams['to'] = $('#todate').val();
-            hashChanged({'queryParams':currentQueryParams});
+            currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
+            currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
+            console.log("currentQueryParams", currentQueryParams);
+            klp.router.setHash('', currentQueryParams);
+            //hashChanged({'queryParams':currentQueryParams});
         });
     }
 

@@ -23,9 +23,10 @@
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/init.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
-
+  <script type="text/javascript" src="{% static 'js/common/jquery.yearMonthSelect.js' %}"></script>
   {% endcompress %}
 {% endblock %}
 
@@ -54,29 +55,25 @@
 				  	<div class="chart-parent dateform">
 						<div class="chart-half-item align-fromdate">
 							<!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
-							<div class="form-field-wrap">
+							<div class="form-field-wrap" id="startDate">
 							    <label class="label-inline bold">Start Date</label><br/>
-							    <select>
-							      <option>Jun</option>
-							      <option>Option 2</option>
+							    <select class="month">
+
 							    </select>
-							    <select>
-							      <option>2014</option>
-							      <option>Option 2</option>
+							    <select class="year">
+
 							    </select>
 							 </div>
 						</div>
 						<div class="chart-half-item align-left">
 							<!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
-							<div class="form-field-wrap">
+							<div class="form-field-wrap" id="endDate">
 							    <label class="label-inline bold">End Date</label><br/>
-							    <select>
-							      <option>Jun</option>
-							      <option>Option 2</option>
+							    <select class="month">
+
 							    </select>
-							    <select>
-							      <option>2015</option>
-							      <option>Option 2</option>
+							    <select class="year">
+
 							    </select>
 							 </div>
 						</div>
