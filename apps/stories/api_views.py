@@ -380,7 +380,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                 date_of_visit__lte=end_date)
 
         if source:
-            school_qset, stories_qset = self.source_filter(
+            stories_qset = self.source_filter(
                 source, stories_qset)
 
             response_json[source] = self.get_json(source, stories_qset)
