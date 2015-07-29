@@ -109,6 +109,7 @@ class Boundary(BaseModel):
 
     def schools(self):
         return School.objects.filter(
+            Q(status=2),
             Q(schooldetails__admin1=self) | Q(schooldetails__admin2=self) | Q(schooldetails__admin3=self)
         )
 
@@ -493,4 +494,4 @@ class MeetingReport(BaseModel):
     language = models.CharField(max_length=128)
 
     def __unicode__(self):
-        return "%d: %s" % (self.school.id, self,language,)
+        return "%d: %s" % (self.school.id, self.language,)

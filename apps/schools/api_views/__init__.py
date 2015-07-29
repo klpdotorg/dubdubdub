@@ -6,9 +6,7 @@ from .school import (
 from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
 )
-from .aggregations import (
-    BoundaryLibLangAggView, BoundaryLibLevelAggView, BoundarySchoolAggView
-)
+from .aggregations import *
 from .boundary import (
     Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails, AssemblyDetails,

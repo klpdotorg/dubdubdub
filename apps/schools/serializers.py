@@ -8,7 +8,7 @@ from schools.models import (
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescoreGender, MeetingReport,
-    BoundaryLibLangAgg, BoundaryLibLevelAgg, BoundarySchoolAgg
+    BoundaryLibLangAgg, BoundaryLibLevelAgg
 )
 
 
