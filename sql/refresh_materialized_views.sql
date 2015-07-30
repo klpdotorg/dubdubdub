@@ -21,7 +21,3 @@ REFRESH MATERIALIZED VIEW mvw_dise_display_master;
 REFRESH MATERIALIZED VIEW mvw_paisa_data;
 REFRESH MATERIALIZED VIEW mvw_school_eval;
 REFRESH MATERIALIZED VIEW mvw_anginfra_agg;
-REFRESH MATERIALIZED VIEW mvw_boundary_school_agg;
-REFRESH MATERIALIZED VIEW mvw_assembly_school_agg;
-REFRESH MATERIALIZED VIEW mvw_parliament_school_agg;
-REFRESH MATERIALIZED VIEW mvw_pincode_school_agg;
