@@ -251,6 +251,22 @@ def api_root(request, format=None):
                 'api_aggregation_boundary_liblevel',
                 request=request, format=format, kwargs={'id': 8967}
             ),
+            'School Aggregations for Boundary': reverse(
+                'api_aggregation_boundary_schools',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
+            'School Aggregations for Assembly': reverse(
+                'api_aggregation_assembly_schools',
+                request=request, format=format, kwargs={'id': 129}
+            ),
+            'School Aggregations for Parliament': reverse(
+                'api_aggregation_parliament_schools',
+                request=request, format=format, kwargs={'id': 12}
+            ),
+            'School Aggregations for Pincode': reverse(
+                'api_aggregation_pincode_schools',
+                request=request, format=format, kwargs={'id': 560008}
+            ),
         },
 
         'Geo': {
