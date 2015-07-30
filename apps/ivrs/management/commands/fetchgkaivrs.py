@@ -4,7 +4,9 @@ from django.db import transaction
 from django.core.management.base import BaseCommand
 
 from ivrs.models import State
+from ivrs.utils import get_question
 from stories.models import Story, UserType, Questiongroup, Answer
+from schools.models import School
 
 class Command(BaseCommand):
     args = ""
@@ -43,7 +45,7 @@ class Command(BaseCommand):
                         user_type=akshara_staff
                     )
 
-                    for (question_number, answer) in enumerate(state.answers):
+                    for (question_number, answer) in enumerate(state.answers[1:]):
                         if answer != 'NA':
                             question = get_question(question_number+1)
                             answer = Answer.objects.get_or_create(
@@ -67,8 +69,8 @@ def sane_state(state):
     if all(answer == 'NA' for answer in state.answers[1:]):
         return NOT_SANE
     # Checking condition 2.
-    elif state.answers[2] != 'NA':
+    if state.answers[2] != 'NA':
         if all(answer == 'NA' for answer in state.answers[2:]):
             return NOT_SANE
-    else:
-        return SANE
+        else:
+            return SANE
