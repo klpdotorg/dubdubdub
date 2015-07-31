@@ -12,7 +12,9 @@ from schools.api_views import (
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
     PincodeDetails, SchoolNutrition, MergeEndpoints,
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
+    BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
+    AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView
 )
 
 from users.api_views import (
@@ -222,6 +224,19 @@ urlpatterns = patterns(
     #     DonationTypeView.as_view(),
     #     name='api_donationtype_view'),
 
+    # Aggregation Views
+    url(r'^aggregation/assembly/(?P<id>[0-9]+)/schools/$',
+        AssemblySchoolAggView.as_view(), name='api_aggregation_assembly_schools'),
+    url(r'^aggregation/parliament/(?P<id>[0-9]+)/schools/$',
+        ParliamentSchoolAggView.as_view(), name='api_aggregation_parliament_schools'),
+    url(r'^aggregation/pincode/(?P<id>[0-9]+)/schools/$',
+        PincodeSchoolAggView.as_view(), name='api_aggregation_pincode_schools'),
+    url(r'^aggregation/boundary/(?P<id>[0-9]+)/schools/$',
+        BoundarySchoolAggView.as_view(), name='api_aggregation_boundary_schools'),
+    url(r'^aggregation/boundary/(?P<id>[0-9]+)/library-level/$',
+        BoundaryLibLevelAggView.as_view(), name='api_aggregation_boundary_liblevel'),
+    url(r'^aggregation/boundary/(?P<id>[0-9]+)/library-language/$',
+        BoundaryLibLangAggView.as_view(), name='api_aggregation_boundary_liblang'),
 
     # Assessment urls
     url(r'^assessment/$',
