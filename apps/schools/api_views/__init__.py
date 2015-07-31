@@ -1,16 +1,29 @@
-from .school import (SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
+from .school import (
+    SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
     SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
-    SchoolLibrary, SchoolNutrition)
-from .boundary import (Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
+    SchoolLibrary, SchoolNutrition
+)
+from .assessment import (
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
+)
+from .aggregations import *
+from .boundary import (
+    Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,
     Admin2s, Admin3sInsideAdmin2, Admin3s, AdminDetails, AssemblyDetails,
-    ParliamentDetails, PincodeDetails)
-from .geo import (Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
-    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool)
+    ParliamentDetails, PincodeDetails, AssemblyList, ParliamentList,
+    AssemblyInParliament
+)
+from .geo import (
+    Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
+    PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool
+)
 
 from common.views import KLPAPIView
 import dubdubdub.api_urls
-from schools.serializers import (SchoolListSerializer, BoundarySerializer,
-    AssemblySerializer, ParliamentSerializer, PincodeSerializer)
+from schools.serializers import (
+    SchoolListSerializer, BoundarySerializer,
+    AssemblySerializer, ParliamentSerializer, PincodeSerializer
+)
 from schools.models import School, Boundary, Assembly, Parliament, Postal
 
 from rest_framework.decorators import api_view
@@ -227,6 +240,33 @@ def api_root(request, format=None):
                                          format=format, kwargs={'id': 8889}),
 
             'Admin3s': reverse('api_admin3s', request=request, format=format)
+        },
+
+        'Aggregation': {
+            'Boundary Library Language': reverse(
+                'api_aggregation_boundary_liblang',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
+            'Boundary Library Level': reverse(
+                'api_aggregation_boundary_liblevel',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
+            'School Aggregations for Boundary': reverse(
+                'api_aggregation_boundary_schools',
+                request=request, format=format, kwargs={'id': 8967}
+            ),
+            'School Aggregations for Assembly': reverse(
+                'api_aggregation_assembly_schools',
+                request=request, format=format, kwargs={'id': 129}
+            ),
+            'School Aggregations for Parliament': reverse(
+                'api_aggregation_parliament_schools',
+                request=request, format=format, kwargs={'id': 12}
+            ),
+            'School Aggregations for Pincode': reverse(
+                'api_aggregation_pincode_schools',
+                request=request, format=format, kwargs={'id': 560008}
+            ),
         },
 
         'Geo': {

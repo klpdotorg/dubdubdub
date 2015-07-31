@@ -16,7 +16,7 @@ class Command(BaseCommand):
     args = "<dates month year>"
     help = """Import data from IVRS
 
-    ./manage.py fetchivrs --from=20/12/2014 --to=21/12/2014"""
+    ./manage.py fetchivrs --from=31/08/2014 --to=05/12/2014"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
@@ -25,17 +25,20 @@ class Command(BaseCommand):
                     help='The date until which to fetch ivrs data '),
     )
 
-    try:
-        f = open('ivrs_error.log')
-        ivrs_errors = json.loads(f.read())
-        f.close()
-    except:
-        ivrs_errors = []
-
     @transaction.atomic
     def handle(self, *args, **options):
         from_date = options.get('from', None)
         to_date = options.get('to', None)
+
+        error_file = '/var/log/ivrs/error_' + \
+                     timezone.now().date().strftime("%m%d%Y") + '.log'
+
+        try:
+            f = open(error_file)
+            ivrs_errors = json.loads(f.read())
+            f.close()
+        except:
+            ivrs_errors = []
 
         if from_date or to_date:
             if from_date and to_date:
@@ -116,10 +119,10 @@ class Command(BaseCommand):
         year = date.split("/")[2]
 
         if not self.is_day_correct(day):
-            return (False, "Please enter a valid day in between 1 and 31")
+            return (False, "Please enter a valid day in between 1 and 31 in the format DD")
 
         if not self.is_month_correct(month):
-            return (False, "Please enter a valid month in between 1 and 12")
+            return (False, "Please enter a valid month in between 1 and 12 in the format MM")
 
         if not self.is_year_correct(year):
             return (False, "Please ensure year format is '2014' and it is <= current year")
@@ -127,10 +130,10 @@ class Command(BaseCommand):
         return (True, "Parameters accepted. Commencing data fetch")
 
     def is_day_correct(self, day):
-        return int(day) in range(1,32)
+        return (len(day) == 2 and int(day) in range(1,32))
 
     def is_month_correct(self, month):
-        return int(month) in range(1,13)
+        return (len(month) == 2 and int(month) in range(1,13))
 
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
@@ -141,7 +144,7 @@ class Command(BaseCommand):
         telephone = json['Mobile Number']
 
         school = School.objects.get(id=school_id)
-        question_group = Questiongroup.objects.get(source__name="ivrs")
+        question_group = Questiongroup.objects.get(version=1, source__name="ivrs")
         date = datetime.datetime.strptime(
             date, '%Y-%m-%d %H:%M:%S'
         )

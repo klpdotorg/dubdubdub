@@ -3,24 +3,27 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.core.urlresolvers import resolve, Resolver404
 from django.conf import settings
-from django.db.models import Q
-from django.utils import timezone
+from django.db.models import Q, Count
 
 from schools.models import School, SchoolDetails
 from users.models import User
-from .models import Question, Story, StoryImage, Answer, Questiongroup
+from .models import (Question, Story, StoryImage, Answer, Questiongroup,
+                     UserType, Source)
 from .serializers import (SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer)
 
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+from common.mixins import CacheMixin
+from common.utils import Date
 from rest_framework.exceptions import (APIException, PermissionDenied,
     ParseError, MethodNotAllowed, AuthenticationFailed)
 from rest_framework import authentication, permissions
 
 import random
+import calendar
 import datetime
 from base64 import b64decode
-from collections import Counter
+from collections import Counter, OrderedDict
 from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
@@ -34,102 +37,401 @@ class StoryInfoView(KLPAPIView):
             'total_images': StoryImage.objects.all().count()
         })
 
+class StoryVolumeView(KLPAPIView, CacheMixin):
+    """Returns the number of stories per month per year.
 
-class StoryMetaView(KLPAPIView):
-    """Returns:
-    1. Total number of Stories for Primary or Pre school for a
-    given source.
-    2. Number of responses per month for Primary or Pre school
-    for a given source, for a given Block/Project and/or
-    Cluster/Circle.
-    3. Questions and their corresponsing answers for
-    Primary or Pre schools for a given source, for a given
-    Block/Project and/or Cluster/Circle.
-
-    source -- Source of data [web/ivrs].
-    admin1 -- ID of the District to search inside.
-    admin2 -- ID of the Block/Project to search inside.
-    admin3 -- ID of the Cluster/Circle to search inside.
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
     """
 
     def get(self, request):
-        qset = Story.objects.filter()
-        source = self.request.QUERY_PARAMS.get('source', None)
-        admin1_id = self.request.QUERY_PARAMS.get('district', None)
-        admin2_id = self.request.QUERY_PARAMS.get('block', None)
-        admin3_id = self.request.QUERY_PARAMS.get('cluster', None)
-        school_type = self.request.QUERY_PARAMS.get('school_type', None)
+        admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
+        admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
+        admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
+        school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
+        start_date = self.request.QUERY_PARAMS.get('from', None)
+        end_date = self.request.QUERY_PARAMS.get('to', None)
+        school_type = self.request.QUERY_PARAMS.get(
+            'school_type', 'Primary School')
 
-        if not source:
-            raise APIException("Source (ivrs, web) not mentioned")
+        date = Date()
+        if start_date:
+            sane = date.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
+            else:
+                start_date = date.get_datetime(start_date)
 
-        if not school_type:
-            raise APIException("School Type (Primary School, PreSchool) not mentioned")
+        if end_date:
+            sane = date.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
+            else:
+                end_date = date.get_datetime(end_date)
 
         response_json = {}
-        response_json['school_type'] = school_type
 
-        question_group = Questiongroup.objects.get(
-            source__name=source)
+        stories_qset = Story.objects.filter(
+            school__admin3__type__name=school_type)
 
-        # Number of Responses
-        total_responses = qset.filter(
-            group=question_group, school__admin3__type__name=school_type
-        ).count()
-
-        yesterday = timezone.now().date() - datetime.timedelta(days=1)
-
-        responses_yesterday = qset.filter(
-            group=question_group,
-            school__admin3__type__name=school_type,
-            date_of_visit=yesterday
-        ).count()
-
-        response_json['total_responses'] = total_responses
-        response_json['responses_yesterday'] = responses_yesterday
-
-        # Number of Responses per month
         if admin1_id:
-            qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin1__id=admin1_id)
 
         if admin2_id:
-            qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin2__id=admin2_id)
 
         if admin3_id:
-            qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin3__id=admin3_id)
 
-        story_dates = qset.filter(
-            group=question_group, school__admin3__type__name=school_type
-        ).values_list('date_of_visit', flat=True)
+        if school_id:
+            stories_qset = stories_qset.filter(
+                school=school_id)
 
-        per_month_responses = dict(Counter(
-            [date.month for date in story_dates]))
+        if mp_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
 
-        response_json['per_month_responses'] = per_month_responses
+        if mla_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
 
-        # List of questions and their answer counts
-        questions = Question.objects.filter(
-            questiongroup=question_group,
-            school_type__name=school_type,
-        ).select_related(
-            'question_type', 'school_type'
-        ).prefetch_related('answer_set')
+        if start_date:
+            stories_qset = stories_qset.filter(
+                date_of_visit__gte=start_date)
 
-        response_json['questions'] = []
+        if end_date:
+            stories_qset = stories_qset.filter(
+                date_of_visit__lte=end_date)
 
-        for question in questions:
-            j = {}
-            j['question'] = question.text
-            j['answers'] = {}
-            j['answers']['question_type'] = question.question_type.name
-            j['answers']['options'] = dict(
-                Counter([a.text for a in question.answer_set.filter(story__in=qset)])
+        story_dates = stories_qset.values_list('date_of_visit', flat=True)
+
+        json = {}
+        for date in story_dates:
+            if date.year in json:
+                json[date.year].append(date.month)
+            else:
+                json[date.year] = []
+                json[date.year].append(date.month)
+
+        per_month_json = {}
+        for year in json:
+            per_month_json[year] = dict(Counter(
+                [calendar.month_abbr[date] for date in json[year]])
             )
 
-            response_json['questions'].append(j)
+        ordered_per_month_json = {}
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+        for year in per_month_json:
+            ordered_per_month_json[year] = OrderedDict()
+            for month in months:
+                ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
+
+        response_json['volumes'] = ordered_per_month_json
+        return Response(response_json)
+
+
+class StoryDetailView(KLPAPIView, CacheMixin):
+    """Returns questions and their corresponding answers.
+
+    source -- Source of data [web/ivrs].
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
+    def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
+        admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
+        admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
+        admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
+        school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
+        start_date = self.request.QUERY_PARAMS.get('from', None)
+        end_date = self.request.QUERY_PARAMS.get('to', None)
+        school_type = self.request.QUERY_PARAMS.get(
+            'school_type', 'Primary School')
+
+        date = Date()
+        if start_date:
+            sane = date.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
+            else:
+                start_date = date.get_datetime(start_date)
+
+        if end_date:
+            sane = date.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
+            else:
+                end_date = date.get_datetime(end_date)
+
+        stories = Story.objects.all()
+
+        if source:
+            stories = stories.filter(group__source__name=source)
+
+        if school_type:
+            stories = stories.filter(school__admin3__type__name=school_type)
+
+        if admin1_id:
+            stories = stories.filter(
+                school__schooldetails__admin1__id=admin1_id
+            )
+
+        if admin2_id:
+            stories = stories.filter(
+                school__schooldetails__admin2__id=admin2_id
+            )
+
+        if admin3_id:
+            stories = stories.filter(
+                school__schooldetails__admin3__id=admin3_id
+            )
+
+        if school_id:
+            stories = stories.filter(school__id=school_id)
+
+        if mp_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
+
+        if mla_id:
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
+
+        if start_date:
+            stories = stories.filter(date_of_visit__gte=start_date)
+
+        if end_date:
+            stories = stories.filter(date_of_visit__lte=end_date)
+
+        response_json = {}
+
+        # Sources and filters
+        if source:
+            response_json[source] = self.get_que_and_ans(
+                stories, source, school_type)
+        else:
+            sources = Source.objects.all().values_list('name', flat=True)
+            for source in sources:
+                response_json[source] = self.get_que_and_ans(
+                    stories, source, school_type)
 
         return Response(response_json)
+
+    def get_que_and_ans(self, stories, source, school_type):
+        response_list = []
+
+        questions = Question.objects.filter(
+            is_featured=True).select_related(
+                'question_type', 'school_type'
+            )
+
+        if source:
+            questions = questions.filter(
+                questiongroup__source__name=source)
+
+        if school_type:
+            questions = questions.filter(
+                school_type__name=school_type)
+
+        for question in questions.distinct('id'):
+            j = {}
+            j['question'] = {}
+            j['question']['key'] = question.key
+            j['question']['text'] = question.text
+            j['question']['display_text'] = question.display_text
+            j['answers'] = {}
+            j['answers']['question_type'] = question.question_type.name
+
+            answer_counts = question.answer_set.filter(
+                story__in=stories
+            ).values('text').annotate(answer_count=Count('text'))
+
+            options = {}
+            for count in answer_counts:
+                options[count['text']] = count['answer_count']
+            j['answers']['options'] = options
+
+            response_list.append(j)
+
+        return response_list
+
+class StoryMetaView(KLPAPIView, CacheMixin):
+    """Returns total number of stories and schools with stories
+    along with respondent types.
+
+    source -- Source of data [web/ivrs].
+    admin1 -- ID of the District.
+    admin2 -- ID of the Block/Project.
+    admin3 -- ID of the Cluster/Circle.
+    school_id -- ID of the school.
+    mp_id -- ID of the MP constituency.
+    mla_id -- ID of the MLA constituency.
+    from -- YYYY-MM-DD from when the data should be filtered.
+    to -- YYYY-MM-DD till when the data should be filtered.
+    school_type -- Type of School [Primary School/PreSchool].
+    """
+
+    def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
+        admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
+        admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
+        admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
+        school_id = self.request.QUERY_PARAMS.get('school_id', None)
+        mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
+        mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
+        start_date = self.request.QUERY_PARAMS.get('from', None)
+        end_date = self.request.QUERY_PARAMS.get('to', None)
+        school_type = self.request.QUERY_PARAMS.get(
+            'school_type', 'Primary School')
+        date = Date()
+        if start_date:
+            sane = date.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
+            else:
+                start_date = date.get_datetime(start_date)
+
+        if end_date:
+            sane = date.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
+            else:
+                end_date = date.get_datetime(end_date)
+
+        school_qset = School.objects.filter(
+            admin3__type__name=school_type, status=2)
+        stories_qset = Story.objects.filter(
+            school__admin3__type__name=school_type)
+
+        if admin1_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin1__id=admin1_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin1__id=admin1_id)
+
+        if admin2_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin2__id=admin2_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin2__id=admin2_id)
+
+        if admin3_id:
+            school_qset = school_qset.filter(
+                schooldetails__admin3__id=admin3_id)
+            stories_qset = stories_qset.filter(
+                school__schooldetails__admin3__id=admin3_id)
+
+        if school_id:
+            school_qset = school_qset.filter(id=school_id)
+            stories_qset = stories_qset.filter(
+                school=school_id)
+
+        if mp_id:
+            school_qset = school_qset.filter(
+                electedrep__mp_const__id=mp_id)
+            stories_qset = stories_qset.filter(
+                school__electedrep__mp_const__id=mp_id)
+
+        if mla_id:
+            school_qset = school_qset.filter(
+                electedrep__mla_const__id=mla_id)
+            stories_qset = stories_qset.filter(
+                school__electedrep__mla_const__id=mla_id)
+
+        response_json = {}
+
+        response_json['total'] = {}
+        response_json['total']['schools'] = school_qset.count()
+        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
+        response_json['total']['stories'] = stories_qset.count()
+
+        if start_date:
+            #school_qset = school_qset.filter(
+            #    story__date_of_visit__gte=start_date)
+            stories_qset = stories_qset.filter(
+                date_of_visit__gte=start_date)
+
+        if end_date:
+            # school_qset = school_qset.filter(
+            #     story__date_of_visit__lte=end_date)
+            stories_qset = stories_qset.filter(
+                date_of_visit__lte=end_date)
+
+        if source:
+            stories_qset = self.source_filter(
+                source, stories_qset)
+
+            response_json[source] = self.get_json(source, stories_qset)
+        else:
+            sources = Source.objects.all().values_list('name', flat=True)
+            for source in sources:
+                stories = self.source_filter(
+                    source, stories_qset)
+                response_json[source] = self.get_json(source, stories)
+
+        response_json['respondents'] = self.get_respondents(stories_qset)
+
+        return Response(response_json)
+
+    def get_respondents(self, stories_qset):
+        usertypes = {
+            'PR' : 'PARENTS',
+            'TR' : 'TEACHERS',
+            'VR' : 'VOLUNTEER',
+            'CM' : 'CBO_MEMBER',
+            'HM' : 'HEADMASTER',
+            'SM' : 'SDMC_MEMBER',
+            'LL' : 'LOCAL_LEADER',
+            'AS' : 'AKSHARA_STAFF',
+            'EY' : 'EDUCATED_YOUTH',
+            'EO' : 'EDUCATION_OFFICIAL',
+            'ER' : 'ELECTED_REPRESENTATIVE',
+        }
+        user_counts = UserType.objects.filter(
+            story__in=stories_qset
+        ).annotate(
+            story_count=Count('story')
+        )
+        return {usertypes[user.name]: user.story_count for user in user_counts}
+
+    def source_filter(self, source, stories_qset):
+        stories_qset = stories_qset.filter(
+            group__source__name=source)
+
+        return stories_qset
+
+    def get_json(self, source, stories_qset):
+        json = {}
+        json['schools'] = stories_qset.distinct('school').count()
+        json['stories'] = stories_qset.count()
+        if source == "web":
+            json['verified_stories'] = stories_qset.filter(
+                is_verified=True,
+            ).count()
+
+        return json
 
 
 class StoryQuestionsView(KLPDetailAPIView):
@@ -211,7 +513,7 @@ class ShareYourStoryView(KLPAPIView):
         comments = request.POST.get('comments', '')
         telephone = request.POST.get('telephone', '')
         date_of_visit = date_parse(request.POST.get('date_of_visit', ''), yearfirst=True)
-
+        question_group = Questiongroup.objects.get(source__name='web', version=2)
         try:
             school = School.objects.get(pk=pk)
         except Exception, e:
@@ -225,7 +527,7 @@ class ShareYourStoryView(KLPAPIView):
             school=school,
             telephone=telephone,
             date_of_visit=date_of_visit,
-            group_id=1,
+            group=question_group,
             comments=comments.strip()
         )
         story.save()
@@ -241,10 +543,10 @@ class ShareYourStoryView(KLPAPIView):
             if not key.startswith('question_'):
                 continue
 
-            _, qid = key.split('_')
+            qkey = key.replace("question_", "")
             try:
                 question = Question.objects.get(
-                    qid=qid,
+                    key=qkey,
                     school_type=school.schooldetails.type,
                     is_active=True
                 )

@@ -41,9 +41,13 @@ var KLPRouter = function(routes) {
 
     this.hashChanged = function(e) {
         var previousURL, previousQueryParams;
-        if (e) {
+        if (e && e.oldURL) {
             var oldFullURL = e.oldURL;
-            var oldHash = oldFullURL.split('#')[1];
+            if (oldFullURL.indexOf("#") !== -1) {
+                var oldHash = oldFullURL.split('#')[1];
+            } else {
+                var oldHash = '';
+            }
             previousQueryParams = getQueryParams(oldHash);
             previousURL = getURL(oldHash);
             // console.log('previous params', previousURL, previousQueryParams);

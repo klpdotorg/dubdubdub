@@ -21,6 +21,10 @@ DATABASES = {
     }
 }
 
+DATA_IMPORT_DIR = os.path.join(PROJECT_ROOT, 'data')
+
+DEFAULT_ACADEMIC_YEAR = '2013-2014'
+
 EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
@@ -164,6 +168,8 @@ INSTALLED_APPS = (
     'schools',
     'users',
     'stories',
+    'imports',
+    'ivrs',
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -229,8 +235,8 @@ CACHES = {
     }
 }
 
-# How long will the cache last? A: 10 days
-CACHE_TIMEOUT = 60 * 60 * 24 * 10
+# How long will the cache last?
+CACHE_TIMEOUT = 60 * 60 * 24
 
 # Should cache be used or not? A: Yes
 CACHE_ENABLED = True

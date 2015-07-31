@@ -1,0 +1,14 @@
+/* CSS for accordian panels with accordian.js*/
+
+.head { 
+	display:block;
+}
+
+.content { 
+	display:none;
+}
+
+#improved li {
+	position:relative;
+	overflow:hidden;
+}

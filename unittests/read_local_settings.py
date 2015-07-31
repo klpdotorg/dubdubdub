@@ -6,6 +6,7 @@ import os
 
 # Reads the django settings file and returns the DB name
 def parse_local_settings():
+    sys.path.append('../')
     os.environ['DJANGO_SETTINGS_MODULE'] = 'dubdubdub.settings'
     db_properties= settings.DATABASES['default']
     dbName=db_properties['NAME']

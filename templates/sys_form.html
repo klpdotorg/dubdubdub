@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Share Your Story{% endblock %}
+
+{% block css_extra %}
+<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+<style>
+  code {
+    font-family: 'Source Code Pro';
+  }
+
+</style>
+ <!--link href='http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css' rel='stylesheet' type='text/css'-->
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  <!--script type="text/javascript" src="{% static 'js/lib/jquery.validate.min.js' %}"></script-->
+  <script type="text/javascript" src="{% static 'js/lib/jquery.stepy.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/sys/init.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="clearfix">
+  <div class="base-spacing-mid"></div>
+    <section class="container" id="school_sys">
+      <div class="form-parent">
+        <div class="threefourth-item">
+          <div class="info-wrapper" id="school-info-wrapper">
+            <h4 class="school-type-{{ school_type }}">
+              <span class="icon-number">
+                {% if school_type == 'school' %}
+                 S 
+                {% else %}
+                P
+                {% endif %}
+              </span>
+              {{ object.name }}
+            </h4>
+            
+            <ul class="map-location-labels font-smallest">  
+              <li class="map-label-each">
+                <div class="map-label-title">
+                  District
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin1.name|capfirst }}
+                </div>
+              </li><li class="map-label-each">
+                <div class="map-label-title">
+                  {% if school_type == 'school' %}
+                    Block
+                  {% else %}
+                    Project
+                  {% endif %}
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin2.name|capfirst }}
+                </div>
+              </li><li class="map-label-each">
+                <div class="map-label-title">
+                  {% if school_type == 'school' %}
+                    Cluster
+                  {% else %}
+                    Circle
+                  {% endif %}
+                </div>
+                <div class="map-label-name">
+                  {{ object.schooldetails.admin3.name|capfirst }}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="quarter-item">
+          <!--div class="module-img">
+            <img src="/static/images/auto.png" class="auto-img" alt="Icon: Auto">
+          </div-->
+          <p class="center-text grey-silver">We have {{ total_verified_stories }} Stories and {{ total_images }} Images across all schools and preschools, so far. Thanks to visitors like you!</p>
+
+        </div>                  
+      </div>      
+
+      <div class="form-parent container js-form-parent">
+      
+       <h2 class="heading-border brand-green">Share a story on your Visit</h2>
+       <hr/>   
+        <form id="sys_school" action="/sysuserinfo" name="sys_school">
+          <fieldset title="1">
+            <legend>Personal Details</legend>
+            <input type="hidden" name="id" value="{{ object.id }}" />
+            <div class="heading-tiny-uppercase">Please provide accurate information</div>
+            <div class="form-field-wrap required">
+              <input type="text" class="input-text" name="name" id="name_id" placeholder="Type Full Name">
+            </div>
+
+            <div class="form-field-wrap required">
+              <input type="email" class="input-text" name="email" id="email_id" placeholder="Type Email">
+            </div>
+
+            <div class="form-field-wrap required">
+              <input type="tel" class="input-text" name="telephone" id="telephone_id" placeholder="Type Mobile Phone">
+            </div>
+
+            <div class="form-field-wrap required">
+              <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
+              <input type="date" name="date_of_visit" class="js-input-date input-text" placeholder=''>
+            </div>
+
+          </fieldset>
+          <fieldset title="2">
+            <legend>Comments and Images</legend>
+
+            <div class="form-field-wrap">
+              <div class="heading-tiny-uppercase">Additional Comments <span class="fa fa-comments"></span></div>
+              <textarea class="input-text" name="comments"></textarea>
+            </div>
+            <div class="base-spacing-lg border-base" id="images_dropzone">
+              <div class="center-text">
+                Drag and drop upto 5 images<br/>
+                <div id="images" class="button-orange fileupload">
+                  <div>Upload</div>
+                  <input type="file" multiple="multiple" id="multiImageUpload" class="upload">
+                </div>
+              </div>
+            </div>
+            <div class="base-spacing-mid">
+            </div>
+            <div class="base-spacing-lg border-base center-text">
+              <div class="heading-tiny-uppercase heading-border">
+                Preview of your images. 
+              </div>
+              <div id="imagePreviews">
+              </div>
+              <div>
+                Click on the image preview to remove from the selection.
+              </div>
+            </div>
+
+
+          </fieldset>
+
+          <fieldset title="3">
+            <legend>Academics</legend>
+            <div id="sysqset1_school"></div>
+          </fieldset>
+
+          <fieldset title="4">
+            <legend>Basic Infrastructure</legend>
+            <div id="sysqset2_school"></div>
+          </fieldset>
+
+          <fieldset title="5">
+            <legend>Nutrition and Hygiene</legend>
+            <div id="sysqset3_school"></div>
+          </fieldset>
+
+          <fieldset title="6">
+            <legend>Learning Environment</legend>
+            <div id="sysqset4_school"></div>
+          </fieldset>
+
+          <input type="submit" class="js-finish-btn" value="Finish!" />
+
+        </form>
+      </div>
+
+      
+    </section>
+</section>
+
+{% include 'frontend_templates/sys_form.html' %} 
+{% endblock %}

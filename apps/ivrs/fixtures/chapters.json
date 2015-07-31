@@ -1,0 +1,306 @@
+[
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 1,
+	    "title": "Area and perimeter of simple geometric shapes"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 2,
+	    "title": "Number concepts"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 3,
+	    "title": "Addition"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 4,
+	    "title": "Subtraction"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 5,
+	    "title": "Multiplication"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 6,
+	    "title": "Division"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 7,
+	    "title": "Circles"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 8,
+	    "title": "Mental Maths"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 9,
+	    "title": "Fractions"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 10,
+	    "title": "Money - Addition and Subtraction"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 11,
+	    "title": "Measurement - Length"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 12,
+	    "title": "Measurement - Weight"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 13,
+	    "title": "Measurement - Volume"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 14,
+	    "title": "Time"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 15,
+	    "title": "Data Management"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 16,
+	    "title": "Pattern and Symmetry"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 17,
+	    "title": "Tangram"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 4,
+	    "chapter_number": 18,
+	    "title": "Solid shapes"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 1,
+	    "title": "5 digit numbers"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 2,
+	    "title": "Addition"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 3,
+	    "title": "Subtraction"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 4,
+	    "title": "Multiples and factors"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 5,
+	    "title": "Fractions"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 6,
+	    "title": "Angles"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 7,
+	    "title": "Circles"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 8,
+	    "title": "Length"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 9,
+	    "title": "Area and perimeter"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 10,
+	    "title": "Data"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 11,
+	    "title": " Multiplication"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 12,
+	    "title": "Division"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 13,
+	    "title": "Mental Maths"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 14,
+	    "title": "Decimals fractions"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 15,
+	    "title": "Money"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 16,
+	    "title": "Weight and Volume"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 17,
+	    "title": "Time"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 18,
+	    "title": "Symmetrical objects"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 19,
+	    "title": "3D shapes"
+	}
+    },
+    {
+	"model": "ivrs.chapter",
+	"fields":{
+	    "class_number": 5,
+	    "chapter_number": 20,
+	    "title": "Pattern"
+	}
+    }
+]

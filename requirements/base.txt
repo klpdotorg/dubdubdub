@@ -1,4 +1,4 @@
-Django==1.7.1
+Django==1.7.4
 #-e git+git://github.com/django/django.git@1.7c2#egg=django
 #South==0.8.1
 argparse==1.2.1
@@ -38,6 +38,10 @@ django-compressor==1.4
 #https://github.com/Hipo/drf-extra-fields (for Base64ImageField)
 django-extra-fields==0.1
 
+#https://github.com/niwinz/djorm-pgarray (for list storage in ivrs app)
+djorm-pgarray==1.2
+
 python-dateutil==2.3
 pytz==2014.10
+prettytable==0.7.2
 requests==2.5
