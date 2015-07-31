@@ -4,6 +4,7 @@
 (function() {
     var preschoolString = 'PreSchool';
     var schoolString = 'Primary School';
+    var premodalQueryParams = {};
 
     klp.init = function() {
         klp.accordion.init();
@@ -16,6 +17,11 @@
         klp.router.start();
         $('#startDate').yearMonthSelect("init");
         $('#endDate').yearMonthSelect("init");
+
+        //this is a bit of a hack to save query state when
+        //triggering a modal, since modals over-ride the url
+        premodalQueryParams = klp.router.getHash().queryParams;
+
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
@@ -30,15 +36,30 @@
 
         $('#dateSummary').click(function(e) {
             e.preventDefault();
-            var currentQueryParams = klp.router.getHash().queryParams;
-            _.each(_.keys(currentQueryParams), function(key) {
-                currentQueryParams[key] = null;
-            });
+            var currentQueryParams = premodalQueryParams;
+            // var currentQueryParams = klp.router.getHash().queryParams;
+            // _.each(_.keys(currentQueryParams), function(key) {
+            //     currentQueryParams[key] = null;
+            // });
             currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
             currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
             console.log("currentQueryParams", currentQueryParams);
-            klp.router.setHash('', currentQueryParams);
+            klp.router.setHash(null, currentQueryParams);
             //hashChanged({'queryParams':currentQueryParams});
+        });
+
+        $('a[href=#datemodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
+        });
+
+        $('a[href=#close]').click(function(e) {
+            klp.router.setHash(null, premodalQueryParams, {'trigger': false});
+        });
+
+        $('a[href=#searchmodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
         });
     }
 
@@ -141,6 +162,12 @@
                 'school_type': schoolType
             };
             hashParams[paramKey] = objectId;
+            if (premodalQueryParams.hasOwnProperty("from")) {
+                hashParams['from'] = premodalQueryParams['from'];
+            }
+            if (premodalQueryParams.hasOwnProperty("to")) {
+                hashParams['to'] = premodalQueryParams['to'];
+            }
             klp.router.setHash(null, hashParams);
         });
 
