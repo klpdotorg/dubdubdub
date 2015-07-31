@@ -222,6 +222,8 @@
 
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
+        var DEFAULT_START_YEAR = 2010;
+        var DEFAULT_END_YEAR = (new Date()).getFullYear();
         var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
@@ -233,6 +235,8 @@
             $metaXHR.done(function(data) {
                 stopSummaryLoading(schoolType);
                 data.searchEntity = entityDetails;
+                data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
+                data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
             });
@@ -291,6 +295,10 @@
     function stopVolumeLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
         $container.find('.js-volume-container').stopLoading();       
+    }
+
+    function getYear(dateString) {
+        return dateString.split("-")[0];
     }
 
     $.fn.startLoading = function() {
