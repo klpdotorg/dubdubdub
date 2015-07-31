@@ -1,12 +1,15 @@
 from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
+from schools.models import (
+    School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData,
-    MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,
-    InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescore,BoundaryAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescoreGender, MeetingReport)
+    MdmAgg, InstitutionAssessmentCohorts, InstitutionAssessmentSinglescore,
+    InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescoreGender, MeetingReport,
+    BoundaryLibLangAgg, BoundaryLibLevelAgg
+)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -281,6 +284,16 @@ class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
+
+
+class BoundaryLibLangAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLangAgg
+
+
+class BoundaryLibLevelAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLevelAgg
 
 
 class AssessmentListSerializer(KLPSerializer):

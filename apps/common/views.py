@@ -1,7 +1,6 @@
 from django import http
 from django.views.generic.base import TemplateView
 from django.core.exceptions import PermissionDenied
-from common.exceptions import APIError
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -28,7 +27,7 @@ class KLPListAPIView(generics.ListAPIView):
 
     def __init__(self, *args, **kwargs):
         super(KLPListAPIView, self).__init__(*args, **kwargs)
-        if self.bbox_filter_field and KLPInBBOXFilter not in self.filter_backends:
+        if hasattr(self, 'bbox_filter_field') and self.bbox_filter_field and KLPInBBOXFilter not in self.filter_backends:
             self.filter_backends += (KLPInBBOXFilter,)
 
     def finalize_response(self, *args, **kwargs):
