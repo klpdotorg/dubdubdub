@@ -1,11 +1,12 @@
 import json
 import datetime
-
+import os
 from django.utils import timezone
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.conf import settings
 
 
 def send_templated_mail(from_email, to_emails, subject, template_name, context=None):
@@ -43,6 +44,15 @@ class cached_property(object):
             return self
         value = obj.__dict__[self.func.__name__] = self.func(obj)
         return value
+
+def get_logfile_path(name, ext):
+    """
+        Returns a full log-file path given a name and a file extension 
+    """
+    base_path = os.path.join(settings.LOGS_FOLDER, name)
+    datestamp = datetime.datetime.now().strftime("%Y-%m-%d-%s")
+    filename = "%s_%s.%s" % (base_path, datestamp, ext,)
+    return filename
 
 class Date(object):
     """

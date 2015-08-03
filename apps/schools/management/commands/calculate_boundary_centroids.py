@@ -1,6 +1,8 @@
 from schools.models import School, Boundary, BoundaryHierarchy, BoundaryCoord
 from django.core.management.base import BaseCommand
 import json
+from datetime import datetime
+from common.utils import get_logfile_path
 
 class Command(BaseCommand):
     help = """Add points to schools from GIS master
@@ -10,9 +12,11 @@ class Command(BaseCommand):
             """
 
     def handle(self, *args, **kwargs):
+        now = datetime.now()
+
         #error_file = open("gis_errors.txt", "w")
         #success_file = open("gis_success.txt", "w")
-        output_sql = open("boundaries_sql.sql", "w")
+        output_sql = open(get_logfile_path("boundaries_sql", "sql"), "w")
         BOUNDARY_TYPES = {
             'district': 'admin1',
             'block': 'admin2',
@@ -46,6 +50,6 @@ class Command(BaseCommand):
                 print sql
                 output_sql.write(sql + "\n")
         output_sql.close()
-        errors = open("empty_boundaries.txt", "w")
+        errors = open(get_logfile_path("empty_boundaries", "txt"), "w")
         errors.write(json.dumps(empty_boundaries, indent=2))
         errors.close()

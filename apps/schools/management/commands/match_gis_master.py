@@ -2,6 +2,9 @@ from schools.models import School, SchoolGIS, InstCoord
 from django.core.management.base import BaseCommand
 import json
 import csv
+from os.path import join
+from datetime import datetime
+from common.utils import get_logfile_path
 
 class Command(BaseCommand):
     help = """Add points to schools from GIS master
@@ -11,10 +14,8 @@ class Command(BaseCommand):
             """
 
     def handle(self, *args, **kwargs):
-        error_file = open("gis_errors.txt", "w")
-        success_file = open("gis_success.txt", "w")
-        output_sql = open("gis_sql.sql", "w")
-        output_writer = csv.writer(output_csv)
+        output_sql = open(get_logfile_path("gis_sql", "sql"), "w")
+        #output_writer = csv.writer(output_csv)
         dise_not_found = []
         successes = []
         for school in School.objects.exclude(instcoord__isnull=False)\
@@ -42,8 +43,11 @@ class Command(BaseCommand):
                     'klp_id': school.id
                 }
                 successes.append(success)
+        output_sql.close()
+        error_file = open(get_logfile_path("gis_errors", "txt"), "w")
         error_file.write(json.dumps(dise_not_found, indent=2))
         error_file.close()
+        success_file = open(get_logfile_path("gis_success", "txt"), "w")
         success_file.write(json.dumps(successes, indent=2))
         success_file.close()
-        output_sql.close()
+
