@@ -63,22 +63,22 @@ class AssessmentInfo(KLPListAPIView):
         if self.request.GET.get('school', ''):
           sid= self.request.GET.get('school')
           assessmentinfo = InstitutionAssessmentSinglescore.objects.filter(school=sid,assessment=assid,studentgroup=studentgroup)\
-.select_related('school__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.select_related('school__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_1', ''):
           serializer_class = BoundaryAssessmentInfoSerializer
           bid= self.request.GET.get('admin_1')
           assessmentinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment=assid,studentgroup=studentgroup)\
-.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_2', ''):
           serializer_class = BoundaryAssessmentInfoSerializer
           bid= self.request.GET.get('admin_2')
           assessmentinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment=assid,studentgroup=studentgroup)\
-.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_3', ''):
           serializer_class = BoundaryAssessmentInfoSerializer
           bid= self.request.GET.get('admin_3')
           assessmentinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment=assid,studentgroup=studentgroup)\
-.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         else:
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
@@ -147,23 +147,23 @@ class ProgrammeInfo(KLPListAPIView):
         if self.request.GET.get('school', ''):
           sid= self.request.GET.get('school')
           programmeinfo = InstitutionAssessmentSinglescore.objects.filter(school=sid,assessment__programme__id=progid)\
-.order_by('studentgroup','assessment__name')\
-.select_related('studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.order_by('studentgroup','assessment__id')\
+.select_related('studentgroup','assessment__id','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_1', ''):
           bid= self.request.GET.get('admin_1')
           programmeinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment__programme=progid)\
-.order_by('studentgroup','assessment__name')\
-.select_related('studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.order_by('studentgroup','assessment__id')\
+.select_related('studentgroup','assessment__id','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_2', ''):
           bid= self.request.GET.get('admin_2')
           programmeinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment__programme=progid)\
-.order_by('studentgroup','assessment__name')\
-.select_related('studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.order_by('studentgroup','assessment__id')\
+.select_related('studentgroup','assessment__id','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         elif self.request.GET.get('admin_3', ''):
           bid= self.request.GET.get('admin_3')
           programmeinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment__programme=progid)\
-.order_by('studentgroup','assessment__name')\
-.select_related('studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile')
+.order_by('studentgroup','assessment__id')\
+.select_related('studentgroup','assessment__id','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         else:
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
