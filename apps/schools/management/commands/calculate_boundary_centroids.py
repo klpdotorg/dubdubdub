@@ -5,7 +5,7 @@ from datetime import datetime
 from common.utils import get_logfile_path
 
 class Command(BaseCommand):
-    help = """Add points to schools from GIS master
+    help = """Calculates boundary centroids (based on points of schools within)
             Generates a boundaries_sql.sql file that needs to be run
             on the klp-coord db.
             After this, remember to refresh materialized views.
