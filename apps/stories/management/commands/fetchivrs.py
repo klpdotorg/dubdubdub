@@ -162,7 +162,7 @@ class Command(BaseCommand):
             for i in range(1, 7):
                 question = Question.objects.get(
                     school_type=school.admin3.type,
-                    questiongroup__source=source,
+                    questiongroup=question_group,
                     questiongroupquestions__sequence=i
                 )
                 answer = Answer.objects.get_or_create(
