@@ -98,21 +98,29 @@
             <legend>Personal Details</legend>
             <input type="hidden" name="id" value="{{ object.id }}" />
             <div class="heading-tiny-uppercase">Please provide accurate information</div>
-            <div class="form-field-wrap required">
-              <input type="text" class="input-text" name="name" id="name_id" placeholder="Type Full Name">
+            <div class="form-field-wrap">
+              <div class="required">
+                <input type="text" class="input-text" data-required="true" name="name" id="name_id" placeholder="Type Full Name">
+              </div>
             </div>
 
-            <div class="form-field-wrap required">
-              <input type="email" class="input-text" name="email" id="email_id" placeholder="Type Email">
+            <div class="form-field-wrap">
+              <div class="required">
+                <input type="email" class="input-text" data-required="true" name="email" id="email_id" placeholder="Type Email">
+              </div>
             </div>
 
-            <div class="form-field-wrap required">
-              <input type="tel" class="input-text" name="telephone" id="telephone_id" placeholder="Type Mobile Phone">
+            <div class="form-field-wrap">
+              <div class="required">
+                <input type="tel" class="input-text" data-required="true" name="telephone" id="telephone_id" placeholder="Type Mobile Phone">
+              </div>
             </div>
 
-            <div class="form-field-wrap required">
-              <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
-              <input type="date" name="date_of_visit" class="js-input-date input-text" placeholder=''>
+            <div class="form-field-wrap">
+              <div class="required">
+                <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
+                <input type="date" name="date_of_visit" data-required="true" class="js-input-date input-text" placeholder=''>
+              </div>
             </div>
 
           </fieldset>

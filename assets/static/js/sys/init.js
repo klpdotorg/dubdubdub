@@ -14,6 +14,7 @@
                 var isValid = true;
                 if (index == 2) {
                     //validate first step
+                    klp.utils.clearValidationErrors('sys_school');
                     isValid = validatePersonalDetails();
                 }
                 return isValid;
@@ -70,21 +71,20 @@
     }
 
     function validatePersonalDetails() {
-        var isValid = true;
+        var isValid = klp.utils.validateRequired("sys_school");
+
+        /*
         $('#sys_school-step-0').find('.required').each(function() {
             var $div = $(this);
             var $input = $div.find('input');
             if ($input.val() === '') {
                 isValid = false;
-                $input.addClass("error");
-            } else {
-                if ($input.hasClass("error")) {
-                    $input.removeClass("error");
-                }
+                klp.utils.invalidateField($input, "This field is required.")
             }
         });
+        */
         if (!isValid) {
-            klp.utils.alertMessage("Please fill in all required fields before proceeding.", "error");
+            klp.utils.alertMessage("Please correct errors before proceeding.", "error");
         }
         return isValid;
     }
