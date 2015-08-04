@@ -70,7 +70,7 @@ def sane_state(state):
         return NOT_SANE
     # Checking condition 2.
     if state.answers[2] != 'NA':
-        if all(answer == 'NA' for answer in state.answers[2:]):
+        if all(answer == 'NA' for answer in state.answers[3:]):
             return NOT_SANE
         else:
             return SANE
