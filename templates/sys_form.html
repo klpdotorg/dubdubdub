@@ -20,6 +20,7 @@
   <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
   <!--script type="text/javascript" src="{% static 'js/lib/jquery.validate.min.js' %}"></script-->
   <script type="text/javascript" src="{% static 'js/lib/jquery.stepy.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/validator.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/sys/init.js' %}"></script>
   
   {% endcompress %}
@@ -119,7 +120,7 @@
             <div class="form-field-wrap">
               <div class="required">
                 <div class="heading-tiny-uppercase">Date of Visit <span class="fa fa-calendar"></span></div>
-                <input type="date" name="date_of_visit" data-required="true" class="js-input-date input-text" placeholder=''>
+                <input type="date" name="date_of_visit" data-required="true" class="js-input-date input-text" id="date_id" placeholder=''>
               </div>
             </div>
 
