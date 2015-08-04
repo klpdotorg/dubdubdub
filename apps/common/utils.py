@@ -49,6 +49,9 @@ def get_logfile_path(name, ext):
     """
         Returns a full log-file path given a name and a file extension 
     """
+    #Create log folder if does not exist
+    if not os.path.exists(settings.LOGS_FOLDER):
+        os.mkdir(settings.LOGS_FOLDER)
     base_path = os.path.join(settings.LOGS_FOLDER, name)
     datestamp = datetime.datetime.now().strftime("%Y-%m-%d-%s")
     filename = "%s_%s.%s" % (base_path, datestamp, ext,)
