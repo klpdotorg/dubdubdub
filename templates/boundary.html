@@ -4,16 +4,6 @@
 {% block page_title %}Boundary Details{% endblock %}
 
 {% block css_extra %}
-<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-<style>
-  code {
-    font-family: 'Source Code Pro';
-  }
-
-  .alert {
-    position: static;
-  }
-</style>
 {% endblock %}
 
 {% block endbody %}
@@ -25,8 +15,10 @@
   <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
   <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
   <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
-
   {% endcompress %}
+  <script>
+    BOUNDARY_ID = {{ object.id }};
+  </script>
 {% endblock %}
 
 {% block subheader %}
