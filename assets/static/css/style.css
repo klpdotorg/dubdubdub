@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -4191,24 +4192,6 @@ code {
     text-align: left; } }
 .button-orange {
   margin-top: 5px; }
-
-::-webkit-input-placeholder::before {
-  font-family: "FontAwesome";
-  content: '\f073    '; }
-
-::-moz-placeholder::before {
-  font-family: "FontAwesome";
-  content: '\f073    '; }
-
-/* firefox 19+ */
-:-ms-input-placeholder::before {
-  font-family: "FontAwesome";
-  content: '\f073    '; }
-
-/* ie */
-input:-moz-placeholder::before {
-  font-family: "FontAwesome";
-  content: '\f073    '; }
 
 .chartist-tooltip {
   position: absolute;

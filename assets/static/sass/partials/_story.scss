@@ -85,11 +85,6 @@
 	margin-top: 5px;
 }	
 
-::-webkit-input-placeholder::before { font-family: $font-icon; content:'\f073    ';}
-::-moz-placeholder::before  { font-family: $font-icon; content:'\f073    ';} /* firefox 19+ */
-:-ms-input-placeholder::before  { font-family: $font-icon; content:'\f073    '; } /* ie */
-input:-moz-placeholder::before  { font-family: $font-icon; content:'\f073    ';}
-
 .chartist-tooltip{
 	position:absolute;
 	display:inline-block;
