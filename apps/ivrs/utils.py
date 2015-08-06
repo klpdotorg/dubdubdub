@@ -15,13 +15,3 @@ def get_question(question_number):
     )
 
     return question
-
-def skip_questions(state, number=None):
-    state.answers.append('No')
-    state.save()
-    for i in range(0,number):
-        state.answers.append('NA')
-        state.question_number = F('question_number') + 1
-        state.save()
-    state.question_number = F('question_number') + 1
-    state.save()

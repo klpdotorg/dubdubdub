@@ -260,7 +260,8 @@
             $field.addClass('error');
             var $error = $('<div />').addClass('js-error-message error-message');
             $error.text(message);
-            $field.after($error);
+            $field.parents(".form-field-wrap").append($error);
+            //$field.after($error);
         },
 
         /*
@@ -273,6 +274,7 @@
                 klp.utils.invalidateField($field, errorMsg);
             });
         },
+
 
         /*
             Check all inputs in a form with data-required=true

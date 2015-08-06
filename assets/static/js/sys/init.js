@@ -14,6 +14,7 @@
                 var isValid = true;
                 if (index == 2) {
                     //validate first step
+                    klp.utils.clearValidationErrors('sys_school');
                     isValid = validatePersonalDetails();
                 }
                 return isValid;
@@ -70,25 +71,63 @@
     }
 
     function validatePersonalDetails() {
-        var isValid = true;
-        $('#sys_school-step-0').find('.required').each(function() {
-            var $div = $(this);
-            var $input = $div.find('input');
-            if ($input.val() === '') {
-                isValid = false;
-                $input.addClass("error");
-            } else {
-                if ($input.hasClass("error")) {
-                    $input.removeClass("error");
-                }
-            }
-        });
+        var isValid = klp.utils.validateRequired("sys_school");
+        var $name = $('#name_id'),
+            $email = $('#email_id'),
+            $tel = $('#telephone_id'),
+            $date = $('#date_id');
+
+        isValid = validateName($name)
+                    && validateEmail($email)
+                    && validateTel($tel)
+                    && validateDate($date);
+
         if (!isValid) {
-            klp.utils.alertMessage("Please fill in all required fields before proceeding.", "error");
+            klp.utils.alertMessage("Please correct errors before proceeding.", "error");
         }
         return isValid;
     }
     
+    function validateName($input) {
+        var name = $input.val();
+        if (!validator.matches(name, /^[a-zA-Z\s]*$/)) {
+            klp.utils.invalidateField($input, "Please enter a valid name");
+            return false;
+        }
+        return true;
+    }
+
+    function validateEmail($input) {
+        var email = $input.val();
+        if (!validator.isEmail(email)) {
+            klp.utils.invalidateField($input, "Please enter a valid e-mail");
+            return false;
+        }
+        return true;
+    }
+
+    function validateTel($input) {
+        var tel = $input.val();
+        if (!validator.isNumeric(tel)) {
+            klp.utils.invalidateField($input, "Please enter only numbers");
+            return false;
+        }
+        if (tel.length != 10) {
+            klp.utils.invalidateField($input, "Please enter a valid 10 digit number");
+            return false;
+        }
+        return true;
+    }
+
+    function validateDate($input) {
+        var date = $input.val();
+        if (validator.isAfter(date)) {
+            klp.utils.invalidateField($input, "Date must be in the past.");
+            return false;
+        }
+        return true;
+    }
+
     function loadQuestions(schoolType, params) {
         var questions = {
             "academic":

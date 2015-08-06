@@ -4,6 +4,7 @@
 (function() {
     var preschoolString = 'PreSchool';
     var schoolString = 'Primary School';
+    var premodalQueryParams = {};
 
     klp.init = function() {
         klp.accordion.init();
@@ -14,6 +15,25 @@
             hashChanged(params);
         });
         klp.router.start();
+
+        $('#startDate').yearMonthSelect("init");
+        $('#endDate').yearMonthSelect("init");
+
+        //this is a bit of a hack to save query state when
+        //triggering a modal, since modals over-ride the url
+        premodalQueryParams = klp.router.getHash().queryParams;
+
+        if (premodalQueryParams.hasOwnProperty("from")) {
+            var mDate = moment(premodalQueryParams.from);
+            $('#startDate').yearMonthSelect("setDate", mDate);
+        }
+        if (premodalQueryParams.hasOwnProperty("to")) {
+            var mDate = moment(premodalQueryParams.to);
+            $('#endDate').yearMonthSelect("setDate", mDate);
+        } else {
+            $('#endDate').yearMonthSelect("setDate", moment());
+        }
+
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
@@ -26,6 +46,39 @@
             klp.router.setHash('', currentQueryParams);
         });
 
+        $('#dateSummary').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = premodalQueryParams;
+            // var currentQueryParams = klp.router.getHash().queryParams;
+            // _.each(_.keys(currentQueryParams), function(key) {
+            //     currentQueryParams[key] = null;
+            // });
+            var startDate = $('#startDate').yearMonthSelect("getDate");
+            var endDate = $('#endDate').yearMonthSelect("getDate");
+            if (moment(startDate) > moment(endDate)) {
+                klp.utils.alertMessage("End date must be after start date", "error");
+                return false;
+            }
+            currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
+            currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
+            //console.log("currentQueryParams", currentQueryParams);
+            klp.router.setHash(null, currentQueryParams);
+            //hashChanged({'queryParams':currentQueryParams});
+        });
+
+        $('a[href=#datemodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
+        });
+
+        $('a[href=#close]').click(function(e) {
+            klp.router.setHash(null, premodalQueryParams, {'trigger': false});
+        });
+
+        $('a[href=#searchmodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
+        });
     }
 
     function hashChanged(params) {
@@ -127,6 +180,12 @@
                 'school_type': schoolType
             };
             hashParams[paramKey] = objectId;
+            if (premodalQueryParams.hasOwnProperty("from")) {
+                hashParams['from'] = premodalQueryParams['from'];
+            }
+            if (premodalQueryParams.hasOwnProperty("to")) {
+                hashParams['to'] = premodalQueryParams['to'];
+            }
             klp.router.setHash(null, hashParams);
         });
 
@@ -181,6 +240,8 @@
 
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
+        var DEFAULT_START_YEAR = 2010;
+        var DEFAULT_END_YEAR = (new Date()).getFullYear();
         var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
@@ -192,6 +253,8 @@
             $metaXHR.done(function(data) {
                 stopSummaryLoading(schoolType);
                 data.searchEntity = entityDetails;
+                data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
+                data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
             });
@@ -250,6 +313,10 @@
     function stopVolumeLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
         $container.find('.js-volume-container').stopLoading();       
+    }
+
+    function getYear(dateString) {
+        return dateString.split("-")[0];
     }
 
     $.fn.startLoading = function() {
