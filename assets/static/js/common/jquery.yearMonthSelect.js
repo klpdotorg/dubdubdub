@@ -49,7 +49,8 @@
     $.fn.yearMonthSelect = function(cmd, options) {
         var funcs = {
             'init': init,
-            'getDate': getDate
+            'getDate': getDate,
+            'setDate': setDate
         };
         return funcs[cmd].call(this, options);
     };
@@ -83,6 +84,14 @@
         }
         var date = new Date(yearVal, monthVal + 1, 0);
         return moment(date).format("YYYY-MM-DD");
+    }
+
+    function setDate(date) {
+        var year = date.year();
+        var month = date.month();
+        this.find("select.year").val(year);
+        this.find("select.month").val(month);
+        return this;
     }
 
 })(jQuery);

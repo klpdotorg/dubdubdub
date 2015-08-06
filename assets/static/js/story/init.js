@@ -15,12 +15,24 @@
             hashChanged(params);
         });
         klp.router.start();
+
         $('#startDate').yearMonthSelect("init");
         $('#endDate').yearMonthSelect("init");
 
         //this is a bit of a hack to save query state when
         //triggering a modal, since modals over-ride the url
         premodalQueryParams = klp.router.getHash().queryParams;
+
+        if (premodalQueryParams.hasOwnProperty("from")) {
+            var mDate = moment(premodalQueryParams.from);
+            $('#startDate').yearMonthSelect("setDate", mDate);
+        }
+        if (premodalQueryParams.hasOwnProperty("to")) {
+            var mDate = moment(premodalQueryParams.to);
+            $('#endDate').yearMonthSelect("setDate", mDate);
+        } else {
+            $('#endDate').yearMonthSelect("setDate", moment());
+        }
 
         //loadData('Primary School');
         //loadData('Preschool');
@@ -41,9 +53,15 @@
             // _.each(_.keys(currentQueryParams), function(key) {
             //     currentQueryParams[key] = null;
             // });
+            var startDate = $('#startDate').yearMonthSelect("getDate");
+            var endDate = $('#endDate').yearMonthSelect("getDate");
+            if (moment(startDate) > moment(endDate)) {
+                klp.utils.alertMessage("End date must be after start date", "error");
+                return false;
+            }
             currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
             currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
-            console.log("currentQueryParams", currentQueryParams);
+            //console.log("currentQueryParams", currentQueryParams);
             klp.router.setHash(null, currentQueryParams);
             //hashChanged({'queryParams':currentQueryParams});
         });
