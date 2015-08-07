@@ -10,6 +10,13 @@ Use required commands
 Changelog
 ---
 
+Release 0.3.1: 82a6dc65cd54491fc4f1ba937363b5b5db4056c7 - 2015-08-07
+  - Date filters on stories page
+  - Fix validations on SYS form
+  - Boundary aggregations API
+  - Misc. IVRS fixes
+  - Coming soon page for status
+
 Release 0.3.0: ae99bfc240b352108a84701227fb3fe8b8ca75af - 2015-07-19
   - Revamped SYS form
   - New IVRS app to talk to Exotel IVRS

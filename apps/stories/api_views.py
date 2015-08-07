@@ -360,13 +360,6 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             stories_qset = stories_qset.filter(
                 school__electedrep__mla_const__id=mla_id)
 
-        response_json = {}
-
-        response_json['total'] = {}
-        response_json['total']['schools'] = school_qset.count()
-        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
-        response_json['total']['stories'] = stories_qset.count()
-
         if start_date:
             #school_qset = school_qset.filter(
             #    story__date_of_visit__gte=start_date)
@@ -378,6 +371,13 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             #     story__date_of_visit__lte=end_date)
             stories_qset = stories_qset.filter(
                 date_of_visit__lte=end_date)
+
+        response_json = {}
+
+        response_json['total'] = {}
+        response_json['total']['schools'] = school_qset.count()
+        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
+        response_json['total']['stories'] = stories_qset.count()
 
         if source:
             stories_qset = self.source_filter(

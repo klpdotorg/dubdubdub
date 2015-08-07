@@ -4,16 +4,7 @@
 {% block page_title %}Story Dashboard{% endblock %}
 
 {% block css_extra %}
-<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-<style>
-  code {
-    font-family: 'Source Code Pro';
-  }
 
-  .alert {
-    position: static;
-  }
-</style>
 {% endblock %}
 
 {% block endbody %}
@@ -23,34 +14,80 @@
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/init.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
-
+  <script type="text/javascript" src="{% static 'js/common/jquery.yearMonthSelect.js' %}"></script>
   {% endcompress %}
 {% endblock %}
 
 {% block subheader %}
-  <div class="map-subheader-wrapper subheader-wrapper">
+<div id="searchmodal" class="modalDialog">
+ <div class="map-subheader-wrapper subheader-wrapper">
+ 	<a href="#close" title="Close" class="close">X</a>
     <div class="subheader-content">
-    	<div class="chart-parent">
-		      <div class="top-search search-input-map">
-		        <input type="text" name="search" id="select2search" placeholder="Search by primary school, preschool or boundary" class="search-input input-text">
-		      </div>
-		      <div class="top-reset center-text">
-		      	 <div class="button" id="resetButton">RESET <i class="fa fa-refresh"></i></div>
-		      </div>
-	    </div>
+      <div class="top-search search-input-map">
+        <input type="text" name="search" id="select2search" placeholder="Search by primary school, preschool or boundary" class="search-input input-text"/>
+      </div>
     </div>
-     
   </div>
+</div>
+
 {% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
 
 {% block content %}
+<div id="datemodal" class="modalDialog">
+	<div class="grey-mist-bg">
+		<a href="#close" title="Close" class="close">X</a>
+		<div class="center-text">
+			<div class="base-spacing-sm"></div>					
+			<form class="form-base">
+				<div class="form-field-wrap">
+				  	<div class="chart-parent dateform">
+						<div class="chart-half-item align-fromdate">
+							<!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
+							<div class="form-field-wrap" id="startDate">
+							    <label class="label-inline bold">Start Date</label><br/>
+							    <select class="month">
 
+							    </select>
+							    <select class="year">
+
+							    </select>
+							 </div>
+						</div>
+						<div class="chart-half-item align-left">
+							<!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
+							<div class="form-field-wrap" id="endDate">
+							    <label class="label-inline bold">End Date</label><br/>
+							    <select class="month">
+
+							    </select>
+							    <select class="year">
+
+							    </select>
+							 </div>
+						</div>
+					</div>    
+					<div class="button-orange" id="dateSummary">Apply Date Filter</div>       
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="side-button-bar">
+	<a href="#searchmodal"><div class="button square sq-tooltip" aria-label="Search"><span class="white fa fa-search"></span></div></a>
+	<div class="base-spacing-sm"></div>
+	<a href="#resetButton"><div class="button-orange square sq-tooltip" aria-label="Reset" ><span class="white fa fa-refresh"></span></div></a>
+	<div class="base-spacing-sm"></div>
+	<a href="#datemodal"><div class="button-grey square sq-tooltip" aria-label="Date Filter"><span class="white fa fa-calendar"></span></div></a>
+	<div class="base-spacing-sm"></div>
+	<!-- <a href="#datemodal"><div class="button square green-leaf-bg sq-tooltip" aria-label="Compare"><span class="white fa fa-columns"></span></div></a> -->
+</div>
 <section class="clearfix">
-	<div class="base-spacing-mid"></div>
 	<div id="primarySchoolContainer">
 		<section class="container" id="school_summary">
+			<div class="base-spacing-mid"></div>
 			<div class="chart-parent" id="topSummary" class="js-summary-container">
 		  	</div><!--end outer parent-->
 		    <hr/>
