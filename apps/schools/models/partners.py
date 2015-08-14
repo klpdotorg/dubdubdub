@@ -93,6 +93,8 @@ class DiseInfo(BaseModel):
     http://www.klp.org.in/schoolpage/school/33166?tab=finances
     '''
     dise_code = models.CharField(max_length=32, primary_key=True)
+    assembly = models.ForeignKey('Assembly')
+    parliament = models.ForeignKey('Parliament')
     classroom_count = models.IntegerField(blank=True, null=True)
     teacher_count = models.IntegerField(blank=True, null=True)
     boys_count = models.IntegerField(blank=True, null=True)
