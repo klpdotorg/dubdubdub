@@ -35,11 +35,15 @@ class CheckSchool(KLPAPIView):
         state.answers = []
         # Ignoring index 0 since question_numbers start from 1
         state.answers.append('IGNORED_INDEX')
-        # Initializing answer slots 1 to 12 with NA
+
         if ivrs_type == GKA:
+            state.ivrs_type = 'gka'
+            # Initializing answer slots 1 to 12 with NA
             for i in range(0,12):
                 state.answers.append('NA')
         else:
+            state.ivrs_type = 'old-ivrs'
+            # Initializing answer slots 1 to 6 with NA
             for i in range(0,6):
                 state.answers.append('NA')
 
