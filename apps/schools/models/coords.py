@@ -126,3 +126,17 @@ class Postal(GeoBaseModel):
     class Meta:
         managed = False
         db_table = 'mvw_postal'
+
+
+class SchoolGIS(GeoBaseModel):
+    code = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=150)
+    centroid = models.PointField()
+    objects = models.GeoManager()
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_gis_master'

@@ -37,6 +37,16 @@ class BoundaryWithParentSerializer(KLPSerializer):
         fields = ('id', 'name', 'type', 'school_type', 'parent')
 
 
+class BoundaryWithGrandparentSerializer(KLPSerializer):
+    type = serializers.CharField(source='hierarchy.name')
+    school_type = serializers.CharField(source='get_school_type')
+    parent = BoundaryWithParentSerializer(source='parent')
+
+    class Meta:
+        model = Boundary
+        fields = ('id', 'name', 'type', 'school_type', 'parent')
+
+
 class ElectedrepSerializer(KLPSerializer):
     name = serializers.CharField(source='const_ward_name')
     type = serializers.CharField(source='const_ward_type')

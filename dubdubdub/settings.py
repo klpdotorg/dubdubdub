@@ -258,6 +258,9 @@ REST_FRAMEWORK = {
     ),
 }
 
+#Should be used by management commands, etc. to log files
+LOGS_FOLDER = os.path.join(PROJECT_ROOT, 'logs',)
+
 TESTS_SCHOOLS_INPUT = {
     'SCHOOLS_LIB_ID': '33312',
     'SCHOOLS_LIB_ID2': '33313',

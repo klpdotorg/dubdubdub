@@ -2,7 +2,7 @@ from schools.models import AcademicYear, School, Boundary, Assembly, Parliament,
 from schools.serializers import (
     BoundaryLibLangAggSerializer, BoundaryLibLevelAggSerializer,
     BoundarySerializer, AssemblySerializer, ParliamentSerializer,
-    PincodeSerializer, BoundaryWithParentSerializer
+    PincodeSerializer, BoundaryWithGrandparentSerializer
 )
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
@@ -75,10 +75,8 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
             raise APIError('Boundary not found', 404)
 
         active_schools = boundary.schools()
-
         agg = self.get_aggregations(active_schools, academic_year)
-
-        agg['boundary'] = BoundaryWithParentSerializer(boundary).data
+        agg['boundary'] = BoundaryWithGrandparentSerializer(boundary, context={'request': request}).data
 
         # Not using serializer because we need to do the aggregations here
         # and return the results directly
