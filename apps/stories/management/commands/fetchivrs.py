@@ -25,6 +25,8 @@ class Command(BaseCommand):
                     help='The date until which to fetch ivrs data '),
     )
 
+    ivrs_errors = []
+
     @transaction.atomic
     def handle(self, *args, **options):
         from_date = options.get('from', None)
@@ -35,10 +37,10 @@ class Command(BaseCommand):
 
         try:
             f = open(error_file)
-            ivrs_errors = json.loads(f.read())
+            self.ivrs_errors = json.loads(f.read())
             f.close()
         except:
-            ivrs_errors = []
+            self.ivrs_errors = []
 
         if from_date or to_date:
             if from_date and to_date:
@@ -162,7 +164,7 @@ class Command(BaseCommand):
             for i in range(1, 7):
                 question = Question.objects.get(
                     school_type=school.admin3.type,
-                    questiongroup__source=source,
+                    questiongroup=question_group,
                     questiongroupquestions__sequence=i
                 )
                 answer = Answer.objects.get_or_create(

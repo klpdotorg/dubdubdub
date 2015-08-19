@@ -1,12 +1,15 @@
 from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
+from schools.models import (
+    School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData,
-    MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,
-    InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescore,BoundaryAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescoreGender, MeetingReport)
+    MdmAgg, InstitutionAssessmentCohorts, InstitutionAssessmentSinglescore,
+    InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescoreGender, MeetingReport,
+    BoundaryLibLangAgg, BoundaryLibLevelAgg
+)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -28,6 +31,16 @@ class BoundaryWithParentSerializer(KLPSerializer):
     type = serializers.CharField(source='hierarchy.name')
     school_type = serializers.CharField(source='get_school_type')
     parent = BoundarySerializer(source='parent')
+
+    class Meta:
+        model = Boundary
+        fields = ('id', 'name', 'type', 'school_type', 'parent')
+
+
+class BoundaryWithGrandparentSerializer(KLPSerializer):
+    type = serializers.CharField(source='hierarchy.name')
+    school_type = serializers.CharField(source='get_school_type')
+    parent = BoundaryWithParentSerializer(source='parent')
 
     class Meta:
         model = Boundary
@@ -281,6 +294,16 @@ class SchoolDetailsSerializer(KLPSerializer):
     class Meta:
         model = Boundary
         fields = ('cluster_or_circle', 'block_or_project', 'district')
+
+
+class BoundaryLibLangAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLangAgg
+
+
+class BoundaryLibLevelAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLevelAgg
 
 
 class AssessmentListSerializer(KLPSerializer):
