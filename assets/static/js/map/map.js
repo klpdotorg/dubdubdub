@@ -14,9 +14,12 @@
     var map_voluteer_date = false;
     var mapIcon = klp.utils.mapIcon;
     var mapBbox;
+
+
     var state = {
         'addPopupCloseHistory': true
     };
+
     var districtLayer,
         preschoolDistrictLayer,
         blockLayer,
@@ -30,11 +33,16 @@
         preschoolXHR,
         schoolXHR;
 
+    //Keeps track of layers currently on map.
     var mapLayers = {};
 
+    //Disabled and enabled are layers disabled / enabled in layer switcher
+    //on right panel
     var disabledLayers,
         enabledLayers,
         allLayers,
+        //This temporarily holds the duplicated entity of the entity that
+        //is "selected" - i.e. has its popup showing.
         selectedLayers;
 
     var isMobile = $(window).width() < 768;
@@ -49,6 +57,7 @@
         return allLayers._layers[layerID];
     };
 
+    //Defines what boundary layers to show at which zoom level
     var boundaryZoomLevels = {
         'district': 8,
         'block': 9,
@@ -65,12 +74,15 @@
 
     t.init = function() {
 
+        //Event handler to close popup
         $(document).on('click', '.js-map-popup-close', function(e) {
             e.preventDefault();
             map.closePopup();
         });
         // Search.
         var $searchInput = $(".search-input");
+
+        //Instantiates search box with select2 autocomplete widget.
         $searchInput.select2({
             placeholder: 'Search for schools, boundaries and PIN codes',
             minimumInputLength: 3,
@@ -84,6 +96,11 @@
                         geometry: 'yes'
                     };
                 },
+
+                /* 
+                  Function that gets called with data from API
+                  and formats results for select2
+                */
                 results: function (data, page) {
                     var searchResponse = {
                         results: [
@@ -118,6 +135,7 @@
             }
         });
 
+        //Function called when user selects an entity from search drop-down
         $searchInput.on('change', function(choice) {
             var data = choice.added.data;
             //console.log(data);
@@ -125,6 +143,7 @@
             var searchGeometryType = data.geometry.type;
             var searchGeometry = data.geometry.coordinates;
             var searchEntityType = data.entity_type;
+
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
@@ -506,7 +525,7 @@
                                     "name": props.boundary.name,
                                     "type": props.boundary.type,
                                     "school_type": props.boundary.school_type
-                                   }
+                                   };
                 if (data.properties.type !== 'district') {
                     boundaryData["parentType"] = props.boundary.parent.type;
                     boundaryData["parentName"] = props.boundary.parent.name;
@@ -546,6 +565,7 @@
             t.startLoading();
             popupInfoXHR = klp.api.do('schools/school/'+feature.properties.id, {});
             popupInfoXHR.done(function(data) {
+                //To fetch additional facilities data from the DISE API.
                 var facilitiesXHR = fetchBasicFacilities(data);
                 facilitiesXHR.done(function(basicFacilities) {
                     t.stopLoading();
