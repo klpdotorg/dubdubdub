@@ -497,22 +497,24 @@
             if (map._popup) {
                 state.addPopupCloseHistory = false;
             }
-            var  popupBoundaryXHR = klp.api.do('boundary/admin/'+feature.properties.id, {'geometry': 'yes'});
+            var  popupBoundaryXHR = klp.api.do('aggregation/boundary/'+feature.properties.id + '/schools/', {'geometry': 'yes'});
             popupBoundaryXHR.done(function(data) {
-                var iconType = data.properties.school_type+'_'+data.properties.type;
+                var props = data.properties;
+                var iconType = props.boundary.school_type + '_' + props.boundary.type;
                 var boundaryData = {
-                                    "name": data.properties.name,
-                                    "type": data.properties.type,
-                                    "school_type": data.properties.school_type
+                                    "id": props.boundary.id,
+                                    "name": props.boundary.name,
+                                    "type": props.boundary.type,
+                                    "school_type": props.boundary.school_type
                                    }
                 if (data.properties.type !== 'district') {
-                    boundaryData["parentType"] = data.properties.parent.type;
-                    boundaryData["parentName"] = data.properties.parent.name;
+                    boundaryData["parentType"] = props.boundary.parent.type;
+                    boundaryData["parentName"] = props.boundary.parent.name;
                 }
-                boundaryData["num_boys"] = 3000;
-                boundaryData["num_girls"] = 2560;
-                boundaryData["total_students"] = 5560;
-                boundaryData["num_schools"] = 100;
+                boundaryData["num_boys"] = props.num_boys;
+                boundaryData["num_girls"] = props.num_girls;
+                boundaryData["total_students"] = props.num_boys + props.num_girls;
+                boundaryData["num_schools"] = props.num_schools;
 
                 var tpl_map_boundary_popup = swig.compile($("#tpl-map-boundary-popup").html());
                 duplicatemarker.bindPopup(tpl_map_boundary_popup(boundaryData),{maxWidth:300, minWidth:300}).openPopup();
@@ -525,7 +527,8 @@
                             e.preventDefault();
                             klp.comparison.open(data);
                         });*/
-                map.setView(marker._latlng, boundaryZoomLevels[boundary_type]);
+                //map.setView(marker._latlng, boundaryZoomLevels[boundary_type]);
+                map.setView(marker._latlng);
             });
         }
 
