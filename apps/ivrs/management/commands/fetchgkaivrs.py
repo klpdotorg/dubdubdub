@@ -72,5 +72,6 @@ def sane_state(state):
     if state.answers[2] != 'NA':
         if all(answer == 'NA' for answer in state.answers[3:]):
             return NOT_SANE
-        else:
-            return SANE
+
+    # If not both, then sane.
+    return SANE

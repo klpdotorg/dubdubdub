@@ -165,9 +165,10 @@
             } else {
                 marker = L.marker(point, {icon: mapIcon(type)});
             }
-            marker.bindPopup(data.properties.name);
+            /*marker.bindPopup(data.properties.name);
             marker.addTo(selectedLayers).openPopup();
-            map.setView(point, boundaryZoomLevels[type]);
+            map.setView(point, boundaryZoomLevels[type]);*/
+            markerBoundary(marker,data);
         }
 
         function makeResults(array, type) {
@@ -258,11 +259,12 @@
                         pointToLayer: function(feature, latlng) {
                             map.setView(latlng);
                             return L.marker(latlng, {icon: mapIcon(iconType)});
-                        }
+                        },
+                        onEachFeature: onEachBoundary
                     });
-                    thisEntityMarker.bindPopup(data.properties.name);
+                    /*thisEntityMarker.bindPopup(data.properties.name);
                     thisEntityMarker.addTo(selectedLayers);
-                    thisEntityMarker.openPopup();
+                    thisEntityMarker.openPopup();*/
                 });
             }
         });
@@ -318,6 +320,15 @@
             if (feature.properties) {
                 layer.on('click', function(e) {
                     markerPopup(this, feature);
+                    //setMarkerURL(feature);
+                });
+            }
+        }
+
+        function onEachBoundary(feature, layer) {
+            if (feature.properties) {
+                layer.on('click', function(e) {
+                    markerBoundary(this, feature);
                     //setMarkerURL(feature);
                 });
             }
@@ -402,42 +413,48 @@
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('school_district')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         preschoolDistrictLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('preschool_district')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         blockLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('school_block')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         clusterLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('school_cluster')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         projectLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('preschool_project')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         circleLayer = L.geoJson(null, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng, {icon: mapIcon('preschool_circle')});
             },
-            onEachFeature: onEachFeature
+            //onEachFeature: onEachFeature
+            onEachFeature: onEachBoundary
         });
 
         districtXHR.done(function (data) {
@@ -469,6 +486,51 @@
             circleLayer.addData(filterGeoJSON(data));
             circleLayer.addTo(disabledLayers);
         });
+
+        function markerBoundary(marker, feature) {
+            var duplicatemarker;
+            var boundary_type = feature.properties.type;
+            var schoolType = feature.properties.school_type;
+            duplicatemarker = L.marker(marker._latlng, {icon: mapIcon(schoolType +'_' + boundary_type)});
+            
+            selectedLayers.addLayer(duplicatemarker);
+            if (map._popup) {
+                state.addPopupCloseHistory = false;
+            }
+            var  popupBoundaryXHR = klp.api.do('aggregation/boundary/'+feature.properties.id + '/schools/', {'geometry': 'yes'});
+            popupBoundaryXHR.done(function(data) {
+                var props = data.properties;
+                var iconType = props.boundary.school_type + '_' + props.boundary.type;
+                var boundaryData = {
+                                    "id": props.boundary.id,
+                                    "name": props.boundary.name,
+                                    "type": props.boundary.type,
+                                    "school_type": props.boundary.school_type
+                                   }
+                if (data.properties.type !== 'district') {
+                    boundaryData["parentType"] = props.boundary.parent.type;
+                    boundaryData["parentName"] = props.boundary.parent.name;
+                }
+                boundaryData["num_boys"] = props.num_boys;
+                boundaryData["num_girls"] = props.num_girls;
+                boundaryData["total_students"] = props.num_boys + props.num_girls;
+                boundaryData["num_schools"] = props.num_schools;
+
+                var tpl_map_boundary_popup = swig.compile($("#tpl-map-boundary-popup").html());
+                duplicatemarker.bindPopup(tpl_map_boundary_popup(boundaryData),{maxWidth:300, minWidth:300}).openPopup();
+
+                //marker.addTo(selectedLayers).openPopup();
+                setMarkerURL(feature);
+                /*document.title = "School: " + feature.properties.name;
+                        $('.js-trigger-compare').unbind('click');
+                        $('.js-trigger-compare').click(function(e) {
+                            e.preventDefault();
+                            klp.comparison.open(data);
+                        });*/
+                //map.setView(marker._latlng, boundaryZoomLevels[boundary_type]);
+                map.setView(marker._latlng);
+            });
+        }
 
         function markerPopup(marker, feature) {
             var duplicateMarker;
