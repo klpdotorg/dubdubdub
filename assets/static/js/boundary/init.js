@@ -5,17 +5,25 @@
         klp.router.init();
         //klp.tabs.init();
         /*------------------- WISH WASH FOR MAP-------------*/
-        var $infoXHR = klp.api.do("schools/school/" + "33312", {geometry: 'yes'});
+        var $infoXHR = klp.api.do("aggregation/boundary/" + BOUNDARY_ID + '/schools/', {geometry: 'yes'});
 
         // FIX THIS LATER
         $('#map-canvas').css('zIndex', 1);
         $infoXHR.done(function(data) {
+            var boundary = data.properties.boundary;
             $('.js-trigger-compare').click(function(e) {
                 e.preventDefault();
                 klp.comparison.open(data.properties);
             });
-            if (data.geometry && data.geometry.coordinates) {
-                var markerLatlng = L.latLng(data.geometry.coordinates[1], data.geometry.coordinates[0]);
+            var geom;
+            if (boundary.geometry) {
+                geom = boundary.geometry;
+            } else {
+                geom = null;
+            }
+            console.log("geom", geom);
+            if (geom && geom.coordinates) {
+                var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
                 var map = L.map('map-canvas', {
                     touchZoom: false,
                     scrollWheelZoom: false,
@@ -30,7 +38,7 @@
                 }).addTo(map);
 
                 // console.log('markerLatlng', markerLatlng);
-                var marker = L.geoJson(data, {
+                var marker = L.geoJson(geom, {
                     pointToLayer: function(feature, latLng) {
                         return L.marker(latLng, {icon: klp.utils.mapIcon("primaryschool_cluster")});
                     }
