@@ -4,19 +4,22 @@
     <span class="icon-number">
       {% if admin3.school_type == 'school' %} C {% else %} C {% endif %}
     </span>
-    {{ admin3.name|capitalize }}
+    {{ boundary.name|capitalize }}
   </h2>
-  
+  {% if boundary.parent %}
   <ul class="map-location-labels font-smallest">  
+    {% if boundary.parent.parent %}
     <li class="map-label-each">
-      <div class="map-label-title">District</div>
-      <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+      <div class="map-label-title">{{ boundary.parent.parent.type|capitalize }}</div>
+      <div class="map-label-name">{{ boundary.parent.parent.name|capitalize }}</div>    
     </li>
+    {% endif %}
     <li class="map-label-each">
-      <div class="map-label-title">{% if admin2.school_type == "primaryschool" %}Block {% else %} Project {% endif %}</div>
-      <div class="map-label-name">{{ admin2.name|capitalize }}</div>
-    </li>
+      <div class="map-label-title">{{ boundary.parent.type|capitalize }}</div>
+      <div class="map-label-name">{{ boundary.parent.name|capitalize }}</div>
+    </li>   
   </ul>
+  {% endif %}
 </script>
 
 <script type="text/html" id="tpl-school-summary">

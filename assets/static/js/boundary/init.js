@@ -1,16 +1,28 @@
 'use strict';
 (function() {
     klp.init = function() {
-        klp.router = new KLPRouter({});
-        klp.router.init();
-        //klp.tabs.init();
+        //klp.router = new KLPRouter({});
+        //klp.router.init();       
+        //klp.router.start();
+        render(BOUNDARY_ID);     
+    };
+
+    function render(boundaryID, academicYear) {
         /*------------------- WISH WASH FOR MAP-------------*/
-        var $infoXHR = klp.api.do("aggregation/boundary/" + BOUNDARY_ID + '/schools/', {geometry: 'yes'});
+        var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {geometry: 'yes'});
 
         // FIX THIS LATER
         $('#map-canvas').css('zIndex', 1);
         $infoXHR.done(function(data) {
             var boundary = data.properties.boundary;
+            var boundaryType = boundary.school_type;
+
+            if (boundaryType === 'primaryschool') {
+                renderPrimarySchool(data, academicYear);
+            } else {
+                renderPreSchool(data, academicYear);
+            }            
+            
             $('.js-trigger-compare').click(function(e) {
                 e.preventDefault();
                 klp.comparison.open(data.properties);
@@ -36,8 +48,7 @@
                 L.tileLayer(klp.settings.tilesURL, {
                     attribution: 'OpenStreetMap, OSM-Bright'
                 }).addTo(map);
-
-                // console.log('markerLatlng', markerLatlng);
+               
                 var marker = L.geoJson(geom, {
                     pointToLayer: function(feature, latLng) {
                         return L.marker(latLng, {icon: klp.utils.mapIcon("primaryschool_cluster")});
@@ -49,11 +60,9 @@
                 //if school does not have any coordinates, what to do?
                 $('.map-canvas').hide();
             }
-            /*------------------- WISH WASH FOR MAP-------------*/
-            var tpl = swig.compile($('#tpl-boundary-info').html());
-            //var html = swig.render($('#tpl-school-info').html(), {locals: data});
-            var context = data.properties;
-            //console.log('context', context);
+            
+            var tpl = swig.compile($('#tpl-boundary-info').html());            
+            var context = data.properties;            
             context['type_name'] = 'cluster';
             var html = tpl(context);
             $('#boundary-info-wrapper').html(html);
@@ -61,9 +70,10 @@
         .fail(function(err) {
             klp.utils.alertMessage("Something went wrong. Please try later.", "error");
         });
-        klp.router.start();
+    }
 
-        /*$('#school-data').removeClass("hidden");
+    function renderPrimarySchool(data, academicYear){
+        $('#school-data').removeClass("hidden");
         renderSummary("school");
         renderGenderCharts("school");
         renderCategories("school");
@@ -71,9 +81,11 @@
         renderEnrolment("school");
         renderGrants();
         renderInfra("school");
-        renderPrograms("school"); */
+        renderPrograms("school");
+        console.log('data', data);
+    }
 
-        
+    function renderPreSchool(data, academicYear) {           
         $('#preschool-data').removeClass("hidden");
         renderSummary("preschool");
         renderGenderCharts("preschool");
@@ -82,7 +94,8 @@
         renderEnrolment("preschool");
         renderInfra("preschool");
         renderPrograms("preschool");
-    };
+        console.log('data', data);
+    }
 
     function renderSummary(schoolType){
         var data =  
