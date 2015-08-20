@@ -24,7 +24,7 @@ class Command(BaseCommand):
         )
 
         date = datetime.now().date().strftime("%d_%b_%Y")
-        csv = open(date+".csv", "w")
+        csv = open("/var/www/dubdubdub/log/"+date+".csv", "w")
 
         lines = ["Sl. No, School ID, Telephone, Date Of Visit, Invalid, \
 Was the school open?, \
