@@ -57,6 +57,9 @@
             context['type_name'] = 'cluster';
             var html = tpl(context);
             $('#boundary-info-wrapper').html(html);
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Something went wrong. Please try later.", "error");
         });
         klp.router.start();
 
