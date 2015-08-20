@@ -1,6 +1,8 @@
 'use strict';
 (function() {
+    var utils;
     klp.init = function() {
+        utils = klp.boundaryUtils;
         //klp.router = new KLPRouter({});
         //klp.router.init();       
         //klp.router.start();
@@ -72,7 +74,8 @@
         });
     }
 
-    function renderPrimarySchool(data, academicYear){
+    function renderPrimarySchool(data, academicYear) {
+
         $('#school-data').removeClass("hidden");
         renderSummary("school");
         renderGenderCharts("school");
@@ -87,7 +90,7 @@
 
     function renderPreSchool(data, academicYear) {           
         $('#preschool-data').removeClass("hidden");
-        renderSummary("preschool");
+        renderSummary(utils.getPreSchoolSummary(data), "preschool");
         renderGenderCharts("preschool");
         renderCategories("preschool");
         renderLanguages("preschool");
@@ -97,20 +100,7 @@
         console.log('data', data);
     }
 
-    function renderSummary(schoolType){
-        var data =  
-            {"klp": {
-                'schools': 1000,
-                'students': 4440,
-                "acadyear" : "2014-2015"
-            }, 
-            "dise" : {
-                'schools': 1000,
-                'students': 4440,
-                'ptr' : '30:1',
-                "acadyear" : "2014-2015"
-            }      
-        };
+    function renderSummary(data, schoolType) {        
         var tpl = swig.compile($('#tpl-school-summary').html());
         data["school_type"] = schoolType;
         var html = tpl(data);
