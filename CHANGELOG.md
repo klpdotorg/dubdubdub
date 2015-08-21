@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 0.3.3: a87a12439d5389ce9a1a3c959068efdb9d3204f1 - 2015-08-21
+  - Minor changes to IVRS csv outputs
+
 Release 0.3.2: 20d7bbf83ac6db08df2ded764bcf0b07a6386244 - 2015-08-17
   - Minor bugfix to IVRS
   - Changes to MP / MLA models (run mview.sql)
