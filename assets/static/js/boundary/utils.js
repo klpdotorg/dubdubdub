@@ -24,11 +24,7 @@
         return modified;
     },
      t.getPreSchoolCategories = function(data) {  
-        var total = data.properties.cat.map(function(category){
-            return category.num
-        }).reduce(function(a,b){
-            return a+b;
-        });
+        var total = data.properties.num_schools;
         var modified = {}
         data.properties.cat.forEach(function(category, index, arr){
             modified[category.cat] = {
@@ -37,6 +33,18 @@
                 "klp_count" : category.num
             }
         })   
+        return modified;
+    },
+    t.getSchoolsByLanguage = function(data) {  
+       var total = data.properties.num_schools;
+        var modified = {}
+        data.properties.moi.forEach(function(moi, index, arr){
+            modified[moi.moi] = {
+                'typename':moi.moi,
+                'count': moi.num,
+                'perc': getPercentage(moi.num, total)
+            }
+        });   
         return modified;
     }
 

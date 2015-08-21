@@ -93,7 +93,7 @@
         renderSummary(utils.getPreSchoolSummary(data), 'preschool');
         renderGenderCharts(utils.getKLPGenderData(data),'preschool');
         renderCategories(utils.getPreSchoolCategories(data),'preschool');
-        renderLanguages("preschool");
+        renderLanguages(utils.getSchoolsByLanguage(data),'preschool');
         renderEnrolment("preschool");
         renderInfra("preschool");
         renderPrograms("preschool");
@@ -168,8 +168,9 @@
         $('#' + prefix + 'category-summary').html(html);  
     }
 
-    function renderLanguages(schoolType){
-        var data = { 
+    function renderLanguages(data, schoolType){
+        //Handle For Primary School
+        /*var data = { 
             "kannada": {
                 "typename":"kannada",
                 "count": 200,
@@ -186,7 +187,7 @@
                 "perc": 39
             }
             
-        };
+        };*/
         var tpl_func = "#tpl-language";
         var prefix = '';
         if(schoolType == "preschool"){
