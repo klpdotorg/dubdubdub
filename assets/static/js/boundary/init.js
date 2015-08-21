@@ -90,8 +90,8 @@
 
     function renderPreSchool(data, academicYear) {           
         $('#preschool-data').removeClass("hidden");
-        renderSummary(utils.getPreSchoolSummary(data), "preschool");
-        renderGenderCharts("preschool");
+        renderSummary(utils.getPreSchoolSummary(data), 'preschool');
+        renderGenderCharts(utils.getKLPGenderData(data),'preschool');
         renderCategories("preschool");
         renderLanguages("preschool");
         renderEnrolment("preschool");
@@ -110,24 +110,7 @@
             $('#preschool-summary').html(html);  
     }
 
-    function renderGenderCharts(schoolType){
-        var data =  
-            {"klp": {
-                'girl_count': 1000,
-                'girl_perc': 33,
-                "boy_count": 2000,
-                "boy_perc": 66,
-                "align":"right"
-            }, 
-            "dise" : {
-                'girl_count': 1500,
-                'girl_perc': 50,
-                "boy_count": 1500,
-                "boy_perc": 50,
-                "align":"left"
-            }
-            
-        };
+    function renderGenderCharts(data, schoolType){
         var tpl = swig.compile($('#tpl-gender-summary').html());
         var gender = null;
         var html = tpl(gender);
@@ -193,7 +176,7 @@
                 "others" : {
                     "type_name": "others",
                     "klp_perc" :9,
-                    "klp_count" : 28
+                    "klp_count" : 28        
                 }
             };
         }
