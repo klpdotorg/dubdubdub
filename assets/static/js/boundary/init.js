@@ -90,10 +90,10 @@
 
     function renderPreSchool(data, academicYear) {           
         $('#preschool-data').removeClass("hidden");
-        renderSummary(utils.getPreSchoolSummary(data), "preschool");
-        renderGenderCharts("preschool");
-        renderCategories("preschool");
-        renderLanguages("preschool");
+        renderSummary(utils.getPreSchoolSummary(data), 'preschool');
+        renderGenderCharts(utils.getKLPGenderData(data),'preschool');
+        renderCategories(utils.getPreSchoolCategories(data),'preschool');
+        renderLanguages(utils.getSchoolsByLanguage(data),'preschool');
         renderEnrolment("preschool");
         renderInfra("preschool");
         renderPrograms("preschool");
@@ -110,24 +110,7 @@
             $('#preschool-summary').html(html);  
     }
 
-    function renderGenderCharts(schoolType){
-        var data =  
-            {"klp": {
-                'girl_count': 1000,
-                'girl_perc': 33,
-                "boy_count": 2000,
-                "boy_perc": 66,
-                "align":"right"
-            }, 
-            "dise" : {
-                'girl_count': 1500,
-                'girl_perc': 50,
-                "boy_count": 1500,
-                "boy_perc": 50,
-                "align":"left"
-            }
-            
-        };
+    function renderGenderCharts(data, schoolType){
         var tpl = swig.compile($('#tpl-gender-summary').html());
         var gender = null;
         var html = tpl(gender);
@@ -148,9 +131,8 @@
          
     }
 
-    function renderCategories(schoolType){
-        var data = null;
-        if(schoolType == "school") {
+    function renderCategories(data,schoolType){
+        /*if(schoolType == "school") {
             data = { 
             "model primary": {
                 "type_name":"model primary",
@@ -173,34 +155,11 @@
                 "klp_count": 60,
                 "dise_count": 62 }
             };
-        } else {
-            data = {
-                "anganwadi" : {
-                    "type_name": "anganwadi",
-                    "klp_perc" :70,
-                    "klp_count" : 200
-                },
-                "balwadi" : {
-                    "type_name": "balwadi",
-                    "klp_perc" :10,
-                    "klp_count" : 30
-                },
-                "independent balwadi" : {
-                    "type_name": "independent balwadi",
-                    "klp_perc" :11,
-                    "klp_count" : 32
-                },
-                "others" : {
-                    "type_name": "others",
-                    "klp_perc" :9,
-                    "klp_count" : 28
-                }
-            };
         }
+        */ 
         var tpl_func = '#tpl-category-summary';
         var prefix = '';
-        if (schoolType == "preschool")
-        {
+        if (schoolType == "preschool") {
             prefix = "ang-";  
             tpl_func = '#tpl-ang-category-summary';
         }
@@ -209,8 +168,9 @@
         $('#' + prefix + 'category-summary').html(html);  
     }
 
-    function renderLanguages(schoolType){
-        var data = { 
+    function renderLanguages(data, schoolType){
+        //Handle For Primary School
+        /*var data = { 
             "kannada": {
                 "typename":"kannada",
                 "count": 200,
@@ -227,7 +187,7 @@
                 "perc": 39
             }
             
-        };
+        };*/
         var tpl_func = "#tpl-language";
         var prefix = '';
         if(schoolType == "preschool"){
