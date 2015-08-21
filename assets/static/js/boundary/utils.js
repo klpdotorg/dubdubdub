@@ -22,6 +22,26 @@
             }
         };
         return modified;
-    }   
+    },
+     t.getPreSchoolCategories = function(data) {  
+        var total = data.properties.cat.map(function(category){
+            return category.num
+        }).reduce(function(a,b){
+            return a+b;
+        });
+        var modified = {}
+        data.properties.cat.forEach(function(category, index, arr){
+            modified[category.cat] = {
+                'type_name': category.cat,
+                "klp_perc" :getPercentage(category.num, total),
+                "klp_count" : category.num
+            }
+        })   
+        return modified;
+    }
+
+    function getPercentage(value, total) {
+        return Math.round(value/total*100);
+    }
 
 })();

@@ -92,7 +92,7 @@
         $('#preschool-data').removeClass("hidden");
         renderSummary(utils.getPreSchoolSummary(data), 'preschool');
         renderGenderCharts(utils.getKLPGenderData(data),'preschool');
-        renderCategories("preschool");
+        renderCategories(utils.getPreSchoolCategories(data),'preschool');
         renderLanguages("preschool");
         renderEnrolment("preschool");
         renderInfra("preschool");
@@ -131,9 +131,8 @@
          
     }
 
-    function renderCategories(schoolType){
-        var data = null;
-        if(schoolType == "school") {
+    function renderCategories(data,schoolType){
+        /*if(schoolType == "school") {
             data = { 
             "model primary": {
                 "type_name":"model primary",
@@ -156,34 +155,11 @@
                 "klp_count": 60,
                 "dise_count": 62 }
             };
-        } else {
-            data = {
-                "anganwadi" : {
-                    "type_name": "anganwadi",
-                    "klp_perc" :70,
-                    "klp_count" : 200
-                },
-                "balwadi" : {
-                    "type_name": "balwadi",
-                    "klp_perc" :10,
-                    "klp_count" : 30
-                },
-                "independent balwadi" : {
-                    "type_name": "independent balwadi",
-                    "klp_perc" :11,
-                    "klp_count" : 32
-                },
-                "others" : {
-                    "type_name": "others",
-                    "klp_perc" :9,
-                    "klp_count" : 28        
-                }
-            };
         }
+        */ 
         var tpl_func = '#tpl-category-summary';
         var prefix = '';
-        if (schoolType == "preschool")
-        {
+        if (schoolType == "preschool") {
             prefix = "ang-";  
             tpl_func = '#tpl-ang-category-summary';
         }
