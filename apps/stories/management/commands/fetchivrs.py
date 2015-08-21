@@ -32,7 +32,7 @@ class Command(BaseCommand):
         from_date = options.get('from', None)
         to_date = options.get('to', None)
 
-        error_file = '/var/log/ivrs/error_' + \
+        error_file = '/var/www/dubdubdub/log/error_' + \
                      timezone.now().date().strftime("%m%d%Y") + '.log'
 
         try:
@@ -73,7 +73,7 @@ class Command(BaseCommand):
         else:
             return
 
-        f = open('ivrs_error.log', 'w')
+        f = open(error_file, 'w')
         f.write(json.dumps(self.ivrs_errors, indent = 4))
         f.close()
 
