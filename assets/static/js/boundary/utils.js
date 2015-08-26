@@ -92,7 +92,7 @@
         var modified = _.mapObject(groupByPartner, function(programs) {
             return programs.map(function(program) {
                 return {
-                    'pname': program.name,
+                    'pname': program.name+ ' ('+ program.academicyear_name + ')',
                     'url': '/programme/'+program.id+'#?'+adminLevel+'='+boundaryID
                 }
             });
