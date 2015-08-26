@@ -1,45 +1,6 @@
 'use strict';
 (function() {
-    var t = klp.boundaryUtils = {};
-
-    var sampleProgramData = {
-        "count": 4,
-        "next": null,
-        "previous": null,
-        "features": [{
-                "id": 5,
-                "name": "Anganwadi",
-                "academicyear_name": "2009-2010",
-                "partner": "Akshara Foundation"
-            }, {
-                "id": 25,
-                "name": "Anganwadi Assessment",
-                "academicyear_name": "2011-2012",
-                "partner": "Akshara Foundation"
-            }, {
-                "id": 37,
-                "name": "Anganwadi-Bangalore",
-                "academicyear_name": "2012-2013",
-                "partner": "Akshara Foundation"
-            }, {
-                "id": 49,
-                "name": "Anganwadi",
-                "academicyear_name": "2013-2014",
-                "partner": "Akshara Foundation"
-            }, {
-                "id": 1,
-                "name": "AnganwadiFoo",
-                "academicyear_name": "2013-2014",
-                "partner": "Pratham"
-            }, {
-                "id": 2,
-                "name": "AnganwadiBar",
-                "academicyear_name": "2013-2014",
-                "partner": "Pratham"
-            }
-        ]
-    };
-
+    var t = klp.boundaryUtils = {};    
 
     t.getPreSchoolSummary = function(data) {
             var modified = {
@@ -96,8 +57,7 @@
                     'url': '/programme/'+program.id+'#?'+adminLevel+'='+boundaryID
                 }
             });
-        });
-        console.log("modified", modified)
+        });        
         return modified;
     };
 
