@@ -24,3 +24,6 @@
     };
 
 })();
+
+//http://dise.klp.org.in/api/drf/12-13/search/?query=bangalore&type=district
+//http://dise.klp.org.in/api/drf/12-13/district/bangalore-rural/

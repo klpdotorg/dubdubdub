@@ -44,7 +44,7 @@
                 } else {
                     geom = null;
                 }
-                console.log("geom", geom);
+                
                 if (geom && geom.coordinates) {
                     var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
                     var map = L.map('map-canvas', {
@@ -89,16 +89,26 @@
     }
 
     function renderPrimarySchool(data, academicYear) {
-
+        var queryParams = {};
+        var boundaryID = data.properties.boundary.id;
+        var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
+        queryParams[adminLevel] = boundaryID;        
         $('#school-data').removeClass("hidden");
-        renderSummary("school");
-        renderGenderCharts("school");
-        renderCategories("school");
-        renderLanguages("school");
-        renderEnrolment("school");
-        renderGrants();
-        renderInfra("school");
-        renderPrograms("school");
+        //renderSummary("school");
+        //renderGenderCharts("school");
+        //renderCategories("school");
+        //renderLanguages("school");
+        //renderEnrolment("school");
+        //renderGrants();
+        //renderInfra("school");
+        //renderPrograms("school");
+        klp.api.do('programme/',queryParams)
+               .done(function(progData) {                    
+                    renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'primaryschool');            
+               })
+               .fail(function(err) {
+                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+            });
         console.log('data', data);
     }
 
@@ -106,11 +116,9 @@
         var queryParams = {};
         var boundaryID = data.properties.boundary.id;
         var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
-        queryParams[adminLevel] = boundaryID;
-        console.log("qP", queryParams);
+        queryParams[adminLevel] = boundaryID;        
         klp.api.do('programme/',queryParams)
-               .done(function(progData) {
-                    console.log("prog",progData);
+               .done(function(progData) {                    
                     renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'preschool');            
                })
                .fail(function(err) {
@@ -447,34 +455,7 @@
     }
 
     function renderPrograms(data, schoolType) {
-        var tpl = swig.compile($('#tpl-program-summary').html());       
-            /*
-            data = {
-                "Akshara Foundation": [{
-                    "pname": "Akshara Ganitha",
-                    "url": "#"
-                }, {
-                    "pname": "English",
-                    "url": "#"
-                }, {
-                    "pname": "Oduve Naanu",
-                    "url": "#"
-                }],
-                "Akshaya Patra": [{
-                    "pname": "Mid day meals",
-                    "url": "#"
-                }],
-                "Sikshana Foundation": [{
-                    "pname": "Math",
-                    "url": "#"
-                }, {
-                    "pname": "English",
-                    "url": "#"
-                }]
-            };
-        } */
-
-        
+        var tpl = swig.compile($('#tpl-program-summary').html());               
         var html = '<div class="page-parent">'
         for (var program in data) {
             html = html + '<div class="third-column">' + '<div class="heading-tiny-uppercase">' + program + '</div>' + tpl({
