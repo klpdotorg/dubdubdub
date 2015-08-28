@@ -1,5 +1,3 @@
-from django.db.models import F
-
 from schools.models import BoundaryType
 from stories.models import (
     Question, Questiongroup
@@ -16,15 +14,18 @@ def get_question(question_number, ivrs_type):
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
+    elif ivrs_type == PRI:
+        question_group = Questiongroup.objects.get(
+            version=3,
+            source__name='ivrs'
+        )
+        school_type = BoundaryType.objects.get(name="Primary School")
     else:
         question_group = Questiongroup.objects.get(
             version=1,
             source__name='ivrs'
         )
-        if ivrs_type == PRI:
-            school_type = BoundaryType.objects.get(name="Primary School")
-        else:
-            school_type = BoundaryType.objects.get(name="PreSchool")
+        school_type = BoundaryType.objects.get(name="PreSchool")
 
     question = Question.objects.get(
         school_type=school_type,
