@@ -176,11 +176,11 @@ class VerifyAnswer(KLPAPIView):
                     accepted_answers = {1: 'Yes', 2: 'No'}
                     response = accepted_answers[response]
 
-                # Perform sanity check for GKA. PRE & PRI (old ivrs) only
+                # Perform sanity check for GKA & PRI. PRE (old ivrs) only
                 # has checkbox and numeric as answers types. Answers other
                 # than 1 or 2 are already moderated on the exotel end. The
                 # numeric answers cannot be moderated for the old ivrs.
-                if ivrs_type == GKA:
+                if ivrs_type == GKA or ivrs_type == PRI:
                     if response in eval(question.options):
                         state.answers[int(question_number)] = response
                         state.save()
