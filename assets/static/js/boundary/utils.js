@@ -17,30 +17,48 @@
             'klp': {
                 'schools': klpData.properties.num_schools,
                 'students': klpData.properties.num_boys + klpData.properties.num_girls,
-                'acadyear' : academicYear
-            }, 
-            'dise' : {
+                'acadyear': academicYear
+            },
+            'dise': {
                 'schools': diseData.properties.sum_schools,
                 'students': diseData.properties.sum_boys + diseData.properties.sum_girls,
-                'ptr' : Math.round((diseData.properties.sum_boys+diseData.properties.sum_girls)/(diseData.properties.sum_male_tch+diseData.properties.sum_female_tch)),
-                "acadyear" : academicYear
-            }      
+                'ptr': Math.round((diseData.properties.sum_boys + diseData.properties.sum_girls) / (diseData.properties.sum_male_tch + diseData.properties.sum_female_tch)),
+                "acadyear": academicYear
+            }
         };
 
         return modified;
     }
 
-    t.getKLPGenderData = function(data) {
-        var percents = klp.utils.getBoyGirlPercents(data.properties.num_boys, data.properties.num_girls);
-        var modified = {
-            "klp": {
-                'girl_count': data.properties.num_girls,
-                'girl_perc': percents.percent_girls,
-                'boy_count': data.properties.num_boys,
-                'boy_perc': percents.percent_boys
-            }
+    t.getGenderData = function(klpData, diseData) {
+        var klpGenderData;
+        var diseGenderData;        
+        var klpGenderPercents = klp.utils.getBoyGirlPercents(klpData.num_boys, klpData.num_girls);
+        var diseGenderPercents = klp.utils.getBoyGirlPercents(diseData.sum_boys, diseData.sum_girls);
+        klpGenderData = {
+            'girl_count': klpData.num_girls,
+            'girl_perc': klpGenderPercents.percent_girls,
+            'boy_count': klpData.num_boys,
+            'boy_perc': klpGenderPercents.percent_boys,            
         };
-        return modified;
+
+        if (diseData) {
+            diseGenderData = {
+                'girl_count': diseData.sum_girls,
+                'girl_perc': diseGenderPercents.percent_girls,
+                'boy_count': diseData.sum_boys,
+                'boy_perc': diseGenderPercents.percent_boys,
+                'align': right                
+            }
+            return {
+                'klp': klpGenderData,
+                'dise': diseGenderData
+            };
+        };
+
+        return {
+            klp: klpGenderData
+        }
     };
     t.getPreSchoolCategories = function(data) {
         var total = data.properties.num_schools;

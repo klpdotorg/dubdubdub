@@ -104,18 +104,16 @@
                     .done(function(diseData) {                        
                         console.log('diseData', diseData);
                         renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear),'school');
+                        renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
                     })
                     .fail(function(err) {
                         klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-                    })
-                //renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'primaryschool');            
+                    })                
             })
             .fail(function(err) {
                 klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-            });
-
+            });       
         
-        //renderGenderCharts("school");
         //renderCategories("school");
         //renderLanguages("school");
         //renderEnrolment("school");
@@ -146,7 +144,7 @@
             });
         $('#preschool-data').removeClass("hidden");
         renderSummary(utils.getPreSchoolSummary(data), 'preschool');
-        renderGenderCharts(utils.getKLPGenderData(data), 'preschool');
+        renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
         renderCategories(utils.getPreSchoolCategories(data), 'preschool');
         renderLanguages(utils.getSchoolsByLanguage(data), 'preschool');
 
@@ -189,7 +187,6 @@
         }
         html = tpl(gender);
         $('#' + prefix + 'klp-gender').html(html);
-
     }
 
     function renderCategories(data, schoolType) {
