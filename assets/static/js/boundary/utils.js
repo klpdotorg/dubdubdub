@@ -48,7 +48,7 @@
                 'girl_perc': diseGenderPercents.percent_girls,
                 'boy_count': diseData.sum_boys,
                 'boy_perc': diseGenderPercents.percent_boys,
-                'align': right                
+                'align': 'right'                
             }
             return {
                 'klp': klpGenderData,
@@ -99,7 +99,7 @@
 
 
     function getPercentage(value, total) {
-        return Math.round(value / total * 100);
+        return +(value / total * 100).toFixed(2);
     }
 
 })();

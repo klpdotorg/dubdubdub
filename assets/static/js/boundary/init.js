@@ -114,12 +114,12 @@
                 klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
             });       
         
-        //renderCategories("school");
-        //renderLanguages("school");
+        //renderCategories("school"); 
+        renderLanguages(utils.getSchoolsByLanguage(data), 'school');
         //renderEnrolment("school");
         //renderGrants();
         //renderInfra("school");
-        //renderPrograms("school");
+        
         klp.api.do('programme/', queryParams)
             .done(function(progData) {
                 renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
