@@ -1,4 +1,4 @@
-(function() {
+(function() {    
     var base = '//disedev.klp.org.in/api/drf/';
     var DEFAULT_ACADEMIC_YEAR = '13-14';
     klp.dise_api = {
@@ -19,6 +19,22 @@
                 'format': 'json'
             };
             var $xhr = $.get(url, params);
+            return $xhr;
+        },
+
+        'queryBoundaryName': function(boundaryName,boundaryType, academicYear) {
+            var url = base + academicYear + '/search/';
+            var params = {
+                'query': boundaryName,
+                'type': boundaryType
+            };
+            var $xhr = $.get(url, params);
+            return $xhr;
+        },
+
+        'getBoundaryData': function(boundaryID, boundaryType, academicYear) {
+            var url = base + academicYear + '/' + boundaryType + '/' + boundaryID + '/';
+            var $xhr = $.get(url);
             return $xhr;
         }
     };

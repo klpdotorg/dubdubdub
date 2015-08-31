@@ -17,6 +17,8 @@
     };
 
     function render(boundaryID, academicYear) {
+        var acadYear = academicYear || '13-14';
+
         /*------------------- WISH WASH FOR MAP-------------*/
         var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {
             geometry: 'yes'
@@ -29,9 +31,9 @@
                 var boundaryType = boundary.school_type;
 
                 if (boundaryType === 'primaryschool') {
-                    renderPrimarySchool(data, academicYear);
+                    renderPrimarySchool(data, acadYear);
                 } else {
-                    renderPreSchool(data, academicYear);
+                    renderPreSchool(data, acadYear);
                 }
 
                 $('.js-trigger-compare').click(function(e) {
@@ -44,7 +46,7 @@
                 } else {
                     geom = null;
                 }
-                
+
                 if (geom && geom.coordinates) {
                     var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
                     var map = L.map('map-canvas', {
@@ -88,13 +90,31 @@
             });
     }
 
-    function renderPrimarySchool(data, academicYear) {
+    function renderPrimarySchool(data, academicYear) {        
         var queryParams = {};
         var boundaryID = data.properties.boundary.id;
         var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
-        queryParams[adminLevel] = boundaryID;        
+        queryParams[adminLevel] = boundaryID;
         $('#school-data').removeClass("hidden");
-        //renderSummary("school");
+        klp.dise_api.queryBoundaryName('bangalore', 'district', academicYear)
+            .done(function(diseData) {
+                var boundary = diseData[0].children[0]
+                console.log('boundary', boundary);
+                klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
+                    .done(function(diseData) {                        
+                        console.log('diseData', diseData);
+                        renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear),'school');
+                    })
+                    .fail(function(err) {
+                        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                    })
+                //renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'primaryschool');            
+            })
+            .fail(function(err) {
+                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+            });
+
+        
         //renderGenderCharts("school");
         //renderCategories("school");
         //renderLanguages("school");
@@ -102,12 +122,12 @@
         //renderGrants();
         //renderInfra("school");
         //renderPrograms("school");
-        klp.api.do('programme/',queryParams)
-               .done(function(progData) {                    
-                    renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'primaryschool');            
-               })
-               .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+        klp.api.do('programme/', queryParams)
+            .done(function(progData) {
+                renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
+            })
+            .fail(function(err) {
+                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
             });
         console.log('data', data);
     }
@@ -116,23 +136,23 @@
         var queryParams = {};
         var boundaryID = data.properties.boundary.id;
         var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
-        queryParams[adminLevel] = boundaryID;        
-        klp.api.do('programme/',queryParams)
-               .done(function(progData) {                    
-                    renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel),'preschool');            
-               })
-               .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+        queryParams[adminLevel] = boundaryID;
+        klp.api.do('programme/', queryParams)
+            .done(function(progData) {
+                renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
+            })
+            .fail(function(err) {
+                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
             });
         $('#preschool-data').removeClass("hidden");
         renderSummary(utils.getPreSchoolSummary(data), 'preschool');
         renderGenderCharts(utils.getKLPGenderData(data), 'preschool');
         renderCategories(utils.getPreSchoolCategories(data), 'preschool');
         renderLanguages(utils.getSchoolsByLanguage(data), 'preschool');
+
+        //To do: Connect with Infra + Enrolment API. 
         renderEnrolment("preschool");
         renderInfra("preschool");
-        
-
         console.log('data', data);
     }
 
@@ -455,7 +475,7 @@
     }
 
     function renderPrograms(data, schoolType) {
-        var tpl = swig.compile($('#tpl-program-summary').html());               
+        var tpl = swig.compile($('#tpl-program-summary').html());
         var html = '<div class="page-parent">'
         for (var program in data) {
             html = html + '<div class="third-column">' + '<div class="heading-tiny-uppercase">' + program + '</div>' + tpl({
