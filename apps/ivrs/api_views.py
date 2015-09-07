@@ -13,13 +13,13 @@ from schools.models import School, SchoolDetails
 from stories.models import Story, UserType, Questiongroup, Answer
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
-GKA = 08039510185
-PRI = 08039236431
-PRE = 08039510414
+GKA = "08039510185"
+PRI = "08039236431"
+PRE = "08039510414"
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
-        ivrs_type = request.QUERY_PARAMS.get('To', None)
+        ivrs_type = str(request.QUERY_PARAMS.get('To', None))
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         state, created = State.objects.get_or_create(session_id=session_id)
 
@@ -159,7 +159,7 @@ class Verify(KLPAPIView):
 
 class VerifyAnswer(KLPAPIView):
     def get(self, request, question_number):
-        ivrs_type = request.QUERY_PARAMS.get('To', None)
+        ivrs_type = str(request.QUERY_PARAMS.get('To', None))
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
             state = State.objects.get(session_id=session_id)

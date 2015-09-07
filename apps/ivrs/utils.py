@@ -4,9 +4,9 @@ from stories.models import (
     Question, Questiongroup
 )
 
-GKA = 08039510185
-PRI = 08039236431
-PRE = 08039510414
+GKA = "08039510185"
+PRI = "08039236431"
+PRE = "08039510414"
 
 def get_question(question_number, ivrs_type):
     if ivrs_type == GKA:
