@@ -3,6 +3,7 @@ from stories.models import Story
 from optparse import make_option
 import codecs
 import csv
+import datetime
 
 class Command(BaseCommand):
     args = ""
@@ -54,10 +55,10 @@ class Command(BaseCommand):
 
         if options.get('from', None):
             from_date = self.get_date(options.get('from'))
-            stories_qset = stories_qset.filter(date__gte=from_date)
+            stories_qset = stories_qset.filter(date_of_visit__gte=from_date)
         if options.get('to', None):
             to_date = self.get_date(options.get('to'))
-            stories_qset = stories_qset.filter(date__lte=to_date)
+            stories_qset = stories_qset.filter(date_of_visit__lte=to_date)
 
         if options.get('source', None):
             source_name = options.get('source')
