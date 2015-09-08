@@ -114,6 +114,8 @@ class Command(BaseCommand):
                     user_type=user_type,
                 )
 
+                print "The Story is: " + str(story) + " and has it been created? " + str(created)
+
                 for sequence_number, answer_column in zip(question_sequence, answer_columns):
                     if row[answer_column] in accepted_answers:
                         question = Question.objects.get(
@@ -144,9 +146,18 @@ class Command(BaseCommand):
         return previous_date
             
     def check_date_sanity(self, date):
+        months = {
+            'june': '6',
+            'july': '7',
+        }
+
         day = date.split("/")[0]
         month = date.split("/")[1]
         year = date.split("/")[2]
+
+        if month.strip().lower() in months:
+            month = months[month.strip().lower()]
+            date = day + "/" + month + "/" + year
 
         if not self.is_day_correct(day):
             return (date, False)
@@ -160,7 +171,10 @@ class Command(BaseCommand):
         return (date, True)
 
     def is_day_correct(self, day):
-        return int(day) in range(1,32)
+        try:
+            return int(day) in range(1,32)
+        except:
+            return False
 
     def is_month_correct(self, month):
         return int(month) in range(1,13)
