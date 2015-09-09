@@ -4,6 +4,8 @@ from optparse import make_option
 import codecs
 import csv
 import datetime
+from common.utils import UnicodeWriter
+
 
 class Command(BaseCommand):
     args = ""
@@ -43,8 +45,8 @@ class Command(BaseCommand):
             print "Please specify a filename with the --file argument"
             return
 
-        out = codecs.open(filename, mode="w", encoding="utf-8")
-
+        #out = codecs.open(filename, mode="w", encoding="utf-8")
+        out = open(filename, "w")
         key, val = self.get_query(options)
         stories_qset = Story.objects.all()
 
@@ -79,7 +81,7 @@ class Command(BaseCommand):
             "admin2",
             "admin3"
         ]
-        writer = csv.writer(out)
+        writer = UnicodeWriter(out, encoding="utf-8")
         writer.writerow(fields)
         print "writing file"
         for story in stories_qset:
