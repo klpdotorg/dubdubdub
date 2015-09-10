@@ -10,6 +10,10 @@ Use required commands
 Changelog
 ---
 
+Release 0.3.4: 4e9e58a6e10752f1042af57a5a82e2d5f62f0a70 - 2015-09-10
+  - Fix bug of stories count on school page
+  - Misc. IVRS
+
 Release 0.3.3: a87a12439d5389ce9a1a3c959068efdb9d3204f1 - 2015-08-21
   - Minor changes to IVRS csv outputs
 
