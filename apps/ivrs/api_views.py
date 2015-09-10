@@ -13,7 +13,8 @@ from schools.models import School, SchoolDetails
 from stories.models import Story, UserType, Questiongroup, Answer
 from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
 
-GKA = "08039510185"
+GKA_SERVER = "08039591332"
+GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
 
@@ -48,7 +49,7 @@ class CheckSchool(KLPAPIView):
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
-        if ivrs_type == GKA:
+        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
@@ -189,7 +190,7 @@ class VerifyAnswer(KLPAPIView):
                 # has checkbox and numeric as answers types. Answers other
                 # than 1 or 2 are already moderated on the exotel end. The
                 # numeric answers cannot be moderated for the old ivrs.
-                if ivrs_type == GKA or ivrs_type == PRI:
+                if ivrs_type == GKA_SERVER or ivrs_type == PRI or ivrs_type == GKA_DEV:
                     if response in eval(question.options):
                         state.answers[int(question_number)] = response
                         state.save()

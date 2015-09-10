@@ -3,12 +3,13 @@ from stories.models import (
     Question, Questiongroup
 )
 
-GKA = "08039510185"
+GKA_SERVER = "08039591332"
+GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
 
 def get_question(question_number, ivrs_type):
-    if ivrs_type == GKA:
+    if ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER:
         question_group = Questiongroup.objects.get(
             version=2,
             source__name='ivrs'
