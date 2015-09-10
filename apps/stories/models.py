@@ -152,7 +152,7 @@ class Story(TimestampedBaseModel):
     class Meta:
         db_table = 'stories_story'
         verbose_name_plural = 'Stories'
-        ordering = ['-created_at']
+        ordering = ['-date_of_visit']
 
     def get_geometry(self):
         return self.school.get_geometry() or None

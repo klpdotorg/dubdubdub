@@ -18,6 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fifteen_minutes = datetime.now() - timedelta(minutes=15)
         states = State.objects.filter(
+            ivrs_type='gka',
             is_processed=False,
             date_of_visit__lte=fifteen_minutes
         )
