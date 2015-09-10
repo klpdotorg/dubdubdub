@@ -19,49 +19,58 @@ PRE = "08039510414"
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
-        ivrs_type = str(request.QUERY_PARAMS.get('To', None))
-        session_id = request.QUERY_PARAMS.get('CallSid', None)
-        state, created = State.objects.get_or_create(session_id=session_id)
+        status_code = status.HTTP_200_OK
 
+        ivrs_type = request.QUERY_PARAMS.get('To', None)
         telephone = request.QUERY_PARAMS.get('From', None)
         date = request.QUERY_PARAMS.get('StartTime', None)
-        date = datetime.datetime.strptime(
-            date, '%Y-%m-%d %H:%M:%S'
-        )
-        date = timezone.make_aware(
-            date, timezone.get_current_timezone()
-        )
-
-        state.answers = []
-        # Ignoring index 0 since question_numbers start from 1
-        state.answers.append('IGNORED_INDEX')
-
-        if ivrs_type == GKA:
-            state.ivrs_type = 'gka'
-            # Initializing answer slots 1 to 12 with NA
-            for i in range(0,12):
-                state.answers.append('NA')
-        else:
-            state.ivrs_type = 'old-ivrs'
-            # Initializing answer slots 1 to 6 with NA
-            for i in range(0,6):
-                state.answers.append('NA')
-
-        state.telephone = telephone
-        state.date_of_visit = date
-        state.save()
-
-        status_code = status.HTTP_200_OK
         school_id = request.QUERY_PARAMS.get('digits', None)
+        session_id = request.QUERY_PARAMS.get('CallSid', None)
+
+        state, created = State.objects.get_or_create(
+            session_id=session_id
+        )
+        state.telephone = telephone
+        state.date_of_visit = get_date(date)
+        state.answers = []
+        state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
+
+        school_type = None
         if not school_id:
             status_code = status.HTTP_404_NOT_FOUND
+        elif School.objects.filter(id=school_id.strip('"')).exists():
+            state.school_id = school_id.strip('"')
+            school_type = School.objects.filter(
+                id=school_id.strip('"')
+            ).values(
+                'admin3__type__name'
+            )[0]['admin3__type__name']
         else:
-            school_id = school_id.strip('"')
-            if School.objects.filter(id=school_id).exists():
-                state.school_id = school_id
-                state.save()
-            else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        if ivrs_type == GKA:
+            if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'gka'
+            for i in range(0,12): # Initializing answer slots 1 to 12 with NA
+                state.answers.append('NA')
+        elif ivrs_type == PRI:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'new-ivrs'
+            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
+                state.answers.append('NA')
+        else:
+            if school_type != u'PreSchool':
+                status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'new-ivrs'
+            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
+                state.answers.append('NA')
+
+        state.save()
 
         return Response("", status=status_code)
 
@@ -159,7 +168,7 @@ class Verify(KLPAPIView):
 
 class VerifyAnswer(KLPAPIView):
     def get(self, request, question_number):
-        ivrs_type = str(request.QUERY_PARAMS.get('To', None))
+        ivrs_type = request.QUERY_PARAMS.get('To', None)
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         if State.objects.filter(session_id=session_id).exists():
             state = State.objects.get(session_id=session_id)
@@ -176,11 +185,11 @@ class VerifyAnswer(KLPAPIView):
                     accepted_answers = {1: 'Yes', 2: 'No'}
                     response = accepted_answers[response]
 
-                # Perform sanity check for GKA. PRE & PRI (old ivrs) only
+                # Perform sanity check for GKA & PRI. PRE (old ivrs) only
                 # has checkbox and numeric as answers types. Answers other
                 # than 1 or 2 are already moderated on the exotel end. The
                 # numeric answers cannot be moderated for the old ivrs.
-                if ivrs_type == GKA:
+                if ivrs_type == GKA or ivrs_type == PRI:
                     if response in eval(question.options):
                         state.answers[int(question_number)] = response
                         state.save()
@@ -196,3 +205,12 @@ class VerifyAnswer(KLPAPIView):
             status_code = status.HTTP_404_NOT_FOUND
 
         return Response("", status=status_code)
+
+def get_date(date):
+    date = datetime.datetime.strptime(
+        date, '%Y-%m-%d %H:%M:%S'
+    )
+    date = timezone.make_aware(
+        date, timezone.get_current_timezone()
+    )
+    return date
