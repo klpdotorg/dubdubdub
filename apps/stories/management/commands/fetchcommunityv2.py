@@ -1,3 +1,4 @@
+import os
 import csv
 import json
 import datetime
@@ -255,7 +256,13 @@ class Command(BaseCommand):
                             text=accepted_answers[row[answer_column]],
                         )
         f.close()
-        file_name = file_name + "_error.log"
+
+        log_directory = os.environ.get('DUBDUBDUB_LOG_DIR')
+        if log_directory:
+            file_name = file_name.split('/')[-1]
+            file_name = log_directory + file_name + "_error.log"
+        else:
+            file_name = file_name + "_error.log"
         f = open(file_name, 'w')
         f.write(json.dumps(dise_errors, indent = 4))
         f.close()
