@@ -25,7 +25,7 @@ class Command(BaseCommand):
         make_option('--file',
                     help='Path to the csv file'),
         make_option('--format',
-                    help='Which format to use - Hosakote1/Hosakote2/v2/GKA1/GKA2'),
+                    help='Which format to use - Hosakote1/Hosakote1-dates/Hosakote2/v2/GKA1/GKA2'),
     )
 
     @transaction.atomic
@@ -36,7 +36,7 @@ class Command(BaseCommand):
             return
 
         csv_format = options.get('format', None)
-        if not csv_format or csv_format not in ['Hosakote1', 'Hosakote2', 'v2', 'GKA1', 'GKA2']:
+        if not csv_format or csv_format not in ['Hosakote1', 'Hosakote1-dates', 'Hosakote2', 'v2', 'GKA1', 'GKA2']:
             print "Please specify a formate with the --format argument [Hosakote1/Hosakote2/v2/GKA1/GKA2]"
             return
 
@@ -68,7 +68,7 @@ class Command(BaseCommand):
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
 
-        if csv_format in ["Hosakote1", "Hosakote2"]:
+        if csv_format in ["Hosakote1", "Hosakote1-dates", "Hosakote2"]:
             dise_errors = {}
             dise_errors['no_school_code'] = []
             count = -1
@@ -113,13 +113,17 @@ class Command(BaseCommand):
                 question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
                 answer_columns = [8, 9, 10, 11, 12, 13, 14, 15]
 
-            elif csv_format in ["Hosakote1", "Hosakote2"]:
-                if csv_format == "Hosakote1":
+            elif csv_format in ["Hosakote1", "Hosakote1-dates", "Hosakote2"]:
+                if csv_format in ["Hosakote1", "Hosakote1-dates"]:
                     name = row[13]
                     school_id = row[9]
                     accepted_answers = {'1':'Yes', '0':'No', '88':'Unknown', '99':'Unknown'}
                     user_type = self.get_user_type(num_to_user_type[row[14]], user_types)
-                    previous_date = date_of_visit = self.parse_date(previous_date, row[11])
+                    if csv_format == "Hosakote1":
+                        previous_date = date_of_visit = self.parse_date(previous_date, row[11])
+                    else:
+                        transformed_date = self.transform_date(row[11])
+                        previous_date = date_of_visit = self.parse_date(previous_date, transformed_date)
 
                     try:
                         school = School.objects.get(id=school_id)
@@ -255,6 +259,15 @@ class Command(BaseCommand):
         f = open(file_name, 'w')
         f.write(json.dumps(dise_errors, indent = 4))
         f.close()
+
+    def transform_date(self, date):
+        if date.strip() != 'NA':
+            date = date.strip()
+            month = date.split("/")[0]
+            day = date.split("/")[1]
+            year = date.split("/")[2]
+            date = day+"/"+month+"/"+year
+        return date
 
     def parse_date(self, previous_date,  date):
         if date:
