@@ -128,7 +128,7 @@ class Command(BaseCommand):
                         continue
 
                     question_sequence = [1, 2, 3, 4, 5, 6, 7, 8]
-                    answer_columns = [14, 15, 16, 17, 18, 19, 20, 21]
+                    answer_columns = [15, 16, 17, 18, 19, 20, 21, 22]
 
                 else:
                     users = {
@@ -251,7 +251,7 @@ class Command(BaseCommand):
                             text=accepted_answers[row[answer_column]],
                         )
         f.close()
-        file_name = "error_"+csv_format+".log"
+        file_name = file_name + "_error.log"
         f = open(file_name, 'w')
         f.write(json.dumps(dise_errors, indent = 4))
         f.close()
