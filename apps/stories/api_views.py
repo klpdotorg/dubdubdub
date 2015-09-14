@@ -450,7 +450,6 @@ class StoriesView(KLPListAPIView):
     answers     [yes, no] if answers should be returned
     verified    [yes, no] if only verified or not-verified stories should be
                 returned, if not mentioned, returns all
-    limit       any positive integer, number of results needed
     """
     bbox_filter_field = "school__instcoord__coord"
 
