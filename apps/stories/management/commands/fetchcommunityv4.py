@@ -39,18 +39,18 @@ class Command(BaseCommand):
             version=4, source=source
         )
 
-        UserType.objects.get_or_create(name=UserType.PARENTS)
-        UserType.objects.get_or_create(name=UserType.CBO_MEMBER)
-        UserType.objects.get_or_create(name=UserType.SDMC_MEMBER)
-        UserType.objects.get_or_create(name=UserType.ELECTED_REPRESENTATIVE)
+        parents, created = UserType.objects.get_or_create(name=UserType.PARENTS)
+        cbo_member, created = UserType.objects.get_or_create(name=UserType.CBO_MEMBER)
+        sdmc_member, created = UserType.objects.get_or_create(name=UserType.SDMC_MEMBER)
+        elected_rep, created = UserType.objects.get_or_create(name=UserType.ELECTED_REPRESENTATIVE)
 
         num_to_user_type = {
             '':None,
-            '1':UserType.PARENTS,
-            '2':UserType.SDMC_MEMBER,
-            '3':UserType.ELECTED_REPRESENTATIVE,
-            '4':UserType.CBO_MEMBER,
-            '5':UserType.CBO_MEMBER
+            '1':parents,
+            '2':sdmc_member,
+            '3':elected_rep,
+            '4':cbo_member,
+            '5':cbo_member
         }
 
         f = open(file_name, 'r')
