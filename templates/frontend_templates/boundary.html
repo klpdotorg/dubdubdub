@@ -90,6 +90,7 @@
 </script>
 
 <script type="text/html" id="tpl-gender-summary">
+    {% if gender %}
     <div class="float-{{ gender.align }}">
       <div class="module-stats-icon module-stats-girl">
         <div class="module-stats-info">
@@ -122,7 +123,11 @@
         </div>     
       </div> <!-- /bar-graph -->
     </div> <!-- /bar-graph-wrap -->
-    
+    {% else %}
+    <div class="no-data">
+      No data available.
+    </div>
+    {% endif %}
 </script>
 
 <script type="text/html" id="tpl-category-summary">
@@ -171,20 +176,26 @@
 
 </script>
 <script type="text/html" id="tpl-language">
-  {% for language in languages %}  
-    <div class="bar-graph-wrap">
-      <div class="bar-graph">
-        
-        <div class="bar-custom tooltip" aria-label="{{language.count}}">
-          <div class="bar-value bar-value-100" style="width:100%;">
-            <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
-            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
+  {% if languages %}
+    {% for language in languages %}  
+      <div class="bar-graph-wrap">
+        <div class="bar-graph">
+          
+          <div class="bar-custom tooltip" aria-label="{{language.count}}">
+            <div class="bar-value bar-value-100" style="width:100%;">
+              <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
+              <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
+            </div>
           </div>
-        </div>
-        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
-      </div> <!-- /bar-graph -->
-    </div> <!-- /bar-graph-wrap -->
-  {%endfor%}
+          <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+        </div> <!-- /bar-graph -->
+      </div> <!-- /bar-graph-wrap -->
+    {%endfor%}
+  {% else %}
+    <div class="no-data">
+      No data available.
+    </div>
+  {% endif %}
 </script>
 
 <script type="text/html" id="tpl-ang-language">

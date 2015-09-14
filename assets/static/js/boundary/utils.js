@@ -35,13 +35,16 @@
         var diseGenderData;        
         var klpGenderPercents = klp.utils.getBoyGirlPercents(klpData.num_boys, klpData.num_girls);
         var diseGenderPercents = klp.utils.getBoyGirlPercents(diseData.sum_boys, diseData.sum_girls);
-        klpGenderData = {
-            'girl_count': klpData.num_girls,
-            'girl_perc': klpGenderPercents.percent_girls,
-            'boy_count': klpData.num_boys,
-            'boy_perc': klpGenderPercents.percent_boys,            
-        };
-
+        if (!klpData.num_girls && !klpData.num_boys) {
+            klpGenderData = null;
+        } else {
+            klpGenderData = {
+                'girl_count': klpData.num_girls,
+                'girl_perc': klpGenderPercents.percent_girls,
+                'boy_count': klpData.num_boys,
+                'boy_perc': klpGenderPercents.percent_boys,            
+            };
+        }
         if (diseData) {
             diseGenderData = {
                 'girl_count': diseData.sum_girls,
@@ -73,6 +76,9 @@
         return modified;
     };
     t.getSchoolsByLanguage = function(data) {
+        if (data.properties.moi.length === 0) {
+            return null;
+        }
         var total = data.properties.num_schools;
         var modified = {}
         data.properties.moi.forEach(function(moi, index, arr) {
@@ -84,6 +90,7 @@
         });
         return modified;
     };
+    
     t.getSchoolPrograms = function(progData, boundaryID, adminLevel) {
         var groupByPartner = _.groupBy(progData.features, 'partner')
         var modified = _.mapObject(groupByPartner, function(programs) {
