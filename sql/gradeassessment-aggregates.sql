@@ -9,7 +9,7 @@ ALTER TABLE tb_boundary_assessment_singlescore_mt ADD COLUMN gradesinglescore ch
 CREATE OR REPLACE FUNCTION grade_median(NUMERIC[])
    RETURNS NUMERIC AS
 $$
-   SELECT (case when count(distinct val)=1 then min(val) else 100 end)
+   SELECT (case when count(distinct val)=1 then min(val) else max(val) end)
    FROM (
      SELECT val
      FROM unnest($1) val
