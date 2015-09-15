@@ -56,9 +56,8 @@ class Command(BaseCommand):
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
 
-        dise_errors = {}
-        dise_errors['no_dise_code'] = []
-        dise_errors['no_school_for_dise'] = []
+        missing_ids = {}
+        missing_ids['schools'] = []
         count = 0
 
         previous_date = ""
@@ -70,7 +69,7 @@ class Command(BaseCommand):
                 continue
 
             name = row[7]
-            dise_code = row[5]
+            school_id = row[6].strip()
             accepted_answers = {'1':'Yes', '0':'No', '99':'Unknown', '88':'Unknown'}
 
             user_type = num_to_user_type[row[8]]
@@ -80,15 +79,9 @@ class Command(BaseCommand):
             )
 
             try:
-                dise_info = DiseInfo.objects.get(dise_code=dise_code)
+                school = School.objects.get(id=school_id)
             except Exception as ex:
-                dise_errors['no_dise_code'].append(dise_code)
-                continue
-
-            try:
-                school = School.objects.get(dise_info=dise_info)
-            except Exception as ex:
-                dise_errors['no_school_for_dise'].append(dise_code)
+                missing_ids['schools'].append(school_id)
                 continue
 
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -136,7 +129,7 @@ class Command(BaseCommand):
         else:
             file_name = file_name + "_error.log"
         f = open(file_name, 'w')
-        f.write(json.dumps(dise_errors, indent = 4))
+        f.write(json.dumps(missing_ids, indent = 4))
         f.close()
 
     def parse_date(self, previous_date,  day, month, year):
