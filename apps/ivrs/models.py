@@ -6,7 +6,8 @@ from djorm_pgarray.fields import TextArrayField
 # Create your models here.
 
 class State(models.Model):
-    session_id = models.CharField(max_length=100,unique=True)
+    ivrs_type = models.CharField(max_length=10, default="gka")
+    session_id = models.CharField(max_length=100, unique=True)
     is_processed = models.BooleanField(default=False)
     is_invalid = models.BooleanField(default=False)
     school_id = models.IntegerField(null=True, blank=True)

@@ -7,6 +7,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.conf import settings
+import codecs
+import csv
+import cStringIO
 
 
 def send_templated_mail(from_email, to_emails, subject, template_name, context=None):
@@ -92,3 +95,41 @@ class Date(object):
 
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
+
+
+class UnicodeWriter:
+    """
+    A CSV writer which will write rows to CSV file "f",
+    which is encoded in the given encoding.
+    
+    Required to correctly write unicode to csv files
+
+    Taken from Python docs: https://docs.python.org/2/library/csv.html#csv-examples
+    
+    With one change changing s.encode("utf-8") to unicode(s).encode("utf-8") - this fixes
+    errors being raised if you pass integers to writerow
+    """
+
+    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+        # Redirect output to a queue
+        self.queue = cStringIO.StringIO()
+        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
+        self.stream = f
+        self.encoder = codecs.getincrementalencoder(encoding)()
+
+    def writerow(self, row):
+        self.writer.writerow([unicode(s).encode("utf-8") for s in row])
+        # Fetch UTF-8 output from the queue ...
+        data = self.queue.getvalue()
+        data = data.decode("utf-8")
+        # ... and reencode it into the target encoding
+        data = self.encoder.encode(data)
+        # write to the target stream
+        self.stream.write(data)
+        # empty queue
+        self.queue.truncate(0)
+
+    def writerows(self, rows):
+        for row in rows:
+            self.writerow(row)
+
