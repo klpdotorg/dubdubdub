@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.6: 313a9cc437a86c8acd4ae7be80e6e2f9f015041b - 2015-09-15
+  - Version 4 Community sheets
 
 Release 0.3.5: 9e983c292efad55975945c5f29fe5ff6a618873a - 2015-09-10
   - IVRS fixes
