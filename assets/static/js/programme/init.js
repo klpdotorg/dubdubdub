@@ -207,6 +207,7 @@
         _.each(_(groupedByClass).keys(), function(className) {
             groupedByClass[className] = getClassContext(groupedByClass[className]);
         });
+        console.log("context", groupedByClass);
         return groupedByClass;
         //console.log("group by", groupedByClass);
     }
@@ -220,7 +221,9 @@
     }
 
     function getAssessmentContext(assessmentData) {
+        console.log("assessment data", assessmentData);
         var genders = [];
+        assessmentData.score = getScore(assessmentData.singlescore, assessmentData.gradesinglescore);
         for (var j=0, length=assessmentData.singlescoredetails.gender.length; j < length; j++) {
             var scoreDetails = assessmentData.singlescoredetails.gender[j];
             var cohortsDetails = assessmentData.cohortsdetails.gender[j];
@@ -228,6 +231,7 @@
                 'name': scoreDetails.sex == 'male' ? 'Boys' : 'Girls',
                 'icon': scoreDetails.sex == 'male' ? 'boy' : 'girl',
                 'singlescore': scoreDetails.singlescore,
+                'score': getScore(scoreDetails.singlescore, scoreDetails.gradesinglescore),
                 'cohorts': cohortsDetails.total
             };
             genders.push(gender);
@@ -236,9 +240,12 @@
 
         var mts = [];
         for (var i=0, length = assessmentData.cohortsdetails.mt.length; i < length; i++) {
+            var singleScore = assessmentData.singlescoredetails.mt[i].singlescore;
+            var gradeScore = assessmentData.singlescoredetails.mt[i].gradesinglescore;
             var mt = {
                 'name': assessmentData.cohortsdetails.mt[i].mt,
-                'singlescore': assessmentData.singlescoredetails.mt[i].singlescore
+                'singlescore': assessmentData.singlescoredetails.mt[i].singlescore,
+                'score': getScore(singleScore, gradeScore)
             };
             mts.push(mt);
         }
@@ -253,13 +260,29 @@
                 'id': boundary[key].boundary,
                 'type': key,
                 'name': boundary[key].boundary__name,
-                'singlescore': boundary[key].singlescore
+                'singlescore': boundary[key].singlescore,
+                'score': getScore(boundary[key].singlescore, boundary[key].gradesinglescore)
             };
             compares.push(compareObj);
         });
         assessmentData.compares = compares;
-
+        console.log("assessment data processed", assessmentData);
         return assessmentData;
+    }
+
+    function getScore(singleScore, gradeScore) {
+        if (singleScore) {
+            var score = parseInt(singleScore);
+            var val = "" + score + "%";
+            var typ = "number";
+        } else {
+            var val = gradeScore;
+            var typ = "grade";
+        }
+        return {
+            'value': val,
+            'type': typ
+        }
     }
 
 })();

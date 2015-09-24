@@ -14,7 +14,7 @@
                         <h5>Overall Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.singlescore|int }}%
+                                {{ a.score.value }}
                             </div>
                         </div>
                     </div>
@@ -32,11 +32,13 @@
                                     </div>
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ gender.singlescore|int }}%</div>
-                                  <div class="bar-custom tooltip" aria-label="{{ gender.singlescore }}%">
+                                  <div class="bar-percent">{{ gender.score.value }}</div>
+                                  {% if gender.score.type == 'number' %}
+                                  <div class="bar-custom tooltip" aria-label="{{ gender.score }}">
                                       <div class="bar-value grey-gravel-bg bar-value-{{ gender.singlescore|int }}" style="width:{{ gender.singlescore }}%;">
                                       </div>
                                   </div>
+                                  {% endif %}
                                 </div> 
                             </div>
                         
@@ -56,7 +58,7 @@
                                     {{ c.name }}
                                 </span>
                                 <span class="admin-score">
-                                    {{ c.singlescore|int }}%
+                                    {{ c.score.value }}
                                 </span>
                             </li>
                             {% endfor %}
@@ -70,11 +72,13 @@
                                     {{ mt.name }}
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ mt.singlescore|int }}%</div>
+                                  <div class="bar-percent">{{ mt.score.value }}</div>
+                                  {% if mt.score.type == 'number' %}
                                   <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
                                       <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
                                       </div>
                                   </div>
+                                  {% endif %}
                                 </div> 
                             </div>                
                         {% endfor %}            
