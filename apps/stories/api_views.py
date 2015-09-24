@@ -549,7 +549,7 @@ class ShareYourStoryView(KLPAPIView):
                     school_type=school.schooldetails.type,
                     is_active=True
                 )
-                print question
+                #print question
                 answer = Answer(
                     story=story,
                     question=question,
