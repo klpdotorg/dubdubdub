@@ -33,11 +33,10 @@
     t.getGenderData = function(klpData, diseData) {
         var klpGenderData;
         var diseGenderData;        
-        var klpGenderPercents = klp.utils.getBoyGirlPercents(klpData.num_boys, klpData.num_girls);
-        var diseGenderPercents = klp.utils.getBoyGirlPercents(diseData.sum_boys, diseData.sum_girls);
         if (!klpData.num_girls && !klpData.num_boys) {
             klpGenderData = null;
         } else {
+            var klpGenderPercents = klp.utils.getBoyGirlPercents(klpData.num_boys, klpData.num_girls);
             klpGenderData = {
                 'girl_count': klpData.num_girls,
                 'girl_perc': klpGenderPercents.percent_girls,
@@ -46,6 +45,7 @@
             };
         }
         if (diseData) {
+            var diseGenderPercents = klp.utils.getBoyGirlPercents(diseData.sum_boys, diseData.sum_girls);
             diseGenderData = {
                 'girl_count': diseData.sum_girls,
                 'girl_perc': diseGenderPercents.percent_girls,
