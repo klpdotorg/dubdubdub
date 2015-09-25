@@ -8,7 +8,14 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
+
+Release 0.3.7: 2ad45cdbad21666f1ec1f81e811ad0f91c2ae114 - 2015-24-15
+  - Minor: fix DISE API end-point to point to prod
+  - Minor removal of debugging statement
+
 ---
+Release 0.3.6: 313a9cc437a86c8acd4ae7be80e6e2f9f015041b - 2015-09-15
+  - Version 4 Community sheets
 
 Release 0.3.5: 9e983c292efad55975945c5f29fe5ff6a618873a - 2015-09-10
   - IVRS fixes
