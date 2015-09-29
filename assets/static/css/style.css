@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -4568,5 +4567,9 @@ code {
         background-position: center;
         font-family: $font-icon;
         position: absolute;*/
+.backToTop {
+  position: fixed;
+  bottom: 2px;
+  right: 2px; }
 
 /*# sourceMappingURL=style.css.map */
