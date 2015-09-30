@@ -4675,5 +4675,9 @@ code {
         background-position: center;
         font-family: $font-icon;
         position: absolute;*/
+.backToTop {
+  position: fixed;
+  bottom: 2px;
+  right: 2px; }
 
 /*# sourceMappingURL=style.css.map */
