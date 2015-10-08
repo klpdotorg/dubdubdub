@@ -5,6 +5,7 @@ from django.db import transaction
 from django.core.management.base import BaseCommand
 
 from ivrs.models import State
+from schools.models import School
 from stories.models import Story, UserType, Questiongroup, Answer
 
 
@@ -26,7 +27,7 @@ class Command(BaseCommand):
         date = datetime.now().date().strftime("%d_%b_%Y")
         csv = open("/var/www/dubdubdub/gka-ivrs-csv/"+date+".csv", "w")
 
-        lines = ["Sl. No, School ID, Telephone, Date Of Visit, Invalid, \
+        lines = ["Sl. No, School ID, District, Block, Cluster, Telephone, Date Of Visit, Invalid, \
 Was the school open?, \
 Class visited, \
 Was Math class happening on the day of your visit?, \
@@ -42,8 +43,19 @@ Is a Mid Day Meal served in the school?"
 ]
 
         for (number, state) in enumerate(states):
+            try:
+                school = School.objects.get(id=state.school_id)
+                district = school.admin3.parent.parent.name.replace(',', '-')
+                block = school.admin3.parent.name.replace(',', '-')
+                cluster = school.admin3.name.replace(',', '-')
+            except:
+                district = block = cluster = None
+
             values = [str(number + 1),
                       str(state.school_id),
+                      str(district),
+                      str(block),
+                      str(cluster),
                       str(state.telephone),
                       str(state.date_of_visit.date()),
                       str(state.is_invalid)
