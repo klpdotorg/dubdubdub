@@ -92,11 +92,13 @@
 
     function renderPrimarySchool(data, academicYear) {        
         var queryParams = {};
+        var boundaryName = data.properties.boundary.name;
+        var boundaryType = data.properties.boundary.type;
         var boundaryID = data.properties.boundary.id;
         var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
         queryParams[adminLevel] = boundaryID;
         $('#school-data').removeClass("hidden");
-        klp.dise_api.queryBoundaryName('bangalore', 'district', academicYear)
+        klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
             .done(function(diseData) {
                 var boundary = diseData[0].children[0]
                 console.log('boundary', boundary);
