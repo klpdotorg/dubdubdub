@@ -8,6 +8,8 @@ from ivrs.utils import get_question
 from stories.models import Story, UserType, Questiongroup, Answer
 from schools.models import School
 
+GKA_SERVER = "08039591332"
+
 class Command(BaseCommand):
     args = ""
     help = """Analyzes the GKA IVRS states and saves stories.
@@ -48,7 +50,7 @@ class Command(BaseCommand):
 
                     for (question_number, answer) in enumerate(state.answers[1:]):
                         if answer != 'NA':
-                            question = get_question(question_number+1)
+                            question = get_question(question_number+1, GKA_SERVER)
                             answer = Answer.objects.get_or_create(
                                 story=story,
                                 question=question,
