@@ -84,7 +84,7 @@ class Command(BaseCommand):
         post_to_slack(
             channel='#klp',
             author='Mahiti IVRS',
-            Message='%s calls processed' % count,
+            message='%s calls processed' % count,
             emoji=':phone:'
         )
 
@@ -177,10 +177,17 @@ class Command(BaseCommand):
                     questiongroup=question_group,
                     questiongroupquestions__sequence=i
                 )
+
+                response = json[str(i)]
+
+                if question.question_type.name == 'checkbox':
+                    accepted_answers = {'1': 'Yes', '0': 'No'}
+                    response = accepted_answers[response]
+
                 answer = Answer.objects.get_or_create(
                     story=story,
                     question=question,
-                    text=json[str(i)]
+                    text=response
                 )
         else:
             print "Date %s for school %s already processed" % (date, school)

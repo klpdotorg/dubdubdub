@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.9: 47a1d71fef122729cbc4c563d5db0d247c8a143a - 2015-10-10
+  - Casts the Mahiti IVRS 1s and 0s to Yes and No before saving
 
 Release 0.3.8: c1d875d508241a0657e81857dc6ee078b7b8f732 - 2015-10-09
   - Implements slack notifications for IVRS systems
