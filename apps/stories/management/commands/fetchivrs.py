@@ -181,7 +181,7 @@ class Command(BaseCommand):
                 response = json[str(i)]
 
                 if question.question_type.name == 'checkbox':
-                    accepted_answers = {1: 'Yes', 0: 'No'}
+                    accepted_answers = {'1': 'Yes', '0': 'No'}
                     response = accepted_answers[response]
 
                 answer = Answer.objects.get_or_create(
