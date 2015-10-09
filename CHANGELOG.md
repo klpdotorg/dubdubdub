@@ -8,12 +8,17 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
+---
+
+Release 0.3.8: c1d875d508241a0657e81857dc6ee078b7b8f732 - 2015-10-09
+  - Implements slack notifications for IVRS systems
+  - Fixes a bug on the gkaivrs script
+  - Adds district, block & cluster to the gka IVRS csv dumps
 
 Release 0.3.7: 2ad45cdbad21666f1ec1f81e811ad0f91c2ae114 - 2015-24-15
   - Minor: fix DISE API end-point to point to prod
   - Minor removal of debugging statement
 
----
 Release 0.3.6: 313a9cc437a86c8acd4ae7be80e6e2f9f015041b - 2015-09-15
   - Version 4 Community sheets
 
