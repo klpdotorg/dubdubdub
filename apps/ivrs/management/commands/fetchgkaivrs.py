@@ -4,9 +4,10 @@ from django.db import transaction
 from django.core.management.base import BaseCommand
 
 from ivrs.models import State
-from ivrs.utils import get_question
-from stories.models import Story, UserType, Questiongroup, Answer
 from schools.models import School
+from ivrs.utils import get_question
+from common.utils import post_to_slack
+from stories.models import Story, UserType, Questiongroup, Answer
 
 GKA_SERVER = "08039591332"
 
@@ -18,6 +19,8 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        valid_count = 0 # For posting daily notifications to slack.
+        invalid_count = 0
         fifteen_minutes = datetime.now() - timedelta(minutes=15)
         states = State.objects.filter(
             ivrs_type='gka',
@@ -28,6 +31,7 @@ class Command(BaseCommand):
             for state in states:
                 if not sane_state(state):
                     state.is_invalid = True
+                    invalid_count += 1
                 else:
                     school = School.objects.get(id=state.school_id)
                     telephone = state.telephone
@@ -57,8 +61,20 @@ class Command(BaseCommand):
                                 text=answer
                             )
 
+                    valid_count += 1
+
                 state.is_processed = True
                 state.save()
+
+        try:
+            post_to_slack(
+                channel='#klp',
+                author='GKA IVRS',
+                message='%s Valid calls & %s Invalid calls' %(valid_count, invalid_count),
+                emoji=':calling:',
+            )
+        except:
+            pass
 
 def sane_state(state):
     # A State is not sane if it has:
