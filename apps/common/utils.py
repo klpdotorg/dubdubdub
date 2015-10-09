@@ -133,3 +133,19 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
+
+def post_to_slack(channel=None, author=None, message=None, emoji=':ghost:'):
+    payload = {
+        'text': message,
+        'channel': channel,
+        'username': author,
+        'icon_emoji': emoji
+    }
+
+    r = requests.post(
+        'https://hooks.slack.com/services/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',
+        data=json.dumps(payload),
+    )
+
+    return r.status_code
