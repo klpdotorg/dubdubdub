@@ -10,6 +10,7 @@ from django.core import serializers
 from django.core.management.base import BaseCommand
 
 from schools.models import School
+from common.utils import post_to_slack
 from stories.models import Story, Questiongroup, Source, Question, Answer
 
 class Command(BaseCommand):
@@ -29,6 +30,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        count = 0 # To post daily updates to slack.
         from_date = options.get('from', None)
         to_date = options.get('to', None)
 
@@ -64,7 +66,9 @@ class Command(BaseCommand):
             for the_json in json_list:
                 sane, message = self.sanity_check_json(the_json)
                 if sane:
-                    self.process_json(source, the_json)
+                    created = self.process_json(source, the_json)
+                    if created:
+                        count += 1
                 else:
                     print message
                     continue
@@ -77,6 +81,12 @@ class Command(BaseCommand):
         f.write(json.dumps(self.ivrs_errors, indent = 4))
         f.close()
 
+        post_to_slack(
+            channel='#klp',
+            author='Mahiti IVRS',
+            Message='%s calls processed' % count,
+            emoji=':phone:'
+        )
 
     def transform_date(self, date):
         day = date.split("/")[0]
@@ -174,7 +184,8 @@ class Command(BaseCommand):
                 )
         else:
             print "Date %s for school %s already processed" % (date, school)
-            return
+
+        return created
 
     def fetch_data(self, from_date, to_date):
         url = "http://klpdata.mahiti.org/json_feeds.php?fromdate=%s&enddate=%s" \
