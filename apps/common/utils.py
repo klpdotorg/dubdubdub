@@ -1,16 +1,17 @@
-import json
-import datetime
 import os
-from django.utils import timezone
-from django.http import HttpResponse
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
-from django.template import Context
-from django.conf import settings
-import codecs
 import csv
+import json
+import codecs
+import requests
+import datetime
 import cStringIO
 
+from django.conf import settings
+from django.utils import timezone
+from django.template import Context
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
 
 def send_templated_mail(from_email, to_emails, subject, template_name, context=None):
     plaintext = get_template('email_templates/{}.txt'.format(template_name))
@@ -132,4 +133,3 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
-
