@@ -64,6 +64,7 @@
           'girl_perc': klpGenderPercents.percent_girls,
           'boy_count': klpData.num_boys,
           'boy_perc': klpGenderPercents.percent_boys,
+          'align': 'right'
         };
       }
       if (diseData) {
@@ -73,7 +74,7 @@
           'girl_perc': diseGenderPercents.percent_girls,
           'boy_count': diseData.sum_boys,
           'boy_perc': diseGenderPercents.percent_boys,
-          'align': 'right'
+          'align': 'left'
         }
         return {
           'klp': klpGenderData,
