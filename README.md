@@ -43,6 +43,7 @@ When developing locally, add the following line to local_settings.py to output e
 and go to `http://localhost:8001`
 
 #### CSS workflow:
+
 1. Add a partial to assets/static/sass/dev and import it in assets/static/sass/style.scss. For example, see [assets/static/sass/dev/_sample.scss](https://github.com/klpdotorg/dubdubdub/blob/develop/assets/static/sass/dev/_sample.scss).
 
 2. Run Sass before you commit the changes
@@ -58,7 +59,7 @@ Unit tests are available for the schools and users endpoints. Below are instruct
 
 Clone the development database:
 
-sudo -u postgres createdb -T existing_db_name test_db_name
+    sudo -u postgres createdb -T existing_db_name test_db_name
 
 All test settings are in the test_settings.py file.
 
@@ -66,6 +67,14 @@ Modify the database name in test_settings.py to reflect the name you gave to you
 
 Make sure the runtests.sh script has execute permissions. Then, run the shell script as follows to run the existing unit tests:
 
-./runtests.sh
+    ./runtests.sh
 
 All the unit tests should pass.
+
+#### Skipping DB creation when unit tests execute
+
+The unit test script creates a test database and then executes tests against it. To skip creation of a database and leverage existing ones, run the script like so:
+
+    ./runtests.sh skipdbcreate
+
+The DB to use should be updated in the test_settings file.

@@ -65,6 +65,9 @@ gitignore/
 data
 *.log
 
+#logs folder
+logs/
+
 assets/static/css.old/
 assets/static/sass.old/
 .sass-cache/ 

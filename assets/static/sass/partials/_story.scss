@@ -18,6 +18,11 @@
 	.chart-quarter-item{
 		@include col-25-flt;
 	}
+
+	.align-fromdate{
+		text-align: right;
+	}
+
 }
 
 /* Defining a text align -left */
@@ -28,16 +33,15 @@
 
 .img-symbol {
 	vertical-align: middle;
-	/*padding-top: 25px;*/
 	margin-left:auto;
 	margin-right:auto;
-	width: 100px;
+	max-width: 100px;
 	display:block;
 }
 
 @include media-med {
 	.img-symbol {
-		width: auto;
+		max-width: 100px;
 	}
 }
 
@@ -45,6 +49,201 @@
   width: 100%; 
 }
 
-.taller {
-	height: 150px;
+@include media-med-maxwidth{
+	.ct-label.ct-horizontal {
+
+		-ms-transform-origin: 50% 50%;
+	  -ms-transform: translateX(0px) translateY(20px) rotate(-45deg); /* IE 9 */
+
+	  -webkit-transform-origin: 50% 50%;
+   	-webkit-transform: translateX(0px) translateY(20px) rotate(-45deg); /* Safari */
+
+	  transform-origin: 50% 50%;
+	  transform: translateX(0px) translateY(20px) rotate(-45deg);
+
+	  /*text-anchor: middle;*/
+	}
+	.ct-chart {
+	  margin-bottom: 30px;
+	}
+
+	.dateform{
+		margin-top: 20px;
+		text-align: left;
+	}
+
+	.js-input-date{
+		margin-top:10px;
+	}
+
+	.align-fromdate{
+		text-align:left;
+	}
+}
+
+.button-orange{
+	margin-top: 5px;
+}	
+
+.chartist-tooltip{
+	position:absolute;
+	display:inline-block;
+	min-width:5em;
+	padding:.5em;
+	background:$black;
+	color:$white;
+	font-size:16px;
+	font-weight:300;
+	text-align:center;
+	pointer-events:none;
+	z-index:1;
+	border-radius: 5px;
+}
+
+.chartist-tooltip:before {
+	content:"";
+	position:absolute;
+	top:100%;
+	left:50%;
+	width:0;
+	height:0;
+	margin-left:-15px;
+	border:15px solid transparent;
+	border-top-color:$black;
+}
+
+.chartist-container {
+	position:relative;
+}
+
+/*.subheader-wrapper { 
+	text-transform: none; 
+}*/
+
+.square{
+  @extend %button;
+  padding: 10px 10px;
+}
+
+.sq-tooltip {
+	position: relative;
+	top: 0;
+	right: 0;
+	text-decoration: none; 
+ }
+.sq-tooltip:before, .sq-tooltip:after {
+	position: absolute;
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: opacity 0.25s ease-in-out;
+	transition: opacity 0.25s ease-in-out; 
+}
+.sq-tooltip:after {
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+	content: attr(aria-label);
+	padding: 5px 10px;
+	font-size: 12px;
+	/*white-space: nowrap;*/
+	background: #000;
+	left: -9999px;
+	margin-top: 12px;
+	text-transform: initial; 
+	z-index: 99999;
+}
+.sq-tooltip:before {
+	content: "";
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #000 transparent;
+    margin-top: 0; 
+}
+
+.sq-tooltip:hover:after, .sq-tooltip:hover:before, .sq-tooltip:focus:after, .sq-tooltip:focus:before {
+	visibility: visible;
+	opacity: 1;
+	top: 50%;
+	left: -100%; 
+}
+.sq-tooltip:hover:before, .sq-tooltip:focus:before {
+	left: 10px; 
+}
+
+.side-button-bar {
+		position: fixed;
+		z-index:9999;
+		top: 10%;
+	 	right: 10px;
+	 	background: rgba(0, 0, 0, 0.1);
+	 	padding: 10px 10px;
+	 	border-radius: 5px;
+}
+
+@include media-med{
+	.side-button-bar {
+		top: 10%;
+	}
+}
+
+@include media-med-maxwidth{
+	.side-button-bar {
+		top: 30%;
+	 }
+}
+
+
+.modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    /*z-index: 99999;*/
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+@include media-med-maxwidth{
+	.modalDialog {
+		margin-top: 10%;
+	 }
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width:80%;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+}
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+.close:hover {
+    background: #00d9ff;
 }

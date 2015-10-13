@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'users',
     'stories',
     'imports',
+    'ivrs',
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -256,6 +257,9 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ),
 }
+
+#Should be used by management commands, etc. to log files
+LOGS_FOLDER = os.path.join(PROJECT_ROOT, 'logs',)
 
 TESTS_SCHOOLS_INPUT = {
     'SCHOOLS_LIB_ID': '33312',

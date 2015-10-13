@@ -76,6 +76,7 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('text',)
     list_display = ('text', 'question_type', 'is_active')
     list_editable = ('is_active',)
+    list_filter = ('school_type', 'questiongroup__source',)
 
 
 class QuestionInline(admin.TabularInline):

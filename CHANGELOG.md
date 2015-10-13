@@ -9,6 +9,71 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.9: 47a1d71fef122729cbc4c563d5db0d247c8a143a - 2015-10-10
+  - Casts the Mahiti IVRS 1s and 0s to Yes and No before saving
+
+Release 0.3.8: c1d875d508241a0657e81857dc6ee078b7b8f732 - 2015-10-09
+  - Implements slack notifications for IVRS systems
+  - Fixes a bug on the gkaivrs script
+  - Adds district, block & cluster to the gka IVRS csv dumps
+
+Release 0.3.7: 2ad45cdbad21666f1ec1f81e811ad0f91c2ae114 - 2015-24-15
+  - Minor: fix DISE API end-point to point to prod
+  - Minor removal of debugging statement
+
+Release 0.3.6: 313a9cc437a86c8acd4ae7be80e6e2f9f015041b - 2015-09-15
+  - Version 4 Community sheets
+
+Release 0.3.5: 9e983c292efad55975945c5f29fe5ff6a618873a - 2015-09-10
+  - IVRS fixes
+
+Release 0.3.4: 4e9e58a6e10752f1042af57a5a82e2d5f62f0a70 - 2015-09-10
+  - Fix bug of stories count on school page
+  - Misc. IVRS
+
+Release 0.3.3: a87a12439d5389ce9a1a3c959068efdb9d3204f1 - 2015-08-21
+  - Minor changes to IVRS csv outputs
+
+Release 0.3.2: 20d7bbf83ac6db08df2ded764bcf0b07a6386244 - 2015-08-17
+  - Minor bugfix to IVRS
+  - Changes to MP / MLA models (run mview.sql)
+  - Text changes on data page
+
+Release 0.3.1: 82a6dc65cd54491fc4f1ba937363b5b5db4056c7 - 2015-08-07
+  - Date filters on stories page
+  - Fix validations on SYS form
+  - Boundary aggregations API
+  - Misc. IVRS fixes
+  - Coming soon page for status
+
+Release 0.3.0: ae99bfc240b352108a84701227fb3fe8b8ca75af - 2015-07-19
+  - Revamped SYS form
+  - New IVRS app to talk to Exotel IVRS
+  - Improve tests work-flow
+
+Release 0.25: 9c220816f8055e37fb4ce469a69a66949fe8650e - 2015-05-18
+  - Stories design changes
+  - Assessment fixes
+  - Cleanups to story import scripts
+
+Release 0.24: ff2ee5d66c9729439512108ebaeb16385ebd1f39 - 2015-05-11
+  - Minor - hide facilities, dont consider inactive schools in stories page
+
+Release 0.23: 71c48f34fb08cba3aa6d12d2ffcc4e9f73f155b1 - 2015-05-10
+  - Minor, see https://github.com/klpdotorg/dubdubdub/pull/502
+
+Release 0.22: b8f372defb054cd8e95555c252fc3cd52e2bb375 - 2015-05-10
+  - Import scripts for different SYS feedback formats
+  - minor bugfixes
+
+Release 0.21: 6bace7a8ee245b452ff90120824b96d28c8f67b2 - 2015-05-09
+  - Minor bugfixes
+
+Release 0.20: 510080ca879663f61ab5b63d4c86eee9c14ea036 - 2015-05-08
+  - Data import scripts + updated data (13-14)
+  - Stories imports + Stories API + Stories Dashboard Frontend
+  - Assessment aggregation scripts and assessments
+  - SDMC / BVS meeting PDFs
 
 Release 0.14: 4c8fbca1b9617a5015f8b620ef53ec030d8cfda8
   - Front-end re-write + styleguide

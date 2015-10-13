@@ -6,7 +6,7 @@ from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from .partners import LibLevelAgg
 from django.contrib.gis.db import models
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 from django.conf import settings
 from django.core.urlresolvers import reverse
 import json
@@ -91,11 +91,27 @@ class Boundary(BaseModel):
         else:
             return 'school'
 
+    def get_admin_level(self):
+        if self.hierarchy_id in [9, 13]:
+            return 1
+        elif self.hierarchy_id in [10, 14]:
+            return 2
+        elif self.hierarchy_id in [11, 15]:
+            return 3
+        else:
+            return False
+
     def get_geometry(self):
         if hasattr(self, 'boundarycoord'):
             return json.loads(self.boundarycoord.coord.geojson)
         else:
             return {}
+
+    def schools(self):
+        return School.objects.filter(
+            Q(status=2),
+            Q(schooldetails__admin1=self) | Q(schooldetails__admin2=self) | Q(schooldetails__admin3=self)
+        )
 
     class Meta:
         managed = False
@@ -239,7 +255,8 @@ class School(GeoBaseModel):
 
     def get_mt_profile(self):
         profile = {}
-        for agg in self.institutionagg_set.all():
+        acyear = AcademicYear.objects.get(name=settings.DEFAULT_ACADEMIC_YEAR)
+        for agg in self.institutionagg_set.filter(academic_year=acyear):
             if agg.mt in profile:
                 profile[agg.mt] += agg.num
             else:
@@ -370,7 +387,6 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_boys
         except Exception, e:
-            print e
             return None
 
     @cached_property
@@ -380,9 +396,7 @@ class SchoolDetails(BaseModel):
             extra = SchoolExtra.objects.get(school=self.school, academic_year=acyear)
             return extra.num_girls
         except Exception, e:
-            print e
             return None
-
 
     class Meta:
         managed = False
@@ -472,3 +486,12 @@ class TeacherQualification(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_teacher_qual'
+
+
+class MeetingReport(BaseModel):
+    school = models.ForeignKey('School')
+    pdf = models.FileField(upload_to='meeting_reports')
+    language = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return "%d: %s" % (self.school.id, self.language,)

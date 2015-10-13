@@ -5,7 +5,7 @@ from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
 from schools.views import SchoolPageView, ProgrammeView
-from stories.views import IVRSPageView
+from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
@@ -16,12 +16,18 @@ from users.views import (ProfilePageView, OrganizationSlugPageView,
 
 urlpatterns = patterns(
     '',
+    # share your story form
+    url(r'^sys/(?P<pk>[0-9]+)$', SYSView.as_view(), name='sys'),
 
     # home page
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
         ), name='home'),
-    
+
+    url(r'^status/$', StaticPageView.as_view(
+        template_name='comingsoon.html'
+        ), name='status'),
+
     # story dashboard
     url(r'^stories/$', StaticPageView.as_view(
         template_name='story_dashboard.html'
@@ -53,6 +59,11 @@ urlpatterns = patterns(
         template_name='reports.html',
         ), name='reports'),
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
+
+    #temporary klp reports page to link to static pdfs
+    url(r'^klpreports/$', StaticPageView.as_view(
+        template_name='klpreports.html',
+    ), name='klpreports'),
 
     # data page
     url(r'^data/$', StaticPageView.as_view(

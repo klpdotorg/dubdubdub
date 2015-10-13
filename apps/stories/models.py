@@ -47,6 +47,8 @@ class Questiongroup(models.Model):
     version = models.IntegerField()
     source = models.ForeignKey('Source')
     questions = models.ManyToManyField('Question', through='QuestiongroupQuestions')
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -86,6 +88,7 @@ class UserType(models.Model):
     CBO_MEMBER = "CM"
     HEADMASTER = "HM"
     SDMC_MEMBER = "SM"
+    LOCAL_LEADER = "LL"
     AKSHARA_STAFF = "AS"
     EDUCATED_YOUTH = "EY"
     EDUCATION_OFFICIAL = "EO"
@@ -98,6 +101,7 @@ class UserType(models.Model):
         (CBO_MEMBER, 'CBO_Member'),
         (HEADMASTER, 'Headmaster'),
         (SDMC_MEMBER, 'SDMC_Member'),
+        (LOCAL_LEADER, 'Local Leader'),
         (AKSHARA_STAFF, 'Akshara_Staff'),
         (EDUCATED_YOUTH, 'Educated_Youth'),
         (EDUCATION_OFFICIAL, 'Education_Official'),
@@ -148,7 +152,7 @@ class Story(TimestampedBaseModel):
     class Meta:
         db_table = 'stories_story'
         verbose_name_plural = 'Stories'
-        ordering = ['-created_at']
+        ordering = ['-date_of_visit']
 
     def get_geometry(self):
         return self.school.get_geometry() or None
@@ -160,6 +164,10 @@ class Story(TimestampedBaseModel):
 @receiver(post_save, sender=Story)
 def story_updated(sender, instance=None, created=False, **kwargs):
     if not created:
+        return
+
+    #if the story is not created from the web, don't send an email.
+    if not instance.group.source.name == 'web':
         return
 
     send_templated_mail(

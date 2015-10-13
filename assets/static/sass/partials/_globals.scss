@@ -288,6 +288,17 @@
 }
 
 /*-------------------------------------*/
+/* LOADING */
+.loading-icon-base {
+  color: $grey-steel;
+  padding: $base-spacing-lg;
+  &.fa {
+    @extend %h1;
+  }
+}
+
+
+/*-------------------------------------*/
 /* SPACING */
 
 .base-spacing, %base-spacing {

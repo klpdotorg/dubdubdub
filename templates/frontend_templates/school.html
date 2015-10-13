@@ -106,6 +106,21 @@
           </tr>
         -->
         </table>
+
+        {% if meeting_reports.length > 0 %}
+        <h4 class="heading-tiny-uppercase">
+          {% if type.id == 1 %} SDMC {% else %} BVS {% endif %} Meeting Reports
+        </h4>
+        <div class="container">
+          <ul>
+            {% for m in meeting_reports %}
+            <li class="circle-bullet white"> 
+              <a href="/media/{{ m.pdf }}" target="_blank">{{ m.language }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
       </div> <!-- school-data-block -->
 
       <div class="school-photos-block">
@@ -263,7 +278,7 @@
       <table class="table-data">
           <tr>
               <td>Source</td>
-              <td>KLP Database (2011-2012), <strong>NUEPA-DISE</strong></td>
+              <td>KLP Database, <strong>NUEPA-DISE</strong></td>
           </tr>
       </table>
     </div>
@@ -350,7 +365,7 @@
     <table class="table-data">
       <tr>
         <td>Source</td>
-        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>{% if type_name == 'school' %}, <strong>NUEPA-DISE (2013-14)</strong>{% endif %}</td>
       </tr>
     </table>
   </div> <!-- /container -->  
@@ -381,7 +396,7 @@
       {% endfor %}
       </select>
 
-      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button-->>  
+      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button--> 
       <div class="base-spacing-mid"></div>
     </div> <!-- /form-base -->
   
@@ -544,13 +559,13 @@
       -->
     </table>
     
-    <div>DISE Reports Number of Books as : <strong>175</strong></div>
+    <div>DISE Reports Number of Books as : <strong>{{ dise_books }}</strong></div>
     
     <div class="base-spacing"></div>
     <table class="table-data">
       <tr>
         <td>Source</td>
-        <td>KLP Database (2011-2012){% if type_name == 'school' %}, <strong>NUEPA-DISE</strong>{% endif %}</td>
+        <td>KLP Database{% if type_name == 'school' %}, <strong>NUEPA-DISE  (2013-2014)</strong>{% endif %}</td>
       </tr>
     </table>
   </div> <!-- /container -->
@@ -611,14 +626,15 @@
        
       <div class="school-share-story">
         <div class="share-your-story">
-          <a href="" id="trigger_share_story_form" class="button-orange">Share your story</a>
+          {% if school_type_id == 1 %}
+          <a href="/sys/{{ school_id }}" class="button-orange">Share your story</a>
           <div class="base-spacing-sm"></div>
-          <!--
+          {% endif %}
         <div class="stats first">
           <div class="number"></div>
           <div class="text">Number of School Visits</div>
         </div>
-        -->
+        
         <div class="base-spacing font-large">
           <span class="icon-number icon-left">{{ count }}</span>
           <span class="text">Shared Stories</span>

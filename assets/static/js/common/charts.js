@@ -245,20 +245,33 @@
                         [1, 'rgba(255,255,255,0.3)']
                     ]
                 }
+            },
+            'aggregate': {
+                'color': '#ef5754',
+                'fillColor': {
+                    'linearGradient': chart_gradient_param,
+                    'stops': [
+                        [0, '#f9c2c1'],
+                        [1, 'rgba(255,255,255,0.3)']
+                    ]
+                }
             }
         };
 
-        function getSeries(parameter, klass, data, klassTotal) {
+        function getSeries(parameter, klass, data, klassTotal, year) {
             var series = {
                 'name': parameter,
                 'data': [],
                 'color': colorMap[parameter].color,
                 'fillColor': colorMap[parameter].fillColor
             };
+            //console.log("series data", series);
+            //console.log("data", data);
             _.each(monthMap, function(value, key) {
                 var arrgh = data[parameter];
+                //console.log("arrgh", arrgh);
                 var matchedObj = _.find(arrgh, function(obj) {
-                    if (obj.month == key && parseInt(obj.class_name) === parseInt(klass)) {
+                    if (obj.month == key && parseInt(obj.class_name) === parseInt(klass) && year === obj.year) {
                         return true;
                     }
                 });
@@ -282,16 +295,25 @@
 
         if (options.parameter === 'level') {
             _.each(data.levels, function(level) {
-                chartSeries.push(getSeries(level, options.klass, data.lib_level_agg, data.classtotal));
+                chartSeries.push(getSeries(level, options.klass, data.lib_level_agg, data.classtotal, options.year));
             });
         }
 
         if (options.parameter === 'language') {
             _.each(data.languages, function(language) {
-                chartSeries.push(getSeries(language, options.klass, data.lib_lang_agg, data.classtotal));
+                chartSeries.push(getSeries(language, options.klass, data.lib_lang_agg, data.classtotal, options.year));
             });
         }
 
+        if (options.parameter === 'aggregate') {
+            _.each(data.lib_borrow_agg, function(obj) {
+                obj.month = obj.trans_month;
+                obj.year = obj.trans_year;
+            });
+            chartSeries.push(getSeries('aggregate', options.klass, {'aggregate': data.lib_borrow_agg}, data.classtotal, options.year));
+        }
+
+        //console.log("series", chartSeries);
         return this.highcharts({
             chart: {
                 type: 'area',

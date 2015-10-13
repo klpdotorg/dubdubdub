@@ -153,6 +153,8 @@
             Get percentage values and total given num_boys and num_girls
          */
         getBoyGirlPercents: function(num_boys, num_girls) {
+            num_boys = num_boys ? parseInt(num_boys) : 0;
+            num_girls = num_girls ? parseInt(num_girls) : 0;
             var total_students = num_boys + num_girls;
             var percent_boys = Math.round((num_boys / total_students) * 100);
             var percent_girls = Math.round((num_girls / total_students) * 100);
@@ -258,7 +260,8 @@
             $field.addClass('error');
             var $error = $('<div />').addClass('js-error-message error-message');
             $error.text(message);
-            $field.after($error);
+            $field.parents(".form-field-wrap").append($error);
+            //$field.after($error);
         },
 
         /*
@@ -271,6 +274,7 @@
                 klp.utils.invalidateField($field, errorMsg);
             });
         },
+
 
         /*
             Check all inputs in a form with data-required=true
