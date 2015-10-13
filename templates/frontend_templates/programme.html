@@ -54,8 +54,12 @@
     </script>
 
     <script type="text/html" id="tpl-assessment-class">
+      
+      <!--li><a href="#" class='head container grey-silver-bg heading-tiny-uppercase js-accordion-header center-text'> <span class="white"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a-->
+      <hr/>
+      <li><a href="#" class=' heading-tiny-uppercase js-accordion-header align-right'> <span class="brand-turquoise"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a>
       <div class="base-spacing-sm"></div>
-      <li><a href="#" class='head container grey-silver-bg heading-tiny-uppercase js-accordion-header center-text'> <span class="white"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a>
+      
       <div class="content" id="{{className}}">
         <div class="container assessment-class-section">
             {% for a in assessments %}
