@@ -1,7 +1,8 @@
 (function() {
     var tplAssessmentClass,
         tplSchool,
-        tplBoundary;
+        tplBoundary,
+        tplAssessmentSchool;
     klp.init = function() {
         console.log("init programme page", PROGRAMME_ID);
         klp.router = new KLPRouter();
@@ -10,6 +11,7 @@
         tplAssessmentClass = swig.compile($('#tpl-assessment-class').html());
         tplSchool = swig.compile($('#tpl-school').html());
         tplBoundary = swig.compile($('#tpl-boundary').html());
+        tplAssessmentSchool = swig.compile($('#tpl-assessment-school').html());
         //fetchProgrammeDetails();
         klp.router.events.on('hashchange', function(event, params) {
             fetchProgrammeDetails();
@@ -116,6 +118,11 @@
             var assessmentsContext = getContext(data);
             //console.log("ass context", assessmentsContext);
             renderAssessments(assessmentsContext);
+            var programme_html = "<ul id='improved' class='js-accordion-container'>" 
+                    + $('#assessmentsContainer').html() + "</ul>";
+            $('#assessmentsContainer').html(programme_html);
+            renderSchoolScore();
+            klp.accordion.init();
             doPostRender();
         });
     }
@@ -191,12 +198,87 @@
                 'className': className,
                 'assessments': assessmentClasses[className]
             });
-            $('#assessmentsContainer').append(html);
+            $('#assessmentsContainer').append( html );
         });
         if (classes.length == 0) {
             $('#assessmentsContainer').text("No programme information available.")
         }
         $('#select2search').select2('data', null);
+    }
+
+    function renderSchoolScore(assessmentsSchool) {
+        assessmentsSchool = {
+                            "count":4,
+                            "next":null,
+                            "previous":null,
+                            "features":
+                            [
+                                {
+                                    "assessmentname":"Post test",
+                                    "academicyear_name":"2010-2011",
+                                    "singlescore":"82.00",
+                                    "percentile":null,
+                                    "boundary":
+                                    {
+                                        "admin1":
+                                        {
+                                            "boundary__name":"bangalore",
+
+                                            "percentile":null,
+                                            "singlescore":"80.00",
+                                            "boundary":8877
+                                        },
+                                            "admin3":{
+                                            "boundary__name":"chickpet",
+                                            "percentile":null,
+                                            "singlescore":"78.00",
+                                            "boundary":8984
+                                        },
+                                            "admin2":{
+                                            "boundary__name":"south-2",
+                                            "percentile":null,
+                                            "singlescore":"84.00",
+                                            "boundary":8880
+                                        }
+                                    }
+                                },
+                                {
+                                    "assessmentname":"Pre test",
+                                    "academicyear_name":"2010-2011",
+                                    "singlescore":"55.00",
+                                    "percentile":null,
+                                    "boundary":
+                                    {
+                                        "admin1":{
+                                        "boundary__name":"bangalore",
+                                        "percentile":null,
+                                        "singlescore":"74.00",
+                                        "boundary":8877
+                                        },
+                                        "admin3":{
+                                        "boundary__name":"chickpet",
+                                        "percentile":null,
+                                        "singlescore":"70.00",
+                                        "boundary":8984
+                                        },
+                                        "admin2":{
+                                        "boundary__name":"south-2",
+
+                                        "percentile":null,
+                                        "singlescore":"75.00",
+                                        "boundary":8880
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+
+        $('#schoolContainer').empty();
+        var html = tplAssessmentSchool({'assessments':assessmentsSchool["features"]})
+        $('#schoolContainer').append(html);
+        if (assessmentsSchool.length == 0) {
+            $('#schoolContainer').text("No programme information available.")
+        }
     }
 
     function getContext(data) {

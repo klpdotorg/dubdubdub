@@ -68,6 +68,21 @@
     }
 }
 
+
+@include media-med {
+    .school-score-parent {
+        @include grid-parent;
+    }
+
+    .school-score {
+        @include col-50-flt;
+    }
+
+    .school-comparison {
+        @include col-50-flt;
+    }
+}
+
 @include media-med {
     .assessment-comparison-container {
         @include grid-parent;
