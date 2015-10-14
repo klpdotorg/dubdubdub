@@ -10,13 +10,14 @@ from django.core import serializers
 from django.core.management.base import BaseCommand
 
 from schools.models import School
+from common.utils import post_to_slack
 from stories.models import Story, Questiongroup, Source, Question, Answer
 
 class Command(BaseCommand):
     args = "<dates month year>"
     help = """Import data from IVRS
 
-    ./manage.py fetchivrs --from=20/12/2014 --to=21/12/2014"""
+    ./manage.py fetchivrs --from=31/08/2014 --to=05/12/2014"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
@@ -25,17 +26,23 @@ class Command(BaseCommand):
                     help='The date until which to fetch ivrs data '),
     )
 
-    try:
-        f = open('ivrs_error.log')
-        ivrs_errors = json.loads(f.read())
-        f.close()
-    except:
-        ivrs_errors = []
+    ivrs_errors = []
 
     @transaction.atomic
     def handle(self, *args, **options):
+        count = 0 # To post daily updates to slack.
         from_date = options.get('from', None)
         to_date = options.get('to', None)
+
+        error_file = '/var/www/dubdubdub/log/error_' + \
+                     timezone.now().date().strftime("%m%d%Y") + '.log'
+
+        try:
+            f = open(error_file)
+            self.ivrs_errors = json.loads(f.read())
+            f.close()
+        except:
+            self.ivrs_errors = []
 
         if from_date or to_date:
             if from_date and to_date:
@@ -59,7 +66,9 @@ class Command(BaseCommand):
             for the_json in json_list:
                 sane, message = self.sanity_check_json(the_json)
                 if sane:
-                    self.process_json(source, the_json)
+                    created = self.process_json(source, the_json)
+                    if created:
+                        count += 1
                 else:
                     print message
                     continue
@@ -68,10 +77,16 @@ class Command(BaseCommand):
         else:
             return
 
-        f = open('ivrs_error.log', 'w')
+        f = open(error_file, 'w')
         f.write(json.dumps(self.ivrs_errors, indent = 4))
         f.close()
 
+        post_to_slack(
+            channel='#klp',
+            author='Mahiti IVRS',
+            message='%s calls processed' % count,
+            emoji=':phone:'
+        )
 
     def transform_date(self, date):
         day = date.split("/")[0]
@@ -116,10 +131,10 @@ class Command(BaseCommand):
         year = date.split("/")[2]
 
         if not self.is_day_correct(day):
-            return (False, "Please enter a valid day in between 1 and 31")
+            return (False, "Please enter a valid day in between 1 and 31 in the format DD")
 
         if not self.is_month_correct(month):
-            return (False, "Please enter a valid month in between 1 and 12")
+            return (False, "Please enter a valid month in between 1 and 12 in the format MM")
 
         if not self.is_year_correct(year):
             return (False, "Please ensure year format is '2014' and it is <= current year")
@@ -127,10 +142,10 @@ class Command(BaseCommand):
         return (True, "Parameters accepted. Commencing data fetch")
 
     def is_day_correct(self, day):
-        return int(day) in range(1,32)
+        return (len(day) == 2 and int(day) in range(1,32))
 
     def is_month_correct(self, month):
-        return int(month) in range(1,13)
+        return (len(month) == 2 and int(month) in range(1,13))
 
     def is_year_correct(self, year):
         return (len(year) == 4 and int(year) <= timezone.now().year)
@@ -141,7 +156,7 @@ class Command(BaseCommand):
         telephone = json['Mobile Number']
 
         school = School.objects.get(id=school_id)
-        question_group = Questiongroup.objects.get(source__name="ivrs")
+        question_group = Questiongroup.objects.get(version=1, source__name="ivrs")
         date = datetime.datetime.strptime(
             date, '%Y-%m-%d %H:%M:%S'
         )
@@ -159,17 +174,25 @@ class Command(BaseCommand):
             for i in range(1, 7):
                 question = Question.objects.get(
                     school_type=school.admin3.type,
-                    questiongroup__source=source,
+                    questiongroup=question_group,
                     questiongroupquestions__sequence=i
                 )
+
+                response = json[str(i)]
+
+                if question.question_type.name == 'checkbox':
+                    accepted_answers = {'1': 'Yes', '0': 'No'}
+                    response = accepted_answers[response]
+
                 answer = Answer.objects.get_or_create(
                     story=story,
                     question=question,
-                    text=json[str(i)]
+                    text=response
                 )
         else:
             print "Date %s for school %s already processed" % (date, school)
-            return
+
+        return created
 
     def fetch_data(self, from_date, to_date):
         url = "http://klpdata.mahiti.org/json_feeds.php?fromdate=%s&enddate=%s" \

@@ -4,6 +4,7 @@
 (function() {
     var preschoolString = 'PreSchool';
     var schoolString = 'Primary School';
+    var premodalQueryParams = {};
 
     klp.init = function() {
         klp.accordion.init();
@@ -14,10 +15,70 @@
             hashChanged(params);
         });
         klp.router.start();
+
+        $('#startDate').yearMonthSelect("init");
+        $('#endDate').yearMonthSelect("init");
+
+        //this is a bit of a hack to save query state when
+        //triggering a modal, since modals over-ride the url
+        premodalQueryParams = klp.router.getHash().queryParams;
+
+        if (premodalQueryParams.hasOwnProperty("from")) {
+            var mDate = moment(premodalQueryParams.from);
+            $('#startDate').yearMonthSelect("setDate", mDate);
+        }
+        if (premodalQueryParams.hasOwnProperty("to")) {
+            var mDate = moment(premodalQueryParams.to);
+            $('#endDate').yearMonthSelect("setDate", mDate);
+        } else {
+            $('#endDate').yearMonthSelect("setDate", moment());
+        }
+
         //loadData('Primary School');
         //loadData('Preschool');
         //get JS query params from URL
+        $('#resetButton').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = klp.router.getHash().queryParams;
+            _.each(_.keys(currentQueryParams), function(key) {
+                currentQueryParams[key] = null;
+            });
+            klp.router.setHash('', currentQueryParams);
+        });
 
+        $('#dateSummary').click(function(e) {
+            e.preventDefault();
+            var currentQueryParams = premodalQueryParams;
+            // var currentQueryParams = klp.router.getHash().queryParams;
+            // _.each(_.keys(currentQueryParams), function(key) {
+            //     currentQueryParams[key] = null;
+            // });
+            var startDate = $('#startDate').yearMonthSelect("getDate");
+            var endDate = $('#endDate').yearMonthSelect("getDate");
+            if (moment(startDate) > moment(endDate)) {
+                klp.utils.alertMessage("End date must be after start date", "error");
+                return false;
+            }
+            currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
+            currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
+            //console.log("currentQueryParams", currentQueryParams);
+            klp.router.setHash(null, currentQueryParams);
+            //hashChanged({'queryParams':currentQueryParams});
+        });
+
+        $('a[href=#datemodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
+        });
+
+        $('a[href=#close]').click(function(e) {
+            klp.router.setHash(null, premodalQueryParams, {'trigger': false});
+        });
+
+        $('a[href=#searchmodal]').click(function(e) {
+            premodalQueryParams = klp.router.getHash().queryParams;
+            return true;
+        });
     }
 
     function hashChanged(params) {
@@ -29,6 +90,7 @@
             $('#preschoolContainer').show();
             $('#primarySchoolContainer').show();
         } else {
+            queryParams.school_type = window.decodeURIComponent(queryParams.school_type);
             if (queryParams.school_type == preschoolString) {
                 $('#primarySchoolContainer').hide();
                 $('#preschoolContainer').show();
@@ -118,6 +180,12 @@
                 'school_type': schoolType
             };
             hashParams[paramKey] = objectId;
+            if (premodalQueryParams.hasOwnProperty("from")) {
+                hashParams['from'] = premodalQueryParams['from'];
+            }
+            if (premodalQueryParams.hasOwnProperty("to")) {
+                hashParams['to'] = premodalQueryParams['to'];
+            }
             klp.router.setHash(null, hashParams);
         });
 
@@ -149,7 +217,7 @@
 
     function fillSelect2(entityDetails) {
         if (entityDetails.name == '') {
-            //do nothing if name is empty
+            $('#select2search').select2("data", null);
             return;
         }
         var currentData = $('#select2search').select2("data");
@@ -172,15 +240,21 @@
 
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
-        var metaURL = "stories/meta"; //FIXME: enter API url
-        params['school_type'] = schoolType
-
+        var DEFAULT_START_YEAR = 2010;
+        var DEFAULT_END_YEAR = (new Date()).getFullYear();
+        var metaURL = "stories/meta";
         var entityDeferred = fetchEntityDetails(params);
+        params['school_type'] = schoolType;
+        startSummaryLoading(schoolType);
         entityDeferred.done(function(entityDetails) {
             fillSelect2(entityDetails);
+            params['school_type'] = schoolType;
             var $metaXHR = klp.api.do(metaURL, params);
             $metaXHR.done(function(data) {
+                stopSummaryLoading(schoolType);
                 data.searchEntity = entityDetails;
+                data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
+                data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
                 renderSummary(data, schoolType);
                 renderRespondentChart(data, schoolType);
             });
@@ -188,8 +262,9 @@
 
         var detailURL = "stories/details/";
         var $detailXHR = klp.api.do(detailURL, params);
-
+        startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
+            stopDetailLoading(schoolType);
             renderFeatured(data, schoolType);
             renderIVRS(data, schoolType);
             renderWeb(data, schoolType);
@@ -199,25 +274,100 @@
             //renderComparison(data);
         });
 
-
+        startVolumeLoading(schoolType);
         var volumeURL = "stories/volume/";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
+            stopVolumeLoading(schoolType);
             renderIVRSVolumeChart(data, schoolType);
         });
 
 
     }
 
+    function startSummaryLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-summary-container').startLoading();
+    }
+
+    function startDetailLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-detail-container').startLoading();        
+    }
+
+    function startVolumeLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-volume-container').startLoading();         
+    }
+
+    function stopSummaryLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-summary-container').stopLoading();
+    }
+
+    function stopDetailLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-detail-container').stopLoading();  
+    }
+
+    function stopVolumeLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-volume-container').stopLoading();       
+    }
+
+    function getYear(dateString) {
+        return dateString.split("-")[0];
+    }
+
+    $.fn.startLoading = function() {
+        var $this = $(this);
+        var $loading = $('<div />').addClass('fa fa-cog fa-spin loading-icon-base js-loading');
+        $this.empty().append($loading);
+    }
+
+    $.fn.stopLoading = function() {
+        var $this = $(this);
+        $this.find('.js-loading').remove();
+    }
+
+    function getContainerDiv(schoolType) {
+        if (schoolType === preschoolString) {
+            return $('#preschoolContainer');
+        } else {
+            return $('#primarySchoolContainer');
+        }        
+    }
+
     function renderRespondentChart(data, schoolType) {
+        var labelMap = {
+            'SDMC_MEMBER': 'SDMC',
+            'CBO_MEMBER': 'CBO',
+            'PARENTS': 'Parents',
+            'TEACHERS': 'Teachers',
+            'VOLUNTEER': 'Volunteers',
+            'EDUCATED_YOUTH': 'Youth',
+            'LOCAL_LEADER': 'Local Leader',
+            'AKSHARA_STAFF': 'Akshara'
+        };
         var labels = _.map(_.keys(data.respondents), function(label) {
-            return _.str.titleize(label);
+            if (labelMap.hasOwnProperty(label)) {
+                return labelMap[label];
+            } else {
+                return _.str.titleize(label);
+            }
         });
         var values = _.values(data.respondents);
+        var meta_values = [];
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        } /* chartist tooltip transformations */ 
         var data_respondent = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-g',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -228,13 +378,24 @@
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
+
         var months = data.volumes['2014']; //FIXME: deal with with academic year.
+        var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
+        var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
+        $('#ivrsyears').html(ivrsVolTitle);
+        var meta_values = [];
         var labels = _.keys(months);
         var values = _.values(months);
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        } /* chartist tooltip transformations */ 
         var data_ivrs = {
             labels: labels,
             series: [
-                values
+                { 
+                    className: 'ct-series-d',
+                    data: meta_values,
+                }
             ]
         };
         var suffix = '';
@@ -246,20 +407,41 @@
 
 
     function renderBarChart(elementId, data) {
+
         var options = {
+            seriesBarDistance: 10,
             axisX: {
-                showGrid: false
+                showGrid: false,
             },
             axisY: {
-                showGrid: false
-            }
+                showGrid: false,
+            },
+            plugins: [
+                Chartist.plugins.tooltip()
+            ]
         };
 
-        var chart_element = Chartist.Bar(elementId, data, options).on('draw', function(data) {
+        var responsiveOptions = [
+            ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+          }]
+        ];
+
+        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
             if (data.type === 'bar') {
                 data.element.attr({
-                    style: 'stroke-width: 20px'
+                    style: 'stroke-width: 15px;'
                 });
+            }
+            if (data.type === 'label' && data.axis === 'x') {
+                data.element.attr({
+                    width: 200
+                })
             }
         });
     }
@@ -301,7 +483,7 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.ivrs.schools
             }, {
                 'label': 'Calls received',
@@ -314,10 +496,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.community.schools
             }, {
-                'label': 'Stories',
+                'label': 'Surveys',
                 'count': data.community.stories
             }/*, {
                 'label': 'Academic Year',
@@ -327,10 +509,10 @@
                 'label': summaryLabel,
                 'count': data.total.schools
             }, {
-                'label': summaryLabel + ' with Stories',
+                'label': summaryLabel + ' with Surveys',
                 'count': data.web.schools
             }, {
-                'label': 'Verified Stories',
+                'label': 'Verified Surveys',
                 'count': data.web.verified_stories
             }/*, {
                 'label': 'Academic Year',
@@ -559,82 +741,89 @@
         }
         $('#webquestions' + suffix).html(html);
 
-        var tplColorText = swig.compile($('#tpl-colorText').html());
+        
+        // var tplColorText = swig.compile($('#tpl-colorText').html());
 
-        var facilityQuestions = [];
-        if ( schoolType == schoolString ) {
-            facilityQuestions = [{
-                'facility': 'All weather pucca building',
-                'icon': ['fa fa-university'],
-                'key': 'webs-pucca-building'
-            }, {
-                'facility': 'Playground',
-                'icon': ['fa fa-futbol-o'],
-                'key': 'webs-playground'
-            }, {
-                'facility': 'Drinking Water',
-                'icon': ['fa  fa-tint'],
-                'key': 'webs-drinking-water'
-            }, {
-                'facility': 'Library',
-                'icon': ['fa fa-book'],
-                'key': 'webs-library'
-            }, {
-                'facility': 'Toilets',
-                'icon': ['fa fa-male', 'fa fa-female'],
-                'key': 'webs-separate-toilets'
-            }, {
-                'facility': 'Secure Boundary Wall',
-                'icon': ['fa fa-circle-o-notch'],
-                'key': 'webs-boundary-wall'
-            }];
-        } else {
-            facilityQuestions = [{
-                'facility': 'A proper designated building',
-                'icon': ['fa fa-university'],
-                'key': 'weba-proper-building'
-            }, {
-                'facility': 'Play Material',
-                'icon': ['fa fa-futbol-o'],
-                'key': 'weba-play-material'
-            }, {
-                'facility': 'Drinking Water',
-                'icon': ['fa  fa-tint'],
-                'key': 'weba-drinking-water'
-            }, {
-                'facility': 'Mid-day meal',
-                'icon': ['fa fa-spoon'],
-                'key': 'weba-food-ontime'
-            }, {
-                'facility': 'Toilets',
-                'icon': ['fa fa-male', 'fa fa-female'],
-                'key': 'weba-toilet'
-            }, {
-                'facility': 'Secure Boundary Wall',
-                'icon': ['fa fa-circle-o-notch'],
-                'key': 'weba-boundary-security'
-            }];
-        }
+        // var facilityQuestions = [];
+        // if ( schoolType == schoolString ) {
+        //     facilityQuestions = [{
+        //         'facility': 'All weather pucca building',
+        //         'icon': ['fa fa-university'],
+        //         'key': 'webs-pucca-building'
+        //     }, {
+        //         'facility': 'Playground',
+        //         'icon': ['fa fa-futbol-o'],
+        //         'key': 'webs-playground'
+        //     }, {
+        //         'facility': 'Drinking Water',
+        //         'icon': ['fa  fa-tint'],
+        //         'key': 'webs-drinking-water'
+        //     }, {
+        //         'facility': 'Library',
+        //         'icon': ['fa fa-book'],
+        //         'key': 'webs-library'
+        //     }, {
+        //         'facility': 'Toilets',
+        //         'icon': ['fa fa-male', 'fa fa-female'],
+        //         'key': 'webs-separate-toilets'
+        //     }, {
+        //         'facility': 'Secure Boundary Wall',
+        //         'icon': ['fa fa-circle-o-notch'],
+        //         'key': 'webs-boundary-wall'
+        //     }];
+        // } else {
+        //     facilityQuestions = [{
+        //         'facility': 'A proper designated building',
+        //         'icon': ['fa fa-university'],
+        //         'key': 'weba-proper-building'
+        //     }, {
+        //         'facility': 'Play Material',
+        //         'icon': ['fa fa-futbol-o'],
+        //         'key': 'weba-play-material'
+        //     }, {
+        //         'facility': 'Drinking Water',
+        //         'icon': ['fa  fa-tint'],
+        //         'key': 'weba-drinking-water'
+        //     }, {
+        //         'facility': 'Healthy and timely meal',
+        //         'icon': ['fa fa-spoon'],
+        //         'key': 'weba-food-ontime'
+        //     }, {
+        //         'facility': 'Toilets',
+        //         'icon': ['fa fa-male', 'fa fa-female'],
+        //         'key': 'weba-toilet'
+        //     }, {
+        //         'facility': 'Secure Boundary Wall',
+        //         'icon': ['fa fa-circle-o-notch'],
+        //         'key': 'weba-boundary-security'
+        //     }];
+        // }
 
-        var questionObjects = _.map(facilityQuestions, function(question) {
-            return getQuestion(data, 'web', question.key);
-        });
+        // var questionObjects = _.map(facilityQuestions, function(question) {
+        //     return getQuestion(data, 'web', question.key);
+        // });
 
-        var questionsArray = getQuestionsArray(questionObjects);
+        // var questionsArray = getQuestionsArray(questionObjects);
 
 
-        var facilities = _.map(questionsArray, function(question, seq) {
-            var facility = facilityQuestions[seq];
-            facility.percent = question.percent;
-            facility.total = question.total;
-            return facility;
-        });
+        // var facilities = _.map(questionsArray, function(question, seq) {
+        //     var facility = facilityQuestions[seq];
+        //     facility.percent = question.percent;
+        //     facility.total = question.total;
+        //     return facility;
+        // });
 
-        var html = ''
-        for (var pos in facilities) {
-            html = html + tplColorText(facilities[pos]);
-        }
-        $('#webfacilities' + suffix).html(html);
+        // var html = '';
+
+        // _.each(facilities, function(f) {
+        //     html = html + tplColorText(f);
+        // });
+        // /*
+        // for (var i=0, len=facilities.length;pos in facilities) {
+        //     html = html + tplColorText(facilities[pos]);
+        // }
+        // */
+        // $('#webfacilities' + suffix).html(html);
 
     }
 
@@ -744,7 +933,7 @@
         if (!paramKey) {
             setTimeout(function() {
                 $deferred.resolve({
-                    'type': 'All',
+                    'type': '',
                     'name': '',
                     'obj': {}
                 });

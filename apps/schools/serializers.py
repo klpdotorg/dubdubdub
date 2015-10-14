@@ -1,8 +1,15 @@
 from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
-from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg,InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,BoundaryAssessmentSinglescore,BoundaryAssessmentSinglescoreMt,BoundaryAssessmentSinglescoreGender)
+from schools.models import (
+    School, Boundary, DiseInfo, ElectedrepMaster,
+    BoundaryType, Assembly, Parliament, Postal, PaisaData,
+    MdmAgg, InstitutionAssessmentCohorts, InstitutionAssessmentSinglescore,
+    InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
+    BoundaryAssessmentSinglescoreGender, MeetingReport,
+    BoundaryLibLangAgg, BoundaryLibLevelAgg
+)
 
 
 class BoundaryTypeSerializer(KLPSerializer):
@@ -24,6 +31,16 @@ class BoundaryWithParentSerializer(KLPSerializer):
     type = serializers.CharField(source='hierarchy.name')
     school_type = serializers.CharField(source='get_school_type')
     parent = BoundarySerializer(source='parent')
+
+    class Meta:
+        model = Boundary
+        fields = ('id', 'name', 'type', 'school_type', 'parent')
+
+
+class BoundaryWithGrandparentSerializer(KLPSerializer):
+    type = serializers.CharField(source='hierarchy.name')
+    school_type = serializers.CharField(source='get_school_type')
+    parent = BoundaryWithParentSerializer(source='parent')
 
     class Meta:
         model = Boundary
@@ -66,6 +83,12 @@ class SchoolListSerializer(KLPSerializer):
         fields = ('id', 'name', 'address_full', 'dise_info', 'type',)
 
 
+class MeetingReportSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MeetingReport
+
+
 class SchoolInfoSerializer(KLPSerializer):
     dise_code = serializers.CharField(source='dise_info_id')
     admin3 = BoundarySerializer(source='schooldetails.admin3')
@@ -85,7 +108,7 @@ class SchoolInfoSerializer(KLPSerializer):
     num_boys = serializers.IntegerField(source='schooldetails.num_boys')
     num_girls = serializers.IntegerField(source='schooldetails.num_girls')
     basic_facilities = serializers.CharField(source='get_basic_facilities')
-
+    meeting_reports = MeetingReportSerializer(source='meetingreport_set')
     has_volunteer_activities = serializers.CharField(source='has_volunteer_activities')
 
     images = serializers.CharField(source='get_images')
@@ -96,7 +119,7 @@ class SchoolInfoSerializer(KLPSerializer):
                   'landmark', 'identifiers', 'admin3', 'admin2', 'admin1',
                   'buses', 'parliament', 'assembly', 'ward',
                   'dise_code', 'type', 'num_boys', 'num_girls',
-                  'basic_facilities', 'images', 'has_volunteer_activities')
+                  'basic_facilities', 'images', 'has_volunteer_activities', 'meeting_reports')
 
 
 class SchoolDemographicsSerializer(KLPSerializer):
@@ -273,9 +296,19 @@ class SchoolDetailsSerializer(KLPSerializer):
         fields = ('cluster_or_circle', 'block_or_project', 'district')
 
 
+class BoundaryLibLangAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLangAgg
+
+
+class BoundaryLibLevelAggSerializer(KLPSerializer):
+    class Meta:
+        model = BoundaryLibLevelAgg
+
+
 class AssessmentListSerializer(KLPSerializer):
-    assid= serializers.IntegerField(source='assessment.id')
-    studentgroup =  serializers.CharField(source='studentgroup')
+    assid = serializers.IntegerField(source='assessment.id')
+    studentgroup = serializers.CharField(source='studentgroup')
     assessmentname = serializers.CharField(source='assessment.name')
     academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
 

@@ -1,14 +1,74 @@
 {% verbatim %}
+    <script type="text/html" id="tpl-assessment-school">
+      <div class="assessment-class-section">
+            {% for a in assessments %}
+            <div class="header-strip brand-turquoise-bg center-text">
+                <div class="heading-tiny-uppercase">
+                    {{ a.assessmentname }}
+                </div>
+            </div>
+            <div class="assessment-container">
+                <div class="school-score-parent">
+                    <div class="school-score">
+                        <h5>School Score</h5>
+                        <div class="overall-score-value border-radius-circle border-base box-demo">
+                            <div class="dead-center">
+                                {{ a.singlescore|int }}%
+                            </div>
+                        </div>
+                    </div> <!-- end score -->
+                
+                    <div class="school-comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin1.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin1.singlescore|int }}%
+                                </span>
+                            </li>
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin2.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin2.singlescore|int }}%
+                                </span>
+                            </li>
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin3.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin3.singlescore|int }}%
+                                </span>
+                            </li>
+                        </ul>
+                    </div> <!-- end comparison -->
+                </div><!-- end parent -->
+            </div><!-- end assessment container -->
+          {% endfor %}
+      </div><!-- end container -->
+    </script>
+
     <script type="text/html" id="tpl-assessment-class">
+      
+      <!--li><a href="#" class='head container grey-silver-bg heading-tiny-uppercase js-accordion-header center-text'> <span class="white"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a-->
+      <hr/>
+      <li><a href="#" class=' heading-tiny-uppercase js-accordion-header align-right'> <span class="brand-turquoise"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a>
+      <div class="base-spacing-sm"></div>
+      
+      <div class="content" id="{{className}}">
         <div class="container assessment-class-section">
-            <h3>Class: {{ className }}</h3>
             {% for a in assessments %}
             <div class="header-strip center-text">
                 <div class="heading-tiny-uppercase">
                     {{ a.assessmentname }}
                 </div>
             </div>
-            <div class="assessment-container">
+            <div class="border-base assessment-container">
                 <div class="assessment-score-parent">
                     <div class="overall-score">
                         <h5>Overall Score</h5>
@@ -18,6 +78,27 @@
                             </div>
                         </div>
                     </div>
+                    <div class="comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            {% for c in a.compares %}
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                <span class="admin-name">
+                                    {{ c.name }}
+                                </span>
+                                <span class="admin-score">
+                                    {{ c.singlescore|int }}%
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div> <!-- end comparison -->
+
+            
+
+                </div>
+                <div class="assessment-graph-container">
+
                     <div class="gender">
                         <h5>Score by Gender</h5>
                         {% for gender in a.genders %}
@@ -45,25 +126,6 @@
                         </div>
                         {% endfor %}
                     </div> <!-- end gender -->
-
-
-                </div>
-                <div class="assessment-comparison-container">
-                    <div class="comparison">
-                        <h5>Comparison</h5>
-                        <ul class="base-ul">
-                            {% for c in a.compares %}
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
-                                <span class="admin-name">
-                                    {{ c.name }}
-                                </span>
-                                <span class="admin-score">
-                                    {{ c.score.value }}
-                                </span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div> <!-- end comparison -->
                     <div class="languages bar-tab-demo-block">
                         <h5>Score by Mother-Tongue</h5>
                         {% for mt in a.mts %}
@@ -87,7 +149,9 @@
                 </div><!-- end assessment-comparison-container -->
             </div><!-- end assessment-container -->
             {% endfor %}
+          </div>
         </div>
+      </li>
 
 
         <!-- <div class="container assessment-section">

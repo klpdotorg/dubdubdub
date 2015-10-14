@@ -60,10 +60,14 @@
       <div data-tab="info" class="js-tab-link tab-heading tab-heading-active">Info</div>
       <div data-tab="demographics" class="js-tab-link tab-heading">Demographics</div>
       <div data-tab="programmes" class="js-tab-link tab-heading">Programmes</div>
+      {% if object.schooldetails.type.id == 1 %}
       <div data-tab="finances" class="js-tab-link tab-heading">Finances</div>
+      {% endif %}
       <div data-tab="infrastructure" class="js-tab-link tab-heading">Infrastructure</div>
+      {% if object.schooldetails.type.id == 1 %}
       <div data-tab="library" class="js-tab-link tab-heading">Library</div>
       <div data-tab="nutrition" class="js-tab-link tab-heading">Nutrition</div>
+      {% endif %}
       <div data-tab="share-story" class="js-tab-link tab-heading">Share your story</div>
       <div data-tab="volunteer" class="js-tab-link tab-heading">Volunteer</div>
     </div> <!-- /tab-wrap-widescreen -->
@@ -92,6 +96,7 @@
       </div>
       <!-- Programme Tab END -->
     </div>
+    {% if object.schooldetails.type.id == 1 %}
     <div class="tab-each">
       <div class="tab-content" data-tab="finances">
         <div class="container">
@@ -100,6 +105,7 @@
       </div>
       <!-- Finances Tab END -->
     </div>
+    {% endif %}
     <div class="tab-each">
       <div class="tab-content" data-tab="infrastructure">
         <div class="container">
@@ -108,6 +114,7 @@
       </div>
       <!-- Infrastructure Tab END -->
     </div>
+    {% if object.schooldetails.type.id == 1 %}
     <div class="tab-each">
       <div class="tab-content" data-tab="library">
         <div class="container">
@@ -124,6 +131,7 @@
       </div>
       <!-- Nutrition Tab END -->
     </div>
+    {% endif %}
     <div class="tab-each">
       <div class="tab-content" data-tab="share-story">
         <div class="container">
