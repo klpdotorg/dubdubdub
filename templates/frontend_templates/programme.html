@@ -78,6 +78,27 @@
                             </div>
                         </div>
                     </div>
+                    <div class="comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            {% for c in a.compares %}
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                <span class="admin-name">
+                                    {{ c.name }}
+                                </span>
+                                <span class="admin-score">
+                                    {{ c.singlescore|int }}%
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div> <!-- end comparison -->
+
+            
+
+                </div>
+                <div class="assessment-graph-container">
+
                     <div class="gender">
                         <h5>Score by Gender</h5>
                         {% for gender in a.genders %}
@@ -105,23 +126,6 @@
                     </div> <!-- end gender -->
 
 
-                </div>
-                <div class="assessment-comparison-container">
-                    <div class="comparison">
-                        <h5>Comparison</h5>
-                        <ul class="base-ul">
-                            {% for c in a.compares %}
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
-                                <span class="admin-name">
-                                    {{ c.name }}
-                                </span>
-                                <span class="admin-score">
-                                    {{ c.singlescore|int }}%
-                                </span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div> <!-- end comparison -->
                     <div class="languages bar-tab-demo-block">
                         <h5>Score by Mother-Tongue</h5>
                         {% for mt in a.mts %}

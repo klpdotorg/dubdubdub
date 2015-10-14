@@ -60,12 +60,13 @@
     }
 
     .overall-score {
-        @include col-33-flt;
+        @include col-50-flt;
     }
 
-    .gender {
-        @include col-66-flt;
+    .comparison {
+        @include col-50-flt;
     }
+
 }
 
 
@@ -84,15 +85,15 @@
 }
 
 @include media-med {
-    .assessment-comparison-container {
+    .assessment-graph-container {
         @include grid-parent;
     }
 
-    .comparison {
-        @include col-33-flt;
+    .gender {
+        @include col-50-flt;
     }
 
     .languages {
-        @include col-66-flt;
+        @include col-50-flt;
     }
 }
