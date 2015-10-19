@@ -120,26 +120,3 @@ class Command(BaseCommand):
                 questiongroup=question_group, question=q, sequence=count+1)
 
         print "Old Anganwadi Bangalore questions populated."
-
-
-        # file_name = options.get('file', None)
-        # if not file_name:
-        #     print "Please specify a filename with the --file argument"
-        #     return
-        # f = open(file_name, 'r')
-
-
-        # csv_f = csv.reader(f, delimiter='|')
-
-
-        # count = 0
-        # for row in csv_f:
-        #     if count == 0:
-        #         count += 1
-        #         for i in range(6, 76):
-        #              questions.append(row[i])
-        #     else:
-        #         continue
-
-        # print json.dumps(questions, indent=4)
-            
