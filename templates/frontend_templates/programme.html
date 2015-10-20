@@ -13,7 +13,7 @@
                         <h5>School Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.singlescore|int }}%
+                                {{ a.percentile|int }}%
                             </div>
                         </div>
                     </div> <!-- end score -->
@@ -26,7 +26,7 @@
                                     {{ a.boundary.admin1.boundary__name}}
                                 </span>
                                 <span class="admin-score">
-                                    {{ a.boundary.admin1.singlescore|int }}%
+                                    {{ a.boundary.admin1.percentile|int }}%
                                 </span>
                             </li>
                             <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
@@ -34,7 +34,7 @@
                                     {{ a.boundary.admin2.boundary__name}}
                                 </span>
                                 <span class="admin-score">
-                                    {{ a.boundary.admin2.singlescore|int }}%
+                                    {{ a.boundary.admin2.percentile|int }}%
                                 </span>
                             </li>
                             <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
@@ -42,7 +42,7 @@
                                     {{ a.boundary.admin3.boundary__name}}
                                 </span>
                                 <span class="admin-score">
-                                    {{ a.boundary.admin3.singlescore|int }}%
+                                    {{ a.boundary.admin3.percentile|int }}%
                                 </span>
                             </li>
                         </ul>
@@ -74,7 +74,7 @@
                         <h5>Overall Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.score.value }}
+                                {{ a.score}}
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                                     {{ c.name }}
                                 </span>
                                 <span class="admin-score">
-                                    {{ c.singlescore|int }}%
+                                    {{ c.score|int }}%
                                 </span>
                             </li>
                             {% endfor %}
@@ -113,13 +113,11 @@
                                     </div>
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ gender.score.value }}</div>
-                                  {% if gender.score.type == 'number' %}
+                                  <div class="bar-percent">{{ gender.score}}</div>
                                   <div class="bar-custom tooltip" aria-label="{{ gender.score }}">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.singlescore|int }}" style="width:{{ gender.singlescore }}%;">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.percentile|int }}" style="width:{{ gender.percentile}}%;">
                                       </div>
                                   </div>
-                                  {% endif %}
                                 </div> 
                             </div>
                         
@@ -134,13 +132,11 @@
                                     {{ mt.name }}
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ mt.score.value }}</div>
-                                  {% if mt.score.type == 'number' %}
-                                  <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
+                                  <div class="bar-percent">{{ mt.score}}</div>
+                                  <div class="bar-custom tooltip" aria-label="{{ mt.percentile}}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.percentile|int }}" style="width:{{ mt.percentile}}%;">
                                       </div>
                                   </div>
-                                  {% endif %}
                                 </div> 
                             </div>                
                         {% endfor %}            
@@ -158,7 +154,7 @@
             Assessment name: {{ assessmentname }} <br />
             Class: {{ studentgroup }} <br />
             Academic Year: {{ academicyear_name }} <br />
-            Overall Percentage: {{ singlescore }}
+            Overall Percentage: {{ percentile}}
         </div> -->
     </script>
 

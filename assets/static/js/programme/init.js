@@ -114,6 +114,7 @@
         $('#assessmentsContainer').empty().text("Loading...");
         $('#entityDetails').empty();
         fetchEntityDetails(params);
+        
         $xhr.done(function(data) {
             var assessmentsContext = getContext(data);
             //console.log("ass context", assessmentsContext);
@@ -121,10 +122,11 @@
             var programme_html = "<ul id='improved' class='js-accordion-container'>" 
                     + $('#assessmentsContainer').html() + "</ul>";
             $('#assessmentsContainer').html(programme_html);
-            renderSchoolScore();
+            fetchPercentile();
             klp.accordion.init();
             doPostRender();
         });
+        
     }
 
     function fetchEntityDetails(params) {
@@ -206,79 +208,19 @@
         $('#select2search').select2('data', null);
     }
 
-    function renderSchoolScore(assessmentsSchool) {
-        assessmentsSchool = {
-                            "count":4,
-                            "next":null,
-                            "previous":null,
-                            "features":
-                            [
-                                {
-                                    "assessmentname":"Post test",
-                                    "academicyear_name":"2010-2011",
-                                    "singlescore":"82.00",
-                                    "percentile":null,
-                                    "boundary":
-                                    {
-                                        "admin1":
-                                        {
-                                            "boundary__name":"bangalore",
-
-                                            "percentile":null,
-                                            "singlescore":"80.00",
-                                            "boundary":8877
-                                        },
-                                            "admin3":{
-                                            "boundary__name":"chickpet",
-                                            "percentile":null,
-                                            "singlescore":"78.00",
-                                            "boundary":8984
-                                        },
-                                            "admin2":{
-                                            "boundary__name":"south-2",
-                                            "percentile":null,
-                                            "singlescore":"84.00",
-                                            "boundary":8880
-                                        }
-                                    }
-                                },
-                                {
-                                    "assessmentname":"Pre test",
-                                    "academicyear_name":"2010-2011",
-                                    "singlescore":"55.00",
-                                    "percentile":null,
-                                    "boundary":
-                                    {
-                                        "admin1":{
-                                        "boundary__name":"bangalore",
-                                        "percentile":null,
-                                        "singlescore":"74.00",
-                                        "boundary":8877
-                                        },
-                                        "admin3":{
-                                        "boundary__name":"chickpet",
-                                        "percentile":null,
-                                        "singlescore":"70.00",
-                                        "boundary":8984
-                                        },
-                                        "admin2":{
-                                        "boundary__name":"south-2",
-
-                                        "percentile":null,
-                                        "singlescore":"75.00",
-                                        "boundary":8880
-                                        }
-                                    }
-                                }
-                            ]
-                        };
-
-        $('#schoolContainer').empty();
-        var html = tplAssessmentSchool({'assessments':assessmentsSchool["features"]})
-        $('#schoolContainer').append(html);
-        if (assessmentsSchool.length == 0) {
-            $('#schoolContainer').text("No programme information available.")
-        }
+    function fetchPercentile() {
+        var params = klp.router.getHash().queryParams;
+        var url = "programme/percentile/" + PROGRAMME_ID;
+        var $xhr = klp.api.do(url, params);
+        $xhr.done(function(data) {
+            var html = tplSchool(data);
+            $('#schoolContainer').empty();
+            var html = tplAssessmentSchool({'assessments':data["features"]})
+            $('#schoolContainer').append(html);
+            if (data.length == 0) {
+                $('#schoolContainer').text("No programme information available.")
+            }   
+        });
     }
 
     function getContext(data) {
@@ -304,16 +246,15 @@
 
     function getAssessmentContext(assessmentData) {
         console.log("assessment data", assessmentData);
+        assessmentData.score = assessmentData.percentile;
         var genders = [];
-        assessmentData.score = getScore(assessmentData.singlescore, assessmentData.gradesinglescore);
         for (var j=0, length=assessmentData.singlescoredetails.gender.length; j < length; j++) {
             var scoreDetails = assessmentData.singlescoredetails.gender[j];
             var cohortsDetails = assessmentData.cohortsdetails.gender[j];
             var gender = {
                 'name': scoreDetails.sex == 'male' ? 'Boys' : 'Girls',
                 'icon': scoreDetails.sex == 'male' ? 'boy' : 'girl',
-                'singlescore': scoreDetails.singlescore,
-                'score': getScore(scoreDetails.singlescore, scoreDetails.gradesinglescore),
+                'score': scoreDetails.percentile,
                 'cohorts': cohortsDetails.total
             };
             genders.push(gender);
@@ -326,8 +267,7 @@
             var gradeScore = assessmentData.singlescoredetails.mt[i].gradesinglescore;
             var mt = {
                 'name': assessmentData.cohortsdetails.mt[i].mt,
-                'singlescore': assessmentData.singlescoredetails.mt[i].singlescore,
-                'score': getScore(singleScore, gradeScore)
+                'score': assessmentData.singlescoredetails.mt[i].percentile
             };
             mts.push(mt);
         }
@@ -342,8 +282,7 @@
                 'id': boundary[key].boundary,
                 'type': key,
                 'name': boundary[key].boundary__name,
-                'singlescore': boundary[key].singlescore,
-                'score': getScore(boundary[key].singlescore, boundary[key].gradesinglescore)
+                'score': boundary[key].percentile
             };
             compares.push(compareObj);
         });
@@ -352,6 +291,8 @@
         return assessmentData;
     }
 
+    /*
+     In case we want to show grade score
     function getScore(singleScore, gradeScore) {
         if (singleScore) {
             var score = parseInt(singleScore);
@@ -366,5 +307,6 @@
             'type': typ
         }
     }
+    */
 
 })();

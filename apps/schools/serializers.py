@@ -7,7 +7,8 @@ from schools.models import (
     MdmAgg, InstitutionAssessmentCohorts, InstitutionAssessmentSinglescore,
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescoreGender, MeetingReport,
+    BoundaryAssessmentSinglescoreGender, InstitutionAssessmentPercentile,
+    BoundaryAssessmentPercentile,MeetingReport,
     BoundaryLibLangAgg, BoundaryLibLevelAgg
 )
 
@@ -602,3 +603,57 @@ class BoundaryProgrammeInfoSerializer(KLPSerializer):
           singlescore["boundary"]["admin1"]["mt"]=mtdata
         return singlescore
 
+
+class ProgrammePercentileSerializer(KLPSerializer):
+    assessmentname = serializers.CharField(source='assessment.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    percentile=serializers.IntegerField(source='percentile')
+    boundary=serializers.SerializerMethodField('getboundarypercentiles')
+
+
+    class Meta:
+        model = InstitutionAssessmentPercentile
+        fields = ('assessmentname','academicyear_name','percentile','boundary')
+
+    def getboundarypercentiles(self, obj):
+        data = {}
+        admin1data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.school.schooldetails.admin1,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+        data["admin1"]=admin1data
+
+        admin2data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.school.schooldetails.admin2,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+        data["admin2"]=admin2data
+
+        admin3data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.school.schooldetails.admin3,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+        data["admin3"]=admin3data
+
+        return data
+
+
+
+class BoundaryProgrammePercentileSerializer(KLPSerializer):
+    assessmentname = serializers.CharField(source='assessment.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    percentile=serializers.IntegerField(source='percentile')
+    boundary=serializers.SerializerMethodField('getboundarypercentiles')
+
+
+    class Meta:
+        model = BoundaryAssessmentPercentile
+        fields = ('assessmentname','academicyear_name','percentile','boundary')
+
+    def getboundarypercentiles(self,obj):
+        data = {}
+        if obj.boundary.hierarchy.id==11 or obj.boundary.hierarchy.id==15:
+
+            admin2data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.boundary.parent,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+            data["admin2"]=admin2data
+
+            admin1data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.boundary.parent.parent,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+            data["admin1"]=admin1data
+
+        elif obj.boundary.hierarchy.id==10 or obj.boundary.hierarchy.id==14:
+            admin1data=BoundaryAssessmentPercentile.objects.filter(boundary=obj.boundary.parent,assessment=obj.assessment).values('percentile','boundary__name','boundary')[0]
+            data["admin1"]=admin1data
+
+
+        return data

@@ -2,7 +2,7 @@ import sys
 from schools.models import Assessment, InstitutionAssessmentCohorts,InstitutionAssessmentSinglescore,InstitutionAssessmentSinglescoreGender,InstitutionAssessmentSinglescoreMt,BoundaryAssessmentSinglescore, InstitutionAssessmentPercentile,BoundaryAssessmentPercentile
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.mixins import CacheMixin
-from schools.serializers import ( AssessmentListSerializer,AssessmentInfoSerializer,ProgrammeListSerializer,ProgrammeInfoSerializer,BoundaryAssessmentInfoSerializer,BoundaryProgrammeInfoSerializer)
+from schools.serializers import ( AssessmentListSerializer,AssessmentInfoSerializer,ProgrammeListSerializer,ProgrammeInfoSerializer,BoundaryAssessmentInfoSerializer,BoundaryProgrammeInfoSerializer,ProgrammePercentileSerializer,BoundaryProgrammePercentileSerializer)
 from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 
@@ -168,6 +168,52 @@ class ProgrammeInfo(KLPListAPIView):
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
 
+
+        return programmeinfo
+
+
+class ProgrammePercentile(KLPListAPIView):
+    '''
+        Returns percentile value of the programme
+    '''
+    bbox_filter_field = "instcoord__coord"
+
+    def get_serializer_class(self):
+        if self.request.GET.get('school',''):
+          return ProgrammePercentileSerializer
+        elif self.request.GET.get('admin_1','') or self.request.GET.get('admin_2','') or self.request.GET.get('admin_3',''):
+          return BoundaryProgrammePercentileSerializer
+        else:
+            return None
+
+    def get_queryset(self):
+        print self.request
+        if self.kwargs.get('programme_id'):
+          progid= self.kwargs.get('programme_id')
+        else:
+          raise ParseError("Mandatory parameter programme_id not passed.")
+        if self.request.GET.get('school', ''):
+          sid= self.request.GET.get('school')
+          programmeinfo = InstitutionAssessmentPercentile.objects.filter(school=sid,assessment__programme__id=progid)\
+.order_by('assessment__id')\
+.select_related('assessment__id','assessment__name','assessment__programme__academic_year__name','percentile')
+        elif self.request.GET.get('admin_1',''):
+          bid= self.request.GET.get('admin_1')
+          programmeinfo = BoundaryAssessmentPercentile.objects.filter(boundary=bid,assessment__programme=progid)\
+.order_by('assessment__id')\
+.select_related('assessment__id','assessment__name','assessment__programme__academic_year__name','percentile')
+        elif self.request.GET.get('admin_2', ''):
+          bid= self.request.GET.get('admin_2')
+          programmeinfo = BoundaryAssessmentPercentile.objects.filter(boundary=bid,assessment__programme=progid)\
+.order_by('assessment__id')\
+.select_related('assessment__id','assessment__name','assessment__programme__academic_year__name','percentile')
+        elif self.request.GET.get('admin_3', ''):
+          bid= self.request.GET.get('admin_3')
+          programmeinfo = BoundaryAssessmentPercentile.objects.filter(boundary=bid,assessment__programme=progid)\
+.order_by('assessment__id')\
+.select_related('assessment__id','assessment__name','assessment__programme__academic_year__name','percentile')
+        else:
+          raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
         return programmeinfo
 
