@@ -18,13 +18,13 @@ class Command(BaseCommand):
     args = "<path to file>"
     help = """Parse and store the Anganwadi data
 
-    ./manage.py fetchanganwadi --file=path/to/file --format=[v1/v2/mallur/bangalore/bangalore-old]"""
+    ./manage.py fetchanganwadi --file=path/to/file --format=[v1/v2/mallur/koppal/bangalore/bangalore-old]"""
 
     option_list = BaseCommand.option_list + (
         make_option('--file',
                     help='Path to the csv file'),
         make_option('--format',
-                    help='Which format to use - v1/v2/mallur/bangalore/bangalore-old'),
+                    help='Which format to use - v1/v2/mallur/koppal/bangalore/bangalore-old'),
     )
 
     @transaction.atomic
@@ -35,8 +35,8 @@ class Command(BaseCommand):
             return
 
         csv_format = options.get('format', None)
-        if not csv_format or csv_format not in ['v1', 'v2', 'mallur', 'bangalore', 'bangalore-old']:
-            print "Please specify a format with the --format argument [v1/v2/mallur/bangalore/bangalore-old]"
+        if not csv_format or csv_format not in ['v1', 'v2', 'mallur', 'koppal', 'bangalore', 'bangalore-old']:
+            print "Please specify a format with the --format argument [v1/v2/mallur/koppal/bangalore/bangalore-old]"
             return
 
         source = Source.objects.get_or_create(name="anganwadi")[0]
@@ -120,11 +120,26 @@ class Command(BaseCommand):
             f = open(file_name, 'r')
             csv_f = csv.reader(f, delimiter='|')
 
-        elif csv_format == 'v2':
+        elif csv_format == 'koppal':
+            start_date = datetime.datetime.strptime('2013-06-04', '%Y-%m-%d')
+            end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
+            question_group = Questiongroup.objects.get(
+                version=5,
+                source=source,
+                start_date=start_date,
+                end_date=end_date,
+            )
+            question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+            answer_columns = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+
+            f = open(file_name, 'r')
+            csv_f = csv.reader(f)
+
+        else:
             start_date = datetime.datetime.strptime('2014-08-18', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2015-12-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
-                version=5,
+                version=6,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
@@ -136,7 +151,6 @@ class Command(BaseCommand):
 
             f = open(file_name, 'r')
             csv_f = csv.reader(f, delimiter='|')
-
 
         school_errors = []
 
