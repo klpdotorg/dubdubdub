@@ -13,8 +13,8 @@ ADMINS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'dubdubdub',
-        'USER': 'vagrant',
+        'NAME': 'testpercentile',
+        'USER': 'klp',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',

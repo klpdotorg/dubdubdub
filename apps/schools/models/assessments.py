@@ -62,6 +62,26 @@ class InstitutionAssessmentSinglescore(BaseModel):
         db_table = 'tb_institution_assessment_singlescore'
 
 
+class InstitutionAssessmentPercentile(BaseModel):
+    school = models.ForeignKey('School', db_column='sid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+
+        return "%s: %s" %(self.school, self.assessment,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'InstAssPercentile'
+        managed = False
+        db_table = 'tb_institution_assessment_percentile'
+
+
+
+
 class InstitutionAssessmentSinglescoreGender(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
@@ -125,6 +145,25 @@ class BoundaryAssessmentSinglescore(BaseModel):
         verbose_name = 'BoundaryAssSingleScore'
         managed = False
         db_table = 'tb_boundary_assessment_singlescore'
+
+
+class BoundaryAssessmentPercentile(BaseModel):
+    boundary= models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    assessment = models.ForeignKey('Assessment', db_column='assid')
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+                                      blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s: %s: %s" %(self.boundary, self.assessment,)
+
+    class Meta:
+
+        #workaround for https://code.djangoproject.com/ticket/8162
+        verbose_name = 'BoundaryAssPercentile'
+        managed = False
+        db_table = 'tb_boundary_assessment_percentile'
+
+
 
 
 class BoundaryAssessmentSinglescoreGender(BaseModel):

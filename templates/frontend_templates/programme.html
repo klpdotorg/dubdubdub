@@ -1,23 +1,104 @@
 {% verbatim %}
+    <script type="text/html" id="tpl-assessment-school">
+      <div class="assessment-class-section">
+            {% for a in assessments %}
+            <div class="header-strip brand-turquoise-bg center-text">
+                <div class="heading-tiny-uppercase">
+                    {{ a.assessmentname }}
+                </div>
+            </div>
+            <div class="assessment-container">
+                <div class="school-score-parent">
+                    <div class="school-score">
+                        <h5>School Score</h5>
+                        <div class="overall-score-value border-radius-circle border-base box-demo">
+                            <div class="dead-center">
+                                {{ a.percentile|int }}%
+                            </div>
+                        </div>
+                    </div> <!-- end score -->
+                
+                    <div class="school-comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin1.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin1.percentile|int }}%
+                                </span>
+                            </li>
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin2.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin2.percentile|int }}%
+                                </span>
+                            </li>
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
+                                <span class="admin-name">
+                                    {{ a.boundary.admin3.boundary__name}}
+                                </span>
+                                <span class="admin-score">
+                                    {{ a.boundary.admin3.percentile|int }}%
+                                </span>
+                            </li>
+                        </ul>
+                    </div> <!-- end comparison -->
+                </div><!-- end parent -->
+            </div><!-- end assessment container -->
+          {% endfor %}
+      </div><!-- end container -->
+    </script>
+
     <script type="text/html" id="tpl-assessment-class">
+      
+      <!--li><a href="#" class='head container grey-silver-bg heading-tiny-uppercase js-accordion-header center-text'> <span class="white"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a-->
+      <hr/>
+      <li><a href="#" class=' heading-tiny-uppercase js-accordion-header align-right'> <span class="brand-turquoise"> Class: {{ className }}  <span class="fa fa-angle-down"></span></span></a>
+      <div class="base-spacing-sm"></div>
+      
+      <div class="content" id="{{className}}">
         <div class="container assessment-class-section">
-            <h3>Class: {{ className }}</h3>
             {% for a in assessments %}
             <div class="header-strip center-text">
                 <div class="heading-tiny-uppercase">
                     {{ a.assessmentname }}
                 </div>
             </div>
-            <div class="assessment-container">
+            <div class="border-base assessment-container">
                 <div class="assessment-score-parent">
                     <div class="overall-score">
                         <h5>Overall Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.score.value }}
+                                {{ a.score}}
                             </div>
                         </div>
                     </div>
+                    <div class="comparison">
+                        <h5>Comparison</h5>
+                        <ul class="base-ul">
+                            {% for c in a.compares %}
+                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                <span class="admin-name">
+                                    {{ c.name }}
+                                </span>
+                                <span class="admin-score">
+                                    {{ c.score|int }}%
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div> <!-- end comparison -->
+
+            
+
+                </div>
+                <div class="assessment-graph-container">
+
                     <div class="gender">
                         <h5>Score by Gender</h5>
                         {% for gender in a.genders %}
@@ -32,38 +113,17 @@
                                     </div>
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ gender.score.value }}</div>
-                                  {% if gender.score.type == 'number' %}
+                                  <div class="bar-percent">{{ gender.score}}</div>
                                   <div class="bar-custom tooltip" aria-label="{{ gender.score }}">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.singlescore|int }}" style="width:{{ gender.singlescore }}%;">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.percentile|int }}" style="width:{{ gender.percentile}}%;">
                                       </div>
                                   </div>
-                                  {% endif %}
                                 </div> 
                             </div>
                         
                         </div>
                         {% endfor %}
                     </div> <!-- end gender -->
-
-
-                </div>
-                <div class="assessment-comparison-container">
-                    <div class="comparison">
-                        <h5>Comparison</h5>
-                        <ul class="base-ul">
-                            {% for c in a.compares %}
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
-                                <span class="admin-name">
-                                    {{ c.name }}
-                                </span>
-                                <span class="admin-score">
-                                    {{ c.score.value }}
-                                </span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div> <!-- end comparison -->
                     <div class="languages bar-tab-demo-block">
                         <h5>Score by Mother-Tongue</h5>
                         {% for mt in a.mts %}
@@ -72,13 +132,11 @@
                                     {{ mt.name }}
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ mt.score.value }}</div>
-                                  {% if mt.score.type == 'number' %}
-                                  <div class="bar-custom tooltip" aria-label="{{ mt.singlescore }}%">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.singlescore|int }}" style="width:{{ mt.singlescore }}%;">
+                                  <div class="bar-percent">{{ mt.score}}</div>
+                                  <div class="bar-custom tooltip" aria-label="{{ mt.percentile}}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.percentile|int }}" style="width:{{ mt.percentile}}%;">
                                       </div>
                                   </div>
-                                  {% endif %}
                                 </div> 
                             </div>                
                         {% endfor %}            
@@ -87,14 +145,16 @@
                 </div><!-- end assessment-comparison-container -->
             </div><!-- end assessment-container -->
             {% endfor %}
+          </div>
         </div>
+      </li>
 
 
         <!-- <div class="container assessment-section">
             Assessment name: {{ assessmentname }} <br />
             Class: {{ studentgroup }} <br />
             Academic Year: {{ academicyear_name }} <br />
-            Overall Percentage: {{ singlescore }}
+            Overall Percentage: {{ percentile}}
         </div> -->
     </script>
 
