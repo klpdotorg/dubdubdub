@@ -26,7 +26,7 @@ class Command(BaseCommand):
         q2 = Question.objects.get_or_create(
             text="Was there a teacher present in each class?",
             data_type=1,
-            question_type=qtype_numeric,
+            question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
         )[0]
