@@ -3472,7 +3472,7 @@ body {
       display: table;
       clear: both; }
 
-  .overall-score {
+  .class-score {
     width: 50%;
     float: left;
     padding-left: 20px;
@@ -3484,21 +3484,41 @@ body {
     padding-left: 20px;
     padding-right: 20px; } }
 @media only screen and (min-width: 750px) {
-  .school-score-parent {
+  .boundary-parent {
     margin-left: -20px;
     margin-right: -20px; }
-    .school-score-parent:after {
+    .boundary-parent:after {
       content: "";
       display: table;
       clear: both; }
 
-  .school-score {
+  .boundary-type {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .boundary-name {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .overall-score-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .overall-score-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .overall-score {
     width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-  .school-comparison {
+  .overall-comparison {
     width: 50%;
     float: left;
     padding-left: 20px;

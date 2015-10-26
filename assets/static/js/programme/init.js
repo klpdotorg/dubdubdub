@@ -2,7 +2,7 @@
     var tplAssessmentClass,
         tplSchool,
         tplBoundary,
-        tplAssessmentSchool;
+        tplAssessmentOverall;
     klp.init = function() {
         console.log("init programme page", PROGRAMME_ID);
         klp.router = new KLPRouter();
@@ -11,7 +11,7 @@
         tplAssessmentClass = swig.compile($('#tpl-assessment-class').html());
         tplSchool = swig.compile($('#tpl-school').html());
         tplBoundary = swig.compile($('#tpl-boundary').html());
-        tplAssessmentSchool = swig.compile($('#tpl-assessment-school').html());
+        tplAssessmentOverall = swig.compile($('#tpl-assessment-overall').html());
         //fetchProgrammeDetails();
         klp.router.events.on('hashchange', function(event, params) {
             fetchProgrammeDetails();
@@ -111,7 +111,8 @@
         var params = klp.router.getHash().queryParams;
         var url = "programme/" + PROGRAMME_ID;
         var $xhr = klp.api.do(url, params);
-        $('#assessmentsContainer').empty().text("Loading...");
+        $('#assessmentsContainer').empty().text("Class Scores Loading...");
+        $('#overallContainer').empty().text("Overall Scores Loading...");
         $('#entityDetails').empty();
         fetchEntityDetails(params);
         
@@ -214,11 +215,12 @@
         var $xhr = klp.api.do(url, params);
         $xhr.done(function(data) {
             var html = tplSchool(data);
-            $('#schoolContainer').empty();
-            var html = tplAssessmentSchool({'assessments':data["features"]})
-            $('#schoolContainer').append(html);
+            $('#overallContainer').empty();
+            var assessmentsContext = getOverallContext(data["features"]);
+            var html = tplAssessmentOverall({'assessments':assessmentsContext})
+            $('#overallContainer').append(html);
             if (data.length == 0) {
-                $('#schoolContainer').text("No programme information available.")
+                $('#overallContainer').text("No programme information available.")
             }   
         });
     }
@@ -240,6 +242,29 @@
         var ret = [];
         _.each(classData, function(assessmentData) {
             ret.push(getAssessmentContext(assessmentData));
+        });
+        return ret;
+    }
+
+    /* added this function to reuse getComparison for Overall score */
+    function getOverallContext(overallData) {
+        var ret = [];
+        _.each(overallData,function(assessmentData) {
+            assessmentData.score = assessmentData.percentile;
+            var compares = [];
+            var boundary = assessmentData.boundary;
+            var boundaryKeys = _.keys(boundary);
+            _.each(boundaryKeys, function(key) {
+                var compareObj = {
+                    'id': boundary[key].boundary,
+                    'type': key,
+                    'name': boundary[key].boundary__name,
+                    'score': boundary[key].percentile
+                };
+                compares.push(compareObj);
+            });
+            assessmentData.compares = compares;
+            ret.push(assessmentData);
         });
         return ret;
     }
@@ -272,7 +297,7 @@
             mts.push(mt);
         }
         assessmentData.mts = mts;
-
+        
         var compares = [];
         var boundary = assessmentData.singlescoredetails.boundary;
         var boundaryKeys = _.keys(boundary);
@@ -287,7 +312,7 @@
             compares.push(compareObj);
         });
         assessmentData.compares = compares;
-        console.log("assessment data processed", assessmentData);
+
         return assessmentData;
     }
 

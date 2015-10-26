@@ -59,7 +59,7 @@
         @include grid-parent;
     }
 
-    .overall-score {
+    .class-score {
         @include col-50-flt;
     }
 
@@ -69,17 +69,32 @@
 
 }
 
-
 @include media-med {
-    .school-score-parent {
+    .boundary-parent {
         @include grid-parent;
     }
 
-    .school-score {
+    .boundary-type {
+        @include col-25-flt;
+    }
+
+    .boundary-name {
+        @include col-75-flt;
+    }
+
+}
+
+
+@include media-med {
+    .overall-score-parent {
+        @include grid-parent;
+    }
+
+    .overall-score {
         @include col-50-flt;
     }
 
-    .school-comparison {
+    .overall-comparison {
         @include col-50-flt;
     }
 }

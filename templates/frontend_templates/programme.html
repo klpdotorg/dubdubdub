@@ -1,5 +1,5 @@
 {% verbatim %}
-    <script type="text/html" id="tpl-assessment-school">
+    <script type="text/html" id="tpl-assessment-overall">
       <div class="assessment-class-section">
             {% for a in assessments %}
             <div class="header-strip brand-turquoise-bg center-text">
@@ -8,49 +8,41 @@
                 </div>
             </div>
             <div class="assessment-container">
-                <div class="school-score-parent">
-                    <div class="school-score">
-                        <h5>School Score</h5>
+                <div class="overall-score-parent">
+                    <div class="overall-score">
+                        <h5>Overall Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.percentile|int }}%
+                                {{ a.score|int }}%
                             </div>
                         </div>
+                        <div class="base-spacing-sm"></div>
                     </div> <!-- end score -->
                 
-                    <div class="school-comparison">
+                    <div class="overall-comparison">
                         <h5>Comparison</h5>
                         <ul class="base-ul">
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
-                                <span class="admin-name">
-                                    {{ a.boundary.admin1.boundary__name}}
-                                </span>
-                                <span class="admin-score">
-                                    {{ a.boundary.admin1.percentile|int }}%
-                                </span>
-                            </li>
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
-                                <span class="admin-name">
-                                    {{ a.boundary.admin2.boundary__name}}
-                                </span>
-                                <span class="admin-score">
-                                    {{ a.boundary.admin2.percentile|int }}%
-                                </span>
-                            </li>
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li">
-                                <span class="admin-name">
-                                    {{ a.boundary.admin3.boundary__name}}
-                                </span>
-                                <span class="admin-score">
-                                    {{ a.boundary.admin3.percentile|int }}%
-                                </span>
-                            </li>
+                            {% if a.compares.length %}
+                                {% for c in a.compares %}
+                                <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                    <span class="admin-name">
+                                        {{ c.name }}
+                                    </span>
+                                    <span class="admin-score">
+                                        {{ c.score|int }}%
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            {% else %}
+                                No comparison available at this boundary.
+                            {% endif %}    
                         </ul>
                     </div> <!-- end comparison -->
                 </div><!-- end parent -->
             </div><!-- end assessment container -->
           {% endfor %}
       </div><!-- end container -->
+
     </script>
 
     <script type="text/html" id="tpl-assessment-class">
@@ -70,27 +62,31 @@
             </div>
             <div class="border-base assessment-container">
                 <div class="assessment-score-parent">
-                    <div class="overall-score">
-                        <h5>Overall Score</h5>
+                    <div class="class-score">
+                        <h5>Class Score</h5>
                         <div class="overall-score-value border-radius-circle border-base box-demo">
                             <div class="dead-center">
-                                {{ a.score}}
+                                {{ a.score}}%
                             </div>
                         </div>
                     </div>
                     <div class="comparison">
                         <h5>Comparison</h5>
                         <ul class="base-ul">
-                            {% for c in a.compares %}
-                            <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
-                                <span class="admin-name">
-                                    {{ c.name }}
-                                </span>
-                                <span class="admin-score">
-                                    {{ c.score|int }}%
-                                </span>
-                            </li>
-                            {% endfor %}
+                            {% if a.compares.length %}
+                                {% for c in a.compares %}
+                                <li class="js-boundaryLink heading-tiny-uppercase admin-score-li" data-type="{{ c.type }}" data-id="{{ c.id }}">
+                                    <span class="admin-name">
+                                        {{ c.name }}
+                                    </span>
+                                    <span class="admin-score">
+                                        {{ c.score|int }}%
+                                    </span>
+                                </li>
+                                {% endfor %}
+                            {% else %}
+                                No comparison available at this boundary.
+                            {% endif %}
                         </ul>
                     </div> <!-- end comparison -->
 
@@ -113,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ gender.score}}</div>
+                                  <div class="bar-percent">{{ gender.score}}%</div>
                                   <div class="bar-custom tooltip" aria-label="{{ gender.score }}">
                                       <div class="bar-value grey-gravel-bg bar-value-{{ gender.percentile|int }}" style="width:{{ gender.percentile}}%;">
                                       </div>
@@ -132,7 +128,7 @@
                                     {{ mt.name }}
                                 </div>
                                 <div class="bar-graph">
-                                  <div class="bar-percent">{{ mt.score}}</div>
+                                  <div class="bar-percent">{{ mt.score}}%</div>
                                   <div class="bar-custom tooltip" aria-label="{{ mt.percentile}}%">
                                       <div class="bar-value grey-gravel-bg bar-value-{{ mt.percentile|int }}" style="width:{{ mt.percentile}}%;">
                                       </div>
@@ -182,8 +178,16 @@
     </script>
 
     <script type="text/html" id="tpl-boundary">
-        Boundary Type: {{ type }} <br />
-        Boundary Name: {{ name }}
+        <div class="boundary-parent">
+            <div class="boundary-type">
+                <div class="brand-turquoise">Boundary Type</div>
+                <div class="heading-tiny-uppercase"> {{ type | capitalize }} </div>
+            </div>
+            <div class="boundary-name">
+                <div class="brand-turquoise">Boundary Name</div>
+                <div class="heading-tiny-uppercase"> {{ name | capitalize }} </div>
+            </div>
+        </div>
     </script>
 
 {% endverbatim %}
