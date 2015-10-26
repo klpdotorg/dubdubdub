@@ -55,20 +55,33 @@
 {% endblock %}
 
 {% block subheader %}
+<div id="searchmodal" class="modalDialog">
+  <div class="container">
+    <a href="#close" title="Close" class="close">X</a>
+    <div class="heading-secondary heading-border">ADVANCED SEARCH </div>
+    <div class=""> Help me find schools by</div>
+  </div>
+</div>
   <div class="map-subheader-wrapper subheader-wrapper">
     <div class="subheader-content">
+
       <div class="search-input-map">
-        <input type="text" name="search" placeholder="Search" class="search-input input-text">
+        <input type="text" name="search" placeholder="Search" class="search-input input-text">  
 <!--       <div class="volunteer-btn-wrapper fr">
           <a class="button blue js-volunteer-trigger">Volunteer</a>
         </div> -->
       </div>
+      <a href="#searchmodal">
+      <div class="adv-search-btn tooltip" aria-label="Advanced Search">
+          <span class="fa fa-search-plus"></span>
+      </div>
+      </a>
     </div>
   </div>
 {% endblock %}
 
 {% block content %}
-
+  
 
   <div class="map_page no-sidebar">
     <section class="map-canvas-full">
