@@ -40,6 +40,10 @@
     float: left;
 }
 
+.padded-text {
+    padding-top: 30px;
+}
+
 @include media-med {
     .programme-meta-parent {
       @include grid-parent;
@@ -60,11 +64,15 @@
     }
 
     .class-score {
-        @include col-50-flt;
+        @include col-25-flt;
     }
 
-    .comparison {
-        @include col-50-flt;
+    .class-comparison-admin {
+        @include col-25-flt;
+    }
+
+    .class-comparison {
+        @include col-75-flt;
     }
 
 }
@@ -91,12 +99,17 @@
     }
 
     .overall-score {
-        @include col-50-flt;
+        @include col-25-flt;
     }
 
     .overall-comparison {
-        @include col-50-flt;
+        @include col-75-flt;
     }
+
+    .overall-comparison-admin {
+        @include col-25-flt;
+    }
+
 }
 
 @include media-med {

@@ -3443,6 +3443,9 @@ body {
 .assessment-gender-icon {
   float: left; }
 
+.padded-text {
+  padding-top: 30px; }
+
 @media only screen and (min-width: 750px) {
   .programme-meta-parent {
     margin-left: -20px;
@@ -3473,13 +3476,19 @@ body {
       clear: both; }
 
   .class-score {
-    width: 50%;
+    width: 25%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-  .comparison {
-    width: 50%;
+  .class-comparison-admin {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .class-comparison {
+    width: 75%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
@@ -3513,13 +3522,19 @@ body {
       clear: both; }
 
   .overall-score {
-    width: 50%;
+    width: 25%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
   .overall-comparison {
-    width: 50%;
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .overall-comparison-admin {
+    width: 25%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }

@@ -125,9 +125,9 @@
             $('#assessmentsContainer').html(programme_html);
             fetchPercentile();
             klp.accordion.init();
-            doPostRender();
+            
         });
-        
+        doPostRender();        
     }
 
     function fetchEntityDetails(params) {
@@ -175,21 +175,20 @@
             'admin2': 'admin_2',
             'admin3': 'admin_3'
         };
-
-        $('.js-boundaryLink').on('click', function(e) {
-            console.log("clicked");
-            e.preventDefault();
-            var boundaryType = $(this).attr("data-type");
-            var boundaryId = $(this).attr("data-id");
-            var paramKey = typeMap[boundaryType];
-            var hashParams = {
-                'school': null,
-                'admin_1': null,
-                'admin_2': null,
-                'admin_3': null
-            };
-            hashParams[paramKey] = boundaryId;
-            klp.router.setHash(null, hashParams);
+        $('body').on('click', '.js-boundaryLink', function(e) {
+                console.log("clicked");
+                e.preventDefault();
+                var boundaryType = $(this).attr("data-type");
+                var boundaryId = $(this).attr("data-id");
+                var paramKey = typeMap[boundaryType];
+                var hashParams = {
+                    'school': null,
+                    'admin_1': null,
+                    'admin_2': null,
+                    'admin_3': null
+                };
+                hashParams[paramKey] = boundaryId;
+                klp.router.setHash(null, hashParams);
         });
     }
 
@@ -233,7 +232,7 @@
         _.each(_(groupedByClass).keys(), function(className) {
             groupedByClass[className] = getClassContext(groupedByClass[className]);
         });
-        console.log("context", groupedByClass);
+        //console.log("context", groupedByClass);
         return groupedByClass;
         //console.log("group by", groupedByClass);
     }
@@ -254,6 +253,7 @@
             var compares = [];
             var boundary = assessmentData.boundary;
             var boundaryKeys = _.keys(boundary);
+            console.log(boundaryKeys);
             _.each(boundaryKeys, function(key) {
                 var compareObj = {
                     'id': boundary[key].boundary,
@@ -270,7 +270,7 @@
     }
 
     function getAssessmentContext(assessmentData) {
-        console.log("assessment data", assessmentData);
+        //console.log("assessment data", assessmentData);
         assessmentData.score = assessmentData.percentile;
         var genders = [];
         for (var j=0, length=assessmentData.singlescoredetails.gender.length; j < length; j++) {
