@@ -23,7 +23,7 @@ class Command(BaseCommand):
         invalid_count = 0
         fifteen_minutes = datetime.now() - timedelta(minutes=15)
         states = State.objects.filter(
-            ivrs_type='gka',
+            ivrs_type='gka-new',
             is_processed=False,
             date_of_visit__lte=fifteen_minutes
         )
@@ -40,7 +40,7 @@ class Command(BaseCommand):
                         name=UserType.AKSHARA_STAFF
                     )[0]
                     question_group = Questiongroup.objects.get(
-                        version=2,
+                        version=4,
                         source__name='ivrs'
                     )
 
