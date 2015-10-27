@@ -176,7 +176,7 @@
             'admin3': 'admin_3'
         };
 
-        $('.js-boundaryLink').click(function(e) {
+        $('body').on('click', '.js-boundaryLink', function() {            
             console.log("clicked");
             e.preventDefault();
             var boundaryType = $(this).attr("data-type");
