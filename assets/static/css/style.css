@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -3471,34 +3472,74 @@ body {
       display: table;
       clear: both; }
 
-  .overall-score {
-    width: 33%;
+  .class-score {
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-  .gender {
-    width: 66.66%;
+  .comparison {
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
 @media only screen and (min-width: 750px) {
-  .assessment-comparison-container {
+  .boundary-parent {
     margin-left: -20px;
     margin-right: -20px; }
-    .assessment-comparison-container:after {
+    .boundary-parent:after {
       content: "";
       display: table;
       clear: both; }
 
-  .comparison {
-    width: 33%;
+  .boundary-type {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .boundary-name {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .overall-score-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .overall-score-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .overall-score {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .overall-comparison {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .assessment-graph-container {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .assessment-graph-container:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .gender {
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
   .languages {
-    width: 66.66%;
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }

@@ -59,25 +59,56 @@
         @include grid-parent;
     }
 
-    .overall-score {
-        @include col-33-flt;
+    .class-score {
+        @include col-50-flt;
     }
 
-    .gender {
-        @include col-66-flt;
+    .comparison {
+        @include col-50-flt;
+    }
+
+}
+
+@include media-med {
+    .boundary-parent {
+        @include grid-parent;
+    }
+
+    .boundary-type {
+        @include col-25-flt;
+    }
+
+    .boundary-name {
+        @include col-75-flt;
+    }
+
+}
+
+
+@include media-med {
+    .overall-score-parent {
+        @include grid-parent;
+    }
+
+    .overall-score {
+        @include col-50-flt;
+    }
+
+    .overall-comparison {
+        @include col-50-flt;
     }
 }
 
 @include media-med {
-    .assessment-comparison-container {
+    .assessment-graph-container {
         @include grid-parent;
     }
 
-    .comparison {
-        @include col-33-flt;
+    .gender {
+        @include col-50-flt;
     }
 
     .languages {
-        @include col-66-flt;
+        @include col-50-flt;
     }
 }

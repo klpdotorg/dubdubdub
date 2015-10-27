@@ -1,0 +1,6 @@
+Order for full installation
+assessment-aggregates.sql
+fillassessmentaggregates.sql
+fillboundaryassessments.sql
+gradeassessment-aggregates.sql
+fillgradeassessment-aggregates.sql
