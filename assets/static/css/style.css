@@ -4583,4 +4583,19 @@ code {
 .close:hover {
   background: #00d9ff; }
 
+@media only screen and (min-width: 750px) {
+  .search-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .search-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .search-half-col {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+
 /*# sourceMappingURL=style.css.map */
