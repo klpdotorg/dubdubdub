@@ -94,7 +94,7 @@ class ReadSchool(KLPAPIView):
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class ReadChapter(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -124,7 +124,7 @@ class ReadChapter(KLPAPIView):
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class ReadTLM(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -150,7 +150,7 @@ class ReadTLM(KLPAPIView):
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class Verify(KLPAPIView):
     def get(self, request):
         status_code = status.HTTP_200_OK
