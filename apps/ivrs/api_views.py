@@ -84,10 +84,15 @@ class ReadSchool(KLPAPIView):
 
             status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
+            # Removes special characters from the school name. Apparently,
+            # that was causing Exotel to break.
+            school_name = ''.join(
+                char for char in school.name if char.isalnum() or char.isspace()
+            )
             data = "The ID you have entered is " + \
                    " ".join(str(school.id)) + \
                    " and school name is " + \
-                   school.name
+                   school_name
         else:
             status_code = status.HTTP_404_NOT_FOUND
             data = ''
