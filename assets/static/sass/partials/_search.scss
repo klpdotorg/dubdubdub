@@ -1,0 +1,9 @@
+@include media-med {
+    .search-parent {
+      @include grid-parent;
+    }
+
+    .search-half-col {
+      @include col-50-flt;
+    }
+}
