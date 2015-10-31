@@ -6,40 +6,62 @@ from django.http import HttpResponse
 
 from .models import State
 from schools.models import School
+from stories.models import Questiongroup, Source
+
 
 class StateAdmin(admin.ModelAdmin):
     actions = ['download_csv']
     list_filter = ['date_of_visit', 'ivrs_type']
 
     def download_csv(self, request, queryset):
-        ivrs_type = request.GET.get('ivrs_type', None)
+        source = Source.objects.get(name='ivrs')
+
         f = StringIO.StringIO()
         writer = csv.writer(f)
-        writer.writerow(
-            [
-                "Sl. No",
-                "School ID",
-                "School name",
-                "District",
-                "Block",
-                "Cluster",
-                "Telephone",
-                "Date Of Visit",
-                "Invalid",
-                "Was the school open?",
-                "Class visited",
-                "Was Math class happening on the day of your visit?",
-                "Which chapter of the textbook was taught?",
-                "Which Ganitha Kalika Andolana TLM was being used by teacher?",
-                "Did you see children using the Ganitha Kalika Andolana TLM?",
-                "Was group work happening in the class on the day of your visit?",
-                "Were children using square line book during math class?",
-                "Are all the toilets in the school functional?",
-                "Does the school have a separate functional toilet for girls?",
-                "Does the school have drinking water?",
-                "Is a Mid Day Meal served in the school?"
-            ]
+        headers = [
+            "Sl. No",
+            "School ID",
+            "School name",
+            "District",
+            "Block",
+            "Cluster",
+            "Telephone",
+            "Date Of Visit",
+            "Invalid",
+        ]
+
+        ivrs_type = request.GET.get('ivrs_type', None)
+
+        if ivrs_type == 'gka':
+            question_group = Questiongroup.objects.get(
+                version=2,
+                source=source
+            )
+        elif ivrs_type == 'ivrs-pri':
+            question_group = Questiongroup.objects.get(
+                version=3,
+                source=source
+            )
+        elif ivrs_type == 'gka-new':
+            question_group = Questiongroup.objects.get(
+                version=4,
+                source=source
+            )
+        else:
+            question_group = Questiongroup.objects.get(
+                version=5,
+                source=source
+            )
+
+        questions = question_group.questions.all().values_list(
+            'text',
+            flat=True
+        ).order_by(
+            'questiongroupquestions__sequence'
         )
+        questions = list(questions)
+        writer.writerow(headers + questions)
+
         for (number, state) in enumerate(queryset):
             try:
                 school = School.objects.get(id=state.school_id)
