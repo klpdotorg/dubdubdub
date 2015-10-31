@@ -5,18 +5,21 @@ from django.contrib import admin
 from django.http import HttpResponse
 
 from .models import State
+from schools.models import School
 
 class StateAdmin(admin.ModelAdmin):
     actions = ['download_csv']
-    list_filter = ['date_of_visit']
+    list_filter = ['date_of_visit', 'ivrs_type']
 
     def download_csv(self, request, queryset):
+        ivrs_type = request.GET.get('ivrs_type', None)
         f = StringIO.StringIO()
         writer = csv.writer(f)
         writer.writerow(
             [
                 "Sl. No",
                 "School ID",
+                "School name",
                 "District",
                 "Block",
                 "Cluster",
@@ -43,11 +46,13 @@ class StateAdmin(admin.ModelAdmin):
                 district = school.admin3.parent.parent.name.replace(',', '-')
                 block = school.admin3.parent.name.replace(',', '-')
                 cluster = school.admin3.name.replace(',', '-')
+                school_name = school.name.replace(',', '-')
             except:
-                district = block = cluster = None
+                school_name = district = block = cluster = None
 
             values = [str(number + 1),
                       str(state.school_id),
+                      str(school_name),
                       str(district),
                       str(block),
                       str(cluster),
