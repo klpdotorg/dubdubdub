@@ -10,6 +10,8 @@ from common.utils import post_to_slack
 from stories.models import Story, UserType, Questiongroup, Answer
 
 GKA_SERVER = "08039591332"
+PRI = "08039236431"
+PRE = "08039510414"
 
 class Command(BaseCommand):
     args = ""
@@ -19,14 +21,34 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        question_group_version_dict = {
+            'gka' : 2,
+            'gka-new' : 4,
+            'ivrs-pri' : 3,
+            'ivrs-pre' : 5,
+        }
+
+        for ivrs_type, version in question_group_version_dict:
+            self.process_state(ivrs_type, version)
+
+    def process_state(self, ivrs_type, version):
         valid_count = 0 # For posting daily notifications to slack.
         invalid_count = 0
         fifteen_minutes = datetime.now() - timedelta(minutes=15)
+
+        ivrs_type_number_dict = {
+            'gka' : GKA_SERVER,
+            'gka-new' : GKA_SERVER,
+            'ivrs-pri' : PRI,
+            'ivrs-pre' : PRE,
+        }
+
         states = State.objects.filter(
-            ivrs_type='gka-new',
+            ivrs_type=ivrs_type,
             is_processed=False,
             date_of_visit__lte=fifteen_minutes
         )
+
         if states:
             for state in states:
                 if not sane_state(state):
@@ -40,7 +62,7 @@ class Command(BaseCommand):
                         name=UserType.AKSHARA_STAFF
                     )[0]
                     question_group = Questiongroup.objects.get(
-                        version=4,
+                        version=version,
                         source__name='ivrs'
                     )
 
@@ -54,7 +76,9 @@ class Command(BaseCommand):
 
                     for (question_number, answer) in enumerate(state.answers[1:]):
                         if answer != 'NA':
-                            question = get_question(question_number+1, GKA_SERVER)
+                            question = get_question(
+                                question_number+1, ivrs_type_number_dict[ivrs_type]
+                            )
                             answer = Answer.objects.get_or_create(
                                 story=story,
                                 question=question,
@@ -66,10 +90,15 @@ class Command(BaseCommand):
                 state.is_processed = True
                 state.save()
 
+        if ivrs_type == 'gka' or ivrs_type == 'gka-new':
+            author = 'GKA IVRS'
+        else:
+            author = 'New IVRS'
+
         try:
             post_to_slack(
                 channel='#klp',
-                author='GKA IVRS',
+                author=author,
                 message='%s Valid calls & %s Invalid calls' %(valid_count, invalid_count),
                 emoji=':calling:',
             )
