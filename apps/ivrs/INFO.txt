@@ -30,7 +30,7 @@ The KLP IVRS app
  - Cron job to be implemented.
 
 4. PreSchool IVRS. (To be implemented)
- - Question group version = 3
+ - Question group version = None
  - ivrs_type = ivrs-pre
  - Available at http://my.exotel.in/viamentis/flows/edit/49733#flowline/start
  - Question at:
