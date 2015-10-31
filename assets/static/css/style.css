@@ -4199,9 +4199,6 @@ code {
 
   .align-fromdate {
     text-align: left; } }
-.button-orange {
-  margin-top: 5px; }
-
 .chartist-tooltip {
   position: absolute;
   display: inline-block;
@@ -4540,7 +4537,8 @@ code {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 99999;
+  z-index: 1;
+  /*99999;*/
   opacity: 0;
   -webkit-transition: opacity 400ms ease-in;
   -moz-transition: opacity 400ms ease-in;
@@ -4596,6 +4594,21 @@ code {
     width: 50%;
     float: left;
     padding-left: 20px;
+    padding-right: 20px; }
+
+  .search-quarter-col {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
     padding-right: 20px; } }
+.search-scroll {
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 10px 10px; }
+
+.program-select {
+  width: 80%;
+  margin: auto; }
 
 /*# sourceMappingURL=style.css.map */

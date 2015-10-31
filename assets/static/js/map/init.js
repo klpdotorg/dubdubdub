@@ -21,7 +21,8 @@
             var $tool = $(this);
             $tool.toggleClass("active");
         });
-
+        $(".js-select-multiple").select2({
+        });
         // $(document).ready(function(){
         // });
 

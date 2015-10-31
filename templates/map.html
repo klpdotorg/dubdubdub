@@ -26,7 +26,6 @@
       <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/spin.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/leaflet.spin.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/lib/jquery.multiselect.js' %}"></script>
     {% endcompress %}
 
     <!--
@@ -39,7 +38,6 @@
     <link rel="stylesheet" href="{% static 'js/lib/marker-cluster/MarkerCluster.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'js/lib/leaflet-draw/leaflet.draw.css' %}">
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
-
     <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
@@ -56,40 +54,7 @@
 {% endblock %}
 
 {% block subheader %}
-  <div id="searchmodal" class="modalDialog">
-    <div class="container">
-      <a href="#close" title="Close" class="close">X</a>
-      <div class="heading-secondary heading-border">ADVANCED SEARCH </div>
-      <div class="search-parent">
-        <div class="base-spacing-mid"></div>
-        <form class="form-base">
-          <div class="search-half-col">
-            <div class="center-text">
-              <div class="form-field-wrap">
-                <label class="label-inline">Pick the type of Institution: </label> 
-                <input type="radio" class="input-radio" id="school" name="radios">
-                <label for="school" class="input-radio-label">School</label>
-                <input type="radio" class="input-radio" id="preschool" name="radios" checked="">
-                <label for="preschool" class="input-radio-label">Preschool</label>
-              </div><!-- end form-field-wrap-->
-            </div><!--end center-text-->
-          </div><!--end search-half-col-->
-          <div class="search-half-col">
-            <div class="center-text">
-              <div class="form-field-wrap">
-                <label class="label-inline">Select the academic year:</label>
-                <select>
-                  <option>2012-2013</option>
-                  <option>2013-2014</option>
-                  <option>2014-2015</option>
-                </select>
-              </div><!-- end form-field-wrap-->
-            </div><!--end center-text-->
-          </div><!--end search-half-col-->
-        </form>
-      </div><!-- end search-parent-->
-    </div><!-- container-->
-  </div><!-- end modal-dialog -->
+  {% include 'advanced_search.html' %}
   <div class="map-subheader-wrapper subheader-wrapper">
     <div class="subheader-content">
 
