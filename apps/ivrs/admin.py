@@ -47,7 +47,7 @@ class StateAdmin(admin.ModelAdmin):
                 version=4,
                 source=source
             )
-        else:
+        else: # ivrs_type = 'ivrs-pre'
             question_group = Questiongroup.objects.get(
                 version=5,
                 source=source
@@ -59,7 +59,7 @@ class StateAdmin(admin.ModelAdmin):
         ).order_by(
             'questiongroupquestions__sequence'
         )
-        questions = list(questions)
+        questions = list(questions) # Converting the Queryset into a list.
         writer.writerow(headers + questions)
 
         for (number, state) in enumerate(queryset):
