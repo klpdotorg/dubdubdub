@@ -21,9 +21,9 @@ def get_question(question_number, ivrs_type):
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
-    else:
+    else: # ivrs_type == PRE
         question_group = Questiongroup.objects.get(
-            version=1,
+            version=5,
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="PreSchool")
