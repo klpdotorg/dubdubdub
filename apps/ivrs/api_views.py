@@ -53,21 +53,21 @@ class CheckSchool(KLPAPIView):
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'gka'
-            for i in range(0,12): # Initializing answer slots 1 to 12 with NA
+            state.ivrs_type = 'gka-new'
+            for i in range(0,8): # Initializing answer slots 1 to 12 with NA
                 state.answers.append('NA')
         elif ivrs_type == PRI:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'new-ivrs'
+            state.ivrs_type = 'ivrs-pri'
             for i in range(0,6): # Initializing answer slots 1 to 6 with NA
                 state.answers.append('NA')
         else:
             if school_type != u'PreSchool':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'new-ivrs'
+            state.ivrs_type = 'ivrs-pre'
             for i in range(0,6): # Initializing answer slots 1 to 6 with NA
                 state.answers.append('NA')
 
@@ -84,17 +84,22 @@ class ReadSchool(KLPAPIView):
 
             status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
+            # Removes special characters from the school name. Apparently,
+            # that was causing Exotel to break.
+            school_name = ''.join(
+                char for char in school.name if char.isalnum() or char.isspace()
+            )
             data = "The ID you have entered is " + \
                    " ".join(str(school.id)) + \
                    " and school name is " + \
-                   school.name
+                   school_name
         else:
             status_code = status.HTTP_404_NOT_FOUND
             data = ''
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class ReadChapter(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -124,7 +129,7 @@ class ReadChapter(KLPAPIView):
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class ReadTLM(KLPAPIView):
     def get(self, request):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
@@ -150,7 +155,7 @@ class ReadTLM(KLPAPIView):
 
         return Response(data, status=status_code, content_type="text/plain")
 
-
+# Deprecated
 class Verify(KLPAPIView):
     def get(self, request):
         status_code = status.HTTP_200_OK

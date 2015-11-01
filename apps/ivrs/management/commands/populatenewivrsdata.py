@@ -14,7 +14,6 @@ class Command(BaseCommand):
         q = Questiongroup.objects.get_or_create(version=3, source=s)[0]
         b = BoundaryType.objects.get(name='Primary School')
         qtype_checkbox = QuestionType.objects.get(name='checkbox')
-        qtype_numeric = QuestionType.objects.get(name='numeric')
 
         q1 = Question.objects.get(
             text="Was the school open?",
@@ -26,7 +25,7 @@ class Command(BaseCommand):
         q2 = Question.objects.get_or_create(
             text="Was there a teacher present in each class?",
             data_type=1,
-            question_type=qtype_numeric,
+            question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
         )[0]
