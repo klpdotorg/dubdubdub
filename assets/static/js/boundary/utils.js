@@ -10,6 +10,10 @@
         icon: ['fa  fa-tint'],
         key: 'sum_has_drinking_water'
       },
+      'Toilets': {
+        'icon': ['fa fa-male', 'fa fa-female'],
+        'key' :'sum_has_toilet' 
+      },                
       'Library': {
         icon: ['fa fa-book'],
         key: 'sum_has_library'
@@ -21,7 +25,12 @@
       'Electricity': {
         icon: ['fa fa-plug'],
         key: 'sum_has_electricity'
-      }      
+      },
+      'Computers': {
+        icon:  ['fa fa-laptop'],
+        key: 'sum_has_computer'
+      }
+
     };
 
     t.getPreSchoolSummary = function(data) {
