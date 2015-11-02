@@ -78,22 +78,6 @@
 }
 
 @include media-med {
-    .boundary-parent {
-        @include grid-parent;
-    }
-
-    .boundary-type {
-        @include col-25-flt;
-    }
-
-    .boundary-name {
-        @include col-75-flt;
-    }
-
-}
-
-
-@include media-med {
     .overall-score-parent {
         @include grid-parent;
     }
@@ -124,4 +108,38 @@
     .languages {
         @include col-50-flt;
     }
+}
+
+@include media-med {
+    .entity-container {
+        @include grid-parent;
+    }
+
+    .entity-detail {
+        @include col-50-flt;
+    }
+
+    .legend {
+        padding-top: 20px;
+        @include col-50-flt;
+        float:right;
+        font-size: small;
+    }
+}
+
+@include media-med-maxwidth {
+
+    .legend {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: small;
+    }
+}
+
+.pgm-box-demo {
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 10px;
 }

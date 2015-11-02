@@ -9,11 +9,18 @@
             </div>
             <div class="assessment-container">
                 <div class="overall-score-parent">
-                    <div class="overall-score">
+                    <div class="overall-score center-text">
                         <h5 class="brand-purple">Overall Score</h5>
-                        <div class="overall-score-value border-radius-circle border-base box-demo">
+                        <div class="overall-score-value border-radius-circle border-base pgm-box-demo">
                             <div class="dead-center">
                                 {{ a.score|int }}%
+                                {% if a.compares.length %}
+                                    {% if a.score < a.admin1_score %}
+                                        <span class="fa fa-caret-down brand-red"></span>
+                                    {% else %}
+                                        <span class="fa fa-caret-up brand-green"></span>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="base-spacing-sm"></div>
@@ -26,6 +33,13 @@
                                 </div>
                                 <div class="padded-text center-text">
                                     {{ c.score|int }}%
+                                    {% if c.type != 'admin_1' %}
+                                        {% if c.score < a.admin1_score %}
+                                            <span class="fa fa-caret-down brand-red"></span>
+                                        {% else %}
+                                            <span class="fa fa-caret-up brand-green"></span>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
@@ -58,11 +72,18 @@
             </div>
             <div class="border-base assessment-container">
                 <div class="assessment-score-parent">
-                    <div class="class-score">
+                    <div class="class-score center-text">
                         <h5 class="brand-purple">Class Score</h5>
-                        <div class="overall-score-value border-radius-circle border-base box-demo">
+                        <div class="overall-score-value border-radius-circle border-base pgm-box-demo">
                             <div class="dead-center">
                                 {{ a.score | int}}%
+                                {% if a.compares.length %}
+                                    {% if c.score < a.admin1_score %}
+                                        <span class="fa fa-caret-down brand-red"></span>
+                                    {% else %}
+                                        <span class="fa fa-caret-up brand-green"></span>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -74,6 +95,13 @@
                                 </div>
                                 <div class="padded-text center-text">
                                     {{ c.score|int }}%
+                                    {% if c.type != 'admin_1' %}
+                                        {% if c.score < a.admin1_score %}
+                                            <span class="fa fa-caret-down brand-red"></span>
+                                        {% else %}
+                                            <span class="fa fa-caret-up brand-green"></span>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
@@ -171,11 +199,7 @@
     <script type="text/html" id="tpl-boundary">
         <div class="boundary-parent">
             <div class="boundary-type">
-                <div class="brand-green">Boundary Type</div>
-                <div class="heading-tiny-uppercase"> {{ type | capitalize }} </div>
-            </div>
-            <div class="boundary-name">
-                <div class="brand-green">Boundary Name</div>
+                <div class="brand-green">{{ type | capitalize }}</div>
                 <div class="heading-tiny-uppercase"> {{ name | capitalize }} </div>
             </div>
         </div>
