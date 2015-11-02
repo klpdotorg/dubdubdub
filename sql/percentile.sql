@@ -399,10 +399,73 @@ begin
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
         end loop;
-        RAISE NOTICE '%', query;
+        --RAISE NOTICE '%', query;
         for schs in execute query
         loop
           insert into tb_student_assessment_percentile values(schs.stuid,schs.studentgroup,schs.sid,inassid,schs.percentilemean);
+        end loop;
+end;
+$$ language plpgsql;
+
+/*
+wrapper for calling the percentile function
+INPUT:- programme id
+*/
+drop function percentile_mark_wrapper(int);
+CREATE OR REPLACE function percentile_mark_wrapper(inpid int)returns void as $$
+declare
+        schs RECORD;
+begin        
+        for schs in 
+        select distinct p.ayid as ayid,sg.name as sgname, array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid,sg.name
+        loop
+            for i in 1..array_length(schs.assid_arr,1) 
+            loop
+                RAISE NOTICE '%,%,%,%,%',inpid,schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr;
+                perform fill_institution_mean(schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr);
+                perform fill_student_percentile(schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr);
+                perform fill_institution_percentile(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile(schs.assid_arr[i]);
+                perform fill_boundary_percentile(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile_gender(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile_mt(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile_gender(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile_mt(schs.assid_arr[i]);
+                RAISE NOTICE 'percentile done';
+            end loop;
+        end loop;
+end;
+$$ language plpgsql;
+
+
+/*
+wrapper for calling the percentile grade functions
+INPUT:- programme id
+*/
+drop function percentile_grade_wrapper(int);
+CREATE OR REPLACE function percentile_grade_wrapper(inpid int)returns void as $$
+declare
+        schs RECORD;
+begin        
+        for schs in 
+        select distinct p.ayid as ayid,sg.name as sgname, array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid,sg.name
+        loop
+            for i in 1..array_length(schs.assid_arr,1) 
+            loop
+                RAISE NOTICE '%,%,%,%,%',inpid,schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr;
+                perform fill_assessment_grade_percentilerank(schs.ayid,schs.assid_arr[i],schs.assid_arr);
+                perform fill_student_grade_percentile(schs.ayid,schs.assid_arr[i],schs.assid_arr);
+                perform fill_institution_grade_percentile(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile(schs.assid_arr[i]);
+                perform fill_boundary_percentile(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile_gender(schs.assid_arr[i]);
+                perform fill_studentgroup_percentile_mt(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile_gender(schs.assid_arr[i]);
+                perform fill_boundary_studentgroup_percentile_mt(schs.assid_arr[i]);
+                RAISE NOTICE 'percentile done';
+            end loop;
         end loop;
 end;
 $$ language plpgsql;
