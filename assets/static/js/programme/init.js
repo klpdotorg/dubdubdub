@@ -215,12 +215,15 @@
         $xhr.done(function(data) {
             var html = tplSchool(data);
             $('#overallContainer').empty();
-            var assessmentsContext = getOverallContext(data["features"]);
-            var html = tplAssessmentOverall({'assessments':assessmentsContext})
-            $('#overallContainer').append(html);
-            if (data.length == 0) {
-                $('#overallContainer').text("No programme information available.")
+            if (data.features) {
+                var assessmentsContext = getOverallContext(data.features);
+                var html = tplAssessmentOverall({'assessments':assessmentsContext})
+                $('#overallContainer').append(html);
             }   
+            else
+            {
+                $('#overallContainer').text("No programme percentile information available.")
+            }
         });
     }
 
