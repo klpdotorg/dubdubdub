@@ -10,6 +10,10 @@
     .search-quarter-col {
       @include col-25-flt;
     }
+
+    .search-third-col {
+    	@include col-33-flt;
+    }
 }
 
 .search-scroll {

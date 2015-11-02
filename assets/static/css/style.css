@@ -4600,6 +4600,12 @@ code {
     width: 25%;
     float: left;
     padding-left: 20px;
+    padding-right: 20px; }
+
+  .search-third-col {
+    width: 33%;
+    float: left;
+    padding-left: 20px;
     padding-right: 20px; } }
 .search-scroll {
   height: 500px;
