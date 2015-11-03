@@ -49,19 +49,19 @@ select fill_agg_singlescore_grade_admin3(123,'4',231,ARRAY[231,274]);
 select fill_agg_singlescore_grade_admin3_mt(123,'4',231,ARRAY[231,274]);
 select fill_agg_singlescore_grade_admin3_gender(123,'4',231,ARRAY[231,274]);
 
-select fill_inst_assess_cohorts(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_mt(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_gender(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin1(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin1_mt(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin1_gender(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin2(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin2_mt(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin2_gender(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin3(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin3_mt(123,'4',274,ARRAY[231,273]);
-select fill_agg_singlescore_grade_admin3_gender(123,'4',274,ARRAY[231,273]);
+select fill_inst_assess_cohorts(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_mt(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_gender(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin1(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin1_mt(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin1_gender(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin2(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin2_mt(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin2_gender(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin3(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin3_mt(123,'4',274,ARRAY[231,274]);
+select fill_agg_singlescore_grade_admin3_gender(123,'4',274,ARRAY[231,274]);
 
 
 select fill_inst_assess_cohorts(123,'5',232,ARRAY[232,275]);
@@ -78,19 +78,19 @@ select fill_agg_singlescore_grade_admin3(123,'5',232,ARRAY[232,275]);
 select fill_agg_singlescore_grade_admin3_mt(123,'5',232,ARRAY[232,275]);
 select fill_agg_singlescore_grade_admin3_gender(123,'5',232,ARRAY[232,275]);
 
-select fill_inst_assess_cohorts(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_mt(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_gender(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin1(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin1_mt(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin1_gender(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin2(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin2_mt(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin2_gender(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin3(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin3_mt(123,'5',275,ARRAY[232,273]);
-select fill_agg_singlescore_grade_admin3_gender(123,'5',275,ARRAY[232,273]);
+select fill_inst_assess_cohorts(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_mt(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_gender(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin1(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin1_mt(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin1_gender(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin2(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin2_mt(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin2_gender(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin3(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin3_mt(123,'5',275,ARRAY[232,275]);
+select fill_agg_singlescore_grade_admin3_gender(123,'5',275,ARRAY[232,275]);
 
 --pid 54
 select cohorts_grade_wrapper(54);
