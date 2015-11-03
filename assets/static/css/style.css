@@ -3493,26 +3493,6 @@ body {
     padding-left: 20px;
     padding-right: 20px; } }
 @media only screen and (min-width: 750px) {
-  .boundary-parent {
-    margin-left: -20px;
-    margin-right: -20px; }
-    .boundary-parent:after {
-      content: "";
-      display: table;
-      clear: both; }
-
-  .boundary-type {
-    width: 25%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px; }
-
-  .boundary-name {
-    width: 75%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px; } }
-@media only screen and (min-width: 750px) {
   .overall-score-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3558,6 +3538,41 @@ body {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .entity-container {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .entity-container:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .entity-detail {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .legend {
+    padding-top: 20px;
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    float: right;
+    font-size: small; } }
+@media only screen and (max-width: 749px) {
+  .legend {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: small; } }
+.pgm-box-demo {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px; }
+
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }

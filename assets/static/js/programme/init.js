@@ -170,17 +170,11 @@
     }
 
     function doPostRender() {
-        var typeMap = {
-            'admin1': 'admin_1',
-            'admin2': 'admin_2',
-            'admin3': 'admin_3'
-        };
         $('body').on('click', '.js-boundaryLink', function(e) {
                 console.log("clicked");
                 e.preventDefault();
-                var boundaryType = $(this).attr("data-type");
+                var paramKey = $(this).attr("data-type");
                 var boundaryId = $(this).attr("data-id");
-                var paramKey = typeMap[boundaryType];
                 var hashParams = {
                     'school': null,
                     'admin_1': null,
@@ -253,20 +247,9 @@
         var ret = [];
         _.each(overallData,function(assessmentData) {
             assessmentData.score = assessmentData.percentile;
-            var compares = [];
-            var boundary = assessmentData.boundary;
-            var boundaryKeys = _.keys(boundary);
-            console.log(boundaryKeys);
-            _.each(boundaryKeys, function(key) {
-                var compareObj = {
-                    'id': boundary[key].boundary,
-                    'type': key,
-                    'name': boundary[key].boundary__name,
-                    'score': boundary[key].percentile
-                };
-                compares.push(compareObj);
-            });
-            assessmentData.compares = compares;
+            var result = makeComparison(assessmentData.boundary);
+            assessmentData.admin1_score = result['admin1_score'];
+            assessmentData.compares = result['compares'];
             ret.push(assessmentData);
         });
         return ret;
@@ -300,23 +283,30 @@
             mts.push(mt);
         }
         assessmentData.mts = mts;
-        
+
+        var ret = makeComparison(assessmentData.singlescoredetails.boundary);
+        assessmentData.admin1_score = ret['admin1_score'];
+        assessmentData.compares = ret['compares'];
+        return assessmentData;
+    }
+
+    function makeComparison(boundary) {
+        var ret =  {};
         var compares = [];
-        var boundary = assessmentData.singlescoredetails.boundary;
         var boundaryKeys = _.keys(boundary);
         _.each(boundaryKeys, function(key) {
-
             var compareObj = {
                 'id': boundary[key].boundary,
-                'type': key,
+                'type': boundary[key].btype,
                 'name': boundary[key].boundary__name,
                 'score': boundary[key].percentile
             };
+            if ( boundary[key].btype == 'admin_1')
+                ret['admin1_score'] = boundary[key].percentile; 
             compares.push(compareObj);
         });
-        assessmentData.compares = compares;
-
-        return assessmentData;
+        ret['compares'] = compares;
+        return ret;
     }
 
     /*
