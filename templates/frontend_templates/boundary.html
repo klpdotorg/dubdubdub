@@ -159,43 +159,62 @@
 
 <script type="text/html" id="tpl-ang-category-summary">
   {% for cat in categories %}  
-
-      <div class="bar-graph-wrap">
-        <div class="bar-graph">       
-          <div class="bar-custom tooltip" aria-label="{{cat.klp_count}}">
-            <div class="bar-value bar-value-100" style="width:100%;">
-              <div class="bar-value bar-value-{{ cat.klp_perc }} grey-gravel-bg" style="width:{{ cat.klp_perc }}%;"></div>
-              <div class="font-smaller center-text"><strong>{{ cat.type_name|capitalize}}</strong></div>
-            </div>
+    <div class="bar-graph-wrap float-right">
+      <div class="bar-graph">
+        <div class="bar-percent grey-gravel">{{ cat.klp_perc }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{cat.klp_count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ cat.klp_perc }} grey-gravel-bg" style="width:{{ cat.klp_perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ cat.klp_count }} schools</strong></div>
           </div>
-          <div class="bar-percent grey-gravel">{{ cat.klp_perc }}%</div>
-        </div> <!-- /bar-graph -->
-      </div> <!-- /bar-graph-wrap -->
-
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    <div class="float-right">{{ cat.type_name|capitalize}}</div>
   {% endfor %}
 
 </script>
-<script type="text/html" id="tpl-language">
-  {% if languages %}
-    {% for language in languages %}  
-      <div class="bar-graph-wrap">
-        <div class="bar-graph">
-          
-          <div class="bar-custom tooltip" aria-label="{{language.count}}">
-            <div class="bar-value bar-value-100" style="width:100%;">
-              <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
-              <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
-            </div>
+<!--script type="text/html" id="tpl-language">
+  {% for language in languages %}  
+    <div class="bar-graph-wrap">
+      <div class="bar-graph">
+        
+        <div class="bar-custom tooltip" aria-label="{{language.count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
           </div>
-          <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
-        </div> <!-- /bar-graph -->
-      </div> <!-- /bar-graph-wrap -->
-    {%endfor%}
-  {% else %}
-    <div class="no-data">
-      No data available.
-    </div>
-  {% endif %}
+        </div>
+        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+      </div> <!-- /bar-graph >
+    </div> <!-- /bar-graph-wrap >
+  {%endfor%}
+</script-->
+
+<script type="text/html" id="tpl-language">
+  {% for language in languages %} 
+        <div class=" compare-each-block">
+        <div class="bar-graph-wrap float-left">
+          <div class="bar-custom">
+            <div class="bar-value green-leaf-bg float-right" style="width:{{ language.mt_perc }}%;"></div>
+            <div class="clear"></div>
+            <div class="green-leaf font-smaller center-text"><strong>{{ language.mt_count }} students</strong></div>
+          </div>
+          <div class="bar-percent green-leaf">{{ language.mt_perc }}%</div>
+        </div>
+
+        <div class="compare-section-heading center-text">{{ language.typename|capitalize }}</div>
+
+        <div class="bar-graph-wrap float-right">
+          <div class="bar-percent">{{ language.moi_perc }}%</div>
+          <div class="bar-custom">
+            <div class="bar-value grey-gravel-bg" style="width:{{ language.moi_perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ language.moi_count }} schools</strong></div>
+          </div>
+        </div>
+      </div>
+
+  {% endfor %}
 </script>
 
 <script type="text/html" id="tpl-ang-language">
@@ -206,30 +225,44 @@
         <div class="bar-custom tooltip" aria-label="{{language.count}}">
           <div class="bar-value bar-value-100" style="width:100%;">
             <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
-            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
+            <div class="font-smaller center-text"><strong>{{ language.count }} students</strong></div>
           </div>
         </div>
       </div> <!-- /bar-graph -->
     </div> <!-- /bar-graph-wrap -->
+    <div class="float-right">{{ language.typename|capitalize}}</div>
   {%endfor%}
 </script>
 
-
 <script type="text/html" id="tpl-enrolment">
-  {% for cat in categories %}  
+  <table class="table-base">
+    <thead class="table-base-heading">
+    </thead>
+    <tbody>
+      {% for cat in categories %}  
+        <tr>
+          <td class="center-text">{{ cat.klp_enrol }}</td>
+          <td class="center-text heading-tiny-uppercase">{{ cat.type_name|capitalize }}</td>
+          <td class="center-text">{{ cat.dise_enrol }}</td>
+        </tr>
+      {%endfor%}
+    </tbody>  
+  </table>
+</script>
 
-    <div class="bar-graph-wrap float-right">
-      <div class="bar-graph">       
-        <div class="bar-percent grey-gravel">{{ cat.avg }}</div>
-        <div class="bar-custom tooltip" aria-label="{{cat.count}}">
-          <div class="bar-value bar-value-100" style="width:100%;">
-            <div class="bar-value bar-value-{{ cat.perc }} grey-gravel-bg" style="width:{{ cat.perc }}%;"></div>
-            <div class="font-smaller center-text"><strong>{{ cat.type_name|capitalize}}</strong></div>
-          </div>
-        </div>
-      </div> <!-- /bar-graph -->
-    </div> <!-- /bar-graph-wrap -->
-  {%endfor%}
+<script type="text/html" id="tpl-ang-enrolment">
+  <table class="table-base">
+    <thead class="table-base-heading">
+    </thead>
+    <tbody>
+      {% for cat in categories %}  
+        <tr>
+          <td>{{ cat.type_name|capitalize }}</td>
+          <td>{{ cat.klp_enrol }}</td>
+        </tr>
+      {%endfor%}
+    </tbody>  
+  </table>
 </script>
 
 <script type="text/html" id="tpl-grants">
