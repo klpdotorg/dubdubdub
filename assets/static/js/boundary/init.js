@@ -107,6 +107,7 @@
             console.log('diseData', diseData);
             renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
             renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
+            renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
             renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
           })
           .fail(function(err) {

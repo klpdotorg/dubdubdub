@@ -61,67 +61,40 @@
       return modified;
     }
 
-    t.getGenderData = function(klpData, diseData) {
-      var klpGenderData;
-      var diseGenderData;
-      if (!klpData.num_girls && !klpData.num_boys) {
-        klpGenderData = null;
-      } else {
-        var klpGenderPercents = klp.utils.getBoyGirlPercents(klpData.num_boys, klpData.num_girls);
-        klpGenderData = {
-          'girl_count': klpData.num_girls,
-          'girl_perc': klpGenderPercents.percent_girls,
-          'boy_count': klpData.num_boys,
-          'boy_perc': klpGenderPercents.percent_boys,
-          'align': 'right'
-        };
-      }
-      if (diseData) {
-        var diseGenderPercents = klp.utils.getBoyGirlPercents(diseData.sum_boys, diseData.sum_girls);
-        diseGenderData = {
-          'girl_count': diseData.sum_girls,
-          'girl_perc': diseGenderPercents.percent_girls,
-          'boy_count': diseData.sum_boys,
-          'boy_perc': diseGenderPercents.percent_boys,
-          'align': 'left'
-        }
-        return {
-          'klp': klpGenderData,
-          'dise': diseGenderData
-        };
-      };
+		return {
+			klp: klpGenderData
+		}
+	};
+	t.getPreSchoolCategories = function(data) {
+		var total = data.properties.num_schools;
+		var modified = {}
+		data.properties.cat.forEach(function(category, index, arr) {
+			modified[category.cat] = {
+				'type_name': category.cat,
+				'klp_perc': getPercentage(category.num, total),
+				'klp_count': category.num
+			}
+		})
+		return modified;
+	};
 
-      return {
-        klp: klpGenderData
-      }
-    };
-    t.getPreSchoolCategories = function(data) {
-      var total = data.properties.num_schools;
-      var modified = {}
-      data.properties.cat.forEach(function(category, index, arr) {
-        modified[category.cat] = {
-          'type_name': category.cat,
-          'klp_perc': getPercentage(category.num, total),
-          'klp_count': category.num
-        }
-      })
-      return modified;
-    };
-    t.getSchoolsByLanguage = function(data) {
-      if (data.properties.moi.length === 0) {
-        return null;
-      }
-      var total = data.properties.num_schools;
-      var modified = {}
-      data.properties.moi.forEach(function(moi, index, arr) {
-        modified[moi.moi] = {
-          'typename': moi.moi,
-          'count': moi.num,
-          'perc': getPercentage(moi.num, total)
-        }
-      });
-      return modified;
-    };
+	t.getPrimarySchoolCategories = function(klpData, diseData) {
+		var schoolCategories = {};
+		var diseTotalUpperPrimarySchools = diseData.school_categories[1]['sum_schools']+diseData.school_categories[2]['sum_schools'];
+		schoolCategories["upper primary"] = {
+			"type_name":"upper primary",
+			"klp_perc": getPercentage(klpData.cat[0]['num'],klpData['num_schools']),
+			"dise_perc": getPercentage(diseTotalUpperPrimarySchools, diseData['sum_schools']),
+			"klp_count": klpData.cat[0]['num'],
+			"dise_count": diseTotalUpperPrimarySchools
+		},
+		schoolCategories["lower primary"] = {
+			"type_name":"lower primary",
+			"klp_perc": getPercentage(klpData.cat[1]['num'],klpData['num_schools']),
+			"dise_perc": getPercentage(diseData.school_categories[0]['sum_schools'], diseData['sum_schools']),
+			"klp_count": klpData.cat[1]['num'],
+			"dise_count": diseData.school_categories[0]['sum_schools']
+		}
 
     t.getSchoolPrograms = function(progData, boundaryID, adminLevel) {
       var groupByPartner = _.groupBy(progData.features, 'partner')
