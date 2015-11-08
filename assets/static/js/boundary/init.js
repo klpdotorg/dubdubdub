@@ -117,8 +117,7 @@
       .fail(function(err) {
         klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
       });
-    renderCategories(utils.getPreSchoolCategories(data), 'school');
-    //renderCategories("school"); 
+    
     renderLanguages(utils.getSchoolsByLanguage(data), 'school');
     //renderEnrolment("school");
     //renderGrants();   
@@ -192,32 +191,7 @@
     $('#' + prefix + 'klp-gender').html(html);
   }
 
-  function renderCategories(data, schoolType) {
-    /*if(schoolType == "school") {
-        data = { 
-        "model primary": {
-            "type_name":"model primary",
-            "klp_perc": 20,
-            "dise_perc": 21,
-            "klp_count": 40,
-            "dise_count": 42
-        },
-        "upper primary": {
-            "type_name":"upper primary",
-            "klp_perc": 50,
-            "dise_perc": 48,
-            "klp_count": 100,
-            "dise_count": 96
-        },
-        "lower primary": {
-            "type_name":"lower primary",
-            "klp_perc": 30,
-            "dise_perc": 31,
-            "klp_count": 60,
-            "dise_count": 62 }
-        };
-    }
-    */
+  function renderCategories(data, schoolType) {    
     var tpl_func = '#tpl-category-summary';
     var prefix = '';
     if (schoolType == "preschool") {
