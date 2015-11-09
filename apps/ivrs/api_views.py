@@ -1,22 +1,50 @@
+import os
 import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.exceptions import APIException
 
-from django.db.models import F
+from django.conf import settings
 from django.utils import timezone
 
+from .models import State
 from .utils import get_question
-from .models import State, Chapter, GKATLM
-from schools.models import School, SchoolDetails
-from stories.models import Story, UserType, Questiongroup, Answer
-from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+
+from schools.models import School
+from common.views import KLPAPIView
+
 
 GKA_SERVER = "08039591332"
 GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
+
+
+class DynamicResponse(KLPAPIView):
+    def get(self, request):
+        sound_file_paths = ""
+
+        if settings.IVRS_VOICE_FILES_DIR:
+            status_code = status.HTTP_200_OK
+
+            digits = request.QUERY_PARAMS.get('digits', None)
+
+            digits = digits.strip('"')
+            path = settings.IVRS_VOICE_FILES_DIR
+            path = os.path.join(path, '') # Adds a trailing slash if not present.
+
+            for digit in digits:
+                file_name = digit + ".wav\n"
+                sound_file_paths += path + file_name
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response(
+            sound_file_paths,
+            status=status_code,
+            content_type="text/plain"
+        )
+
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
