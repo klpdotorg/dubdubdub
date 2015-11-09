@@ -113,20 +113,31 @@
 
 	t.getPrimarySchoolCategories = function(klpData, diseData) {
 		var schoolCategories = {};
-		var diseTotalUpperPrimarySchools = diseData.school_categories[1]['sum_schools']+diseData.school_categories[2]['sum_schools'];
+		var upperPrimaryCategories = [2,3,4,5,6,7];
+		var diseLowerPrimarySchools = 0;
+		var diseUpperPrimarySchools = 0;
+		diseData.school_categories.forEach(function(category){
+			if (category.id == 1) {
+				diseLowerPrimarySchools = category.sum_schools;
+			}
+			else if (_.contains(upperPrimaryCategories, category.id)){
+				diseUpperPrimarySchools += category.sum_schools;
+			}
+		})
+		 
 		schoolCategories["upper primary"] = {
 			"type_name":"upper primary",
 			"klp_perc": getPercentage(klpData.cat[0]['num'],klpData['num_schools']),
-			"dise_perc": getPercentage(diseTotalUpperPrimarySchools, diseData['sum_schools']),
+			"dise_perc": getPercentage(diseUpperPrimarySchools, diseData['sum_schools']),
 			"klp_count": klpData.cat[0]['num'],
-			"dise_count": diseTotalUpperPrimarySchools
+			"dise_count": diseUpperPrimarySchools
 		},
 		schoolCategories["lower primary"] = {
 			"type_name":"lower primary",
 			"klp_perc": getPercentage(klpData.cat[1]['num'],klpData['num_schools']),
-			"dise_perc": getPercentage(diseData.school_categories[0]['sum_schools'], diseData['sum_schools']),
+			"dise_perc": getPercentage(diseLowerPrimarySchools, diseData['sum_schools']),
 			"klp_count": klpData.cat[1]['num'],
-			"dise_count": diseData.school_categories[0]['sum_schools']
+			"dise_count": diseLowerPrimarySchools
 		}
 
 		return schoolCategories;
