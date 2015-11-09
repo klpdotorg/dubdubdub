@@ -2,11 +2,8 @@ from django.conf.urls import patterns, url
 
 from .api_views import (
     CheckSchool,
-    Verify,
     VerifyAnswer,
-    ReadChapter,
     ReadSchool,
-    ReadTLM,
 
     DynamicResponse,
 )
