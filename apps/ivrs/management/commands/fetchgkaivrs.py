@@ -90,20 +90,23 @@ class Command(BaseCommand):
                 state.is_processed = True
                 state.save()
 
-        if ivrs_type == 'gka' or ivrs_type == 'gka-new':
+        if ivrs_type == 'gka-new':
             author = 'GKA IVRS'
-        else:
+        elif ivrs_type == 'ivrs-pri':
             author = 'New IVRS'
+        else:
+            author = None
 
-        try:
-            post_to_slack(
-                channel='#klp',
-                author=author,
-                message='%s Valid calls & %s Invalid calls' %(valid_count, invalid_count),
-                emoji=':calling:',
-            )
-        except:
-            pass
+        if author:
+            try:
+                post_to_slack(
+                    channel='#klp',
+                    author=author,
+                    message='%s Valid calls & %s Invalid calls' %(valid_count, invalid_count),
+                    emoji=':calling:',
+                )
+            except:
+                pass
 
 def sane_state(state):
     # A State is not sane if it has:
