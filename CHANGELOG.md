@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.11: 2dec0c69fbe0856e108b47d16fc3864a09ae4256 - 2015-11-11
+  - Adds sanity check for New Mahiti IVRS
+  - Fixes bugs on the fetchgkaivrs script
+
 Release 0.3.10: 6151a64b59cd25e418beb84245aa04b46a8631a7 - 2015-11-11
   - Adds docs for existing IVRS infrastructure
   - Implements the admin functionality for exporting IVRS data within a date range
