@@ -51,7 +51,7 @@ class Command(BaseCommand):
 
         if states:
             for state in states:
-                if not sane_state(state):
+                if not sane_state(state, ivrs_type):
                     state.is_invalid = True
                     invalid_count += 1
                 else:
@@ -77,7 +77,8 @@ class Command(BaseCommand):
                     for (question_number, answer) in enumerate(state.answers[1:]):
                         if answer != 'NA':
                             question = get_question(
-                                question_number+1, ivrs_type_number_dict[ivrs_type]
+                                question_number+1,
+                                ivrs_type_number_dict[ivrs_type]
                             )
                             answer = Answer.objects.get_or_create(
                                 story=story,
@@ -90,10 +91,10 @@ class Command(BaseCommand):
                 state.is_processed = True
                 state.save()
 
-        if ivrs_type == 'gka-new':
+        if ivrs_type in ['gka', 'gka-new']:
             author = 'GKA IVRS'
         elif ivrs_type == 'ivrs-pri':
-            author = 'New IVRS'
+            author = 'New Mahiti IVRS'
         else:
             author = None
 
@@ -108,21 +109,23 @@ class Command(BaseCommand):
             except:
                 pass
 
-def sane_state(state):
+def sane_state(state, ivrs_type):
     # A State is not sane if it has:
-    # 1. No answers for any questions.
-    # 2. An answer to the 2nd question (class visited),
-    # but no answers thereafter
+    # 1. No answers for any questions. (For GKA and MAHITI)
+    # 2. An answer to the 2nd question, 'class visited',
+    # but no answers thereafter (Only for GKA).
 
     SANE, NOT_SANE = True, False
+
 
     # Checking condition 1.
     if all(answer == 'NA' for answer in state.answers[1:]):
         return NOT_SANE
     # Checking condition 2.
-    if state.answers[2] != 'NA':
-        if all(answer == 'NA' for answer in state.answers[3:]):
-            return NOT_SANE
+    if ivrs_type in ['gka', 'gka-new']:
+        if state.answers[2] != 'NA':
+            if all(answer == 'NA' for answer in state.answers[3:]):
+                return NOT_SANE
 
     # If not both, then sane.
     return SANE
