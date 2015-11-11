@@ -28,7 +28,7 @@ class Command(BaseCommand):
             'ivrs-pre' : 5,
         }
 
-        for ivrs_type, version in question_group_version_dict:
+        for ivrs_type, version in question_group_version_dict.items():
             self.process_state(ivrs_type, version)
 
     def process_state(self, ivrs_type, version):
