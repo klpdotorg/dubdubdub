@@ -91,10 +91,10 @@ class Command(BaseCommand):
                 state.is_processed = True
                 state.save()
 
-        if ivrs_type in ['gka', 'gka-new']:
+        if ivrs_type in ['gka-new']:
             author = 'GKA IVRS'
         elif ivrs_type == 'ivrs-pri':
-            author = 'New Mahiti IVRS'
+            author = 'Primary School IVRS'
         else:
             author = None
 
