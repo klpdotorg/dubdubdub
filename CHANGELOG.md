@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.12: 82f2ca7027fbd2ef09e39fead88b6430cfc49b9e - 2015-11-12
+  - Marks all IVRS stories as verified
+
 Release 0.3.11: 2dec0c69fbe0856e108b47d16fc3864a09ae4256 - 2015-11-11
   - Adds sanity check for New Mahiti IVRS
   - Fixes bugs on the fetchgkaivrs script
