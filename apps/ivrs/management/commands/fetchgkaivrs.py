@@ -68,6 +68,7 @@ class Command(BaseCommand):
 
                     story = Story.objects.create(
                         school=school,
+                        is_verified=True,
                         group=question_group,
                         date_of_visit=date,
                         telephone=telephone,
