@@ -9,6 +9,22 @@ Use required commands
 
 Changelog
 ---
+Release 0.3.12: 82f2ca7027fbd2ef09e39fead88b6430cfc49b9e - 2015-11-12
+  - Marks all IVRS stories as verified
+
+Release 0.3.11: 2dec0c69fbe0856e108b47d16fc3864a09ae4256 - 2015-11-11
+  - Adds sanity check for New Mahiti IVRS
+  - Fixes bugs on the fetchgkaivrs script
+
+Release 0.3.10: 6151a64b59cd25e418beb84245aa04b46a8631a7 - 2015-11-11
+  - Adds docs for existing IVRS infrastructure
+  - Implements the admin functionality for exporting IVRS data within a date range
+  - Removes the deprecated IVRS endpoints
+  - Changes IVRS types
+  - Implements the new MAHITI IVRS system
+  - Moves all IVRS scripts from the stories app to the ivrs app
+  - Adds Locality model
+
 Release 0.3.9: 47a1d71fef122729cbc4c563d5db0d247c8a143a - 2015-10-10
   - Casts the Mahiti IVRS 1s and 0s to Yes and No before saving
 
