@@ -57,6 +57,10 @@ class BaseSchoolAggView(object):
             num_girls=SumCase('institutionagg__num', when="gender='female'")
         )
 
+        for mt in agg['mt']:
+            mt['name'] = mt['institutionagg__mt']
+            del mt['institutionagg__mt']
+
         agg['num_boys'] = active_schools.filter(
             schoolextra__academic_year=academic_year
         ).aggregate(
