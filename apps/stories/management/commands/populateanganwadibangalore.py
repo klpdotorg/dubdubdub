@@ -52,7 +52,7 @@ class Command(BaseCommand):
             "Surrounding near the tap is clean",
             "No dust & spider web is found in the center room",
             "All the window panes are strong and can be locked",
-            "Center is functioning at the women & children development Dept",
+            "Center is functioning with the women & children development dept",
             "Children are able to write on the black board",
             "Necessary items are available in the first aid box",
             "Anganwadi worker marked the last year, 6yrs completed the children name",
