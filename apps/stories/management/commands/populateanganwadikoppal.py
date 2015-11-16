@@ -9,7 +9,7 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Anganwadi Koppal questions
+    help = """Populate DB with Anganwadi Koppal 2012-13 questions
 
     ./manage.py populateanganwadikoppal"""
 
@@ -63,4 +63,4 @@ class Command(BaseCommand):
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
 
-        print "Anganwadi Koppal questions populated."
+        print "Anganwadi Koppal 2012-13 questions populated."
