@@ -94,7 +94,7 @@ class Command(BaseCommand):
             "Weekly TLM plan organized in the anganwadi center",
             "List the anganwadi center TLM",
             "Anganwadi worker cooperates with children",
-            "Anganwadi worker and helper have mutual understading",
+            "Anganwadi worker and helper have mutual understanding",
             "Children are involved in activity with the TLM",
             "Anganwadi workers are observing the children activities",
             "Angnawadi workers are using the TLM to children learning",
