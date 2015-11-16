@@ -14,7 +14,7 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Old Anganwadi Bangalore questions
+    help = """Populate DB with Anganwadi Bangalore 2010-12 questions
 
     ./manage.py populateanganwadibangaloreold"""
 
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         start_date = datetime.strptime('2010-01-13', '%Y-%m-%d')
         end_date = datetime.strptime('2012-05-30', '%Y-%m-%d')
         question_group = Questiongroup.objects.get_or_create(
-            version=4,
+            version=6,
             source=s,
             start_date=start_date,
             end_date=end_date,
@@ -119,4 +119,4 @@ class Command(BaseCommand):
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
 
-        print "Old Anganwadi Bangalore questions populated."
+        print "Anganwadi Bangalore 2010-12 questions populated."
