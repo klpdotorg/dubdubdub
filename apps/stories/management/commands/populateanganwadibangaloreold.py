@@ -70,7 +70,7 @@ class Command(BaseCommand):
             "First aid box with all necessary items available (through observation)", 
             "Materials available in first aid box are being used (ask Aya or Worker & observe)", 
             "Black board is being used (Through observation)", 
-            "Black board is convenient for children and teachers viewing and writing.(Through observation)", 
+            "Black board is convenient for children and teacher's viewing and writing.(Through observation)",
             "Admission records are maintained", 
             "The Anganwadi worker daily signs and confirms that children\u2019s attendance is as per the attendance register.", 
             "Name of the student who has taken TC is circled and comment written (to be cross checked)", 
