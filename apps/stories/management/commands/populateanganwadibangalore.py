@@ -67,7 +67,7 @@ class Command(BaseCommand):
             "Dustbin is used by children",
             "Children have learnt to keep center room clean",
             "Every day children attendence is confirmed in the attendence book by anganwadi worker through signature",
-            "Activities is done by anganwadi friendship group members",
+            "Activities are conducted by anganwadi friendship group members",
             "There is toilet",
             "TLM kit is available at the anganwadi center",
             "TLM material are dependable and effective in using & learning",
@@ -107,7 +107,7 @@ class Command(BaseCommand):
                 user_type=user_type,
                 question_type=question_type,
                 school_type=school_type,
-                options="{Yes,No}",
+                options="{'Yes','No'}",
             )[0]
 
             QuestiongroupQuestions.objects.get_or_create(
