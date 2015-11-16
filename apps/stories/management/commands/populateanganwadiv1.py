@@ -172,7 +172,7 @@ class Command(BaseCommand):
             options="{Yes,No}",
         )[0]
         q19 = Question.objects.get_or_create(
-            text="BVS is involved in all the anganwadi activities.",
+            text="BVS is involved in all the anganwadi activities",
             data_type=1,
             user_type=user_type,
             question_type=question_type,
