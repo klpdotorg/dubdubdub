@@ -99,7 +99,7 @@ class Command(BaseCommand):
             f = open(file_name, 'r')
             csv_f = csv.reader(f)
 
-        elif csv_format = 'bangalore-old':
+        elif csv_format == 'bangalore-old':
             start_date = datetime.datetime.strptime('2010-01-13', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2012-05-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
@@ -135,7 +135,7 @@ class Command(BaseCommand):
             f = open(file_name, 'r')
             csv_f = csv.reader(f)
 
-        else:
+        else: # csv_format == 'v2'
             start_date = datetime.datetime.strptime('2014-08-18', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2015-12-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
@@ -212,8 +212,39 @@ class Command(BaseCommand):
                         question=question,
                         text=row[answer_column],
                     )
+                elif csv_format == 'v2' and sequence_number in range(1, 8):
+                    answer = row[answer_column].strip()
+                    if answer == 'NA':
+                        answer = 'Unknown'
+
+                    question = Question.objects.get(
+                        questiongroup=question_group,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=answer,
+                    )
+                elif csv_format == 'v2' and sequence_number == 16:
+                    # This special case is because column 16 uses
+                    # '2' to specify 'Unknown/NA'.
+                    answer = row[answer_column].strip()
+                    if answer == '2':
+                        answer = 'Unknown'
+
+                    question = Question.objects.get(
+                        questiongroup=question_group,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=answer,
+                    )
                 else:
                     print "Answer not found: " + str(row[answer_column].strip())
+                    print "Question number is: " + str(sequence_number)
                     continue
 
         f.close()
