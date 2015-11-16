@@ -9,7 +9,7 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Anganwadi V2 questions
+    help = """Populate DB with Anganwadi Bangalore 2014-15 v2
 
     ./manage.py populateanganwadiv2"""
 
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         start_date = datetime.strptime('2014-08-18', '%Y-%m-%d')
         end_date = datetime.strptime('2015-12-30', '%Y-%m-%d')
         question_group = Questiongroup.objects.get_or_create(
-            version=6,
+            version=2,
             source=s,
             start_date=start_date,
             end_date=end_date,
@@ -77,4 +77,4 @@ class Command(BaseCommand):
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
 
-        print "Anganwadi v2 questions populated."
+        print "Anganwadi Bangalore 2014-15 v2 questions populated"
