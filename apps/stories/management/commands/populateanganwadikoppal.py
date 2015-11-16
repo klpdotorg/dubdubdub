@@ -45,7 +45,7 @@ class Command(BaseCommand):
             "Anganwadi friendship group is formed", 
             "Has the anganwadi worker done evaluation on childrens learning till now", 
             "Friends of anganwadi are contineously involved", 
-            "Anaganwadi worker & helper had a mutual understanding", 
+            "Anganwadi worker & helper had a mutual understanding",
             "BVS is Involved in all the anganwadi activities", 
             "For question asked by visitor, children are actively answering"
         ]

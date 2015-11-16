@@ -164,7 +164,7 @@ class Command(BaseCommand):
             options="{Yes,No}",
         )[0]
         q18 = Question.objects.get_or_create(
-            text="Anaganwadi worker & helper had a mutual understanding.",
+            text="Anganwadi worker & helper had a mutual understanding.",
             data_type=1,
             user_type=user_type,
             question_type=question_type,
