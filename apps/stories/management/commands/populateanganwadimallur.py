@@ -33,7 +33,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=QuestionType.objects.get(name="numeric"),
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q2 = Question.objects.get_or_create(
             text="Was anganwadi worker present on time during visit?",
@@ -41,7 +41,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q3 = Question.objects.get_or_create(
             text="Was anganwadi helper present on time during visit?",
@@ -49,7 +49,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q4 = Question.objects.get_or_create(
             text="Center is functioning with the women & children development dept",
@@ -57,7 +57,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q5 = Question.objects.get_or_create(
             text="The floor is in good condition",
@@ -65,7 +65,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q6 = Question.objects.get_or_create(
             text="The roof is in good condition",
@@ -73,7 +73,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q7 = Question.objects.get_or_create(
             text="Doors are strong & can be bolted & locked",
@@ -81,7 +81,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q8 = Question.objects.get(
             text="All the window panes are strong and can be locked",
@@ -89,7 +89,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )
         q9 = Question.objects.get_or_create(
             text="No dust & spider web is found in the center room",
@@ -97,7 +97,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q10 = Question.objects.get_or_create(
             text="Anganwadi walls are painted with learning subject",
@@ -105,7 +105,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q11 = Question.objects.get_or_create(
             text="Learning charts are there in the anganwadi center",
@@ -113,7 +113,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q12 = Question.objects.get_or_create(
             text="There is Dustbin in the center",
@@ -121,7 +121,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q13 = Question.objects.get_or_create(
             text="Dustbin is used by children",
@@ -129,7 +129,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q14 = Question.objects.get_or_create(
             text="Children have learnt to keep center room clean",
@@ -137,7 +137,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q15 = Question.objects.get_or_create(
             text="Store room is maintained to preserve food items",
@@ -145,7 +145,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q16 = Question.objects.get_or_create(
             text="Store room is clean",
@@ -153,7 +153,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q17 = Question.objects.get_or_create(
             text="Food for daily use is covered properly",
@@ -161,7 +161,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q18 = Question.objects.get_or_create(
             text="Morning food was distributed at the time of visit (mention the time)",
@@ -169,7 +169,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q19 = Question.objects.get_or_create(
             text="Afternoon food was distributed at the time of visit (mention the time)",
@@ -177,7 +177,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q20 = Question.objects.get_or_create(
             text="Cook / chef are clean",
@@ -185,7 +185,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q21 = Question.objects.get_or_create(
             text="Separate place is maintained for hand wash after lunch",
@@ -193,7 +193,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q22 = Question.objects.get_or_create(
             text="Water tap's are there at anganwadi center",
@@ -201,7 +201,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q23 = Question.objects.get_or_create(
             text="There is water supply through taps",
@@ -209,7 +209,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q24 = Question.objects.get_or_create(
             text="Surrounding areas near the tap is clean",
@@ -217,7 +217,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q25 = Question.objects.get_or_create(
             text="Drinking water is stored in clean vessel",
@@ -225,7 +225,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q26 = Question.objects.get_or_create(
             text="Vessel are always closed to avoid children placing hand",
@@ -233,7 +233,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q27 = Question.objects.get_or_create(
             text="There is toilet in the center",
@@ -241,7 +241,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q28 = Question.objects.get_or_create(
             text="Toilet roof is maintained to avoid sun/rain",
@@ -249,7 +249,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q29 = Question.objects.get_or_create(
             text="There is water facility in the toilet",
@@ -257,7 +257,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q30 = Question.objects.get_or_create(
             text="Jug is easily available to children in the toilet",
@@ -265,7 +265,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q31 = Question.objects.get_or_create(
             text="Algae is not found in toilet basin",
@@ -273,7 +273,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q32 = Question.objects.get_or_create(
             text="Necessary items are available in the first aid box",
@@ -281,7 +281,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q33 = Question.objects.get_or_create(
             text="Items in the first aid box is in use",
@@ -289,7 +289,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q34 = Question.objects.get_or_create(
             text="Center has black board",
@@ -297,7 +297,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q35 = Question.objects.get_or_create(
             text="Children are able to write on the black board",
@@ -305,7 +305,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q36 = Question.objects.get_or_create(
             text="Children register book is maintained by anganwadi worker",
@@ -313,7 +313,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q37 = Question.objects.get_or_create(
             text="Every day children attendence is confirmed in the register by anganwadi worker through signature",
@@ -321,7 +321,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q38 = Question.objects.get_or_create(
             text="Anganwadi worker has marked the last year 6yrs completed children name (each children details according to name)",
@@ -329,7 +329,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q39 = Question.objects.get_or_create(
             text="50% of attendence was there at the time of visit",
@@ -337,7 +337,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q40 = Question.objects.get_or_create(
             text="Children progress card maintained",
@@ -345,7 +345,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q41 = Question.objects.get_or_create(
             text="Teacher dairy is maintained",
@@ -353,7 +353,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q42 = Question.objects.get_or_create(
             text="Staff attendance & other information is maintained",
@@ -361,7 +361,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q43 = Question.objects.get_or_create(
             text="Accounting records is maintained",
@@ -369,7 +369,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q44 = Question.objects.get_or_create(
             text="Learning material record is maintained",
@@ -377,7 +377,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q45 = Question.objects.get_or_create(
             text="Children medical report is maintained",
@@ -385,7 +385,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q46 = Question.objects.get_or_create(
             text=" Medical check done within 3 months",
@@ -393,7 +393,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q47 = Question.objects.get_or_create(
             text="Children list of special need is available",
@@ -401,7 +401,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q48 = Question.objects.get_or_create(
             text="Ramp facility is available for handicaps",
@@ -409,7 +409,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q49 = Question.objects.get_or_create(
             text="Learning material available for handicap children in the center",
@@ -417,7 +417,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q50 = Question.objects.get_or_create(
             text="Workers are trained to teach handicap children",
@@ -425,7 +425,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q51 = Question.objects.get_or_create(
             text="BVS is available",
@@ -433,7 +433,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q52 = Question.objects.get_or_create(
             text="List of BVS member is maintained",
@@ -441,7 +441,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q53 = Question.objects.get_or_create(
             text="BVS book is maintained",
@@ -449,7 +449,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q54 = Question.objects.get_or_create(
             text="Role & responsibility of the BVS member list is maintained",
@@ -457,7 +457,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q55 = Question.objects.get_or_create(
             text="BVS is functioning as per the rules & regulation",
@@ -465,7 +465,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q56 = Question.objects.get_or_create(
             text="Anganwadi worker is trained about pre school",
@@ -473,7 +473,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q57 = Question.objects.get_or_create(
             text="Pre school start time",
@@ -481,7 +481,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q58 = Question.objects.get_or_create(
             text="Pre school end time",
@@ -489,7 +489,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q59 = Question.objects.get_or_create(
             text="Weekly TLM plan organized in the anganwadi center",
@@ -497,7 +497,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q60 = Question.objects.get_or_create(
             text="List the anganwadi center TLM",
@@ -505,7 +505,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q61 = Question.objects.get_or_create(
             text="Anganwadi worker cooperates with children",
@@ -513,7 +513,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q62 = Question.objects.get_or_create(
             text="Anganwadi worker and helper have mutual understanding",
@@ -521,7 +521,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q63 = Question.objects.get_or_create(
             text="Children are involved in activity with the TLM",
@@ -529,7 +529,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q64 = Question.objects.get_or_create(
             text="Anganwadi workers are observing the children activities",
@@ -537,7 +537,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q65 = Question.objects.get_or_create(
             text="Angnawadi workers are using the TLM to children learning",
@@ -545,7 +545,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q66 = Question.objects.get_or_create(
             text="TLM meterial are dependable and effective in using & learning",
@@ -553,7 +553,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
         q67 = Question.objects.get_or_create(
             text="Children actively answer the questions asked by visitor",
@@ -561,7 +561,7 @@ class Command(BaseCommand):
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
-            options="{Yes,No}",
+            options="{'Yes','No'}",
         )[0]
 
         questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13,
