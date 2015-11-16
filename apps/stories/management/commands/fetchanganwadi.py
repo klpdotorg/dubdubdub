@@ -45,12 +45,12 @@ class Command(BaseCommand):
         if csv_format == 'v1':
             start_date = datetime.datetime.strptime('2013-06-04', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
-            question_group = Questiongroup.objects.get_or_create(
+            question_group = Questiongroup.objects.get(
                 version=1,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
-            )[0]
+            )
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
             answer_columns = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
 
@@ -60,12 +60,12 @@ class Command(BaseCommand):
         elif csv_format == 'mallur':
             start_date = datetime.datetime.strptime('2013-08-06', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-12-30', '%Y-%m-%d')
-            question_group = Questiongroup.objects.get_or_create(
-                version=2,
+            question_group = Questiongroup.objects.get(
+                version=4,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
-            )[0]
+            )
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                                  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
                                  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
@@ -81,12 +81,12 @@ class Command(BaseCommand):
         elif csv_format == 'bangalore':
             start_date = datetime.datetime.strptime('2014-01-13', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
-            question_group = Questiongroup.objects.get_or_create(
+            question_group = Questiongroup.objects.get(
                 version=3,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
-            )[0]
+            )
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                                  22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
                                  42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
@@ -103,7 +103,7 @@ class Command(BaseCommand):
             start_date = datetime.datetime.strptime('2010-01-13', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2012-05-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
-                version=4,
+                version=6,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
@@ -139,7 +139,7 @@ class Command(BaseCommand):
             start_date = datetime.datetime.strptime('2014-08-18', '%Y-%m-%d')
             end_date = datetime.datetime.strptime('2015-12-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
-                version=6,
+                version=2,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
@@ -231,6 +231,20 @@ class Command(BaseCommand):
                     # '2' to specify 'Unknown/NA'.
                     answer = row[answer_column].strip()
                     if answer == '2':
+                        answer = 'Unknown'
+
+                    question = Question.objects.get(
+                        questiongroup=question_group,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=answer,
+                    )
+                elif csv_format == 'v1' and sequence_number in [1, 2, 3, 4, 5, 35, 36]:
+                    answer = row[answer_column].strip()
+                    if answer == 'NA':
                         answer = 'Unknown'
 
                     question = Question.objects.get(
