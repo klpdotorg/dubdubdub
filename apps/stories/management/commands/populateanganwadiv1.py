@@ -107,8 +107,8 @@ class Command(BaseCommand):
             school_type=school_type,
             options="{Yes,No}",
         )[0]
-        q11 = Question.objects.get_or_create(
-            text="Anganwadi worker used Akshara learning materiel on the day of visit.",
+        q11 = Question.objects.get(
+            text="Anganwadi worker used Akshara learning materiel on the day of visit",
             data_type=1,
             user_type=user_type,
             question_type=question_type,
