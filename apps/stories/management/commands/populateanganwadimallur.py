@@ -83,14 +83,14 @@ class Command(BaseCommand):
             school_type=school_type,
             options="{Yes,No}",
         )[0]
-        q8 = Question.objects.get_or_create(
-            text="All the Window panes are strong and can be locked",
+        q8 = Question.objects.get(
+            text="All the window panes are strong and can be locked",
             data_type=1,
             user_type=user_type,
             question_type=question_type,
             school_type=school_type,
             options="{Yes,No}",
-        )[0]
+        )
         q9 = Question.objects.get_or_create(
             text="No dust & spider web is found in the center room",
             data_type=1,
