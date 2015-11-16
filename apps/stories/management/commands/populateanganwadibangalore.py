@@ -87,7 +87,7 @@ class Command(BaseCommand):
             "Children register book is maintained by anganwadi worker",
             "Details provided for the child to whom TC is issued",
             "Jug is easily available to children in the toilet",
-            "There is water supply through tapes",
+            "There is water supply through taps",
             "Separate place is maintained for hand wash after lunch",
             "Anganwadi worker is trained about anganwadi",
             "Regarding learn process",
