@@ -23,9 +23,10 @@ class Command(BaseCommand):
             start_date=start_date,
             end_date=end_date,
         )[0]
-        question_type = QuestionType.objects.get(name="checkbox")
+        question_type_checkbox = QuestionType.objects.get(name="checkbox")
+        question_type_numeric = QuestionType.objects.get(name="numeric")
         school_type = BoundaryType.objects.get(name="PreSchool")
-        user_type= UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
+        user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         questions = [
             "Number of students enrolled(boys)", 
@@ -56,15 +57,21 @@ class Command(BaseCommand):
             "Bala Vikas Samithi meeting is conducted"
         ]
 
-
         for count, question in enumerate(questions):
+            if count in range(0, 7):
+                question_type = question_type_numeric
+                options = None
+            else:
+                question_type = question_type_checkbox
+                options = "{'Yes','No'}"
+
             q = Question.objects.get_or_create(
                 text=question,
                 data_type=1,
                 user_type=user_type,
                 question_type=question_type,
                 school_type=school_type,
-                options="{'Yes','No'}",
+                options=options,
             )[0]
 
             QuestiongroupQuestions.objects.get_or_create(
