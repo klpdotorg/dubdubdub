@@ -91,7 +91,7 @@ class Command(BaseCommand):
             "Anganwadi worker is trained about pre school",
             "Pre school start time",
             "Pre school end time",
-            "Weakly TLM plan organized in the anganwadi center",
+            "Weekly TLM plan organized in the anganwadi center",
             "List the anganwadi center TLM",
             "Anganwadi worker cooperates with children",
             "Anganwadi worker and helper have mutual understading",
