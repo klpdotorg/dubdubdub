@@ -55,7 +55,7 @@ class Command(BaseCommand):
             "Center is functioning with the women & children development dept",
             "Children are able to write on the black board",
             "Necessary items are available in the first aid box",
-            "Anganwadi worker marked the last year, 6yrs completed the children name",
+            "Anganwadi worker has marked the last year 6yrs completed children name (each children details according to name)",
             "Store room is maintained to preserved food items",
             "Accounting records is maintained",
             "Learning material record is maintained",
