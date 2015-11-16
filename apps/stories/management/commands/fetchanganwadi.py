@@ -43,16 +43,20 @@ class Command(BaseCommand):
         user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         if csv_format == 'v1':
-            start_date = datetime.datetime.strptime('2013-06-04', '%Y-%m-%d')
-            end_date = datetime.datetime.strptime('2014-05-30', '%Y-%m-%d')
+            start_date = datetime.datetime.strptime('2014-08-18', '%Y-%m-%d')
+            end_date = datetime.datetime.strptime('2015-12-30', '%Y-%m-%d')
             question_group = Questiongroup.objects.get(
                 version=1,
                 source=source,
                 start_date=start_date,
                 end_date=end_date,
             )
-            question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-            answer_columns = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+            question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+                                 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                                 31, 32, 33, 34, 35, 36]
+            answer_columns = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                              23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+                              38, 39, 40, 41, 42]
 
             f = open(file_name, 'r')
             csv_f = csv.reader(f)
