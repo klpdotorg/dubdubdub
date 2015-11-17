@@ -35,7 +35,7 @@ class Command(BaseCommand):
             "Number of students present(girl)",
             "Where is the center functioning",
             "The anganwadi center is in a spacious room (35 sq according to ecce rule)  meaning there is an indoor enclosure",
-            "There is an outdoor space for 30 children  with space of 30sq",
+            "There is an outdoor space for 30 children, with space of 30sq",
             "There is a toilet for children to use",
             "There is pure drinking water facility",
             "There is safety around the center",
