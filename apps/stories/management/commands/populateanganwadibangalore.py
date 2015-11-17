@@ -46,7 +46,7 @@ class Command(BaseCommand):
             "There is water facility in the toilet",
             "BVS book is maintained",
             "Water tap's are there at anganwadi center",
-            "Dustbin is maintained in the center",
+            "There is dust bin in the center",
             "Children are active with the TLM provided by akshara",
             "Children list of special need is available",
             "Surrounding near the tap is clean",

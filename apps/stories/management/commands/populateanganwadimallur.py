@@ -44,7 +44,7 @@ class Command(BaseCommand):
             "No dust & spider web is found in the center room",
             "Anganwadi walls are painted with learning subject",
             "Learning charts are there in the anganwadi center",
-            "There is Dustbin in the center",
+            "There is dust bin in the center",
             "Dustbin is used by children",
             "Children have learnt to keep center room clean",
             "Store room is maintained to preserve food items",
