@@ -40,7 +40,7 @@ class Command(BaseCommand):
             "The floor is in good condition",
             "The roof is in good condition",
             "Doors are strong & can be bolted & locked",
-            "All the Window panes are strong and can be locked",
+            "All the window panes are strong and can be locked",
             "No dust & spider web is found in the center room",
             "Anganwadi walls are painted with learning subject",
             "Learning charts are there in the anganwadi center",
