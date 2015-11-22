@@ -110,6 +110,7 @@ def queryset_to_geojson(geofield_or_relation=None):
 # SUM CASE WHEN Aggregator
 # ========================
 
+
 class SQLSumCase(models.sql.aggregates.Aggregate):
     is_ordinal = True
     sql_function = 'SUM'
@@ -117,10 +118,10 @@ class SQLSumCase(models.sql.aggregates.Aggregate):
 
     def __init__(self, col, **extra):
         if isinstance(extra['when'], basestring):
-            extra['when'] = "%s"%extra['when']
+            extra['when'] = "%s" % extra['when']
 
         if not extra.get('case', None):
-            extra['case'] = '"%s"."%s"'%(extra['source'].model._meta.db_table, extra['source'].name)
+            extra['case'] = '"%s"."%s"' % (extra['source'].model._meta.db_table, extra['source'].name)
 
         if extra['when'] is None:
             extra['when'] = True

@@ -4,6 +4,7 @@ from schools.serializers import (
     BoundarySerializer, AssemblySerializer, ParliamentSerializer,
     PincodeSerializer, BoundaryWithGrandparentSerializer
 )
+from common.models import SumCase
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
@@ -36,13 +37,29 @@ class BoundaryLibLevelAggView(KLPListAPIView):
 
 class BaseSchoolAggView(object):
     def get_aggregations(self, active_schools, academic_year):
+        active_schools = active_schools.filter(schoolextra__academic_year=academic_year)
         agg = {
             'num_schools': active_schools.count(),
             'moi': active_schools.values('moi').annotate(num=Count('moi')),
-            'cat': active_schools.values('cat').annotate(num=Count('cat')),
+            'cat': active_schools.values('cat').annotate(
+                num_schools=Count('cat'),
+                num_boys=Sum('schoolextra__num_boys'),
+                num_girls=Sum('schoolextra__num_girls')
+            ),
             'mgmt': active_schools.values('mgmt').annotate(num=Count('mgmt')),
             'gender': active_schools.values('sex').annotate(num=Count('sex'))
         }
+
+        active_institutions = active_schools.filter(institutionagg__academic_year=academic_year)
+        agg['mt'] = active_institutions.values('institutionagg__mt').annotate(
+            num_students=Sum('institutionagg__num'),
+            num_boys=SumCase('institutionagg__num', when="gender='male'"),
+            num_girls=SumCase('institutionagg__num', when="gender='female'")
+        )
+
+        for mt in agg['mt']:
+            mt['name'] = mt['institutionagg__mt']
+            del mt['institutionagg__mt']
 
         agg['num_boys'] = active_schools.filter(
             schoolextra__academic_year=academic_year

@@ -163,6 +163,7 @@ class Command(BaseCommand):
 
         story, created = Story.objects.get_or_create(
             school=school,
+            is_verified=True,
             group=question_group,
             date_of_visit=timezone.make_aware(
                 date, timezone.get_current_timezone()
