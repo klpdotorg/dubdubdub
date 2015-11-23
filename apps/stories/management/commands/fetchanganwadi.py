@@ -294,8 +294,13 @@ class Command(BaseCommand):
 
         f.close()
 
-        # Make an error log.
-        file_name = file_name + "_error.log"
+        log_directory = os.environ.get('DUBDUBDUB_LOG_DIR', None)
+        if log_directory:
+            file_name = file_name.split('/')[-1]
+            file_name = log_directory + file_name + "_error.log"
+        else:
+            file_name = file_name + "_error.log"
+
         f = open(file_name, 'w')
         f.write(json.dumps(school_errors, indent = 4))
         f.close()
