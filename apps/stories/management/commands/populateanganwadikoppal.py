@@ -28,26 +28,26 @@ class Command(BaseCommand):
         user_type= UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         questions = [
-            "This Anganwadi has its own building & it was in good condition", 
-            "To preserve the food material in the anganwadi separate  room is available", 
-            "The children have maintained class room neatly", 
-            "In the Anganwadi there is drinking water & usage water facility and it was neat", 
-            "Toilet is in good condition to use", 
-            "Is sufficient places available inside & outside of the anganwadi center for any educational activities", 
-            "50% of attendence was there at the time of visit", 
-            "Children are able to write on the black board", 
-            "TLM kit is available at the anganwadi center", 
-            "Is wall writing  and charts related to learning material available for center", 
-            "Anganwadi worker used Akshara learning materiel on the day of visit", 
-            "Anaganwadi worker was involving all children in to the activities", 
-            "Anaganwadi worker helps akshara worker Involve in all programmes", 
-            "The BVS member list is maintained In the center", 
-            "Anganwadi friendship group is formed", 
-            "Has the anganwadi worker done evaluation on childrens learning till now", 
-            "Friends of anganwadi are contineously involved", 
+            "This Anganwadi has its own building & it was in good condition",
+            "Store room is maintained to preserve food items",
+            "The children have maintained the class room neatly",
+            "In the Anganwadi, there is drinking water & usage water facility and it was neat",
+            "Toilet is in good condition to use",
+            "The anganwadi center is in a spacious room (35 sq according to ecce rule), meaning there is an indoor enclosure",
+            "50% of attendance was there at the time of visit",
+            "Children are able to write on the black board",
+            "Learning materials are present in the center",
+            "Is wall writing and charts related to learning material available for center",
+            "Activities are conducted using learning material by the anganwadi worker",
+            "Anganwadi worker was involving all children in to the activities",
+            "Anganwadi worker helps akshara worker involve in all programmes",
+            "The BVS member list is maintained in the center",
+            "Anganwadi friendship group is formed",
+            "Has the anganwadi worker done evaluation on children's learning till now",
+            "Friends of anganwadi are continuously involved",
             "Anganwadi worker & helper had a mutual understanding",
             "BVS is involved in all the anganwadi activities",
-            "For question asked by visitor, children are actively answering"
+            "For questions asked by visitor, children are actively answering"
         ]
 
         for count, question in enumerate(questions):
