@@ -158,6 +158,39 @@
 		return modified;
 	};
 
+	t.getMotherTongue = function(data) {
+		var modified = {};
+		var totalStudents = data.num_boys + data.num_girls
+		var sortedLanguages = _.sortBy(data.mt, 'num_students').reverse();		
+		sortedLanguages.reduce(function(soFar, current, index){
+			if (index < 4) {
+				soFar[current.name] = {
+					count: current.num_students,
+					perc: getPercentage(current.num_students, totalStudents)
+				}
+				return soFar;
+			} else {	
+				if(!soFar.other) {
+					soFar.other = {count: 0}
+				}
+				soFar.other.count += current.num_students;
+				soFar.other.perc = getPercentage(soFar.other.count, totalStudents);
+				return soFar;
+			}			
+		}, modified);
+		 return modified;
+	};
+
+	t.getPreSchoolEnrollment = function(data) {
+		var modified = {};
+		data.cat.forEach(function(category){
+			modified[category.cat] = {				
+				klp_enrol: Math.round((category.num_boys + category.num_girls) / category.num_schools)
+			}
+		})
+		return modified;
+	};
+
 	t.getSchoolPrograms = function(progData, boundaryID, adminLevel) {
 		var groupByPartner = _.groupBy(progData.features, 'partner')
 		var modified = _.mapObject(groupByPartner, function(programs) {

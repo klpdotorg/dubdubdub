@@ -27,53 +27,53 @@
     // FIX THIS LATER
     $('#map-canvas').css('zIndex', 1);
     $infoXHR.done(function(data) {
-        var boundary = data.properties.boundary;
-        var boundaryType = boundary.school_type;
-        if (boundaryType === 'primaryschool') {
-          renderPrimarySchool(data, acadYear);
-        } else {
-          renderPreSchool(data, acadYear);
-        }
+      var boundary = data.properties.boundary;
+      var boundaryType = boundary.school_type;
+      if (boundaryType === 'primaryschool') {
+        renderPrimarySchool(data, acadYear);
+      } else {
+        renderPreSchool(data, acadYear);
+      }
 
-        $('.js-trigger-compare').click(function(e) {
-          e.preventDefault();
-          klp.comparison.open(data.properties);
+      $('.js-trigger-compare').click(function(e) {
+        e.preventDefault();
+        klp.comparison.open(data.properties);
+      });
+      var geom;
+      if (boundary.geometry) {
+        geom = boundary.geometry;
+      } else {
+        geom = null;
+      }
+
+      if (geom && geom.coordinates) {
+        var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
+        var map = L.map('map-canvas', {
+          touchZoom: false,
+          scrollWheelZoom: false,
+          doubleClickZoom: false,
+          boxZoom: false,
+          zoomControl: false,
+          attributionControl: false
+        }).setView(markerLatlng, 15);
+
+        L.tileLayer(klp.settings.tilesURL, {
+          attribution: 'OpenStreetMap, OSM-Bright'
+        }).addTo(map);
+
+        var marker = L.geoJson(geom, {
+          pointToLayer: function(feature, latLng) {
+            return L.marker(latLng, {
+              icon: klp.utils.mapIcon("primaryschool_cluster")
+            });
+          }
+        }).addTo(map);
+
+        map.panBy([0, 50], {
+          animate: true,
+          duration: 0.50
         });
-        var geom;
-        if (boundary.geometry) {
-          geom = boundary.geometry;
-        } else {
-          geom = null;
-        }
-
-        if (geom && geom.coordinates) {
-          var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
-          var map = L.map('map-canvas', {
-            touchZoom: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false,
-            boxZoom: false,
-            zoomControl: false,
-            attributionControl: false
-          }).setView(markerLatlng, 15);
-
-          L.tileLayer(klp.settings.tilesURL, {
-            attribution: 'OpenStreetMap, OSM-Bright'
-          }).addTo(map);
-
-          var marker = L.geoJson(geom, {
-            pointToLayer: function(feature, latLng) {
-              return L.marker(latLng, {
-                icon: klp.utils.mapIcon("primaryschool_cluster")
-              });
-            }
-          }).addTo(map);
-
-          map.panBy([0, 50], {
-            animate: true,
-            duration: 0.50
-          });
-        } else {
+      } else {
           //if school does not have any coordinates, what to do?
           $('.map-canvas').hide();
         }
@@ -84,50 +84,50 @@
         var html = tpl(context);
         $('#boundary-info-wrapper').html(html);
       })
-      .fail(function(err) {
-        klp.utils.alertMessage("Something went wrong. Please try later.", "error");
-      });
-  }
+.fail(function(err) {
+  klp.utils.alertMessage("Something went wrong. Please try later.", "error");
+});
+}
 
-  function renderPrimarySchool(data, academicYear) {
-    var queryParams = {};
-    var boundaryName = data.properties.boundary.name;
-    var boundaryType = data.properties.boundary.type;
-    var boundaryID = data.properties.boundary.id;
-    var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
-    queryParams[adminLevel] = boundaryID;
-    $('#school-data').removeClass("hidden");
-    klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
-      .done(function(diseData) {
-        var boundary = diseData[0].children[0]
-        console.log('boundary', boundary);
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
-          .done(function(diseData) {
-            console.log('diseData', diseData);
-            renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
-            renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
-            renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
-            renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
-          })
-          .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-          })
-      })
-      .fail(function(err) {
-        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-      });
-    
-    renderLanguages(utils.getSchoolsByLanguage(data), 'school');
+function renderPrimarySchool(data, academicYear) {
+  var queryParams = {};
+  var boundaryName = data.properties.boundary.name;
+  var boundaryType = data.properties.boundary.type;
+  var boundaryID = data.properties.boundary.id;
+  var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
+  queryParams[adminLevel] = boundaryID;
+  $('#school-data').removeClass("hidden");
+  klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
+  .done(function(diseData) {
+    var boundary = diseData[0].children[0]
+    console.log('boundary', boundary);
+    klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
+    .done(function(diseData) {
+      console.log('diseData', diseData);
+      renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
+      renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
+      renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
+      renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
+    })
+    .fail(function(err) {
+      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+    })
+  })
+  .fail(function(err) {
+    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+  });
+
+  renderLanguages(utils.getSchoolsByLanguage(data), 'school');
     //renderEnrolment("school");
     //renderGrants();   
 
     klp.api.do('programme/', queryParams)
-      .done(function(progData) {
-        renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
-      })
-      .fail(function(err) {
-        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-      });
+    .done(function(progData) {
+      renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
+    })
+    .fail(function(err) {
+      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+    });
     console.log('data', data);
   }
 
@@ -137,20 +137,19 @@
     var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
     queryParams[adminLevel] = boundaryID;
     klp.api.do('programme/', queryParams)
-      .done(function(progData) {
-        renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
-      })
-      .fail(function(err) {
-        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-      });
+    .done(function(progData) {
+      renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
+    })
+    .fail(function(err) {
+      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+    });
     $('#preschool-data').removeClass("hidden");
     renderSummary(utils.getPreSchoolSummary(data), 'preschool');
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
     renderCategories(utils.getPreSchoolCategories(data), 'preschool');
-    renderLanguages(utils.getSchoolsByLanguage(data), 'preschool');
-
-    //To do: Connect with Infra + Enrolment API. 
-    renderEnrolment("preschool");
+    renderLanguages(utils.getMotherTongue(data.properties), 'preschool');    
+    renderEnrollment(utils.getPreSchoolEnrollment(data.properties),"preschool");
+    //To do: Render Infra
     renderInfra("preschool");
     console.log('data', data);
   }
@@ -223,152 +222,143 @@
             "perc": 39
         }
         
-    };*/
-    var tpl_func = "#tpl-language";
-    var prefix = '';
-    if (schoolType == "preschool") {
-      prefix = "ang-"
-      tpl_func = "#tpl-ang-language";
+      };*/
+      var tpl_func = "#tpl-language";
+      var prefix = '';
+      if (schoolType == "preschool") {
+        prefix = "ang-"
+        tpl_func = "#tpl-ang-language";
+      }
+      var tpl = swig.compile($(tpl_func).html());
+      var html = tpl({
+        "languages": data
+      });
+      $('#' + prefix + 'klp-language').html(html);
     }
-    var tpl = swig.compile($(tpl_func).html());
-    var html = tpl({
-      "languages": data
-    });
-    $('#' + prefix + 'klp-language').html(html);
-  }
 
-  function renderEnrolment(schoolType) {
-    var data = null;
-    if (schoolType == "school") {
-      data = {
-        "model primary": {
-          "type_name": "model primary",
-          "count": 2000,
-          "perc": 21,
-          "avg": 80
+    function renderEnrollment(data, schoolType) {
+      /*var data = null;
+      if (schoolType == "school") {
+        data = {
+          "model primary": {
+            "type_name": "model primary",
+            "count": 2000,
+            "perc": 21,
+            "avg": 80
+          },
+          "upper primary": {
+            "type_name": "upper primary",
+            "count": 4000,
+            "perc": 80,
+            "avg": 100
+          },
+          "lower primary": {
+            "type_name": "lower primary",
+            "count": 1000,
+            "perc": 19,
+            "avg": 90
+          }
+
+        };
+      } else {
+        data = {         
+          "anganwadi": {
+            "type_name":"anganwadi",
+            "klp_enrol" :20
+          },
+          "balwadi": {
+            "type_name":"balwadi",
+            "klp_enrol" :22
+          },
+          "independent balwadi": {
+            "type_name":"independent balwadi",
+            "klp_enrol" :24          
+          },
+          "others": {
+            "type_name":"others",
+            "klp_enrol" :30         
+          }
+        };
+      }*/
+
+      var tpl = swig.compile($('#tpl-enrolment').html());
+      var prefix = 'dise-';
+      if (schoolType == "preschool") {
+        prefix = "ang-"
+        tpl = swig.compile($('#tpl-ang-enrolment').html());
+      }
+       var html = tpl({"categories": data});
+      $('#' + prefix + 'enrolment').html(html);
+    }
+
+    function renderGrants() {
+      var data = {
+        "received": {
+          "sg_perc": 35,
+          "sg_amt": 3500,
+          "smg_perc": 55,
+          "smg_amt": 5500,
+          "tlm_perc": 10,
+          "tlm_amt": 1000
         },
-        "upper primary": {
-          "type_name": "upper primary",
-          "count": 4000,
-          "perc": 80,
-          "avg": 100
-        },
-        "lower primary": {
-          "type_name": "lower primary",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
+        "expected": {
+          "sg_perc": 35,
+          "sg_amt": 3500,
+          "smg_perc": 55,
+          "smg_amt": 5500,
+          "tlm_perc": 10,
+          "tlm_amt": 1000
         }
-
       };
-    } else {
-      data = {
-        "anganwadi": {
-          "type_name": "anganwadi",
-          "count": 2000,
-          "perc": 21,
-          "avg": 80
-        },
-        "balwadi": {
-          "type_name": "balwadi",
-          "count": 4000,
-          "perc": 80,
-          "avg": 100
-        },
-        "independent balwadi": {
-          "type_name": "independent balwadi",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
-        },
-        "others": {
-          "type_name": "others",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
-        }
-      };
+      drawStackedBar([
+        [data["expected"]["sg_perc"]],
+        [data["expected"]["smg_perc"]],
+        [data["expected"]["tlm_perc"]]
+        ], "#chart-expected");
+      drawStackedBar([
+        [data["received"]["sg_perc"]],
+        [data["received"]["smg_perc"]],
+        [data["received"]["tlm_perc"]]
+        ], "#chart-received");
+
+      var tpl = swig.compile($('#tpl-grants').html());
+      var html = tpl({
+        "grants": data["expected"]
+      });
+      $('#dise-expected').html(html);
+      html = tpl({
+        "grants": data["received"]
+      });
+      $('#dise-received').html(html);
     }
 
-    var tpl = swig.compile($('#tpl-enrolment').html());
-    var html = tpl({
-      "categories": data
-    });
-    var prefix = 'dise-';
-    if (schoolType == "preschool") {
-      prefix = "ang-"
-    }
-    $('#' + prefix + 'enrolment').html(html);
-  }
-
-  function renderGrants() {
-    var data = {
-      "received": {
-        "sg_perc": 35,
-        "sg_amt": 3500,
-        "smg_perc": 55,
-        "smg_amt": 5500,
-        "tlm_perc": 10,
-        "tlm_amt": 1000
-      },
-      "expected": {
-        "sg_perc": 35,
-        "sg_amt": 3500,
-        "smg_perc": 55,
-        "smg_amt": 5500,
-        "tlm_perc": 10,
-        "tlm_amt": 1000
-      }
-    };
-    drawStackedBar([
-      [data["expected"]["sg_perc"]],
-      [data["expected"]["smg_perc"]],
-      [data["expected"]["tlm_perc"]]
-    ], "#chart-expected");
-    drawStackedBar([
-      [data["received"]["sg_perc"]],
-      [data["received"]["smg_perc"]],
-      [data["received"]["tlm_perc"]]
-    ], "#chart-received");
-
-    var tpl = swig.compile($('#tpl-grants').html());
-    var html = tpl({
-      "grants": data["expected"]
-    });
-    $('#dise-expected').html(html);
-    html = tpl({
-      "grants": data["received"]
-    });
-    $('#dise-received').html(html);
-  }
-
-  function drawStackedBar(data, element_id) {
-    new Chartist.Bar(element_id, {
-      labels: [''],
-      series: data
-    }, {
-      stackBars: true,
-      horizontalBars: true,
-      axisX: {
-        showGrid: false
-      },
-      axisY: {
-        showGrid: false,
-        labelInterpolationFnc: function(value) {
-          return '';
+    function drawStackedBar(data, element_id) {
+      new Chartist.Bar(element_id, {
+        labels: [''],
+        series: data
+      }, {
+        stackBars: true,
+        horizontalBars: true,
+        axisX: {
+          showGrid: false
+        },
+        axisY: {
+          showGrid: false,
+          labelInterpolationFnc: function(value) {
+            return '';
+          }
         }
-      }
-    }).on('draw', function(data) {
-      if (data.type === 'bar') {
-        data.element.attr({
-          style: 'stroke-width: 20px'
-        });
-      }
-    });
-  }
+      }).on('draw', function(data) {
+        if (data.type === 'bar') {
+          data.element.attr({
+            style: 'stroke-width: 20px'
+          });
+        }
+      });
+    }
 
-  function renderInfra(facilities, schoolType) {
-    var tpl = swig.compile($('#tpl-infra-summary').html());
+    function renderInfra(facilities, schoolType) {
+      var tpl = swig.compile($('#tpl-infra-summary').html());
 
     /*var facilities = [{
       'facility': 'All weather pucca building',
