@@ -104,8 +104,8 @@
 		data.properties.cat.forEach(function(category, index, arr) {
 			modified[category.cat] = {
 				'type_name': category.cat,
-				'klp_perc': getPercentage(category.num, total),
-				'klp_count': category.num
+				'klp_perc': getPercentage(category.num_schools, total),
+				'klp_count': category.num_schools
 			}
 		})
 		return modified;
@@ -114,14 +114,14 @@
 	t.getPrimarySchoolCategories = function(klpData, diseData) {
 		var schoolCategories = {};
 		var upperPrimaryCategories = [2,3,4,5,6,7];
-		var diseCategories = diseData.school_categories.reduce(function(soFar, category) {
+		var diseCategories = diseData.school_categories.reduce(function(sumSchools, category) {
 			if (category.id == 1) {
-				soFar.lowerPrimary = category.sum_schools;
+				sumSchools.lowerPrimary = category.sum_schools;
 			}
 			else if (_.contains(upperPrimaryCategories, category.id)){
-				soFar.upperPrimary += category.sum_schools;
+				sumSchools.upperPrimary += category.sum_schools;
 			}	
-			return soFar
+			return sumSchools
 		}, { lowerPrimary: 0,upperPrimary: 0 });
 		
 		schoolCategories["upper primary"] = {

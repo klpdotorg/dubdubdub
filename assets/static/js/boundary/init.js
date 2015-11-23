@@ -29,7 +29,6 @@
     $infoXHR.done(function(data) {
         var boundary = data.properties.boundary;
         var boundaryType = boundary.school_type;
-
         if (boundaryType === 'primaryschool') {
           renderPrimarySchool(data, acadYear);
         } else {
