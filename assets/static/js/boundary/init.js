@@ -146,7 +146,7 @@ function renderPrimarySchool(data, academicYear) {
     $('#preschool-data').removeClass("hidden");
     renderSummary(utils.getPreSchoolSummary(data), 'preschool');
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
-    renderCategories(utils.getPreSchoolCategories(data), 'preschool');
+    renderCategories(utils.getPreSchoolCategories(data.properties), 'preschool');
     renderLanguages(utils.getMotherTongue(data.properties), 'preschool');    
     renderEnrollment(utils.getPreSchoolEnrollment(data.properties),"preschool");
     //To do: Render Infra

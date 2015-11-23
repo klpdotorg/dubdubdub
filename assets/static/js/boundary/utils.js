@@ -99,9 +99,10 @@
 		}
 	};
 	t.getPreSchoolCategories = function(data) {
-		var total = data.properties.num_schools;
-		var modified = {}
-		data.properties.cat.forEach(function(category, index, arr) {
+		var total = data.num_schools;
+		var modified = {};
+		var sortedCategories = _.sortBy(data.cat, "num_schools").reverse();
+		sortedCategories.forEach(function(category, index, arr) {
 			modified[category.cat] = {
 				'type_name': category.cat,
 				'klp_perc': getPercentage(category.num_schools, total),
