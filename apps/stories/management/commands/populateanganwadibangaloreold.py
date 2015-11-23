@@ -34,7 +34,7 @@ class Command(BaseCommand):
         user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         questions = [
-            "Anganwadi worker is aware of year of establishment of this Anganwadi (Ask Anganwadi Worker)",
+            "Anganwadi worker is aware of year of establishment of this Anganwadi",
             "Anganwadi worker was present on time during visit",
             "Anganwadi helper was present on time during visit",
             "Anganwadi runs in its own building (i.e designated for running Anganwadi,built by the Woman & Child department)",
@@ -55,7 +55,7 @@ class Command(BaseCommand):
             "Store room is clean",
             "Food to be distributed on that day was covered properly",
             "All children got the meals on time on the day of visit",
-            "The cook maintains cleanliness and wore clean clothes on the day of visit",
+            "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "There is separate facility for washing hands after meals",
             "Center has water available in the taps",
             "There is regular water supply in the tap",
@@ -66,20 +66,20 @@ class Command(BaseCommand):
             "Toilet roof is maintained to avoid children from sun/rain",
             "There is water facility in the toilet",
             "Jug is easily available to children in the toilet",
-            "The toilet's interior and the basin are free of stink and moss"
+            "The toilet's interior and the basin are free of stink and moss",
             "First aid box contains all the necessary items",
             "Materials available in first aid box are being used",
             "There is black board in the center",
-            "Black board is convenient for children and teacher's viewing and writing"
+            "Black board is convenient for children and teacher's viewing and writing",
             "Children register book is maintained by anganwadi worker",
-            "The Anganwadi worker daily signs and confirms that children's attendance is as per the attendance register"
+            "The Anganwadi worker daily signs and confirms that children's attendance is as per the attendance register",
             "Name of the student who has taken TC is circled and comment written",
             "Anganwadi worker has maintained the document on all the children who have passed out of Anganwadi last year and are aware of their whereabouts",
             "50% of attendance was there at the time of visit",
             "Progress in children learning is documented",
             "Teacher's diary is maintained",
             "Anganwadi worker maintains the attendance register of the Anganwadi staff",
-            "Accounting records is maintained",
+            "Accounting records are maintained",
             "Learning material record is maintained",
             "Anganwadi has a record of health details of each children",
             "Medical check was done within last 3 months",
@@ -93,7 +93,7 @@ class Command(BaseCommand):
             "Anganwadi Centre has a list of roles and responsibilities of BVS as prescribed by the Govt.",
             "Bala Vikas Samithi meeting is conducted",
             "Anganwadi friendship group is formed",
-            "Friends of Anganwadi members are conducting the activities(ask Akshara FC & cross check with FoA members)",
+            "Friends of Anganwadi members are conducting the activities",
             "Anganwadi worker is trained",
             "The Anganwadi calendar has been prepared(ask Anganwadi worker cross check records)",
             "Anganwadi has Akshara Anganwadi center Preparedness kit (through observation)",
