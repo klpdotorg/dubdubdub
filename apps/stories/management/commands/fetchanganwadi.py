@@ -236,6 +236,8 @@ class Command(BaseCommand):
                     answer = row[answer_column].strip()
                     if answer == '2':
                         answer = 'Unknown'
+                    else:
+                        answer = accepted_answers[answer]
 
                     question = Question.objects.get(
                         questiongroup=question_group,
@@ -251,6 +253,22 @@ class Command(BaseCommand):
                     if answer == 'NA':
                         answer = 'Unknown'
 
+                    question = Question.objects.get(
+                        questiongroup=question_group,
+                        questiongroupquestions__sequence=sequence_number,
+                    )
+                    answer = Answer.objects.get_or_create(
+                        story=story,
+                        question=question,
+                        text=answer,
+                    )
+                elif csv_format == 'v1' and sequence_number == 16:
+                    # To invert the answers of column 16
+                    answer = row[answer_column].strip()
+                    if answer == '1':
+                        answer = 'No'
+                    else:
+                        answer = 'Yes'
                     question = Question.objects.get(
                         questiongroup=question_group,
                         questiongroupquestions__sequence=sequence_number,
