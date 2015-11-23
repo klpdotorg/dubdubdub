@@ -52,7 +52,7 @@ class Command(BaseCommand):
             "Food to be distributed on that day was covered properly",
             "All children got the meals on time on the day of visit",
             "Afternoon food was distributed at the time of visit (mention the time)",
-            "The cook / chef  maintains cleanliness and wore clean clothes on the day of visit",
+            "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "There is separate facility for washing hands after meals",
             "Center has water available in the taps",
             "There is regular water supply in the tap",

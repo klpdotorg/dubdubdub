@@ -49,7 +49,7 @@ class Command(BaseCommand):
             "Store room is maintained to preserve food items",
             "Store room is clean",
             "Food to be distributed on that day was covered properly",
-            "The cook / chef  maintains cleanliness and wore clean clothes on the day of visit",
+            "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "There is separate facility for washing hands after meals",
             "First aid box contains all the necessary items",
             "There is sufficient learning material and playing items for children",
