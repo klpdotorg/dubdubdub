@@ -90,7 +90,7 @@ class Command(BaseCommand):
             "Bala Vikas Samithi is present",
             "Has maintained the roster of members (ask Aya or Worker & cross check records)",
             "BVS proceedings book exists",
-            "Anganwadi Centre has a list of roles and responsibilities of BVS as prescribed by the Govt.",
+            "Anganwadi centre has a list of roles and responsibilities of BVS as prescribed by the Govt.",
             "Bala Vikas Samithi meeting is conducted",
             "Anganwadi friendship group is formed",
             "Friends of Anganwadi members are conducting the activities",

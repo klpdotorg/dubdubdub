@@ -93,7 +93,7 @@ class Command(BaseCommand):
             "Regarding learn process",
             "Anganwadi worker is aware of year of establishment of this Anganwadi",
             "Anganwadi center floor is in good shape",
-            "Anganwadi Centre has a list of roles and responsibilities of BVS as prescribed by the Govt.",
+            "Anganwadi center has a list of roles and responsibilities of BVS as prescribed by the Govt.",
             "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "Materials available in first aid box are being used",
             "Bala Vikas Samithi is present",

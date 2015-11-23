@@ -86,7 +86,7 @@ class Command(BaseCommand):
             "Bala Vikas Samithi is present",
             "List of BVS member is maintained",
             "BVS proceedings book exists",
-            "Anganwadi Centre has a list of roles and responsibilities of BVS as prescribed by the Govt.",
+            "Anganwadi center has a list of roles and responsibilities of BVS as prescribed by the Govt.",
             "BVS is functioning as per the rules & regulation",
             "Anganwadi worker is trained",
             "Pre school start time",
