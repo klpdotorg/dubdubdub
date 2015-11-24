@@ -452,11 +452,11 @@ declare
         schs RECORD;
 begin        
         for schs in 
-        select distinct p.ayid as ayid,sg.name as sgname, array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid,sg.name
+        select distinct p.ayid as ayid,array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid
         loop
             for i in 1..array_length(schs.assid_arr,1) 
             loop
-                RAISE NOTICE '%,%,%,%,%',inpid,schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr;
+                RAISE NOTICE '%,%,%,%',inpid,schs.ayid,schs.assid_arr[i],schs.assid_arr;
                 perform fill_assessment_grade_percentilerank(schs.ayid,schs.assid_arr[i],schs.assid_arr);
                 perform fill_student_grade_percentile(schs.ayid,schs.assid_arr[i],schs.assid_arr);
                 perform fill_institution_grade_percentile(schs.assid_arr[i]);
