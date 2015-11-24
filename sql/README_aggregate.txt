@@ -4,6 +4,7 @@ fillassessmentaggregates.sql
 fillboundaryassessments.sql
 gradeassessment-aggregates.sql
 fillgradeassessment-aggregates.sql
+assessmentcorrections.sql
 fillassessments2014-2015.sql
 percentile.sql
 fillpercentile.sql

@@ -53,16 +53,16 @@ CREATE TABLE "tb_boundary_assessment_percentile"(
 /*
 This function calculates the mean value for an assessment for an institution.
 The mean is calcuated for the cohorts values only.
-INPUT:- academic id, student group name (class),assessment id, array of cohorts assessment (e.g. pretest test and post test ids)
+INPUT:- academic id, assessment id, array of cohorts assessment (e.g. pretest test and post test ids)
 OUTPUT:- Fills the tb_institution_assessment_percentile with the mean value
 */
-DROP function fill_institution_mean(int,character(50),int,int[]);
-CREATE OR REPLACE function fill_institution_mean(inayid int,insgname character(50),inassid int,inallassid int[]) returns void as $$
+DROP function fill_institution_mean(int,int,int[]);
+CREATE OR REPLACE function fill_institution_mean(inayid int,inassid int,inallassid int[]) returns void as $$
 declare
         schs RECORD;
         query text;
 begin
-    query:='SELECT distinct sg.sid as sid,sum(se.mark)/count(distinct se.stuid) as mean from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and sg.name='''||insgname||''' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
+    query:='SELECT distinct sg.sid as sid,sum(se.mark)/count(distinct se.stuid) as mean from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
@@ -75,8 +75,6 @@ begin
         end loop;
 end;
 $$ language plpgsql;
-
-
 
 
 /*
@@ -92,11 +90,11 @@ The algorithm for scaling can be described as follows: !
 The value of dm is chosen as 70 and value of mx as 100
 ms is mean of the assessment of all the institutions.
 
-INPUT:- academic id, class,assessment id, cohorts assessment array
+INPUT:- academic id,class,assessment id, cohorts assessment array
 OUTPUT:-inserts valus in tb_student_assessment_percentile
 */
-DROP function fill_student_percentile(int,character(50),int,int[]);
-CREATE OR REPLACE function fill_student_percentile(inayid int,insgname character(50),inassid int,inallassid int[]) returns void as $$
+DROP function fill_student_percentile(int,char[],int,int[]);
+CREATE OR REPLACE function fill_student_percentile(inayid int,insg char[],inassid int,inallassid int[]) returns void as $$
 declare
         schs RECORD;
         query text;
@@ -104,19 +102,21 @@ declare
         mx integer:=100;
 
 begin
-    query:='SELECT stuid as stuid,sid as sid, case when ts>ms.mean then ('||dm||'+(ts-ms.mean)*(100-'||dm||')/('||mx||'-ms.mean)) else (ts*'||dm||'/ms.mean) end as testscore FROM( select distinct stu.id  as stuid, sg.sid as sid,sum(se.mark) as ts from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stusg.ayid = '||inayid||' and sg.name='''||insgname||''' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
+    query:='SELECT distinct stuid as stuid,sid as sid,sgname as sgname, case when ts>ms.mean then ('||dm||'+(ts-ms.mean)*(100-'||dm||')/('||mx||'-ms.mean)) else (ts*'||dm||'/ms.mean) end as testscore FROM( select distinct stu.id  as stuid,sg.name as sgname, sg.sid as sid,sum(se.mark) as ts from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu  WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stusg.ayid = '||inayid||' and sg.name !~ ''10'' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
         end loop;
-        query=query||'group by stu.id,sg.sid) as innerloop,(select sum(mean)/count(*) as mean from tb_institution_assessment_percentile where assid='||inassid||')as ms';
+        query=query||'group by stu.id,sg.sid,sg.name) as innerloop,(select sum(mean)/count(*) as mean from tb_institution_assessment_percentile where assid='||inassid||')as ms';
         --RAISE NOTICE '%', query;
         for schs in execute query
         loop
-          insert into tb_student_assessment_percentile values (schs.stuid,insgname,schs.sid,inassid,schs.testscore);
+          insert into tb_student_assessment_percentile values (schs.stuid,schs.sgname,schs.sid,inassid,schs.testscore);
         end loop;
 end;
 $$ language plpgsql;
+
+
 
 
 /*
@@ -417,13 +417,16 @@ declare
         schs RECORD;
 begin        
         for schs in 
-        select distinct p.ayid as ayid,sg.name as sgname, array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid,sg.name
+        select ayid,array_agg(distinct trim(sgname)) as sgname_arr,assid_arr from(select distinct p.ayid as ayid,sg.name as sgname, array_agg(distinct ass.id) assid_arr from tb_assessment ass,tb_programme p,tb_student_eval se,tb_student_class stusg,tb_class sg,tb_question q,tb_school s,tb_boundary b where se.qid=q.id and q.assid=ass.id and ass.pid=p.id and p.id=inpid and se.stuid=stusg.stuid and stusg.clid=sg.id and stusg.ayid=p.ayid and sg.sid=s.id and s.bid=b.id and b.type=p.type group by p.ayid,sg.name)sub group by ayid,assid_arr
         loop
             for i in 1..array_length(schs.assid_arr,1) 
             loop
-                RAISE NOTICE '%,%,%,%,%',inpid,schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr;
-                perform fill_institution_mean(schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr);
-                perform fill_student_percentile(schs.ayid,schs.sgname,schs.assid_arr[i],schs.assid_arr);
+                RAISE NOTICE '%,%,%,%',inpid,schs.ayid,schs.assid_arr[i],schs.assid_arr;
+                perform fill_institution_mean(schs.ayid,schs.assid_arr[i],schs.assid_arr);
+                for j in 1..array_length(schs.sgname_arr,1)
+                loop
+                   perform fill_student_percentile(schs.ayid,schs.sgname_arr[j],schs.assid_arr[i],schs.assid_arr);
+                end loop;
                 perform fill_institution_percentile(schs.assid_arr[i]);
                 perform fill_studentgroup_percentile(schs.assid_arr[i]);
                 perform fill_boundary_percentile(schs.assid_arr[i]);
