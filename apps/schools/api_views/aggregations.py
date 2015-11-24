@@ -4,11 +4,15 @@ from schools.serializers import (
     BoundarySerializer, AssemblySerializer, ParliamentSerializer,
     PincodeSerializer, BoundaryWithGrandparentSerializer
 )
+
+import dubdubdub.urls
+
 from common.models import SumCase
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
 from django.db.models import Q, Count, Sum
+from django.core.urlresolvers import resolve
 from rest_framework.response import Response
 from rest_framework import exceptions
 
@@ -80,6 +84,7 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
     def get(self, request, id=None):
         boundary_id = id
         year = request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
+        source = request.GET.get('source', None)
 
         try:
             academic_year = AcademicYear.objects.get(name=year)
@@ -94,6 +99,18 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
         active_schools = boundary.schools()
         agg = self.get_aggregations(active_schools, academic_year)
         agg['boundary'] = BoundaryWithGrandparentSerializer(boundary, context={'request': request}).data
+
+        # Getting the Anganwadi infrastructure data from the
+        # StoryDetail view.
+        if source:
+            view, args, kwargs = resolve(
+                '/api/v1/stories/details/',
+                urlconf = dubdubdub.urls
+            )
+            kwargs['request'] = request
+            kwargs['boundary'] = boundary
+            stories_response = view(*args, **kwargs)
+            agg['infrastructure'] = stories_response.data
 
         # Not using serializer because we need to do the aggregations here
         # and return the results directly
