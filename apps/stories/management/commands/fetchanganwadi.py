@@ -211,10 +211,16 @@ class Command(BaseCommand):
                         questiongroup=question_group,
                         questiongroupquestions__sequence=sequence_number,
                     )
+
+                    if question.question_type.name == 'numeric':
+                        answer_text = row[answer_column].strip()
+                    else:
+                        answer_text = accepted_answers[row[answer_column].strip()]
+
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=accepted_answers[row[answer_column].strip()],
+                        text=answer_text,
                     )
                 elif row[answer_column].strip() in accepted_answers['dates']:
                     question = Question.objects.get(
@@ -224,12 +230,12 @@ class Command(BaseCommand):
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=row[answer_column],
+                        text=row[answer_column].strip(),
                     )
                 elif csv_format == 'v2' and sequence_number in range(1, 8):
-                    answer = row[answer_column].strip()
-                    if answer == 'NA':
-                        answer = 'Unknown'
+                    answer_text = row[answer_column].strip()
+                    if answer_text == 'NA':
+                        answer_text = 'Unknown'
 
                     question = Question.objects.get(
                         questiongroup=question_group,
@@ -238,16 +244,16 @@ class Command(BaseCommand):
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=answer,
+                        text=answer_text,
                     )
                 elif csv_format == 'v2' and sequence_number == 16:
                     # This special case is because column 16 uses
                     # '2' to specify 'Unknown/NA'.
-                    answer = row[answer_column].strip()
-                    if answer == '2':
-                        answer = 'Unknown'
+                    answer_text = row[answer_column].strip()
+                    if answer_text == '2':
+                        answer_text = 'Unknown'
                     else:
-                        answer = accepted_answers[answer]
+                        answer_text = accepted_answers[answer_text]
 
                     question = Question.objects.get(
                         questiongroup=question_group,
@@ -256,12 +262,12 @@ class Command(BaseCommand):
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=answer,
+                        text=answer_text,
                     )
                 elif csv_format == 'v1' and sequence_number in [1, 2, 3, 4, 5, 35, 36]:
-                    answer = row[answer_column].strip()
-                    if answer == 'NA':
-                        answer = 'Unknown'
+                    answer_text = row[answer_column].strip()
+                    if answer_text == 'NA':
+                        answer_text = 'Unknown'
 
                     question = Question.objects.get(
                         questiongroup=question_group,
@@ -270,15 +276,15 @@ class Command(BaseCommand):
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=answer,
+                        text=answer_text,
                     )
                 elif csv_format == 'v1' and sequence_number == 16:
                     # To invert the answers of column 16
-                    answer = row[answer_column].strip()
-                    if answer == '1':
-                        answer = 'No'
+                    answer_text = row[answer_column].strip()
+                    if answer_text == '1':
+                        answer_text = 'No'
                     else:
-                        answer = 'Yes'
+                        answer_text = 'Yes'
                     question = Question.objects.get(
                         questiongroup=question_group,
                         questiongroupquestions__sequence=sequence_number,
@@ -286,7 +292,7 @@ class Command(BaseCommand):
                     answer = Answer.objects.get_or_create(
                         story=story,
                         question=question,
-                        text=answer,
+                        text=answer_text,
                     )
                 else:
                     print "Answer not found: " + str(row[answer_column].strip())
