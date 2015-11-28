@@ -192,7 +192,7 @@
 </script-->
 
 <script type="text/html" id="tpl-language">
-  {% for language in languages %} 
+  {% for name, language in languages %} 
         <div class=" compare-each-block">
         <div class="bar-graph-wrap float-left">
           <div class="bar-custom">
@@ -203,7 +203,7 @@
           <div class="bar-percent green-leaf">{{ language.mt_perc }}%</div>
         </div>
 
-        <div class="compare-section-heading center-text">{{ language.typename|capitalize }}</div>
+        <div class="compare-section-heading center-text">{{ name|capitalize }}</div>
 
         <div class="bar-graph-wrap float-right">
           <div class="bar-percent">{{ language.moi_perc }}%</div>

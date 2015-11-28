@@ -9,7 +9,7 @@
     'circle': 'admin_3'
   };
   klp.init = function() {
-    utils = klp.boundaryUtils;
+    utils = klp.boundaryUtils;    
     //klp.router = new KLPRouter({});
     //klp.router.init();       
     //klp.router.start();
@@ -33,8 +33,7 @@
         renderPrimarySchool(data, acadYear);
       } else {
         renderPreSchool(data, acadYear);
-      }
-
+      }      
       $('.js-trigger-compare').click(function(e) {
         e.preventDefault();
         klp.comparison.open(data.properties);
@@ -102,12 +101,13 @@ function renderPrimarySchool(data, academicYear) {
     var boundary = diseData[0].children[0]
     console.log('boundary', boundary);
     klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
-    .done(function(diseData) {
+    .done(function(diseData) {      
       console.log('diseData', diseData);
       renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
       renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
       renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
       renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
+      renderEnrollment(utils.getSchoolEnrollment(data.properties, diseData.properties),"school");
     })
     .fail(function(err) {
       klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -117,8 +117,8 @@ function renderPrimarySchool(data, academicYear) {
     klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
   });
 
-  renderLanguages(utils.getSchoolsByLanguage(data), 'school');
-    //renderEnrolment("school");
+  renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
+  
     //renderGrants();   
 
     klp.api.do('programme/', queryParams)
