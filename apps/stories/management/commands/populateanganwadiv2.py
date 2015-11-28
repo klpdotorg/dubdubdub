@@ -9,16 +9,16 @@ from stories.models import (
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Anganwadi Bangalore 2014-15 v1
+    help = """Populate DB with Anganwadi Bangalore 2014-15 v2
 
-    ./manage.py populateanganwadiv1"""
+    ./manage.py populateanganwadiv2"""
 
     def handle(self, *args, **options):
         s = Source.objects.get_or_create(name="anganwadi")[0]
         start_date = datetime.strptime('2014-08-18', '%Y-%m-%d')
         end_date = datetime.strptime('2015-12-30', '%Y-%m-%d')
         question_group = Questiongroup.objects.get_or_create(
-            version=1,
+            version=2,
             source=s,
             start_date=start_date,
             end_date=end_date,
@@ -33,42 +33,32 @@ class Command(BaseCommand):
             "Number of students enrolled (girls)",
             "Number of students present (boys)",
             "Number of students present (girls)",
+            "Number of students with special needs (boys)",
+            "Number of students with special needs (girls)",
             "Where is the center functioning",
             "The anganwadi center is in a spacious room (35 sq according to ecce rule), meaning there is an indoor enclosure",
             "There is an outdoor space for 30 children, with space of 30sq",
+            "Anganwadi center walls are in good shape",
+            "Anganwadi center floor is in good shape",
+            "Anganwadi center roof is in good shape",
             "There is a toilet for children to use",
+            "Children are using toilet",
+            "Center has water available in the taps",
             "There is pure drinking water facility",
-            "There is safety around the center",
-            "There is cleanliness around the center",
-            "The building is safe",
-            "There is basic facility for children with special needs",
-            "There is seating facility available for children",
-            "There are clean rooms to sit for children",
-            "The floor, walls, corners of walls and roof are free of cobweb and dust",
-            "There is dust bin in the center",
-            "Store room is maintained to preserve food items",
-            "Store room is clean",
             "Food to be distributed on that day was covered properly",
-            "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "There is separate facility for washing hands after meals",
-            "First aid box contains all the necessary items",
-            "There is sufficient learning material and playing items for children",
-            "There is sufficient learning material for indoor activities",
-            "Indoor learning materials are being used by children",
             "There is black board in the center",
-            "Anganwadi Center wall was painted and was full of writings related to learning",
-            "Anganwadi has a record of health details of each children",
-            "Bala Vikas Samithi is present",
-            "Anganwadi friendship group is formed",
-            "Friends of Anganwadi members are conducting the activities",
-            "Anganwadi worker is trained",
             "Learning materials are present in the center",
-            "Number of students with special needs (boys)",
-            "Number of students with special needs (girls)"
+            "Anganwadi worker is trained",
+            "Activities are conducted using learning material by the anganwadi worker",
+            "Children learning value correction is done for 2013-14",
+            "Progress in children learning is documented",
+            "Bala Vikas Samithi is present",
+            "Bala Vikas Samithi meeting is conducted"
         ]
 
         for count, question in enumerate(questions):
-            if count in [0, 1, 2, 3, 4, 34, 35]:
+            if count in range(0, 7):
                 question_type = question_type_numeric
                 options = None
             else:
@@ -87,4 +77,4 @@ class Command(BaseCommand):
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
 
-        print "Anganwadi Bangalore 2014-15 v1 questions populated."
+        print "Anganwadi Bangalore 2014-15 v2 questions populated"

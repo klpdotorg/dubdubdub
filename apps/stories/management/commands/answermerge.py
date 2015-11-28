@@ -22,7 +22,7 @@ class Command(BaseCommand):
             },
 
             'radio'   : {
-                'Yes'     : ['yes', 'Yes', 'YES'],
+                'Yes'     : ['yes', 'Yes', 'YES', 'on'],
                 'No'      : ['NO', 'No'],
                 'Unknown' : ['Do Not Know'],
             },
@@ -36,22 +36,22 @@ class Command(BaseCommand):
         }
 
         # Deleting duplicate questions without any answers. This is a special case.
-        questions = Question.objects.filter(text__icontains='An All weather (pucca) building')
-        for question in questions:
-            if not question.answer_set.all().exists():
-                question.delete()
+        # questions = Question.objects.filter(text__icontains='An All weather (pucca) building')
+        # for question in questions:
+        #     if not question.answer_set.all().exists():
+        #         question.delete()
 
         # Converting question_type of certain questions to numeric. Concluded the type after
         # Manually inspecting
-        question_type = QuestionType.objects.get(name="numeric")
-        questions = ['What was the total numbers of teachers present (including head master)?',
-                     'How many classrooms had no teachers in the class?',
-                     'How many functional class rooms (exclude rooms that are not used for conducting classes for whatever reason) does the school have?'
-                 ]
-        for question in questions:
-            q = Question.objects.get(text__icontains=question)
-            q.question_type = question_type
-            q.save()
+        # question_type = QuestionType.objects.get(name="numeric")
+        # questions = ['What was the total numbers of teachers present (including head master)?',
+        #              'How many classrooms had no teachers in the class?',
+        #              'How many functional class rooms (exclude rooms that are not used for conducting classes for whatever reason) does the school have?'
+        #          ]
+        # for question in questions:
+        #     q = Question.objects.get(text__icontains=question)
+        #     q.question_type = question_type
+        #     q.save()
 
         # Start to merge answers
         answers = Answer.objects.all()
@@ -90,5 +90,5 @@ class Command(BaseCommand):
         # "5": 8, "7": 1, "6": 4, "9": 2, "8": 1,
         # "17": 0, "3": 25, "2": 27, "4": 13,
         # }
-        for answer in answers_to_be_deleted:
-            answer.delete()
+        # for answer in answers_to_be_deleted:
+        #     answer.delete()
