@@ -108,6 +108,7 @@ function renderPrimarySchool(data, academicYear) {
       renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
       renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
       renderEnrollment(utils.getSchoolEnrollment(data.properties, diseData.properties),"school");
+      renderGrants(utils.getGrants(diseData.properties));   
     })
     .fail(function(err) {
       klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -118,8 +119,6 @@ function renderPrimarySchool(data, academicYear) {
   });
 
   renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
-  
-    //renderGrants();   
 
     klp.api.do('programme/', queryParams)
     .done(function(progData) {
@@ -291,41 +290,21 @@ function renderPrimarySchool(data, academicYear) {
       $('#' + prefix + 'enrolment').html(html);
     }
 
-    function renderGrants() {
-      var data = {
-        "received": {
-          "sg_perc": 35,
-          "sg_amt": 3500,
-          "smg_perc": 55,
-          "smg_amt": 5500,
-          "tlm_perc": 10,
-          "tlm_amt": 1000
-        },
-        "expected": {
-          "sg_perc": 35,
-          "sg_amt": 3500,
-          "smg_perc": 55,
-          "smg_amt": 5500,
-          "tlm_perc": 10,
-          "tlm_amt": 1000
-        }
-      };
+    function renderGrants(data) {
+       drawStackedBar([
+        [data["expenditure"]["sg_perc"]],        
+        [data["expenditure"]["tlm_perc"]]
+        ], "#chart-expenditure");
       drawStackedBar([
-        [data["expected"]["sg_perc"]],
-        [data["expected"]["smg_perc"]],
-        [data["expected"]["tlm_perc"]]
-        ], "#chart-expected");
-      drawStackedBar([
-        [data["received"]["sg_perc"]],
-        [data["received"]["smg_perc"]],
+        [data["received"]["sg_perc"]],        
         [data["received"]["tlm_perc"]]
         ], "#chart-received");
 
       var tpl = swig.compile($('#tpl-grants').html());
       var html = tpl({
-        "grants": data["expected"]
+        "grants": data["expenditure"]
       });
-      $('#dise-expected').html(html);
+      $('#dise-expenditure').html(html);
       html = tpl({
         "grants": data["received"]
       });

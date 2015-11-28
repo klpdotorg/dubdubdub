@@ -290,11 +290,34 @@
       obj.total = data[infraHash[facility].key];
       obj.percent = getPercentage(obj.total, totalSchools);
       modified.push(obj);
-    })
-    console.log('modified', modified);
+    })    
     return modified;
   };
 
+  t.getGrants = function(data) {
+    var devGrantReceived = data.sum_school_dev_grant_recd;
+    var devGrantExpenditure = data.sum_school_dev_grant_expnd;
+    var tlmGrantReceived = data.sum_tlm_grant_recd;
+    var tlmGrantExpenditure = data.sum_tlm_grant_expnd;
+    var totalReceived = devGrantReceived + tlmGrantReceived;
+    var totalExpenditure = devGrantExpenditure + tlmGrantExpenditure;
+    var modified = {};
+       var data = {
+        "received": {
+          "sg_perc": Math.round(getPercentage(devGrantReceived, totalReceived)),          
+          "sg_amt": devGrantReceived,
+          "tlm_perc": Math.round(getPercentage(tlmGrantReceived, totalReceived)),
+          "tlm_amt": tlmGrantReceived
+        },
+        "expenditure": {
+          "sg_perc": Math.round(getPercentage(devGrantExpenditure, totalExpenditure)),          
+          "sg_amt": devGrantExpenditure,
+          "tlm_perc": Math.round(getPercentage(tlmGrantExpenditure, totalExpenditure)),
+          "tlm_amt": tlmGrantExpenditure
+        },
+      };
+      return data;
+  }
 
   function getPercentage(value, total) {
     return +(value / total * 100).toFixed(2);
