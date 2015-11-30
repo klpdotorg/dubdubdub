@@ -120,15 +120,15 @@ urlpatterns = patterns(
         }), name='map'),
 
     # report pages
-    url(r'^demographics/$', StaticPageView.as_view(
+    url(r'^reports/demographics/$', StaticPageView.as_view(
         template_name='demographics.html'
         ), name='demographics'),
 
-    url(r'^finance/$', StaticPageView.as_view(
+    url(r'^reports/finance/$', StaticPageView.as_view(
         template_name='finance.html'
         ), name='finance'),
 
-    url(r'^infrastructure/$', StaticPageView.as_view(
+    url(r'^reports/infrastructure/$', StaticPageView.as_view(
         template_name='infrastructure.html'
         ), name='infrastructure'),
 

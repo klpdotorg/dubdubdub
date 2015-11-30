@@ -1,0 +1,163 @@
+{% verbatim %}
+  <script type="text/html" id="tpl-reportDate">
+    <div class="heading-tiny date-header"> Primary School Report | {{today.date}}</div>
+  </script>
+
+  <script type="text/html" id="tpl-topSummary">
+
+    <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
+    <div class="base-spacing-mid"></div>
+    <div class="sect-parent">
+      <div class="sect-third rounded-sect">
+          <div class="heading-tiny-uppercase">Boundary</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
+          <div class="heading-tiny-uppercase">Type</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
+          <div class="heading-tiny-uppercase">Elected Representative</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+      </div><!--sect-third-->
+      <div class="sect-two-third grey-mist-bg rounded-sect">
+          <div class="sect-parent">
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Schools</div>
+                  <h2 class="heading-secondary black align-left">{{data.school_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Teachers</div>
+                  <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}}:1 > <span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">(Recommended)</span></div>
+              </div><!--sect-half-->
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Students</div>
+                  <div class="module-stats-icon module-stats-boygirl"><!--1-->
+                      <span class="icon-boy-girl"></span>
+                      <div class="module-stats-info"><!--2-->
+                          <div class="uppercase">Total</div>
+                          <p class="module-stats-label">{{data.student_total}}</p>
+                      </div><!--2-->
+                  </div><!--1-->
+
+                  <div class="heading-tiny-uppercase">Gender Profile</div>
+                  <div class="module-stats-icon module-stats-girl"><!--2-->
+                      <span class="icon-girl"></span>
+                      <div class="module-stats-info"><!--3-->
+                          <div class="uppercase">Girls</div>
+                          <p class="module-stats-label">{{data.gender.girls}}</p>
+                      </div><!--3-->          
+                  </div><!--2-->    
+                  <div class="module-stats-icon"><!--4-->
+                      <span class="icon-boy"></span>
+                      <div class="module-stats-info"><!--5-->
+                          <div class="uppercase">Boys</div>
+                          <p class="module-stats-label">{{data.gender.boys}}</p>
+                      </div><!--5-->
+                  </div><!--4-->   
+                  
+                  <div class="bar-graph-wrap "><!--1-->
+                      <div class="bar-graph"><!--2-->
+                          <div class="clear-fix"><!--3-->
+                              <div class="float-left pink-salmon">{{data.boy_perc}}%</div>
+                              <div class="float-right brand-blue">{{data.girl_perc}}%</div>
+                          </div><!--3-->
+                          <div class="bar-custom"><!--4-->
+                              <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
+                                  <div class="bar-value bar-value-{{data.girl_perc}} pink-salmon-bg" style="width:{{data.girl_perc}}%;"></div>
+                              </div><!--5-->
+                          </div><!--4-->     
+                      </div> <!-- /bar-graph --><!--2-->
+                  </div> <!-- /bar-graph-wrap --><!--1-->          
+
+              </div><!--sect-half-->
+          </div><!-- inner sect-parent-->
+        </div><!--sect-two-third-->
+      </div><!--sect-parent-->
+  </script>
+
+  <script type="text/html" id="tpl-Category">
+
+      <h2 class="heading-border brand-turquoise">School Category Profile</h2>
+      <div class="sect-parent">
+          <div class="sect-three-quarter rounded-sect">
+            
+            <div class="sect-parent">
+              <!--row headings-->
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">School Distribution by Category</div>
+              </div>
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">Average Enrollment by Category</div>
+              </div>
+              <!--row data-->
+              {% for each in cat %}
+                <div class="sect-half">
+                    <div class="bar-graph-wrap float-left"><!--1-->
+                        <div class="bar-num-label brand-blue">{{each.school_count}}/{{each.school_total}}</div>
+                          <div class="bar-custom tooltip" aria-label="{{each.school_count}} Schools"><!--2-->
+                            <div class="bar-value grey-gravel-bg float-left" style="width:{{each.cat_perc}}%;"></div><!--3-->
+                          </div><!--2-->
+                    <div class="bar-percent grey-gravel">{{each.cat_perc}}%</div><!--6-->
+                  </div><!--1-->
+                </div><!--sect-half-->
+                <div class="sect-half">
+                  <div class="sect-parent">
+                    <div class="sect-two-third"><div class="bar-lookup">{{each.name| capitalize}}</div></div>
+                    <div class="sect-third"><div class="bar-lookup">{{each.enrolled}}</div></div>
+                  </div>
+                </div><!--sect-half-->
+              {% endfor %}
+            </div><!-- inner sect-parent-->
+
+          </div><!--sect-three-quarter-->
+          <div class="sect-quarter grey-mist-bg rounded-sect">
+            <div class="heading-tiny-uppercase">Total Enrollment</div>
+            <div class="base-spacing-sm"></div>
+            {% for each in enrol %}
+              <div class="heading-tiny bold">{{each.text}}: 
+              <span class="brand-blue"> {{each.student_count}}</span> </div>
+              <div class="base-spacing-sm"></div>
+            {% endfor %}           
+          </div><!--sect-quarter-->
+      </div><!--sect-parent-->
+  </script>
+  <script  type="text/html" id="tpl-Language">
+      <h2 class="heading-border brand-turquoise">Language Profile</h2>
+      <div class="sect-parent">
+        <div class="sect-third">
+          <div class="heading-tiny-uppercase float-left">Distribution of</div>
+        </div>
+        <div class="sect-third">
+          <div class="heading-tiny-uppercase center-text">Students by Mother Tongue</div>
+        </div>
+        <div class="sect-third">
+          <div class="heading-tiny-uppercase float-right">Schools by Medium of Instruction</div>
+        </div>
+      </div><!--parent-->
+      {% for each in lang.mt %}
+          <div class="sect-parent">
+            <div class="sect-third">
+              <div class="">{{lang.mt.each}}</div>
+            </div><!--third-->
+            <div class="sect-third">
+              <div class="bar-graph-wrap float-left">
+                <div class="bar-percent green-leaf">{{lang.mt.each.perc}}</div>
+                <div class="bar-custom">
+                  <div class="bar-value green-leaf-bg" style="width:{{lang.mt.each.perc}}%;"></div>
+                  <div class="clear"></div>
+                  <div class="green-leaf font-smaller center-text"><strong>{{lang.mt.each.student_count}} students</strong></div>
+                </div><!--bar-custom-->
+              </div><!--bar-graph-wrap-->
+            </div><!--third-->
+            <div class="sect-third">
+              <div class="bar-graph-wrap float-right">
+                <div class="bar-percent">{{lang.moi.each.perc}}%</div>
+                <div class="bar-custom">
+                  <div class="bar-value grey-gravel-bg" style="width:{{lang.moi.each.perc}}%;"></div>
+                  <div class="font-smaller center-text"><strong>{{lang.moi.each.school_count}} schools</strong></div>
+                </div><!--bar-custom-->
+              </div><!--bar-graph-wrap-->
+            </div><!--third-->
+          </div><!--end parent-->
+      {% endfor %}
+  </script>
+
+{% endverbatim %}
+
