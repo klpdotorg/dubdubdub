@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET.CSS */
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -115,7 +116,7 @@ a {
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .module-stats-label, .bar-label, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
+.picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label, .bar-num-label, .bar-lookup, .per-lookup {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
@@ -127,7 +128,7 @@ a {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code {
+.font-small, .heading-section-ul-alt, .bar-label, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code, .bar-num-label, .bar-lookup, .per-lookup {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .dropdown-base, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .profile-options, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
@@ -4571,5 +4572,112 @@ code {
   position: fixed;
   bottom: 2px;
   right: 2px; }
+
+.top-band {
+  border-top: 5px solid; }
+
+.flap-right {
+  float: right;
+  border-radius: 0 0 5px 5px;
+  width: 200px;
+  height: 35px;
+  padding-top: 5px; }
+
+.rounded-sect {
+  border-radius: 10px;
+  padding-top: 10px; }
+
+.date-header {
+  padding-top: 20px;
+  padding-left: 100px; }
+
+.bar-num-label {
+  display: inline;
+  float: right;
+  padding: 0 5px;
+  text-align: right;
+  margin-top: 3px; }
+
+@media only screen and (max-width: 749px) {
+  .bar-num-label {
+    display: block;
+    float: right;
+    text-align: left; } }
+.bar-lookup {
+  margin-bottom: 15px;
+  margin-top: 3px; }
+
+.per-lookup {
+  margin-bottom: 18px;
+  margin-top: 3px; }
+
+.table-base-comparison th, .table-base-comparison td {
+  width: 120px; }
+
+@media only screen and (max-width: 749px) {
+  .td-label-enrolu:before {
+    content: "Average Enrollment - Upper Primary: "; }
+
+  .td-label-enroll:before {
+    content: "Average Enrollment - Lower Primary: "; }
+
+  .td-label-ptr:before {
+    content: "PTR: "; }
+
+  .td-label-perstu:before {
+    content: "Per Student: "; }
+
+  .td-label-tlm:before {
+    content: "TLM Grant: "; }
+
+  .td-label-sg:before {
+    content: "School Grant: "; }
+
+  .td-label-smg:before {
+    content: "School Maintenance Grant: "; }
+
+  .td-label-year:before {
+    content: "Year: "; }
+
+  .td-label-boundary:before {
+    content: "Boundary: "; } }
+@media only screen and (min-width: 750px) {
+  .sect-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .sect-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .sect-half {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-third {
+    width: 33%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-two-third {
+    width: 66.66%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-quarter {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-three-quarter {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
 
 /*# sourceMappingURL=style.css.map */

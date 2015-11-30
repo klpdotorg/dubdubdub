@@ -1,34 +1,25 @@
+{% load static %}
+{% load compress %}
+{% block css_extra %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/font-awesome.css' %}" media="all">
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../assets/static/images/favicon.ico">
-
-    <title>Finances report</title>
-    <link href="../assets/static/css/style.css" rel="stylesheet">
-    <link href="../assets/static/css/font-awesome.css" rel="stylesheet">
-    <script type="text/javascript" src="../assets/static/js/lib/chartist/chartist.js"></script>
-    <script type="text/javascript" src="../assets/static/js/reports/init.js"></script>
-    <script type="text/javascript">
-      //init();
-      window.onload = init;
-    </script>
-  </head>
-
-  <body >
+{% block endbody %}
+  {% compress js %}
+  <script type="text/javascript" src="{% static 'js/reports/finance.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+{% block content %}
   <div class="container"><!--outer-->
     <!-- Summary section -->
     <div id="summary" class="container">
 
       <div class="top-band brand-red"></div>
       <div class="flap-right brand-red-bg white center-text">FINANCES</div>
-      <a href="/" class="logo"><img src="../assets/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+      <a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
       <div class="heading-tiny date-header"> Primary School Report | 11 November, 2015</div>
       <hr/>
       <div class="heading-secondary heading-border">BANGALORE CENTRAL</div>
@@ -623,5 +614,4 @@
     </table>
     </div><!-- comparison -->
   </div> <!-- outer container -->
-  </body>
-</html>
+{% endblock %}
