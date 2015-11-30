@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../assets/static/images/favicon.ico">
+
+    <title>Finances report</title>
+    <link href="../assets/static/css/style.css" rel="stylesheet">
+    <link href="../assets/static/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="../assets/static/js/lib/chartist/chartist.js"></script>
+    <script type="text/javascript" src="../assets/static/js/reports/init.js"></script>
+    <script type="text/javascript">
+      //init();
+      window.onload = init;
+    </script>
+  </head>
+
+  <body >
+  <div class="container"><!--outer-->
+    <!-- Summary section -->
+    <div id="summary" class="container">
+
+      <div class="top-band brand-red"></div>
+      <div class="flap-right brand-red-bg white center-text">FINANCES</div>
+      <a href="/" class="logo"><img src="../assets/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+      <div class="heading-tiny date-header"> Primary School Report | 11 November, 2015</div>
+      <hr/>
+      <div class="heading-secondary heading-border">BANGALORE CENTRAL</div>
+
+      
+      <div class="base-spacing-mid"></div>
+      <div class="sect-parent">
+        <div class="sect-third rounded-sect">
+          <div class="heading-tiny-uppercase">Boundary</div>
+          <h2 class="heading-secondary brand-blue align-left">BANGALORE CENTRAL</h2> 
+          <div class="heading-tiny-uppercase">Election Commission Code</div>
+          <h2 class="heading-secondary brand-blue align-left">25</h2>
+          <div class="heading-tiny-uppercase">Elected Representative</div>
+          <h2 class="heading-secondary brand-blue align-left">PC MOHAN (BJP)</h2>
+        </div><!--sect-third-->
+        <div class="sect-two-third grey-mist-bg rounded-sect">
+          <div class="sect-parent">
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">Schools</div>
+                <h2 class="heading-secondary black align-left">314</h2> 
+                <div class="heading-tiny-uppercase">Teachers</div>
+                <h2 class="heading-secondary black align-left">2000</h2> 
+                <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
+                <div class="align-left"> <span class="heading-secondary black"> 20:1 > <span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">(Recommended)</span></div>
+              </div>
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">Students</div>
+                  <div class="module-stats-icon module-stats-boygirl"><!--1-->
+                      <span class="icon-boy-girl"></span>
+                      <div class="module-stats-info"><!--2-->
+                          <div class="uppercase">Total</div>
+                          <p class="module-stats-label">47145</p>
+                      </div><!--2-->
+                  </div><!--1-->
+
+                  <div class="heading-tiny-uppercase">Gender Profile</div>
+                  <div class="module-stats-icon module-stats-girl"><!--2-->
+                      <span class="icon-girl"></span>
+                      <div class="module-stats-info"><!--3-->
+                          <div class="uppercase">Girls</div>
+                          <p class="module-stats-label">23118</p>
+                      </div><!--3-->          
+                  </div><!--2-->    
+                  <div class="module-stats-icon"><!--4-->
+                      <span class="icon-boy"></span>
+                      <div class="module-stats-info"><!--5-->
+                          <div class="uppercase">Boys</div>
+                          <p class="module-stats-label">24027</p>
+                      </div><!--5-->
+                  </div><!--4-->   
+                  <div class="bar-graph-wrap "><!--1-->
+                      <div class="bar-graph"><!--2-->
+                          <div class="clear-fix"><!--3-->
+                              <div class="float-left pink-salmon">49%</div>
+                              <div class="float-right brand-blue">51%</div>
+                          </div><!--3-->
+                          <div class="bar-custom"><!--4-->
+                              <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
+                                  <div class="bar-value bar-value-49 pink-salmon-bg" style="width:49%;"></div>
+                              </div><!--5-->
+                          </div><!--4-->     
+                      </div> <!-- /bar-graph --><!--2-->
+                  </div> <!-- /bar-graph-wrap --><!--1-->          
+              </div>
+          </div><!-- inner sect-parent-->
+        </div><!--sect-two-third-->
+      </div><!--sect-parent-->
+    </div><!--summary container -->
+    <div id="grant" class="container">
+        <div class="base-spacing-sm"></div>
+        <hr/>
+        <h2 class="heading-border brand-turquoise">Grant Summary</h2>
+        <div class="sect-parent">
+          <div class="sect-half">
+            <div class="heading-tiny-uppercase  center-text">RECEIVED GRANT</div>
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle brand-red float-left dot-padding"></div>
+                <div class="float-left grant-label">School Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 44,55,000</div>
+              </div>
+            </div><!--parent-->
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle grey-gravel float-left dot-padding"></div>
+                <div class="float-left grant-label">School Maintenance Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 33,55,000</div>
+              </div>
+            </div><!--parent-->
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle brand-purple float-left dot-padding"></div>
+                <div class="float-left grant-label">TLM Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 1,00,000</div>
+              </div>
+            </div><!--parent-->
+            <hr/>
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="float-left grant-label">Total</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 78,05,000</div>
+              </div>
+            </div><!--parent-->
+            <div id="chart-received" class="ct-chart"></div>  
+            
+          </div><!--half-->
+          <div class="sect-half">
+            <div class="heading-tiny-uppercase center-text">EXPENDITURE</div>
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle brand-red float-left dot-padding"></div>
+                <div class="float-left grant-label">School Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 44,55,000</div>
+              </div>
+            </div><!--parent-->
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle grey-gravel float-left dot-padding"></div>
+                <div class="float-left grant-label">School Maintenance Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 33,55,000</div>
+              </div>
+            </div><!--parent-->
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="fa fa-circle brand-purple float-left dot-padding"></div>
+                <div class="float-left grant-label">TLM Grant</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 1,00,000</div>
+              </div>
+            </div><!--parent-->
+            <hr/>
+            <div class="sect-parent">
+              <div class="sect-two-third">
+                <div class="float-left grant-label">Total</div>
+              </div>
+              <div class="sect-third">
+                <div class="float-left">&#8377; 78,05,000</div>
+              </div>
+            </div><!--parent-->
+            <div id="chart-expenditure" class="ct-chart"></div>  
+               
+          </div>
+        </div>
+    </div><!-- grant container-->
+    <div id="allocation" class="container">
+        <div class="base-spacing-sm"></div>
+        <hr/>
+        <h2 class="heading-border brand-turquoise">Allocation Summary</h2>
+        
+        <div class="sect-parent">
+
+          <div class="sect-three-quarter rounded-sect">
+            <div class="heading-tiny-uppercase">School Grant Allocation</div>
+                
+            <div class="sect-parent">
+              <div class="sect-third">
+                
+                <div class="sect-parent">
+                  <div class="sect-two-third"><div class="bar-lookup">Lower Primary</div></div>
+                  <div class="sect-third"><div class="bar-lookup">78</div></div>
+                </div><!--row 1-->
+                <div class="sect-parent">
+                  <div class="sect-two-third"><div class="bar-lookup">Upper Primary</div></div>
+                  <div class="sect-third"><div class="bar-lookup">178</div></div>
+                </div><!--row 2-->
+                <div class="sect-parent">
+                  <div class="sect-two-third"><div class="bar-lookup">Model Primary</div></div>
+                  <div class="sect-third"><div class="bar-lookup">315</div></div>
+                </div><!--row 3-->
+                
+              </div><!--sect-half-->
+              <div class="sect-two-third">
+                <div class="bar-graph-wrap float-left"><!--1-->
+                  <div class="bar-num-label brand-blue">&#8377; 10,00,000</div>
+                  <div class="bar-custom tooltip" aria-label="146 Schools"><!--2-->
+                    <div class="bar-value brand-purple-bg float-left" style="width:46.5%;"></div><!--3-->
+                  </div><!--2-->
+                  <div class="bar-percent grey-gravel">46.5%</div><!--6-->
+                </div><!--1-->
+                <div class="bar-graph-wrap float-left"><!--1-->
+                  <div class="bar-num-label brand-blue">&#8377; 22,00,000</div>
+                  <div class="bar-custom tooltip" aria-label="42 Schools"><!--2-->
+                    <div class="bar-value grey-gravel-bg float-left" style="width:13.4%;"></div><!--3-->
+                  </div><!--2-->
+                  <div class="bar-percent grey-gravel">13.4%</div><!--6-->
+                </div><!--1-->
+                <div class="bar-graph-wrap float-left"><!--1-->
+                  <div class="bar-num-label brand-blue">&#8377; 33,00,000</div>
+                  <div class="bar-custom tooltip" aria-label="126 Schools"><!--2-->
+                    <div class="bar-value grey-gravel-bg float-left" style="width:40.1%;"></div><!--3-->
+                  </div><!--2-->
+                  <div class="bar-percent grey-gravel">40.1%</div><!--6-->
+                </div><!--1-->
+
+              </div><!--sect-half-->
+              
+            </div><!-- inner sect-parent-->
+          </div><!--sect-three-quarter-->
+          <div class="sect-quarter rounded-sect">
+            <div class="sect-parent">
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">/School</div>
+              </div><!--half-->
+              <div class="sect-half">
+                <div class="heading-tiny-uppercase">/Student</div>
+              </div><!--half-->
+            </div><!--parent-->
+            <div class="sect-parent">
+              <div class="sect-half">
+                <div class="per-lookup">&#8377; 7,000</div>
+                <div class="per-lookup">&#8377; 7,000</div>
+                <div class="per-lookup">&#8377; 5,000</div>
+              </div><!--half-->
+              <div class="sect-half">
+                <div class="per-lookup">&#8377; 0.5</div>
+                <div class="per-lookup">&#8377; 0.23</div>
+                <div class="per-lookup">&#8377; 0.7</div>
+              </div><!--half-->
+            </div><!--parent-->
+          </div><!--sect-quarter-->
+      </div><!--sect-parent-->
+      <hr/>
+      <div class="sect-parent">
+        <div class="sect-three-quarter rounded-sect">
+          <div class="heading-tiny-uppercase">School Maintenance Grant Allocation</div>
+              
+          <div class="sect-parent">
+            <div class="sect-third">
+              
+              <div class="sect-parent">
+                <div class="sect-three-quarter"><div class="bar-lookup">With > 3 Classrooms</div></div>
+                <div class="sect-quarter"><div class="bar-lookup">78</div></div>
+              </div><!--row 1-->
+              <div class="sect-parent">
+                <div class="sect-three-quarter"><div class="bar-lookup">With > 3 Classrooms</div></div>
+                <div class="sect-quarter"><div class="bar-lookup">178</div></div>
+              </div><!--row 2-->
+              
+            </div><!--sect-half-->
+            <div class="sect-two-third">
+              <div class="bar-graph-wrap float-left"><!--1-->
+                <div class="bar-num-label brand-blue">&#8377; 10,00,000</div>
+                <div class="bar-custom tooltip" aria-label="146 Schools"><!--2-->
+                  <div class="bar-value brand-red-bg float-left" style="width:46.5%;"></div><!--3-->
+                </div><!--2-->
+                <div class="bar-percent grey-gravel">46.5%</div><!--6-->
+              </div><!--1-->
+              <div class="bar-graph-wrap float-left"><!--1-->
+                <div class="bar-num-label brand-blue">&#8377; 22,00,000</div>
+                <div class="bar-custom tooltip" aria-label="42 Schools"><!--2-->
+                  <div class="bar-value grey-gravel-bg float-left" style="width:13.4%;"></div><!--3-->
+                </div><!--2-->
+                <div class="bar-percent grey-gravel">13.4%</div><!--6-->
+              </div><!--1-->
+
+            </div><!--sect-half-->
+            
+          </div><!-- inner sect-parent-->
+        </div><!--sect-three-quarter-->
+        <div class="sect-quarter rounded-sect">
+          <div class="sect-parent">
+            <div class="sect-half">
+              <div class="heading-tiny-uppercase">/School</div>
+            </div><!--half-->
+            <div class="sect-half">
+              <div class="heading-tiny-uppercase">/Student</div>
+            </div><!--half-->
+          </div><!--parent-->
+          <div class="sect-parent">
+            <div class="sect-half">
+              <div class="per-lookup">&#8377; 7,000</div>
+              <div class="per-lookup">&#8377; 7,000</div>
+            </div><!--half-->
+            <div class="sect-half">
+              <div class="per-lookup">&#8377; 0.5</div>
+              <div class="per-lookup">&#8377; 0.23</div>
+            </div><!--half-->
+          </div><!--parent-->
+        </div><!--sect-quarter-->
+      </div><!--sect-parent-->
+      <hr/>
+
+      <div class="sect-parent">
+        <div class="sect-third rounded-sect">
+          <div class="module-stats-icon module-stats-girl"><!--2-->
+              <span class="icon-girl"></span>
+              <div class="module-stats-info"><!--3-->
+                  Total  : &#8377; 45,00,000
+                  <p class="module-stats-label">
+                    Per Girl : &#8377; 5.00
+                  </p>
+              </div><!--3-->          
+          </div><!--2--> 
+        </div>
+        <div class="sect-third rounded-sect">
+          <div class="module-stats-icon"><!--4-->
+              <span class="icon-boy"></span>
+              <div class="module-stats-info"><!--5-->
+                  <div class="uppercase">Total : &#8377; 45,00,000</div>
+                  <p class="module-stats-label">Per Boy : &#8377; 5.00</p>
+              </div><!--5-->
+          </div><!--4-->   
+        </div>
+        <div class="sect-third grey-mist-bg rounded-sect">
+          <div class="module-stats-icon"><!--4-->
+              <span class="icon-teacher"></span>
+              <div class="module-stats-info"><!--5-->
+                  <div class="uppercase">Total : &#8377; 5,00,000</div>
+                  <p class="module-stats-label">Per Teacher : &#8377; 500.00</p>
+              </div><!--5-->
+          </div><!--4-->   
+        </div>
+      </div>
+    </div><!--close allocation container-->
+    
+    <div id="comparison" class="container">
+      <div class="base-spacing-sm"></div>
+      <hr/>
+      <div class="heading-secondary heading-border"> Comparison </div>
+      <div class="base-spacing-sm"></div>
+      <h3 class="brand-turquoise  heading-border center-text">
+        3 year comparison of status of Primary school status in this region
+      </h3>
+      <table class="table-base table-list-view">
+      <tbody><tr class="table-base-heading">
+        <th>Year</th>
+        <th>Per Student</th>
+        <th>TLM</th>
+        <th>School Grant</th>
+        <th>School Maintenance Grant</th>
+      </tr>
+
+      <tr class="font-smaller">
+        <td class="td-label-year">
+          <div class="bold td-label-year">2013</div>
+        </td>
+
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>  
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 1,00,000</div>    
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-sg">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:80%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 22,00,000</div>
+
+          </div><!--bar-graph-wrap-->
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-smg">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:60%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 18,00,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+        
+      </tr>
+
+
+      <tr class="font-smaller">
+        <td class="td-label-year">
+          <div class="bold td-label-year">2014</div>
+        </td>
+
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>  
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 1,00,000</div>    
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-sg">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:70%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 22,00,000</div>
+
+          </div><!--bar-graph-wrap-->
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-smg">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:65%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 18,00,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+        
+      </tr>
+
+      <tr class="font-smaller">
+        <td class="td-label-year">
+          <div class="bold td-label-year">2015</div>
+        </td>
+
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>  
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 1,00,000</div>    
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-sg">
+            <div class="bar-custom">
+              <div class="bar-value green-leaf-bg" style="width:72%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 22,00,000</div>
+
+          </div><!--bar-graph-wrap-->
+        </td>
+        <td>
+           <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap td-label-smg">
+            <div class="bar-custom">
+              <div class="bar-value green-leaf-bg" style="width:50%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent font-smallest">&#8377; 18,00,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+        
+      </tr>
+    </tbody>
+    </table>
+      <h3 class="brand-turquoise heading-border center-text">
+          Comparison of status of Primary school with neighbours
+      </h3>
+    
+      <table class="table-base table-list-view table-base-comparison">
+      <tbody><tr class="table-base-heading">
+        <th>Boundary</th>
+        <th>Per Student</th>
+        <th>TLM Grant</th>
+        <th>School Grant</th>
+        <th>School Maintenance Grant</th>
+        <th>Total Grant</th>
+      </tr>
+
+      <tr class="font-smaller">
+        <td>
+          <div class="bold td-label-boundary">Bangalore North</div>
+        </td>
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>    
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 50,000</div>  
+        </td>
+        <td>
+          <div class="td-label-sg">&#8377; 1,00,000</div>
+        </td>
+         <td>
+          <div class="td-label-smg">&#8377; 2,00,000</div>
+        </td>
+        <td>
+          <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:65%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent center-text font-smallest">&#8377; 3,50,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+      </tr>
+      <tr class="font-smaller">
+        <td>
+          <div class="bold td-label-boundary">Bangalore South</div>
+        </td>
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>    
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 50,000</div>  
+        </td>
+        <td>
+          <div class="td-label-sg">&#8377; 1,00,000</div>
+        </td>
+         <td>
+          <div class="td-label-smg">&#8377; 2,00,000</div>
+        </td>
+        <td>
+          <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:75%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent center-text font-smallest">&#8377; 3,50,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+      </tr>
+      <tr class="font-smaller">
+        <td>
+          <div class="bold td-label-boundary">Bangalore Central</div>
+        </td>
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>    
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 50,000</div>  
+        </td>
+        <td>
+          <div class="td-label-sg">&#8377; 1,00,000</div>
+        </td>
+         <td>
+          <div class="td-label-smg">&#8377; 2,00,000</div>
+        </td>
+        <td>
+          <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value brand-red-bg" style="width:80%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent center-text font-smallest">&#8377; 3,50,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+      </tr>
+      <tr class="font-smaller">
+        <td>
+          <div class="bold td-label-boundary">Bangalore Rural</div>
+        </td>
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>    
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 50,000</div>  
+        </td>
+        <td>
+          <div class="td-label-sg">&#8377; 1,00,000</div>
+        </td>
+         <td>
+          <div class="td-label-smg">&#8377; 2,00,000</div>
+        </td>
+        <td>
+          <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:45%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent center-text font-smallest">&#8377; 3,50,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+      </tr>
+      <tr class="font-smaller">
+        <td>
+          <div class="bold td-label-boundary">Chikkaballapura</div>
+        </td>
+        <td>
+          <div class="td-label-perstu">&#8377; 5.00</div>    
+        </td>
+        <td>
+          <div class="td-label-tlm">&#8377; 50,000</div>  
+        </td>
+        <td>
+          <div class="td-label-sg">&#8377; 1,00,000</div>
+        </td>
+         <td>
+          <div class="td-label-smg">&#8377; 2,00,000</div>
+        </td>
+        <td>
+          <!-- Value is percentage of the nearest 100 to the highest value-->
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:80%;"></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent center-text font-smallest">&#8377; 3,50,000</div>
+          </div><!--bar-graph-wrap-->
+        </td>
+      </tr>
+    </tbody>
+    </table>
+    </div><!-- comparison -->
+  </div> <!-- outer container -->
+  </body>
+</html>

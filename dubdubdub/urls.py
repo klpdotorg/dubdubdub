@@ -119,6 +119,19 @@ urlpatterns = patterns(
             'hide_footer': True,
         }), name='map'),
 
+    # report pages
+    url(r'^demographics/$', StaticPageView.as_view(
+        template_name='demographics.html'
+        ), name='demographics'),
+
+    url(r'^finance/$', StaticPageView.as_view(
+        template_name='finance.html'
+        ), name='finance'),
+
+    url(r'^infrastructure/$', StaticPageView.as_view(
+        template_name='infrastructure.html'
+        ), name='infrastructure'),
+
 
     # url(r'^volunteer-map$', StaticPageView.as_view(
     #     template_name='volunteer-map.html',
