@@ -60,8 +60,23 @@
             };
             renderCategories(detailsJson);
             renderLanguage(detailsJson);
-            //var comparisonJson = {}
-            //renderYearComparison(data["year-wise"])
+            var comparisonJson = {
+                "year-wise": {
+                    "2013":{"year":"2013","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                    "2014":{"year":"2014","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                    "2015":{"year":"2015","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
+                }, /* maybe entrolment can be calculated with student and school count 
+                    Percentage could be percentage of schools in district */
+                "neighbours" : {
+                    "Bangalore Central":{"name":"Bangalore Central","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                    "Bangalore North":{"name":"Bangalore North","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                    "Bangalore South":{"name":"Bangalore South","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                    "Bangalore Rural":{"name":"Bangalore Rural","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                    "Chikkabalapur":{"name":"Chikkabalapur","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
+
+                }
+            }
+            renderComparison(comparisonJson);
         //});
     }
 
@@ -105,48 +120,72 @@
 
     function renderLanguage(data) {
         var languages = data["languages"];
+        var new_lang = {};
         var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU","OTHERS"];
         var moi_school_total = 0;
         var mt_student_total = 0;
+        
         for (var each in languages) {
             for (var lang in languages[each]) {
                 if (each == "moi") {
                     moi_school_total += languages[each][lang]["school_count"];   
                 } else {
                     mt_student_total += languages[each][lang]["student_count"];
-                }
-                
+                }    
             }
         }
-        languages["moi"]["OTHERS"] = {"school_count": 0};
-        for (var lang in languages["moi"]) {
-            languages["moi"][lang]["name"] = lang;
-            languages["moi"][lang]["perc"] = Math.round(languages["moi"][lang]["school_count"]*100/moi_school_total);
-            if (!_.contains(lang_lookup,lang)) 
+
+        new_lang["OTHERS"] = {"name":"OTHERS", "school_count": 0, "student_count":0, "moi_perc":0,"mt_perc":0};
+        for (var each in languages["moi"]) {
+            if (!_.contains(lang_lookup,each)) 
             {
-                languages["moi"]["OTHERS"]["school_count"] += languages["moi"][lang]["school_count"];
-                delete languages["moi"][lang];
-            }    
+                new_lang["OTHERS"]["school_count"] += languages["moi"][each]["school_count"];
+                delete languages["moi"][each];
+            } else {
+                new_lang[each]= {"name" : each};
+                new_lang[each]["school_count"] = languages["moi"][each]["school_count"];
+                new_lang[each]["moi_perc"] = Math.round(languages["moi"][each]["school_count"]*100/moi_school_total);
+            } 
         }
-        languages["moi"]["OTHERS"]["perc"] = Math.round(languages["moi"]["OTHERS"]["school_count"]*100/moi_school_total);
         
-        languages["mt"]["OTHERS"] = {"student_count": 0};
-        for (var lang in languages["mt"]) {
-            languages["mt"][lang]["name"] = lang;
-            languages["mt"][lang]["perc"] = Math.round(languages["mt"][lang]["student_count"]*100/mt_student_total);
-            if (!_.contains(lang_lookup,lang)) 
+        for (var each in languages["mt"]) {
+            if (!_.contains(lang_lookup,each)) 
             {
-                languages["mt"]["OTHERS"]["student_count"] += languages["mt"][lang]["student_count"];
-                delete languages["mt"][lang];
+                new_lang["OTHERS"]["student_count"] += languages["mt"][each]["student_count"];
+                delete languages["mt"][each];
+            } else {
+
+                new_lang[each]["student_count"] = languages["mt"][each]["student_count"];
+                new_lang[each]["mt_perc"] = Math.round(languages["mt"][each]["student_count"]*100/mt_student_total);
             }
-            
         }
-        languages["mt"]["OTHERS"]["perc"] = Math.round(languages["mt"]["OTHERS"]["student_count"]*100/mt_student_total);
-            
+
+        new_lang["OTHERS"]["moi_perc"] = Math.round(new_lang["OTHERS"]["school_count"]*100/moi_school_total);
+        new_lang["OTHERS"]["mt_perc"] = Math.round(new_lang["OTHERS"]["student_count"]*100/mt_student_total);
+        /* All of the above is json dependent logic
+        We convert distinct moi, mt hash maps to a single hashmap of the type
+        newlang = { "KANNADA" :
+                    {"name": "KANNADA",
+                     "school_count": 12,
+                     "student_count":3600,
+                     "moi_perc": 10%
+                     "mt_perc": 12%
+                    }, ...
+                }*/
         var tplLanguage = swig.compile($('#tpl-Language').html()); 
-        var languageHTML = tplLanguage({"lang":languages});
+        var languageHTML = tplLanguage({"lang":new_lang});
         $('#language-profile').html(languageHTML);
         
+    }
+
+    function renderComparison(data) {
+        var tplYearComparison = swig.compile($('#tpl-YearComparison').html()); 
+        var yrcompareHTML = tplYearComparison({"years":data["year-wise"]});
+        $('#comparison-year').html(yrcompareHTML);
+        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
+        var compareHTML = tplComparison({"neighbours":data["neighbours"]});
+        $('#comparison-neighbour').html(compareHTML);
+    
     }
 
 })();

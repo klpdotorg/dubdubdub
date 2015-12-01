@@ -131,32 +131,119 @@
           <div class="heading-tiny-uppercase float-right">Schools by Medium of Instruction</div>
         </div>
       </div><!--parent-->
-      {% for each in lang.mt %}
-          <div class="sect-parent">
+      {% for each in lang %}
+         <div class="sect-parent">
             <div class="sect-third">
-              <div class="">{{lang.mt.each}}</div>
+              <div class="">{{each.name}}</div>
             </div><!--third-->
             <div class="sect-third">
               <div class="bar-graph-wrap float-left">
-                <div class="bar-percent green-leaf">{{lang.mt.each.perc}}</div>
+                <div class="bar-percent green-leaf">{{each.mt_perc}}%</div>
                 <div class="bar-custom">
-                  <div class="bar-value green-leaf-bg" style="width:{{lang.mt.each.perc}}%;"></div>
+                  <div class="bar-value green-leaf-bg" style="width:{{each.mt_perc}}%;"></div>
                   <div class="clear"></div>
-                  <div class="green-leaf font-smaller center-text"><strong>{{lang.mt.each.student_count}} students</strong></div>
+                  <div class="green-leaf font-smaller center-text"><strong>{{each.student_count}} students</strong></div>
                 </div><!--bar-custom-->
               </div><!--bar-graph-wrap-->
             </div><!--third-->
             <div class="sect-third">
               <div class="bar-graph-wrap float-right">
-                <div class="bar-percent">{{lang.moi.each.perc}}%</div>
+                <div class="bar-percent">{{each.moi_perc}}%</div>
                 <div class="bar-custom">
-                  <div class="bar-value grey-gravel-bg" style="width:{{lang.moi.each.perc}}%;"></div>
-                  <div class="font-smaller center-text"><strong>{{lang.moi.each.school_count}} schools</strong></div>
+                  <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
+                  <div class="font-smaller center-text"><strong>{{each.school_count}} schools</strong></div>
                 </div><!--bar-custom-->
               </div><!--bar-graph-wrap-->
             </div><!--third-->
           </div><!--end parent-->
       {% endfor %}
+  </script>
+
+  <script type="text/html" id="tpl-YearComparison">
+    <h3 class="brand-turquoise  heading-border center-text">
+        3 year comparison of status of Primary school status in this region
+      </h3>
+      <table class="table-base table-list-view table-base-comparison">
+      <tbody><tr class="table-base-heading">
+        <th>Year</th>
+        <th>Average Enrollment <br/>in Upper Primary</th>
+        <th>Average Enrollment <br/>in Lower Primary</th>
+        <th>PTR</th>
+        <th>Schools</th>
+      </tr>
+      {% for each in years %}
+          <tr>
+            <td class="td-label-year">
+              <div class="bold td-label-year">{{each.year}}</div>
+            </td>
+            <td>
+              <div class="td-label-enrolu">{{each.enrol_upper}}</div>    
+            </td>
+            <td>
+              <div class="td-label-enroll">{{each.enrol_lower}}</div>  
+            </td>
+            <td>
+              <div class="td-label-ptr">{{each.ptr}}:1</div>
+            </td>
+            <td>
+              <!-- Value is percentage of the nearest 100 to the highest value-->
+              <div class="bar-graph-wrap">
+                <div class="bar-custom">
+                  <div class="bar-value grey-gravel-bg" style="width:{{each.school_perc}}%;"></div>
+                </div><!--bar-custom-->
+                <div class="bar-percent">{{each.school_count}}</div>
+              </div><!--bar-graph-wrap-->
+            </td>
+          </tr>
+      {% endfor %}
+
+
+    </tbody>
+    </table>
+  </script>
+
+  <script type="text/html" id="tpl-neighComparison">
+      <h3 class="brand-turquoise heading-border center-text">
+          Comparison of status of Primary school with neighbours
+      </h3>
+    
+      <table class="table-base table-list-view table-base-comparison">
+      <tbody><tr class="table-base-heading">
+        <th>Boundary</th>
+        <th>Average Enrollment <br/>in Upper Primary</th>
+        <th>Average Enrollment <br/>in Lower Primary</th>
+        <th>PTR</th>
+        <th>Schools</th>
+      </tr>
+      {% for each in neighbours %}
+          <tr>
+            <td>
+              <div class="bold td-label-boundary">{{each.name}}</div>
+            </td>
+            <td>
+              <div class="td-label-enrolu">{{each.enrol_upper}}</div>    
+            </td>
+            <td>
+              <div class="td-label-enroll">{{each.enrol_lower}}</div>  
+            </td>
+            <td>
+              <div class="td-label-ptr">{{each.ptr}}:1</div>
+            </td>
+            <td>
+              <!-- Value is percentage of the nearest 100 to the highest value-->
+              <div class="bar-graph-wrap">
+                <div class="bar-custom">
+                  <div class="bar-value grey-gravel-bg" style="width:{{each.school_perc}}%;"></div>
+                </div><!--bar-custom-->
+                <div class="bar-percent">{{each.school_count}}</div>
+              </div><!--bar-graph-wrap-->
+            </td>
+          </tr>
+      {% endfor %}
+
+
+    </tbody>
+    </table>
   </script>
 
 {% endverbatim %}
