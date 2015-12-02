@@ -56,6 +56,11 @@
     width: 120px;
  }
 
+.dot-padding {
+	padding-top:3px;
+	padding-right:3px;
+}
+
 @include media-med-maxwidth {	
 	.td-label-enrolu {
 	    &:before {

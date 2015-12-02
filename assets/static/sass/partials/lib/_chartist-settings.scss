@@ -66,20 +66,21 @@ $ct-include-alternative-responsive-containers: $ct-include-classes !default;
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
 $ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) !default;
 $ct-series-colors: (
+  $brand-red,
+  $grey-gravel,
+  $brand-purple,
+  $brand-green,
+  $brand-blue,
+  $brand-orange,
   $green-leaf,
   $orange-mild,
   $pink-salmon,
   $brand-turquoise,
-  $brand-purple,
-  $blue-sky,
-  $grey-gravel,
   $red-mild,
+  $maroon,
   $yellow-mild,
   $green-pista,
   $blue-ink,
-  $purple-amethyst,
-  $brand-orange,
-  $brand-green,
-  $brand-blue,
-  $brand-red
+  $blue-sky,
+  $purple-amethyst
 ) !default;

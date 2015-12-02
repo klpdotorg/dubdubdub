@@ -383,7 +383,7 @@ ol {
 .pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: #f87c84; }
 
-.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .leaflet-container a.button--sm {
@@ -508,7 +508,7 @@ ol {
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
 
-.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
+.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -553,7 +553,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .stepy-header li div .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .stepy-header li div .k-icon, .icon-boy:before, .icon-girl:before, .module-img img, .compare-section-heading {
+.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .stepy-header li div .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .stepy-header li div .k-icon, .icon-boy:before, .icon-girl:before, .icon-teacher:before, .module-img img, .compare-section-heading {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -717,7 +717,7 @@ hr {
 
 /*-------------------------------------*/
 /* ICONS */
-.font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
+.font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-teacher:before, .icon-teacher:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
 .picker__nav--next:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon, .demo-do:before, .demo-dont:before {
   font-family: "FontAwesome"; }
 
@@ -762,14 +762,14 @@ hr {
     font-size: 12px;
     margin-right: 5px; }
 
-.icon-boy, .icon-girl, .icon-boy-girl {
+.icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl {
   width: 45px;
   height: 45px;
   padding: 10px;
   line-height: 1;
   display: inline-block;
   position: relative; }
-  .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after {
+  .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-teacher:before, .icon-teacher:after, .icon-boy-girl:before, .icon-boy-girl:after {
     font-size: 22px; }
 
 .icon-boy:before {
@@ -779,6 +779,11 @@ hr {
   background-color: #f87c84; }
   .icon-girl:before {
     content: "\f182"; }
+
+.icon-teacher {
+  background-color: #44c28c; }
+  .icon-teacher:before {
+    content: "\f19d"; }
 
 .icon-boy-girl {
   background-color: #2c3e50; }
@@ -1049,6 +1054,9 @@ hr {
 
 .module-stats-girl .module-stats-label {
   color: #f87c84; }
+
+.module-stats-teacher .module-stats-label {
+  color: #44c28c; }
 
 .module-stats-boygirl .module-stats-label {
   color: #2c3e50; }
@@ -3719,65 +3727,65 @@ code {
   fill: none;
   stroke-width: 60px; }
 .ct-chart .ct-series.ct-series-a .ct-point, .ct-chart .ct-series.ct-series-a .ct-line, .ct-chart .ct-series.ct-series-a .ct-bar, .ct-chart .ct-series.ct-series-a .ct-slice.ct-donut {
-  stroke: #44c28c; }
+  stroke: #cb0012; }
 .ct-chart .ct-series.ct-series-a .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-a .ct-area {
-  fill: #44c28c; }
+  fill: #cb0012; }
 .ct-chart .ct-series.ct-series-b .ct-point, .ct-chart .ct-series.ct-series-b .ct-line, .ct-chart .ct-series.ct-series-b .ct-bar, .ct-chart .ct-series.ct-series-b .ct-slice.ct-donut {
-  stroke: #faa060; }
-.ct-chart .ct-series.ct-series-b .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-b .ct-area {
-  fill: #faa060; }
-.ct-chart .ct-series.ct-series-c .ct-point, .ct-chart .ct-series.ct-series-c .ct-line, .ct-chart .ct-series.ct-series-c .ct-bar, .ct-chart .ct-series.ct-series-c .ct-slice.ct-donut {
-  stroke: #f87c84; }
-.ct-chart .ct-series.ct-series-c .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-c .ct-area {
-  fill: #f87c84; }
-.ct-chart .ct-series.ct-series-d .ct-point, .ct-chart .ct-series.ct-series-d .ct-line, .ct-chart .ct-series.ct-series-d .ct-bar, .ct-chart .ct-series.ct-series-d .ct-slice.ct-donut {
-  stroke: #24b2b6; }
-.ct-chart .ct-series.ct-series-d .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-d .ct-area {
-  fill: #24b2b6; }
-.ct-chart .ct-series.ct-series-e .ct-point, .ct-chart .ct-series.ct-series-e .ct-line, .ct-chart .ct-series.ct-series-e .ct-bar, .ct-chart .ct-series.ct-series-e .ct-slice.ct-donut {
-  stroke: #7575bc; }
-.ct-chart .ct-series.ct-series-e .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-e .ct-area {
-  fill: #7575bc; }
-.ct-chart .ct-series.ct-series-f .ct-point, .ct-chart .ct-series.ct-series-f .ct-line, .ct-chart .ct-series.ct-series-f .ct-bar, .ct-chart .ct-series.ct-series-f .ct-slice.ct-donut {
-  stroke: #c7e0f7; }
-.ct-chart .ct-series.ct-series-f .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-f .ct-area {
-  fill: #c7e0f7; }
-.ct-chart .ct-series.ct-series-g .ct-point, .ct-chart .ct-series.ct-series-g .ct-line, .ct-chart .ct-series.ct-series-g .ct-bar, .ct-chart .ct-series.ct-series-g .ct-slice.ct-donut {
   stroke: #4d4d4d; }
-.ct-chart .ct-series.ct-series-g .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-g .ct-area {
+.ct-chart .ct-series.ct-series-b .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-b .ct-area {
   fill: #4d4d4d; }
-.ct-chart .ct-series.ct-series-h .ct-point, .ct-chart .ct-series.ct-series-h .ct-line, .ct-chart .ct-series.ct-series-h .ct-bar, .ct-chart .ct-series.ct-series-h .ct-slice.ct-donut {
-  stroke: #e17e5b; }
-.ct-chart .ct-series.ct-series-h .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-h .ct-area {
-  fill: #e17e5b; }
-.ct-chart .ct-series.ct-series-i .ct-point, .ct-chart .ct-series.ct-series-i .ct-line, .ct-chart .ct-series.ct-series-i .ct-bar, .ct-chart .ct-series.ct-series-i .ct-slice.ct-donut {
-  stroke: #ffeda0; }
-.ct-chart .ct-series.ct-series-i .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-i .ct-area {
-  fill: #ffeda0; }
-.ct-chart .ct-series.ct-series-j .ct-point, .ct-chart .ct-series.ct-series-j .ct-line, .ct-chart .ct-series.ct-series-j .ct-bar, .ct-chart .ct-series.ct-series-j .ct-slice.ct-donut {
-  stroke: #addd8e; }
-.ct-chart .ct-series.ct-series-j .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-j .ct-area {
-  fill: #addd8e; }
-.ct-chart .ct-series.ct-series-k .ct-point, .ct-chart .ct-series.ct-series-k .ct-line, .ct-chart .ct-series.ct-series-k .ct-bar, .ct-chart .ct-series.ct-series-k .ct-slice.ct-donut {
-  stroke: #2c3e50; }
-.ct-chart .ct-series.ct-series-k .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-k .ct-area {
-  fill: #2c3e50; }
-.ct-chart .ct-series.ct-series-l .ct-point, .ct-chart .ct-series.ct-series-l .ct-line, .ct-chart .ct-series.ct-series-l .ct-bar, .ct-chart .ct-series.ct-series-l .ct-slice.ct-donut {
-  stroke: #7b7795; }
-.ct-chart .ct-series.ct-series-l .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-l .ct-area {
-  fill: #7b7795; }
-.ct-chart .ct-series.ct-series-m .ct-point, .ct-chart .ct-series.ct-series-m .ct-line, .ct-chart .ct-series.ct-series-m .ct-bar, .ct-chart .ct-series.ct-series-m .ct-slice.ct-donut {
-  stroke: #ec6608; }
-.ct-chart .ct-series.ct-series-m .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-m .ct-area {
-  fill: #ec6608; }
-.ct-chart .ct-series.ct-series-n .ct-point, .ct-chart .ct-series.ct-series-n .ct-line, .ct-chart .ct-series.ct-series-n .ct-bar, .ct-chart .ct-series.ct-series-n .ct-slice.ct-donut {
+.ct-chart .ct-series.ct-series-c .ct-point, .ct-chart .ct-series.ct-series-c .ct-line, .ct-chart .ct-series.ct-series-c .ct-bar, .ct-chart .ct-series.ct-series-c .ct-slice.ct-donut {
+  stroke: #7575bc; }
+.ct-chart .ct-series.ct-series-c .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-c .ct-area {
+  fill: #7575bc; }
+.ct-chart .ct-series.ct-series-d .ct-point, .ct-chart .ct-series.ct-series-d .ct-line, .ct-chart .ct-series.ct-series-d .ct-bar, .ct-chart .ct-series.ct-series-d .ct-slice.ct-donut {
   stroke: #26b262; }
-.ct-chart .ct-series.ct-series-n .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-n .ct-area {
+.ct-chart .ct-series.ct-series-d .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-d .ct-area {
   fill: #26b262; }
-.ct-chart .ct-series.ct-series-o .ct-point, .ct-chart .ct-series.ct-series-o .ct-line, .ct-chart .ct-series.ct-series-o .ct-bar, .ct-chart .ct-series.ct-series-o .ct-slice.ct-donut {
+.ct-chart .ct-series.ct-series-e .ct-point, .ct-chart .ct-series.ct-series-e .ct-line, .ct-chart .ct-series.ct-series-e .ct-bar, .ct-chart .ct-series.ct-series-e .ct-slice.ct-donut {
   stroke: #3891e3; }
-.ct-chart .ct-series.ct-series-o .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-o .ct-area {
+.ct-chart .ct-series.ct-series-e .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-e .ct-area {
   fill: #3891e3; }
+.ct-chart .ct-series.ct-series-f .ct-point, .ct-chart .ct-series.ct-series-f .ct-line, .ct-chart .ct-series.ct-series-f .ct-bar, .ct-chart .ct-series.ct-series-f .ct-slice.ct-donut {
+  stroke: #ec6608; }
+.ct-chart .ct-series.ct-series-f .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-f .ct-area {
+  fill: #ec6608; }
+.ct-chart .ct-series.ct-series-g .ct-point, .ct-chart .ct-series.ct-series-g .ct-line, .ct-chart .ct-series.ct-series-g .ct-bar, .ct-chart .ct-series.ct-series-g .ct-slice.ct-donut {
+  stroke: #44c28c; }
+.ct-chart .ct-series.ct-series-g .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-g .ct-area {
+  fill: #44c28c; }
+.ct-chart .ct-series.ct-series-h .ct-point, .ct-chart .ct-series.ct-series-h .ct-line, .ct-chart .ct-series.ct-series-h .ct-bar, .ct-chart .ct-series.ct-series-h .ct-slice.ct-donut {
+  stroke: #faa060; }
+.ct-chart .ct-series.ct-series-h .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-h .ct-area {
+  fill: #faa060; }
+.ct-chart .ct-series.ct-series-i .ct-point, .ct-chart .ct-series.ct-series-i .ct-line, .ct-chart .ct-series.ct-series-i .ct-bar, .ct-chart .ct-series.ct-series-i .ct-slice.ct-donut {
+  stroke: #f87c84; }
+.ct-chart .ct-series.ct-series-i .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-i .ct-area {
+  fill: #f87c84; }
+.ct-chart .ct-series.ct-series-j .ct-point, .ct-chart .ct-series.ct-series-j .ct-line, .ct-chart .ct-series.ct-series-j .ct-bar, .ct-chart .ct-series.ct-series-j .ct-slice.ct-donut {
+  stroke: #24b2b6; }
+.ct-chart .ct-series.ct-series-j .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-j .ct-area {
+  fill: #24b2b6; }
+.ct-chart .ct-series.ct-series-k .ct-point, .ct-chart .ct-series.ct-series-k .ct-line, .ct-chart .ct-series.ct-series-k .ct-bar, .ct-chart .ct-series.ct-series-k .ct-slice.ct-donut {
+  stroke: #e17e5b; }
+.ct-chart .ct-series.ct-series-k .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-k .ct-area {
+  fill: #e17e5b; }
+.ct-chart .ct-series.ct-series-l .ct-point, .ct-chart .ct-series.ct-series-l .ct-line, .ct-chart .ct-series.ct-series-l .ct-bar, .ct-chart .ct-series.ct-series-l .ct-slice.ct-donut {
+  stroke: #a31460; }
+.ct-chart .ct-series.ct-series-l .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-l .ct-area {
+  fill: #a31460; }
+.ct-chart .ct-series.ct-series-m .ct-point, .ct-chart .ct-series.ct-series-m .ct-line, .ct-chart .ct-series.ct-series-m .ct-bar, .ct-chart .ct-series.ct-series-m .ct-slice.ct-donut {
+  stroke: #ffeda0; }
+.ct-chart .ct-series.ct-series-m .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-m .ct-area {
+  fill: #ffeda0; }
+.ct-chart .ct-series.ct-series-n .ct-point, .ct-chart .ct-series.ct-series-n .ct-line, .ct-chart .ct-series.ct-series-n .ct-bar, .ct-chart .ct-series.ct-series-n .ct-slice.ct-donut {
+  stroke: #addd8e; }
+.ct-chart .ct-series.ct-series-n .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-n .ct-area {
+  fill: #addd8e; }
+.ct-chart .ct-series.ct-series-o .ct-point, .ct-chart .ct-series.ct-series-o .ct-line, .ct-chart .ct-series.ct-series-o .ct-bar, .ct-chart .ct-series.ct-series-o .ct-slice.ct-donut {
+  stroke: #2c3e50; }
+.ct-chart .ct-series.ct-series-o .ct-slice:not(.ct-donut), .ct-chart .ct-series.ct-series-o .ct-area {
+  fill: #2c3e50; }
 .ct-chart.ct-square {
   display: block;
   position: relative;
@@ -4613,6 +4621,10 @@ code {
 
 .table-base-comparison th, .table-base-comparison td {
   width: 120px; }
+
+.dot-padding {
+  padding-top: 3px;
+  padding-right: 3px; }
 
 @media only screen and (max-width: 749px) {
   .td-label-enrolu:before {
