@@ -1,4 +1,4 @@
-How to deploy
+git sgitHow to deploy
 ---
 Use required commands
 
@@ -9,6 +9,14 @@ Use required commands
 
 Changelog
 ---
+Release 0.4.1: c939fff51d271e15ec78b3add885513b126ca1f4 - 2015-12-01
+  - Squeezes in the anganwadi infrastructure API data within the boundary endpoint
+  - Fixes a few bugs on scripts
+  - Moves adhoc reports to production server
+
+Release 0.4.0: e3913eb89b36d4c2823054dceb8b3b65af742abb - 2015-11-23
+  - Merges and imports the Anganwadi infrastructure data
+
 Release 0.3.12: 82f2ca7027fbd2ef09e39fead88b6430cfc49b9e - 2015-11-12
   - Marks all IVRS stories as verified
 

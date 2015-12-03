@@ -4,10 +4,15 @@ from schools.serializers import (
     BoundarySerializer, AssemblySerializer, ParliamentSerializer,
     PincodeSerializer, BoundaryWithGrandparentSerializer
 )
+
+import dubdubdub.urls
+
+from common.models import SumCase
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
 from django.db.models import Q, Count, Sum
+from django.core.urlresolvers import resolve
 from rest_framework.response import Response
 from rest_framework import exceptions
 
@@ -36,13 +41,29 @@ class BoundaryLibLevelAggView(KLPListAPIView):
 
 class BaseSchoolAggView(object):
     def get_aggregations(self, active_schools, academic_year):
+        active_schools = active_schools.filter(schoolextra__academic_year=academic_year)
         agg = {
             'num_schools': active_schools.count(),
             'moi': active_schools.values('moi').annotate(num=Count('moi')),
-            'cat': active_schools.values('cat').annotate(num=Count('cat')),
+            'cat': active_schools.values('cat').annotate(
+                num_schools=Count('cat'),
+                num_boys=Sum('schoolextra__num_boys'),
+                num_girls=Sum('schoolextra__num_girls')
+            ),
             'mgmt': active_schools.values('mgmt').annotate(num=Count('mgmt')),
             'gender': active_schools.values('sex').annotate(num=Count('sex'))
         }
+
+        active_institutions = active_schools.filter(institutionagg__academic_year=academic_year)
+        agg['mt'] = active_institutions.values('institutionagg__mt').annotate(
+            num_students=Sum('institutionagg__num'),
+            num_boys=SumCase('institutionagg__num', when="gender='male'"),
+            num_girls=SumCase('institutionagg__num', when="gender='female'")
+        )
+
+        for mt in agg['mt']:
+            mt['name'] = mt['institutionagg__mt']
+            del mt['institutionagg__mt']
 
         agg['num_boys'] = active_schools.filter(
             schoolextra__academic_year=academic_year
@@ -63,6 +84,7 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
     def get(self, request, id=None):
         boundary_id = id
         year = request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
+        source = request.GET.get('source', None)
 
         try:
             academic_year = AcademicYear.objects.get(name=year)
@@ -77,6 +99,18 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
         active_schools = boundary.schools()
         agg = self.get_aggregations(active_schools, academic_year)
         agg['boundary'] = BoundaryWithGrandparentSerializer(boundary, context={'request': request}).data
+
+        # Getting the Anganwadi infrastructure data from the
+        # StoryDetail view.
+        if source:
+            view, args, kwargs = resolve(
+                '/api/v1/stories/details/',
+                urlconf = dubdubdub.urls
+            )
+            kwargs['request'] = request
+            kwargs['boundary'] = boundary
+            stories_response = view(*args, **kwargs)
+            agg['infrastructure'] = stories_response.data
 
         # Not using serializer because we need to do the aggregations here
         # and return the results directly
