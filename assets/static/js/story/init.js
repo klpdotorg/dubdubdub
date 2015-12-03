@@ -661,7 +661,12 @@
             IVRSQuestionKeys = [
                 'ivrss-school-open',
                 'ivrss-headmaster-present',
-                'ivrss-toilets-condition'
+                'ivrss-toilets-condition',
+                "ivrss-classes-proper",
+                "ivrss-functional-toilets-girls",
+                "ivrss-drinking-water",
+                "ivrss-midday-meal",
+                "ivrss-teacher-present"
             ];
         } else {
             IVRSQuestionKeys = [
