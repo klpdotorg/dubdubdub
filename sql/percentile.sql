@@ -76,7 +76,7 @@ begin
     query:='SELECT sum(case when q.qtype=1 then se.mark else se.grade::int end)/count(distinct se.stuid) as mean from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
-          query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
+          query:= query||' and se.stuid in (select distinct stuid from tb_student_eval where qid in (select id from tb_question where assid='||inallassid[i]||')  and (mark is not null or grade is not null))';
         end loop;
         --RAISE NOTICE '%', query;
         for schs in execute query
@@ -112,13 +112,13 @@ declare
         mx integer:=100;
 
 begin
-    query:='SELECT distinct stuid as stuid,sid as sid,sgname as sgname, case when ts>ms.mean then ('||dm||'+(ts-ms.mean)*(100-'||dm||')/('||mx||'-ms.mean)) else (ts*'||dm||'/ms.mean) end as testscore FROM( select distinct stu.id  as stuid,sg.name as sgname, sg.sid as sid,sum(case when q.qtype=1 then se.mark else se.grade::int end) as ts from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu  WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stusg.ayid = '||inayid||' and sg.name=''||insg||'' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
+    query:='SELECT distinct stuid as stuid,sid as sid,sgname as sgname, case when ts>ms.mean then ('||dm||'+(ts-ms.mean)*(100-'||dm||')/('||mx||'-ms.mean)) else (ts*'||dm||'/ms.mean) end as testscore FROM( select distinct stu.id  as stuid,sg.name as sgname, sg.sid as sid,sum(case when q.qtype=1 then se.mark else se.grade::int end) as ts from tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_student stu  WHERE se.stuid=stu.id and se.qid=q.id and stusg.stuid=stu.id and stusg.clid=sg.id and stusg.ayid = '||inayid||' and sg.name='''||insg||''' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
-          query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
+          query:= query||' and se.stuid in (select distinct stuid from tb_student_eval where qid in (select id from tb_question where assid='||inallassid[i]||')  and (mark is not null or grade is not null))';
         end loop;
         query=query||'group by stu.id,sg.sid,sg.name) as innerloop,tb_assessment_mean ms where ms.assid='||inassid||'';
-        --RAISE NOTICE '%', query;
+        RAISE NOTICE '%', query;
         for schs in execute query
         loop
           insert into tb_student_assessment_percentile values (schs.stuid,schs.sgname,schs.sid,inassid,schs.testscore);
@@ -356,7 +356,7 @@ begin
     query:='select round((((Ocount/2)/totcount)*100)::numeric,2) as Orank,round((((Ocount+(Lcount/2))/totcount)*100)::numeric,2) as Lrank, round((((Ocount+Lcount+(Wcount/2))/totcount)*100)::numeric,2) as Wrank, round((((Ocount+Lcount+Wcount+(Scount/2))/totcount)*100)::numeric,2) as Srank, round((((Ocount+Lcount+Wcount+Scount+(Pcount/2))/totcount)*100)::numeric,2) as Prank from (select count(se.grade)::float as totcount,count(case trim(se.grade) when ''0'' then 1 end)::float as Ocount,count(case trim(se.grade) when ''L'' then 1 end)::float as Lcount,count(case trim(se.grade) when ''W'' then 1 end)::float as Wcount,count(case trim(se.grade) when ''S'' then 1 end)::float as Scount,count(case trim(se.grade) when ''P'' then 1 end)::float as Pcount from tb_student_eval se,tb_question q, tb_student_class stusg,tb_class sg where se.stuid=stusg.stuid and se.qid=q.id and stusg.clid=sg.id AND stusg.ayid = '||inayid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and se.grade is not null';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
-          query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and se.grade is not null and q.assid = '||inallassid[i]||')';
+          query:= query||' and se.stuid in (select distinct stuid from tb_student_eval where qid in (select id from tb_question where assid='||inallassid[i]||') and grade is not null)';
         end loop;
         query:=query||')as innerloop';
         --RAISE NOTICE '%', query;
@@ -384,10 +384,10 @@ declare
         query text;
 
 begin
-    query:='SELECT se.stuid as stuid,sg.name as studentgroup,sg.sid as sid, percrank.percentilerank as percentilemean FROM tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_assessment_grade_percentilerank percrank WHERE se.qid=q.id and stusg.stuid=se.stuid and stusg.clid=sg.id and stusg.ayid = '||inayid||' and trim(se.grade)=percrank.grade and percrank.assid='||inassid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and (se.mark is not null or  se.grade is not null)';
+    query:='SELECT se.stuid as stuid,sg.name as studentgroup,sg.sid as sid, percrank.percentilerank as percentilemean FROM tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_assessment_grade_percentilerank percrank WHERE se.qid=q.id and stusg.stuid=se.stuid and stusg.clid=sg.id and stusg.ayid = '||inayid||' and trim(se.grade)=percrank.grade and percrank.assid='||inassid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and se.grade is not null';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
-          query:= query||' and se.stuid in (select se.stuid from tb_student_eval se,tb_question q where se.qid=q.id and (se.mark is not null or se.grade is not null)  and q.assid = '||inallassid[i]||')';
+          query:= query||' and se.stuid in (select distinct stuid from tb_student_eval where qid in (select id from tb_question where assid='||inallassid[i]||') and grade is not null)';
         end loop;
         --RAISE NOTICE '%', query;
         for schs in execute query
