@@ -32,7 +32,7 @@
                     $('.rbox_img_gal').rbox({
                         'type': 'image',
                         'series': 'image_gallery'
-                    }); 
+                    });
                 }
             },
             'demographics': {
