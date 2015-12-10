@@ -1,6 +1,22 @@
 'use strict';
 (function() {
   var t = klp.boundaryUtils = {};
+  var preschoolInfraHash = {
+    'ang-drinking-water': {
+      type: 'Drinking Water',
+      icon: ['fa  fa-tint']      
+    },
+    'ang-toilet-for-use': {
+      type:'Toilets', 
+      icon: ['fa fa-male', 'fa fa-female']
+    },
+    'ang-bvs-present': {
+      type: 'Functional Bal Vikas Samithis',
+      icon: ['fa fa-users']
+    }
+
+  }
+  
   var infraHash = {
     'Playground': {
       icon: ['fa fa-futbol-o'],
@@ -8,11 +24,11 @@
     },
     'Drinking Water': {
       icon: ['fa  fa-tint'],
-      key: 'sum_has_drinking_water'
+      key: 'sum_has_drinking_water',       
     },
     'Toilets': {
       'icon': ['fa fa-male', 'fa fa-female'],
-      'key': 'sum_has_toilet'
+      'key': 'sum_has_toilet'      
     },
     'Library': {
       icon: ['fa fa-book'],
@@ -33,11 +49,11 @@
     'Mid-day Meal': {
       icon: ['fa fa-spoon'],
       key: 'sum_has_mdm'
-    }
+    }    
   };
 
   t.triggerDropDown = function() {
-    $(".js-dropdown li:has(ul)").click(function(event){
+    $(".js-dropdown li:has(ul)").click(function(event) {
       event.stopPropagation();
       var thisNav = $(this).closest(".js-dropdown").find('ul');
       $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
@@ -142,19 +158,19 @@
     });
 
     schoolCategories["upper primary"] = {
-      "type_name": "upper primary",
-      "klp_perc": getPercentage(klpData.cat[0]['num_schools'], klpData['num_schools']),
-      "dise_perc": getPercentage(diseCategories.upperPrimary, diseData['sum_schools']),
-      "klp_count": klpData.cat[0]['num_schools'],
-      "dise_count": diseCategories.upperPrimary
-    },
-    schoolCategories["lower primary"] = {
-      "type_name": "lower primary",
-      "klp_perc": getPercentage(klpData.cat[1]['num_schools'], klpData['num_schools']),
-      "dise_perc": getPercentage(diseCategories.lowerPrimary, diseData['sum_schools']),
-      "klp_count": klpData.cat[1]['num_schools'],
-      "dise_count": diseCategories.lowerPrimary
-    }
+        "type_name": "upper primary",
+        "klp_perc": getPercentage(klpData.cat[0]['num_schools'], klpData['num_schools']),
+        "dise_perc": getPercentage(diseCategories.upperPrimary, diseData['sum_schools']),
+        "klp_count": klpData.cat[0]['num_schools'],
+        "dise_count": diseCategories.upperPrimary
+      },
+      schoolCategories["lower primary"] = {
+        "type_name": "lower primary",
+        "klp_perc": getPercentage(klpData.cat[1]['num_schools'], klpData['num_schools']),
+        "dise_perc": getPercentage(diseCategories.lowerPrimary, diseData['sum_schools']),
+        "klp_count": klpData.cat[1]['num_schools'],
+        "dise_count": diseCategories.lowerPrimary
+      }
 
     return schoolCategories;
   };
@@ -184,11 +200,11 @@
     enrollment = {
       "upper primary": {
         "dise_enrol": Math.round(diseEnrollment.upperPrimary.totalStudents / diseEnrollment.upperPrimary.totalSchools),
-        "klp_enrol": Math.round(klpData.cat[0].num_boys+klpData.cat[0].num_girls/klpData.cat[0].num_schools)
+        "klp_enrol": Math.round(klpData.cat[0].num_boys + klpData.cat[0].num_girls / klpData.cat[0].num_schools)
       },
       "lower primary": {
         "dise_enrol": Math.round(diseEnrollment.lowerPrimary.totalStudents / diseEnrollment.lowerPrimary.totalSchools),
-        "klp_enrol": Math.round(klpData.cat[1].num_boys+klpData.cat[1].num_girls/klpData.cat[1].num_schools)
+        "klp_enrol": Math.round(klpData.cat[1].num_boys + klpData.cat[1].num_girls / klpData.cat[1].num_schools)
       }
     };
     return enrollment;
@@ -198,16 +214,37 @@
   t.getSchoolsByLanguage = function(klp) {
     var totalStudents = klp.num_boys + klp.num_girls;
     var totalSchools = klp.num_schools;
-    var languageCategories  = ["kannada", "tamil", "telugu", "urdu"]
-    var modified = {"kannada": {moi_count :0,mt_count: 0},"urdu": {moi_count :0,mt_count: 0},"tamil": {moi_count :0,mt_count: 0},"telugu": {moi_count :0,mt_count: 0},"others": {moi_count :0,mt_count: 0}}
-    klp.moi.forEach(function(moi){
+    var languageCategories = ["kannada", "tamil", "telugu", "urdu"]
+    var modified = {
+      "kannada": {
+        moi_count: 0,
+        mt_count: 0
+      },
+      "urdu": {
+        moi_count: 0,
+        mt_count: 0
+      },
+      "tamil": {
+        moi_count: 0,
+        mt_count: 0
+      },
+      "telugu": {
+        moi_count: 0,
+        mt_count: 0
+      },
+      "others": {
+        moi_count: 0,
+        mt_count: 0
+      }
+    }
+    klp.moi.forEach(function(moi) {
       if (_.contains(languageCategories, moi.moi)) {
         modified[moi.moi].moi_count = moi.num
       } else {
         modified.others.moi_count += moi.num
       }
     })
-    klp.mt.forEach(function(mt){
+    klp.mt.forEach(function(mt) {
       if (_.contains(languageCategories, mt.name)) {
         modified[mt.name].mt_count = mt.num_boys + mt.num_girls
       } else {
@@ -215,20 +252,20 @@
       }
     })
 
-    modified = _.each(modified, function(lang, category){
+    modified = _.each(modified, function(lang, category) {
       lang.moi_perc = getPercentage(lang.moi_count, totalSchools);
       lang.mt_perc = getPercentage(lang.mt_count, totalStudents);
     })
 
     var modified = _.keys(modified)
-                    .filter(function(lang) {
-                        return modified[lang].moi_count !=0 || modified[lang].mt_count !=0
-                    })
-                    .reduce(function(result, key){
-                      result[key] = modified[key];
-                      return result;
-                    }, {})
-    
+      .filter(function(lang) {
+        return modified[lang].moi_count != 0 || modified[lang].mt_count != 0
+      })
+      .reduce(function(result, key) {
+        result[key] = modified[key];
+        return result;
+      }, {})
+
     return modified;
   };
 
@@ -283,14 +320,14 @@
   t.getSchoolInfra = function(data) {
     var totalSchools = data.sum_schools;
     var modified = [];
-    _.keys(infraHash).forEach(function(facility) {
+   _.without(_.keys(infraHash), 'Functional Bal Vikas Samithis').forEach(function(facility) {
       var obj = {};
       obj.facility = facility;
       obj.icon = infraHash[facility].icon;
       obj.total = data[infraHash[facility].key];
       obj.percent = getPercentage(obj.total, totalSchools);
       modified.push(obj);
-    })    
+    })
     return modified;
   };
 
@@ -302,21 +339,38 @@
     var totalReceived = devGrantReceived + tlmGrantReceived;
     var totalExpenditure = devGrantExpenditure + tlmGrantExpenditure;
     var modified = {};
-       var data = {
-        "received": {
-          "sg_perc": Math.round(getPercentage(devGrantReceived, totalReceived)),          
-          "sg_amt": devGrantReceived,
-          "tlm_perc": Math.round(getPercentage(tlmGrantReceived, totalReceived)),
-          "tlm_amt": tlmGrantReceived
-        },
-        "expenditure": {
-          "sg_perc": Math.round(getPercentage(devGrantExpenditure, totalExpenditure)),          
-          "sg_amt": devGrantExpenditure,
-          "tlm_perc": Math.round(getPercentage(tlmGrantExpenditure, totalExpenditure)),
-          "tlm_amt": tlmGrantExpenditure
-        },
-      };
-      return data;
+    var data = {
+      "received": {
+        "sg_perc": Math.round(getPercentage(devGrantReceived, totalReceived)),
+        "sg_amt": devGrantReceived,
+        "tlm_perc": Math.round(getPercentage(tlmGrantReceived, totalReceived)),
+        "tlm_amt": tlmGrantReceived
+      },
+      "expenditure": {
+        "sg_perc": Math.round(getPercentage(devGrantExpenditure, totalExpenditure)),
+        "sg_amt": devGrantExpenditure,
+        "tlm_perc": Math.round(getPercentage(tlmGrantExpenditure, totalExpenditure)),
+        "tlm_amt": tlmGrantExpenditure
+      },
+    };
+    return data;
+  }
+
+  t.getPreSchoolInfra = function(data) {
+    var sumSchools = data.num_schools    
+    var anganwadiInfra = data.reduce(function(results, infra){
+      var key = infra.question.key
+      var obj = {}
+      if (preschoolInfraHash[key]) {
+        obj.facility = preschoolInfraHash[key].type
+        obj.icon = preschoolInfraHash[key].icon
+        obj.total = infra.answers.options.Yes
+        obj.percent = getPercentage(obj.total, sumSchools) 
+        results.push(obj)
+      }     
+        return results
+    }, [])    
+    return anganwadiInfra
   }
 
   function getPercentage(value, total) {

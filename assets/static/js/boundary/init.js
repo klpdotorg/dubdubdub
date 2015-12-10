@@ -9,7 +9,7 @@
     'circle': 'admin_3'
   };
   klp.init = function() {
-    utils = klp.boundaryUtils;    
+    utils = klp.boundaryUtils;
     //klp.router = new KLPRouter({});
     //klp.router.init();       
     //klp.router.start();
@@ -22,59 +22,59 @@
     /*------------------- WISH WASH FOR MAP-------------*/
     var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {
       geometry: 'yes',
-      school_type:'PreSchool', 
+      school_type: 'PreSchool',
       source: 'anganwadi'
     });
 
     // FIX THIS LATER
     $('#map-canvas').css('zIndex', 1);
     $infoXHR.done(function(data) {
-      var boundary = data.properties.boundary;
-      var boundaryType = boundary.school_type;
-      if (boundaryType === 'primaryschool') {
-        renderPrimarySchool(data, acadYear);
-      } else {
-        renderPreSchool(data, acadYear);
-      }      
-      $('.js-trigger-compare').click(function(e) {
-        e.preventDefault();
-        klp.comparison.open(data.properties);
-      });
-      var geom;
-      if (boundary.geometry) {
-        geom = boundary.geometry;
-      } else {
-        geom = null;
-      }
-
-      if (geom && geom.coordinates) {
-        var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
-        var map = L.map('map-canvas', {
-          touchZoom: false,
-          scrollWheelZoom: false,
-          doubleClickZoom: false,
-          boxZoom: false,
-          zoomControl: false,
-          attributionControl: false
-        }).setView(markerLatlng, 15);
-
-        L.tileLayer(klp.settings.tilesURL, {
-          attribution: 'OpenStreetMap, OSM-Bright'
-        }).addTo(map);
-
-        var marker = L.geoJson(geom, {
-          pointToLayer: function(feature, latLng) {
-            return L.marker(latLng, {
-              icon: klp.utils.mapIcon("primaryschool_cluster")
-            });
-          }
-        }).addTo(map);
-
-        map.panBy([0, 50], {
-          animate: true,
-          duration: 0.50
+        var boundary = data.properties.boundary;
+        var boundaryType = boundary.school_type;
+        if (boundaryType === 'primaryschool') {
+          renderPrimarySchool(data, acadYear);
+        } else {
+          renderPreSchool(data, acadYear);
+        }
+        $('.js-trigger-compare').click(function(e) {
+          e.preventDefault();
+          klp.comparison.open(data.properties);
         });
-      } else {
+        var geom;
+        if (boundary.geometry) {
+          geom = boundary.geometry;
+        } else {
+          geom = null;
+        }
+
+        if (geom && geom.coordinates) {
+          var markerLatlng = L.latLng(geom.coordinates[1], geom.coordinates[0]);
+          var map = L.map('map-canvas', {
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            zoomControl: false,
+            attributionControl: false
+          }).setView(markerLatlng, 15);
+
+          L.tileLayer(klp.settings.tilesURL, {
+            attribution: 'OpenStreetMap, OSM-Bright'
+          }).addTo(map);
+
+          var marker = L.geoJson(geom, {
+            pointToLayer: function(feature, latLng) {
+              return L.marker(latLng, {
+                icon: klp.utils.mapIcon("primaryschool_cluster")
+              });
+            }
+          }).addTo(map);
+
+          map.panBy([0, 50], {
+            animate: true,
+            duration: 0.50
+          });
+        } else {
           //if school does not have any coordinates, what to do?
           $('.map-canvas').hide();
         }
@@ -85,50 +85,50 @@
         var html = tpl(context);
         $('#boundary-info-wrapper').html(html);
       })
-.fail(function(err) {
-  klp.utils.alertMessage("Something went wrong. Please try later.", "error");
-});
-}
+      .fail(function(err) {
+        klp.utils.alertMessage("Something went wrong. Please try later.", "error");
+      });
+  }
 
-function renderPrimarySchool(data, academicYear) {
-  var queryParams = {};
-  var boundaryName = data.properties.boundary.name;
-  var boundaryType = data.properties.boundary.type;
-  var boundaryID = data.properties.boundary.id;
-  var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
-  queryParams[adminLevel] = boundaryID;
-  $('#school-data').removeClass("hidden");
-  klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
-  .done(function(diseData) {
-    var boundary = diseData[0].children[0]
-    console.log('boundary', boundary);
-    klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
-    .done(function(diseData) {      
-      console.log('diseData', diseData);
-      renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
-      renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
-      renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
-      renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
-      renderEnrollment(utils.getSchoolEnrollment(data.properties, diseData.properties),"school");
-      renderGrants(utils.getGrants(diseData.properties));   
-    })
-    .fail(function(err) {
-      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-    })
-  })
-  .fail(function(err) {
-    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-  });
+  function renderPrimarySchool(data, academicYear) {
+    var queryParams = {};
+    var boundaryName = data.properties.boundary.name;
+    var boundaryType = data.properties.boundary.type;
+    var boundaryID = data.properties.boundary.id;
+    var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
+    queryParams[adminLevel] = boundaryID;
+    $('#school-data').removeClass("hidden");
+    klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
+      .done(function(diseData) {
+        var boundary = diseData[0].children[0]
+        console.log('boundary', boundary);
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
+          .done(function(diseData) {
+            console.log('diseData', diseData);
+            renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
+            renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
+            renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
+            renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
+            renderEnrollment(utils.getSchoolEnrollment(data.properties, diseData.properties), "school");
+            renderGrants(utils.getGrants(diseData.properties));
+          })
+          .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+          })
+      })
+      .fail(function(err) {
+        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+      });
 
-  renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
+    renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
 
     klp.api.do('programme/', queryParams)
-    .done(function(progData) {
-      renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
-    })
-    .fail(function(err) {
-      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-    });
+      .done(function(progData) {
+        renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'primaryschool');
+      })
+      .fail(function(err) {
+        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+      });
     console.log('data', data);
   }
 
@@ -138,20 +138,20 @@ function renderPrimarySchool(data, academicYear) {
     var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
     queryParams[adminLevel] = boundaryID;
     klp.api.do('programme/', queryParams)
-    .done(function(progData) {
-      renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
-    })
-    .fail(function(err) {
-      klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-    });
+      .done(function(progData) {
+        renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
+      })
+      .fail(function(err) {
+        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+      });
     $('#preschool-data').removeClass("hidden");
     renderSummary(utils.getPreSchoolSummary(data), 'preschool');
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
     renderCategories(utils.getPreSchoolCategories(data.properties), 'preschool');
-    renderLanguages(utils.getMotherTongue(data.properties), 'preschool');    
-    renderEnrollment(utils.getPreSchoolEnrollment(data.properties),"preschool");
+    renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
+    renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");
     //To do: Render Infra
-    renderInfra(utils.getPreSchoolInfra(data.properties),"preschool");
+    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");
     console.log('data', data);
   }
 
@@ -190,7 +190,7 @@ function renderPrimarySchool(data, academicYear) {
     $('#' + prefix + 'klp-gender').html(html);
   }
 
-  function renderCategories(data, schoolType) {    
+  function renderCategories(data, schoolType) {
     var tpl_func = '#tpl-category-summary';
     var prefix = '';
     if (schoolType == "preschool") {
@@ -204,209 +204,81 @@ function renderPrimarySchool(data, academicYear) {
     $('#' + prefix + 'category-summary').html(html);
   }
 
-  function renderLanguages(data, schoolType) {
-    //Handle For Primary School
-    /*var data = { 
-        "kannada": {
-            "typename":"kannada",
-            "count": 200,
-            "perc": 20
-        },
-        "urdu": {
-            "typename":"urdu",
-            "count": 400,
-            "perc": 41
-        },
-        "tamil": {
-            "typename":"tamil",
-            "count": 400,
-            "perc": 39
+  function renderLanguages(data, schoolType) {   
+    var tpl_func = "#tpl-language";
+    var prefix = '';
+    if (schoolType == "preschool") {
+      prefix = "ang-"
+      tpl_func = "#tpl-ang-language";
+    }
+    var tpl = swig.compile($(tpl_func).html());
+    var html = tpl({
+      "languages": data
+    });
+    $('#' + prefix + 'klp-language').html(html);
+  }
+
+  function renderEnrollment(data, schoolType) {
+    var tpl = swig.compile($('#tpl-enrolment').html());
+    var prefix = 'dise-';
+    if (schoolType == "preschool") {
+      prefix = "ang-"
+      tpl = swig.compile($('#tpl-ang-enrolment').html());
+    }
+    var html = tpl({
+      "categories": data
+    });
+    $('#' + prefix + 'enrolment').html(html);
+  }
+
+  function renderGrants(data) {
+    drawStackedBar([
+      [data["expenditure"]["sg_perc"]],
+      [data["expenditure"]["tlm_perc"]]
+    ], "#chart-expenditure");
+    drawStackedBar([
+      [data["received"]["sg_perc"]],
+      [data["received"]["tlm_perc"]]
+    ], "#chart-received");
+
+    var tpl = swig.compile($('#tpl-grants').html());
+    var html = tpl({
+      "grants": data["expenditure"]
+    });
+    $('#dise-expenditure').html(html);
+    html = tpl({
+      "grants": data["received"]
+    });
+    $('#dise-received').html(html);
+  }
+
+  function drawStackedBar(data, element_id) {
+    new Chartist.Bar(element_id, {
+      labels: [''],
+      series: data
+    }, {
+      stackBars: true,
+      horizontalBars: true,
+      axisX: {
+        showGrid: false
+      },
+      axisY: {
+        showGrid: false,
+        labelInterpolationFnc: function(value) {
+          return '';
         }
-        
-      };*/
-      var tpl_func = "#tpl-language";
-      var prefix = '';
-      if (schoolType == "preschool") {
-        prefix = "ang-"
-        tpl_func = "#tpl-ang-language";
       }
-      var tpl = swig.compile($(tpl_func).html());
-      var html = tpl({
-        "languages": data
-      });
-      $('#' + prefix + 'klp-language').html(html);
-    }
-
-    function renderEnrollment(data, schoolType) {
-      /*var data = null;
-      if (schoolType == "school") {
-        data = {
-          "model primary": {
-            "type_name": "model primary",
-            "count": 2000,
-            "perc": 21,
-            "avg": 80
-          },
-          "upper primary": {
-            "type_name": "upper primary",
-            "count": 4000,
-            "perc": 80,
-            "avg": 100
-          },
-          "lower primary": {
-            "type_name": "lower primary",
-            "count": 1000,
-            "perc": 19,
-            "avg": 90
-          }
-
-        };
-      } else {
-        data = {         
-          "anganwadi": {
-            "type_name":"anganwadi",
-            "klp_enrol" :20
-          },
-          "balwadi": {
-            "type_name":"balwadi",
-            "klp_enrol" :22
-          },
-          "independent balwadi": {
-            "type_name":"independent balwadi",
-            "klp_enrol" :24          
-          },
-          "others": {
-            "type_name":"others",
-            "klp_enrol" :30         
-          }
-        };
-      }*/
-
-      var tpl = swig.compile($('#tpl-enrolment').html());
-      var prefix = 'dise-';
-      if (schoolType == "preschool") {
-        prefix = "ang-"
-        tpl = swig.compile($('#tpl-ang-enrolment').html());
+    }).on('draw', function(data) {
+      if (data.type === 'bar') {
+        data.element.attr({
+          style: 'stroke-width: 20px'
+        });
       }
-       var html = tpl({"categories": data});
-      $('#' + prefix + 'enrolment').html(html);
-    }
+    });
+  }
 
-    function renderGrants(data) {
-       drawStackedBar([
-        [data["expenditure"]["sg_perc"]],        
-        [data["expenditure"]["tlm_perc"]]
-        ], "#chart-expenditure");
-      drawStackedBar([
-        [data["received"]["sg_perc"]],        
-        [data["received"]["tlm_perc"]]
-        ], "#chart-received");
-
-      var tpl = swig.compile($('#tpl-grants').html());
-      var html = tpl({
-        "grants": data["expenditure"]
-      });
-      $('#dise-expenditure').html(html);
-      html = tpl({
-        "grants": data["received"]
-      });
-      $('#dise-received').html(html);
-    }
-
-    function drawStackedBar(data, element_id) {
-      new Chartist.Bar(element_id, {
-        labels: [''],
-        series: data
-      }, {
-        stackBars: true,
-        horizontalBars: true,
-        axisX: {
-          showGrid: false
-        },
-        axisY: {
-          showGrid: false,
-          labelInterpolationFnc: function(value) {
-            return '';
-          }
-        }
-      }).on('draw', function(data) {
-        if (data.type === 'bar') {
-          data.element.attr({
-            style: 'stroke-width: 20px'
-          });
-        }
-      });
-    }
-
-    function renderInfra(facilities, schoolType) {
-      var tpl = swig.compile($('#tpl-infra-summary').html());
-
-    /*var facilities = [{
-      'facility': 'All weather pucca building',
-      'icon': ['fa fa-university'],
-      'percent': 70,
-      'total': 10
-    }, {
-      'facility': 'Playground',
-      'icon': ['fa fa-futbol-o'],
-      'percent': 50,
-      'total': 10
-    }, {
-      'facility': 'Drinking Water',
-      'icon': ['fa  fa-tint'],
-      'percent': 30,
-      'total': 10
-    }, {
-      'facility': 'Toilets',
-      'icon': ['fa fa-male', 'fa fa-female'],
-      'percent': 20,
-      'total': 20
-    }];
-    if (schoolType == "school") {
-      facilities = facilities.concat(
-        [{
-          'facility': 'Library',
-          'icon': ['fa fa-book'],
-          'percent': 70,
-          'total': 10
-        }, {
-          'facility': 'Secure Boundary Wall',
-          'icon': ['fa fa-circle-o-notch'],
-          'percent': 80,
-          'total': 10
-        }, {
-          'facility': 'Electricity',
-          'icon': ['fa fa-plug'],
-          'percent': 10,
-          'total': 10
-        }, {
-          'facility': 'Mid-day Meal',
-          'icon': ['fa fa-spoon'],
-          'percent': 90,
-          'total': 10
-        }, {
-          'facility': 'Computers',
-          'icon': ['fa fa-laptop'],
-          'percent': 15,
-          'total': 10
-        }])
-
-    } else {
-      facilities = facilities.concat(
-        [{
-          'facility': 'Healthy and Timely Meal',
-          'icon': ['fa fa-cutlery'],
-          'percent': 70,
-          'total': 10
-        }, {
-          'facility': 'Functional Bal Vikas Samithis',
-          'icon': ['fa fa-users'],
-          'percent': 80,
-          'total': 10
-        }])
-    }
-    */
-
+  function renderInfra(facilities, schoolType) {
+    var tpl = swig.compile($('#tpl-infra-summary').html());
     var html = '<div class="page-parent">'
     for (var pos in facilities) {
       html = html + tpl(facilities[pos]);
