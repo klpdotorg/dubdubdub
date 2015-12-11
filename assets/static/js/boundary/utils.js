@@ -13,6 +13,18 @@
     'ang-bvs-present': {
       type: 'Functional Bal Vikas Samithis',
       icon: ['fa fa-users']
+    },
+    'ang-separate-handwash': {
+      type: 'Separate Hand-Wash',
+      icon: ['fa fa-hand-o-up']
+    }, 
+    'ang-activities-use-tlm': {
+      type: 'Uses Learning Material', 
+      icon: ['fa fa-cubes']
+    },
+    'ang-in-spacious-room': {
+      type: 'Spacious Room', 
+      icon: ['fa fa-arrows-alt']
     }
 
   }
@@ -356,9 +368,9 @@
     return data;
   }
 
-  t.getPreSchoolInfra = function(data) {
+  t.getPreSchoolInfra = function(data) {    
     var sumSchools = data.num_schools    
-    var anganwadiInfra = data.reduce(function(results, infra){
+    var anganwadiInfra = data.infrastructure.anganwadi.reduce(function(results, infra){
       var key = infra.question.key
       var obj = {}
       if (preschoolInfraHash[key]) {
