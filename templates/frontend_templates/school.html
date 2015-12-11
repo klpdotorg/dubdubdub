@@ -6,8 +6,8 @@
     </span>
     {{ name }}
   </h4>
-  
-  <ul class="map-location-labels font-smallest">  
+
+  <ul class="map-location-labels font-smallest">
     <li class="map-label-each">
       <div class="map-label-title">District</div>
       <div class="map-label-name">{{ admin1.name|capitalize }}</div>
@@ -28,12 +28,12 @@
         <h4 class="heading-tiny-uppercase">Address</h4>
         <p>{{ address_full }}</p>
         {% endif %}
-    
+
         {% if landmark %}
         <h4 class="heading-tiny-uppercase">Landmark</h4>
         <p>{{ landmark }}</p>
         {% endif %}
-      
+
         <h4 class="heading-tiny-uppercase">School Information</h4>
         <table class="table-data">
           <tr>
@@ -70,7 +70,7 @@
             {% endif %}
           {% endif %}
         </table>
-      
+
           <h4 class="heading-tiny-uppercase">Constituency Information</h4>
           <table class="table-data">
             <tr>
@@ -114,7 +114,7 @@
         <div class="container">
           <ul>
             {% for m in meeting_reports %}
-            <li class="circle-bullet white"> 
+            <li class="circle-bullet white">
               <a href="/media/{{ m.pdf }}" target="_blank">{{ m.language }}</a>
             </li>
             {% endfor %}
@@ -133,9 +133,9 @@
           </div>
           {% endif %}
       </div>
-      <div class="clear"></div> 
+      <div class="clear"></div>
     </div> <!-- /school-data-wrap -->
-    <div class="base-spacing"></div> 
+    <div class="base-spacing"></div>
     <table class="table-data">
       <tr>
         <td>Source</td>
@@ -145,7 +145,7 @@
   </div> <!-- /container -->
 </script>
 <script type="text/html" id="tpl-tab-demographics">
-  
+
   <div class="container">
 
     <div class="grid-parent">
@@ -154,12 +154,12 @@
         <div class="no-data js-klp" style="display:none;">
             <p> No data available </p>
         </div>
-    
+
         <div class="pie-chart-wrapper" id="boygirlChartWrapper">
           <div class="pie-chart-inner">
             <div id="num_students_piechart" class="chart"></div>
           </div>
-      
+
           <div class="school-demo-tab">
             <div class="module-stats-icon">
               <span class="icon-boy"></span>
@@ -185,9 +185,9 @@
               </div>
             </div>
           </div> <!-- /school-demo-tab -->
-        </div> <!--/pie-chart-wrapper --> 
-      </div> 
-  
+        </div> <!--/pie-chart-wrapper -->
+      </div>
+
       <div class="float-right grid-child bar-tab-demo-block">
         <h4 class="heading-tiny-uppercase">Languages</h4>
         <div>
@@ -206,18 +206,18 @@
           </div>
         </div>
       </div> <!-- /float-right -->
-    
+
       {% if type_name != 'preschool' %}
       <h4 class="heading-tiny-uppercase">DISE Student Profile</h4>
       <div class="no-data js-dise" style="display:none;">
           <p> No data available </p>
       </div>
-  
+
       <div class="pie-chart-wrapper" id="boygirlChartWrapperDISE">
         <div class="pie-chart-inner fl">
           <div id="num_students_piechart_dise" class="chart fl"></div>
         </div>
-    
+
         <div class="school-demo-tab">
           <div class="module-stats-icon">
             <span class="icon-boy"></span>
@@ -245,7 +245,7 @@
         </div>
       </div>
       {% endif %}
-  
+
     <div class="base-spacing"></div>
     <table class="table-data">
       <tr>
@@ -254,7 +254,7 @@
       </tr>
     </table>
   </div> <!-- /container -->
-  
+
 </script>
 
 <script type="text/html" id="tpl-tab-programmes">
@@ -287,9 +287,9 @@
 <script type="text/html" id="tpl-tab-finances">
   <div class="container">
     <h4 class="heading-tiny-uppercase">SSA GRANTS ALLOCATION</h4>
-    
+
     <div class="center-text" id="pie_chart_finance">{ Chart here }</div>
-    
+
     <table class="table-data table-data-finances">
         <tr>
           <td>School Maintence Grant (SMG)</td>
@@ -314,7 +314,7 @@
       {{ teacher_count }} teachers as per DISE sources.<br/>
       It is known to receive a total annual SSA grant of ₹ {{ total_amount }}.
     </p>
-    
+
     <table class="table-data">
         <tr>
           <td>Source</td>
@@ -326,9 +326,9 @@
 
 <script type="text/html" id="tpl-tab-infrastructure">
   <div class="container">
-    
+
     <div class="tab-school-infra-block">
-      <div class="school-infra-table">    
+      <div class="school-infra-table">
         <h4 class="heading-tiny-uppercase">Infrastructure</h4>
         {% if facilities %}
         <table class="table-data table-data-key">
@@ -351,7 +351,7 @@
         </div>
         {% endif %}
       </div> <!-- /school-infra-table -->
-    
+
       <div class="infra-key-legend">
         <div class="table-infra-key-color table-infra-icon-right brand-green">Indicates infrastructure present</div>
         <div class="table-infra-key-color table-infra-icon-right brand-red">Indicates infrastructure absent</div>
@@ -359,8 +359,8 @@
       </div>
 
     </div> <!-- /tab-school-infra-block -->
-      
-    <div class="base-spacing-lg"></div> 
+
+    <div class="base-spacing-lg"></div>
 
     <table class="table-data">
       <tr>
@@ -368,7 +368,7 @@
         <td>{% if type_name == 'school' %}, <strong>NUEPA-DISE (2013-14)</strong>{% endif %}</td>
       </tr>
     </table>
-  </div> <!-- /container -->  
+  </div> <!-- /container -->
 </script>
 <script type="text/html" id="tpl-tab-library">
   <div class="container">
@@ -383,25 +383,25 @@
         <option value="language">Borrow By Language</option>
         <option value="aggregate">Aggregate</option>
       </select>
-    
+
       <select name="" id="select_library_year" class="grey-mist-bg">
         {% for year in years %}
           <option data-selectedtext="Year {{ year }}" value={{ year }} selected>{{ year }}</option>
         {% endfor %}
       </select>
-    
+
       <select name="" id="select_library_class" class="grey-mist-bg">
       {% for klass in klasses %}
         <option data-selectedtext="Class {{ klass }}" value={{ klass }} selected>{{ klass }}</option>
       {% endfor %}
       </select>
 
-      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button--> 
+      <!--<button class="styled hide" id="library_graph_table_switch">Switch to Table View</button-->
       <div class="base-spacing-mid"></div>
     </div> <!-- /form-base -->
-  
+
     <div id="graph_library">{ Graph here }</div>
-    
+
     <!--<table id="table_library" class="table-data" style="display:none;">
       <tr>
         <th>Month</th>
@@ -521,9 +521,9 @@
         <td>1</td>
       </tr>
     </table>-->
-    
+
     <h4 class="heading-tiny-uppercase">Akshara Library Details</h4>
-    
+
     <table class="table-data">
       {% for value in lib_infra %}
         <tr>
@@ -558,9 +558,9 @@
       </tr>
       -->
     </table>
-    
+
     <div>DISE Reports Number of Books as : <strong>{{ dise_books }}</strong></div>
-    
+
     <div class="base-spacing"></div>
     <table class="table-data">
       <tr>
@@ -569,7 +569,7 @@
       </tr>
     </table>
   </div> <!-- /container -->
-    
+
 </script>
 
 <script type="text/html" id="tpl-tab-nutrition">
@@ -591,7 +591,7 @@
       </tr>
     </table>
   </div> <!-- /container -->
-  
+
 </script>
 
 
@@ -599,16 +599,16 @@
   <div class="container">
     <div class="school-tab-story">
       <div class="school-story-visits">
-          <h4 class="heading-tiny-uppercase">Information from schools visits</h4>
-      
+          <h4 class="heading-tiny-uppercase">Information from school visits</h4>
+
           <p>This data is gathered from vistors sharing their experiences. It indicates whether or not the school has facilities under the headings below:</p>
-      
+
           <table class="table-data table-data-key">
             {% if latest_answers %}
                 {% for answer in latest_answers %}
                   <tr>
                     <td>{{ answer.question.text }}</td>
-                    <td> 
+                    <td>
                       <div class="table-infra-key-color table-infra-icon-left brand-{% if answer.text == 'Yes' %}green{% else %}red{% endif %}">
                       {{ answer.text }}
                       </div>
@@ -623,7 +623,7 @@
               {% endif %}
           </table>
       </div> <!-- /school-story-visits -->
-       
+
       <div class="school-share-story">
         <div class="share-your-story">
           {% if school_type_id == 1 %}
@@ -634,7 +634,7 @@
           <div class="number"></div>
           <div class="text">Number of School Visits</div>
         </div>
-        
+
         <div class="base-spacing font-large">
           <span class="icon-number icon-left">{{ count }}</span>
           <span class="text">Shared Stories</span>
@@ -659,10 +659,10 @@
                 {% endif %}
             </div>
             {% endfor %}
-        </div> <!-- /comments --> 
+        </div> <!-- /comments -->
       </div> <!-- /school-share-story -->
 
-    </div> <!-- /school-tab-story --> 
+    </div> <!-- /school-tab-story -->
   </div> <!-- /container -->
 
 </script>
@@ -782,7 +782,7 @@
           <input name="image" type="file">
           <img class="form-file-preview js-image-preview" width="100">
         </div>
-    
+
         <div class="form-field-wrap center-text">
           <button type="submit" class="button js-submit-btn">Submit</button>
           <div class="js-submit-loading" style="display:none;">
@@ -792,6 +792,6 @@
     </form>
 
   </div> <!-- /container -->
-  
+
 </script>
 {% endverbatim %}
