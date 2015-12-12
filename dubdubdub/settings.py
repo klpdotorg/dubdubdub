@@ -259,7 +259,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-#Should be used by management commands, etc. to log files
+# Should be used by management commands, etc. to log files
 LOGS_FOLDER = os.path.join(PROJECT_ROOT, 'logs',)
 
 TESTS_SCHOOLS_INPUT = {
