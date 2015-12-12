@@ -19,12 +19,12 @@
 <script>
   SCHOOL_ID = {{ object.id }};
   SCHOOL_TYPE_ID = {{ object.schooldetails.type.id }};
-  {% if object.dise_info.dise_code %}
-    DISE_CODE = {{ object.dise_info.dise_code }};
+  {% if object.dise_info_id %}
+    DISE_CODE = {{ object.dise_info_id }};
   {% else %}
     DISE_CODE = null;
   {% endif %}
-  
+
 </script>
 {% endblock %}
 
@@ -32,7 +32,7 @@
 {% block subheader %}
   <div class="subheader-wrapper">
     <div class="subheader-content">
-      {% include 'includes/_breadcrumb.html' %}        
+      {% include 'includes/_breadcrumb.html' %}
     </div>
   </div>
 {% endblock %}
@@ -49,10 +49,10 @@
             </div>
             <div class="button-compare-wrap">
               <a class="button-grey js-trigger-compare" href="">Compare to</a>
-            </div>          
+            </div>
         </div>
       </div> <!-- /container -->
-    </div> <!-- /school-map-info -->      
+    </div> <!-- /school-map-info -->
   </div> <!-- /school-map-wrapper -->
 
   <div class="tab-wrap">
@@ -75,15 +75,15 @@
     <div class="tab-each">
       <div class="tab-content font-small" data-tab="info">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
-      <!-- Info Tab END -->            
+      <!-- Info Tab END -->
     </div>
     <div class="tab-each">
       <div class="tab-content tab-active" data-tab="demographics">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Demographics Tab END -->
@@ -91,7 +91,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="programmes">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Programme Tab END -->
@@ -100,7 +100,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="finances">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Finances Tab END -->
@@ -109,7 +109,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="infrastructure">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Infrastructure Tab END -->
@@ -118,7 +118,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="library">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Library Tab END -->
@@ -126,7 +126,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="nutrition">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Nutrition Tab END -->
@@ -135,7 +135,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="share-story">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Share your story Tab END -->
@@ -143,7 +143,7 @@
     <div class="tab-each">
       <div class="tab-content" data-tab="volunteer">
         <div class="container">
-          Loading...        
+          Loading...
         </div>
       </div>
       <!-- Share your story Tab END -->

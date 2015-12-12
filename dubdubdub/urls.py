@@ -65,6 +65,11 @@ urlpatterns = patterns(
         template_name='klpreports.html',
     ), name='klpreports'),
 
+    #temporary dise reports page to link to static pdfs
+    url(r'^disereports/$', StaticPageView.as_view(
+        template_name='disereports.html',
+    ), name='disereports'),
+
     # data page
     url(r'^data/$', StaticPageView.as_view(
         template_name='data.html',
@@ -76,7 +81,7 @@ urlpatterns = patterns(
 
     url(r'^partners/akshara/reading/$', StaticPageView.as_view(
         template_name='partners/akshara/reading.html',
-        ), name='reading_programme'),     
+        ), name='reading_programme'),
     url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
     url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
 
