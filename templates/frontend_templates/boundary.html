@@ -1,0 +1,304 @@
+{% verbatim %}
+<script type="text/html" id="tpl-boundary-info">
+  <h2 class="heading-secondary">
+    <span class="icon-number">
+      {% if admin3.school_type == 'school' %} C {% else %} C {% endif %}
+    </span>
+    {{ boundary.name|capitalize }}
+  </h2>
+  {% if boundary.parent %}
+  <ul class="map-location-labels font-smallest">  
+    {% if boundary.parent.parent %}
+    <li class="map-label-each">
+      <div class="map-label-title">{{ boundary.parent.parent.type|capitalize }}</div>
+      <div class="map-label-name">{{ boundary.parent.parent.name|capitalize }}</div>    
+    </li>
+    {% endif %}
+    <li class="map-label-each">
+      <div class="map-label-title">{{ boundary.parent.type|capitalize }}</div>
+      <div class="map-label-name">{{ boundary.parent.name|capitalize }}</div>
+    </li>   
+  </ul>
+  {% endif %}
+</script>
+
+<script type="text/html" id="tpl-school-summary">
+    <div class="page-parent">
+        <div class="klp-summary">
+            <div class="top">
+                <div class="heading-tiny-uppercase align-left" >Source</div>
+                <h2 class="heading-secondary brand-blue align-left">KLP</h2>
+            </div> 
+            <div class="half-column">
+                <div class="heading-tiny-uppercase  align-left" >Schools</div>
+                <h2 class="heading-secondary brand-blue align-left">{{ klp.schools }}</h2> 
+            </div>
+            <div class="half-column">
+                <div class="heading-tiny-uppercase align-left" >Students</div>
+                <div class="module-stats-icon module-stats-boygirl">
+                  <span class="icon-boy-girl"></span>
+                  <div class="module-stats-info">
+                    <div class="uppercase">Total</div>
+                    <p class="module-stats-label">{{ klp.students }}</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {%if school_type == "school" %}
+          <div class="dise-summary">
+              <div class="top">
+                  <div class="heading-tiny-uppercase align-left" >Source</div>
+                  <h2 class="heading-secondary brand-blue align-left">DISE</h2>
+              </div> 
+              <div class="third-column">
+                  <div class="heading-tiny-uppercase  align-left" >Schools</div>
+                  <h2 class="heading-secondary brand-blue align-left">{{ dise.schools }}</h2> 
+              </div>
+              <div class="third-column">
+                  <div class="heading-tiny-uppercase align-left" >Students</div>
+                  <div class="module-stats-icon module-stats-boygirl">
+                    <span class="icon-boy-girl"></span>
+                    <div class="module-stats-info">
+                      <div class="uppercase">Total</div>
+                      <p class="module-stats-label">{{ dise.students }}</p>
+                    </div>
+                  </div>
+              </div>
+              <div class="third-column">
+                  <div class="heading-tiny-uppercase align-left" >Average PTR</div>
+                  <h2 class="heading-secondary brand-blue align-left">{{ dise.ptr }}</h2> 
+              </div>
+          </div>
+        {% endif %}          
+
+        <div class="acad-year-{{school_type}}">
+            <ul class="dropdown-base js-dropdown">
+            <li>
+              <span class="bold">Academic Year</span>
+              <span class="fa fa-angle-down"></span>
+              <ul>
+                <li>2014-2015</li>
+                <li>2013-2014</li>
+                <li>2012-2013</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="text/html" id="tpl-gender-summary">
+    {% if gender %}
+    <div class="float-{{ gender.align }}">
+      <div class="module-stats-icon module-stats-girl">
+        <div class="module-stats-info">
+          <div class="uppercase">Girls</div>
+          <p class="module-stats-label">{{ gender.girl_count }}</p>
+        </div>
+        <span class="icon-girl"></span>
+      </div>
+
+      <div class="module-stats-icon">
+        <span class="icon-boy"></span>
+        <div class="module-stats-info">
+          <div class="uppercase">Boys</div>
+          <p class="module-stats-label">{{ gender.boy_count }}</p>
+        </div>
+      </div>
+    <div>
+
+    <div class="bar-graph-wrap float-{{ gender.align }}">
+      <div class="bar-graph">
+          <div class="clear-fix">
+            <div class="float-left pink-salmon">{{ gender.girl_perc }}%</div>
+            <div class="float-right brand-blue">{{ gender.boy_perc }}%</div>
+          </div>
+          <div class="bar-custom">
+            <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;">
+              <div class="bar-value bar-value-{{ gender.girl_perc }} pink-salmon-bg" style="width:{{ gender.girl_perc }}%;"></div>
+            </div>
+          </div>
+        </div>     
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    {% else %}
+    <div class="no-data">
+      No data available.
+    </div>
+    {% endif %}
+</script>
+
+<script type="text/html" id="tpl-category-summary">
+  {% for cat in categories %}  
+
+      <div class=" compare-each-block">
+        <div class="bar-graph-wrap float-left">
+          <div class="bar-custom">
+            <div class="bar-value green-leaf-bg float-right" style="width:{{ cat.klp_perc }}%;"></div>
+            <div class="clear"></div>
+            <div class="green-leaf font-smaller center-text"><strong>{{ cat.klp_count }} schools</strong></div>
+          </div>
+          <div class="bar-percent green-leaf">{{ cat.klp_perc }}%</div>
+        </div>
+
+        <div class="compare-section-heading center-text">{{ cat.type_name|capitalize }}</div>
+
+        <div class="bar-graph-wrap float-right">
+          <div class="bar-percent">{{ cat.dise_perc }}%</div>
+          <div class="bar-custom">
+            <div class="bar-value grey-gravel-bg" style="width:{{ cat.dise_perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ cat.dise_count }} schools</strong></div>
+          </div>
+        </div>
+      </div>
+
+  {% endfor %}
+</script>
+
+<script type="text/html" id="tpl-ang-category-summary">
+  {% for cat in categories %}  
+    <div class="bar-graph-wrap float-right">
+      <div class="bar-graph">
+        <div class="bar-percent grey-gravel">{{ cat.klp_perc }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{cat.klp_count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ cat.klp_perc }} grey-gravel-bg" style="width:{{ cat.klp_perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ cat.klp_count }} schools</strong></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    <div class="float-right">{{ cat.type_name|capitalize}}</div>
+  {% endfor %}
+
+</script>
+<!--script type="text/html" id="tpl-language">
+  {% for language in languages %}  
+    <div class="bar-graph-wrap">
+      <div class="bar-graph">
+        
+        <div class="bar-custom tooltip" aria-label="{{language.count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
+          </div>
+        </div>
+        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
+      </div> <!-- /bar-graph >
+    </div> <!-- /bar-graph-wrap >
+  {%endfor%}
+</script-->
+
+<script type="text/html" id="tpl-language">
+  {% for name, language in languages %} 
+        <div class=" compare-each-block">
+        <div class="bar-graph-wrap float-left">
+          <div class="bar-custom">
+            <div class="bar-value green-leaf-bg float-right" style="width:{{ language.mt_perc }}%;"></div>
+            <div class="clear"></div>
+            <div class="green-leaf font-smaller center-text"><strong>{{ language.mt_count }} students</strong></div>
+          </div>
+          <div class="bar-percent green-leaf">{{ language.mt_perc }}%</div>
+        </div>
+
+        <div class="compare-section-heading center-text">{{ name|capitalize }}</div>
+
+        <div class="bar-graph-wrap float-right">
+          <div class="bar-percent">{{ language.moi_perc }}%</div>
+          <div class="bar-custom">
+            <div class="bar-value grey-gravel-bg" style="width:{{ language.moi_perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ language.moi_count }} schools</strong></div>
+          </div>
+        </div>
+      </div>
+
+  {% endfor %}
+</script>
+
+<script type="text/html" id="tpl-ang-language">
+  {% for language, val in languages %}  
+    <div class="bar-graph-wrap float-right">
+      <div class="bar-graph">
+        <div class="bar-percent grey-gravel">{{ val.perc }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{val.count}}">
+          <div class="bar-value bar-value-100" style="width:100%;">
+            <div class="bar-value bar-value-{{ val.perc }} grey-gravel-bg" style="width:{{ val.perc }}%;"></div>
+            <div class="font-smaller center-text"><strong>{{ val.count }} students</strong></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    <div class="float-right">{{ language|capitalize}}</div>
+  {%endfor%}
+</script>
+
+<script type="text/html" id="tpl-enrolment">
+  <table class="table-base">
+    <thead class="table-base-heading">
+    </thead>
+    <tbody>
+      {% for cat in categories %}  
+        <tr>
+          <td class="center-text">{{ cat.klp_enrol }}</td>
+          <td class="center-text heading-tiny-uppercase">{{ cat.type_name|capitalize }}</td>
+          <td class="center-text">{{ cat.dise_enrol }}</td>
+        </tr>
+      {%endfor%}
+    </tbody>  
+  </table>
+</script>
+
+<script type="text/html" id="tpl-ang-enrolment">
+  <table class="table-base">
+    <thead class="table-base-heading">
+    </thead>
+    <tbody>
+      {% for cat, val in categories %}  
+        <tr>
+          <td>{{ cat|capitalize }}</td>
+          <td>{{ val.klp_enrol }}</td>
+        </tr>
+      {%endfor%}
+    </tbody>  
+  </table>
+</script>
+
+<script type="text/html" id="tpl-grants">
+  <div class="fa fa-circle brand-purple float-left dot-padding"></div>
+  <div class="float-left grant-label">School Dev Grant</div>
+  <div class="float-right">INR {{grants.sg_amt}}</div>
+  <br/>  
+  <div class="fa fa-circle brand-blue float-left dot-padding"></div>
+  <div class="float-left grant-label">TLM Grant</div>
+  <div class="float-right">INR {{grants.tlm_amt}}</div>
+</script>
+
+<script type="text/html" id="tpl-infra-summary">
+    <div class="third-column">
+      <div>
+        {% for i in icon %}
+          <span class="{{ i }}"></span>
+        {% endfor %}
+        &nbsp;{{ facility }}
+      </div>
+      {% if total != 0 %}
+      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
+        {{ percent }}%
+      </div>
+      {% else %}
+      <div class="no-data">
+        No data
+      </div>
+      {% endif %}
+    </div>
+</script>
+
+<script type="text/html" id="tpl-program-summary">
+  {% for p in programs %}
+    <i class="fa fa-external-link"></i><a class="program-list" href={{p.url}}>{{p.pname}}</a><br/>
+  {% endfor %}
+</script>
+
+{% endverbatim %}
