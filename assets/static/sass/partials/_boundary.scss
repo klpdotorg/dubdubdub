@@ -1,0 +1,163 @@
+/* Defining mixins for the chart trials page*/
+
+@mixin col-55-flt {
+  width: 55%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-65-flt {
+  width: 55%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-35-flt {
+  width: 35%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-15-flt {
+  width: 15%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-20-flt {
+  width: 20%;
+  float: left;
+  @include grid-child;  
+}
+
+@mixin col-60-flt {
+  width: 60%;
+  float: left;
+  @include grid-child;  
+}
+
+
+@include media-med {
+
+	.page-parent{
+	  @include grid-parent;
+	}
+
+	.klp-summary{
+	  @include col-35-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.dise-summary{
+	  @include col-50-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.acad-year-school{
+	  @include col-15-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.acad-year-preschool{
+	  @include col-65-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.category-summary{
+	  @include col-60-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.cat-margin{
+	  @include col-20-flt;
+	  padding-left: 0;
+	  padding-right: 0;
+	}
+
+	.half-column{
+	  @include col-50-flt;
+	}
+
+	.third-column{
+	  @include col-33-flt;
+	}
+
+	.top{
+		padding-left:20px;
+	}
+	.bar-left{
+		padding-left:5px;
+	}
+
+	.grant-text {
+		padding-left:50px;
+	}
+
+	.grant-label {
+		padding-left:10px;
+	}
+
+	.dot-padding {
+		padding-top:3px;
+	}
+
+	.program-list {
+		padding-left:10px;
+	}
+
+	.dropdown-base {
+		text-align: right;
+	}
+	
+}
+
+.align-left {
+  text-align: left; 
+}
+
+.align-right {
+  text-align: right; 
+}
+
+.module-stats-icon {
+	margin: 0 0 0 0;
+}
+
+.bar-label {
+  	width: 20%; 
+}
+
+.enrolment {
+	@extend .bar-label;
+  	width: 25%; 
+}
+
+.hidden { 
+	display: none; 
+}
+
+
+
+$ct-series-colors: (
+  $brand-purple,
+  $brand-green,
+  $brand-blue,
+  $brand-orange,
+  $green-leaf,
+  $orange-mild,
+  $pink-salmon,
+  $brand-turquoise,
+  $red-mild,
+  $maroon,
+  $yellow-mild,
+  $green-pista,
+  $blue-ink,
+  $blue-sky,
+  $purple-amethyst,
+  $brand-red
+) !default;

@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
-from schools.views import SchoolPageView, ProgrammeView
+from schools.views import (SchoolPageView, ProgrammeView,
+                           BoundaryPageView)
 from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
@@ -182,6 +183,11 @@ urlpatterns = patterns(
         pattern_name='school_page',
         query_string=True
     ), name='old_school_page'),
+
+    # boundary page
+    url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(
+        ), name='boundary_page'),
+
 
     url(r'^users/verify_email',
         EmailVerificationView.as_view(), name='user_email_verify'),

@@ -458,10 +458,11 @@ class ProgrammeListSerializer(KLPSerializer):
     id= serializers.IntegerField(source='assessment.programme.id')
     name= serializers.CharField(source='assessment.programme.name')
     academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    partner = serializers.CharField(source='assessment.programme.partner.name')
 
     class Meta:
         model = InstitutionAssessmentCohorts
-        fields = ('id','name','academicyear_name')
+        fields = ('id','name','academicyear_name', 'partner',)
 
 class ProgrammeInfoSerializer(KLPSerializer):
     studentgroup =  serializers.CharField(source='studentgroup')

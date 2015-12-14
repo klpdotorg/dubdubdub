@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from schools.models import SchoolDetails, Boundary, School
 from common.views import KLPListAPIView, KLPDetailAPIView
 from schools.serializers import SchoolDetailsSerializer, BoundarySerializer,\
@@ -13,7 +14,8 @@ class Admin1OfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).admin1
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).admin1
 
 
 class Admin2OfSchool(KLPDetailAPIView):
@@ -24,7 +26,8 @@ class Admin2OfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).admin2
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).admin2
 
 
 class Admin3OfSchool(KLPDetailAPIView):
@@ -35,7 +38,8 @@ class Admin3OfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).admin3
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).admin3
 
 
 class PincodeOfSchool(KLPDetailAPIView):
@@ -45,7 +49,8 @@ class PincodeOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).postal
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).postal
 
 
 class AssemblyOfSchool(KLPDetailAPIView):
@@ -55,7 +60,8 @@ class AssemblyOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).assembly
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).assembly
 
 
 class ParliamentOfSchool(KLPDetailAPIView):
@@ -65,4 +71,5 @@ class ParliamentOfSchool(KLPDetailAPIView):
 
     def get_object(self):
         school_id = self.kwargs.get('pk')
-        return SchoolDetails.objects.get(school_id=school_id).parliament
+        school = get_object_or_404(School.objects.all(), id=school_id)
+        return SchoolDetails.objects.get(school_id=school.id).parliament
