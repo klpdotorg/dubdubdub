@@ -14,7 +14,6 @@ class Command(BaseCommand):
         q = Questiongroup.objects.get_or_create(version=3, source=s)[0]
         b = BoundaryType.objects.get(name='Primary School')
         qtype_checkbox = QuestionType.objects.get(name='checkbox')
-        qtype_numeric = QuestionType.objects.get(name='numeric')
 
         q1 = Question.objects.get(
             text="Was the school open?",

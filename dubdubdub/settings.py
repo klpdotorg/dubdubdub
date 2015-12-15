@@ -22,6 +22,7 @@ DATABASES = {
 }
 
 DATA_IMPORT_DIR = os.path.join(PROJECT_ROOT, 'data')
+IVRS_VOICE_FILES_DIR = os.environ.get('IVRS_VOICE_FILES_DIR', None)
 
 DEFAULT_ACADEMIC_YEAR = '2013-2014'
 
@@ -258,7 +259,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-#Should be used by management commands, etc. to log files
+# Should be used by management commands, etc. to log files
 LOGS_FOLDER = os.path.join(PROJECT_ROOT, 'logs',)
 
 TESTS_SCHOOLS_INPUT = {

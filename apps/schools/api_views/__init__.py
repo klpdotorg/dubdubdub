@@ -192,7 +192,7 @@ def api_root(request, format=None):
 
             'Schools DISE Info': reverse('api_schools_dise', request=request,
                                          format=format,
-                                         kwargs={'year': '2011-12'}),
+                                         kwargs={'year': '2013-14'}),
 
             'School Info': reverse('api_school_info', request=request,
                                    format=format, kwargs={'pk': 3573}),

@@ -41,6 +41,13 @@ BEGIN
         WHERE ems.id = r.ems_id;
     END LOOP;
     RETURN;
+
+    UPDATE tb_programme
+    SET ayid=ay.id
+    FROM tb_academic_year AS ay
+    WHERE ayid IS NULL
+        AND ay.from_year=extract(YEAR FROM "start")
+        AND ay.to_year=extract(YEAR FROM "end");
 END;
 $$
 LANGUAGE plpgsql;

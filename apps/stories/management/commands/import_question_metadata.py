@@ -43,10 +43,11 @@ class Command(BaseCommand):
                 raise Exception("question text does not match. failing.")
             question.display_text = new_display_text
             question.key = key
-            if is_featured == 'Y':
-                question.is_featured = True
-            else:
-                question.is_featured = False
+            if not question.is_featured:
+                if is_featured == 'Y':
+                    print question.text
+                    question.is_featured = True
+                else:
+                    question.is_featured = False
             question.save()
-
 
