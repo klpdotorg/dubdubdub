@@ -275,8 +275,7 @@
         });
 
         startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/";
-        params["source"] = "ivrs";
+        var volumeURL = "stories/volume/?source=ivrs";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             stopVolumeLoading(schoolType);
