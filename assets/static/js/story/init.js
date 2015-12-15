@@ -403,6 +403,7 @@
         var months = _.keys(data.volumes[latest]);
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
         var ivrsVolTitle = tplIvrsYear({"acad_year":earliest + "-" + latest});
+        $('#ivrsyears').html(ivrsVolTitle);
         var meta_values = [];
         for (var i in months)
         {
