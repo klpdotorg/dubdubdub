@@ -379,8 +379,8 @@
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
-
-        var months = data.volumes['2014']; //FIXME: deal with with academic year.
+        var year = Object.keys(data.volumes)[0];
+        var months = data.volumes[year]; //FIXME: deal with with academic year.
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
         var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
         $('#ivrsyears').html(ivrsVolTitle);
