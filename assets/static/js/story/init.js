@@ -379,9 +379,9 @@
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
-        var year = "2015" //FIXDB: Object.keys(data.volumes)[Object.keys(data.volumes).length-1];
-        var prev = "2014"; 
-        var months = data.volumes[year]; //FIXME: deal with with academic year.
+        var year = new Date().getFullYear(); //FIXDB: Object.keys(data.volumes)[Object.keys(data.volumes).length-1];
+        var prev = parseInt(year) - 1 
+        var months = data.volumes[String(year)]; //FIXME: deal with with academic year.
         var prevmonths = null;
         if(prev in Object.keys(data.volumes))
             prevmonths = data.volumes[String(prev)];
@@ -397,8 +397,24 @@
         for( var i=0; i < labels.length; i++) {
             meta_values.push({'meta': labels[i],'value': values[i] + (prev_values==null?0:prev_values[i])});
         } /* chartist tooltip transformations */ 
+        // var years = _.keys(data.volumes);
+        // var latest = Math.max.apply(Math,years);
+        // var earliest = Math.min.apply(Math,years);
+        // var months = _.keys(data.volumes[latest]);
+        // var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
+        // var ivrsVolTitle = tplIvrsYear({"acad_year":earliest + "-" + latest});
+        // var meta_values = [];
+        // for (var i in months)
+        // {
+        //     var month_volume = 0;
+        //     for (var j in years)
+        //     {
+        //         month_volume += data.volumes[years[j]][months[i]];
+        //     }
+        //     meta_values.push({'meta':months[i],'value':month_volume})
+        // }
         var data_ivrs = {
-            labels: labels,
+            labels: labels, //months,
             series: [
                 { 
                     className: 'ct-series-a',
