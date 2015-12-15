@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block page_title %} DISE Ad-hoc Reports {% endblock %}
+
 {% block content %}
 <div class="container">
   <h1 class="heading-primary brand-purple" id="top">Reports</h1>
@@ -7,195 +8,119 @@
 
 <div class="center-text">
   <h2 class="heading-section">Reports</h2>
-  <div class="heading-section-block">
-    <ul class="dropdown-base js-dropdown">
-      <li>
-        <span class="bold">Users</span>
-        <span class="fa fa-angle-down"></span>
-        <ul>
-          <li>Dropdown item</li>
-          <li>Dropdown item
-            <ul>
-              <li>Nest children if you like</li>
-            </ul>
-          </li>
-          <li>Dropdown item</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+  <form class="form-base">
+    <div class="heading-section-block">
+      <div class="grid-parent">
+        <div class="form-field-wrap col-25-flt">
+          <label class="label-inline bold">Academic Year</label>
+          <select id="adhoc-dise-acyear">
+            <option value='10-11'>2010-2011</option>
+            <option value='11-12'>2011-2012</option>
+            <option value='12-13'>2012-2013</option>
+            <option value='13-14'>2013-2014</option>
+            <option value='14-15'>2014-2015</option>
+          </select>
+        </div>
+        <div class="form-field-wrap col-25-flt">
+          <label class="label-inline bold">Admin Level</label>
+          <select id="adhoc-dise-admin">
+            <option value=''>Select an admin level</option>
+            <option value='cluster'>Cluster</option>
+            <option value='block'>Block</option>
+            <option value='district'>District</option>
+            <option value='mp'>Parliamentary Constitution (MP)</option>
+            <option value='mla'>Assembly Constitution (MLA)</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="adhoc-admin form-field-wrap col-25-flt" style="display:none">
+          <label class="label-inline bold">District</label>
+          <select id="adhoc-dise-district">
+
+          </select>
+        </div>
+        <div class="adhoc-admin form-field-wrap col-25-flt" style="display:none">
+          <label class="label-inline bold">Block</label>
+          <select id="adhoc-dise-block">
+
+          </select>
+        </div>
+        <div class="adhoc-admin form-field-wrap col-25-flt" style="display:none">
+          <label class="label-inline bold">Cluster</label>
+          <select id="adhoc-dise-cluster">
+
+          </select>
+        </div>
+        <div class="adhoc-admin form-field-wrap col-25-flt" style="display:none">
+          <label class="label-inline bold">MP</label>
+          <select id="adhoc-dise-mp">
+
+          </select>
+        </div>
+        <div class="adhoc-admin form-field-wrap col-25-flt" style="display:none">
+          <label class="label-inline bold">MLA</label>
+          <select id="adhoc-dise-mla">
+
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
-
-<!-- REPORT SECTION START -->
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="cluster_reports">Cluster Reports</h2>
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li><a href="https://klp.org.in/public/adhoc-reports/mp/Bagalkot.pdf" target="_blank">Bagalkot</a></li>
-  </ul>
-  <div class="clearfix"></div>
-</div>
-<!-- REPORT SECTION END -->
-
-<!-- REPORT SECTION START -->
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="mp_reports">MP Reports</h2>
-<!--     <div class="heading-section-block">
-      <ul>
-        <li><a href="#mp" class="js-scroll-smooth-link">Akshara Foundation</a></li>
-      </ul>
-    </div> -->
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li><a href="https://klp.org.in/public/adhoc-reports/mp/Bagalkot.pdf" target="_blank">Bagalkot</a></li>
-  </ul>
-  <div class="clearfix"></div>
-</div>
-<!-- REPORT SECTION END -->
-
-<!-- REPORT SECTION START -->
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="mp_reports">MP Reports</h2>
-<!--     <div class="heading-section-block">
-      <ul>
-        <li><a href="#mp" class="js-scroll-smooth-link">Akshara Foundation</a></li>
-      </ul>
-    </div> -->
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li><a href="https://klp.org.in/public/adhoc-reports/mp/Bagalkot.pdf" target="_blank">Bagalkot</a></li>
-  </ul>
-  <div class="clearfix"></div>
-</div>
-<!-- REPORT SECTION END -->
-
-<!-- REPORT SECTION START -->
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="mp_reports">MP Reports</h2>
-<!--     <div class="heading-section-block">
-      <ul>
-        <li><a href="#mp" class="js-scroll-smooth-link">Akshara Foundation</a></li>
-      </ul>
-    </div> -->
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li><a href="https://klp.org.in/public/adhoc-reports/mp/Bagalkot.pdf" target="_blank">Bagalkot</a></li>
-  </ul>
-  <div class="clearfix"></div>
-</div>
-<!-- REPORT SECTION END -->
-
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="mla_reports">MLA Reports</h2>
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li><a href="https://klp.org.in/public/adhoc-reports/mla/Afzalpur.pdf" target="_blank">Afzalpur</a></li>
-  </ul>
-</div> <!-- /container -->
-
-<section>
-  <div class="center-text">
-    <h2 class="heading-section" id="rte_reports">RTE Reports</h2>
-  </div>
-</section>
-
-<div class="container">
-  <ul class="ul-base">
-    <li>bangalore_rural
-      <ul class="ul-base">
-        <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote.pdf" target="_blank">hosakote</a>
-          <ul class="ul-base">
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/alappanahalli.pdf" target="_blank">alappanahalli</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/beguru.pdf" target="_blank">beguru</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/bendiganahalli.pdf" target="_blank">bendiganahalli</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/bilanarasapura.pdf" target="_blank">bilanarasapura</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/devanagundi.pdf" target="_blank">devanagundi</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/doddagattinabbe.pdf" target="_blank">doddagattinabbe</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/doddanallala.pdf" target="_blank">doddanallala</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/doddanhulluru.pdf" target="_blank">doddanhulluru</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/hosakote_town.pdf" target="_blank">hosakote_town</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/jadigenahalli.pdf" target="_blank">jadigenahalli</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/kalkunte.pdf" target="_blank">kalkunte</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/mugbala.pdf" target="_blank">mugbala</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/nandagudi.pdf" target="_blank">nandagudi</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/nelavagilu.pdf" target="_blank">nelavagilu</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/samethanahalli.pdf" target="_blank">samethanahalli</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/shivanapura.pdf" target="_blank">shivanapura</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/sulibele.pdf" target="_blank">sulibele</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/t_agrahara.pdf" target="_blank">t_agrahara</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/thavarekere.pdf" target="_blank">thavarekere</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/bangalore_rural/hosakote/vagata.pdf" target="_blank">vagata</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>gadag
-      <ul class="ul-base">
-        <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi.pdf" target="_blank">mundaragi</a>
-          <ul class="ul-base">
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/bagewadi.pdf" target="_blank">bagewadi</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/dambal.pdf" target="_blank">dambal</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/kadampur.pdf" target="_blank">kadampur</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/korlahalli.pdf" target="_blank">korlahalli</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/mundaragi_city_west.pdf" target="_blank">mundaragi_city_west</a></li>
-            <li><a href="https://klp.org.in/public/adhoc-reports/RTE/gadag/mundaragi/mundaragi_east.pdf" target="_blank">mundaragi_east</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>koppal
-      <ul class="ul-base">
-        <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi.pdf" target="_blank">kustagi</a>
-          <ul class="ul-base">
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/adavibhavi.pdf" target="_blank">adavibhavi</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/bijakal.pdf" target="_blank">bijakal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/chalageri.pdf" target="_blank">chalageri</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/dotihal.pdf" target="_blank">dotihal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/hanumanal.pdf" target="_blank">hanumanal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/hanumasagar.pdf" target="_blank">hanumasagar</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/hiregonnagar.pdf" target="_blank">hiregonnagar</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/hiremannapur.pdf" target="_blank">hiremannapur</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/hoolagera.pdf" target="_blank">hoolagera</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/j.gudadoor.pdf" target="_blank">gudadoor</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/jumalapur.pdf" target="_blank">j.jumalapur</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/killarhatti.pdf" target="_blank">killarhatti</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/koradakera.pdf" target="_blank">koradakera</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/kustagi.pdf" target="_blank">kustagi</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/menedhal.pdf" target="_blank">menedhal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/mudenur.pdf" target="_blank">mudenur</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/nilogal.pdf" target="_blank">nilogal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/sanghanal.pdf" target="_blank">sanghanal</a></li>
-              <li><a href="https://klp.org.in/public/adhoc-reports/RTE/koppal/kustagi/thavaragera.pdf" target="_blank">thavaragera</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
 
 <div class="backToTop">
   <a href="#top">Back to top</a>
 </div>
 
 {% endblock %}
+
+{% block endbody %}
+<script type="text/javascript">
+  var fillAdmin = function(adminlevel) {
+    if (adminlevel === 'cluster') {
+      var block = $('#adhoc-dise-block').val();
+      if (block) {
+
+      }
+    } else if (adminlevel === 'block') {
+      $('#adhoc-dise-district').parent('div').show();
+      $('#adhoc-dise-block').parent('div').show();
+    } else if (adminlevel === 'district') {
+      $('#adhoc-dise-district').parent('div').show();
+    } else if (adminlevel === 'mp') {
+      $('#adhoc-dise-mp').parent('div').show();
+    } else if (adminlevel === 'mla') {
+      $('#adhoc-dise-mla').parent('div').show();
+    }
+  }
+
+  $('#adhoc-dise-acyear').select2().on('change', function(e) {
+    console.log(e);
+  });
+  $('#adhoc-dise-admin').select2().on('select2-selecting', function(e) {
+    console.log(e);
+    $('.adhoc-admin').hide();
+    if (e.val === 'cluster') {
+      $('#adhoc-dise-district').parent('div').show();
+      $('#adhoc-dise-block').parent('div').show();
+      $('#adhoc-dise-cluster').parent('div').show();
+    } else if (e.val === 'block') {
+      $('#adhoc-dise-district').parent('div').show();
+      $('#adhoc-dise-block').parent('div').show();
+    } else if (e.val === 'district') {
+      $('#adhoc-dise-district').parent('div').show();
+    } else if (e.val === 'mp') {
+      $('#adhoc-dise-mp').parent('div').show();
+    } else if (e.val === 'mla') {
+      $('#adhoc-dise-mla').parent('div').show();
+    }
+  });
+  $('#adhoc-dise-boundary').select2();
+  $('#adhoc-dise-admin').select2();
+  $('#adhoc-dise-block').select2();
+  $('#adhoc-dise-cluster').select2();
+  $('#adhoc-dise-mp').select2();
+  $('#adhoc-dise-mla').select2();
+</script>
+{% endblock endbody %}
