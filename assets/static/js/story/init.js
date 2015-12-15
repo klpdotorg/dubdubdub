@@ -347,7 +347,8 @@
             'VOLUNTEER': 'Volunteers',
             'EDUCATED_YOUTH': 'Youth',
             'LOCAL_LEADER': 'Local Leader',
-            'AKSHARA_STAFF': 'Akshara'
+            'AKSHARA_STAFF': 'Akshara',
+            'ELECTED_REPRESENTATIVE': 'Elected Rep' 
         };
         var labels = _.map(_.keys(data.respondents), function(label) {
             if (labelMap.hasOwnProperty(label)) {
@@ -660,7 +661,12 @@
             IVRSQuestionKeys = [
                 'ivrss-school-open',
                 'ivrss-headmaster-present',
-                'ivrss-toilets-condition'
+                'ivrss-toilets-condition',
+                "ivrss-classes-proper",
+                "ivrss-functional-toilets-girls",
+                "ivrss-drinking-water",
+                "ivrss-midday-meal",
+                "ivrss-teacher-present"
             ];
         } else {
             IVRSQuestionKeys = [

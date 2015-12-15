@@ -28,7 +28,13 @@
       <div class="chart-parent">  
         <div class="chart-half-item js-entity-data">
           <div class="heading-tiny-uppercase align-left" >Academic Year(s)</div>
-          <h2 class="heading-secondary black align-left">{{ year_from }}-{{ year_to }}</h2> 
+          <h2 class="heading-secondary black align-left">
+          {%if year_from != year_to %}
+            {{ year_from }}-{{ year_to }}
+          {% else %}
+            {{ year_from }}-{{ year_from|increment }}
+          {% endif %}
+          </h2> 
         </div>     
         <div class="chart-half-item js-hide-school">
           <div class="heading-tiny-uppercase align-left" >{{school_type}} with Surveys</div>
