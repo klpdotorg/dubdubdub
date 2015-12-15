@@ -76,7 +76,7 @@ urlpatterns = patterns(
 
     url(r'^partners/akshara/reading/$', StaticPageView.as_view(
         template_name='partners/akshara/reading.html',
-        ), name='reading_programme'),     
+        ), name='reading_programme'),
     url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
     url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
 
@@ -118,6 +118,12 @@ urlpatterns = patterns(
         extra_context={
             'hide_footer': True,
         }), name='map'),
+
+    url(r'^advanced-map/$', StaticPageView.as_view(
+        template_name='advanced-map.html',
+        extra_context={
+            'hide_footer': True,
+        }), name='advanced-map'),
 
 
     # url(r'^volunteer-map$', StaticPageView.as_view(

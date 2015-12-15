@@ -16,7 +16,7 @@
       <script src="{% static 'js/common/dise_infra.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/advanced-map.js' %}"></script>
       <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/advanced_search.js' %}"></script>
@@ -77,8 +77,12 @@
 {% block content %}
 
 
-  <div class="map_page no-sidebar">
-    <section class="map-canvas-full">
+  <div class="map_page">
+    <section class="sidebar-volunteer-map">
+        <ul id="school-list">
+        </ul>
+    </section>
+    <section class="map-canvas-full  map-volunteer-canvas-full">
       <div id="js-map-canvas"></div>
     </section>
 
@@ -99,7 +103,7 @@
 
   </div>
 
-  {% include 'frontend_templates/map.html' %}
+  {% include 'frontend_templates/advanced-map.html' %}
 
   {% include 'frontend_templates/compare.html' %}
 
