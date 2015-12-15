@@ -2,7 +2,17 @@
 <script type="text/html" id="tpl-boundary-info">
   <h2 class="heading-secondary">
     <span class="icon-number">
-      {% if admin3.school_type == 'school' %} C {% else %} C {% endif %}
+      {% if boundary.type == 'district' %} 
+        D 
+      {% elif boundary.type =='block' %} 
+        B
+      {% elif boundary.type =='cluster' %} 
+        C
+      {% elif boundary.type =='project' %} 
+        P
+      {% elif boundary.type =='circle' %} 
+        C
+      {% endif %}
     </span>
     {{ boundary.name|capitalize }}
   </h2>

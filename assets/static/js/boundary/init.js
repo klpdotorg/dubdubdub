@@ -81,7 +81,6 @@
 
         var tpl = swig.compile($('#tpl-boundary-info').html());
         var context = data.properties;
-        context['type_name'] = 'cluster';
         var html = tpl(context);
         $('#boundary-info-wrapper').html(html);
       })
