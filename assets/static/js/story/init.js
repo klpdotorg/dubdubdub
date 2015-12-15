@@ -382,16 +382,20 @@
         var year = "2015" //FIXDB: Object.keys(data.volumes)[Object.keys(data.volumes).length-1];
         var prev = "2014"; 
         var months = data.volumes[year]; //FIXME: deal with with academic year.
-        var prevmonths = data.volumes[String(prev)];
+        var prevmonths = null;
+        if(prev in Object.keys(data.volumes))
+            prevmonths = data.volumes[String(prev)];
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
         var ivrsVolTitle = tplIvrsYear({"acad_year":prev + "-" + year});
         $('#ivrsyears').html(ivrsVolTitle);
         var meta_values = [];
         var labels = _.keys(months);
         var values = _.values(months);
-        var prev_values = _.values(prevmonths)
+        var prev_values = null;
+        if(prevmonths != null)
+            prev_values = _.values(prevmonths)
         for( var i=0; i < labels.length; i++) {
-            meta_values.push({'meta': labels[i],'value': values[i] + prev_values[i]});
+            meta_values.push({'meta': labels[i],'value': values[i] + (prev_values==null?0:prev_values[i])});
         } /* chartist tooltip transformations */ 
         var data_ivrs = {
             labels: labels,
