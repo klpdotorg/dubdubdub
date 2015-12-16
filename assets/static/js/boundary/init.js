@@ -144,7 +144,7 @@
         klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
       });
     $('#preschool-data').removeClass("hidden");
-    renderSummary(utils.getPreSchoolSummary(data), 'preschool');
+    renderSummary(utils.getPreSchoolSummary(data, academicYear), 'preschool');
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
     renderCategories(utils.getPreSchoolCategories(data.properties), 'preschool');
     renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
