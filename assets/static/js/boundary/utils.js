@@ -155,9 +155,12 @@
   };
 
   t.getPrimarySchoolCategories = function(klpData, diseData) {
-    var schoolCategories = {};
+    var klpSchools = klpData.num_schools
+    var diseSchools = diseData.sum_schools
+    var schoolCategories = {'upper primary': {}, 'lower primary': {}}
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
-    var diseCategories = diseData.school_categories.reduce(function(sumSchools, category) {
+
+    var diseCount = diseData.school_categories.reduce(function(sumSchools, category) {
       if (category.id == 1) {
         sumSchools.lowerPrimary = category.sum_schools;
       } else if (_.contains(upperPrimaryCategories, category.id)) {
@@ -169,20 +172,39 @@
       upperPrimary: 0
     });
 
-    schoolCategories["upper primary"] = {
-        "type_name": "upper primary",
-        "klp_perc": getPercentage(klpData.cat[0]['num_schools'], klpData['num_schools']),
-        "dise_perc": getPercentage(diseCategories.upperPrimary, diseData['sum_schools']),
-        "klp_count": klpData.cat[0]['num_schools'],
-        "dise_count": diseCategories.upperPrimary
-      },
-      schoolCategories["lower primary"] = {
-        "type_name": "lower primary",
-        "klp_perc": getPercentage(klpData.cat[1]['num_schools'], klpData['num_schools']),
-        "dise_perc": getPercentage(diseCategories.lowerPrimary, diseData['sum_schools']),
-        "klp_count": klpData.cat[1]['num_schools'],
-        "dise_count": diseCategories.lowerPrimary
+    function klpCategories(klp) {
+      var modified = {'lower primary':{}, 'upper primary': {}}
+      if (klpData.num_schools) {
+        modified = klp.reduce(function(result, current){          
+            result[current.cat.toLowerCase()] = {
+              klp_count: current.num_schools,
+              klp_perc: getPercentage(current.num_schools, klpSchools)
+            }
+            return result
+          }, {})  
       }
+      return modified      
+    }
+
+    function diseCategories(dise) {
+      var modified = {
+        'lower primary': {
+          dise_count: dise.lowerPrimary,
+          dise_perc: getPercentage(dise.lowerPrimary, diseSchools)
+        }, 
+        'upper primary': {
+          dise_count: dise.upperPrimary, 
+          dise_perc: getPercentage(dise.upperPrimary, diseSchools)
+        }
+      }
+
+      return modified
+    }
+    
+   schoolCategories =  _.mapObject(schoolCategories, function(val, category){
+      var data = Object.assign({}, klpCategories(klpData.cat)[category], diseCategories(diseCount)[category])      
+      return data
+    })   
 
     return schoolCategories;
   };
@@ -270,13 +292,13 @@
     })
 
     var modified = _.keys(modified)
-      .filter(function(lang) {
-        return modified[lang].moi_count != 0 || modified[lang].mt_count != 0
-      })
-      .reduce(function(result, key) {
-        result[key] = modified[key];
-        return result;
-      }, {})
+    .filter(function(lang) {
+      return modified[lang].moi_count != 0 || modified[lang].mt_count != 0
+    })
+    .reduce(function(result, key) {
+      result[key] = modified[key];
+      return result;
+    }, {})
 
     return modified;
   };
@@ -332,7 +354,7 @@
   t.getSchoolInfra = function(data) {
     var totalSchools = data.sum_schools;
     var modified = [];
-   _.without(_.keys(infraHash), 'Functional Bal Vikas Samithis').forEach(function(facility) {
+    _.without(_.keys(infraHash), 'Functional Bal Vikas Samithis').forEach(function(facility) {
       var obj = {};
       obj.facility = facility;
       obj.icon = infraHash[facility].icon;
@@ -380,13 +402,15 @@
         obj.percent = getPercentage(obj.total, sumSchools) 
         results.push(obj)
       }     
-        return results
+      return results
     }, [])    
     return anganwadiInfra
   }
 
   function getPercentage(value, total) {
-    return +(value / total * 100).toFixed(2);
+    if (total) {
+      return (value / total * 100).toFixed(2);  
+    } return    
   }
 
 })();
