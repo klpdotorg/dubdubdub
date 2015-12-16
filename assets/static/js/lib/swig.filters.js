@@ -24,3 +24,13 @@ swig.setFilter('autolink', function (input) {
 swig.setFilter('int', function (input) {
     return parseInt(input).toString();
 });
+
+//parseint and increment
+swig.setFilter('increment', function (input) {
+    return (parseInt(input)+1).toString();
+});
+
+//parseint and decrement
+swig.setFilter('decrement', function (input) {
+    return (parseInt(input)-1).toString();
+});
