@@ -40,6 +40,7 @@
           e.preventDefault();
           klp.comparison.open(data.properties);
         });
+        utils.triggerDropDown()
         var geom;
         if (boundary.geometry) {
           geom = boundary.geometry;
