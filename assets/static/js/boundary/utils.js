@@ -212,15 +212,15 @@
   t.getSchoolEnrollment = function(klpData, diseData) {
     var enrollment = {};
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
-    var diseEnrollment = diseData.school_categories.reduce(function(accumulator, category) {
+    var diseEnrollment = diseData.school_categories.reduce(function(results, category) {
       if (category.id == 1) {
-        accumulator.lowerPrimary.totalStudents = category.sum_boys + category.sum_girls;
-        accumulator.lowerPrimary.totalSchools = category.sum_schools;
+        results.lowerPrimary.totalStudents = category.sum_boys + category.sum_girls;
+        results.lowerPrimary.totalSchools = category.sum_schools;
       } else if (_.contains(upperPrimaryCategories, category.id)) {
-        accumulator.upperPrimary.totalStudents = category.sum_boys + category.sum_girls;
-        accumulator.upperPrimary.totalSchools = category.sum_schools;
+        results.upperPrimary.totalStudents = category.sum_boys + category.sum_girls;
+        results.upperPrimary.totalSchools = category.sum_schools;
       }
-      return accumulator;
+      return results;
     }, {
       lowerPrimary: {
         totalStudents: 0,
@@ -231,14 +231,27 @@
         totalSchools: 0
       }
     });
+    function klpEnrollment(klp) {
+      var modified = {'lower primary':{}, 'upper primary': {}}
+      if (klp.num_schools) {
+        modified = klp.cat.reduce(function(result, current){          
+            result[current.cat.toLowerCase()] = {
+              klp_enrol: Math.round(current.num_boys + current.num_girls / current.num_schools)
+            }
+            return result
+          }, {})  
+      }
+      return modified      
+    }
+
     enrollment = {
       "upper primary": {
         "dise_enrol": Math.round(diseEnrollment.upperPrimary.totalStudents / diseEnrollment.upperPrimary.totalSchools),
-        "klp_enrol": Math.round(klpData.cat[0].num_boys + klpData.cat[0].num_girls / klpData.cat[0].num_schools)
+        "klp_enrol": klpEnrollment(klpData)['upper primary'].klp_enrol
       },
       "lower primary": {
         "dise_enrol": Math.round(diseEnrollment.lowerPrimary.totalStudents / diseEnrollment.lowerPrimary.totalSchools),
-        "klp_enrol": Math.round(klpData.cat[1].num_boys + klpData.cat[1].num_girls / klpData.cat[1].num_schools)
+        "klp_enrol": klpEnrollment(klpData)['lower primary'].klp_enrol
       }
     };
     return enrollment;
@@ -246,6 +259,7 @@
   };
 
   t.getSchoolsByLanguage = function(klp) {
+    
     var totalStudents = klp.num_boys + klp.num_girls;
     var totalSchools = klp.num_schools;
     var languageCategories = ["kannada", "tamil", "telugu", "urdu"]
@@ -409,8 +423,8 @@
 
   function getPercentage(value, total) {
     if (total) {
-      return (value / total * 100).toFixed(2);  
-    } return    
+      return (value / total * 100).toFixed(2);
+    }   
   }
 
 })();
