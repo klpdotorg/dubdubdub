@@ -198,6 +198,10 @@
       tpl_func = '#tpl-ang-category-summary';
     }
     var tpl = swig.compile($(tpl_func).html());
+    for(var key in _.keys(data)) {
+      var type_name = _.keys(data)[key];
+      data[type_name]["type_name"] = type_name;
+    }
     var html = tpl({
       "categories": data
     });
@@ -224,6 +228,10 @@
     if (schoolType == "preschool") {
       prefix = "ang-"
       tpl = swig.compile($('#tpl-ang-enrolment').html());
+    }
+    for(var key in _.keys(data)) {
+      var type_name = _.keys(data)[key];
+      data[type_name]["type_name"] = type_name;
     }
     var html = tpl({
       "categories": data
@@ -294,10 +302,14 @@
   function renderPrograms(data, schoolType) {
     var tpl = swig.compile($('#tpl-program-summary').html());
     var html = '<div class="page-parent">'
-    for (var program in data) {
-      html = html + '<div class="third-column">' + '<div class="heading-tiny-uppercase">' + program + '</div>' + tpl({
-        "programs": data[program]
-      }) + '</div>';
+    if( "program" in _.keys(data)) 
+      for (var program in data) {
+        html = html + '<div class="third-column">' + '<div class="heading-tiny-uppercase">' + program + '</div>' + tpl({
+          "programs": data[program]
+        }) + '</div>';
+      }
+    else {
+      html = "No Data";
     }
     var prefix = '';
     if (schoolType == "preschool") {
