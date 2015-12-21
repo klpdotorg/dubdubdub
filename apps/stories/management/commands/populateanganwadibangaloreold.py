@@ -4,47 +4,50 @@ from django.core.management.base import BaseCommand
 
 from schools.models import School, BoundaryType
 from stories.models import (
-    Question, Questiongroup, QuestionType,
-    QuestiongroupQuestions, Source, UserType)
+    Question,
+    Questiongroup,
+    QuestionType,
+    QuestiongroupQuestions,
+    Source,
+    UserType
+)
 
 class Command(BaseCommand):
     args = ""
-    help = """Populate DB with Anganwadi Mallur 2013-14 questions
+    help = """Populate DB with Anganwadi Bangalore 2010-12 questions
 
-    ./manage.py populateanganwadimallur"""
+    ./manage.py populateanganwadibangaloreold"""
 
     def handle(self, *args, **options):
         s = Source.objects.get_or_create(name="anganwadi")[0]
-        start_date = datetime.strptime('2013-08-06', '%Y-%m-%d')
-        end_date = datetime.strptime('2014-12-30', '%Y-%m-%d')
+        # Dates are guessed.
+        start_date = datetime.strptime('2010-01-13', '%Y-%m-%d')
+        end_date = datetime.strptime('2012-05-30', '%Y-%m-%d')
         question_group = Questiongroup.objects.get_or_create(
-            version=4,
+            version=6,
             source=s,
             start_date=start_date,
             end_date=end_date,
         )[0]
-        question_type_numeric = QuestionType.objects.get(name="numeric")
-        question_type_checkbox = QuestionType.objects.get(name="checkbox")
+        question_type = QuestionType.objects.get(name="checkbox")
         school_type = BoundaryType.objects.get(name="PreSchool")
-        user_type= UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
+        user_type = UserType.objects.get_or_create(name=UserType.AKSHARA_STAFF)[0]
 
         questions = [
-            "In which year anganwadi was started",
+            "Anganwadi worker is aware of year of establishment of this Anganwadi",
             "Anganwadi worker was present on time during visit",
             "Anganwadi helper was present on time during visit",
-            "Center is functioning with the women & children development dept.",
+            "Anganwadi runs in its own building (i.e designated for running Anganwadi,built by the Woman & Child department)",
             "The anganwadi center is in a spacious room (35 sq according to ecce rule), meaning there is an indoor enclosure",
-            "There is space in and out of anganwadi center to conduct pre education activity",
             "There is enough space available for children to play in the Anganwadi premises",
             "Anganwadi center premises has lawn, flower plants and trees",
-            "Anganwadi center walls are in good shape",
+            "Plaster of the walls are not damaged (through observation)",
             "Anganwadi center floor is in good shape",
             "Anganwadi center roof is in good shape",
             "All doors are strong and can be bolted and locked",
             "All windows are strong and can be bolted and locked",
             "The floor, walls, corners of walls and roof are free of cobweb and dust",
             "Anganwadi Center wall was painted and was full of writings related to learning",
-            "Learning materials are present in the center",
             "There is dust bin in the center",
             "Dustbin is used by children",
             "Children have learned to keep center room clean",
@@ -52,7 +55,6 @@ class Command(BaseCommand):
             "Store room is clean",
             "Food to be distributed on that day was covered properly",
             "All children got the meals on time on the day of visit",
-            "Afternoon food was distributed at the time of visit (mention the time)",
             "The cook / chef maintains cleanliness and wore clean clothes on the day of visit",
             "There is separate facility for washing hands after meals",
             "Center has water available in the taps",
@@ -72,6 +74,7 @@ class Command(BaseCommand):
             "Children register book is maintained by anganwadi worker",
             "The Anganwadi worker daily signs and confirms that children's attendance is as per the attendance register",
             "Name of the student who has taken TC is circled and comment written",
+            "Anganwadi worker has maintained the document on all the children who have passed out of Anganwadi last year and are aware of their whereabouts",
             "50% of attendance was there at the time of visit",
             "Progress in children learning is documented",
             "Teacher's diary is maintained",
@@ -85,32 +88,25 @@ class Command(BaseCommand):
             "Materials necessary (learning) for physically challenged / disabled children are available",
             "Teacher is trained to teach physically challenged / disabled children",
             "Bala Vikas Samithi is present",
-            "List of BVS member is maintained",
+            "Has maintained the roster of members (ask Aya or Worker & cross check records)",
             "BVS proceedings book exists",
             "Anganwadi center has a list of roles and responsibilities of BVS as prescribed by the Govt.",
-            "BVS is functioning as per the rules & regulation",
+            "Bala Vikas Samithi meeting is conducted",
+            "Anganwadi friendship group is formed",
+            "Friends of Anganwadi members are conducting the activities",
             "Anganwadi worker is trained",
-            "Pre school start time",
-            "Pre school end time",
-            "Weekly TLM plan organized in the anganwadi center",
-            "List the anganwadi center TLM",
-            "Anganwadi worker cooperates with children",
-            "Anganwadi worker & helper had a mutual understanding",
-            "Children are active with the TLM provided by akshara",
+            "The Anganwadi calendar has been prepared(ask Anganwadi worker cross check records)",
+            "Anganwadi has Akshara Anganwadi center Preparedness kit (through observation)",
+            "Anganwadi workers are trained about TLM kit",
+            "Anganwadi worker has been trained on Assessment of the children(ask Worker & cross check )",
+            "In the Anganwadi, assessment has been done by akshara foundation",
+            "Children are engaged with materials based on learning outcomes are used by children (Through observation)",
             "Anganwadi worker gives needed guidance to each child, examines all activities, correct mistakes",
             "Activities are conducted using learning material by the anganwadi worker",
-            "TLM material are dependable and effective in using & learning",
-            "Children actively answer the questions asked by visitor"
+            "TLM material are dependable and effective in using & learning"
         ]
 
         for count, question in enumerate(questions):
-            # Saving the question type for the 1st
-            # question as numeric
-            if count == 0:
-                question_type = question_type_numeric
-            else:
-                question_type = question_type_checkbox
-
             q = Question.objects.get_or_create(
                 text=question,
                 data_type=1,
@@ -123,4 +119,4 @@ class Command(BaseCommand):
             QuestiongroupQuestions.objects.get_or_create(
                 questiongroup=question_group, question=q, sequence=count+1)
 
-        print "Anganwadi Mallur 2013-14 questions populated."
+        print "Anganwadi Bangalore 2010-12 questions populated."

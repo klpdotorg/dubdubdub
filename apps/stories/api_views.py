@@ -40,6 +40,7 @@ class StoryInfoView(KLPAPIView):
 class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
+    source -- Source of data [web/ivrs].
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -52,6 +53,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     """
 
     def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -82,6 +84,10 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
+
+        if source:
+            stories_qset = stories_qset.filter(
+                group__source__name=source)
 
         if admin1_id:
             stories_qset = stories_qset.filter(
@@ -157,7 +163,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     school_type -- Type of School [Primary School/PreSchool].
     """
 
-    def get(self, request):
+    def get(self, request, boundary=None):
         source = self.request.QUERY_PARAMS.get('source', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
@@ -169,6 +175,18 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+
+        # This boundary variable and check is for the time
+        # when this endpoint is being called from within the
+        # BoundarySchoolAggView
+        if boundary:
+            boundary_type = boundary.hierarchy.name
+            if boundary_type == u'district':
+                admin1_id = boundary.id
+            elif boundary_type in [u'block', u'project']:
+                admin2_id = boundary.id
+            else:
+                admin3_id = boundary.id
 
         date = Date()
         if start_date:
@@ -254,6 +272,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         if school_type:
             questions = questions.filter(
                 school_type__name=school_type)
+
 
         for question in questions.distinct('id'):
             j = {}

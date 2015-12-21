@@ -1,22 +1,50 @@
+import os
 import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.exceptions import APIException
 
-from django.db.models import F
+from django.conf import settings
 from django.utils import timezone
 
+from .models import State
 from .utils import get_question
-from .models import State, Chapter, GKATLM
-from schools.models import School, SchoolDetails
-from stories.models import Story, UserType, Questiongroup, Answer
-from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+
+from schools.models import School
+from common.views import KLPAPIView
+
 
 GKA_SERVER = "08039591332"
 GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
+
+
+class DynamicResponse(KLPAPIView):
+    def get(self, request):
+        sound_file_paths = ""
+
+        if settings.IVRS_VOICE_FILES_DIR:
+            status_code = status.HTTP_200_OK
+
+            digits = request.QUERY_PARAMS.get('digits', None)
+
+            digits = digits.strip('"')
+            path = settings.IVRS_VOICE_FILES_DIR
+            path = os.path.join(path, '') # Adds a trailing slash if not present.
+
+            for digit in digits:
+                file_name = digit + ".wav\n"
+                sound_file_paths += path + file_name
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        return Response(
+            sound_file_paths,
+            status=status_code,
+            content_type="text/plain"
+        )
+
 
 class CheckSchool(KLPAPIView):
     def get(self, request):
@@ -53,21 +81,21 @@ class CheckSchool(KLPAPIView):
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'gka'
-            for i in range(0,12): # Initializing answer slots 1 to 12 with NA
+            state.ivrs_type = 'gka-new'
+            for i in range(0,8): # Initializing answer slots 1 to 12 with NA
                 state.answers.append('NA')
         elif ivrs_type == PRI:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'new-ivrs'
+            state.ivrs_type = 'ivrs-pri'
             for i in range(0,6): # Initializing answer slots 1 to 6 with NA
                 state.answers.append('NA')
         else:
             if school_type != u'PreSchool':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'new-ivrs'
+            state.ivrs_type = 'ivrs-pre'
             for i in range(0,6): # Initializing answer slots 1 to 6 with NA
                 state.answers.append('NA')
 
@@ -84,87 +112,20 @@ class ReadSchool(KLPAPIView):
 
             status_code = status.HTTP_200_OK
             school = School.objects.get(id=state.school_id)
+            # Removes special characters from the school name. Apparently,
+            # that was causing Exotel to break.
+            school_name = ''.join(
+                char for char in school.name if char.isalnum() or char.isspace()
+            )
             data = "The ID you have entered is " + \
                    " ".join(str(school.id)) + \
                    " and school name is " + \
-                   school.name
+                   school_name
         else:
             status_code = status.HTTP_404_NOT_FOUND
             data = ''
 
         return Response(data, status=status_code, content_type="text/plain")
-
-
-class ReadChapter(KLPAPIView):
-    def get(self, request):
-        session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if State.objects.filter(session_id=session_id).exists():
-            state = State.objects.get(session_id=session_id)
-
-            status_code = status.HTTP_200_OK
-
-            # Get the class number, which is the 2nd question
-            class_number = state.answers[2]
-
-            # Get the chapter number, which is the 4th question
-            chapter_number = state.answers[4]
-
-            chapter = Chapter.objects.get(
-                class_number=class_number,
-                chapter_number=chapter_number
-            )
-
-            data = "Chapter number is " + \
-                   chapter_number + \
-                   " and the title is " + \
-                   chapter.title
-        else:
-            data = ''
-            status_code = status.HTTP_404_NOT_FOUND
-
-        return Response(data, status=status_code, content_type="text/plain")
-
-
-class ReadTLM(KLPAPIView):
-    def get(self, request):
-        session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if State.objects.filter(session_id=session_id).exists():
-            state = State.objects.get(session_id=session_id)
-
-            status_code = status.HTTP_200_OK
-
-            # Get the GKATLM number, which is the 5th question
-            number = state.answers[5]
-
-            gkatlm = GKATLM.objects.get(
-                number=number,
-            )
-
-            data = "T L M number is " + \
-                   number + \
-                   " and the title is " + \
-                   gkatlm.title
-        else:
-            data = ''
-            status_code = status.HTTP_404_NOT_FOUND
-
-        return Response(data, status=status_code, content_type="text/plain")
-
-
-class Verify(KLPAPIView):
-    def get(self, request):
-        status_code = status.HTTP_200_OK
-        response = request.QUERY_PARAMS.get('digits', None)
-        if response:
-            response = response.strip('"')
-            if int(response) == 1:
-                status_code = status.HTTP_200_OK
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
-
-        return Response("", status=status_code)
 
 
 class VerifyAnswer(KLPAPIView):

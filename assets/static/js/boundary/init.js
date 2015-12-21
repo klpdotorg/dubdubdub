@@ -21,7 +21,9 @@
 
     /*------------------- WISH WASH FOR MAP-------------*/
     var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {
-      geometry: 'yes'
+      geometry: 'yes',
+      school_type: 'PreSchool',
+      source: 'anganwadi'
     });
 
     // FIX THIS LATER
@@ -29,13 +31,11 @@
     $infoXHR.done(function(data) {
         var boundary = data.properties.boundary;
         var boundaryType = boundary.school_type;
-
         if (boundaryType === 'primaryschool') {
           renderPrimarySchool(data, acadYear);
         } else {
           renderPreSchool(data, acadYear);
         }
-
         $('.js-trigger-compare').click(function(e) {
           e.preventDefault();
           klp.comparison.open(data.properties);
@@ -107,7 +107,10 @@
             console.log('diseData', diseData);
             renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
             renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
+            renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
             renderInfra(utils.getSchoolInfra(diseData.properties), 'school');
+            renderEnrollment(utils.getSchoolEnrollment(data.properties, diseData.properties), "school");
+            renderGrants(utils.getGrants(diseData.properties));
           })
           .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -116,11 +119,8 @@
       .fail(function(err) {
         klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
       });
-    renderCategories(utils.getPreSchoolCategories(data), 'school');
-    //renderCategories("school"); 
-    renderLanguages(utils.getSchoolsByLanguage(data), 'school');
-    //renderEnrolment("school");
-    //renderGrants();   
+
+    renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
 
     klp.api.do('programme/', queryParams)
       .done(function(progData) {
@@ -147,12 +147,11 @@
     $('#preschool-data').removeClass("hidden");
     renderSummary(utils.getPreSchoolSummary(data), 'preschool');
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
-    renderCategories(utils.getPreSchoolCategories(data), 'preschool');
-    renderLanguages(utils.getSchoolsByLanguage(data), 'preschool');
-
-    //To do: Connect with Infra + Enrolment API. 
-    renderEnrolment("preschool");
-    renderInfra("preschool");
+    renderCategories(utils.getPreSchoolCategories(data.properties), 'preschool');
+    renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
+    renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");
+    //To do: Render Infra
+    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");
     console.log('data', data);
   }
 
@@ -192,31 +191,6 @@
   }
 
   function renderCategories(data, schoolType) {
-    /*if(schoolType == "school") {
-        data = { 
-        "model primary": {
-            "type_name":"model primary",
-            "klp_perc": 20,
-            "dise_perc": 21,
-            "klp_count": 40,
-            "dise_count": 42
-        },
-        "upper primary": {
-            "type_name":"upper primary",
-            "klp_perc": 50,
-            "dise_perc": 48,
-            "klp_count": 100,
-            "dise_count": 96
-        },
-        "lower primary": {
-            "type_name":"lower primary",
-            "klp_perc": 30,
-            "dise_perc": 31,
-            "klp_count": 60,
-            "dise_count": 62 }
-        };
-    }
-    */
     var tpl_func = '#tpl-category-summary';
     var prefix = '';
     if (schoolType == "preschool") {
@@ -230,26 +204,7 @@
     $('#' + prefix + 'category-summary').html(html);
   }
 
-  function renderLanguages(data, schoolType) {
-    //Handle For Primary School
-    /*var data = { 
-        "kannada": {
-            "typename":"kannada",
-            "count": 200,
-            "perc": 20
-        },
-        "urdu": {
-            "typename":"urdu",
-            "count": 400,
-            "perc": 41
-        },
-        "tamil": {
-            "typename":"tamil",
-            "count": 400,
-            "perc": 39
-        }
-        
-    };*/
+  function renderLanguages(data, schoolType) {   
     var tpl_func = "#tpl-language";
     var prefix = '';
     if (schoolType == "preschool") {
@@ -263,105 +218,34 @@
     $('#' + prefix + 'klp-language').html(html);
   }
 
-  function renderEnrolment(schoolType) {
-    var data = null;
-    if (schoolType == "school") {
-      data = {
-        "model primary": {
-          "type_name": "model primary",
-          "count": 2000,
-          "perc": 21,
-          "avg": 80
-        },
-        "upper primary": {
-          "type_name": "upper primary",
-          "count": 4000,
-          "perc": 80,
-          "avg": 100
-        },
-        "lower primary": {
-          "type_name": "lower primary",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
-        }
-
-      };
-    } else {
-      data = {
-        "anganwadi": {
-          "type_name": "anganwadi",
-          "count": 2000,
-          "perc": 21,
-          "avg": 80
-        },
-        "balwadi": {
-          "type_name": "balwadi",
-          "count": 4000,
-          "perc": 80,
-          "avg": 100
-        },
-        "independent balwadi": {
-          "type_name": "independent balwadi",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
-        },
-        "others": {
-          "type_name": "others",
-          "count": 1000,
-          "perc": 19,
-          "avg": 90
-        }
-      };
-    }
-
+  function renderEnrollment(data, schoolType) {
     var tpl = swig.compile($('#tpl-enrolment').html());
-    var html = tpl({
-      "categories": data
-    });
     var prefix = 'dise-';
     if (schoolType == "preschool") {
       prefix = "ang-"
+      tpl = swig.compile($('#tpl-ang-enrolment').html());
     }
+    var html = tpl({
+      "categories": data
+    });
     $('#' + prefix + 'enrolment').html(html);
   }
 
-  function renderGrants() {
-    var data = {
-      "received": {
-        "sg_perc": 35,
-        "sg_amt": 3500,
-        "smg_perc": 55,
-        "smg_amt": 5500,
-        "tlm_perc": 10,
-        "tlm_amt": 1000
-      },
-      "expected": {
-        "sg_perc": 35,
-        "sg_amt": 3500,
-        "smg_perc": 55,
-        "smg_amt": 5500,
-        "tlm_perc": 10,
-        "tlm_amt": 1000
-      }
-    };
+  function renderGrants(data) {
     drawStackedBar([
-      [data["expected"]["sg_perc"]],
-      [data["expected"]["smg_perc"]],
-      [data["expected"]["tlm_perc"]]
-    ], "#chart-expected");
+      [data["expenditure"]["sg_perc"]],
+      [data["expenditure"]["tlm_perc"]]
+    ], "#chart-expenditure");
     drawStackedBar([
       [data["received"]["sg_perc"]],
-      [data["received"]["smg_perc"]],
       [data["received"]["tlm_perc"]]
     ], "#chart-received");
 
     var tpl = swig.compile($('#tpl-grants').html());
     var html = tpl({
-      "grants": data["expected"]
+      "grants": data["expenditure"]
     });
-    $('#dise-expected').html(html);
+    $('#dise-expenditure').html(html);
     html = tpl({
       "grants": data["received"]
     });
@@ -395,73 +279,6 @@
 
   function renderInfra(facilities, schoolType) {
     var tpl = swig.compile($('#tpl-infra-summary').html());
-
-    /*var facilities = [{
-      'facility': 'All weather pucca building',
-      'icon': ['fa fa-university'],
-      'percent': 70,
-      'total': 10
-    }, {
-      'facility': 'Playground',
-      'icon': ['fa fa-futbol-o'],
-      'percent': 50,
-      'total': 10
-    }, {
-      'facility': 'Drinking Water',
-      'icon': ['fa  fa-tint'],
-      'percent': 30,
-      'total': 10
-    }, {
-      'facility': 'Toilets',
-      'icon': ['fa fa-male', 'fa fa-female'],
-      'percent': 20,
-      'total': 20
-    }];
-    if (schoolType == "school") {
-      facilities = facilities.concat(
-        [{
-          'facility': 'Library',
-          'icon': ['fa fa-book'],
-          'percent': 70,
-          'total': 10
-        }, {
-          'facility': 'Secure Boundary Wall',
-          'icon': ['fa fa-circle-o-notch'],
-          'percent': 80,
-          'total': 10
-        }, {
-          'facility': 'Electricity',
-          'icon': ['fa fa-plug'],
-          'percent': 10,
-          'total': 10
-        }, {
-          'facility': 'Mid-day Meal',
-          'icon': ['fa fa-spoon'],
-          'percent': 90,
-          'total': 10
-        }, {
-          'facility': 'Computers',
-          'icon': ['fa fa-laptop'],
-          'percent': 15,
-          'total': 10
-        }])
-
-    } else {
-      facilities = facilities.concat(
-        [{
-          'facility': 'Healthy and Timely Meal',
-          'icon': ['fa fa-cutlery'],
-          'percent': 70,
-          'total': 10
-        }, {
-          'facility': 'Functional Bal Vikas Samithis',
-          'icon': ['fa fa-users'],
-          'percent': 80,
-          'total': 10
-        }])
-    }
-    */
-
     var html = '<div class="page-parent">'
     for (var pos in facilities) {
       html = html + tpl(facilities[pos]);

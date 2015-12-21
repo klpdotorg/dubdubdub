@@ -78,3 +78,26 @@ The unit test script creates a test database and then executes tests against it.
     ./runtests.sh skipdbcreate
 
 The DB to use should be updated in the test_settings file.
+
+### Populating local db with production dump
+
+1. Copy the latest backup from the production server onto your machine.
+ - `rsync -azP -e "ssh -p 2020" <your_username>@klp.org.in:/home/vamsee/backups/db/dubdubdub/<backup_file_name>.gz .`
+ - On the production server, you can find the backup files at `/home/vamsee/backups/db/dubdubdub/`.
+
+2. Uncompress the downloaded file.
+ - `gunzip <backup_file_name>.gz`
+
+3. Drop the dubdubdub db on your local machine.
+ - `dropdb dubdubdub`
+
+4. Create a new dubdubdub db.
+ - `createdb -U klp dubdubdub`
+
+5. Copy the db dump you downloaded into the project root folder (the place where you Vagrantfile resides). # Not necessarily
+
+6. Use pg_restore to populate your local db with the dump.
+ - `pg_restore -U klp -h localhost -d dubdubdub <backup_file_name>`
+
+7. Create the materialized views.
+ - `psql -h localhost -U klp -d dubdubdub -f sql/materialized_views.sql`

@@ -275,7 +275,7 @@
         });
 
         startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/";
+        var volumeURL = "stories/volume/?source=ivrs";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             stopVolumeLoading(schoolType);
@@ -347,7 +347,8 @@
             'VOLUNTEER': 'Volunteers',
             'EDUCATED_YOUTH': 'Youth',
             'LOCAL_LEADER': 'Local Leader',
-            'AKSHARA_STAFF': 'Akshara'
+            'AKSHARA_STAFF': 'Akshara',
+            'ELECTED_REPRESENTATIVE': 'Elected Rep' 
         };
         var labels = _.map(_.keys(data.respondents), function(label) {
             if (labelMap.hasOwnProperty(label)) {
@@ -365,7 +366,7 @@
             labels: labels,
             series: [
                 { 
-                    className: 'ct-series-g',
+                    className: 'ct-series-a',
                     data: meta_values,
                 }
             ]
@@ -378,22 +379,46 @@
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
-
-        var months = data.volumes['2014']; //FIXME: deal with with academic year.
+        // var year = new Date().getFullYear(); //FIXDB: Object.keys(data.volumes)[Object.keys(data.volumes).length-1];
+        // var prev = parseInt(year) - 1 
+        // var months = data.volumes[String(year)]; //FIXME: deal with with academic year.
+        // var prevmonths = null;
+        // if(String(prev) in Object.keys(data.volumes))
+        //     prevmonths = data.volumes[String(prev)];
+        // var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
+        // var ivrsVolTitle = tplIvrsYear({"acad_year":prev + "-" + year});
+        // $('#ivrsyears').html(ivrsVolTitle);
+        // var meta_values = [];
+        // var labels = _.keys(months);
+        // var values = _.values(months);
+        // var prev_values = null;
+        // if(prevmonths != null)
+        //     prev_values = _.values(prevmonths)
+        // for( var i=0; i < labels.length; i++) {
+        //     meta_values.push({'meta': labels[i],'value': values[i] + (prev_values==null?0:prev_values[i])});
+        // } /* chartist tooltip transformations */ 
+        var years = _.keys(data.volumes);
+        var latest = Math.max.apply(Math,years);
+        var earliest = Math.min.apply(Math,years);
+        var months = _.keys(data.volumes[latest]);
         var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
-        var ivrsVolTitle = tplIvrsYear({"acad_year":"2014-2015"});
+        var ivrsVolTitle = tplIvrsYear({"acad_year":earliest + "-" + latest});
         $('#ivrsyears').html(ivrsVolTitle);
         var meta_values = [];
-        var labels = _.keys(months);
-        var values = _.values(months);
-        for( var i=0; i < labels.length; i++) {
-            meta_values.push({'meta': labels[i],'value': values[i]});
-        } /* chartist tooltip transformations */ 
+        for (var i in months)
+        {
+            var month_volume = 0;
+            for (var j in years)
+            {
+                month_volume += data.volumes[years[j]][months[i]];
+            }
+            meta_values.push({'meta':months[i],'value':month_volume})
+        }
         var data_ivrs = {
-            labels: labels,
+            labels: months, //labels,
             series: [
                 { 
-                    className: 'ct-series-d',
+                    className: 'ct-series-a',
                     data: meta_values,
                 }
             ]
@@ -660,7 +685,12 @@
             IVRSQuestionKeys = [
                 'ivrss-school-open',
                 'ivrss-headmaster-present',
-                'ivrss-toilets-condition'
+                'ivrss-toilets-condition',
+                "ivrss-classes-proper",
+                "ivrss-functional-toilets-girls",
+                "ivrss-drinking-water",
+                "ivrss-midday-meal",
+                "ivrss-teacher-present"
             ];
         } else {
             IVRSQuestionKeys = [

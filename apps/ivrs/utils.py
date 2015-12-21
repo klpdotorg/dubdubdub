@@ -11,7 +11,7 @@ PRE = "08039510414"
 def get_question(question_number, ivrs_type):
     if ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER:
         question_group = Questiongroup.objects.get(
-            version=2,
+            version=4,
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
@@ -21,9 +21,9 @@ def get_question(question_number, ivrs_type):
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
-    else:
+    else: # ivrs_type == PRE
         question_group = Questiongroup.objects.get(
-            version=1,
+            version=5,
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="PreSchool")
