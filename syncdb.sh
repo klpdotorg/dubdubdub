@@ -26,6 +26,7 @@ then
     mkdir -p $temp_dir_name
     for i in "spatial" "gis_master" "klp-coord" "electrep_new" "dise_all" "apmdm" "klpdise_olap" "ang_infra" "libinfra" "library" "pratham_mysore" "dubdubdub"
     do
+        echo "Downloading '$i'"
         mkdir -p ./$temp_dir_name/$i/
         latest_dump=`ssh klp.org.in ls /home/vamsee/backups/db/$i | head -n 1`
         rsync -avz -e ssh klp.org.in:"/home/vamsee/backups/db/$i/$latest_dump" ./$temp_dir_name/$i/
