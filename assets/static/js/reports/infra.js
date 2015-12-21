@@ -47,71 +47,48 @@
             "2013": {
                         "year":"2013",
                         "school_count" : 1500,
-                        "basic_infra":{
-                            "sum_has_boundary_wall": 1000, 
-                            "sum_has_playground": 900,
-                            "sum_has_electricity": 1300,
-                            "sum_classrooms_in_good_condition": 900
-                        },
-                        "learning_env":{
-                            "sum_has_blackboard": 1200,
-                            "sum_has_computer": 300,
-                            "sum_has_library": 200
-                        },
-                        "nutrition":{
-                            "sum_has_mdm": 1200,
-                            "sum_has_drinking_water": 1300
-                        },
-                        "toilets":{
-                            "sum_has_toilet": 1200,
-                            "sum_toilet_girls": 1200
-                        }
-                    }
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
+                    },
             "2014": {
                         "year":"2014",
                         "school_count" : 1400,
-                        "basic_infra":{
-                            "sum_has_boundary_wall": 1000, 
-                            "sum_has_playground": 900,
-                            "sum_has_electricity": 1300,
-                            "sum_classrooms_in_good_condition": 900
-                        },
-                        "learning_env":{
-                            "sum_has_blackboard": 1200,
-                            "sum_has_computer": 300,
-                            "sum_has_library": 200
-                        },
-                        "nutrition":{
-                            "sum_has_mdm": 1200,
-                            "sum_has_drinking_water": 1300
-                        },
-                        "toilets":{
-                            "sum_has_toilet": 1200,
-                            "sum_toilet_girls": 1200
-                        }
-                    }    
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
+                        
+                    },    
             "2015": {
                         "year":"2015",
                         "school_count" : 1600,
-                        "basic_infra":{
-                            "sum_has_boundary_wall": 1000, 
-                            "sum_has_playground": 900,
-                            "sum_has_electricity": 1300,
-                            "sum_classrooms_in_good_condition": 900
-                        },
-                        "learning_env":{
-                            "sum_has_blackboard": 1200,
-                            "sum_has_computer": 300,
-                            "sum_has_library": 200
-                        },
-                        "nutrition":{
-                            "sum_has_mdm": 1200,
-                            "sum_has_drinking_water": 1300
-                        },
-                        "toilets":{
-                            "sum_has_toilet": 1200,
-                            "sum_toilet_girls": 1200
-                        }
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
                     }                
             }
             renderComparison(comparisonJson);
@@ -155,28 +132,113 @@ function renderGrantSummary(data){
     }
 
     function renderComparison(data) {
-        transposeData(data);
+        var transpose = transposeData(data);
+        console.log(transpose);
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html()); 
-        var yrcompareHTML = tplYearComparison({"years":data["year-wise"]});
+        var yrcompareHTML = tplYearComparison({"transpose":transpose});
         $('#comparison-year').html(yrcompareHTML);
-        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
-        var compareHTML = tplComparison({"neighbours":data["neighbours"]});
-        $('#comparison-neighbour').html(compareHTML);
+        //var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
+        //var compareHTML = tplComparison({"neighbours":data["neighbours"]});
+        //$('#comparison-neighbour').html(compareHTML);
     }
 
     function transposeData(data) {
-        var transpose = {}
+        var transpose = {
+            "school_count" : { "name":"school_count" },
+            "Basic Infrastructure" : { "name":"Basic Infrastructure"},
+            "Learning Environment" : { "name":"Learning Environment"},
+            "Nutrition and Hygiene" : { "name":"Nutrition and Hygiene"},
+            "Toilets" : { "name":"Toilets"}
+        }
+
+        var infraHash = {
+            'sum_has_playground': {
+                'icon': ['fa fa-futbol-o'],
+                'display': 'Playground' 
+            },
+            'sum_has_drinking_water': {
+                'icon': ['fa fa-tint'],
+                'display': 'Drinking Water',       
+            },
+            'sum_has_toilet': {
+                'icon': ['fa fa-male', 'fa fa-female'],
+                'display': 'Toilets'      
+            },
+            'sum_has_library': {
+                'icon': ['fa fa-book'],
+                'display': 'Library'
+            },
+            'sum_has_boundary_wall': {
+                'icon': ['fa fa-circle-o-notch'],
+                'display': 'Secure Boundary Wall'
+            },
+            'sum_has_electricity': {
+                'icon': ['fa fa-plug'],
+                'display': 'Electricity'
+            },
+            'sum_has_computer': {
+                'icon': ['fa fa-laptop'],
+                'display': 'Computers'
+            },
+            'sum_has_mdm': {
+                'icon': ['fa fa-spoon'],
+                'display': 'Mid-Day Meal'
+            }, 
+            'sum_toilet_girls': {
+                'icon': ['fa fa-spoon'],
+                'display': 'Separate Girls\' Toilets'
+            },
+            'sum_classrooms_in_good_condition': {
+                'icon': ['fa fa-users'],
+                'display': 'Good Classrooms'
+            },
+            'sum_has_blackboard': {
+                'icon': ['fa fa-square'],
+                'display': 'Blackboards'
+            }
+
+        };
+        
+        var basic_infra = ["sum_has_boundary_wall","sum_has_playground","sum_has_electricity","sum_classrooms_in_good_condition"];
+        var learning_env = ["sum_has_blackboard","sum_has_computer","sum_has_library"];
+        var nut_hyg = ["sum_has_mdm","sum_has_drinking_water"];
+        var toilets = ["sum_has_toilet","sum_toilet_girls"];
+
         for (var year in data) {
-            for (var header in data[year]){
-                for (var key in year[header]){
-                    if (header in _keys(transpose))
-                        transpose[header] = data[year][header][key];
-                    else
-                        transpose = { header: { year: data[year][header][key] }}
+            transpose["school_count"]["yr"+year] = data[year]["school_count"];
+            for (var key in data[year]) {
+                var iconTag = "";
+                if($.inArray(key,["year","school_count"])==-1)
+                {
+                    for(var i in infraHash[key]['icon']){
+                        iconTag += "<span class='" + infraHash[key]['icon'][i] + "'></span>   ";
+                    }
                 }
+                if ($.inArray(key,basic_infra) != -1 ) {
+                    if(!transpose["Basic Infrastructure"][key])
+                        transpose["Basic Infrastructure"][key] = {"name":infraHash[key]['display'],"icon":iconTag};
+                    transpose["Basic Infrastructure"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;
+
+                    
+                } else if ($.inArray(key,learning_env) != -1) {
+                    if(!transpose["Learning Environment"][key])
+                        transpose["Learning Environment"][key] = {"name":infraHash[key]['display'],"icon":iconTag};
+                    transpose["Learning Environment"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;
+                } else if ($.inArray(key,nut_hyg) != -1) {
+                    if(!transpose["Nutrition and Hygiene"][key])
+                        transpose["Nutrition and Hygiene"][key] = {"name":infraHash[key]['display'],"icon":iconTag}; 
+                    transpose["Nutrition and Hygiene"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;    
+                } else if ($.inArray(key,toilets) != -1) {
+                    if(!transpose["Toilets"][key])
+                        transpose["Toilets"][key] = {"name":infraHash[key]['display'],"icon":iconTag}; 
+                    transpose["Toilets"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;    
+                } else {}
             }
         }
+        return transpose;
     }
+
+
 
 })();
 

@@ -117,49 +117,47 @@
 
   <script type="text/html" id="tpl-YearComparison">
       <h3 class="brand-turquoise  heading-border center-text">
-        3 year comparison of status of Primary school status in this region
+        3 year comparison of infrastructure of Primary schools within this region
       </h3>
       <table class="table-base table-list-view">
         <tbody>
           <tr class="table-base-heading">
-            <th>Year</th>
-            <th>Per Student</th>
-            <th>TLM</th>
-            <th>School Grant</th>
-            <th>School Maintenance Grant</th>
+            <th>Category</th>
+            <th colspan='2'>Infrastructure</th>
+            <th>2013</th>
+            <th>2014</th>
+            <th>2015</th>
           </tr>
-          {% for each in years %}
-            <tr class="font-smaller">
-              <td class="td-label-year">
-                <div class="bold td-label-year">{{each.year}}</div>
-              </td>
-
-              <td>
-                <div class="td-label-perstu">&#8377; {{each.per_student}}</div>  
-              </td>
-              <td>
-                <div class="td-label-tlm">&#8377; {{each.tlm}}</div>    
-              </td>
-              <td>
-                 <!-- Value is percentage of the nearest 100 to the highest value-->
-                <div class="bar-graph-wrap td-label-sg">
-                  <div class="bar-custom">
-                    <div class="bar-value grey-gravel-bg" style="width:{{each.sg_perc}}%;"></div>
-                  </div><!--bar-custom-->
-                  <div class="bar-percent font-smallest">&#8377; {{each.sg_amt}}</div>
-
-                </div><!--bar-graph-wrap-->
-              </td>
-              <td>
-                 <!-- Value is percentage of the nearest 100 to the highest value-->
-                <div class="bar-graph-wrap td-label-smg">
-                  <div class="bar-custom">
-                    <div class="bar-value brand-purple-bg" style="width:{{each.smg_perc}}%;"></div>
-                  </div><!--bar-custom-->
-                  <div class="bar-percent font-smallest">&#8377; {{each.smg_amt}}</div>
-                </div><!--bar-graph-wrap-->
-              </td>
-            </tr>
+          {% for key in transpose %}
+            {% if key.name == "school_count" %}
+              <tr class="font-smaller">
+                <td>Total Schools</td>  
+                <td> </td>
+                <td> </td>
+                <td>{{key.yr2013}}</td>
+                <td>{{key.yr2014}}</td>
+                <td>{{key.yr2015}}</td>
+              </tr>
+            {% else %}
+              {% set counter=1%}
+              {%for each in key%}
+                
+                <tr class="font-smaller">
+                  {% if counter == 1 %}
+                    <td>{{ counter }}{{key.name}}</td>
+                  {% else %}
+                    <td>{{ counter }}{{key.name}}</td>
+                  {% endif %} 
+                  <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
+                  <td>{{each.name}}</td>
+                  <td>{{each.yr2013 | round}}%</td>
+                  <td>{{each.yr2014 | round}}%</td>
+                  <td>{{each.yr2015 | round}}%</td>
+                </tr>
+                {% set counter = counter|increment %}
+                
+              {% endfor %}
+            {% endif %}
           {% endfor %}
         </tbody>
       </table>
