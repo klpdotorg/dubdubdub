@@ -17,11 +17,12 @@
   };
 
   function render(boundaryID, academicYear) {
-    var acadYear = academicYear || '13-14';
+    var acadYear = academicYear || '2014-2015';
 
     /*------------------- WISH WASH FOR MAP-------------*/
     var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {
       geometry: 'yes',
+      year: acadYear,
       school_type: 'PreSchool',
       source: 'anganwadi'
     });
@@ -36,11 +37,14 @@
         } else {
           renderPreSchool(data, acadYear);
         }
-        $('.js-trigger-compare').click(function(e) {
-          e.preventDefault();
-          klp.comparison.open(data.properties);
-        });
+        // $('.js-trigger-compare').click(function(e) {
+        //   e.preventDefault();
+        //   klp.comparison.open(data.properties);
+        // });
         utils.triggerDropDown()
+        $(document).on('click', '.acad-year', function(e){
+          console.log($(e.target).text())
+        })
         var geom;
         if (boundary.geometry) {
           geom = boundary.geometry;
@@ -91,6 +95,7 @@
   }
 
   function renderPrimarySchool(data, academicYear) {
+    var acadYear = academicYear.replace(/20/g, '')
     var queryParams = {};
     var boundaryName = data.properties.boundary.name;
     var boundaryType = data.properties.boundary.type;
@@ -98,11 +103,11 @@
     var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
     queryParams[adminLevel] = boundaryID;
     $('#school-data').removeClass("hidden");
-    klp.dise_api.queryBoundaryName(boundaryName, boundaryType, academicYear)
+    klp.dise_api.queryBoundaryName(boundaryName, boundaryType, acadYear)
       .done(function(diseData) {
         var boundary = diseData[0].children[0]
         console.log('boundary', boundary);
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, academicYear)
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear)
           .done(function(diseData) {
             console.log('diseData', diseData);
             renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
@@ -139,6 +144,7 @@
     queryParams[adminLevel] = boundaryID;
     klp.api.do('programme/', queryParams)
       .done(function(progData) {
+        console.log('prog',progData)
         renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
       })
       .fail(function(err) {
