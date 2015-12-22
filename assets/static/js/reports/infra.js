@@ -24,6 +24,53 @@
         loadData(null, null);
     }
 
+    var infraHash = {
+        'sum_has_playground': {
+            'icon': ['fa fa-futbol-o'],
+            'display': 'Playground' 
+        },
+        'sum_has_drinking_water': {
+            'icon': ['fa fa-tint'],
+            'display': 'Drinking Water',       
+        },
+        'sum_has_toilet': {
+            'icon': ['fa fa-male', 'fa fa-female'],
+            'display': 'Toilets'      
+        },
+        'sum_has_library': {
+            'icon': ['fa fa-book'],
+            'display': 'Library'
+        },
+        'sum_has_boundary_wall': {
+            'icon': ['fa fa-circle-o-notch'],
+            'display': 'Secure Boundary Wall'
+        },
+        'sum_has_electricity': {
+            'icon': ['fa fa-plug'],
+            'display': 'Electricity'
+        },
+        'sum_has_computer': {
+            'icon': ['fa fa-laptop'],
+            'display': 'Computers'
+        },
+        'sum_has_mdm': {
+            'icon': ['fa fa-spoon'],
+            'display': 'Mid-Day Meal'
+        }, 
+        'sum_toilet_girls': {
+            'icon': ['fa fa-female'],
+            'display': 'Separate Girls\' Toilets'
+        },
+        'sum_classrooms_in_good_condition': {
+            'icon': ['fa fa-users'],
+            'display': 'Good Classrooms'
+        },
+        'sum_has_blackboard': {
+            'icon': ['fa fa-square'],
+            'display': 'Blackboards'
+        }
+    };
+
     function loadData(schoolType, params) {
 
         /*var dataURL = "reports/infrastructure/xxx";
@@ -92,6 +139,84 @@
                     }                
             }
             renderComparison(comparisonJson);
+            var neighboursJson = {
+                "Bangalore Central": {
+                    "name": "Bangalore Central",
+                    "school_count" : 1500,
+                    "sum_has_boundary_wall": 1200, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1100,
+                    "sum_classrooms_in_good_condition": 800,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1500,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1500,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore North": {
+                    "name": "Bangalore North",
+                    "school_count" : 1600,
+                    "sum_has_boundary_wall": 1000, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1300,
+                    "sum_classrooms_in_good_condition": 900,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1200,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore South": {
+                    "name": "Bangalore South",
+                    "school_count" : 1700,
+                    "sum_has_boundary_wall": 1500, 
+                    "sum_has_playground": 1000,
+                    "sum_has_electricity": 1200,
+                    "sum_classrooms_in_good_condition": 1400,
+                    "sum_has_blackboard": 1100,
+                    "sum_has_computer": 500,
+                    "sum_has_library": 800,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1400,
+                    "sum_has_toilet": 1600,
+                    "sum_toilet_girls": 1600
+                },
+                "Chikkabalapur": {
+                    "name": "Chikkabalapur",
+                    "school_count" : 1600,
+                    "sum_has_boundary_wall": 1000, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1300,
+                    "sum_classrooms_in_good_condition": 900,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1200,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore Rural": {
+                    "name": "Bangalore Rural",
+                    "school_count" : 1500,
+                    "sum_has_boundary_wall": 1200, 
+                    "sum_has_playground": 800,
+                    "sum_has_electricity": 1200,
+                    "sum_classrooms_in_good_condition": 1000,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 800,
+                    "sum_has_library": 400,
+                    "sum_has_mdm": 900,
+                    "sum_has_drinking_water": 1000,
+                    "sum_has_toilet": 1300,
+                    "sum_toilet_girls": 1400
+                } 
+            }
+            renderNeighbours(neighboursJson);
         //});
     }
 
@@ -137,9 +262,31 @@ function renderGrantSummary(data){
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html()); 
         var yrcompareHTML = tplYearComparison({"transpose":transpose});
         $('#comparison-year').html(yrcompareHTML);
-        //var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
-        //var compareHTML = tplComparison({"neighbours":data["neighbours"]});
-        //$('#comparison-neighbour').html(compareHTML);
+    }
+
+    function renderNeighbours(data) {
+        var percData = {};
+        
+        for (var each in data) {
+            for (var key in data[each]) {
+                var iconTag = "";
+                if(key != "name" && key != "school_count") {
+                    for(var i in infraHash[key]['icon']){
+                        iconTag += "<span class='" + infraHash[key]['icon'][i] + "'></span>   ";
+                    }
+                    if(!percData[key]) 
+                        percData[key] = {"icon":iconTag,"name":infraHash[key]['display']};
+                    if(!percData[key][each])
+                        percData[key][each] = {};
+                    percData[key][each]["name"] = each;
+                    percData[key][each]["perc"] = (data[each][key]/data[each]["school_count"]) * 100;
+                }
+            }
+        }
+
+        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
+        var compareHTML = tplComparison({"neighbours":percData});
+        $('#comparison-neighbour').html(compareHTML);
     }
 
     function transposeData(data) {
@@ -151,53 +298,7 @@ function renderGrantSummary(data){
             "Toilets" : { "name":"Toilets"}
         }
 
-        var infraHash = {
-            'sum_has_playground': {
-                'icon': ['fa fa-futbol-o'],
-                'display': 'Playground' 
-            },
-            'sum_has_drinking_water': {
-                'icon': ['fa fa-tint'],
-                'display': 'Drinking Water',       
-            },
-            'sum_has_toilet': {
-                'icon': ['fa fa-male', 'fa fa-female'],
-                'display': 'Toilets'      
-            },
-            'sum_has_library': {
-                'icon': ['fa fa-book'],
-                'display': 'Library'
-            },
-            'sum_has_boundary_wall': {
-                'icon': ['fa fa-circle-o-notch'],
-                'display': 'Secure Boundary Wall'
-            },
-            'sum_has_electricity': {
-                'icon': ['fa fa-plug'],
-                'display': 'Electricity'
-            },
-            'sum_has_computer': {
-                'icon': ['fa fa-laptop'],
-                'display': 'Computers'
-            },
-            'sum_has_mdm': {
-                'icon': ['fa fa-spoon'],
-                'display': 'Mid-Day Meal'
-            }, 
-            'sum_toilet_girls': {
-                'icon': ['fa fa-spoon'],
-                'display': 'Separate Girls\' Toilets'
-            },
-            'sum_classrooms_in_good_condition': {
-                'icon': ['fa fa-users'],
-                'display': 'Good Classrooms'
-            },
-            'sum_has_blackboard': {
-                'icon': ['fa fa-square'],
-                'display': 'Blackboards'
-            }
-
-        };
+        
         
         var basic_infra = ["sum_has_boundary_wall","sum_has_playground","sum_has_electricity","sum_classrooms_in_good_condition"];
         var learning_env = ["sum_has_blackboard","sum_has_computer","sum_has_library"];

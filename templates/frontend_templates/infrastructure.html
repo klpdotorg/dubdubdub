@@ -141,21 +141,22 @@
             {% else %}
               {% set counter=1%}
               {%for each in key%}
-                
+                {% if counter > 1 %}
                 <tr class="font-smaller">
-                  {% if counter == 1 %}
-                    <td>{{ counter }}{{key.name}}</td>
+                  {% if counter == 2 %}
+                    <td>{{key.name}}</td>
                   {% else %}
-                    <td>{{ counter }}{{key.name}}</td>
+                    <td></td>
                   {% endif %} 
                   <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
                   <td>{{each.name}}</td>
-                  <td>{{each.yr2013 | round}}%</td>
-                  <td>{{each.yr2014 | round}}%</td>
-                  <td>{{each.yr2015 | round}}%</td>
+                  <td class="bold {% if each.yr2013 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2013 | round}}%</td>
+                  <td class="bold {% if each.yr2014 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2014 | round}}%</td>
+                  <td class="bold {% if each.yr2015 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2015 | round}}%</td>
                 </tr>
+                {% endif %}
                 {% set counter = counter|increment %}
-                
+                 
               {% endfor %}
             {% endif %}
           {% endfor %}
@@ -172,41 +173,35 @@
       <table class="table-base table-list-view table-base-comparison">
         <tbody>
           <tr class="table-base-heading">
-            <th>Boundary</th>
-            <th>Per Student</th>
-            <th>TLM Grant</th>
-            <th>School Grant</th>
-            <th>School Maintenance Grant</th>
-            <th>Total Grant</th>
+            <th colspan="2"></th>
+            {% set counter = 1 %}
+            {% for each in neighbours %}
+              {% if counter == 1 %}
+                {% for key in each %}
+                  {% if key.perc %}
+                    <th>{{key.name}}</th>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              {% set counter = counter | increment %}
+            {% endfor %}
           </tr>
           {% for each in neighbours %}
             <tr class="font-smaller">
-              <td>
-                <div class="bold td-label-boundary">{{each.name}}</div>
-              </td>
-              <td>
-                <div class="td-label-perstu">&#8377; {{each.per_student}}</div>    
-              </td>
-              <td>
-                <div class="td-label-tlm">&#8377; {{each.tlm}}</div>  
-              </td>
-              <td>
-                <div class="td-label-sg">&#8377; {{each.sg_amt}}</div>
-              </td>
-               <td>
-                <div class="td-label-smg">&#8377; {{each.smg_amt}}</div>
-              </td>
-              <td>
-                <!-- Value is percentage of the nearest 100 to the highest value-->
-                <div class="bar-graph-wrap">
-                  <div class="bar-custom">
-                    <div class="bar-value grey-gravel-bg" style="width:{{each.total_perc}}%;"></div>
-                  </div><!--bar-custom-->
-                  <div class="bar-percent center-text font-smallest">&#8377; {{each.total}}</div>
-                </div><!--bar-graph-wrap-->
-              </td>
+              {% for key in each %}
+                {% if key.perc %}
+                  <td class="bold {% if key.perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{key.perc | round}}%</td>
+                {% else %}
+                  {%if key.indexOf("</span>") != -1 %}
+                    <td style="width:50px">{% autoescape false %}{{key}}{% endautoescape %}</td>
+                  {% else %}
+                    <td style="width:200px">{{key}}</td>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
             </tr>
           {% endfor %}
+          
         </tbody>
     </table>
   </script>

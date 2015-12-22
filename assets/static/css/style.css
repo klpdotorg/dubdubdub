@@ -4799,5 +4799,8 @@ code {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
+span.tab {
+  padding-right: 20px;
+  /* Or desired space*/ }
 
 /*# sourceMappingURL=style.css.map */
