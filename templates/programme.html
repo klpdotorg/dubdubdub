@@ -10,6 +10,7 @@
         PROGRAMME_ID = {{ object.id }};
     </script>
     <script src="{% static 'js/programme/init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
 
 {% endblock %}
     
@@ -31,11 +32,21 @@
         <div class="search-bar">
             <input id="select2search" />
         </div>
-        <div id="entityDetails" class="entity-detail container">
-
+        <div class="entity-container container">
+            <div id="entityDetails" class="entity-detail">
+            </div>
+            <div id="legend" class="legend align-right">
+                <span class="fa fa-caret-down brand-red"></span> Better than District score<br/>
+                <span class="fa fa-caret-up brand-green"></span> Lower than District score
+            </div>
+        </div>
+        <hr/>
+        <div id="methodology" class="container">
+            <p class="center-text font-small">If a program has more than one assessment we have only considered cohorts, that is, students present in all tests. <br/>All scores have been normalised so that they can be compared. The full methodology is <a href="https://klp.org.in/public/docs/KLP_Aggregating_Test_Scores.pdf" target="_blank">available.</a></p>
+        </div>
+        <div id="overallContainer">
         </div>
         <div id="assessmentsContainer">
-
         </div>
     </div>
 
