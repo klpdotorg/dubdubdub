@@ -1,6 +1,7 @@
 'use strict';
 (function() {
   var utils;
+  var selectedYear;
   var ADMIN_LEVEL_MAP = {
     'district': 'admin_1',
     'block': 'admin_2',
@@ -13,13 +14,23 @@
     //klp.router = new KLPRouter({});
     //klp.router.init();       
     //klp.router.start();
-    render(BOUNDARY_ID);
+    setAcadYear()
+    render(BOUNDARY_ID, selectedYear);
   };
+
+  function setAcadYear() {
+    if (!window.location.hash) {
+      window.location.hash = '2014-2015'      
+    } 
+    selectedYear = window.location.hash.split('#').join('')
+  }
 
   function render(boundaryID, academicYear) {
     var acadYear = academicYear || '2014-2015';
 
+
     /*------------------- WISH WASH FOR MAP-------------*/
+
     var $infoXHR = klp.api.do("aggregation/boundary/" + boundaryID + '/schools/', {
       geometry: 'yes',
       year: acadYear,
@@ -36,14 +47,15 @@
           renderPrimarySchool(data, acadYear);
         } else {
           renderPreSchool(data, acadYear);
-        }
+        }        
         // $('.js-trigger-compare').click(function(e) {
         //   e.preventDefault();
         //   klp.comparison.open(data.properties);
         // });
         utils.triggerDropDown()
         $(document).on('click', '.acad-year', function(e){
-          console.log($(e.target).text())
+          window.location.hash = $(e.target).text()
+          window.location.reload()          
         })
         var geom;
         if (boundary.geometry) {
@@ -169,6 +181,7 @@
       $('#school-summary').html(html);
     else
       $('#preschool-summary').html(html);
+    $('#selected-year').text(selectedYear)
   }
 
   function renderGenderCharts(data, schoolType) {
