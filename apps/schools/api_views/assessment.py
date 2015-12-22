@@ -88,39 +88,58 @@ class AssessmentInfo(KLPListAPIView):
         return assessmentinfo
 
 
-
 class ProgrammesList(KLPListAPIView, CacheMixin):
-    '''
-        Returns list of programmes and year in which they were conducted
+    '''Returns list of programmes and year in which they were conducted
+    ---
+    parameters:
+        - name: school|admin_1|admin_2|admin_3
+          description: the id of the entity to return programmes about
+          required: true
+          type: integer
+          paramType: form
     '''
     serializer_class = ProgrammeListSerializer
     bbox_filter_field = "instcoord__coord"
 
     def get_queryset(self):
         if self.request.GET.get('school', ''):
-          sid= self.request.GET.get('school')
-          programmes= InstitutionAssessmentCohorts.objects.filter(school=sid)\
-              .order_by('assessment__programme__id')\
-              .distinct('assessment__programme__name','assessment__programme__academic_year__name','assessment__programme__id')
+            sid = self.request.GET.get('school')
+            programmes = InstitutionAssessmentCohorts.objects.filter(
+                school=sid
+            ).order_by('assessment__programme__id').distinct(
+                'assessment__programme__name',
+                'assessment__programme__academic_year__name',
+                'assessment__programme__id'
+            )
         elif self.request.GET.get('admin_1', ''):
-          admin1= self.request.GET.get('admin_1')
-          programmes= InstitutionAssessmentCohorts.objects.filter(school__schooldetails__admin1=admin1)\
-              .order_by('assessment__programme__id')\
-              .distinct('assessment__programme__name','assessment__programme__academic_year__name','assessment__programme__id')
+            admin1 = self.request.GET.get('admin_1')
+            programmes = InstitutionAssessmentCohorts.objects.filter(
+                school__schooldetails__admin1=admin1
+            ).order_by('assessment__programme__id').distinct(
+                'assessment__programme__name',
+                'assessment__programme__academic_year__name',
+                'assessment__programme__id'
+            )
         elif self.request.GET.get('admin_2', ''):
-          admin2= self.request.GET.get('admin_2')
-          programmes= InstitutionAssessmentCohorts.objects.filter(school__schooldetails__admin2=admin2)\
-              .order_by('assessment__programme__id')\
-              .distinct('assessment__programme__name','assessment__programme__academic_year__name','assessment__programme__id')
+            admin2 = self.request.GET.get('admin_2')
+            programmes = InstitutionAssessmentCohorts.objects.filter(
+                school__schooldetails__admin2=admin2
+            ).order_by('assessment__programme__id').distinct(
+                'assessment__programme__name',
+                'assessment__programme__academic_year__name',
+                'assessment__programme__id'
+            )
         elif self.request.GET.get('admin_3', ''):
-          admin3= self.request.GET.get('admin_3')
-          programmes= InstitutionAssessmentCohorts.objects.filter(school__schooldetails__admin3=admin3)\
-              .order_by('assessment__programme__id')\
-              .distinct('assessment__programme__name','assessment__programme__academic_year__name','assessment__programme__id')
-
-
+            admin3 = self.request.GET.get('admin_3')
+            programmes = InstitutionAssessmentCohorts.objects.filter(
+                school__schooldetails__admin3=admin3
+            ).order_by('assessment__programme__id').distinct(
+                'assessment__programme__name',
+                'assessment__programme__academic_year__name',
+                'assessment__programme__id'
+            )
         else:
-          raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
+            raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
         return programmes
 
 
