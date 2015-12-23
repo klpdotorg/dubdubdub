@@ -121,6 +121,10 @@ urlpatterns = patterns(
         }), name='map'),
 
     # report pages
+    url(r'^reports/search/$', StaticPageView.as_view(
+        template_name='report_search.html'
+        ), name='report_search'),
+
     url(r'^reports/demographics/$', StaticPageView.as_view(
         template_name='demographics.html'
         ), name='demographics'),
