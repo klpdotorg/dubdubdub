@@ -1,3 +1,4 @@
+from django.conf import settings
 from schools.models import School, DiseInfo, MdmAgg
 from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
@@ -96,10 +97,9 @@ class SchoolsDiseInfo(KLPListAPIView):
     bbox_filter_field = "school__instcoord__coord"
 
     def get_queryset(self):
-        year = self.kwargs.get('year', '2011-12')
+        year = self.kwargs.get('year', settings.DEFAULT_ACADEMIC_YEAR)
         schools = DiseInfo.objects.filter(acyear=year, school__status=2)\
             .select_related('instcoord', 'school')
-        print schools.query
         return schools
 
 
