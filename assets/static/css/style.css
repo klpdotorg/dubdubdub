@@ -3443,9 +3443,6 @@ body {
 .assessment-gender-icon {
   float: left; }
 
-.padded-text {
-  padding-top: 30px; }
-
 @media only screen and (min-width: 750px) {
   .programme-meta-parent {
     margin-left: -20px;
@@ -3560,12 +3557,18 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     float: right;
-    font-size: small; } }
+    font-size: small; }
+
+  .padded-text {
+    padding-top: 30px; } }
 @media only screen and (max-width: 749px) {
   .legend {
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: small; } }
+    font-size: small; }
+
+  .padded-text {
+    padding-bottom: 30px; } }
 .pgm-box-demo {
   width: 90px;
   height: 90px;

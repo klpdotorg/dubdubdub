@@ -40,9 +40,7 @@
     float: left;
 }
 
-.padded-text {
-    padding-top: 30px;
-}
+
 
 @include media-med {
     .programme-meta-parent {
@@ -125,6 +123,10 @@
         float:right;
         font-size: small;
     }
+
+    .padded-text {
+        padding-top: 30px;
+    }
 }
 
 @include media-med-maxwidth {
@@ -133,6 +135,10 @@
         padding-top: 20px;
         padding-bottom: 20px;
         font-size: small;
+    }
+
+    .padded-text {
+        padding-bottom: 30px;
     }
 }
 
