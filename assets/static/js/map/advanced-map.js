@@ -211,6 +211,7 @@
         });
 
         klp.router.events.on('hashchange:marker', function (event, params) {
+            console.log(event);
             var queryParams = params.queryParams,
                 changed = params.changed;
             if (map._popup) {
@@ -345,6 +346,31 @@
             }
         }
 
+        // var $sidebar_school_items = $('.sidebar-school');
+        $('body').on('click', '.sidebar-school', function(e) {
+            e.preventDefault();
+
+            var opts = {
+                trigger: false,
+            }
+
+            var school_element = e.target;
+            if (e.target.tagName !== 'LI' ) {
+                var school_parents = $(e.target).parents('.sidebar-school');
+                if (school_parents.length > 0) {
+                    school_element = school_parents[0];
+                } else {
+                    console.log('cannot find a list element');
+                    return;
+                }
+            }
+
+            var id = $(school_element).data('id');
+            var typeslug = $(school_element).data('type').replace(' ', '').toLowerCase();
+
+            klp.router.setHash(null, {marker: typeslug + '-' + id}, opts);
+        })
+
         function loadPointsByBbox() {
             var bbox = map.getBounds();
             if (mapBbox && mapBbox.contains(bbox)) {
@@ -362,7 +388,6 @@
                 schoolXHR.abort();
             }
 
-
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
                 preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
@@ -375,6 +400,16 @@
                         },
                         onEachFeature: onEachSchool
                     }).addTo(preschoolCluster);
+
+                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
+                    $('#preschool-list').html('');
+
+                    if (data.features.length > 0) {
+                        _(data.features).each(function(school) {
+                            var html = tplSchoolItem(school);
+                            $('#preschool-list').append(html);
+                        });
+                    }
                 });
             }
 
@@ -392,12 +427,12 @@
                     }).addTo(schoolCluster);
 
                     var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-                    $('#school-list').html();
-                    console.log(data.features);
+                    $('#parimaryschool-list').html('');
+
                     if (data.features.length > 0) {
                         _(data.features).each(function(school) {
                             var html = tplSchoolItem(school);
-                            $('#school-list').append(html);
+                            $('#primaryschool-list').append(html);
                         });
                     }
                 });
