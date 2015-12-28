@@ -10,7 +10,7 @@
   <form class="form-base">
     <div class="heading-section-block">
       <div>
-        <div class="col-25-flt">
+        <div class="col-50-flt">
           <label class="label-inline bold">Academic Year</label>
           <select id="adhoc-dise-acyear">
             <option value='10-11'>2010-2011</option>
@@ -20,7 +20,7 @@
             <option value='14-15'>2014-2015</option>
           </select>
         </div>
-        <div class="col-25-flt">
+        <div class="col-50-flt">
           <label class="label-inline bold">Admin Level</label>
           <select id="adhoc-dise-admin">
             <option value=''>Select an admin level</option>
@@ -222,7 +222,9 @@
     }
   }
 
-  $('#adhoc-dise-acyear').select2().on('change', function(e) {
+  $('#adhoc-dise-acyear').select2({
+    minimumResultsForSearch: Infinity
+  }).on('change', function(e) {
     var admin = $('#adhoc-dise-admin').val();
     if(admin !== '') {
       $('.warning-text').hide();
@@ -231,7 +233,9 @@
       fillAdmin(e.val, admin);
     }
   });
-  $('#adhoc-dise-admin').select2().on('select2-selecting', function(e) {
+  $('#adhoc-dise-admin').select2({
+    minimumResultsForSearch: Infinity
+  }).on('select2-selecting', function(e) {
     console.log(e);
 
     var acyear = $('#adhoc-dise-acyear').val();
@@ -245,6 +249,5 @@
       fillAdmin(acyear, e.val);
     }
   });
-  $('#adhoc-dise-boundary').select2();
 </script>
 {% endblock endbody %}
