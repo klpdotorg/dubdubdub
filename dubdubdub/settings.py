@@ -13,8 +13,8 @@ ADMINS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'dubdubdub',
-        'USER': 'vagrant',
+        'NAME': 'testpercentile',
+        'USER': 'klp',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
@@ -269,7 +269,7 @@ TESTS_SCHOOLS_INPUT = {
     'SCHOOL_DEMOGRAPHICS_ID': '33312',
     'SCHOOL_PROGRAMMES_ID': '25139',
     'SCHOOL_FINANCE_ID': '4708',
-    'SCHOOL_INFRA_ID': '24594',
+    'SCHOOL_INFRA_ID': '33141',
 }
 
 BLOG_FEED_URL = 'http://blog.klp.org.in/feeds/posts/default?alt=json'

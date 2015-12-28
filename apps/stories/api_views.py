@@ -40,6 +40,7 @@ class StoryInfoView(KLPAPIView):
 class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
+    source -- Source of data [web/ivrs].
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -52,6 +53,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     """
 
     def get(self, request):
+        source = self.request.QUERY_PARAMS.get('source', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -82,6 +84,10 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
+
+        if source:
+            stories_qset = stories_qset.filter(
+                group__source__name=source)
 
         if admin1_id:
             stories_qset = stories_qset.filter(

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %} DISE Ad-hoc Reports {% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="heading-primary brand-purple" id="top">Reports</h1>
+</div>
+
+<div class="center-text">
+  <form class="form-base">
+    <div class="heading-section-block">
+      <div>
+        <div class="col-50-flt">
+          <label class="label-inline bold">Academic Year</label>
+          <select id="adhoc-dise-acyear">
+            <option value='10-11'>2010-2011</option>
+            <option value='11-12'>2011-2012</option>
+            <option value='12-13'>2012-2013</option>
+            <option value='13-14'>2013-2014</option>
+            <option value='14-15'>2014-2015</option>
+          </select>
+        </div>
+        <div class="col-50-flt">
+          <label class="label-inline bold">Admin Level</label>
+          <select id="adhoc-dise-admin">
+            <option value=''>Select an admin level</option>
+            <!-- <option value='cluster'>Cluster</option>
+            <option value='block'>Block</option> -->
+            <option value='district'>District</option>
+            <option value='mp'>Parliamentary Constitution (MP)</option>
+            <option value='mla'>Assembly Constitution (MLA)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<section>
+  <div class="center-text">
+    <h2 class="heading-section" id="reports"><span id="heading-acyear" style="display:none"></span> Reports</h2>
+  </div>
+</section>
+
+<div class="container">
+  <div class="reports-list" style="display:none">
+    <table class="table-base" id="reports-table">
+      <thead class="table-base-heading">
+        <tr>
+          <th>Name</th>
+          <th>Infrastructure</th>
+          <th>Demographics</th>
+          <th>Finance</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="warning-text">Please choose admin level and academic year above.</div>
+  <div class="clearfix"></div>
+</div>
+
+
+<div class="backToTop">
+  <a href="#top">Back to top</a>
+</div>
+
+{% endblock %}
+
+{% block endbody %}
+<script src="{% static 'js/reports/dise.js' %}"></script>
+{% endblock endbody %}

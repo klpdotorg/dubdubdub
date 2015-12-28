@@ -1,0 +1,14 @@
+--pid 23
+select fill_inst_assess_cohorts(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_mt(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_gender(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin1(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin1_gender(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin1_mt(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin2(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin2_gender(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin2_mt(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin3(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin3_gender(102,'1',65,ARRAY[65,75]);
+select fill_agg_singlescore_admin3_mt(102,'1',65,ARRAY[65,75]);

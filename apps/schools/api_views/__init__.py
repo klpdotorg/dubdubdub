@@ -4,7 +4,7 @@ from .school import (
     SchoolLibrary, SchoolNutrition
 )
 from .assessment import (
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,ProgrammePercentile
 )
 from .aggregations import *
 from .boundary import (
