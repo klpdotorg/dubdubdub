@@ -1,7 +1,8 @@
 (function() {
     var tplAssessmentClass,
         tplSchool,
-        tplBoundary;
+        tplBoundary,
+        tplAssessmentOverall;
     klp.init = function() {
         console.log("init programme page", PROGRAMME_ID);
         klp.router = new KLPRouter();
@@ -10,6 +11,7 @@
         tplAssessmentClass = swig.compile($('#tpl-assessment-class').html());
         tplSchool = swig.compile($('#tpl-school').html());
         tplBoundary = swig.compile($('#tpl-boundary').html());
+        tplAssessmentOverall = swig.compile($('#tpl-assessment-overall').html());
         //fetchProgrammeDetails();
         klp.router.events.on('hashchange', function(event, params) {
             fetchProgrammeDetails();
@@ -109,15 +111,23 @@
         var params = klp.router.getHash().queryParams;
         var url = "programme/" + PROGRAMME_ID;
         var $xhr = klp.api.do(url, params);
-        $('#assessmentsContainer').empty().text("Loading...");
+        $('#assessmentsContainer').empty().text("Class Scores Loading...");
+        $('#overallContainer').empty().text("Overall Scores Loading...");
         $('#entityDetails').empty();
         fetchEntityDetails(params);
+        
         $xhr.done(function(data) {
             var assessmentsContext = getContext(data);
             //console.log("ass context", assessmentsContext);
             renderAssessments(assessmentsContext);
-            doPostRender();
+            var programme_html = "<ul id='improved' class='js-accordion-container'>" 
+                    + $('#assessmentsContainer').html() + "</ul>";
+            $('#assessmentsContainer').html(programme_html);
+            fetchPercentile();
+            klp.accordion.init();
+            
         });
+        doPostRender();        
     }
 
     function fetchEntityDetails(params) {
@@ -160,26 +170,19 @@
     }
 
     function doPostRender() {
-        var typeMap = {
-            'admin1': 'admin_1',
-            'admin2': 'admin_2',
-            'admin3': 'admin_3'
-        };
-
-        $('.js-boundaryLink').click(function(e) {
-            console.log("clicked");
-            e.preventDefault();
-            var boundaryType = $(this).attr("data-type");
-            var boundaryId = $(this).attr("data-id");
-            var paramKey = typeMap[boundaryType];
-            var hashParams = {
-                'school': null,
-                'admin_1': null,
-                'admin_2': null,
-                'admin_3': null
-            };
-            hashParams[paramKey] = boundaryId;
-            klp.router.setHash(null, hashParams);
+        $('body').on('click', '.js-boundaryLink', function(e) {
+                console.log("clicked");
+                e.preventDefault();
+                var paramKey = $(this).attr("data-type");
+                var boundaryId = $(this).attr("data-id");
+                var hashParams = {
+                    'school': null,
+                    'admin_1': null,
+                    'admin_2': null,
+                    'admin_3': null
+                };
+                hashParams[paramKey] = boundaryId;
+                klp.router.setHash(null, hashParams);
         });
     }
 
@@ -191,12 +194,31 @@
                 'className': className,
                 'assessments': assessmentClasses[className]
             });
-            $('#assessmentsContainer').append(html);
+            $('#assessmentsContainer').append( html );
         });
         if (classes.length == 0) {
             $('#assessmentsContainer').text("No programme information available.")
         }
         $('#select2search').select2('data', null);
+    }
+
+    function fetchPercentile() {
+        var params = klp.router.getHash().queryParams;
+        var url = "programme/percentile/" + PROGRAMME_ID;
+        var $xhr = klp.api.do(url, params);
+        $xhr.done(function(data) {
+            var html = tplSchool(data);
+            $('#overallContainer').empty();
+            if (data.features) {
+                var assessmentsContext = getOverallContext(data.features);
+                var html = tplAssessmentOverall({'assessments':assessmentsContext})
+                $('#overallContainer').append(html);
+            }   
+            else
+            {
+                $('#overallContainer').text("No programme percentile information available.")
+            }
+        });
     }
 
     function getContext(data) {
@@ -207,6 +229,7 @@
         _.each(_(groupedByClass).keys(), function(className) {
             groupedByClass[className] = getClassContext(groupedByClass[className]);
         });
+        //console.log("context", groupedByClass);
         return groupedByClass;
         //console.log("group by", groupedByClass);
     }
@@ -219,7 +242,22 @@
         return ret;
     }
 
+    /* added this function to reuse getComparison for Overall score */
+    function getOverallContext(overallData) {
+        var ret = [];
+        _.each(overallData,function(assessmentData) {
+            assessmentData.score = assessmentData.percentile;
+            var result = makeComparison(assessmentData.boundary);
+            assessmentData.admin1_score = result['admin1_score'];
+            assessmentData.compares = result['compares'];
+            ret.push(assessmentData);
+        });
+        return ret;
+    }
+
     function getAssessmentContext(assessmentData) {
+        //console.log("assessment data", assessmentData);
+        assessmentData.score = assessmentData.percentile;
         var genders = [];
         for (var j=0, length=assessmentData.singlescoredetails.gender.length; j < length; j++) {
             var scoreDetails = assessmentData.singlescoredetails.gender[j];
@@ -227,7 +265,7 @@
             var gender = {
                 'name': scoreDetails.sex == 'male' ? 'Boys' : 'Girls',
                 'icon': scoreDetails.sex == 'male' ? 'boy' : 'girl',
-                'singlescore': scoreDetails.singlescore,
+                'score': scoreDetails.percentile,
                 'cohorts': cohortsDetails.total
             };
             genders.push(gender);
@@ -236,30 +274,57 @@
 
         var mts = [];
         for (var i=0, length = assessmentData.cohortsdetails.mt.length; i < length; i++) {
+            var singleScore = assessmentData.singlescoredetails.mt[i].singlescore;
+            var gradeScore = assessmentData.singlescoredetails.mt[i].gradesinglescore;
             var mt = {
                 'name': assessmentData.cohortsdetails.mt[i].mt,
-                'singlescore': assessmentData.singlescoredetails.mt[i].singlescore
+                'score': assessmentData.singlescoredetails.mt[i].percentile
             };
             mts.push(mt);
         }
         assessmentData.mts = mts;
 
-        var compares = [];
-        var boundary = assessmentData.singlescoredetails.boundary;
-        var boundaryKeys = _.keys(boundary);
-        _.each(boundaryKeys, function(key) {
-
-            var compareObj = {
-                'id': boundary[key].boundary,
-                'type': key,
-                'name': boundary[key].boundary__name,
-                'singlescore': boundary[key].singlescore
-            };
-            compares.push(compareObj);
-        });
-        assessmentData.compares = compares;
-
+        var ret = makeComparison(assessmentData.singlescoredetails.boundary);
+        assessmentData.admin1_score = ret['admin1_score'];
+        assessmentData.compares = ret['compares'];
         return assessmentData;
     }
+
+    function makeComparison(boundary) {
+        var ret =  {};
+        var compares = [];
+        var boundaryKeys = _.keys(boundary);
+        _.each(boundaryKeys, function(key) {
+            var compareObj = {
+                'id': boundary[key].boundary,
+                'type': boundary[key].btype,
+                'name': boundary[key].boundary__name,
+                'score': boundary[key].percentile
+            };
+            if ( boundary[key].btype == 'admin_1')
+                ret['admin1_score'] = boundary[key].percentile; 
+            compares.push(compareObj);
+        });
+        ret['compares'] = compares;
+        return ret;
+    }
+
+    /*
+     In case we want to show grade score
+    function getScore(singleScore, gradeScore) {
+        if (singleScore) {
+            var score = parseInt(singleScore);
+            var val = "" + score + "%";
+            var typ = "number";
+        } else {
+            var val = gradeScore;
+            var typ = "grade";
+        }
+        return {
+            'value': val,
+            'type': typ
+        }
+    }
+    */
 
 })();
