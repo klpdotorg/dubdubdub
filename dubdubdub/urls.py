@@ -61,12 +61,12 @@ urlpatterns = patterns(
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
 
     #temporary klp reports page to link to static pdfs
-    url(r'^klpreports/$', StaticPageView.as_view(
+    url(r'^reports/klp/$', StaticPageView.as_view(
         template_name='klpreports.html',
     ), name='klpreports'),
 
     #temporary dise reports page to link to static pdfs
-    url(r'^disereports/$', StaticPageView.as_view(
+    url(r'^reports/dise/$', StaticPageView.as_view(
         template_name='disereports.html',
     ), name='disereports'),
 
