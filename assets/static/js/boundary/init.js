@@ -321,7 +321,7 @@
   function renderPrograms(data, schoolType) {
     var tpl = swig.compile($('#tpl-program-summary').html());
     var html = '<div class="page-parent">'
-    if(_.keys(data)) 
+    if(!_.isEmpty(data)) 
       for (var program in data) {
         html = html + '<div class="third-column">' + '<div class="heading-tiny-uppercase">' + program + '</div>' + tpl({
           "programs": data[program]
