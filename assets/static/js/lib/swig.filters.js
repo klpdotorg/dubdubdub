@@ -7,6 +7,8 @@ swig.setFilter('round', function (input) {
 swig.setFilter('length', function (input) {
     if (input instanceof Array || (typeof input === 'string' || input instanceof String)) {
 		return input.length;
+	} else if (input instanceof Object) {
+		return Object.keys(input).length
 	}
 });
 
