@@ -228,7 +228,7 @@
 <script type="text/html" id="tpl-language">
   {% if languages | length %}
     {% for name, language in languages %}
-      {% if language.mt_count %} 
+      {% if language.mt_count && language.mt_count > -1  %} 
         <div class=" compare-each-block">
           <div class="bar-graph-wrap float-left">
             <div class="bar-custom">
@@ -239,11 +239,13 @@
             <div class="bar-percent green-leaf">{{ language.mt_perc }}%</div>
           </div>
         {% else %}
-          No Data
+          <div class="float-left">
+            No Data
+          </div>
         {% endif %}
 
         <div class="compare-section-heading center-text">{{ name|capitalize }}</div>
-        {% if language.moi_count %} 
+        {% if language.moi_count && language.moi_count > -1 %} 
           <div class="bar-graph-wrap float-right">
             <div class="bar-percent">{{ language.moi_perc }}%</div>
             <div class="bar-custom">
@@ -252,7 +254,9 @@
             </div>
           </div>
         {% else %}
-          No Data
+          <div class="float-right">
+            No Data
+          </div>
         {% endif %}
       </div>
     {% endfor %}

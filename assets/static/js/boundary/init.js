@@ -328,6 +328,7 @@
           "programs": data[program]
         }) + '</div>';
       }
+    }
     else {
       html = "No Data";
     }
