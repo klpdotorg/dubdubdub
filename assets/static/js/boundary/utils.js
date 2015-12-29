@@ -65,7 +65,7 @@
   };
 
   t.triggerDropDown = function() {
-    $(".js-dropdown li:has(ul)").click(function(event) {
+    $(document).on('click', '.js-dropdown li:has(ul)', function(event) {
       event.stopPropagation();
       var thisNav = $(this).closest(".js-dropdown").find('ul');
       $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
@@ -239,7 +239,7 @@
               klp_enrol: Math.round(current.num_boys + current.num_girls / current.num_schools)
             }
             return result
-          }, {})  
+          }, modified)  
       }
       return modified      
     }
@@ -259,7 +259,6 @@
   };
 
   t.getSchoolsByLanguage = function(klp) {
-    
     var totalStudents = klp.num_boys + klp.num_girls;
     var totalSchools = klp.num_schools;
     var languageCategories = ["kannada", "tamil", "telugu", "urdu"]

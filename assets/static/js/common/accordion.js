@@ -1,3 +1,4 @@
+/*http://www.jacklmoore.com/notes/jquery-accordion-tutorial/*/
 (function() {
     var t = klp.accordion = {};
     t.init = function() {

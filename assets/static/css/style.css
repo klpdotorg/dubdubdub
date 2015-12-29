@@ -3472,37 +3472,110 @@ body {
       display: table;
       clear: both; }
 
-  .overall-score {
-    width: 33%;
+  .class-score {
+    width: 25%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-  .gender {
-    width: 66.66%;
+  .class-comparison-admin {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .class-comparison {
+    width: 75%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
 @media only screen and (min-width: 750px) {
-  .assessment-comparison-container {
+  .overall-score-parent {
     margin-left: -20px;
     margin-right: -20px; }
-    .assessment-comparison-container:after {
+    .overall-score-parent:after {
       content: "";
       display: table;
       clear: both; }
 
-  .comparison {
-    width: 33%;
+  .overall-score {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .overall-comparison {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .overall-comparison-admin {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .assessment-graph-container {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .assessment-graph-container:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .gender {
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
   .languages {
-    width: 66.66%;
+    width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
+@media only screen and (min-width: 750px) {
+  .entity-container {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .entity-container:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .entity-detail {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .legend {
+    padding-top: 20px;
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    float: right;
+    font-size: small; }
+
+  .padded-text {
+    padding-top: 30px; } }
+@media only screen and (max-width: 749px) {
+  .legend {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: small; }
+
+  .padded-text {
+    padding-bottom: 30px; } }
+.pgm-box-demo {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px; }
+
 .dropdown-styleguide > li {
   display: block;
   border-radius: 0; }
