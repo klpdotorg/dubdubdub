@@ -12,7 +12,7 @@ from schools.api_views import (
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
     PincodeDetails, SchoolNutrition, MergeEndpoints,
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,ProgrammePercentile,
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView
 )

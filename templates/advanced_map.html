@@ -19,7 +19,6 @@
       <script type="text/javascript" src="{% static 'js/map/advanced-map.js' %}"></script>
       <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/advanced_search.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
       <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_filters.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
@@ -27,6 +26,8 @@
       <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/spin.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/leaflet.spin.js' %}"></script>
+
+      <script type="text/javascript" src="{% static 'js/map/advanced_search.js' %}"></script>
     {% endcompress %}
 
     <!--
@@ -79,9 +80,9 @@
 
   <div class="map_page">
     <section class="sidebar-volunteer-map">
-        <h3>Primary Schools</h3>
+        <h3 style="text-align: center" id="primaryschool-header">Primary Schools</h3>
         <ul id="primaryschool-list"></ul>
-        <h3>Preschools</h3>
+        <h3 style="text-align: center" id="preschool-header">Preschools</h3>
         <ul id="preschool-list"></ul>
     </section>
     <section class="map-canvas-full  map-volunteer-canvas-full">
@@ -105,7 +106,7 @@
 
   </div>
 
-  {% include 'frontend_templates/advanced-map.html' %}
+  {% include 'frontend_templates/advanced_map.html' %}
 
   {% include 'frontend_templates/compare.html' %}
 

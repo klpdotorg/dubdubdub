@@ -1,5 +1,6 @@
 # page views go here. For API views, use api_views.py
 from django.views.generic.detail import DetailView
+from common.views import StaticPageView
 from .models import School, Programme, Boundary
 from django.conf import settings
 import urllib2
@@ -41,6 +42,13 @@ class ProgrammeView(DetailView):
 class BoundaryPageView(DetailView):
     model = Boundary
     template_name = 'boundary.html'
+
+
+class AdvancedMapView(StaticPageView):
+    template_name = 'advanced_map.html'
+    extra_context = {
+        'hide_footer': True,
+    }
 
 
 def blog_feed(request):

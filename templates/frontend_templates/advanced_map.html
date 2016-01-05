@@ -187,9 +187,9 @@
 </script>
 
 <script type="text/html" id="tpl-school-item">
-    <li class="list-sidebar sidebar-school" data-id="{{ properties.id }}" data-type="{{ properties.type.name }}">
-        <div class="brand-green uppercase font-smaller"><strong>{{ properties.name }}</strong></div>
-        <div class="base-spacing-sm"></div>
+    <li class="list-sidebar sidebar-school" data-id="{{ properties.id }}" data-type="{{ properties.type.name }}" data-latlng="{{ geometry.coordinates }}">
+        <div class="uppercase font-smaller"><strong>{{ properties.name }}</strong></div>
+        <div class="font-smallest">{{ properties.address_full }}</div>
     </li>
 </script>
 {% endverbatim %}

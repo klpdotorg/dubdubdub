@@ -196,16 +196,23 @@
         klp.router.events.on('hashchange', function (event, params) {
             var url = params.url,
                 oldURL = params.oldURL;
-            if (url === '') {
+
+            if (url === '' || url === 'close') {
+                // 'close' is because of the advanced search modal
                 setURL();
             } else {
                 if (oldURL !== url) {
                     //currentURL = url;
                     var urlSplit = url.split('/');
+                    if (urlSplit.length < 3) {
+                        // when the advanced search modal is displayed,
+                        // it sets url as 'advanced' or 'close'
+                        return;
+                    }
+
                     var urlZoom = urlSplit[0];
                     var urlLatLng = L.latLng(urlSplit[1], urlSplit[2]);
                     map.setView(urlLatLng, urlZoom);
-
                 }
             }
         });
@@ -301,17 +308,19 @@
             return new L.DivIcon({ className:'marker-cluster marker-cluster-school', style:'style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate(293px, 363px); z-index: 363;"', html: "<div><span>" + cluster.getChildCount() + "</span></div>" });
             }}).addTo(enabledLayers);
 
+        var bbox = map.getBounds().toBBoxString();
+
         var districtXHR = klp.api.do('boundary/admin1s', {'school_type':'primaryschools', 'geometry': 'yes', 'per_page': 0});
 
         var preschoolDistrictXHR = klp.api.do('boundary/admin1s', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0});
 
-        var blockXHR = klp.api.do('boundary/admin2s', {'school_type': 'primaryschools', 'geometry': 'yes', 'per_page': 0});
+        var blockXHR = klp.api.do('boundary/admin2s', {'school_type': 'primaryschools', 'geometry': 'yes', 'bbox': bbox});
 
-        var projectXHR = klp.api.do('boundary/admin2s', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0});
+        var projectXHR = klp.api.do('boundary/admin2s', {'school_type': 'preschools', 'geometry': 'yes', 'bbox': bbox});
 
-        var clusterXHR = klp.api.do('boundary/admin3s', {'school_type': 'primaryschools', 'geometry': 'yes', 'per_page': 0});
+        var clusterXHR = klp.api.do('boundary/admin3s', {'school_type': 'primaryschools', 'geometry': 'yes', 'bbox': bbox});
 
-        var circleXHR = klp.api.do('boundary/admin3s', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0});
+        var circleXHR = klp.api.do('boundary/admin3s', {'school_type': 'preschools', 'geometry': 'yes', 'bbox': bbox});
 
         function onEachSchool(feature, layer) {
             if (feature.properties) {
@@ -346,6 +355,16 @@
             }
         }
 
+        $('body').on('click', '#primaryschool-header', function(e) {
+            e.preventDefault();
+            $('#primaryschool-list').toggle('fast');
+        });
+
+        $('body').on('click', '#preschool-header', function(e) {
+            e.preventDefault();
+            $('#preschool-list').toggle('fast');
+        });
+
         // var $sidebar_school_items = $('.sidebar-school');
         $('body').on('click', '.sidebar-school', function(e) {
             e.preventDefault();
@@ -365,10 +384,12 @@
                 }
             }
 
-            var id = $(school_element).data('id');
-            var typeslug = $(school_element).data('type').replace(' ', '').toLowerCase();
+            $(school_element).siblings('li').css('background-color', '')
 
-            klp.router.setHash(null, {marker: typeslug + '-' + id}, opts);
+            var latlng = $(school_element).data('latlng')
+            map.setView(latlng.split(',').reverse(), 18);
+
+            $(school_element).css('background-color', '#ddd')
         })
 
         function loadPointsByBbox() {
@@ -377,8 +398,8 @@
                 return;
             }
 
-            var bboxString = map.getBounds().pad(0.5).toBBoxString();
-            mapBbox = bbox.pad(0.5);
+            var bboxString = map.getBounds().pad(0.05).toBBoxString();
+            mapBbox = bbox.pad(0.05);
 
             if (preschoolXHR && preschoolXHR.state() === 'pending') {
                 preschoolXHR.abort();
@@ -390,10 +411,17 @@
 
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
-                preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
+                preschoolXHR = klp.api.do('schools/list', {
+                    'type': 'preschools',
+                    'geometry': 'yes',
+                    'per_page': 400,
+                    'bbox': bboxString
+                });
                 preschoolXHR.done(function (data) {
                     t.stopLoading();
                     preschoolCluster.clearLayers();
+                    $('#preschool-list').html('');
+
                     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
                             return L.marker(latlng, {icon: mapIcon('preschool')});
@@ -402,7 +430,6 @@
                     }).addTo(preschoolCluster);
 
                     var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-                    $('#preschool-list').html('');
 
                     if (data.features.length > 0) {
                         _(data.features).each(function(school) {
@@ -415,10 +442,17 @@
 
             if (enabledLayers.hasLayer(schoolCluster)) {
                 t.startLoading();
-                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
+                schoolXHR = klp.api.do('schools/list', {
+                    'type': 'primaryschools',
+                    'geometry': 'yes',
+                    'per_page': 400,
+                    'bbox': bboxString
+                });
                 schoolXHR.done(function (data) {
                     t.stopLoading();
                     schoolCluster.clearLayers();
+                    $('#primaryschool-list').html('');
+
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
                             return L.marker(latlng, {icon: mapIcon('school')});
@@ -427,7 +461,6 @@
                     }).addTo(schoolCluster);
 
                     var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-                    $('#parimaryschool-list').html('');
 
                     if (data.features.length > 0) {
                         _(data.features).each(function(school) {
@@ -655,8 +688,6 @@
         });
 
         map.addControl(new filterControl());
-
-
 
         // Map Events
         map.on('zoomend', updateLayers);

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from schools.views import (SchoolPageView, ProgrammeView,
-                           BoundaryPageView)
+                           BoundaryPageView, AdvancedMapView)
 from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
 from users.views import (
@@ -129,20 +129,7 @@ urlpatterns = patterns(
             'hide_footer': True,
         }), name='map'),
 
-    url(r'^advanced-map/$', StaticPageView.as_view(
-        template_name='advanced-map.html',
-        extra_context={
-            'hide_footer': True,
-        }), name='advanced-map'),
-
-
-    # url(r'^volunteer-map$', StaticPageView.as_view(
-    #     template_name='volunteer-map.html',
-    #     extra_context={
-    #         'header_full_width': True,
-    #         'header_fixed': True,
-    #         'hide_footer': True
-    #     }), name='volunteer_map'),
+    url(r'^advanced-map/$', AdvancedMapView.as_view(), name='advanced_map'),
 
     url(r'^volunteer-map$', VolunteerMapPageView.as_view(
         template_name='volunteer-map.html',
