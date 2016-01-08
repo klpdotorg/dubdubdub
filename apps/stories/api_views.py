@@ -152,6 +152,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -165,6 +166,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
     def get(self, request, boundary=None):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -208,6 +210,10 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         if source:
             stories = stories.filter(group__source__name=source)
 
+        if versions:
+            versions = map(int, versions)
+            stories = stories.filter(group__version__in=versions)
+
         if school_type:
             stories = stories.filter(school__admin3__type__name=school_type)
 
@@ -248,16 +254,16 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         # Sources and filters
         if source:
             response_json[source] = self.get_que_and_ans(
-                stories, source, school_type)
+                stories, source, school_type, versions)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
                 response_json[source] = self.get_que_and_ans(
-                    stories, source, school_type)
+                    stories, source, school_type, versions)
 
         return Response(response_json)
 
-    def get_que_and_ans(self, stories, source, school_type):
+    def get_que_and_ans(self, stories, source, school_type, versions):
         response_list = []
 
         questions = Question.objects.filter(
@@ -268,6 +274,10 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         if source:
             questions = questions.filter(
                 questiongroup__source__name=source)
+
+        if versions:
+            questions = questions.filter(
+                questiongroup__version__in=versions)
 
         if school_type:
             questions = questions.filter(
