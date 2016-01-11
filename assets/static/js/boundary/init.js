@@ -52,9 +52,11 @@
         //   e.preventDefault();
         //   klp.comparison.open(data.properties);
         // });
-        utils.triggerDropDown()
-        $(document).on('click', '.acad-year', function(e){
-          window.location.hash = $(e.target).text()
+        //utils.triggerDropDown()
+        $("#acad-year").val(acadYear);
+        $(document).on('change', '#acad-year', function(e){
+          //window.location.hash = $(e.text).text()
+          window.location.hash = $( "#acad-year option:selected" ).text()
           window.location.reload()          
         })
         var geom;
