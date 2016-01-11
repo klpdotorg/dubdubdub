@@ -7,6 +7,8 @@ swig.setFilter('round', function (input) {
 swig.setFilter('length', function (input) {
     if (input instanceof Array || (typeof input === 'string' || input instanceof String)) {
 		return input.length;
+	} else if (input instanceof Object) {
+		return Object.keys(input).length
 	}
 });
 
@@ -24,3 +26,47 @@ swig.setFilter('autolink', function (input) {
 swig.setFilter('int', function (input) {
     return parseInt(input).toString();
 });
+
+//parseint and increment
+swig.setFilter('increment', function (input) {
+    return (parseInt(input)+1).toString();
+});
+
+//parseint and decrement
+swig.setFilter('decrement', function (input) {
+    return (parseInt(input)-1).toString();
+});
+
+//check empty values
+swig.setFilter('checkempty', function (input) {
+	var checked;
+	(input != undefined)?checked=input:checked="No data";
+	return checked; 
+});
+
+//check zero values
+swig.setFilter('checkzero', function (input) {
+	var checked;
+	(input != undefined && input!= 0)?checked=input:checked="No data";
+	return checked; 
+});
+
+//format INR number
+swig.setFilter('inrformat', function (input) {
+	if (input && input !=0) {
+		var x=input.toString();
+		var afterPoint = '';
+		if(x.indexOf('.') > 0)
+	   		afterPoint = x.substring(x.indexOf('.'),x.length);
+		x = Math.floor(x);
+		x=x.toString();
+		var lastThree = x.substring(x.length-3);
+		var otherNumbers = x.substring(0,x.length-3);
+		if(otherNumbers != '')
+	    	lastThree = ',' + lastThree;
+		var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+		return  ' \u20B9 ' + res;
+	} else {
+		return 'No Data';
+	}
+})

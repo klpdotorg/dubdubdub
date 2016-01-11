@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.contrib import admin
 admin.autodiscover()
-from schools.views import SchoolPageView, ProgrammeView
+from schools.views import (SchoolPageView, ProgrammeView,
+                           BoundaryPageView)
 from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
 from users.views import (ProfilePageView, OrganizationSlugPageView,
@@ -61,9 +62,14 @@ urlpatterns = patterns(
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
 
     #temporary klp reports page to link to static pdfs
-    url(r'^klpreports/$', StaticPageView.as_view(
+    url(r'^reports/klp/$', StaticPageView.as_view(
         template_name='klpreports.html',
     ), name='klpreports'),
+
+    #temporary dise reports page to link to static pdfs
+    url(r'^reports/dise/$', StaticPageView.as_view(
+        template_name='disereports.html',
+    ), name='disereports'),
 
     # data page
     url(r'^data/$', StaticPageView.as_view(
@@ -76,7 +82,7 @@ urlpatterns = patterns(
 
     url(r'^partners/akshara/reading/$', StaticPageView.as_view(
         template_name='partners/akshara/reading.html',
-        ), name='reading_programme'),     
+        ), name='reading_programme'),
     url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
     url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
 
@@ -169,6 +175,11 @@ urlpatterns = patterns(
         pattern_name='school_page',
         query_string=True
     ), name='old_school_page'),
+
+    # boundary page
+    url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(
+        ), name='boundary_page'),
+
 
     url(r'^users/verify_email',
         EmailVerificationView.as_view(), name='user_email_verify'),
