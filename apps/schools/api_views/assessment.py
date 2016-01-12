@@ -171,6 +171,8 @@ class ProgrammesList(KLPListAPIView, CacheMixin):
                 'assessment__programme__academic_year__name',
                 'assessment__programme__id'
             )
+        else:
+            raise ParseError("Invalid parameters. Provide either school, admin_1, admin_2 or admin_3")
 
         if self.request.GET.get('partner_id', ''):
             programmes = programmes.filter(
@@ -181,8 +183,7 @@ class ProgrammesList(KLPListAPIView, CacheMixin):
             programmes = programmes.filter(
                 academic_year_id=academic_year_id
             )
-        else:
-            raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
+
         return programmes
 
 
