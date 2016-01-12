@@ -15,9 +15,7 @@
 {% endblock %}
 
 {% block endbody %}
-  {% compress js %}
-  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  {% compress js %}  
   <!--script type="text/javascript" src="{% static 'js/lib/jquery.validate.min.js' %}"></script-->
   <script type="text/javascript" src="{% static 'js/lib/jquery.stepy.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/validator.min.js' %}"></script>
