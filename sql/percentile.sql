@@ -384,7 +384,7 @@ declare
         query text;
 
 begin
-    query:='SELECT se.stuid as stuid,sg.name as studentgroup,sg.sid as sid, percrank.percentilerank as percentilemean FROM tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_assessment_grade_percentilerank percrank WHERE se.qid=q.id and stusg.stuid=se.stuid and stusg.clid=sg.id and stusg.ayid = '||inayid||' and trim(se.grade)=percrank.grade and percrank.assid='||inassid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and se.grade is not null';
+    query:='SELECT distinct se.stuid as stuid,sg.name as studentgroup,sg.sid as sid, percrank.percentilerank as percentilemean FROM tb_student_eval se, tb_student_class stusg, tb_class sg,tb_question q,tb_assessment_grade_percentilerank percrank WHERE se.qid=q.id and stusg.stuid=se.stuid and stusg.clid=sg.id and stusg.ayid = '||inayid||' and trim(se.grade)=percrank.grade and percrank.assid='||inassid||' and q.id in (select distinct id from tb_question where assid ='||inassid||' and "desc" !~ ''^.*(AB|Attendance|Parihara).*'') and se.grade is not null';
         FOR i in array_lower(inallassid,1)..array_upper(inallassid,1)
         loop
           query:= query||' and se.stuid in (select distinct stuid from tb_student_eval where qid in (select id from tb_question where assid='||inallassid[i]||') and grade is not null)';

@@ -18,3 +18,5 @@ psql -U klp -d testdub -f percentile.sql
 echo "Finished percentile.sql"
 psql -U klp -d testdub -f fillmarkpercentile.sql
 echo "Finished mark percentile"
+psql -U klp -d testdub -f fillassessments_pid60-63.sql
+echo "Finished running aggregates for pid 60-63"
