@@ -64,6 +64,8 @@ class CheckSchool(KLPAPIView):
         state.answers = []
         state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
 
+        # Checking if school_id has been entered and whether the
+        # entered ID is valid.
         school_type = None
         if not school_id:
             status_code = status.HTTP_404_NOT_FOUND
@@ -77,6 +79,9 @@ class CheckSchool(KLPAPIView):
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
+        # Validating whether the entered school ID corresponds to the
+        # correct school_type. Assigns the ivrs_type based on the call
+        # number as well.
         if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
