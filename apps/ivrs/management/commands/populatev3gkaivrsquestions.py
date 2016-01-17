@@ -59,20 +59,27 @@ class Command(BaseCommand):
             school_type=b
         )
         q7 = Question.objects.get_or_create(
+            text="Were multiple TLMs being used?",
+            data_type=1,
+            question_type=qtype_numeric,
+            options="{'Yes','No'}",
+            school_type=b
+        )[0]
+        q8 = Question.objects.get_or_create(
             text="Did you see representational stage being practiced during the class?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
         )[0]
-        q8 = Question.objects.get(
+        q9 = Question.objects.get(
             text="Was group work happening in the class on the day of your visit?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
         )
-        q9 = Question.objects.get(
+        q10 = Question.objects.get(
             text="Does the school have a separate functional toilet for girls?",
             data_type=1,
             question_type=qtype_checkbox,
@@ -98,6 +105,8 @@ class Command(BaseCommand):
             questiongroup=q, question=q8, sequence=8)
         QuestiongroupQuestions.objects.get_or_create(
             questiongroup=q, question=q9, sequence=9)
+        QuestiongroupQuestions.objects.get_or_create(
+            questiongroup=q, question=q10, sequence=10)
                 
    
         print "V3 GKA questions populated"
