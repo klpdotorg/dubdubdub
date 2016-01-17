@@ -23,50 +23,50 @@ def save_answer(state, question_number, question, ivrs_type, response):
     # numeric answers cannot be moderated for the old ivrs.
     status_code = status.HTTP_200_OK
     if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
-        if question_number == '1': # Question 1 & 2 based on responses.
-            if response == '0':
+        if question_number == 1: # Question 1 & 2 based on responses.
+            if response == 0:
                 # Q1. School is closed.
-                state.answers[int(question_number)] = 'No'
+                state.answers[question_number] = 'No'
             elif response in range(1, 9):
                 # Q1. School is open.
-                state.answers[int(question_number)] = 'Yes'
+                state.answers[question_number] = 'Yes'
                 # Q2. Class visited.
-                state.answers[int(question_number + 1)] = response
+                state.answers[question_number + 1] = response
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
-        elif question_number == '5': # Question 5, 6 & 7 based on responses.
-            if response == '99':
+        elif question_number == 5: # Question 5, 6 & 7 based on responses.
+            if response == 99:
                 # Q5. TLM is not being used.
-                state.answers[int(question_number)] = 'No'
+                state.answers[question_number] = 'No'
             elif response in range(1, 22):
                 # Q5. TLM is being used.
-                state.answers[int(question_number)] = 'Yes'
+                state.answers[question_number] = 'Yes'
                 # Q6. TLM code
-                state.answers[int(question_number + 1)] = response
+                state.answers[question_number + 1] = response
                 # Q7. Multiple TMLs are not being used.
-                state.answers[int(question_number + 2)] = 'No'
-            elif response == '55':
+                state.answers[question_number + 2] = 'No'
+            elif response == 55:
                 # Q5. TLM is being used.
-                state.answers[int(question_number)] = 'Yes'
+                state.answers[question_number] = 'Yes'
                 # Q7. Multiple TMLs are being used.
-                state.answers[int(question_number + 2)] = 'Yes'
+                state.answers[question_number + 2] = 'Yes'
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
         else:
             if response in eval(question.options):
-                state.answers[int(question_number)] = response
+                state.answers[question_number)] = response
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
     elif ivrs_type == PRI:
         if response in eval(question.options):
-            state.answers[int(question_number)] = response
+            state.answers[question_number] = response
         else:
             status_code = status.HTTP_404_NOT_FOUND
     else:
-        state.answers[int(question_number)] = response
+        state.answers[question_number] = response
 
     state.save()
 

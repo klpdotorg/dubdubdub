@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from .models import State
-from .utils import get_question
+from .utils import get_question, save_answer
 
 from schools.models import School
 from common.views import KLPAPIView
@@ -141,7 +141,8 @@ class VerifyAnswer(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
-            question = get_question(int(question_number), ivrs_type)
+            question_number = int(question_number)
+            question = get_question(question_number, ivrs_type)
             response = request.QUERY_PARAMS.get('digits', None)
 
             if response:
