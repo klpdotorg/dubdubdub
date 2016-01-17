@@ -37,7 +37,7 @@ def save_answer(question, ivrs_type, response):
 def get_question(question_number, ivrs_type):
     if ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER:
         question_group = Questiongroup.objects.get(
-            version=4,
+            version=5,
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
@@ -49,7 +49,7 @@ def get_question(question_number, ivrs_type):
         school_type = BoundaryType.objects.get(name="Primary School")
     else: # ivrs_type == PRE
         question_group = Questiongroup.objects.get(
-            version=5,
+            version=999, # To be implemented.
             source__name='ivrs'
         )
         school_type = BoundaryType.objects.get(name="PreSchool")
