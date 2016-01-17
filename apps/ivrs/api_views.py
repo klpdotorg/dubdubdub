@@ -86,7 +86,7 @@ class CheckSchool(KLPAPIView):
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'gka-new'
+            state.ivrs_type = 'gka-v3'
             for i in range(0,8): # Initializing answer slots 1 to 12 with NA
                 state.answers.append('NA')
         elif ivrs_type == PRI:
