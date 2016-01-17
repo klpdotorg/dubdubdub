@@ -71,7 +71,7 @@ class Command(BaseCommand):
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q9 = Question.objects.get(
             text="Does the school have a separate functional toilet for girls?",
             data_type=1,
