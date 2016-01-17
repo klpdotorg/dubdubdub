@@ -153,7 +153,9 @@ class VerifyAnswer(KLPAPIView):
                     response = accepted_answers[response]
 
                 # Save the answer.
-                status_code = save_answer(question, ivrs_type, response)
+                status_code = save_answer(
+                    state, question_number, question, ivrs_type, response
+                )
 
             else:
                 status_code = status.HTTP_404_NOT_FOUND
