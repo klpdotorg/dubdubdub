@@ -56,7 +56,7 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
         else:
             if response in eval(question.options):
-                state.answers[question_number)] = response
+                state.answers[question_number] = response
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
