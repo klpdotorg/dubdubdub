@@ -41,6 +41,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -54,6 +55,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -88,6 +90,11 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if source:
             stories_qset = stories_qset.filter(
                 group__source__name=source)
+
+        if versions:
+            versions = map(int, versions)
+            stories_qset = stories_qset.filter(
+                group__version__in=versions)
 
         if admin1_id:
             stories_qset = stories_qset.filter(
@@ -311,6 +318,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     along with respondent types.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -324,6 +332,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -353,6 +362,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             admin3__type__name=school_type, status=2)
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
+
+        if versions:
+            versions = map(int, versions)
+            stories_qset = stories_qset.filter(
+                group__version__in=versions)
 
         if admin1_id:
             school_qset = school_qset.filter(

@@ -149,8 +149,8 @@ class VerifyAnswer(KLPAPIView):
                 response = int(response.strip('"'))
 
                 # Mapping integers to Yes/No.
-                if question.question_type.name == 'checkbox':
-                    accepted_answers = {1: 'Yes', 2: 'No'}
+                accepted_answers = {1: 'Yes', 2: 'No'}
+                if question.question_type.name == 'checkbox' and response in accepted_answers:
                     response = accepted_answers[response]
 
                 # Save the answer.

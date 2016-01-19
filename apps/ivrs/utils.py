@@ -39,24 +39,26 @@ def save_answer(state, question_number, question, ivrs_type, response):
             if response == 99:
                 # Q5. TLM is not being used.
                 state.answers[question_number] = 'No'
+                # Q7. Multiple TLMs are not being used.
+                state.answers[question_number + 2] = 'No'
             elif response in range(1, 22):
                 # Q5. TLM is being used.
                 state.answers[question_number] = 'Yes'
                 # Q6. TLM code
                 state.answers[question_number + 1] = response
-                # Q7. Multiple TMLs are not being used.
+                # Q7. Multiple TLMs are not being used.
                 state.answers[question_number + 2] = 'No'
             elif response == 55:
                 # Q5. TLM is being used.
                 state.answers[question_number] = 'Yes'
-                # Q7. Multiple TMLs are being used.
+                # Q7. Multiple TLMs are being used.
                 state.answers[question_number + 2] = 'Yes'
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
         else:
             if response in eval(question.options):
-                state.answers[question_number)] = response
+                state.answers[question_number] = response
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
