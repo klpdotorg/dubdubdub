@@ -231,7 +231,7 @@
         //var params = klp.router.getHash().queryParams;
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
-        var metaURL = "stories/meta";
+        var metaURL = "stories/meta/?source=ivrs&version=2&version=4";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
         startSummaryLoading(schoolType);
@@ -249,7 +249,7 @@
             });
         });
 
-        var detailURL = "stories/details/";
+        var detailURL = "stories/details/?source=ivrs&version=2&version=4&version=5";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
@@ -258,7 +258,7 @@
         });
 
         startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/?source=ivrs";
+        var volumeURL = "stories/volume/?source=ivrs&version=2&version=4";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             stopVolumeLoading(schoolType);
@@ -438,13 +438,11 @@
 
     function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
+        var tplIvrsSummary = swig.compile($('#tpl-ivrsSummary').html());
         var suffix = '';
         var summaryLabel = "Schools";
 
-        if (schoolType == preschoolString) {
-            summaryLabel = "Preschools";
-            suffix = '_ang';
-        }
+        
         var searchEntityType = data.searchEntity.type;
         var isSchool = [schoolString, preschoolString].indexOf(searchEntityType) !== -1 ? true : false; 
 
@@ -457,7 +455,9 @@
         var summaryData = data;
         summaryData['school_type'] = summaryLabel;
         var topSummaryHTML = tplTopSummary(summaryData);
-        $('#topSummary' + suffix).html(topSummaryHTML);
+        var ivrsSummaryHTML = tplIvrsSummary(summaryData);
+        $('#topSummary').html(topSummaryHTML);
+        $('#ivrsSummary').html(ivrsSummaryHTML);
 
         if (isSchool) {
             //hide summary boxes for 'total schools' and 'total schools with stories'
@@ -467,61 +467,61 @@
             $('.js-hide-school').css("visibility", "visible");
         }
 
-        var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
-        var summaries = {
-            'ivrs': [{
-                'label': summaryLabel,
-                'count': data.total.schools
-            }, {
-                'label': summaryLabel + ' with Surveys',
-                'count': data.ivrs.schools
-            }, {
-                'label': 'Calls received',
-                'count': data.ivrs.stories
-            }/*, {
-                'label': 'Academic Year',
-                'count': '2015-2016'
-            }*/],
-            'survey': [{
-                'label': summaryLabel,
-                'count': data.total.schools
-            }, {
-                'label': summaryLabel + ' with Surveys',
-                'count': data.community.schools
-            }, {
-                'label': 'Surveys',
-                'count': data.community.stories
-            }/*, {
-                'label': 'Academic Year',
-                'count': '2015-2016'
-            }*/],
-            'web': [{
-                'label': summaryLabel,
-                'count': data.total.schools
-            }, {
-                'label': summaryLabel + ' with Surveys',
-                'count': data.web.schools
-            }, {
-                'label': 'Verified Surveys',
-                'count': data.web.verified_stories
-            }/*, {
-                'label': 'Academic Year',
-                'count': '2015-2016'
-            }*/]
-        };
+        // var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
+        // var summaries = {
+        //     'ivrs': [{
+        //         'label': summaryLabel,
+        //         'count': data.total.schools
+        //     }, {
+        //         'label': summaryLabel + ' with Surveys',
+        //         'count': data.ivrs.schools
+        //     }, {
+        //         'label': 'Calls received',
+        //         'count': data.ivrs.stories
+        //     }/*, {
+        //         'label': 'Academic Year',
+        //         'count': '2015-2016'
+        //     }*/],
+        //     'survey': [{
+        //         'label': summaryLabel,
+        //         'count': data.total.schools
+        //     }, {
+        //         'label': summaryLabel + ' with Surveys',
+        //         'count': data.community.schools
+        //     }, {
+        //         'label': 'Surveys',
+        //         'count': data.community.stories
+        //     }, {
+        //         'label': 'Academic Year',
+        //         'count': '2015-2016'
+        //     }],
+        //     'web': [{
+        //         'label': summaryLabel,
+        //         'count': data.total.schools
+        //     }, {
+        //         'label': summaryLabel + ' with Surveys',
+        //         'count': data.web.schools
+        //     }, {
+        //         'label': 'Verified Surveys',
+        //         'count': data.web.verified_stories
+        //     }/*, {
+        //         'label': 'Academic Year',
+        //         'count': '2015-2016'
+        //     }*/]
+        // };
 
-        var html = tplCountSummary({
-            'summary': summaries['ivrs']
-        });
-        $('#ivrssummary' + suffix).html(html);
-        html = tplCountSummary({
-            'summary': summaries['survey']
-        });
-        $('#surveysummary' + suffix).html(html);
-        html = tplCountSummary({
-            'summary': summaries['web']
-        });
-        $('#websummary' + suffix).html(html);
+        // var html = tplCountSummary({
+        //     'summary': summaries['ivrs']
+        // });
+        // $('#ivrssummary' + suffix).html(html);
+        // html = tplCountSummary({
+        //     'summary': summaries['survey']
+        // });
+        // $('#surveysummary' + suffix).html(html);
+        // html = tplCountSummary({
+        //     'summary': summaries['web']
+        // });
+        // $('#websummary' + suffix).html(html);
     }
 
     
