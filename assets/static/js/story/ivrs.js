@@ -245,24 +245,24 @@
                 data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
                 data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
                 renderSummary(data, schoolType);
-                renderRespondentChart(data, schoolType);
+                //renderRespondentChart(data, schoolType);
             });
         });
 
         var gka_tlm = {
-                "Jan": {"4" : [0,1,4,6,7,21], "5" : [2,3,5,6,7]}
-                "Feb": {"4" : [1,24,15,16,17], "5" : [3,4,5,6,7]},
-                "Mar": {"4" : [3,5,6,7,8,9], "5" : [4,6,7,8,15]},
-                "Apr": {"4" : [], "5": []},
-                "May": {"4" : [], "5": []},
-                "Jun": {"4" : [3,5,17,8,9], "5" : [3,6,7,8,15]},
-                "Jul": {"4" : [2,5,16,7,8,9], "5" : [3,6,7,8,15]},
-                "Aug": {"4" : [2,4,6,7,8,9], "5" : [4,6,17,8,15]},
-                "Sep": {"4" : [3,16,7,8,9], "5" : [5,16,7,8,15]},
-                "Oct": {"4" : [15,6,7,8,9], "5" : [1,6,7,8,15]},
-                "Nov": {"4" : [], "5": []},
-                "Dec": {"4" : [], "5": []}   
-        }   
+                "Jan": {"four" : [0,1,4,6,7,21], "five" : [2,3,5,6,7]},
+                "Feb": {"four" : [1,24,15,16,17], "five" : [3,4,5,6,7]},
+                "Mar": {"four" : [3,5,6,7,8,9], "five" : [4,6,7,8,15]},
+                "Apr": {"four" : [], "five": []},
+                "May": {"four" : [], "five": []},
+                "Jun": {"four" : [3,5,17,8,9], "five" : [3,6,7,8,15]},
+                "Jul": {"four" : [2,5,16,7,8,9], "five" : [3,6,7,8,15]},
+                "Aug": {"four" : [2,4,6,7,8,9], "five" : [4,6,17,8,15]},
+                "Sep": {"four" : [3,16,7,8,9], "five" : [5,16,7,8,15]},
+                "Oct": {"four" : [15,6,7,8,9], "five" : [1,6,7,8,15]},
+                "Nov": {"four" : [], "five": []},
+                "Dec": {"four" : [], "five": []}   
+        };   
         var gka_ivrs = [
             {
                 "question": {
@@ -342,9 +342,8 @@
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
             stopDetailLoading(schoolType);
-            console.log(data);
             data.ivrs = data.ivrs.concat(gka_ivrs);
-            console.log(data);
+            data["tlm"] =gka_tlm;
             renderIVRS(data, schoolType);
         });
 
@@ -644,6 +643,11 @@
         }
 
         $('#ivrsquestions').html(html);
+        
+        var tplTlmTable = swig.compile($('#tpl-tlmTable').html());
+        html = tplTlmTable({"months":data["tlm"]});
+        $('#ivrstlmsummary').html(html);
+        
     }
 
     

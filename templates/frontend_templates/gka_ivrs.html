@@ -50,23 +50,28 @@
         <td>NOV</td>
         <td>DEC</td>
       </tr>
-      for
-      <tr>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-        <td>Info</td>
-      </tr>              
+      {% set range=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] %}
+      {% for i in range %}
+        <tr>
+          <td>{{i}}</td>
+          {% for month in months %}
+            <td>
+            {% if month.four.indexOf(i) !== -1 %} 
+              <div class="icon-number brand-green">
+                <span class="k-icon">4</span>
+              </div>
+            {% endif %}
+            {% if month.five.indexOf(i) !== -1 %} 
+              <div class="icon-number">
+                <span class="k-icon">5</span>
+              </div>
+            {% else %}
+              &nbsp;
+            {% endif %}
+            </td>
+          {% endfor %}
+        </tr> 
+      {% endfor %}             
     </tbody>
   </table>
 </div>
