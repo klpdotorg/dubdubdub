@@ -15,15 +15,64 @@
   </script>
   
   <script type="text/html" id="tpl-ivrsSummary">
+    <div class="chart-parent">
+      <div class="chart-athird-item">
         <div class="heading-tiny-uppercase align-left" >Calls</div>
         <h2 class="heading-secondary black align-left">{{ total.stories }}</h2>
+      </div>
+      <div class="chart-athird-item">
         <div class="heading-tiny-uppercase align-left" >Schools</div>
         <h2 class="heading-secondary black align-left">{{ total.schools }}</h2>
+      </div>
+      <div class="chart-athird-item">
         <div class="heading-tiny-uppercase align-left" >Schools with Calls</div>
         <h2 class="heading-secondary black align-left">{{ total.schools_with_stories }}</h2> 
+      </div>
+    </div>
   </script>
 
-  <script type="text/html" id="tpl-gradeGraph">
+  <script type="text/html" id="tpl-tlmTable">
+   <div class="table-responsive-wrap">        
+    <table class="table-base">
+      <tbody>
+        <tr class="table-base-heading">
+        <td></td>
+        <td>JAN</td>
+        <td>FEB</td>
+        <td>MAR</td>
+        <td>APR</td>
+        <td>MAY</td>
+        <td>JUN</td>
+        <td>JUL</td>
+        <td>AUG</td>
+        <td>SEP</td>
+        <td>OCT</td>
+        <td>NOV</td>
+        <td>DEC</td>
+      </tr>
+      for
+      <tr>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+        <td>Info</td>
+      </tr>              
+    </tbody>
+  </table>
+</div>
+  </script>
+
+  <script type="text/html" id="tpl-classGraph">
     {% if total != 0 %}
     <div class="bar-graph-wrap">
       <div class="bar-label {{ color }}">{{ value }} Grade</div>

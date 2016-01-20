@@ -249,11 +249,102 @@
             });
         });
 
+        var gka_tlm = {
+                "Jan": {"4" : [0,1,4,6,7,21], "5" : [2,3,5,6,7]}
+                "Feb": {"4" : [1,24,15,16,17], "5" : [3,4,5,6,7]},
+                "Mar": {"4" : [3,5,6,7,8,9], "5" : [4,6,7,8,15]},
+                "Apr": {"4" : [], "5": []},
+                "May": {"4" : [], "5": []},
+                "Jun": {"4" : [3,5,17,8,9], "5" : [3,6,7,8,15]},
+                "Jul": {"4" : [2,5,16,7,8,9], "5" : [3,6,7,8,15]},
+                "Aug": {"4" : [2,4,6,7,8,9], "5" : [4,6,17,8,15]},
+                "Sep": {"4" : [3,16,7,8,9], "5" : [5,16,7,8,15]},
+                "Oct": {"4" : [15,6,7,8,9], "5" : [1,6,7,8,15]},
+                "Nov": {"4" : [], "5": []},
+                "Dec": {"4" : [], "5": []}   
+        }   
+        var gka_ivrs = [
+            {
+                "question": {
+                    "display_text": "Were Class 4 and 5 math teachers trained for GKA?", 
+                    "text": "Were Class 4 and 5 math teachers trained for GKA?", 
+                    "key": "ivrss-gka-trained"
+                }, 
+                "answers": {
+                    "options": {
+                        "Yes": 495, 
+                        "No": 10
+                    }, 
+                    "question_type": "checkbox"
+                }
+            },
+            {
+                "question": {
+                    "display_text": "Was the Math class in progress?", 
+                    "text": "Did you observe the Math class in progress?", 
+                    "key": "ivrss-gka-math"
+                }, 
+                "answers": {
+                    "options": {
+                        "Yes": 495, 
+                        "No": 10
+                    }, 
+                    "question_type": "checkbox"
+                }
+            },
+            {
+                "question": {
+                    "display_text": "Did you see representational stage in practice?", 
+                    "text": "Did you see representational stage in practice?", 
+                    "key": "ivrss-gka-rep-stage"
+                }, 
+                "answers": {
+                    "options": {
+                        "Yes": 495, 
+                        "No": 10
+                    }, 
+                    "question_type": "checkbox"
+                }
+            },
+            {
+                "question": {
+                    "display_text": "Did you see group work happening?", 
+                    "text": "Did you see group work happening?", 
+                    "key": "ivrss-gka-group-work"
+                }, 
+                "answers": {
+                    "options": {
+                        "Yes": 495, 
+                        "No": 10
+                    }, 
+                    "question_type": "checkbox"
+                }
+            },
+            {
+                "question": {
+                    "display_text": "Was GKA TLM seen in use in:", 
+                    "text": "Was GKA TLM seen in use in:", 
+                    "key": "ivrss-gka-tlm"
+                }, 
+                "answers": {
+                    "options": {
+                        "2": 2589, 
+                        "3": 791, 
+                        "4": 3128,
+                        "5": 2458
+                    }, 
+                    "question_type": "numeric"
+                }
+            }
+        ];
         var detailURL = "stories/details/?source=ivrs&version=2&version=4&version=5";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
             stopDetailLoading(schoolType);
+            console.log(data);
+            data.ivrs = data.ivrs.concat(gka_ivrs);
+            console.log(data);
             renderIVRS(data, schoolType);
         });
 
@@ -467,122 +558,71 @@
             $('.js-hide-school').css("visibility", "visible");
         }
 
-        // var tplCountSummary = swig.compile($('#tpl-countSummary').html());  
-        // var summaries = {
-        //     'ivrs': [{
-        //         'label': summaryLabel,
-        //         'count': data.total.schools
-        //     }, {
-        //         'label': summaryLabel + ' with Surveys',
-        //         'count': data.ivrs.schools
-        //     }, {
-        //         'label': 'Calls received',
-        //         'count': data.ivrs.stories
-        //     }/*, {
-        //         'label': 'Academic Year',
-        //         'count': '2015-2016'
-        //     }*/],
-        //     'survey': [{
-        //         'label': summaryLabel,
-        //         'count': data.total.schools
-        //     }, {
-        //         'label': summaryLabel + ' with Surveys',
-        //         'count': data.community.schools
-        //     }, {
-        //         'label': 'Surveys',
-        //         'count': data.community.stories
-        //     }, {
-        //         'label': 'Academic Year',
-        //         'count': '2015-2016'
-        //     }],
-        //     'web': [{
-        //         'label': summaryLabel,
-        //         'count': data.total.schools
-        //     }, {
-        //         'label': summaryLabel + ' with Surveys',
-        //         'count': data.web.schools
-        //     }, {
-        //         'label': 'Verified Surveys',
-        //         'count': data.web.verified_stories
-        //     }/*, {
-        //         'label': 'Academic Year',
-        //         'count': '2015-2016'
-        //     }*/]
-        // };
-
-        // var html = tplCountSummary({
-        //     'summary': summaries['ivrs']
-        // });
-        // $('#ivrssummary' + suffix).html(html);
-        // html = tplCountSummary({
-        //     'summary': summaries['survey']
-        // });
-        // $('#surveysummary' + suffix).html(html);
-        // html = tplCountSummary({
-        //     'summary': summaries['web']
-        // });
-        // $('#websummary' + suffix).html(html);
     }
 
     
 
     function renderIVRS(data, schoolType) {
-        var tplGradeGraph = swig.compile($('#tpl-gradeGraph').html());
-        var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
-        //define your data
-        var ivrs_grade = 'ivrss-grade';
-        if (schoolType == preschoolString) {
-            ivrs_grade = 'ivrsa-grade';
-        }
-        var gradeQuestion = getQuestion(data, 'ivrs', ivrs_grade);
-        var gradeAnswers = gradeQuestion.answers;
-        var total = getTotal(gradeAnswers);
-        var scoreA = getScore(gradeAnswers, "1");
-        var scoreB = getScore(gradeAnswers, "2");
-        var scoreC = getScore(gradeAnswers, "3");
-        var grades = [{
-            'value': 'A',
-            'score': scoreA,
+        var tplClassGraph = swig.compile($('#tpl-classGraph').html());
+        var ivrs_class = 'ivrss-gka-tlm';
+        
+        var classQuestion = getQuestion(data, 'ivrs', ivrs_class);
+        var classAnswers = classQuestion.answers;
+        var total = getTotal(classAnswers);
+        var score2 = getScore(classAnswers, "2");
+        var score3 = getScore(classAnswers, "3");
+        var score4 = getScore(classAnswers, "4");
+        var score5 = getScore(classAnswers, "4");
+        var classes = [{
+            'value': 'Class 2',
+            'score': score2,
             'total': total,
-            'percent': getPercent(scoreA, total),
+            'percent': getPercent(score2, total),
             'color': 'green-leaf'
         }, {
-            'value': 'B',
-            'score': scoreB,
+            'value': 'Class 3',
+            'score': score3,
             'total': total,
-            'percent': getPercent(scoreB, total),
+            'percent': getPercent(score3, total),
             'color': 'orange-mild'
         }, {
-            'value': 'C',
-            'score': scoreC,
+            'value': 'Class 4',
+            'score': score4,
             'total': total,
-            'percent': getPercent(scoreC, total),
+            'percent': getPercent(score4, total),
             'color': 'pink-salmon'
+        }, {
+            'value': 'Class 5',
+            'score': score5,
+            'total': total,
+            'percent': getPercent(score5, total),
+            'color': 'green-pista'
         }];
 
         var html = ''
-        for (var pos in grades) {
-            html = html + "<div class='chart-athird-item'>" + tplGradeGraph(grades[pos]) + "</div>";
+        for (var pos in classes) {
+            html = html + "<div class='chart-quarter-item'>" + tplClassGraph(classes[pos]) + "</div>";
         }
 
-        var suffix = '';
-        if (schoolType == preschoolString) {
-            suffix = '_ang';
-        }
-        $('#ivrsgrades' + suffix).html(html);
+        $('#ivrsclasses').html(html);
 
+
+        var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
+        //define your data
+        
         var IVRSQuestionKeys = [];
         if (schoolType == schoolString)
         {
             IVRSQuestionKeys = [
                 'ivrss-school-open',
-                'ivrss-headmaster-present',
                 'ivrss-toilets-condition',
-                "ivrss-classes-proper",
-                "ivrss-functional-toilets-girls",
-                "ivrss-drinking-water",
-                "ivrss-midday-meal",
-                "ivrss-teacher-present"
+                //"ivrss-functional-toilets-girls",
+                //"ivrss-drinking-water",
+                //"ivrss-midday-meal",
+                "ivrss-gka-math",
+                "ivrss-gka-trained",
+                "ivrss-gka-rep-stage",
+                "ivrss-gka-group-work"
             ];
         } else {
             IVRSQuestionKeys = [
@@ -598,12 +638,12 @@
 
         var questions = getQuestionsArray(questionObjects);
 
-        html = ''
+        var html = ''
         for (var pos in questions) {
             html = html + tplPercentGraph(questions[pos]);
         }
 
-        $('#ivrsquestions' + suffix).html(html);
+        $('#ivrsquestions').html(html);
     }
 
     
