@@ -64,20 +64,6 @@
     }    
   };
 
-  t.triggerDropDown = function() {
-    $(document).on('click', '.js-dropdown li:has(ul)', function(event) {
-      event.stopPropagation();
-      var thisNav = $(this).closest(".js-dropdown").find('ul');
-      $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
-      if (this == event.target || this == $(event.target).parent()[0]) {
-        $(this).toggleClass('clicked').children('ul').slideToggle(200);
-        $(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();
-        $(this).siblings().removeClass('clicked').find("ul").slideUp();
-        return false;
-      }
-    }).addClass('has_ul');
-  }
-
   t.getPreSchoolSummary = function(data, academicYear) {
     var modified = {
       "klp": {
