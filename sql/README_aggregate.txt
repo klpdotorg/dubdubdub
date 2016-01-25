@@ -1,0 +1,13 @@
+Order for full installation
+assessment-aggregates.sql
+fillassessmentaggregates.sql
+fillboundaryassessments.sql
+gradeassessment-aggregates.sql
+fillgradeassessment-aggregates.sql
+assessmentcorrections.sql
+fillassessments2014-2015.sql
+percentile.sql
+fillmarkpercentile.sql
+createnewassessments_pid54_55_56.sql
+fillgradepercentile.sql
+fillassessments_pid54_55_56.sql

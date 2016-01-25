@@ -12,7 +12,7 @@ from schools.api_views import (
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
     PincodeDetails, SchoolNutrition, MergeEndpoints,
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
     ReportsDetail,
@@ -248,6 +248,8 @@ urlpatterns = patterns(
         ProgrammesList.as_view(), name='api_programme_list'),
     url(r'^programme/(?P<programme_id>[0-9]+)/$',
         ProgrammeInfo.as_view(), name='api_programme_info'),
+    url(r'^programme/percentile/(?P<programme_id>[0-9]+)/$',
+        ProgrammePercentile.as_view(), name='api_programme_percentile'),
 
     url(r'^ivrs/', include('ivrs.api_urls')),
 

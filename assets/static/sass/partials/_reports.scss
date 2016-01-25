@@ -144,22 +144,6 @@
 	}
 }
 
-$ct-series-colors: (
-  $brand-red,
-  $grey-gravel,
-  $brand-purple,
-  $brand-green,
-  $brand-blue,
-  $brand-orange,
-  $green-leaf,
-  $orange-mild,
-  $pink-salmon,
-  $brand-turquoise,
-  $red-mild,
-  $maroon,
-  $yellow-mild,
-  $green-pista,
-  $blue-ink,
-  $blue-sky,
-  $purple-amethyst
-) !default;
+span.tab{
+    padding-right:20px; /* Or desired space*/
+}

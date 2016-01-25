@@ -24,97 +24,199 @@
         loadData(null, null);
     }
 
+    var infraHash = {
+        'sum_has_playground': {
+            'icon': ['fa fa-futbol-o'],
+            'display': 'Playground' 
+        },
+        'sum_has_drinking_water': {
+            'icon': ['fa fa-tint'],
+            'display': 'Drinking Water',       
+        },
+        'sum_has_toilet': {
+            'icon': ['fa fa-male', 'fa fa-female'],
+            'display': 'Toilets'      
+        },
+        'sum_has_library': {
+            'icon': ['fa fa-book'],
+            'display': 'Library'
+        },
+        'sum_has_boundary_wall': {
+            'icon': ['fa fa-circle-o-notch'],
+            'display': 'Secure Boundary Wall'
+        },
+        'sum_has_electricity': {
+            'icon': ['fa fa-plug'],
+            'display': 'Electricity'
+        },
+        'sum_has_computer': {
+            'icon': ['fa fa-laptop'],
+            'display': 'Computers'
+        },
+        'sum_has_mdm': {
+            'icon': ['fa fa-spoon'],
+            'display': 'Mid-Day Meal'
+        }, 
+        'sum_toilet_girls': {
+            'icon': ['fa fa-female'],
+            'display': 'Separate Girls\' Toilets'
+        },
+        'sum_classrooms_in_good_condition': {
+            'icon': ['fa fa-users'],
+            'display': 'Good Classrooms'
+        },
+        'sum_has_blackboard': {
+            'icon': ['fa fa-square'],
+            'display': 'Blackboards'
+        }
+    };
+
     function loadData(schoolType, params) {
 
-        /*var dataURL = "reports/finances/xxx";
+        /*var dataURL = "reports/infrastructure/xxx";
         var $dataXHR = klp.api.do(detailURL, params);
         $datadetailXHR.done(function(data) {*/
             var grantdata = { 
                 "received": {
                     "sg_perc": 25,
-                    "sg_amt": 3500,
+                    "sg_amt": 350000,
                     "smg_perc": 65,
-                    "smg_amt": 5500,
+                    "smg_amt": 550000,
                     "tlm_perc": 10,
-                    "tlm_amt": 1000   
+                    "tlm_amt": 60000   
                 },
-                "expenditure": {
-                    "sg_perc": 35,
-                    "sg_amt": 3500,
-                    "smg_perc": 55,
-                    "smg_amt": 5500,
-                    "tlm_perc": 10,
-                    "tlm_amt": 1000 
-                }
+                "teacher_count": 120,
+                "student_total":48000
             };
-            renderGrants(grantdata);
-            var allocdata = {
-                "sg":{
-                    "upper_primary" : { 
-                        "name":"Upper Primary",
-                        "school_count":200,
-                        "alloc_amt":"10,00,000",
-                        "alloc_perc":46.5,
-                        "per_school":"7,000",
-                        "per_student":"1.00"
-                    },
-                    "lower_primary" : { 
-                        "name":"Lower Primary",
-                        "school_count":114,
-                        "alloc_amt":"15,00,000",
-                        "alloc_perc":53.5,
-                        "per_school":"5,000",
-                        "per_student":"0.75"
-                    }
-                },
-                "smg":{
-                   "more_than_3_cr" : { 
-                        "name":"With > 3 classrooms",
-                        "school_count":200,
-                        "alloc_amt":"10,00,000",
-                        "alloc_perc":46.5,
-                        "per_school":"7,000",
-                        "per_student":"1.00"
-                    },
-                    "less_than_3_cr" :{ 
-                        "name":"With < 3 classrooms",
-                        "school_count":114,
-                        "alloc_amt":"15,00,000",
-                        "alloc_perc":53.5,
-                        "per_school":"5,000",
-                        "per_student":"0.75"
-                    }
-                },
-                "per":{
-                    "total_girl": "45,00,000",
-                    "per_girl" : 4.50,
-                    "total_boy": "55,00,000",
-                    "per_boy" : 5.50,
-                    "total_teacher": "5,00,000",
-                    "per_teacher" : 500,
-                }
-            }
-            renderAllocation(allocdata["sg"],'#sg-alloc');
-            renderAllocation(allocdata["smg"],"#smg-alloc");
-            renderPerChild(allocdata["per"],"#per-alloc");
-            
-            var comparisonJson = {
-                "year-wise": {
-                    "2013":{"year":"2013","per_student":4.5,"tlm":"5,00,000","sg_perc":45,"sg_amt":"20,00,000","smg_perc":35,"smg_amt":"30,00,000"},
-                    "2014":{"year":"2014","per_student":5,"tlm":"5,00,000","sg_perc":30,"sg_amt":"18,00,000","smg_perc":45,"smg_amt":"35,00,000"},
-                    "2015":{"year":"2015","per_student":5.5,"tlm":"5,00,000","sg_perc":50,"sg_amt":"23,00,000","smg_perc":55,"smg_amt":"40,00,000"}
-                }, /* maybe entrolment can be calculated with student and school count 
-                    Percentage could be percentage of schools in district */
-                "neighbours" : {
-                    "Bangalore Central":{"name":"Bangalore Central","per_student":4.5,"tlm":"5,00,000","sg_amt":"10,00,000","smg_amt":"32,00,000","total":"55,00,000","total_perc":45},
-                    "Bangalore North":{"name":"Bangalore North","per_student":5,"tlm":"4,00,000","sg_amt":"15,00,000","smg_amt":"34,00,000","total":"25,00,000","total_perc":55},
-                    "Bangalore South":{"name":"Bangalore South","per_student":4,"tlm":"3,00,000","sg_amt":"18,00,000","smg_amt":"35,00,000","total":"35,00,000","total_perc":65},
-                    "Bangalore Rural":{"name":"Bangalore Rural","per_student":3.5,"tlm":"5,00,000","sg_amt":"20,00,000","smg_amt":"36,00,000","total":"45,00,000","total_perc":35},
-                    "Chikkabalapur":{"name":"Chikkabalapur","per_student":4.6,"tlm":"4,00,000","sg_amt":"25,00,000","smg_amt":"37,00,000","total":"56,00,000","total_perc":25}
+            renderGrantSummary(grantdata);
 
-                }
+            var comparisonJson = {
+            "2013": {
+                        "year":"2013",
+                        "school_count" : 1500,
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
+                    },
+            "2014": {
+                        "year":"2014",
+                        "school_count" : 1400,
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
+                        
+                    },    
+            "2015": {
+                        "year":"2015",
+                        "school_count" : 1600,
+                        "sum_has_boundary_wall": 1000, 
+                        "sum_has_playground": 900,
+                        "sum_has_electricity": 1300,
+                        "sum_classrooms_in_good_condition": 900,
+                        "sum_has_blackboard": 1200,
+                        "sum_has_computer": 300,
+                        "sum_has_library": 200,
+                        "sum_has_mdm": 1200,
+                        "sum_has_drinking_water": 1300,
+                        "sum_has_toilet": 1200,
+                        "sum_toilet_girls": 1200
+                    }                
             }
             renderComparison(comparisonJson);
+            var neighboursJson = {
+                "Bangalore Central": {
+                    "name": "Bangalore Central",
+                    "school_count" : 1500,
+                    "sum_has_boundary_wall": 1200, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1100,
+                    "sum_classrooms_in_good_condition": 800,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1500,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1500,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore North": {
+                    "name": "Bangalore North",
+                    "school_count" : 1600,
+                    "sum_has_boundary_wall": 1000, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1300,
+                    "sum_classrooms_in_good_condition": 900,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1200,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore South": {
+                    "name": "Bangalore South",
+                    "school_count" : 1700,
+                    "sum_has_boundary_wall": 1500, 
+                    "sum_has_playground": 1000,
+                    "sum_has_electricity": 1200,
+                    "sum_classrooms_in_good_condition": 1400,
+                    "sum_has_blackboard": 1100,
+                    "sum_has_computer": 500,
+                    "sum_has_library": 800,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1400,
+                    "sum_has_toilet": 1600,
+                    "sum_toilet_girls": 1600
+                },
+                "Chikkabalapur": {
+                    "name": "Chikkabalapur",
+                    "school_count" : 1600,
+                    "sum_has_boundary_wall": 1000, 
+                    "sum_has_playground": 900,
+                    "sum_has_electricity": 1300,
+                    "sum_classrooms_in_good_condition": 900,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 300,
+                    "sum_has_library": 200,
+                    "sum_has_mdm": 1200,
+                    "sum_has_drinking_water": 1300,
+                    "sum_has_toilet": 1200,
+                    "sum_toilet_girls": 1200
+                },
+                "Bangalore Rural": {
+                    "name": "Bangalore Rural",
+                    "school_count" : 1500,
+                    "sum_has_boundary_wall": 1200, 
+                    "sum_has_playground": 800,
+                    "sum_has_electricity": 1200,
+                    "sum_classrooms_in_good_condition": 1000,
+                    "sum_has_blackboard": 1200,
+                    "sum_has_computer": 800,
+                    "sum_has_library": 400,
+                    "sum_has_mdm": 900,
+                    "sum_has_drinking_water": 1000,
+                    "sum_has_toilet": 1300,
+                    "sum_toilet_girls": 1400
+                } 
+            }
+            renderNeighbours(neighboursJson);
         //});
     }
 
@@ -138,67 +240,106 @@
 
     }
 
-function renderGrants(data){
-        drawStackedBar([ [data["expenditure"]["sg_perc"]],
-                         [data["expenditure"]["smg_perc"]],
-                         [data["expenditure"]["tlm_perc"]]
-                       ],"#chart-expenditure");
-        drawStackedBar([ [data["received"]["sg_perc"]],
-                         [data["received"]["smg_perc"]],
-                         [data["received"]["tlm_perc"]]
-                       ],"#chart-received");
-
-        var tpl = swig.compile($('#tpl-grants').html());
-        var html = tpl({"grants":data["expenditure"]});
-        $('#dise-expenditure').html(html); 
-        html = tpl({"grants":data["received"]});
-        $('#dise-received').html(html);   
+function renderGrantSummary(data){
+        var tpl = swig.compile($('#tpl-grantSummary').html());
+        var total = data["received"]["sg_amt"] + data["received"]["smg_amt"] + data["received"]["tlm_amt"]
+        var received = {
+                        "sg":data["received"]["sg_amt"], 
+                        "smg": data["received"]["smg_amt"],
+                        "tlm": data["received"]["tlm_amt"],
+                        "total": total,
+                        "per_student": total/data["student_total"],
+                        "per_teacher": data["received"]["tlm_amt"]/data["teacher_count"]
+        }
+        console.log(received);
+        var html = tpl({"received":received});
+        $('#grant-summary').html(html);  
     }
 
-    function drawStackedBar(data, element_id) {
-        new Chartist.Bar(element_id, {
-                labels: [''],
-                series: data
-            }, {
-            stackBars: true,
-            horizontalBars: true,
-            axisX: {
-                showGrid: false
-            },
-            axisY: {
-                showGrid: false,
-                labelInterpolationFnc: function(value) {
-                return'';
+    function renderComparison(data) {
+        var transpose = transposeData(data);
+        console.log(transpose);
+        var tplYearComparison = swig.compile($('#tpl-YearComparison').html()); 
+        var yrcompareHTML = tplYearComparison({"transpose":transpose});
+        $('#comparison-year').html(yrcompareHTML);
+    }
+
+    function renderNeighbours(data) {
+        var percData = {};
+        
+        for (var each in data) {
+            for (var key in data[each]) {
+                var iconTag = "";
+                if(key != "name" && key != "school_count") {
+                    for(var i in infraHash[key]['icon']){
+                        iconTag += "<span class='" + infraHash[key]['icon'][i] + "'></span>   ";
+                    }
+                    if(!percData[key]) 
+                        percData[key] = {"icon":iconTag,"name":infraHash[key]['display']};
+                    if(!percData[key][each])
+                        percData[key][each] = {};
+                    percData[key][each]["name"] = each;
+                    percData[key][each]["perc"] = (data[each][key]/data[each]["school_count"]) * 100;
+                }
             }
         }
-        }).on('draw', function(data) {
-            if(data.type === 'bar') {
-                data.element.attr({
-                    style: 'stroke-width: 20px'
-                });
-            }
-        });
+
+        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
+        var compareHTML = tplComparison({"neighbours":percData});
+        $('#comparison-neighbour').html(compareHTML);
     }
 
-    function renderAllocation(data,element_id) {
-        var tplalloc = swig.compile($('#tpl-allocSummary').html());
-        var html = tplalloc({"data":data});
-        $(element_id).html(html);     
+    function transposeData(data) {
+        var transpose = {
+            "school_count" : { "name":"school_count" },
+            "Basic Infrastructure" : { "name":"Basic Infrastructure"},
+            "Learning Environment" : { "name":"Learning Environment"},
+            "Nutrition and Hygiene" : { "name":"Nutrition and Hygiene"},
+            "Toilets" : { "name":"Toilets"}
+        }
+
+        
+        
+        var basic_infra = ["sum_has_boundary_wall","sum_has_playground","sum_has_electricity","sum_classrooms_in_good_condition"];
+        var learning_env = ["sum_has_blackboard","sum_has_computer","sum_has_library"];
+        var nut_hyg = ["sum_has_mdm","sum_has_drinking_water"];
+        var toilets = ["sum_has_toilet","sum_toilet_girls"];
+
+        for (var year in data) {
+            transpose["school_count"]["yr"+year] = data[year]["school_count"];
+            for (var key in data[year]) {
+                var iconTag = "";
+                if($.inArray(key,["year","school_count"])==-1)
+                {
+                    for(var i in infraHash[key]['icon']){
+                        iconTag += "<span class='" + infraHash[key]['icon'][i] + "'></span>   ";
+                    }
+                }
+                if ($.inArray(key,basic_infra) != -1 ) {
+                    if(!transpose["Basic Infrastructure"][key])
+                        transpose["Basic Infrastructure"][key] = {"name":infraHash[key]['display'],"icon":iconTag};
+                    transpose["Basic Infrastructure"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;
+
+                    
+                } else if ($.inArray(key,learning_env) != -1) {
+                    if(!transpose["Learning Environment"][key])
+                        transpose["Learning Environment"][key] = {"name":infraHash[key]['display'],"icon":iconTag};
+                    transpose["Learning Environment"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;
+                } else if ($.inArray(key,nut_hyg) != -1) {
+                    if(!transpose["Nutrition and Hygiene"][key])
+                        transpose["Nutrition and Hygiene"][key] = {"name":infraHash[key]['display'],"icon":iconTag}; 
+                    transpose["Nutrition and Hygiene"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;    
+                } else if ($.inArray(key,toilets) != -1) {
+                    if(!transpose["Toilets"][key])
+                        transpose["Toilets"][key] = {"name":infraHash[key]['display'],"icon":iconTag}; 
+                    transpose["Toilets"][key]["yr"+year] = (data[year][key]/data[year]["school_count"])*100;    
+                } else {}
+            }
+        }
+        return transpose;
     }
-    function renderPerChild(data,element_id) {
-        var tplalloc = swig.compile($('#tpl-perChild').html());
-        var html = tplalloc({"data":data});
-        $(element_id).html(html); 
-    }
-    function renderComparison(data) {
-        var tplYearComparison = swig.compile($('#tpl-YearComparison').html()); 
-        var yrcompareHTML = tplYearComparison({"years":data["year-wise"]});
-        $('#comparison-year').html(yrcompareHTML);
-        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
-        var compareHTML = tplComparison({"neighbours":data["neighbours"]});
-        $('#comparison-neighbour').html(compareHTML);
-    
-    }
+
+
 
 })();
 
