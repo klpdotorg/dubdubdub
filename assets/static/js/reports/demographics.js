@@ -1,34 +1,48 @@
 'use strict';
+var BOUNDARY_TYPE="parliament";
+var KLP_ID="264";
+var LANGUAGE="kannada";
+
 (function() {
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
+        fetchReportDetails();
         klp.router.start();
-        var summaryJSON = {
-            "boundary"  : {
-                "name"  : "Bangalore Central",
-                "type"  : "MP Constituency",
-                "id"    : 1234,
-                "code"  : 25,
-                "elected_rep" : "PC Mohan",
-                "elected_party" : "INC"
-            },
-            "school_count" : 314,
-            "teacher_count" : 2000,
-            "gender" : {
-                "boys": 23118,
-                "girls": 24027
-            }
-        }
-        renderSummary(summaryJSON,"Schools");
-        loadData(null, null);
     }
-    function loadData(schoolType, params) {
 
-        /*var dataURL = "reports/demographics/xxx";
-        var $dataXHR = klp.api.do(detailURL, params);
-        $datadetailXHR.done(function(data) {*/
-            var detailsJson = {
+    function fetchReportDetails()
+    {
+        var params = klp.router.getHash().queryParams;
+        var url = "reports/?report_type=demographics&boundary=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
+        var $xhr = klp.api.do(url, params);
+        $xhr.done(function(data) {
+            var summaryJSON= getSummaryData(data.features[0]);
+            renderSummary(summaryJSON,"Schools");
+            var detailsJSON= getDetailsData(data);
+            renderCategories(detailsJSON);
+            renderLanguage(detailsJSON);
+            var comparisonJSON=getComparisonData(data);
+            renderComparison(comparisonJSON);
+        });
+
+    }
+
+    function getSummaryData(data)
+    {
+        var summaryJSON = {
+            "boundary"  : data["boundary_info"],
+            "school_count" : data["schoolcount"], 
+            "teacher_count" : data["teacher_count"],
+            "gender" : data["gender"]
+        }
+
+        return summaryJSON;
+    }
+
+    function getDetailsData(data)
+    { 
+        var detailsJson = {
                 "categories" : {
                     "Upper Primary": {"school_count" : 168, "student_count" : 25000},
                     "Lower Primary": {"school_count" : 146, "student_count" : 22145}
@@ -58,27 +72,30 @@
                 },
 
             };
-            renderCategories(detailsJson);
-            renderLanguage(detailsJson);
-            var comparisonJson = {
-                "year-wise": {
-                    "2013":{"year":"2013","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
-                    "2014":{"year":"2014","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
-                    "2015":{"year":"2015","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
-                }, /* maybe entrolment can be calculated with student and school count 
-                    Percentage could be percentage of schools in district */
-                "neighbours" : {
-                    "Bangalore Central":{"name":"Bangalore Central","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
-                    "Bangalore North":{"name":"Bangalore North","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
-                    "Bangalore South":{"name":"Bangalore South","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
-                    "Bangalore Rural":{"name":"Bangalore Rural","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
-                    "Chikkabalapur":{"name":"Chikkabalapur","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
-
-                }
-            }
-            renderComparison(comparisonJson);
-        //});
+     
+        return detailsJson;
     }
+
+    function getComparisonData(data)
+    {
+        var comparisonJson = {
+            "year-wise": {
+                "2013":{"year":"2013","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                "2014":{"year":"2014","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                "2015":{"year":"2015","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
+            }, /* maybe entrolment can be calculated with student and school count 
+                    Percentage could be percentage of schools in district */
+            "neighbours" : {
+                "Bangalore Central":{"name":"Bangalore Central","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                "Bangalore North":{"name":"Bangalore North","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                "Bangalore South":{"name":"Bangalore South","enrol_upper":120,"enrol_lower":75,"ptr":25,"school_count":200,"school_perc":40},
+                "Bangalore Rural":{"name":"Bangalore Rural","enrol_upper":140,"enrol_lower":65,"ptr":24,"school_count":240,"school_perc":50},
+                "Chikkabalapur":{"name":"Chikkabalapur","enrol_upper":145,"enrol_lower":85,"ptr":20,"school_count":314,"school_perc":40}
+            }
+        }
+        return comparisonJson;
+    }
+
 
     function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html()); 

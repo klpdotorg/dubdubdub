@@ -6,6 +6,9 @@ from .school import (
 from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo
 )
+from .reports import (
+    ReportsDetail
+)
 from .aggregations import *
 from .boundary import (
     Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,

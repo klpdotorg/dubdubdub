@@ -14,7 +14,8 @@ from schools.api_views import (
     PincodeDetails, SchoolNutrition, MergeEndpoints,
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
-    AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView
+    AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
+    ReportsDetail,
 )
 
 from users.api_views import (
@@ -247,5 +248,12 @@ urlpatterns = patterns(
         ProgrammesList.as_view(), name='api_programme_list'),
     url(r'^programme/(?P<programme_id>[0-9]+)/$',
         ProgrammeInfo.as_view(), name='api_programme_info'),
+
     url(r'^ivrs/', include('ivrs.api_urls')),
+
+    # Reports urls
+    url(r'^reports/$',
+        ReportsDetail.as_view(), name='api_reports_detail')
+    #url(r'^reports/(?P<boundary>["admin_1", "admin_2", "admin_3", "assembly", "partliament"]+)/(?P<id>[0-9]+)/(?P<report_type>["finance", "demographics"]+)/(?P<language>["kannada", "english"]+)/$',
+        #ReportsDetail.as_view(), name='api_reports_detail'),
 )

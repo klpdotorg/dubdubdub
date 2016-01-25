@@ -495,3 +495,20 @@ class MeetingReport(BaseModel):
 
     def __unicode__(self):
         return "%d: %s" % (self.school.id, self.language,)
+
+
+
+class SchoolAggregation(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey('AcademicYear')
+    boundary= models.ForeignKey("Boundary", db_column="boundary_id")
+    gender= models.CharField(max_length=128, choices=ALLOWED_GENDER_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num= models.IntegerField(blank=True, null=True, db_column='num')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_institution_aggregations'
+
+
+

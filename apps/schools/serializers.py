@@ -1,3 +1,4 @@
+import sys
 from django.db.models import Sum
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
@@ -8,7 +9,9 @@ from schools.models import (
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescoreGender, MeetingReport,
-    BoundaryLibLangAgg, BoundaryLibLevelAgg
+    BoundaryLibLangAgg, BoundaryLibLevelAgg,
+    SchoolElectedrep,SchoolExtra,SchoolDetails,
+    SchoolAggregation
 )
 
 
@@ -599,3 +602,62 @@ class BoundaryProgrammeInfoSerializer(KLPSerializer):
           singlescore["boundary"]["admin1"]["mt"]=mtdata
         return singlescore
 
+
+class DemographicsReportSerializer(KLPSerializer):
+    boundary_info=serializers.SerializerMethodField('getBoundaryInfo')
+    reportlang=serializers.SerializerMethodField('getreportlang')
+    schoolcount=serializers.SerializerMethodField('get_schoolcount')
+    teachercount=serializers.SerializerMethodField('get_teachercount')
+    gender=serializers.SerializerMethodField('get_gender')
+    categories=serializers.SerializerMethodField('get_categories')
+    enrollment=serializers.SerializerMethodField('get_enrollment')
+    languages=serializers.SerializerMethodField('get_languages')
+    comparisonInfo= serializers.SerializerMethodField('get_comparison_info')
+
+    class Meta:
+        model = ElectedrepMaster
+        fields = ('boundary_info','reportlang','schoolcount','teachercount','gender','categories','enrollment','languages','comparisonInfo')
+
+
+    def getBoundaryInfo(self,obj):
+        boundaryInfo={}
+        boundaryInfo["name"]=obj.const_ward_name;
+        boundaryInfo["type"]=obj.const_ward_type
+        boundaryInfo["id"]=obj.id
+        boundaryInfo["code"]=obj.elec_comm_code
+        boundaryInfo["elected_rep"]=obj.current_elected_rep
+        boundaryInfo["elected_party"]=obj.current_elected_party
+        return boundaryInfo
+
+    def getreportlang(self,obj):
+        return self.context['request'].GET.get('language')
+
+    def get_schoolcount(self,obj):
+        if obj.const_ward_type=='MP Constituency':
+            return SchoolElectedrep.objects.filter(mp_const=obj.id).count()
+
+
+    def get_teachercount(self,obj):
+        return 0
+
+    def get_gender(self,obj):
+        gender={"boys":0,"girls":0}
+        return gender
+
+    def get_categories(self,obj):
+        return {}
+
+    def get_enrollment(self,obj):
+        return {}
+
+    def get_languages(self,obj):
+        return {}
+
+    def get_comparison_info(self,obj):
+        return {}
+
+
+class FinanceReportSerializer(KLPSerializer):
+    class Meta:
+        model = ElectedrepMaster
+        fields = ('name','id')
