@@ -151,7 +151,15 @@ class VerifyAnswer(KLPAPIView):
                 # Mapping integers to Yes/No.
                 accepted_answers = {1: 'Yes', 2: 'No'}
                 if question.question_type.name == 'checkbox' and response in accepted_answers:
-                    response = accepted_answers[response]
+                    if ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER and question_number == 1:
+                        # This special case is there for question 1 which clubs "Was the school
+                        # open?" and "Class visited". Since "Class visited accepts answers from
+                        # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
+                        # whether the school was open or not is handled in the save_answer
+                        # function within utils.py
+                        response = response
+                    else:
+                        response = accepted_answers[response]
 
                 # Save the answer.
                 status_code = save_answer(
