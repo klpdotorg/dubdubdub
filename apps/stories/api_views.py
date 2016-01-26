@@ -151,46 +151,55 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         }
         for story in stories:
             year = story.date_of_visit.year
-            story_month = story.date_of_visit.month
+            story_month = calendar.month_name[story.date_of_visit.month][:3]
             if year not in json:
                 json[year] = OrderedDict()
                 for month in months:
                     json[year][month] = {}
 
-            school_was_open = boolean_mapper[
-                story.answer_set.get(question__text="Was the school open?").text
-            ]
-            if school_was_open:
-                math_class_was_happening = boolean_mapper[
-                    story.answer_set.get(
-                        question__text="Was Math class happening on the day of your visit?").text
+            try:
+                school_was_open = boolean_mapper[
+                    story.answer_set.get(question__text="Was the school open?").text
                 ]
+            except:
+                continue
+
+            if school_was_open:
+                try:
+                    math_class_was_happening = boolean_mapper[
+                        story.answer_set.get(
+                            question__text="Was Math class happening on the day of your visit?").text
+                    ]
+                except:
+                    continue
+
                 if math_class_was_happening:
-                    tlm_was_being_used = boolean_mapper[
-                        story.answer_set.get(
-                            question__text="Did you see children using the Ganitha Kalika Andolana TLM?").text
-                    ]
-                    multiple_tlms_were_being_used = boolean_mapper[
-                        story.answer_set.get(
-                            question__text="Were multiple TLMs being used?").text
-                    ]
-                    if tlm_was_being_used and not multiple_tlms_were_being_used:
+                    try:
+                        tlm_was_being_used = boolean_mapper[
+                            story.answer_set.get(
+                                question__text="Did you see children using the Ganitha Kalika Andolana TLM?").text
+                        ]
+                    except:
+                        continue
+
+                    if tlm_was_being_used:
                         class_visited = int(
                             story.answer_set.get(question__text="Class visited").text
                         )
-                        tlm_code = int(
-                            story.answer_set.get(
-                                question__text="Which Ganitha Kalika Andolana TLM was being used by teacher?"
-                            ).text
-                        )
+                        try:
+                            tlm_code = int(
+                                story.answer_set.get(
+                                    question__text="Which Ganitha Kalika Andolana TLM was being used by teacher?"
+                                ).text
+                            )
+                        except:
+                            continue
+
                         if class_visited in json[year][story_month]:
-                            json[year][story_month][class_visited].append(tlm_code)
+                            json[year][story_month][class_visited].add(tlm_code)
                         else:
-                            json[year][story_month][class_visited] = [tlm_code]
-
-            else:
-                continue
-
+                            json[year][story_month][class_visited] = set()
+                            json[year][story_month][class_visited].add(tlm_code)
         return json
 
     def get_call_volume(self, story_dates, months):
