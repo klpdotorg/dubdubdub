@@ -27,7 +27,7 @@ The KLP IVRS app
  - Available at http://my.exotel.in/viamentis/flows/edit/49659#flowline/start
  - Questions at:
    - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/populatenewivrsdata.py
- - Cron job to be implemented.
+ - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/fetchgkaivrs.py
 
 4. PreSchool IVRS. (To be implemented)
  - Question group version = None
@@ -37,13 +37,23 @@ The KLP IVRS app
    - None
  - Cron job to be implemented.
 
-5. GKA IVRS - new.
+5. GKA IVRS - new. (Deprecated)
  - Question group version = 4
  - ivrs_type = gka-new
  - Available at http://klpdata.mahiti.org/json_feeds.php?fromdate=08/29/2015&enddate=10/09/2015
-   - Dev at http://my.exotel.in/viamentis/flows/edit/49164#flowline/start
+   - Dev at Nil.
  - Question at:
    - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/populatenewgkaivrsdata.py 
- - Cron job to be implemented.
+ - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/fetchgkaivrs.py
+
+6. GKA IVRS - v3.
+ - Question group version = 5
+ - ivrs_type = gka-v3
+ - Available at (To be implemented)
+   - Dev at http://my.exotel.in/viamentis/flows/edit/57618#flowline/start
+ - Question at:
+   - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/populatev3gkaivrsquestions.py 
+ - https://github.com/klpdotorg/dubdubdub/blob/develop/apps/ivrs/management/commands/fetchgkaivrs.py
+
 
 # Models
