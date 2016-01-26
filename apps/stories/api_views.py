@@ -51,6 +51,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
+    response_type - What volume to calculate [call/gka-class]
     """
 
     def get(self, request):
@@ -66,6 +67,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+        response_type = self.request.QUERY_PARAMS.get(
+            'response_type', 'call_volume')
 
         date = Date()
         if start_date:
@@ -130,6 +133,16 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
 
+        if response_type == 'call_volume':
+            response_json['volumes'] = self.get_call_volume(story_dates)
+        elif response_type == 'gka-class':
+            response_json['volumes'] = self.get_gka_class_volume(story_dates, stories_qset)
+        else:
+            response_json = {}
+
+        return Response(response_json)
+
+    def get_call_volume(self, story_dates):
         json = {}
         for date in story_dates:
             if date.year in json:
@@ -151,8 +164,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             for month in months:
                 ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
 
-        response_json['volumes'] = ordered_per_month_json
-        return Response(response_json)
+        return ordered_per_month_json
 
 
 class StoryDetailView(KLPAPIView, CacheMixin):
