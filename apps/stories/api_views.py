@@ -133,16 +133,22 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
 
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+
         if response_type == 'call_volume':
-            response_json['volumes'] = self.get_call_volume(story_dates)
+            response_json['volumes'] = self.get_call_volume(story_dates, months)
         elif response_type == 'gka-class':
-            response_json['volumes'] = self.get_gka_class_volume(story_dates, stories_qset)
+            response_json['volumes'] = self.get_gka_class_volume(story_dates, stories_qset, months)
         else:
             response_json = {}
 
         return Response(response_json)
 
-    def get_call_volume(self, story_dates):
+    def get_gka_class_volume(self, story_dates, stories_qset, months):
+        json = {}
+        return json
+
+    def get_call_volume(self, story_dates, months):
         json = {}
         for date in story_dates:
             if date.year in json:
@@ -158,7 +164,6 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             )
 
         ordered_per_month_json = {}
-        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
         for year in per_month_json:
             ordered_per_month_json[year] = OrderedDict()
             for month in months:
