@@ -229,9 +229,10 @@
 
     function loadData(schoolType, params) {
         //var params = klp.router.getHash().queryParams;
+        console.log(schoolType);
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
-        var metaURL = "stories/meta/?source=ivrs&version=2&version=4";
+        var metaURL = "stories/meta/?source=ivrs&version=2&version=4&version=5";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
         startSummaryLoading(schoolType);
@@ -249,110 +250,30 @@
             });
         });
 
-        var gka_tlm = {
-                "Jan": {"four" : [0,1,4,6,7,21], "five" : [2,3,5,6,7]},
-                "Feb": {"four" : [1,24,15,16,17], "five" : [3,4,5,6,7]},
-                "Mar": {"four" : [3,5,6,7,8,9], "five" : [4,6,7,8,15]},
-                "Apr": {"four" : [], "five": []},
-                "May": {"four" : [], "five": []},
-                "Jun": {"four" : [3,5,17,8,9], "five" : [3,6,7,8,15]},
-                "Jul": {"four" : [2,5,16,7,8,9], "five" : [3,6,7,8,15]},
-                "Aug": {"four" : [2,4,6,7,8,9], "five" : [4,6,17,8,15]},
-                "Sep": {"four" : [3,16,7,8,9], "five" : [5,16,7,8,15]},
-                "Oct": {"four" : [15,6,7,8,9], "five" : [1,6,7,8,15]},
-                "Nov": {"four" : [], "five": []},
-                "Dec": {"four" : [], "five": []}   
-        };   
-        var gka_ivrs = [
-            {
-                "question": {
-                    "display_text": "Were Class 4 and 5 math teachers trained for GKA?", 
-                    "text": "Were Class 4 and 5 math teachers trained for GKA?", 
-                    "key": "ivrss-gka-trained"
-                }, 
-                "answers": {
-                    "options": {
-                        "Yes": 495, 
-                        "No": 10
-                    }, 
-                    "question_type": "checkbox"
-                }
-            },
-            {
-                "question": {
-                    "display_text": "Was the Math class in progress?", 
-                    "text": "Did you observe the Math class in progress?", 
-                    "key": "ivrss-gka-math"
-                }, 
-                "answers": {
-                    "options": {
-                        "Yes": 495, 
-                        "No": 10
-                    }, 
-                    "question_type": "checkbox"
-                }
-            },
-            {
-                "question": {
-                    "display_text": "Did you see representational stage in practice?", 
-                    "text": "Did you see representational stage in practice?", 
-                    "key": "ivrss-gka-rep-stage"
-                }, 
-                "answers": {
-                    "options": {
-                        "Yes": 495, 
-                        "No": 10
-                    }, 
-                    "question_type": "checkbox"
-                }
-            },
-            {
-                "question": {
-                    "display_text": "Did you see group work happening?", 
-                    "text": "Did you see group work happening?", 
-                    "key": "ivrss-gka-group-work"
-                }, 
-                "answers": {
-                    "options": {
-                        "Yes": 495, 
-                        "No": 10
-                    }, 
-                    "question_type": "checkbox"
-                }
-            },
-            {
-                "question": {
-                    "display_text": "Was GKA TLM seen in use in:", 
-                    "text": "Was GKA TLM seen in use in:", 
-                    "key": "ivrss-gka-tlm"
-                }, 
-                "answers": {
-                    "options": {
-                        "2": 2589, 
-                        "3": 791, 
-                        "4": 3128,
-                        "5": 2458
-                    }, 
-                    "question_type": "numeric"
-                }
-            }
-        ];
+        
+          
         var detailURL = "stories/details/?source=ivrs&version=2&version=4&version=5";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
             stopDetailLoading(schoolType);
-            data.ivrs = data.ivrs.concat(gka_ivrs);
-            data["tlm"] =gka_tlm;
             renderIVRS(data, schoolType);
         });
 
         startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/?source=ivrs&version=2&version=4";
+        var volumeURL = "stories/volume/?source=ivrs&version=2&version=4&version=5";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             stopVolumeLoading(schoolType);
             renderIVRSVolumeChart(data, schoolType);
+        });
+
+        startTlmLoading(schoolType);
+        var tlmURL = "stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class";
+        var $tlmXHR = klp.api.do(tlmURL, params);
+        $volumeXHR.done(function(data) {
+            stopTlmLoading(schoolType);
+            renderTlmTable(data, schoolType);
         });
 
 
@@ -373,6 +294,11 @@
         $container.find('.js-volume-container').startLoading();         
     }
 
+    function startTlmLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-tlm-container').startLoading();         
+    }
+
     function stopSummaryLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
         $container.find('.js-summary-container').stopLoading();
@@ -386,6 +312,11 @@
     function stopVolumeLoading(schoolType) {
         var $container = getContainerDiv(schoolType);
         $container.find('.js-volume-container').stopLoading();       
+    }
+
+    function stopTlmLoading(schoolType) {
+        var $container = getContainerDiv(schoolType);
+        $container.find('.js-tlm-container').stopLoading();         
     }
 
     function getYear(dateString) {
@@ -562,48 +493,47 @@
     
 
     function renderIVRS(data, schoolType) {
-        var tplClassGraph = swig.compile($('#tpl-classGraph').html());
-        var ivrs_class = 'ivrss-gka-tlm';
-        
-        var classQuestion = getQuestion(data, 'ivrs', ivrs_class);
-        var classAnswers = classQuestion.answers;
-        var total = getTotal(classAnswers);
-        var score2 = getScore(classAnswers, "2");
-        var score3 = getScore(classAnswers, "3");
-        var score4 = getScore(classAnswers, "4");
-        var score5 = getScore(classAnswers, "4");
-        var classes = [{
-            'value': 'Class 2',
-            'score': score2,
-            'total': total,
-            'percent': getPercent(score2, total),
-            'color': 'green-leaf'
-        }, {
-            'value': 'Class 3',
-            'score': score3,
-            'total': total,
-            'percent': getPercent(score3, total),
-            'color': 'orange-mild'
-        }, {
-            'value': 'Class 4',
-            'score': score4,
-            'total': total,
-            'percent': getPercent(score4, total),
-            'color': 'pink-salmon'
-        }, {
-            'value': 'Class 5',
-            'score': score5,
-            'total': total,
-            'percent': getPercent(score5, total),
-            'color': 'green-pista'
-        }];
+        // var tplClassGraph = swig.compile($('#tpl-classGraph').html());
+        // var ivrs_class = 'ivrss-gka-tlm';
+        // var classQuestion = getQuestion(data, 'ivrs', ivrs_class);
+        // var classAnswers = classQuestion.answers;
+        // var total = getTotal(classAnswers);
+        // var score2 = getScore(classAnswers, "2");
+        // var score3 = getScore(classAnswers, "3");
+        // var score4 = getScore(classAnswers, "4");
+        // var score5 = getScore(classAnswers, "4");
+        // var classes = [{
+        //     'value': 'Class 2',
+        //     'score': score2,
+        //     'total': total,
+        //     'percent': getPercent(score2, total),
+        //     'color': 'green-leaf'
+        // }, {
+        //     'value': 'Class 3',
+        //     'score': score3,
+        //     'total': total,
+        //     'percent': getPercent(score3, total),
+        //     'color': 'orange-mild'
+        // }, {
+        //     'value': 'Class 4',
+        //     'score': score4,
+        //     'total': total,
+        //     'percent': getPercent(score4, total),
+        //     'color': 'pink-salmon'
+        // }, {
+        //     'value': 'Class 5',
+        //     'score': score5,
+        //     'total': total,
+        //     'percent': getPercent(score5, total),
+        //     'color': 'green-pista'
+        // }];
 
-        var html = ''
-        for (var pos in classes) {
-            html = html + "<div class='chart-quarter-item'>" + tplClassGraph(classes[pos]) + "</div>";
-        }
+        // var html = ''
+        // for (var pos in classes) {
+        //     html = html + "<div class='chart-quarter-item'>" + tplClassGraph(classes[pos]) + "</div>";
+        // }
 
-        $('#ivrsclasses').html(html);
+        // $('#ivrsclasses').html(html);
 
 
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
@@ -614,14 +544,15 @@
         {
             IVRSQuestionKeys = [
                 'ivrss-school-open',
-                'ivrss-toilets-condition',
-                //"ivrss-functional-toilets-girls",
-                //"ivrss-drinking-water",
-                //"ivrss-midday-meal",
-                "ivrss-gka-math",
+                "ivrss-math-class-happening",
                 "ivrss-gka-trained",
+                "ivrss-gka-tlm-in-use",
+                "ivrss-multi-tlm",
                 "ivrss-gka-rep-stage",
-                "ivrss-gka-group-work"
+                "ivrss-children-use-square-line",
+                "ivrss-group-work",
+                'ivrss-toilets-condition',
+                'ivrss-functional-toilets-girls'
             ];
         } else {
             IVRSQuestionKeys = [
@@ -637,17 +568,52 @@
 
         var questions = getQuestionsArray(questionObjects);
 
-        var html = ''
+        var html = '<div class="chart-half-item">'
         for (var pos in questions) {
+            if (pos > (questions.length/2)-1)
+                html = html + "</div><div class='chart-half-item'>";
             html = html + tplPercentGraph(questions[pos]);
         }
-
+        html = html + "</div>"
         $('#ivrsquestions').html(html);
-        
+    }
+
+    function renderTlmTable(data, schoolType) {
+        console.log(data);
+        var transform = {
+            "Jan": {},
+            "Feb": {}, 
+            "Mar": {}, 
+            "Apr": {}, 
+            "May": {}, 
+            "Jun": {}, 
+            "Jul": {}, 
+            "Aug": {}, 
+            "Sep": {}, 
+            "Oct": {}, 
+            "Nov": {}, 
+            "Dec": {}
+        }
+        var gradeNames = {
+            "1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven"
+        }
+        for (var year in data["volumes"]){
+            for (var month in data["volumes"][year]) {
+                if(_.keys(data["volumes"][year][month]).length > 0){
+                    for (var grade in data["volumes"][year][month]) {
+                        if (transform[month][gradeNames[grade]] == undefined)
+                            transform[month][gradeNames[grade]] = []
+                        for (var tlm in data["volumes"][year][month][grade]){
+                            if(! tlm in transform[month][gradeNames[grade]])
+                                transform[month][gradeNames[grade]].push(tlm);
+                        }
+                    }
+                }
+            }
+        }
         var tplTlmTable = swig.compile($('#tpl-tlmTable').html());
-        html = tplTlmTable({"months":data["tlm"]});
+        var html = tplTlmTable({"months":transform});
         $('#ivrstlmsummary').html(html);
-        
     }
 
     

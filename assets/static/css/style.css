@@ -4517,6 +4517,9 @@ code {
 .close:hover {
   background: #00d9ff; }
 
+.fixwidth {
+  width: 50px; }
+
 /* CSS for accordian panels with accordian.js*/
 .head {
   display: block; }
