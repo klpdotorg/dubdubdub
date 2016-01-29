@@ -270,6 +270,7 @@
 
         startTlmLoading(schoolType);
         var tlmURL = "stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class";
+        //var tlmURL = "/api/v1/stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class&format=json";
         var $tlmXHR = klp.api.do(tlmURL, params);
         $volumeXHR.done(function(data) {
             stopTlmLoading(schoolType);
@@ -579,7 +580,55 @@
     }
 
     function renderTlmTable(data, schoolType) {
-        console.log(data);
+        data = {
+                    "volumes": {
+                        "2016": {
+                            "Jan": {
+                                "2": [15],
+                                "3": [20],
+                                "4": [16, 12, 14],
+                                "5": [4, 6, 7, 9, 10, 18],
+                                "6": [20, 5]
+                            },
+                            "Feb": {},
+                            "Mar": {},
+                            "Apr": {},
+                            "May": {},
+                            "Jun": {},
+                            "Jul": {},
+                            "Aug": {},
+                            "Sep": {},
+                            "Oct": {},
+                            "Nov": {},
+                            "Dec": {}
+                        },
+                        "2015": {
+                            "Jan": {},
+                            "Feb": {},
+                            "Mar": {},
+                            "Apr": {},
+                            "May": {},
+                            "Jun": {},
+                            "Jul": {
+                                "4": [3, 7, 8, 16, 19, 20],
+                                "5": [2, 5]
+                            },
+                            "Aug": {
+                                "5": [3, 4, 5, 9, 12, 14]
+                            },
+                            "Sep": {
+                                "4": [1, 2, 3, 4, 5, 7, 8, 12, 15, 17, 20],
+                                "5": [1, 2, 3, 4, 7, 8, 12, 13, 14, 15, 16, 20]
+                            },
+                            "Oct": {
+                                "4": [8, 2, 3, 4],
+                                "5": [3, 4]
+                            },
+                            "Nov": {},
+                            "Dec": {}
+                        }
+                    }
+                }
         var transform = {
             "Jan": {},
             "Feb": {}, 
@@ -604,8 +653,11 @@
                         if (transform[month][gradeNames[grade]] == undefined)
                             transform[month][gradeNames[grade]] = []
                         for (var tlm in data["volumes"][year][month][grade]){
-                            if(! tlm in transform[month][gradeNames[grade]])
-                                transform[month][gradeNames[grade]].push(tlm);
+                            if(data["volumes"][year][month][grade][tlm] in transform[month][gradeNames[grade]])
+                            {}
+                            else {    
+                                transform[month][gradeNames[grade]].push(data["volumes"][year][month][grade][tlm]);
+                            }
                         }
                     }
                 }
