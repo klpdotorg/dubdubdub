@@ -272,7 +272,7 @@
         var tlmURL = "stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class";
         //var tlmURL = "/api/v1/stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class&format=json";
         var $tlmXHR = klp.api.do(tlmURL, params);
-        $volumeXHR.done(function(data) {
+        $tlmXHR.done(function(data) {
             stopTlmLoading(schoolType);
             renderTlmTable(data, schoolType);
         });
@@ -494,48 +494,6 @@
     
 
     function renderIVRS(data, schoolType) {
-        // var tplClassGraph = swig.compile($('#tpl-classGraph').html());
-        // var ivrs_class = 'ivrss-gka-tlm';
-        // var classQuestion = getQuestion(data, 'ivrs', ivrs_class);
-        // var classAnswers = classQuestion.answers;
-        // var total = getTotal(classAnswers);
-        // var score2 = getScore(classAnswers, "2");
-        // var score3 = getScore(classAnswers, "3");
-        // var score4 = getScore(classAnswers, "4");
-        // var score5 = getScore(classAnswers, "4");
-        // var classes = [{
-        //     'value': 'Class 2',
-        //     'score': score2,
-        //     'total': total,
-        //     'percent': getPercent(score2, total),
-        //     'color': 'green-leaf'
-        // }, {
-        //     'value': 'Class 3',
-        //     'score': score3,
-        //     'total': total,
-        //     'percent': getPercent(score3, total),
-        //     'color': 'orange-mild'
-        // }, {
-        //     'value': 'Class 4',
-        //     'score': score4,
-        //     'total': total,
-        //     'percent': getPercent(score4, total),
-        //     'color': 'pink-salmon'
-        // }, {
-        //     'value': 'Class 5',
-        //     'score': score5,
-        //     'total': total,
-        //     'percent': getPercent(score5, total),
-        //     'color': 'green-pista'
-        // }];
-
-        // var html = ''
-        // for (var pos in classes) {
-        //     html = html + "<div class='chart-quarter-item'>" + tplClassGraph(classes[pos]) + "</div>";
-        // }
-
-        // $('#ivrsclasses').html(html);
-
 
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         //define your data
@@ -580,59 +538,6 @@
     }
 
     function renderTlmTable(data, schoolType) {
-        console.log("response   ");
-        console.log(data);
-        data = {
-                    "volumes": {
-                        "2016": {
-                            "Jan": {
-                                "2": [15],
-                                "3": [20],
-                                "4": [16, 12, 14],
-                                "5": [4, 6, 7, 9, 10, 18],
-                                "6": [20, 5]
-                            },
-                            "Feb": {},
-                            "Mar": {},
-                            "Apr": {},
-                            "May": {},
-                            "Jun": {},
-                            "Jul": {},
-                            "Aug": {},
-                            "Sep": {},
-                            "Oct": {},
-                            "Nov": {},
-                            "Dec": {}
-                        },
-                        "2015": {
-                            "Jan": {},
-                            "Feb": {},
-                            "Mar": {},
-                            "Apr": {},
-                            "May": {},
-                            "Jun": {},
-                            "Jul": {
-                                "4": [3, 7, 8, 16, 19, 20],
-                                "5": [2, 5]
-                            },
-                            "Aug": {
-                                "5": [3, 4, 5, 9, 12, 14]
-                            },
-                            "Sep": {
-                                "4": [1, 2, 3, 4, 5, 7, 8, 12, 15, 17, 20],
-                                "5": [1, 2, 3, 4, 7, 8, 12, 13, 14, 15, 16, 20]
-                            },
-                            "Oct": {
-                                "4": [8, 2, 3, 4],
-                                "5": [3, 4]
-                            },
-                            "Nov": {},
-                            "Dec": {}
-                        }
-                    }
-                }
-        console.log("hardcoded   ");
-        console.log(data);
         var transform = {
             "Jan": {},
             "Feb": {}, 
