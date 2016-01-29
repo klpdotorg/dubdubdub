@@ -580,6 +580,8 @@
     }
 
     function renderTlmTable(data, schoolType) {
+        console.log("response   ");
+        console.log(data);
         data = {
                     "volumes": {
                         "2016": {
@@ -629,6 +631,8 @@
                         }
                     }
                 }
+        console.log("hardcoded   ");
+        console.log(data);
         var transform = {
             "Jan": {},
             "Feb": {}, 
