@@ -249,5 +249,5 @@ urlpatterns = patterns(
         ProgrammeInfo.as_view(), name='api_programme_info'),
     url(r'^programme/percentile/(?P<programme_id>[0-9]+)/$',
         ProgrammePercentile.as_view(), name='api_programme_percentile'),
-    #url(r'^ivrs/', include('ivrs.api_urls')),
+    url(r'^ivrs/', include('ivrs.api_urls')),
 )
