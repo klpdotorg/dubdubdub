@@ -552,6 +552,29 @@
             "Nov": {}, 
             "Dec": {}
         }
+        var tlmNames = {
+            "TLM 1": "Square counters",
+            "TLM 2": "Number line and clothes clips",
+            "TLM 3": "Abacus",
+            "TLM 4": "Base Ten Blocks",
+            "TLM 5": "Place Value mat",
+            "TLM 6": "Place Value strips",
+            "TLM 7": "Fraction shapes",
+            "TLM 8": "Fraction strips",
+            "TLM 9": "Decimal set",
+            "TLM 10": "Decimal Place value strips",
+            "TLM 11": "Dice",
+            "TLM 12": "Geo-Board",
+            "TLM 13": "Protractor and angle measure",
+            "TLM 14": "Clock",
+            "TLM 15": "Weighing Balance",
+            "TLM 16": "Geo-solids with nets",
+            "TLM 17": "Play money Coins",
+            "TLM 18": "Coins",
+            "TLM 19": "Tangram",
+            "TLM 20": "Measuring Tape",
+            "TLM 21": "Maths Concept Cards"
+        }
         var gradeNames = {
             "1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven"
         }
@@ -568,12 +591,13 @@
                                 transform[month][gradeNames[grade]].push(data["volumes"][year][month][grade][tlm]);
                             }
                         }
+                        
                     }
                 }
             }
         }
         var tplTlmTable = swig.compile($('#tpl-tlmTable').html());
-        var html = tplTlmTable({"months":transform});
+        var html = tplTlmTable({"months":transform,"tlm":tlmNames});
         $('#ivrstlmsummary').html(html);
     }
 

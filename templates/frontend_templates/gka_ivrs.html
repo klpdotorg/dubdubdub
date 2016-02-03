@@ -28,7 +28,7 @@
     <table class="table-base">
       <tbody>
         <tr class="table-base-heading">
-        <td>TLM Code</td>
+        <td>TLM </td>
         <td>JAN</td>
         <td>FEB</td>
         <td>MAR</td>
@@ -45,26 +45,14 @@
       {% set range=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] %}
       {% for i in range %}
         <tr>
-          <td class="fixwidth">{{i}}</td>
+          <td class="fixwidth heading-tiny-uppercase">{{tlm['TLM '+i]}}</td>
           {% for month in months %}
             <td class="fixwidth">
-            {% if month.two && month.two.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle brand-blue"></span>
-            {% endif %}
-            {% if month.three && month.three.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle brand-orange"></span>
-            {% endif %}
             {% if month.four && month.four.indexOf(i) !== -1 %} 
               <span class="fa fa-circle grey-steel"></span>
             {% endif %}
             {% if month.five && month.five.indexOf(i) !== -1 %} 
               <span class="fa fa-circle green-leaf"></span>
-            {% endif %}
-            {% if month.six && month.six.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle pink-salmon"></span>
-            {% endif %}
-            {% if month.seven && month.seven.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle brand-red"></span>
             {% else %}
               &nbsp;
             {% endif %}
@@ -75,7 +63,11 @@
     </tbody>
   </table>
 </div>
-<div class="chart-parent center-text">
+<div class="center-text">
+  <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
+  <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
+</div>
+<!--div class="chart-parent center-text">
   <div class="chart-parent chart-half-item">
     <div class="chart-athird-item">
       <span class="fa fa-circle brand-blue"></span>&nbsp;Class 2
@@ -97,7 +89,7 @@
     <div class="chart-athird-item">
       <span class="fa fa-circle brand-red"></span>&nbsp;Class 7
     </div>
-  </div>
+  </div-->
 </div>
   </script>
 
