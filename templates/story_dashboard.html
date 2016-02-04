@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block endbody %}
-  {% compress js %}
-  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  {% compress js %}  
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>

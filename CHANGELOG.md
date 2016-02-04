@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.4.2: daf347ebf2ab3f5d3cf9ee2a26c2c0ed931203b6 - 2016-01-12
+  - Fixes the swig-filter bug.
+
 Release 0.4.1: c939fff51d271e15ec78b3add885513b126ca1f4 - 2015-12-01
   - Squeezes in the anganwadi infrastructure API data within the boundary endpoint
   - Fixes a few bugs on scripts
