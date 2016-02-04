@@ -8,8 +8,8 @@ from schools.models import (
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescoreGender, InstitutionAssessmentPercentile,
-    BoundaryAssessmentPercentile,MeetingReport,
-    BoundaryLibLangAgg, BoundaryLibLevelAgg
+    BoundaryAssessmentPercentile, MeetingReport,
+    BoundaryLibLangAgg, BoundaryLibLevelAgg, Programme, Partner
 )
 
 
@@ -385,7 +385,6 @@ class AssessmentInfoSerializer(KLPSerializer):
         return singlescore
 
 
-
 class BoundaryAssessmentInfoSerializer(KLPSerializer):
     boundaryname=serializers.CharField(source='boundary.name')
     studentgroup =  serializers.CharField(source='studentgroup')
@@ -466,30 +465,39 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
         return singlescore
 
 
+class PartnerSerializer(KLPSerializer):
+    class Meta:
+        model = Partner
+
+
 class ProgrammeListSerializer(KLPSerializer):
-    id= serializers.IntegerField(source='assessment.programme.id')
-    name= serializers.CharField(source='assessment.programme.name')
-    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
-    partner = serializers.CharField(source='assessment.programme.partner.name')
+    id = serializers.IntegerField(source='id')
+    name = serializers.CharField(source='name')
+    academicyear_name = serializers.CharField(source='academic_year.name')
+    partner = PartnerSerializer(source='partner')
 
     class Meta:
-        model = InstitutionAssessmentCohorts
-        fields = ('id','name','academicyear_name', 'partner',)
+        model = Programme
+        fields = ('id', 'name', 'academicyear_name', 'partner',)
+
 
 class ProgrammeInfoSerializer(KLPSerializer):
-    studentgroup =  serializers.CharField(source='studentgroup')
+    studentgroup = serializers.CharField(source='studentgroup')
     assessmentname = serializers.CharField(source='assessment.name')
     academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
-    singlescore=serializers.IntegerField(source='singlescore')
-    percentile=serializers.IntegerField(source='percentile')
-    gradesinglescore=serializers.CharField(source='gradesinglescore')
-    cohortsdetails= serializers.SerializerMethodField('get_cohorts_details')
-    singlescoredetails= serializers.SerializerMethodField('get_singlescore_details')
-
+    singlescore = serializers.IntegerField(source='singlescore')
+    percentile = serializers.IntegerField(source='percentile')
+    gradesinglescore = serializers.CharField(source='gradesinglescore')
+    cohortsdetails = serializers.SerializerMethodField('get_cohorts_details')
+    singlescoredetails = serializers.SerializerMethodField('get_singlescore_details')
 
     class Meta:
         model = InstitutionAssessmentSinglescore
-        fields = ('assessmentname', 'studentgroup','academicyear_name','singlescore','percentile','gradesinglescore','cohortsdetails','singlescoredetails')
+        fields = (
+            'assessmentname', 'studentgroup',
+            'academicyear_name', 'singlescore', 'percentile',
+            'gradesinglescore', 'cohortsdetails', 'singlescoredetails'
+        )
 
     def get_cohorts_details(self, obj):
         data = {}

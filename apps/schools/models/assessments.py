@@ -260,7 +260,6 @@ class Question(BaseModel):
         db_table = 'tb_question'
 
 
-
 class StudentEval(BaseModel):
     question = models.ForeignKey('Question', db_column='qid', primary_key=True)
     student = models.ForeignKey('Student', db_column='stuid')
