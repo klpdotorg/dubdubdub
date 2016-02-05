@@ -34,8 +34,6 @@
             $('#endDate').yearMonthSelect("setDate", moment());
         }
 
-        //loadData('Primary School');
-        //loadData('Preschool');
         //get JS query params from URL
         $('#resetButton').click(function(e) {
             e.preventDefault();
@@ -49,10 +47,6 @@
         $('#dateSummary').click(function(e) {
             e.preventDefault();
             var currentQueryParams = premodalQueryParams;
-            // var currentQueryParams = klp.router.getHash().queryParams;
-            // _.each(_.keys(currentQueryParams), function(key) {
-            //     currentQueryParams[key] = null;
-            // });
             var startDate = $('#startDate').yearMonthSelect("getDate");
             var endDate = $('#endDate').yearMonthSelect("getDate");
             if (moment(startDate) > moment(endDate)) {
@@ -61,9 +55,7 @@
             }
             currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
             currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
-            //console.log("currentQueryParams", currentQueryParams);
             klp.router.setHash(null, currentQueryParams);
-            //hashChanged({'queryParams':currentQueryParams});
         });
 
         $('a[href=#datemodal]').click(function(e) {
@@ -86,7 +78,6 @@
         var queryParams = params.queryParams;
         if (!queryParams.school_type) {
             loadData(schoolString, queryParams);
-            $('#primarySchoolContainer').show();
         } else {
             queryParams.school_type = window.decodeURIComponent(queryParams.school_type);
             loadData(queryParams.school_type, queryParams);
@@ -96,7 +87,7 @@
 
     function initSelect2() {
         $('#select2search').select2({
-            placeholder: 'Search for schools and boundaries',
+            placeholder: 'Search for Primary schools and boundaries',
             minimumInputLength: 3,
             ajax: {
                 url: "/api/v1/search",
@@ -133,9 +124,9 @@
                 var paramKey = 'school_id';
             } else if (boundaryType == 'district') {
                 var paramKey = 'admin1';
-            } else if (['project', 'block'].indexOf(boundaryType) !== -1) {
+            } else if (boundaryType == 'block') {
                 var paramKey = 'admin2';
-            } else if (['circle', 'cluster'].indexOf(boundaryType) !== -1) {
+            } else if (boundaryType == 'cluster') {
                 var paramKey = 'admin3';
             } else {
                 var paramKey = 'error';
@@ -187,7 +178,7 @@
         };
         return _(array).map(function(obj) {
             var name = obj.properties.name;
-            if (type === 'boundary') {
+            if (type === 'boundary' && obj.properties.school_type=='primaryschool') {
                 if (obj.properties.type === 'district') {
                     name = obj.properties.name + ' - ' + schoolDistrictMap[obj.properties.school_type] + ' ' + obj.properties.type;
                 } else {
@@ -211,7 +202,7 @@
         }
         var currentData = $('#select2search').select2("data");
 
-        var boundaryTypes = ['district', 'block', 'cluster', 'circle', 'project'];
+        var boundaryTypes = ['district', 'block', 'cluster'];
         if (boundaryTypes.indexOf(entityDetails.type) !== -1) {
             var typ = 'boundary';
         } else {
@@ -228,8 +219,6 @@
     }
 
     function loadData(schoolType, params) {
-        //var params = klp.router.getHash().queryParams;
-        console.log(schoolType);
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
         var metaURL = "stories/meta/?source=ivrs&version=2&version=4&version=5";
@@ -246,12 +235,9 @@
                 data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
                 data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
                 renderSummary(data, schoolType);
-                //renderRespondentChart(data, schoolType);
             });
         });
-
-        
-          
+      
         var detailURL = "stories/details/?source=ivrs&version=2&version=4&version=5";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
@@ -270,14 +256,11 @@
 
         startTlmLoading(schoolType);
         var tlmURL = "stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class";
-        //var tlmURL = "/api/v1/stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class&format=json";
         var $tlmXHR = klp.api.do(tlmURL, params);
         $tlmXHR.done(function(data) {
             stopTlmLoading(schoolType);
             renderTlmTable(data, schoolType);
         });
-
-
     }
 
     function startSummaryLoading(schoolType) {
@@ -341,46 +324,6 @@
         } else {
             return $('#primarySchoolContainer');
         }        
-    }
-
-    function renderRespondentChart(data, schoolType) {
-        var labelMap = {
-            'SDMC_MEMBER': 'SDMC',
-            'CBO_MEMBER': 'CBO',
-            'PARENTS': 'Parents',
-            'TEACHERS': 'Teachers',
-            'VOLUNTEER': 'Volunteers',
-            'EDUCATED_YOUTH': 'Youth',
-            'LOCAL_LEADER': 'Local Leader',
-            'AKSHARA_STAFF': 'Akshara',
-            'ELECTED_REPRESENTATIVE': 'Elected Rep' 
-        };
-        var labels = _.map(_.keys(data.respondents), function(label) {
-            if (labelMap.hasOwnProperty(label)) {
-                return labelMap[label];
-            } else {
-                return _.str.titleize(label);
-            }
-        });
-        var values = _.values(data.respondents);
-        var meta_values = [];
-        for( var i=0; i < labels.length; i++) {
-            meta_values.push({'meta': labels[i],'value': values[i]});
-        } /* chartist tooltip transformations */ 
-        var data_respondent = {
-            labels: labels,
-            series: [
-                { 
-                    className: 'ct-series-a',
-                    data: meta_values,
-                }
-            ]
-        };
-        var suffix = '';
-        if (schoolType == preschoolString)
-            suffix = '_ang';
-        renderBarChart('#chart_respondent' + suffix, data_respondent);
-
     }
 
     function renderIVRSVolumeChart(data, schoolType) {
@@ -499,28 +442,19 @@
         //define your data
         
         var IVRSQuestionKeys = [];
-        if (schoolType == schoolString)
-        {
-            IVRSQuestionKeys = [
-                'ivrss-school-open',
-                "ivrss-math-class-happening",
-                "ivrss-gka-trained",
-                "ivrss-gka-tlm-in-use",
-                "ivrss-multi-tlm",
-                "ivrss-gka-rep-stage",
-                "ivrss-children-use-square-line",
-                "ivrss-group-work",
-                'ivrss-toilets-condition',
-                'ivrss-functional-toilets-girls'
-            ];
-        } else {
-            IVRSQuestionKeys = [
-                'ivrsa-center-open',
-                'ivrsa-worker-present'//,
-                //'ivrsa-how-many-children'
-            ];
-        }
-
+        IVRSQuestionKeys = [
+            'ivrss-school-open',
+            "ivrss-math-class-happening",
+            "ivrss-gka-trained",
+            "ivrss-gka-tlm-in-use",
+            "ivrss-multi-tlm",
+            "ivrss-gka-rep-stage",
+            "ivrss-children-use-square-line",
+            "ivrss-group-work",
+            'ivrss-toilets-condition',
+            'ivrss-functional-toilets-girls'
+        ];
+        
         var questionObjects = _.map(IVRSQuestionKeys, function(key) {
             return getQuestion(data, 'ivrs', key);
         });
