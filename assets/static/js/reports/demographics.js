@@ -43,10 +43,14 @@ var LANGUAGE="kannada";
     function getDetailsData(data)
     { 
         var detailsJson = {
-                "categories" : {
-                    "Upper Primary": {"school_count" : 168, "student_count" : 25000},
-                    "Lower Primary": {"school_count" : 146, "student_count" : 22145}
-                },
+                "categories" : [
+                    {"categories": "Upper Primary", "num_schools" : 168, "num_students" : 25000}
+                    {"categories": "Lower Primary", "num_schools" : 146, "num_studnets" : 22145}
+                ],
+                //"categories" : {
+                  //  "Upper Primary": {"school_count" : 168, "student_count" : 25000},
+                    //"Lower Primary": {"school_count" : 146, "student_count" : 22145}
+                //},
                 "enrolment" : {
                     "Class 1-4": {"text":"Class 1 to 4","student_count":30000},
                     "Class 5-8": {"text":"Class 5 to 8","student_count":17145}
