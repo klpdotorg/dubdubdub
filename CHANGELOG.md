@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.5.0: d7c435eda95ce3a77d1ddc91bca3b811faa5ebe7 - 2016-02-06
+  - Implements GKA V3.2
+
 Release 0.4.2: daf347ebf2ab3f5d3cf9ee2a26c2c0ed931203b6 - 2016-01-12
   - Fixes the swig-filter bug.
 
