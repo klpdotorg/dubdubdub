@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.5.2: dc215c0166a6ec5bc876787c9d56309c96a9abdc - 2016-02-06
+  - Updates the GKA dashboard
+
 Release 0.5.1: 69ac04bf67428cabad41a9f6cd94a9610aa189d5 - 2016-02-06
   - Fixes version filtering on the meta endpoint
 
