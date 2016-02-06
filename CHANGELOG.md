@@ -1,4 +1,4 @@
-git sgitHow to deploy
+How to deploy
 ---
 Use required commands
 
@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.5.1: 69ac04bf67428cabad41a9f6cd94a9610aa189d5 - 2016-02-06
+  - Fixes version filtering on the meta endpoint
+
 Release 0.5.0: d7c435eda95ce3a77d1ddc91bca3b811faa5ebe7 - 2016-02-06
   - Implements GKA V3.2
 
