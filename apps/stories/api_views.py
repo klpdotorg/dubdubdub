@@ -434,11 +434,6 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
 
-        if versions:
-            versions = map(int, versions)
-            stories_qset = stories_qset.filter(
-                group__version__in=versions)
-
         if admin1_id:
             school_qset = school_qset.filter(
                 schooldetails__admin1__id=admin1_id)
@@ -496,6 +491,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         if source:
             stories_qset = self.source_filter(
                 source, stories_qset)
+
+            if versions:
+                versions = map(int, versions)
+                stories_qset = stories_qset.filter(
+                    group__version__in=versions)
 
             response_json[source] = self.get_json(source, stories_qset)
         else:
