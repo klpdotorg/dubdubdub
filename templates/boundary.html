@@ -7,14 +7,16 @@
 {% endblock %}
 
 {% block endbody %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />  
+  {% endcompress %}
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/common/dise_api.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/utils.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
-  <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
-  <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
+  <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->  
   {% endcompress %}
   <script>
     BOUNDARY_ID = {{ object.id }};

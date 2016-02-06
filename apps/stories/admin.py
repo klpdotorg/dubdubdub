@@ -74,10 +74,31 @@ class StoryImageAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('text',)
-    list_display = ('text', 'question_type', 'is_active')
-    list_editable = ('is_active',)
-    list_filter = ('school_type', 'questiongroup__source',)
-
+    list_display = (
+        'questiongroup_source',
+        'school_type',
+        'questiongroup_version',
+        'questiongroupquestions_sequence',
+        'text',
+        'key',
+        'display_text',
+        'is_featured',
+        'question_type',
+        'is_active'
+    )
+    list_editable = ('is_featured', 'is_active',)
+    list_filter = (
+        'school_type',
+        'questiongroup__source',
+        'questiongroup__version',
+        'is_featured'
+    )
+    def questiongroup_source(self, question):
+        return question.questiongroup_set.all().values_list('source__name', flat=True)
+    def questiongroup_version(self, question):
+        return question.questiongroup_set.all().values_list('version', flat=True)
+    def questiongroupquestions_sequence(self, question):
+        return question.questiongroupquestions_set.all().values_list('sequence', flat=True)
 
 class QuestionInline(admin.TabularInline):
     model = QuestiongroupQuestions

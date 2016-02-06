@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from .models import State
-from .utils import get_question
+from .utils import get_question, save_answer
 
 from schools.models import School
 from common.views import KLPAPIView
@@ -64,6 +64,8 @@ class CheckSchool(KLPAPIView):
         state.answers = []
         state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
 
+        # Checking if school_id has been entered and whether the
+        # entered ID is valid.
         school_type = None
         if not school_id:
             status_code = status.HTTP_404_NOT_FOUND
@@ -77,12 +79,15 @@ class CheckSchool(KLPAPIView):
         else:
             status_code = status.HTTP_404_NOT_FOUND
 
+        # Validating whether the entered school ID corresponds to the
+        # correct school_type. Assigns the ivrs_type based on the call
+        # number as well.
         if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
 
-            state.ivrs_type = 'gka-new'
-            for i in range(0,8): # Initializing answer slots 1 to 12 with NA
+            state.ivrs_type = 'gka-v3'
+            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
                 state.answers.append('NA')
         elif ivrs_type == PRI:
             if school_type != u'Primary School':
@@ -91,7 +96,7 @@ class CheckSchool(KLPAPIView):
             state.ivrs_type = 'ivrs-pri'
             for i in range(0,6): # Initializing answer slots 1 to 6 with NA
                 state.answers.append('NA')
-        else:
+        else: # ivrs_type == PRE
             if school_type != u'PreSchool':
                 status_code = status.HTTP_404_NOT_FOUND
 
@@ -136,30 +141,30 @@ class VerifyAnswer(KLPAPIView):
             state = State.objects.get(session_id=session_id)
 
             status_code = status.HTTP_200_OK
-            question = get_question(int(question_number), ivrs_type)
+            question_number = int(question_number)
+            question = get_question(question_number, ivrs_type)
             response = request.QUERY_PARAMS.get('digits', None)
 
             if response:
                 response = int(response.strip('"'))
 
                 # Mapping integers to Yes/No.
-                if question.question_type.name == 'checkbox':
-                    accepted_answers = {1: 'Yes', 2: 'No'}
-                    response = accepted_answers[response]
-
-                # Perform sanity check for GKA & PRI. PRE (old ivrs) only
-                # has checkbox and numeric as answers types. Answers other
-                # than 1 or 2 are already moderated on the exotel end. The
-                # numeric answers cannot be moderated for the old ivrs.
-                if ivrs_type == GKA_SERVER or ivrs_type == PRI or ivrs_type == GKA_DEV:
-                    if response in eval(question.options):
-                        state.answers[int(question_number)] = response
-                        state.save()
+                accepted_answers = {1: 'Yes', 2: 'No'}
+                if question.question_type.name == 'checkbox' and response in accepted_answers:
+                    if question_number == 1 and (ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER):
+                        # This special case is there for question 1 which clubs "Was the school
+                        # open?" and "Class visited". Since "Class visited accepts answers from
+                        # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
+                        # whether the school was open or not is handled in the save_answer
+                        # function within utils.py
+                        response = response
                     else:
-                        status_code = status.HTTP_404_NOT_FOUND
-                else:
-                    state.answers[int(question_number)] = response
-                    state.save()
+                        response = accepted_answers[response]
+
+                # Save the answer.
+                status_code = save_answer(
+                    state, question_number, question, ivrs_type, response
+                )
 
             else:
                 status_code = status.HTTP_404_NOT_FOUND
