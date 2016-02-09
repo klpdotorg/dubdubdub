@@ -24,6 +24,8 @@ SELECT t7.id,
         current_elected_party character varying(300),
         status character varying(20)
     );
+CREATE INDEX ON mvw_electedrep_master (elec_comm_code);
+ANALYZE mvw_electedrep_master;
 
 DROP MATERIALIZED VIEW IF EXISTS mvw_school_electedrep CASCADE;
 CREATE MATERIALIZED VIEW mvw_school_electedrep AS
@@ -54,6 +56,8 @@ CREATE MATERIALIZED VIEW mvw_assembly AS
     WHERE assembly.ac_no=mvw_electedrep_master.elec_comm_code and
           mvw_electedrep_master.status='active' and
           mvw_electedrep_master.const_ward_type='MLA Constituency';
+CREATE INDEX ON mvw_assembly (id);
+ANALYZE mvw_assembly;
 
 -- View for Parliament table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_parliament CASCADE;
@@ -75,6 +79,8 @@ CREATE MATERIALIZED VIEW mvw_parliament AS
     WHERE parliament.pc_no=mvw_electedrep_master.elec_comm_code and
           mvw_electedrep_master.status='active' and
           mvw_electedrep_master.const_ward_type='MP Constituency';
+CREATE INDEX ON mvw_parliament (id);
+ANALYZE mvw_parliament;
 
 -- View for Postal table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_postal CASCADE;
@@ -202,8 +208,8 @@ ANALYZE mvw_mdm_agg;
 DROP MATERIALIZED VIEW IF EXISTS mvw_dise_info_olap CASCADE;
 CREATE MATERIALIZED VIEW mvw_dise_info_olap AS
 SELECT t1.school_code as dise_code,
-    t2.ac_id as assembly_id,
-    t3.pc_id as parliament_id,
+    t2.id as assembly_id,
+    t3.id as parliament_id,
     t1.tot_clrooms as classroom_count,
     t1.teacher_count,
     t1.total_boys AS boys_count,
@@ -368,3 +374,4 @@ SELECT sg.sid AS schid,
     tb_academic_year acyear
   WHERE stu.id = stusg.stuid AND stusg.clid = sg.id AND stu.status = 2 AND acyear.id = stusg.ayid
   GROUP BY sg.sid, btrim(sg.name::text), acyear.id;
+
