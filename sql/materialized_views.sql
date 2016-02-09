@@ -1,22 +1,80 @@
+-- Materialized view for electedrep views
+
+DROP MATERIALIZED VIEW IF EXISTS mvw_electedrep_master CASCADE;
+CREATE MATERIALIZED VIEW mvw_electedrep_master AS
+SELECT t7.id,
+    t7.parent,
+    t7.elec_comm_code,
+    t7.const_ward_name,
+    t7.const_ward_type,
+    t7.neighbours,
+    t7.current_elected_rep,
+    t7.current_elected_party,
+    t7.status
+   FROM dblink(
+        'host=localhost dbname=electrep_new user=klp'::text, 'select id, parent, elec_comm_code, const_ward_name, const_ward_type, neighbours, current_elected_rep, current_elected_party, status from tb_electedrep_master'::text
+    ) t7(
+        id integer,
+        parent integer,
+        elec_comm_code integer,
+        const_ward_name character varying(300),
+        const_ward_type admin_heirarchy,
+        neighbours character varying(100),
+        current_elected_rep character varying(300),
+        current_elected_party character varying(300),
+        status character varying(20)
+    );
+
+DROP MATERIALIZED VIEW IF EXISTS mvw_school_electedrep CASCADE;
+CREATE MATERIALIZED VIEW mvw_school_electedrep AS
+SELECT t8.sid,
+    t8.ward_id,
+    t8.mla_const_id,
+    t8.mp_const_id,
+    t8.heirarchy
+   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select sid, ward_id, mla_const_id, mp_const_id, heirarchy from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);
+
 -- View for Assembly table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_assembly CASCADE;
 CREATE MATERIALIZED VIEW mvw_assembly AS
- SELECT gid, ac_id,
+ SELECT mvw_electedrep_master.id, gid, ac_id,
     ac_no,
     ac_name,
     state_ut,
     the_geom
-   FROM dblink('host=localhost dbname=spatial user=klp '::text, 'select gid, ac_id, ac_no, ac_name, state_ut, the_geom from assembly'::text) assembly(gid integer, ac_id integer, ac_no integer, ac_name character varying(35), state_ut character varying(35), the_geom geometry);
+   FROM dblink('host=localhost dbname=spatial user=klp '::text, 'select gid, ac_id, ac_no, ac_name, state_ut, the_geom from assembly'::text)
+        assembly(
+            gid integer,
+            ac_id integer,
+            ac_no integer,
+            ac_name character varying(35),
+            state_ut character varying(35),
+            the_geom geometry
+        ), mvw_electedrep_master
+    WHERE assembly.ac_no=mvw_electedrep_master.elec_comm_code and
+          mvw_electedrep_master.status='active' and
+          mvw_electedrep_master.const_ward_type='MLA Constituency';
 
 -- View for Parliament table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_parliament CASCADE;
 CREATE MATERIALIZED VIEW mvw_parliament AS
- SELECT gid, pc_id,
+ SELECT mvw_electedrep_master.id, gid, pc_id,
     pc_no,
     pc_name,
     state_ut,
     the_geom
-   FROM dblink('host=localhost dbname=spatial user=klp'::text, 'select gid, pc_id, pc_no, pc_name, state_ut, the_geom from parliament'::text) parliament(gid integer, pc_id integer, pc_no integer, pc_name character varying(35), state_ut character varying(35), the_geom geometry);
+   FROM dblink('host=localhost dbname=spatial user=klp'::text, 'select gid, pc_id, pc_no, pc_name, state_ut, the_geom from parliament'::text)
+        parliament(
+            gid integer,
+            pc_id integer,
+            pc_no integer,
+            pc_name character varying(35),
+            state_ut character varying(35),
+            the_geom geometry
+        ), mvw_electedrep_master
+    WHERE parliament.pc_no=mvw_electedrep_master.elec_comm_code and
+          mvw_electedrep_master.status='active' and
+          mvw_electedrep_master.const_ward_type='MP Constituency';
 
 -- View for Postal table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_postal CASCADE;
@@ -90,16 +148,16 @@ SELECT tbs.id as id,
     tb2.id as block_or_project_id,
     tb3.id as district_id,
     tb1.type as stype,
-    assembly.ac_id as assembly_id,
-    assembly.pc_id as parliament_id,
-    assembly.pin_id as pin_id
+    electrep.aid as assembly_id,
+    electrep.pid as parliament_id,
+    electrep.pin_id as pin_id
     FROM tb_boundary tb1, tb_boundary tb2, tb_boundary tb3, tb_school tbs
     LEFT JOIN (
-        SELECT mva.ac_id as ac_id, mvp.pc_id as pc_id, vic.instid as instid, postal.pin_id as pin_id
+        SELECT mva.id as aid, mvp.id as pid, vic.instid as instid, postal.pin_id as pin_id
         FROM mvw_assembly mva, mvw_parliament mvp, mvw_inst_coord vic, mvw_postal postal
         WHERE ST_Within(vic.coord, mva.the_geom) AND ST_Within(vic.coord, mvp.the_geom)
             AND ST_Within(vic.coord, postal.the_geom)
-    ) AS assembly ON assembly.instid=tbs.id
+    ) AS electrep ON electrep.instid=tbs.id
     WHERE tbs.bid=tb1.id AND
     tb1.parent=tb2.id AND
     tb2.parent=tb3.id;
@@ -115,29 +173,6 @@ SELECT
     SUM(CASE tia.gender WHEN 'female' THEN tia.num ELSE 0 END) as num_girls
     FROM mvw_institution_aggregations as tia
     GROUP BY academic_year_id, school_id;
-
--- Materialized view for electedrep views
-
-DROP MATERIALIZED VIEW IF EXISTS mvw_electedrep_master CASCADE;
-CREATE MATERIALIZED VIEW mvw_electedrep_master AS
-SELECT t7.id,
-    t7.parent,
-    t7.elec_comm_code,
-    t7.const_ward_name,
-    t7.const_ward_type,
-    t7.neighbours,
-    t7.current_elected_rep,
-    t7.current_elected_party
-   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select id,parent,elec_comm_code,const_ward_name,const_ward_type,neighbours,current_elected_rep,current_elected_party from tb_electedrep_master'::text) t7(id integer, parent integer, elec_comm_code integer, const_ward_name character varying(300), const_ward_type admin_heirarchy, neighbours character varying(100), current_elected_rep character varying(300), current_elected_party character varying(300));
-
-DROP MATERIALIZED VIEW IF EXISTS mvw_school_electedrep CASCADE;
-CREATE MATERIALIZED VIEW mvw_school_electedrep AS
-SELECT t8.sid,
-    t8.ward_id,
-    t8.mla_const_id,
-    t8.mp_const_id,
-    t8.heirarchy
-   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select sid, ward_id, mla_const_id, mp_const_id, heirarchy from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);
 
 DROP MATERIALIZED VIEW IF EXISTS mvw_dise_rte_agg CASCADE;
 CREATE MATERIALIZED VIEW mvw_dise_rte_agg AS
