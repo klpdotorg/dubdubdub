@@ -11,7 +11,7 @@ from schools.api_views import (
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
-    PincodeDetails, SchoolNutrition, MergeEndpoints,
+    PincodeDetails, SchoolNutrition, MergeEndpoints, PartnerList,
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView
@@ -239,6 +239,7 @@ urlpatterns = patterns(
         BoundaryLibLangAggView.as_view(), name='api_aggregation_boundary_liblang'),
 
     # Assessment urls
+    url(r'^partners/$', PartnerList.as_view(), name='api_partner_list'),
     url(r'^assessment/$',
         AssessmentsList.as_view(), name='api_assessment_list'),
     url(r'^assessment/(?P<assessment_id>[0-9]+)/$',

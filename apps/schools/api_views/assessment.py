@@ -4,7 +4,7 @@ from schools.models import (
     InstitutionAssessmentSinglescore, InstitutionAssessmentSinglescoreGender,
     InstitutionAssessmentSinglescoreMt, BoundaryAssessmentSinglescore,
     InstitutionAssessmentPercentile, BoundaryAssessmentPercentile,
-    Programme
+    Programme, Partner
 )
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.mixins import CacheMixin
@@ -12,10 +12,18 @@ from schools.serializers import (
     AssessmentListSerializer, AssessmentInfoSerializer, ProgrammeListSerializer,
     ProgrammeInfoSerializer, BoundaryAssessmentInfoSerializer,
     BoundaryProgrammeInfoSerializer, ProgrammePercentileSerializer,
-    BoundaryProgrammePercentileSerializer
+    BoundaryProgrammePercentileSerializer, PartnerSerializer
 )
 from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
+
+
+class PartnerList(KLPListAPIView, CacheMixin):
+    """
+    Returns list of partner
+    """
+    serializer_class = PartnerSerializer
+    queryset = Partner.objects.filter(status=1)
 
 
 class AssessmentsList(KLPListAPIView, CacheMixin):
@@ -142,6 +150,17 @@ class ProgrammesList(KLPListAPIView, CacheMixin):
             'partner'
         )
 
+        stype = self.request.GET.get('school_type', 'both')
+
+        if stype == 'preschool':
+            programmes = programmes.filter(
+                assessment__institutionassessmentcohorts__school_schooldetails__type=2
+            )
+        elif stype == 'school':
+            programmes = programmes.filter(
+                assessment__institutionassessmentcohorts__school_schooldetails__type=1
+            )
+
         if self.request.GET.get('school', ''):
             sid = self.request.GET.get('school')
             programmes = programmes.filter(
@@ -172,8 +191,7 @@ class ProgrammesList(KLPListAPIView, CacheMixin):
             programmes = programmes.filter(
                 academic_year_id=self.request.GET.get('academic_year_id')
             )
-
-        if self.request.GET.get('academic_year', ''):
+        elif self.request.GET.get('academic_year', ''):
             programmes = programmes.filter(
                 academic_year__name=self.request.GET.get('academic_year')
             )
@@ -273,5 +291,3 @@ class ProgrammePercentile(KLPListAPIView):
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
         return programmeinfo
-
-

@@ -5,7 +5,7 @@ from .school import (
 )
 from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
-    ProgrammePercentile
+    ProgrammePercentile, PartnerList
 )
 from .aggregations import *
 from .boundary import (
