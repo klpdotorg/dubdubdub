@@ -16,7 +16,7 @@
       <script src="{% static 'js/common/dise_infra.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/advanced-map.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/advanced_map.js' %}"></script>
       <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
@@ -67,9 +67,7 @@
         </div> -->
       </div>
       <a href="#searchmodal">
-      <div class="adv-search-btn tooltip" aria-label="Advanced Search">
-          <span class="fa fa-search-plus"></span>
-      </div>
+      <div style="font-size: 0.9em" class="adv-search-btn tooltip" aria-label="Advanced Search">Advanced Search</div>
       </a>
     </div>
   </div>
@@ -80,10 +78,7 @@
 
   <div class="map_page">
     <section class="sidebar-volunteer-map">
-        <h3 style="text-align: center;cursor: pointer;" id="primaryschool-header">Primary Schools </h3>
-        <ul id="primaryschool-list"></ul>
-        <h3 style="text-align: center;cursor: pointer;" id="preschool-header">Preschools</h3>
-        <ul id="preschool-list"></ul>
+        <ul id="school-list"></ul>
     </section>
     <section class="map-canvas-full  map-volunteer-canvas-full">
       <div id="js-map-canvas"></div>

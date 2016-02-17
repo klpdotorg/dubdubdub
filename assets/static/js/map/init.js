@@ -29,6 +29,6 @@
 
         klp._tpl = klp.utils.compile_templates();
         klp.router.start();
-    };    
+    };
 
 })();

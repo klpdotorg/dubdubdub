@@ -7,7 +7,8 @@
         $_filter_layers_button,
         $radiusButton,
         map,
-        marker_overlay_html;
+        marker_overlay_html,
+        search_mode = false;
 
     var tpl_map_popup;
     var tpl_mobile_place_details;
@@ -35,7 +36,8 @@
     var disabledLayers,
         enabledLayers,
         allLayers,
-        selectedLayers;
+        selectedLayers,
+        allMarkersOnMap = [];
 
     var isMobile = $(window).width() < 768;
 
@@ -355,16 +357,6 @@
             }
         }
 
-        $('body').on('click', '#primaryschool-header', function(e) {
-            e.preventDefault();
-            $('#primaryschool-list').toggle('fast');
-        });
-
-        $('body').on('click', '#preschool-header', function(e) {
-            e.preventDefault();
-            $('#preschool-list').toggle('fast');
-        });
-
         // var $sidebar_school_items = $('.sidebar-school');
         $('body').on('click', '.sidebar-school', function(e) {
             e.preventDefault();
@@ -386,11 +378,56 @@
 
             $(school_element).siblings('li').css('background-color', '')
 
-            var latlng = $(school_element).data('latlng')
-            map.setView(latlng.split(',').reverse(), 18);
+            var school_id = $(school_element).data('id');
+            $.each(allMarkersOnMap, function(idx, marker) {
+                if (marker.feature.properties.id == school_id) {
+                    marker.fire('click');
+                }
+            })
 
             $(school_element).css('background-color', '#ddd')
         })
+
+        function shuffle(array) {
+          var currentIndex = array.length, temporaryValue, randomIndex;
+
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+
+          return array;
+        }
+
+        function listPointsOnSidebar(allTheLayers) {
+            var bbox = map.getBounds();
+            allMarkersOnMap = [];
+
+            allTheLayers.eachLayer(function(parentLayer) {
+                parentLayer.eachLayer(function(marker) {
+                    if (bbox.contains(marker.getLatLng())) {
+                        allMarkersOnMap.push(marker);
+                    }
+                })
+            });
+
+            $('#school-list').html('');
+            shuffle(allMarkersOnMap);
+            $.each(allMarkersOnMap, function(idx, marker) {
+                var tplSchoolItem = swig.compile($('#tpl-school-item').html());
+
+                var html = tplSchoolItem(marker.feature);
+                $('#school-list').append(html);
+            })
+        }
 
         function loadPointsByBbox() {
             var bbox = map.getBounds();
@@ -420,7 +457,6 @@
                 preschoolXHR.done(function (data) {
                     t.stopLoading();
                     preschoolCluster.clearLayers();
-                    $('#preschool-list').html('');
 
                     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -429,14 +465,7 @@
                         onEachFeature: onEachSchool
                     }).addTo(preschoolCluster);
 
-                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-
-                    if (data.features.length > 0) {
-                        _(data.features).each(function(school) {
-                            var html = tplSchoolItem(school);
-                            $('#preschool-list').append(html);
-                        });
-                    }
+                    listPointsOnSidebar(enabledLayers);
                 });
             }
 
@@ -451,7 +480,6 @@
                 schoolXHR.done(function (data) {
                     t.stopLoading();
                     schoolCluster.clearLayers();
-                    $('#primaryschool-list').html('');
 
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -460,14 +488,10 @@
                         onEachFeature: onEachSchool
                     }).addTo(schoolCluster);
 
-                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-
-                    if (data.features.length > 0) {
-                        _(data.features).each(function(school) {
-                            var html = tplSchoolItem(school);
-                            $('#primaryschool-list').append(html);
-                        });
-                    }
+                    // this is here so that it gets called
+                    // after both the preschool and primary school
+                    // API calls are done.
+                    listPointsOnSidebar(enabledLayers);
                 });
             }
         }
@@ -743,7 +767,7 @@
                     });
                 enabledLayers.clearLayers();
                 enabledLayers.addLayer(radiusLayer);
-                });
+            });
         });
 
     };

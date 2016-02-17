@@ -19,7 +19,9 @@
               </div>
               <label class="label required brand-green">Select the academic year </label>
               <div class="form-field-wrap">
-                <select name="acyear">
+                <select name="academic_year">
+                  <option value="2010-2011">2010-2011</option>
+                  <option value="2011-2012">2011-2012</option>
                   <option value="2012-2013">2012-2013</option>
                   <option value="2013-2014">2013-2014</option>
                   <option value="2014-2015">2014-2015</option>
@@ -34,17 +36,13 @@
               <label class="label brand-green">First pick a Partner</label>
               <div class="base-spacing-sm"></div>
               <div class="search-parent">
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="partner_akshara" name="partner" value="akshara">
+                <div class="search-half-col form-field-wrap">
+                  <input type="radio" class="input-radio" id="partner_akshara" name="partner_id" value="1">
                   <label for="partner_akshara" class="input-radio-label">Akshara Foundation</label>
                 </div>
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="partner_akshaya_patra" name="partner" value="akshaya_patra" >
-                  <label for="partner_akshaya_patra" class="input-radio-label">Akshaya Patra</label>
-                </div>
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="partner_sikshana" name="partner" value="sikshana">
-                  <label for="partner_sikshana" class="input-radio-label">Sikshana Foundation</label>
+                <div class="search-half-col form-field-wrap">
+                  <input type="radio" class="input-radio" id="partner_akshaya_patra" name="partner_id" value="2">
+                  <label for="partner_akshaya_patra" class="input-radio-label">Pratham Mysore</label>
                 </div>
               </div>
 
@@ -52,11 +50,7 @@
                 <div>
                 <label class="label brand-green">Then select a Program</label>
                 <div class="base-spacing-sm"></div>
-                <select class="js-select-multiple program-select" multiple="multiple">
-                  <option value="option1">Akshara Ganitha</option>
-                  <option value="option2">Akshara GKA</option>
-                  <option value="option3">Akshara Reading</option>
-                  <option value="option4">Library</option>
+                <select class="js-select-multiple program-select" id="multi_programmes" name="programmes" multiple="multiple">
                 </select>
                 </div>
               </div><!-- end form-field-wrap-->
