@@ -347,6 +347,16 @@ class School(GeoBaseModel):
         else:
             return {}
 
+    def get_latest_story(self, source, versions=None):
+        queryset = self.story_set.filter(
+            group__source__name=source,
+        )
+        if versions:
+            queryset = queryset.filter(
+                group__version__in=versions,
+            )
+        return queryset.latest('date_of_visit')
+
     class Meta:
         managed = False
         db_table = 'tb_school'
