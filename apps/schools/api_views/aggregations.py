@@ -10,6 +10,10 @@ import dubdubdub.urls
 from common.models import SumCase
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
+
+from stories.models import Story
+from stories.api_views import get_que_and_ans
+
 from django.conf import settings
 from django.db.models import Q, Count, Sum
 from django.core.urlresolvers import resolve
@@ -103,18 +107,25 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
         # Getting the Anganwadi infrastructure data from the
         # StoryDetail view.
         if source:
-            view, args, kwargs = resolve(
-                '/api/v1/stories/details/',
-                urlconf = dubdubdub.urls
+            schools_with_anganwadi_stories = active_schools.filter(
+                story__isnull=False,
+                story__group__source__name='anganwadi',
+            ).distinct('id')
+            stories = self.get_latest_anganwadi_stories(
+                schools_with_anganwadi_stories
             )
-            kwargs['request'] = request
-            kwargs['boundary'] = boundary
-            stories_response = view(*args, **kwargs)
-            agg['infrastructure'] = stories_response.data
+            data = get_que_and_ans(stories, 'anganwadi', 'PreSchool', None)
+            agg['infrastructure'] = data
 
         # Not using serializer because we need to do the aggregations here
         # and return the results directly
         return Response(agg)
+
+    def get_latest_anganwadi_stories(self, schools):
+        queryset = []
+        for school in schools:
+            queryset.append(school.get_latest_story())
+        return queryset
 
 
 class AssemblySchoolAggView(KLPAPIView, BaseSchoolAggView):
