@@ -108,7 +108,6 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
         # StoryDetail view.
         if source:
             schools_with_anganwadi_stories = active_schools.filter(
-                story__isnull=False,
                 story__group__source__name='anganwadi',
             ).distinct('id')
             stories = self.get_latest_anganwadi_stories(
