@@ -41,6 +41,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -50,10 +51,12 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
+    response_type - What volume to calculate [call/gka-class]
     """
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -64,6 +67,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+        response_type = self.request.QUERY_PARAMS.get(
+            'response_type', 'call_volume')
 
         date = Date()
         if start_date:
@@ -88,6 +93,11 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if source:
             stories_qset = stories_qset.filter(
                 group__source__name=source)
+
+        if versions:
+            versions = map(int, versions)
+            stories_qset = stories_qset.filter(
+                group__version__in=versions)
 
         if admin1_id:
             stories_qset = stories_qset.filter(
@@ -122,7 +132,77 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
                 date_of_visit__lte=end_date)
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
 
+        if response_type == 'call_volume':
+            response_json['volumes'] = self.get_call_volume(story_dates, months)
+        elif response_type == 'gka-class':
+            response_json['volumes'] = self.get_gka_class_volume(stories_qset, months)
+        else:
+            response_json = {}
+
+        return Response(response_json)
+
+    def get_gka_class_volume(self, stories, months):
+        json = {}
+        boolean_mapper = {
+            'Yes':True,
+            'No':False
+        }
+        for story in stories:
+            year = story.date_of_visit.year
+            story_month = calendar.month_name[story.date_of_visit.month][:3]
+            if year not in json:
+                json[year] = OrderedDict()
+                for month in months:
+                    json[year][month] = {}
+
+            try:
+                school_was_open = boolean_mapper[
+                    story.answer_set.get(question__text="Was the school open?").text
+                ]
+            except:
+                continue
+
+            if school_was_open:
+                try:
+                    math_class_was_happening = boolean_mapper[
+                        story.answer_set.get(
+                            question__text="Was Math class happening on the day of your visit?").text
+                    ]
+                except:
+                    continue
+
+                if math_class_was_happening:
+                    try:
+                        tlm_was_being_used = boolean_mapper[
+                            story.answer_set.get(
+                                question__text="Did you see children using the Ganitha Kalika Andolana TLM?").text
+                        ]
+                    except:
+                        continue
+
+                    if tlm_was_being_used:
+                        class_visited = int(
+                            story.answer_set.get(question__text="Class visited").text
+                        )
+                        try:
+                            tlm_code = int(
+                                story.answer_set.get(
+                                    question__text="Which Ganitha Kalika Andolana TLM was being used by teacher?"
+                                ).text
+                            )
+                        except:
+                            continue
+
+                        if class_visited in json[year][story_month]:
+                            json[year][story_month][class_visited].add(tlm_code)
+                        else:
+                            json[year][story_month][class_visited] = set()
+                            json[year][story_month][class_visited].add(tlm_code)
+        return json
+
+    def get_call_volume(self, story_dates, months):
         json = {}
         for date in story_dates:
             if date.year in json:
@@ -138,14 +218,12 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             )
 
         ordered_per_month_json = {}
-        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
         for year in per_month_json:
             ordered_per_month_json[year] = OrderedDict()
             for month in months:
                 ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
 
-        response_json['volumes'] = ordered_per_month_json
-        return Response(response_json)
+        return ordered_per_month_json
 
 
 class StoryDetailView(KLPAPIView, CacheMixin):
@@ -311,6 +389,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     along with respondent types.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -324,6 +403,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -411,6 +491,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         if source:
             stories_qset = self.source_filter(
                 source, stories_qset)
+
+            if versions:
+                versions = map(int, versions)
+                stories_qset = stories_qset.filter(
+                    group__version__in=versions)
 
             response_json[source] = self.get_json(source, stories_qset)
         else:

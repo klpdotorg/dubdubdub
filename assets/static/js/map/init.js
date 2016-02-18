@@ -7,6 +7,7 @@
         //klp.login_modal.init();
         klp.map.init();
         klp.place_info.init();
+        klp.advanced_search.init();
         klp.comparison.init();
         klp.share_story.init();
         // klp.volunteer_modal.init();
@@ -21,7 +22,8 @@
             var $tool = $(this);
             $tool.toggleClass("active");
         });
-
+        $(".js-select-multiple").select2({
+        });
         // $(document).ready(function(){
         // });
 

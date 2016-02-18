@@ -1,0 +1,210 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-topSummary">
+    <h2 class="heading-border grey-steel">GKA IVRS</h2> 
+
+    <div class="container js-entity-data">
+          <div class="heading-tiny-uppercase align-left">
+            {{ searchEntity.type}}
+          </div>
+          <h2 class="heading-secondary black align-left">
+            {{ searchEntity.name }}
+          </h2>
+    </div>
+  </script>
+  
+  <script type="text/html" id="tpl-ivrsSummary">
+    <div class="heading-tiny-uppercase align-left" >Calls</div>
+    <h2 class="heading-secondary black align-left">{{ ivrs.stories }}</h2>
+    <div class="heading-tiny-uppercase align-left" >Schools</div>
+    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2>
+    <div class="heading-tiny-uppercase align-left" >Schools with Calls</div>
+    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2> 
+  </script>
+
+  <script type="text/html" id="tpl-tlmTable">
+   <div class="table-responsive-wrap">        
+    <table class="table-base">
+      <tbody>
+        <tr class="table-base-heading">
+        <td>TLM </td>
+        <td>JAN</td>
+        <td>FEB</td>
+        <td>MAR</td>
+        <td>APR</td>
+        <td>MAY</td>
+        <td>JUN</td>
+        <td>JUL</td>
+        <td>AUG</td>
+        <td>SEP</td>
+        <td>OCT</td>
+        <td>NOV</td>
+        <td>DEC</td>
+      </tr>
+      {% set range=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] %}
+      {% for i in range %}
+        <tr>
+          <td class="fixwidth heading-tiny-uppercase">{{tlm['TLM '+i]}}</td>
+          {% for month in months %}
+            <td class="fixwidth">
+            {% if month.four && month.four.indexOf(i) !== -1 %} 
+              <span class="fa fa-circle grey-steel"></span>
+            {% endif %}
+            {% if month.five && month.five.indexOf(i) !== -1 %} 
+              <span class="fa fa-circle green-leaf"></span>
+            {% else %}
+              &nbsp;
+            {% endif %}
+            </td>
+          {% endfor %}
+        </tr> 
+      {% endfor %}             
+    </tbody>
+  </table>
+</div>
+<div class="center-text">
+  <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
+  <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
+</div>
+<!--div class="chart-parent center-text">
+  <div class="chart-parent chart-half-item">
+    <div class="chart-athird-item">
+      <span class="fa fa-circle brand-blue"></span>&nbsp;Class 2
+    </div>
+    <div class="chart-athird-item">
+      <span class="fa fa-circle brand-orange"></span>&nbsp;Class 3
+    </div>
+    <div class="chart-athird-item">
+      <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
+    </div>
+  </div>
+  <div class="chart-parent chart-half-item">
+    <div class="chart-athird-item">
+      <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
+    </div>
+    <div class="chart-athird-item">
+      <span class="fa fa-circle pink-salmon"></span>&nbsp;Class 6
+    </div>
+    <div class="chart-athird-item">
+      <span class="fa fa-circle brand-red"></span>&nbsp;Class 7
+    </div>
+  </div-->
+</div>
+  </script>
+
+  <script type="text/html" id="tpl-classGraph">
+    {% if total != 0 %}
+    <div class="bar-graph-wrap">
+      <div class="bar-label {{ color }}">{{ value }} Grade</div>
+      <div class="bar-graph">
+        <div class="bar-percent {{ color }}">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-{{ score }} {{ color }}-bg" style="width:{{percent }}%;"></div>
+        </div>
+      </div> <!-- /bar-graph -->
+    </div> <!-- /bar-graph-wrap -->
+    {% else %}
+    <div class="no-data">
+      No respondents
+    </div>
+    {% endif %}
+  </script>
+
+
+  <script type="text/html" id="tpl-percentGraph">
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ question }}</div>
+      {% if total != 0 %}
+      <div class="bar-graph">
+        <div class="bar-percent green-leaf">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+      {% else %}
+      <div class="no-data">
+        No respondents
+      </div> 
+      {% endif %}
+    </div> <!-- /bar-graph-wrap -->
+  </script>
+
+  <script type="text/html" id="tpl-colorText">
+    <div class="chart-athird-item">
+      <div>
+        {% for i in icon %}
+          <span class="{{ i }}"></span>
+        {% endfor %}
+        &nbsp;{{ facility }}
+      </div>
+      {% if total != 0 %}
+      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
+        {{ percent }}%
+      </div>
+      {% else %}
+      <div class="no-data">
+        No data
+      </div>
+      {% endif %}
+    </div>
+  </script>
+
+  <!-- There's probably a cleaner way of doing the below template without this many for loops-->
+  <script type="text/html" id="tpl-compareTable">
+    <table class="table-base">
+      <thead class="table-base-heading">
+        <tr>
+        <th></th>            
+          {% for n in neighbours %}
+            <th>{{ n.name }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Schools</td>
+          {% for n in neighbours %}
+            <td>{{ n.schools }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>Surveys</td>
+          {% for n in neighbours %}
+            <td>{{ n.stories }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>IVRS Calls</td>
+          {% for n in neighbours %}
+            <td>{{ n.ivrs }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Volunteers say) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_volunteer }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Community says) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_community }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/html" id="tpl-countSummary">           
+    {% for s in summary %}
+      <div class="chart-quarter-item">
+        <div class="heading-tiny-uppercase align-left" >{{ s.label }}</div>
+        <h2 class="heading-secondary black align-left">{{ s.count }}</h2> 
+      </div>
+    {% endfor %}
+  </script>
+
+  <script type="text/html" id="tpl-ivrsVolume">           
+    <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
+  </script>
+
+{% endverbatim %}
+
