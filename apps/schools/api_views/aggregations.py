@@ -110,21 +110,22 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
             schools_with_anganwadi_stories = active_schools.filter(
                 story__group__source__name='anganwadi',
             ).distinct('id')
-            stories = self.get_latest_anganwadi_stories(
-                schools_with_anganwadi_stories
+
+            stories = Story.objects.filter(
+                school__in=schools_with_anganwadi_stories
+            ).order_by(
+                'school',
+                '-date_of_visit'
+            ).distinct(
+                'school'
             )
+
             data = get_que_and_ans(stories, 'anganwadi', 'PreSchool', None)
             agg['infrastructure'] = data
 
         # Not using serializer because we need to do the aggregations here
         # and return the results directly
         return Response(agg)
-
-    def get_latest_anganwadi_stories(self, schools):
-        queryset = []
-        for school in schools:
-            queryset.append(school.get_latest_story())
-        return queryset
 
 
 class AssemblySchoolAggView(KLPAPIView, BaseSchoolAggView):
