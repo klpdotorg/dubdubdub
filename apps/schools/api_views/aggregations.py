@@ -112,7 +112,8 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
             ).distinct('id')
 
             stories = Story.objects.filter(
-                school__in=schools_with_anganwadi_stories
+                school__in=schools_with_anganwadi_stories,
+                group__source__name='anganwadi',
             ).order_by(
                 'school',
                 '-date_of_visit'
