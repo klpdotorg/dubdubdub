@@ -391,14 +391,15 @@
 
   t.getPreSchoolInfra = function(data) {    
     var sumSchools = data.num_schools    
-    var anganwadiInfra = data.infrastructure.anganwadi.reduce(function(results, infra){
+    var anganwadiInfra = data.infrastructure.reduce(function(results, infra){
+      var sumResponses = infra.answers.options.Yes + infra.answers.options.No
       var key = infra.question.key
       var obj = {}
       if (preschoolInfraHash[key]) {
         obj.facility = preschoolInfraHash[key].type
         obj.icon = preschoolInfraHash[key].icon
         obj.total = infra.answers.options.Yes
-        obj.percent = getPercentage(obj.total, sumSchools) 
+        obj.percent = getPercentage(obj.total, sumResponses) 
         results.push(obj)
       }     
       return results

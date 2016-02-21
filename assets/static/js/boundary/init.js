@@ -168,8 +168,8 @@
     renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
     renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");
     //To do: Render Infra
-    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");
     console.log('data', data);
+    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");    
   }
 
   function renderSummary(data, schoolType) {
