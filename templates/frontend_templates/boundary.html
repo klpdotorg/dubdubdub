@@ -324,7 +324,7 @@
     <tbody>
       {% for cat, val in categories %}  
         <tr>
-          <td>{{ cat.type_name |capitalize }}</td>
+          <td>{{ cat |capitalize }}</td>
           <td>{{ val.klp_enrol | checkzero}}</td>
         </tr>
       {%endfor%}

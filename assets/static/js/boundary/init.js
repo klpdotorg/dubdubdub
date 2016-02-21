@@ -51,11 +51,8 @@
         // $('.js-trigger-compare').click(function(e) {
         //   e.preventDefault();
         //   klp.comparison.open(data.properties);
-        // });
-        //utils.triggerDropDown()
-        $("#acad-year").val(acadYear);
-        $(document).on('change', '#acad-year', function(e){
-          //window.location.hash = $(e.text).text()
+        // });        
+        $(document).on('change', '#acad-year', function(e){          
           window.location.hash = $( "#acad-year option:selected" ).text()
           window.location.reload()          
         })
@@ -171,19 +168,21 @@
     renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
     renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");
     //To do: Render Infra
-    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");
     console.log('data', data);
+    renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");    
   }
 
   function renderSummary(data, schoolType) {
     var tpl = swig.compile($('#tpl-school-summary').html());
     data["school_type"] = schoolType;
     var html = tpl(data);
-    if (schoolType == "school")
+    if (schoolType == "school") {
       $('#school-summary').html(html);
-    else
+    }
+    else {
       $('#preschool-summary').html(html);
-    $('#selected-year').text(selectedYear)
+    }
+    $('#acad-year').val(selectedYear)
   }
 
   function renderGenderCharts(data, schoolType) {

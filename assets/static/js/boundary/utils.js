@@ -64,20 +64,6 @@
     }    
   };
 
-  t.triggerDropDown = function() {
-    $(document).on('click', '.js-dropdown li:has(ul)', function(event) {
-      event.stopPropagation();
-      var thisNav = $(this).closest(".js-dropdown").find('ul');
-      $(".js-dropdown ul").not(thisNav).slideUp().closest('.js-dropdown').children('li:has(ul)').removeClass('clicked');
-      if (this == event.target || this == $(event.target).parent()[0]) {
-        $(this).toggleClass('clicked').children('ul').slideToggle(200);
-        $(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();
-        $(this).siblings().removeClass('clicked').find("ul").slideUp();
-        return false;
-      }
-    }).addClass('has_ul');
-  }
-
   t.getPreSchoolSummary = function(data, academicYear) {
     var modified = {
       "klp": {
@@ -405,14 +391,15 @@
 
   t.getPreSchoolInfra = function(data) {    
     var sumSchools = data.num_schools    
-    var anganwadiInfra = data.infrastructure.anganwadi.reduce(function(results, infra){
+    var anganwadiInfra = data.infrastructure.reduce(function(results, infra){
+      var sumResponses = infra.answers.options.Yes + infra.answers.options.No
       var key = infra.question.key
       var obj = {}
       if (preschoolInfraHash[key]) {
         obj.facility = preschoolInfraHash[key].type
         obj.icon = preschoolInfraHash[key].icon
         obj.total = infra.answers.options.Yes
-        obj.percent = getPercentage(obj.total, sumSchools) 
+        obj.percent = getPercentage(obj.total, sumResponses) 
         results.push(obj)
       }     
       return results
