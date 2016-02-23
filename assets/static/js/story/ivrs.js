@@ -8,9 +8,10 @@
 
     klp.init = function() {
         klp.accordion.init();
+        klp.gka_filters_modal.init();
         klp.router = new KLPRouter();
         klp.router.init();
-        initSelect2();
+        //initSelect2();
         klp.router.events.on('hashchange', function(event, params) {
             hashChanged(params);
         });
@@ -33,6 +34,11 @@
         } else {
             $('#endDate').yearMonthSelect("setDate", moment());
         }
+
+        $('#searchModal').click(function(e) {
+            e.preventDefault();
+            klp.gka_filters_modal.open();
+        });
 
         //get JS query params from URL
         $('#resetButton').click(function(e) {
