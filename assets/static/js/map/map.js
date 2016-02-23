@@ -526,7 +526,7 @@
                                     "type": props.boundary.type,
                                     "school_type": props.boundary.school_type
                                    };
-                if (data.properties.type !== 'district') {
+                if (props.boundary.type !== 'district') {
                     boundaryData["parentType"] = props.boundary.parent.type;
                     boundaryData["parentName"] = props.boundary.parent.name;
                 }

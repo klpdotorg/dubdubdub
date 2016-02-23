@@ -37,6 +37,11 @@ urlpatterns = patterns(
         template_name='story_dashboard.html'
     ), name='story_dashboard'),
 
+    # gka ivrs
+    url(r'^gka/$', StaticPageView.as_view(
+        template_name='gka_ivrs.html'
+        ), name='gka_ivrs'),
+
     # styleguide page
     url(r'^styleguide/$', StaticPageView.as_view(
         template_name='styleguide.html'
@@ -203,7 +208,7 @@ urlpatterns = patterns(
     url(r'^profile/(?P<pk>[0-9]+)/edit$',
         ProfileEditPageView.as_view(), name='profile_edit_page'),
 
-    url(r'^ivrs$', IVRSPageView.as_view(), name='ivrs_page'),
+    #url(r'^ivrs$', IVRSPageView.as_view(), name='ivrs_page'),
 
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'django.contrib.auth.views.password_reset_confirm', {

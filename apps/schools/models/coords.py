@@ -45,7 +45,6 @@ class BoundaryCoord(GeoBaseModel):
 
 
 class Assembly(GeoBaseModel):
-    id = models.IntegerField(primary_key=True, db_column='ac_id')
     gid = models.IntegerField()
     number = models.IntegerField(db_column='ac_no')
     name = models.CharField(max_length=35, db_column='ac_name')
@@ -73,7 +72,6 @@ class Assembly(GeoBaseModel):
 
 
 class Parliament(GeoBaseModel):
-    id = models.IntegerField(primary_key=True, db_column='pc_id')
     gid = models.IntegerField()
     number = models.IntegerField(db_column='pc_no')
     name = models.CharField(max_length=35, db_column='pc_name')

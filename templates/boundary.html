@@ -7,14 +7,16 @@
 {% endblock %}
 
 {% block endbody %}
+  {% compress css %}
+    <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />  
+  {% endcompress %}
   {% compress js %}
   <script type="text/javascript" src="{% static 'js/common/dise_api.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/init.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/boundary/utils.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/leaflet-0.7.3/leaflet.js' %}"></script>
-  <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->
-  <link rel="stylesheet" href="{% static 'js/lib/leaflet-0.7.3/leaflet.css' %}" />
+  <!-- <script src="{% static 'js/inline-school.js' %}"></script> -->  
   {% endcompress %}
   <script>
     BOUNDARY_ID = {{ object.id }};
@@ -38,9 +40,9 @@
           <div class="grid-parent">
             <div class="info-wrapper" id="boundary-info-wrapper">
             </div>
-            <div class="button-compare-wrap">
+            <!--<div class="button-compare-wrap">
               <a class="button-grey js-trigger-compare" href="">Compare to</a>
-            </div>          
+            </div>-->
         </div>
       </div> <!-- /container -->
     </div> <!-- /school-map-info -->      
@@ -49,7 +51,7 @@
 
   <div class="container hidden" id="school-data">
     <div class="base-spacing-mid"></div>
-    <div id="school-summary"></div> 
+    <div id="school-summary" class="container"></div> 
     <hr/>
 
     <h2 class="heading-border brand-turquoise">Demographics</h2> 
