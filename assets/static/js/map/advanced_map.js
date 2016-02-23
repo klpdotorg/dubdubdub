@@ -81,8 +81,6 @@
         $_input_programme = $('#multi_programmes');
         $_btn_reset_adv_search = $('.adv-search-reset-btn');
 
-        // klp.router.routes['/'] = t.route_home;
-
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
@@ -848,11 +846,6 @@
     t.stopLoading = function() {
         t.map.spin(false);
     };
-
-    t.route_home = function(stuff) {
-        console.log('home is here');
-        console.log(stuff);
-    }
 
     function updateLayers() {
 
