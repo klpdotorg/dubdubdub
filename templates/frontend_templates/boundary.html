@@ -353,6 +353,11 @@
       {% if total != 0 %}
       <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
         {{ percent }}%
+        {% if schooltype and schooltype=='Preschool' %}
+          <span class="font-smaller grey-steel">
+            ( {{ total }} / {{ sumschools }} surveyed)
+          </span>
+        {% endif %}
       </div>
       {% else %}
       <div class="no-data">

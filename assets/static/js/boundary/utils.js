@@ -400,6 +400,8 @@
         obj.icon = preschoolInfraHash[key].icon
         obj.total = infra.answers.options.Yes
         obj.percent = getPercentage(obj.total, sumResponses) 
+        obj.sumschools = sumSchools
+        obj.schooltype = 'Preschool'
         results.push(obj)
       }     
       return results
