@@ -467,24 +467,28 @@
                 })
             });
 
-            $('#school-list').html('');
-            shuffle(allMarkersOnMap);
-            $.each(allMarkersOnMap, function(idx, marker) {
-                var tplSchoolItem = swig.compile($('#tpl-school-item').html());
+            if (allMarkersOnMap.length > 0) {
+                $('#school-list').html('');
+                shuffle(allMarkersOnMap);
+                $.each(allMarkersOnMap, function(idx, marker) {
+                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
 
-                var html = tplSchoolItem(marker.feature);
-                $('#school-list').append(html);
-            })
+                    var html = tplSchoolItem(marker.feature);
+                    $('#school-list').append(html);
+                })
+            } else {
+                $('#school-list').html('Sorry, no schools were found in the current map view. Please zoom out or move around to find more schools.')
+            }
         }
 
         $_btn_reset_adv_search.on('click', function(e) {
             window.location.hash = '';
-            setURL();
-            $(e.target).hide();
+            map.setZoom(map.getZoom() - 1);
         });
 
         function loadPointsByBbox() {
             var bbox = map.getBounds();
+            // FIXME
             // if (mapBbox && mapBbox.contains(bbox)) {
             //     console.log('this is quitting here');
             //     return;
@@ -535,6 +539,9 @@
                         onEachFeature: onEachSchool
                     }).addTo(preschoolCluster);
 
+                    // this is here so that it gets called
+                    // after both the preschool and primary school
+                    // API calls are done.
                     listPointsOnSidebar(enabledLayers);
                 });
             }
