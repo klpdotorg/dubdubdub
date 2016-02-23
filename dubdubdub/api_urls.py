@@ -11,7 +11,7 @@ from schools.api_views import (
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool, SchoolInfra,
     SchoolLibrary, OmniSearch, AdminDetails, AssemblyDetails,
     ParliamentDetails, AssemblyList, ParliamentList, AssemblyInParliament,
-    PincodeDetails, SchoolNutrition, MergeEndpoints,
+    PincodeDetails, SchoolNutrition, MergeEndpoints, PartnerList,
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView
@@ -45,10 +45,10 @@ urlpatterns = patterns(
 
     url(r'^patterns/$', URLConfigView.as_view(), name='api_urlspatterns'),
 
-    url(r'^search$', OmniSearch.as_view(), name='api_omni_search'),
+    url(r'^search/$', OmniSearch.as_view(), name='api_omni_search'),
 
-    url(r'^schools/list$', SchoolsList.as_view(), name='api_schools_list'),
-    url(r'^schools/info$', SchoolsInfo.as_view(), name='api_schools_info'),
+    url(r'^schools/list/$', SchoolsList.as_view(), name='api_schools_list'),
+    url(r'^schools/info/$', SchoolsInfo.as_view(), name='api_schools_info'),
     url(r'^schools/dise/(?P<year>[0-9\-]*)$', SchoolsDiseInfo.as_view(),
         name='api_schools_dise'),
     url(r'^schools/school/(?P<pk>[0-9]+)/$', SchoolInfo.as_view(),
@@ -239,6 +239,7 @@ urlpatterns = patterns(
         BoundaryLibLangAggView.as_view(), name='api_aggregation_boundary_liblang'),
 
     # Assessment urls
+    url(r'^partners/$', PartnerList.as_view(), name='api_partner_list'),
     url(r'^assessment/$',
         AssessmentsList.as_view(), name='api_assessment_list'),
     url(r'^assessment/(?P<assessment_id>[0-9]+)/$',

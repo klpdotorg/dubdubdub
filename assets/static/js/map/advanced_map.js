@@ -35,7 +35,13 @@
     var disabledLayers,
         enabledLayers,
         allLayers,
-        selectedLayers;
+        selectedLayers,
+        allMarkersOnMap = [];
+
+    var $_form_advanced_search,
+        $_input_partner,
+        $_input_programme,
+        $_btn_reset_adv_search;
 
     var isMobile = $(window).width() < 768;
 
@@ -69,6 +75,12 @@
             e.preventDefault();
             map.closePopup();
         });
+
+        $_form_advanced_search = $('#form_advanced_search');
+        $_input_partner = $('input[name="partner_id"]:radio');
+        $_input_programme = $('#multi_programmes');
+        $_btn_reset_adv_search = $('.adv-search-reset-btn');
+
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
@@ -193,11 +205,49 @@
             });
         }
 
+        // Advanced Search
+        var do_search = function(e) {
+            e.preventDefault();
+            var data = get_form_data();
+            klp.router.setHash('/', data);
+            loadPointsByBbox();
+        }
+
+        var get_form_data = function() {
+            var formdata = $_form_advanced_search.serializeArray();
+
+            var data = {};
+            $(formdata ).each(function(index, obj){
+                if (data.hasOwnProperty(obj.name)) {
+                    data[obj.name] += ',' + encodeURIComponent(obj.value);
+                } else {
+                    data[obj.name] = encodeURIComponent(obj.value);
+                }
+            });
+            return data;
+        }
+
+        var fill_program = function(e) {
+            e.preventDefault();
+            var formdata = get_form_data();
+
+            var thisEntityXHR = klp.api.do('programme/', formdata);
+            thisEntityXHR.done(function(data) {
+                $_input_programme.select2('destroy');
+                $_input_programme.append( $.map(data.features, function(v, i){
+                    return $('<option>', { val: v.id, text: v.name });
+                }) );
+            });
+        }
+
+        $_form_advanced_search.on('submit', do_search);
+        $_input_partner.on('change', fill_program);
+
         klp.router.events.on('hashchange', function (event, params) {
             var url = params.url,
                 oldURL = params.oldURL;
 
-            if (url === '' || url === 'close') {
+            if (url === 'close') {
                 // 'close' is because of the advanced search modal
                 setURL();
             } else {
@@ -355,16 +405,6 @@
             }
         }
 
-        $('body').on('click', '#primaryschool-header', function(e) {
-            e.preventDefault();
-            $('#primaryschool-list').toggle('fast');
-        });
-
-        $('body').on('click', '#preschool-header', function(e) {
-            e.preventDefault();
-            $('#preschool-list').toggle('fast');
-        });
-
         // var $sidebar_school_items = $('.sidebar-school');
         $('body').on('click', '.sidebar-school', function(e) {
             e.preventDefault();
@@ -386,17 +426,73 @@
 
             $(school_element).siblings('li').css('background-color', '')
 
-            var latlng = $(school_element).data('latlng')
-            map.setView(latlng.split(',').reverse(), 18);
+            var school_id = $(school_element).data('id');
+            $.each(allMarkersOnMap, function(idx, marker) {
+                if (marker.feature.properties.id == school_id) {
+                    marker.fire('click');
+                }
+            })
 
             $(school_element).css('background-color', '#ddd')
         })
 
+        function shuffle(array) {
+          var currentIndex = array.length, temporaryValue, randomIndex;
+
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+
+          return array;
+        }
+
+        function listPointsOnSidebar(allTheLayers) {
+            var bbox = map.getBounds();
+            allMarkersOnMap = [];
+
+            allTheLayers.eachLayer(function(parentLayer) {
+                parentLayer.eachLayer(function(marker) {
+                    if (bbox.contains(marker.getLatLng())) {
+                        allMarkersOnMap.push(marker);
+                    }
+                })
+            });
+
+            if (allMarkersOnMap.length > 0) {
+                $('#school-list').html('');
+                shuffle(allMarkersOnMap);
+                $.each(allMarkersOnMap, function(idx, marker) {
+                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
+
+                    var html = tplSchoolItem(marker.feature);
+                    $('#school-list').append(html);
+                })
+            } else {
+                $('#school-list').html('Sorry, no schools were found in the current map view. Please zoom out or move around to find more schools.')
+            }
+        }
+
+        $_btn_reset_adv_search.on('click', function(e) {
+            window.location.hash = '';
+            map.setZoom(map.getZoom() - 1);
+        });
+
         function loadPointsByBbox() {
             var bbox = map.getBounds();
-            if (mapBbox && mapBbox.contains(bbox)) {
-                return;
-            }
+            // FIXME
+            // if (mapBbox && mapBbox.contains(bbox)) {
+            //     console.log('this is quitting here');
+            //     return;
+            // }
 
             var bboxString = map.getBounds().pad(0.05).toBBoxString();
             mapBbox = bbox.pad(0.05);
@@ -409,18 +505,32 @@
                 schoolXHR.abort();
             }
 
+            var formdata = klp.router.getHash();
+            console.log('form data parsed from url', formdata);
+
+            console.log(Object.getOwnPropertyNames(formdata.queryParams).length);
+            if (Object.getOwnPropertyNames(formdata.queryParams).length > 0) {
+                $('.adv-search-reset-btn').show();
+            }
+
+            var options = {
+                'geometry': 'yes',
+                'per_page': 400,
+                'bbox': bboxString
+            }
+            for (var attrname in formdata.queryParams) {
+                options[attrname] = formdata.queryParams[attrname];
+            }
+
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
-                preschoolXHR = klp.api.do('schools/list', {
-                    'type': 'preschools',
-                    'geometry': 'yes',
-                    'per_page': 400,
-                    'bbox': bboxString
-                });
+
+                options['school_type'] = 'preschools';
+
+                preschoolXHR = klp.api.do('schools/list', options);
                 preschoolXHR.done(function (data) {
                     t.stopLoading();
                     preschoolCluster.clearLayers();
-                    $('#preschool-list').html('');
 
                     var preschoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -429,29 +539,22 @@
                         onEachFeature: onEachSchool
                     }).addTo(preschoolCluster);
 
-                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-
-                    if (data.features.length > 0) {
-                        _(data.features).each(function(school) {
-                            var html = tplSchoolItem(school);
-                            $('#preschool-list').append(html);
-                        });
-                    }
+                    // this is here so that it gets called
+                    // after both the preschool and primary school
+                    // API calls are done.
+                    listPointsOnSidebar(enabledLayers);
                 });
             }
 
             if (enabledLayers.hasLayer(schoolCluster)) {
                 t.startLoading();
-                schoolXHR = klp.api.do('schools/list', {
-                    'type': 'primaryschools',
-                    'geometry': 'yes',
-                    'per_page': 400,
-                    'bbox': bboxString
-                });
+
+                options['school_type'] = 'primaryschools';
+
+                schoolXHR = klp.api.do('schools/list', options);
                 schoolXHR.done(function (data) {
                     t.stopLoading();
                     schoolCluster.clearLayers();
-                    $('#primaryschool-list').html('');
 
                     var schoolLayer = L.geoJson(filterGeoJSON(data), {
                         pointToLayer: function(feature, latlng) {
@@ -460,14 +563,10 @@
                         onEachFeature: onEachSchool
                     }).addTo(schoolCluster);
 
-                    var tplSchoolItem = swig.compile($('#tpl-school-item').html());
-
-                    if (data.features.length > 0) {
-                        _(data.features).each(function(school) {
-                            var html = tplSchoolItem(school);
-                            $('#primaryschool-list').append(html);
-                        });
-                    }
+                    // this is here so that it gets called
+                    // after both the preschool and primary school
+                    // API calls are done.
+                    listPointsOnSidebar(enabledLayers);
                 });
             }
         }
@@ -743,7 +842,7 @@
                     });
                 enabledLayers.clearLayers();
                 enabledLayers.addLayer(radiusLayer);
-                });
+            });
         });
 
     };
@@ -783,7 +882,6 @@
     }
 
     function setURL() {
-
         var currentZoom = map.getZoom();
         var mapCenter = map.getCenter();
         var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);

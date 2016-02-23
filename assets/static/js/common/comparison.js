@@ -178,7 +178,7 @@
     var open = function(entity1){
         //e.preventDefault();
         // console.log("compare open called with ", entity1);
-        // 
+        //
         $trigger.click();
         if(klp.map){
             klp.map.closePopup();
@@ -307,7 +307,7 @@
                 data: function (term, page) {
                     return {
                         search: term,
-                        type: entityOne.type.id === 1 ? 'primaryschools' : 'preschools'
+                        school_type: entityOne.type.id === 1 ? 'primaryschools' : 'preschools'
                     };
                 },
                 results: function (data, page) {
@@ -363,7 +363,7 @@
                 },100);
                 //var html = templates['comparison-result'](context);
             });
-            $btn_comparison_submit.removeClass("show");            
+            $btn_comparison_submit.removeClass("show");
         });
     };
 

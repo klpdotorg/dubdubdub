@@ -10,16 +10,18 @@
             <div class="text-bordered center-text">
               <label class="label required brand-green">Pick the type of Institution </label>
               <div class="form-field-wrap">
-                <input type="radio" class="input-radio" id="stype_school" value="school" name="school_type">
+                <input type="radio" class="input-radio" id="stype_school" value="primaryschools" name="school_type">
                 <label for="stype_school" class="input-radio-label">School</label>
-                <input type="radio" class="input-radio" id="stype_preschool" value="preschool" name="school_type">
+                <input type="radio" class="input-radio" id="stype_preschool" value="preschools" name="school_type">
                 <label for="stype_preschool" class="input-radio-label">Preschool</label>
                 <input type="radio" class="input-radio" id="stype_both" value="both" name="school_type" checked>
                 <label for="stype_both" class="input-radio-label">Both</label>
               </div>
               <label class="label required brand-green">Select the academic year </label>
               <div class="form-field-wrap">
-                <select>
+                <select name="academic_year">
+                  <option value="2010-2011">2010-2011</option>
+                  <option value="2011-2012">2011-2012</option>
                   <option value="2012-2013">2012-2013</option>
                   <option value="2013-2014">2013-2014</option>
                   <option value="2014-2015">2014-2015</option>
@@ -34,17 +36,13 @@
               <label class="label brand-green">First pick a Partner</label>
               <div class="base-spacing-sm"></div>
               <div class="search-parent">
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="program_akshara" name="program" value="akshara">
-                  <label for="program_akshara" class="input-radio-label">Akshara Foundation</label>
+                <div class="search-half-col form-field-wrap">
+                  <input type="radio" class="input-radio" id="partner_akshara" name="partner_id" value="1">
+                  <label for="partner_akshara" class="input-radio-label">Akshara Foundation</label>
                 </div>
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="program_akshaya_patra" name="program" value="akshaya_patra" >
-                  <label for="program_akshaya_patra" class="input-radio-label">Akshaya Patra</label>
-                </div>
-                <div class="search-third-col form-field-wrap">
-                  <input type="radio" class="input-radio" id="program_sikshana" name="program" value="sikshana">
-                  <label for="program_sikshana" class="input-radio-label">Sikshana Foundation</label>
+                <div class="search-half-col form-field-wrap">
+                  <input type="radio" class="input-radio" id="partner_akshaya_patra" name="partner_id" value="2">
+                  <label for="partner_akshaya_patra" class="input-radio-label">Pratham Mysore</label>
                 </div>
               </div>
 
@@ -52,11 +50,7 @@
                 <div>
                 <label class="label brand-green">Then select a Program</label>
                 <div class="base-spacing-sm"></div>
-                <select class="js-select-multiple program-select" multiple="multiple">
-                  <option value="option1">Akshara Ganitha</option>
-                  <option value="option2">Akshara GKA</option>
-                  <option value="option3">Akshara Reading</option>
-                  <option value="option4">Library</option>
+                <select class="js-select-multiple program-select" id="multi_programmes" name="programmes" multiple="multiple">
                 </select>
                 </div>
               </div><!-- end form-field-wrap-->
