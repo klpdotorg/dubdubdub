@@ -45,10 +45,10 @@ urlpatterns = patterns(
 
     url(r'^patterns/$', URLConfigView.as_view(), name='api_urlspatterns'),
 
-    url(r'^search$', OmniSearch.as_view(), name='api_omni_search'),
+    url(r'^search/$', OmniSearch.as_view(), name='api_omni_search'),
 
-    url(r'^schools/list$', SchoolsList.as_view(), name='api_schools_list'),
-    url(r'^schools/info$', SchoolsInfo.as_view(), name='api_schools_info'),
+    url(r'^schools/list/$', SchoolsList.as_view(), name='api_schools_list'),
+    url(r'^schools/info/$', SchoolsInfo.as_view(), name='api_schools_info'),
     url(r'^schools/dise/(?P<year>[0-9\-]*)$', SchoolsDiseInfo.as_view(),
         name='api_schools_dise'),
     url(r'^schools/school/(?P<pk>[0-9]+)/$', SchoolInfo.as_view(),

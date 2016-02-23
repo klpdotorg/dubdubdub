@@ -7,8 +7,7 @@
         $_filter_layers_button,
         $radiusButton,
         map,
-        marker_overlay_html,
-        search_mode = false;
+        marker_overlay_html;
 
     var tpl_map_popup;
     var tpl_mobile_place_details;
@@ -38,6 +37,11 @@
         allLayers,
         selectedLayers,
         allMarkersOnMap = [];
+
+    var $_form_advanced_search,
+        $_input_partner,
+        $_input_programme,
+        $_btn_reset_adv_search;
 
     var isMobile = $(window).width() < 768;
 
@@ -71,6 +75,14 @@
             e.preventDefault();
             map.closePopup();
         });
+
+        $_form_advanced_search = $('#form_advanced_search');
+        $_input_partner = $('input[name="partner_id"]:radio');
+        $_input_programme = $('#multi_programmes');
+        $_btn_reset_adv_search = $('.adv-search-reset-btn');
+
+        // klp.router.routes['/'] = t.route_home;
+
         // Search.
         var $searchInput = $(".search-input");
         $searchInput.select2({
@@ -195,11 +207,49 @@
             });
         }
 
+        // Advanced Search
+        var do_search = function(e) {
+            e.preventDefault();
+            var data = get_form_data();
+            klp.router.setHash('/', data);
+            loadPointsByBbox();
+        }
+
+        var get_form_data = function() {
+            var formdata = $_form_advanced_search.serializeArray();
+
+            var data = {};
+            $(formdata ).each(function(index, obj){
+                if (data.hasOwnProperty(obj.name)) {
+                    data[obj.name] += ',' + encodeURIComponent(obj.value);
+                } else {
+                    data[obj.name] = encodeURIComponent(obj.value);
+                }
+            });
+            return data;
+        }
+
+        var fill_program = function(e) {
+            e.preventDefault();
+            var formdata = get_form_data();
+
+            var thisEntityXHR = klp.api.do('programme/', formdata);
+            thisEntityXHR.done(function(data) {
+                $_input_programme.select2('destroy');
+                $_input_programme.append( $.map(data.features, function(v, i){
+                    return $('<option>', { val: v.id, text: v.name });
+                }) );
+            });
+        }
+
+        $_form_advanced_search.on('submit', do_search);
+        $_input_partner.on('change', fill_program);
+
         klp.router.events.on('hashchange', function (event, params) {
             var url = params.url,
                 oldURL = params.oldURL;
 
-            if (url === '' || url === 'close') {
+            if (url === 'close') {
                 // 'close' is because of the advanced search modal
                 setURL();
             } else {
@@ -429,6 +479,12 @@
             })
         }
 
+        $_btn_reset_adv_search.on('click', function(e) {
+            window.location.hash = '';
+            setURL();
+            $(e.target).hide();
+        });
+
         function loadPointsByBbox() {
             var bbox = map.getBounds();
             if (mapBbox && mapBbox.contains(bbox)) {
@@ -446,14 +502,29 @@
                 schoolXHR.abort();
             }
 
+            var formdata = klp.router.getHash();
+            console.log('form data parsed from url', formdata);
+
+            console.log(Object.getOwnPropertyNames(formdata.queryParams).length);
+            if (Object.getOwnPropertyNames(formdata.queryParams).length > 0) {
+                $('.adv-search-reset-btn').show();
+            }
+
+            var options = {
+                'geometry': 'yes',
+                'per_page': 400,
+                'bbox': bboxString
+            }
+            for (var attrname in formdata.queryParams) {
+                options[attrname] = formdata.queryParams[attrname];
+            }
+
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
-                preschoolXHR = klp.api.do('schools/list', {
-                    'type': 'preschools',
-                    'geometry': 'yes',
-                    'per_page': 400,
-                    'bbox': bboxString
-                });
+
+                options['school_type'] = 'preschools';
+
+                preschoolXHR = klp.api.do('schools/list', options);
                 preschoolXHR.done(function (data) {
                     t.stopLoading();
                     preschoolCluster.clearLayers();
@@ -471,12 +542,10 @@
 
             if (enabledLayers.hasLayer(schoolCluster)) {
                 t.startLoading();
-                schoolXHR = klp.api.do('schools/list', {
-                    'type': 'primaryschools',
-                    'geometry': 'yes',
-                    'per_page': 400,
-                    'bbox': bboxString
-                });
+
+                options['school_type'] = 'primaryschools';
+
+                schoolXHR = klp.api.do('schools/list', options);
                 schoolXHR.done(function (data) {
                     t.stopLoading();
                     schoolCluster.clearLayers();
@@ -780,6 +849,11 @@
         t.map.spin(false);
     };
 
+    t.route_home = function(stuff) {
+        console.log('home is here');
+        console.log(stuff);
+    }
+
     function updateLayers() {
 
         var currentZoom = map.getZoom();
@@ -807,7 +881,6 @@
     }
 
     function setURL() {
-
         var currentZoom = map.getZoom();
         var mapCenter = map.getCenter();
         var mapURL = currentZoom+'/'+mapCenter.lat.toFixed(5)+'/'+mapCenter.lng.toFixed(5);

@@ -26,8 +26,6 @@
       <script type="text/javascript" src="{% static 'js/lib/leaflet-draw/leaflet.draw.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/spin.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/leaflet.spin.js' %}"></script>
-
-      <script type="text/javascript" src="{% static 'js/map/advanced_search.js' %}"></script>
     {% endcompress %}
 
     <!--
@@ -67,8 +65,9 @@
         </div> -->
       </div>
       <a href="#searchmodal">
-      <div style="font-size: 0.9em" class="adv-search-btn tooltip" aria-label="Advanced Search">Advanced Search</div>
+      <div style="font-size: 0.9em" class="adv-search-btn tooltip" aria-label="Advanced Search">Advanced</div>
       </a>
+      <div style="font-size: 0.9em; display:none; padding: 10px;" class="adv-search-reset-btn button tooltip" aria-label="Advanced Search Reset">Reset</div>
     </div>
   </div>
 {% endblock %}
