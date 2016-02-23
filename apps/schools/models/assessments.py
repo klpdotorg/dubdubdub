@@ -192,16 +192,16 @@ class BoundaryAssessmentSinglescoreMt(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+                                     blank=True, null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" %(self.boundary, self.assessment, self.mt,)
+        return "%s: %s: %s" % (self.boundary, self.assessment, self.mt,)
 
     class Meta:
 
-        #workaround for https://code.djangoproject.com/ticket/8162
+        # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'BoundaryAssSingleScoreMt'
         managed = False
         db_table = 'tb_boundary_assessment_singlescore_mt'
@@ -258,7 +258,6 @@ class Question(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_question'
-
 
 
 class StudentEval(BaseModel):

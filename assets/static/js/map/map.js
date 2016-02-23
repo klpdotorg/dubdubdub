@@ -97,7 +97,7 @@
                     };
                 },
 
-                /* 
+                /*
                   Function that gets called with data from API
                   and formats results for select2
                 */
@@ -397,7 +397,7 @@
 
             if (enabledLayers.hasLayer(preschoolCluster)) {
                 t.startLoading();
-                preschoolXHR = klp.api.do('schools/list', {'type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
+                preschoolXHR = klp.api.do('schools/list', {'school_type': 'preschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
                 preschoolXHR.done(function (data) {
                     t.stopLoading();
                     preschoolCluster.clearLayers();
@@ -412,7 +412,7 @@
 
             if (enabledLayers.hasLayer(schoolCluster)) {
                 t.startLoading();
-                schoolXHR = klp.api.do('schools/list', {'type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
+                schoolXHR = klp.api.do('schools/list', {'school_type': 'primaryschools', 'geometry': 'yes', 'per_page': 0, 'bbox': bboxString});
                 schoolXHR.done(function (data) {
                     t.stopLoading();
                     schoolCluster.clearLayers();
@@ -511,7 +511,7 @@
             var boundary_type = feature.properties.type;
             var schoolType = feature.properties.school_type;
             duplicatemarker = L.marker(marker._latlng, {icon: mapIcon(schoolType +'_' + boundary_type)});
-            
+
             selectedLayers.addLayer(duplicatemarker);
             if (map._popup) {
                 state.addPopupCloseHistory = false;
@@ -570,7 +570,7 @@
                 facilitiesXHR.done(function(basicFacilities) {
                     t.stopLoading();
                     data.basic_facilities = basicFacilities;
-                    data.has_basic_facilities = data.basic_facilities.computer_lab || 
+                    data.has_basic_facilities = data.basic_facilities.computer_lab ||
                                                 data.basic_facilities.library ||
                                                 data.basic_facilities.playground ||
                                                 data.has_volunteer_activities;
@@ -600,7 +600,7 @@
                         var basicFacilities = klp.dise_infra.getBasicFacilities(diseData.properties);
                         $deferred.resolve(basicFacilities);
                     } else {
-                        $deferred.resolve({});    
+                        $deferred.resolve({});
                     }
                 });
                 facilitiesXHR.fail(function(err) {
@@ -643,7 +643,7 @@
 
         allLayers = L.layerGroup([preschoolCluster, schoolCluster, districtLayer, preschoolDistrictLayer, blockLayer, clusterLayer, projectLayer, circleLayer]);
 
- 
+
        // Radius tool.
         // Initialise the FeatureGroup to store editable layers
         var drawnItems = new L.FeatureGroup();
@@ -695,7 +695,7 @@
 
         map.addControl(new filterControl());
 
- 
+
 
         // Map Events
         map.on('zoomend', updateLayers);
