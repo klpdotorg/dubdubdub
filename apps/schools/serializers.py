@@ -77,7 +77,7 @@ class PincodeSerializer(KLPSimpleGeoSerializer):
 
 class SchoolListSerializer(KLPSerializer):
     type = BoundaryTypeSerializer(source='schooldetails.type')
-    address_full = serializers.CharField(source='address.full')
+    address_full = serializers.CharField(source='full_address')
 
     class Meta:
         model = School

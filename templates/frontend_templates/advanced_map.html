@@ -194,7 +194,7 @@
             <img title="Primary School" style="float:left; margin: 0 10px 10px 0" src="/static/images/map/icon_school.png" />
         {% endif %}
         <div class="uppercase font-smaller"><strong>{{ properties.name }}</strong></div>
-        <div class="font-smallest">{{ properties.address_full }}</div>
+        <div class="font-smallest">{% if properties.address_full != null %}{{ properties.address_full }}{% endif%}</div>
     </li>
 </script>
 {% endverbatim %}
