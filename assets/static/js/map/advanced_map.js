@@ -485,9 +485,10 @@
 
         function loadPointsByBbox() {
             var bbox = map.getBounds();
-            if (mapBbox && mapBbox.contains(bbox)) {
-                return;
-            }
+            // if (mapBbox && mapBbox.contains(bbox)) {
+            //     console.log('this is quitting here');
+            //     return;
+            // }
 
             var bboxString = map.getBounds().pad(0.05).toBBoxString();
             mapBbox = bbox.pad(0.05);
