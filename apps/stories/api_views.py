@@ -459,6 +459,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             stories_qset = stories_qset.filter(
                 school__electedrep__mla_const__id=mla_id)
 
+        # We need the stories qset with all filters except
+        # the date filter applied on it to calculate the
+        # last story date for each source.
+        last_date_stories_qset = stories_qset
+
         if start_date:
             #school_qset = school_qset.filter(
             #    story__date_of_visit__gte=start_date)
@@ -475,25 +480,50 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         response_json['total'] = {}
         response_json['total']['schools'] = school_qset.count()
-        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
         response_json['total']['stories'] = stories_qset.count()
+        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
 
         if source:
             stories_qset = self.source_filter(
-                source, stories_qset)
+                source,
+                stories_qset
+            )
+
+            last_date_stories_qset = self.source_filter(
+                source,
+                last_date_stories_qset,
+            )
 
             if versions:
                 versions = map(int, versions)
                 stories_qset = stories_qset.filter(
-                    group__version__in=versions)
+                    group__version__in=versions
+                )
+                last_date_stories_qset = self.source_filter(
+                    group__version__in=versions
+                )
 
-            response_json[source] = self.get_json(source, stories_qset)
+            response_json[source] = self.get_json(
+                source,
+                stories_qset,
+                last_date_stories_qset,
+            )
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
                 stories = self.source_filter(
-                    source, stories_qset)
-                response_json[source] = self.get_json(source, stories)
+                    source,
+                    stories_qset
+                )
+                last_date_stories = self.source_filter(
+                    source,
+                    last_date_stories_qset,
+                )
+                response_json[source] = self.get_json(
+                    source,
+                    stories,
+                    last_date_stories,
+                )
 
         response_json['respondents'] = self.get_respondents(stories_qset)
 
@@ -526,10 +556,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         return stories_qset
 
-    def get_json(self, source, stories_qset):
+    def get_json(self, source, stories_qset, last_date_qset):
         json = {}
-        json['schools'] = stories_qset.distinct('school').count()
         json['stories'] = stories_qset.count()
+        json['schools'] = stories_qset.distinct('school').count()
+        json['last_story'] = last_date_qset.latest('date_of_visit').date_of_visit
         if source == "web":
             json['verified_stories'] = stories_qset.filter(
                 is_verified=True,
