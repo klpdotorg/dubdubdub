@@ -87,7 +87,7 @@
   @extend %grey-cloud;
 }
 
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .nextLightBox {
     right: -20px; }
 
