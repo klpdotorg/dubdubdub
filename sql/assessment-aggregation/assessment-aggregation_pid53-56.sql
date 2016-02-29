@@ -262,6 +262,7 @@ begin
         for schs in execute query
         loop
           insert into tb_assessment_grade_percentilerank values (inassid,'0',schs.Orank);
+          insert into tb_assessment_grade_percentilerank values (inassid,'O',schs.Orank);
           insert into tb_assessment_grade_percentilerank values (inassid,'D',schs.Drank);
           insert into tb_assessment_grade_percentilerank values (inassid,'N',schs.Nrank);
           insert into tb_assessment_grade_percentilerank values (inassid,'A',schs.Arank);

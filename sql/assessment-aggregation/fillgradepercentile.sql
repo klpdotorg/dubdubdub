@@ -1,4 +1,3 @@
-
 select percentile_grade_wrapper(1);
 select percentile_grade_wrapper(7);
 select percentile_grade_wrapper(8);
