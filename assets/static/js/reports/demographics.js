@@ -1,6 +1,6 @@
 'use strict';
-var BOUNDARY_TYPE="parliament";
-var KLP_ID="264";
+var BOUNDARY_TYPE="admin3";
+var KLP_ID="8908";
 var LANGUAGE="kannada";
 
 (function() {
@@ -17,12 +17,12 @@ var LANGUAGE="kannada";
         var url = "reports/?report_type=demographics&boundary=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
         var $xhr = klp.api.do(url, params);
         $xhr.done(function(data) {
-            var summaryJSON= getSummaryData(data.features[0]);
+            var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");
             var detailsJSON= getDetailsData(data);
             renderCategories(detailsJSON);
             renderLanguage(detailsJSON);
-            var comparisonJSON=getComparisonData(data);
+            var comparisonJSON = data["comparison"];
             renderComparison(comparisonJSON);
         });
 
@@ -32,7 +32,7 @@ var LANGUAGE="kannada";
     {
         var summaryJSON = {
             "boundary"  : data["boundary_info"],
-            "school_count" : data["schoolcount"], 
+            "school_count" : data["school_count"], 
             "teacher_count" : data["teacher_count"],
             "gender" : data["gender"]
         }
@@ -43,40 +43,10 @@ var LANGUAGE="kannada";
     function getDetailsData(data)
     { 
         var detailsJson = {
-                "categories" : [
-                    {"categories": "Upper Primary", "num_schools" : 168, "num_students" : 25000}
-                    {"categories": "Lower Primary", "num_schools" : 146, "num_studnets" : 22145}
-                ],
-                //"categories" : {
-                  //  "Upper Primary": {"school_count" : 168, "student_count" : 25000},
-                    //"Lower Primary": {"school_count" : 146, "student_count" : 22145}
-                //},
-                "enrolment" : {
-                    "Class 1-4": {"text":"Class 1 to 4","student_count":30000},
-                    "Class 5-8": {"text":"Class 5 to 8","student_count":17145}
-                },
-                "languages" : {
-                    "moi" : { 
-                        "KANNADA" : {"school_count":180},
-                        "TAMIL"   : {"school_count":50},
-                        "URDU"    : {"school_count":70},
-                        "TELUGU"  : {"school_count":12},
-                        "MARATHI" : {"school_count":2},
-                        "ENGLISH" : {"school_count":2}
-                    },
-                    "mt" : {
-                        "KANNADA" : {"student_count":30000},
-                        "TAMIL"   : {"student_count":5000},
-                        "URDU"    : {"student_count":8000},
-                        "TELUGU"  : {"student_count":3000},
-                        "MARATHI" : {"student_count":200},
-                        "NEPALI" : {"student_count":4},
-                        "BENGALI" : {"student_count":2}
-                    }
-                },
-
+                "categories" : data["categories"],
+                "enrolment" : data["enrolment"],
+                "languages" : data["languages"],
             };
-     
         return detailsJson;
     }
 
@@ -175,7 +145,12 @@ var LANGUAGE="kannada";
                 new_lang["OTHERS"]["student_count"] += languages["mt"][each]["student_count"];
                 delete languages["mt"][each];
             } else {
-
+                if (!(each in new_lang))
+                {
+                    new_lang[each]={"name": each};
+                    new_lang[each]["school_count"] = 0;
+                    new_lang[each]["moi_perc"] = 0;
+                }
                 new_lang[each]["student_count"] = languages["mt"][each]["student_count"];
                 new_lang[each]["mt_perc"] = Math.round(languages["mt"][each]["student_count"]*100/mt_student_total);
             }

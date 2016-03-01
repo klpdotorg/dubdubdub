@@ -1,36 +1,105 @@
 import sys
+from rest_framework.response import Response
 from schools.models import ElectedrepMaster, Boundary, AcademicYear
 from .aggregations import BaseSchoolAggView
-from common.views import KLPDetailAPIView
-from schools.serializers import (
-    DemographicsReportSerializer, FinanceReportSerializer
-)
+from common.views import KLPAPIView
 from common.exceptions import APIError
 from rest_framework.exceptions import ParseError
 from django.conf import settings
+from django.db.models import Count, Sum
 
 
-class ReportsDetail(KLPDetailAPIView, BaseSchoolAggView):
+class ReportsDetail(KLPAPIView, BaseSchoolAggView):
 
     '''
         Returns report details
     '''
+    boundaryInfo = {"boundary_info": {}, "school_count": {}, "teacher_count": 0,
+                    "gender": {}, "categories": {}, "enrolment": {},
+                    "languages": {"moi": {}, "mt": {}},
+                    "comparison": {"year-wise": {}, "neighbours": {}}}
 
-    bbox_filter_field = "instcoord__coord"
+    def get_teachercount(self, active_schools, academic_year):
+        teachers = active_schools.filter(
+                   studentgroup__teachers__teacherstudentgroup__academic_year=
+                   academic_year).  aggregate(
+                   count=Count('studentgroup__teachers__id',distinct=True))
+        numteachers = teachers["count"]
+        return numteachers
 
-    def get_serializer_class(self):
-        report_type = self.request.GET.get('report_type', '')
-        if report_type == 'demographics':
-            return DemographicsReportSerializer
-        elif report_type == 'finance':
-            return FinanceReportSerializer
-        else:
-            return None
+    def get_enrolment(self, active_schools, academic_year):
+        active_schools = active_schools.filter(schoolclasstotalyear__academic_year=academic_year)
+        enrolment = active_schools.values('schoolclasstotalyear__clas').annotate(num=Sum('schoolclasstotalyear__total'))
+        enrolmentdata = {"Class 1-4": {"text": "Class 1 to 4", "student_count": 0},
+                       "Class 5-8": {"text": "Class 5 to 8", "student_count": 0}}
+        for data in enrolment:
+            if 0 < data["schoolclasstotalyear__clas"] <= 4:
+                enrolmentdata["Class 1-4"]["student_count"] += data["num"]
+            elif data["schoolclasstotalyear__clas"] <= 8:
+                enrolmentdata["Class 5-8"]["student_count"] += data["num"]
+
+        return enrolmentdata
+
+    def get_yeardata(self, active_schools, year, year_id):
+        yeardata = {"year": year, "enrol_upper": 0, "enrol_lower": 0}
+        enrolment = self.get_enrolment(active_schools, year_id)
+        yeardata["enrol_upper"] = enrolment["Class 5-8"]["student_count"]
+        yeardata["enrol_lower"] = enrolment["Class 1-4"]["student_count"]
+        boundaryData = self.get_aggregations(active_schools, year_id)
+        teachers = active_schools.filter(
+                   studentgroup__teachers__teacherstudentgroup__academic_year=
+                   year_id).values("studentgroup__teachers")
+        teacher_count = self.get_teachercount(active_schools, year_id)
+        student_count = boundaryData["num_boys"] +  boundaryData["num_girls"]
+        yeardata["student_count"] = student_count
+        yeardata["teacher_count"] = teacher_count
+        return yeardata
+
+    def get_year_comparison(self, active_schools, academic_year, year):
+        comparisonData = {}
+        start_year = year.split('-')[0]
+        end_year = year.split('-')[1]
+        prev_year = str(int(start_year)-1) + "-" + str(int(end_year)-1)
+        prev_prev_year = str(int(start_year)-2) + "-" + str(int(end_year)-2)
+
+        prev_year_id = AcademicYear.objects.get(name=prev_year)
+        prev_prev_year_id = AcademicYear.objects.get(name=prev_prev_year)
+
+        comparisonData[year] = {"year": year,
+                "enrol_upper": self.boundaryInfo["enrolment"]["Class 5-8"]["student_count"],
+                "enrol_lower": self.boundaryInfo["enrolment"]["Class 1-4"]["student_count"],
+                "student_count": self.boundaryInfo["student_count"],
+                "teacher_count": self.boundaryInfo["teacher_count"]}
+        comparisonData[prev_year] = self.get_yeardata(active_schools, prev_year, prev_year_id)
+        comparisonData[prev_prev_year] = self.get_yeardata(active_schools, prev_prev_year, prev_prev_year_id)
+
+        return comparisonData
+
+    def get_neighbour_comparison(self,academic_year,boundarytype,boundary):
+        comparisonData = {}
+        if boundarytype == 'admin3':
+            neighbours = Boundary.objects.filter(parent=boundary.parent)
+            for neighbour in neighbours:
+                comparisonData[neighbour.name] = {"name": neighbour.name, "enrol_upper": 0, "enrol_lower": 0, "ptr": 0, "school_count": 0, "school_perc": 0}
+                active_schools = neighbour.schools()
+                if active_schools.exists():
+                    boundaryData = self.get_aggregations(active_schools, academic_year)
+                    enrolment = self.get_enrolment(active_schools, academic_year)
+                    comparisonData[neighbour.name]["enrol_upper"] = enrolment["Class 5-8"]["student_count"]
+                    comparisonData[neighbour.name]["enrol_lower"] = enrolment["Class 1-4"]["student_count"]
+                    comparisonData[neighbour.name]["school_count"] = boundaryData["num_schools"]
+                    teachers = active_schools.filter(
+                        studentgroup__teachers__teacherstudentgroup__academic_year=
+                        academic_year).values("studentgroup__teachers")
+                    teacher_count = self.get_teachercount(active_schools, academic_year)
+                    student_count = boundaryData["num_boys"] +  boundaryData["num_girls"]
+                    comparisonData[neighbour.name]["student_count"] = student_count
+                    comparisonData[neighbour.name]["teacher_count"] = teacher_count
+
+        return comparisonData
+
 
     def get_boundaryData(self, boundarytype, boundaryid):
-        boundaryInfo = {"boundary_info": {}, "school_count": {}, "teacher_count": 0,
-                        "gender": {}, "categories": [], "enrollment": {},
-                        "languages": {}}
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
         try:
             academic_year = AcademicYear.objects.get(name=year)
@@ -45,19 +114,25 @@ class ReportsDetail(KLPDetailAPIView, BaseSchoolAggView):
 
             active_schools = boundary.schools()
             boundaryData = self.get_aggregations(active_schools, academic_year)
-            boundaryInfo["boundary_info"]["name"] = boundary.name
-            boundaryInfo["boundary_info"]["type"] = boundary.type
-            boundaryInfo["boundary_info"]["type"] = boundaryid
-            boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
+            self.boundaryInfo["boundary_info"]["name"] = boundary.name
+            self.boundaryInfo["boundary_info"]["type"] = boundary.type.name
+            self.boundaryInfo["boundary_info"]["id"] = boundaryid
+            self.boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
                                       "girls": boundaryData["num_girls"]}
-            boundaryInfo["school_count"] = boundaryData["num_schools"]
-            print >>sys.stderr, "Printing-------"
-            print >>sys.stderr, boundaryData["cat"]
+            self.boundaryInfo["school_count"] = boundaryData["num_schools"]
+            self.boundaryInfo["student_count"] = boundaryData["num_boys"] +  boundaryData["num_girls"]
             for data in boundaryData["cat"]:
-                print >>sys.stderr, "-------in loop"
-                print >>sys.stderr, data
-                print >>sys.stderr, data["cat"]
-                boundaryInfo["categories"].append({"cat": data["cat"], "school_count": data["num_schools"], "student_count": data["num_boys"] + data["num_girls"]})
+                self.boundaryInfo["categories"][data["cat"]] = {"school_count": data["num_schools"], "student_count": data["num_boys"] + data["num_girls"]}
+            for data in boundaryData["moi"]:
+                self.boundaryInfo["languages"]["moi"][data["moi"].upper()] = {"school_count": data["num"]}
+            for data in boundaryData["mt"]:
+                self.boundaryInfo["languages"]["mt"][data["name"].upper()] = {"student_count":
+                                                                 data["num_students"]}
+
+            self.boundaryInfo["enrolment"] = self.get_enrolment(active_schools, academic_year)
+            self.boundaryInfo["teacher_count"] = self.get_teachercount(active_schools, academic_year)
+            self.boundaryInfo["comparison"]["year-wise"] = self.get_year_comparison(active_schools, academic_year, year)
+            self.boundaryInfo["comparison"]["neighbours"] = self.get_neighbour_comparison( academic_year, boundarytype, boundary)
 
         else:
             obj = ElectedrepMaster.objects.filter(id=boundaryid)
@@ -67,9 +142,10 @@ class ReportsDetail(KLPDetailAPIView, BaseSchoolAggView):
             boundaryInfo["code"] = obj.elec_comm_code
             boundaryInfo["elected_rep"] = obj.current_elected_rep
             boundaryInfo["elected_party"] = obj.current_elected_party
-        return boundaryInfo
 
-    def get_object(self):
+        return self.boundaryInfo
+
+    def get(self, request):
         mandatoryparams = {'boundary':
                            {"assembly", "parliament", "admin1", "admin2", "admin3"},
                            'id': {},
@@ -86,6 +162,4 @@ class ReportsDetail(KLPDetailAPIView, BaseSchoolAggView):
         boundaryid = self.request.GET.get("id")
         boundarydata = {}
         boundarydata = self.get_boundaryData(boundarytype, boundaryid)
-        print >>sys.stderr, "Printing boundarydata"
-        print >>sys.stderr, boundarydata
-        return boundarydata
+        return Response(boundarydata)
