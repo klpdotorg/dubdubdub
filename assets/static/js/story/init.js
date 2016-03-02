@@ -471,6 +471,20 @@
         });
     }
 
+    function formatLastStory(last_story) {
+        var date, time = ' ';
+        if(last_story != null) {
+            if('T'.indexOf(last_story) != -1) {
+                var arr = last_story.split('T');
+                date = moment(arr[0], "YYYY-MM-DD").format("DD MMM YYYY");
+                time += moment(arr[1], "HH:mm:ss").format("h:mm:ss a");
+            } else {
+                date = moment(last_story, "YYYY-MM-DD").format("DD MMM YYYY");
+            }
+        }
+        return date + time;        
+    }
+
     function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var suffix = '';
@@ -513,7 +527,11 @@
             }, {
                 'label': 'Calls received',
                 'count': data.ivrs.stories
-            }/*, {
+            }, {
+                'label': 'Last Call',
+                'count': formatLastStory(data.ivrs.last_story)
+            }
+            /*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
             }*/],
@@ -526,6 +544,9 @@
             }, {
                 'label': 'Surveys',
                 'count': data.community.stories
+            }, {
+                'label': 'Last Survey',
+                'count': formatLastStory(data.community.last_story)
             }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
@@ -539,6 +560,9 @@
             }, {
                 'label': 'Verified Surveys',
                 'count': data.web.verified_stories
+            }, {
+                'label': 'Last Story',
+                'count': formatLastStory(data.web.last_story)
             }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
