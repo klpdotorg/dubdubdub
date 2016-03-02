@@ -471,7 +471,7 @@
         });
     }
 
-    function formatLastStory(last_story, ignoreTime = false) {
+    function formatLastStory(last_story, ignoreTime) {
         var date =' ';
         var time = ' ';
         if(last_story != null) {
@@ -530,7 +530,7 @@
                 'count': data.ivrs.stories
             }, {
                 'label': 'Last Call',
-                'count': formatLastStory(data.ivrs.last_story)
+                'count': formatLastStory(data.ivrs.last_story, false)
             }
             /*, {
                 'label': 'Academic Year',
