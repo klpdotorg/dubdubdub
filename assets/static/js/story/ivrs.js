@@ -409,7 +409,7 @@
     function formatLastStory(last_story) {
         var date, time = ' ';
         if(last_story != null) {
-            if('T'.indexOf(last_story) != -1) {
+            if(last_story.indexOf('T') != -1) {
                 var arr = last_story.split('T');
                 date = moment(arr[0], "YYYY-MM-DD").format("DD MMM YYYY");
                 time += moment(arr[1], "HH:mm:ss").format("h:mm:ss a");
