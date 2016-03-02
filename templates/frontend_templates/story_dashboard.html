@@ -171,11 +171,7 @@
     {% for s in summary %}
       <div class="chart-quarter-item">
         <div class="heading-tiny-uppercase align-left" >{{ s.label }}</div>
-          {% if s.label.indexOf('Last Call') !== -1 %} 
-            <div class="font-light font-large black align-left">{{ s.count }}</div> 
-          {% else %}
-            <div class="heading-secondary black align-left">{{ s.count }}</div> 
-          {% endif %}
+        <div class="font-light font-large black align-left">{{ s.count }}</div> 
       </div>
     {% endfor %}
   </script>
