@@ -471,10 +471,11 @@
         });
     }
 
-    function formatLastStory(last_story) {
-        var date, time = ' ';
+    function formatLastStory(last_story, ignoreTime = false) {
+        var date =' ';
+        var time = ' ';
         if(last_story != null) {
-            if(last_story.indexOf('T') != -1) {
+            if(ignoreTime == false && last_story.indexOf('T') != -1) {
                 var arr = last_story.split('T');
                 date = moment(arr[0], "YYYY-MM-DD").format("DD MMM YYYY");
                 time += moment(arr[1], "HH:mm:ss").format("h:mm:ss a");
@@ -546,7 +547,7 @@
                 'count': data.community.stories
             }, {
                 'label': 'Last Survey',
-                'count': formatLastStory(data.community.last_story)
+                'count': formatLastStory(data.community.last_story, true)
             }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
@@ -562,7 +563,7 @@
                 'count': data.web.verified_stories
             }, {
                 'label': 'Last Story',
-                'count': formatLastStory(data.web.last_story)
+                'count': formatLastStory(data.web.last_story, true)
             }/*, {
                 'label': 'Academic Year',
                 'count': '2015-2016'
