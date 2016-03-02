@@ -530,7 +530,7 @@
                 'count': data.ivrs.stories
             }, {
                 'label': 'Last Call',
-                'count': formatLastStory(data.ivrs.last_story, false)
+                'count': (schoolType == preschoolString)?formatLastStory(data.ivrs.last_story, true):formatLastStory(data.ivrs.last_story, false)
             }
             /*, {
                 'label': 'Academic Year',
