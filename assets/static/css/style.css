@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* RESET.CSS */
-/* http://meyerweb.com/eric/tools/css/reset/
+/* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -383,7 +383,7 @@ ol {
 .pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: #f87c84; }
 
-.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .adv-search-btn:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .adv-search-btn:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .leaflet-container a.button--sm {
@@ -2266,7 +2266,7 @@ increase padding of lightbox icons
 
 //on library page, both blue and yellow show 9-10 sentences
 
-//consider adding a separate class for the header in breadcrumb for map and removing
+//consider adding a separate class for the header in breadcrumb for map and removing 
 the css in the head of map.html
 
 // role=tooltip is technically wrong because it violates when there's no described by
@@ -4755,11 +4755,11 @@ code {
   color: #4d4d4d; }
 
 /*--- with font awesome icons ----*/
-/*.stepy-header li.stepy-active div {visibility: collapse;}
-    .stepy-header li.stepy-active div:after {
+/*.stepy-header li.stepy-active div {visibility: collapse;} 
+    .stepy-header li.stepy-active div:after { 
         visibility: visible;
         margin: -30px auto;
-        content: "\f21c";
+        content: "\f21c"; 
         background-image: url(/static/images/story/auto.png);
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -4771,7 +4771,6 @@ code {
   bottom: 2px;
   right: 2px; }
 
-<<<<<<< HEAD
 .top-band {
   border-top: 5px solid; }
 
@@ -4849,7 +4848,43 @@ code {
     margin-left: -20px;
     margin-right: -20px; }
     .sect-parent:after {
-=======
+      content: "";
+      display: table;
+      clear: both; }
+
+  .sect-half {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-third {
+    width: 33%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-two-third {
+    width: 66.66%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-quarter {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-three-quarter {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+span.tab {
+  padding-right: 20px;
+  /* Or desired space*/ }
+
 /*http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/*/
 .modalDialog {
   position: fixed;
@@ -4907,51 +4942,27 @@ code {
     margin-left: -20px;
     margin-right: -20px; }
     .search-parent:after {
-
       content: "";
       display: table;
       clear: both; }
 
-  .sect-half, .search-half-col {
-
+  .search-half-col {
     width: 50%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-
-  .sect-third {
-    width: 33%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px; }
-
-  .sect-two-third {
-    width: 66.66%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px; }
-
-  .sect-quarter, .search-quarter-col {
-
+  .search-quarter-col {
     width: 25%;
     float: left;
     padding-left: 20px;
     padding-right: 20px; }
 
-  .sect-three-quarter {
-    width: 75%;
-    float: left;
-    padding-left: 20px;
-    padding-right: 20px; } }
-span.tab {
-  padding-right: 20px;
-}
   .search-third-col {
     width: 33%;
     float: left;
     padding-left: 20px;
-    padding-right: 20px; } 
+    padding-right: 20px; } }
 .search-scroll {
   height: 500px;
   overflow-x: hidden;
