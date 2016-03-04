@@ -10,8 +10,7 @@
   	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="/static/images/favicon.png
-    ">
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
   	<meta name="description" content="">
     {% compress css %}
       <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all">
@@ -42,7 +41,7 @@
       <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
     {% endcompress %}
-    
+
     {% if not settings.DEBUG %}
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -80,13 +79,13 @@
   			<div class="nav-wrap">
           <nav class="top-nav" role="navigation">
             {% include "includes/_top_navigation.html" %}
-          </nav>            
+          </nav>
           {% include 'includes/_profile_options.html' %}
         </div>
   		</div>
 
   	</header>
-    
+
     <main class="main">
       {% block subheader %}
       {% endblock %}
@@ -96,7 +95,7 @@
       {% include 'includes/_login_modal.html' %}
       {% if not hide_footer %}
       <footer class="main-footer">
-        <div class="container">  
+        <div class="container">
           <div class="footer-wrapper">
             <nav class="nav-footer">
               <ul>
@@ -112,12 +111,12 @@
                 <li><a href="/map" class="tooltip" aria-label="School Map"><span class="fa fa-map-marker k-icon"></span></a></li>
                 <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
                 <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
-                <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->                
+                <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
               </ul>
-            </nav>  
+            </nav>
             <div class="footer-copyright">
               <img src="/static/images/KLP_logo_footer@2x.png" alt="logo-klp" width="55">
-              <div class="copyright">Copyright 2015. All Rights Reserved.</div>          
+              <div class="copyright">Copyright 2015. All Rights Reserved.</div>
             </div>
           </div> <!-- /footer-wrapper -->
         </div> <!-- /container -->

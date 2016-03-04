@@ -7,10 +7,9 @@ from schools.models import (
     MdmAgg, InstitutionAssessmentCohorts, InstitutionAssessmentSinglescore,
     InstitutionAssessmentSinglescoreGender, InstitutionAssessmentSinglescoreMt,
     BoundaryAssessmentSinglescore, BoundaryAssessmentSinglescoreMt,
-    BoundaryAssessmentSinglescoreGender, MeetingReport,
-    BoundaryLibLangAgg, BoundaryLibLevelAgg, InstitutionAssessmentPercentile,
-    BoundaryAssessmentPercentile
-
+    BoundaryAssessmentSinglescoreGender, InstitutionAssessmentPercentile,
+    BoundaryAssessmentPercentile, MeetingReport,
+    BoundaryLibLangAgg, BoundaryLibLevelAgg, Programme, Partner
 )
 
 
@@ -78,7 +77,7 @@ class PincodeSerializer(KLPSimpleGeoSerializer):
 
 class SchoolListSerializer(KLPSerializer):
     type = BoundaryTypeSerializer(source='schooldetails.type')
-    address_full = serializers.CharField(source='address.full')
+    address_full = serializers.CharField(source='full_address')
 
     class Meta:
         model = School
@@ -537,15 +536,21 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
         return singlescore
 
 
+class PartnerSerializer(KLPSerializer):
+    class Meta:
+        model = Partner
+
+
 class ProgrammeListSerializer(KLPSerializer):
-    id = serializers.IntegerField(source='assessment.programme.id')
-    name = serializers.CharField(source='assessment.programme.name')
-    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
-    partner = serializers.CharField(source='assessment.programme.partner.name')
+    id = serializers.IntegerField(source='id')
+    name = serializers.CharField(source='name')
+    academicyear_name = serializers.CharField(source='academic_year.name')
+    partner = PartnerSerializer(source='partner')
 
     class Meta:
-        model = InstitutionAssessmentCohorts
-        fields = ('id', 'name', 'academicyear_name', 'partner', )
+        model = Programme
+        fields = ('id', 'name', 'academicyear_name', 'partner',)
+
 
 
 class ProgrammeInfoSerializer(KLPSerializer):
@@ -560,7 +565,11 @@ class ProgrammeInfoSerializer(KLPSerializer):
 
     class Meta:
         model = InstitutionAssessmentSinglescore
-        fields = ('assessmentname', 'studentgroup', 'academicyear_name', 'singlescore', 'percentile', 'gradesinglescore', 'cohortsdetails', 'singlescoredetails')
+        fields = (
+            'assessmentname', 'studentgroup',
+            'academicyear_name', 'singlescore', 'percentile',
+            'gradesinglescore', 'cohortsdetails', 'singlescoredetails'
+        )
 
     def get_cohorts_details(self, obj):
         data = {}

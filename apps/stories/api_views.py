@@ -41,6 +41,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -50,10 +51,12 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
+    response_type - What volume to calculate [call/gka-class]
     """
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -64,6 +67,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+        response_type = self.request.QUERY_PARAMS.get(
+            'response_type', 'call_volume')
 
         date = Date()
         if start_date:
@@ -88,6 +93,11 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if source:
             stories_qset = stories_qset.filter(
                 group__source__name=source)
+
+        if versions:
+            versions = map(int, versions)
+            stories_qset = stories_qset.filter(
+                group__version__in=versions)
 
         if admin1_id:
             stories_qset = stories_qset.filter(
@@ -122,7 +132,77 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
                 date_of_visit__lte=end_date)
 
         story_dates = stories_qset.values_list('date_of_visit', flat=True)
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
 
+        if response_type == 'call_volume':
+            response_json['volumes'] = self.get_call_volume(story_dates, months)
+        elif response_type == 'gka-class':
+            response_json['volumes'] = self.get_gka_class_volume(stories_qset, months)
+        else:
+            response_json = {}
+
+        return Response(response_json)
+
+    def get_gka_class_volume(self, stories, months):
+        json = {}
+        boolean_mapper = {
+            'Yes':True,
+            'No':False
+        }
+        for story in stories:
+            year = story.date_of_visit.year
+            story_month = calendar.month_name[story.date_of_visit.month][:3]
+            if year not in json:
+                json[year] = OrderedDict()
+                for month in months:
+                    json[year][month] = {}
+
+            try:
+                school_was_open = boolean_mapper[
+                    story.answer_set.get(question__text="Was the school open?").text
+                ]
+            except:
+                continue
+
+            if school_was_open:
+                try:
+                    math_class_was_happening = boolean_mapper[
+                        story.answer_set.get(
+                            question__text="Was Math class happening on the day of your visit?").text
+                    ]
+                except:
+                    continue
+
+                if math_class_was_happening:
+                    try:
+                        tlm_was_being_used = boolean_mapper[
+                            story.answer_set.get(
+                                question__text="Did you see children using the Ganitha Kalika Andolana TLM?").text
+                        ]
+                    except:
+                        continue
+
+                    if tlm_was_being_used:
+                        class_visited = int(
+                            story.answer_set.get(question__text="Class visited").text
+                        )
+                        try:
+                            tlm_code = int(
+                                story.answer_set.get(
+                                    question__text="Which Ganitha Kalika Andolana TLM was being used by teacher?"
+                                ).text
+                            )
+                        except:
+                            continue
+
+                        if class_visited in json[year][story_month]:
+                            json[year][story_month][class_visited].add(tlm_code)
+                        else:
+                            json[year][story_month][class_visited] = set()
+                            json[year][story_month][class_visited].add(tlm_code)
+        return json
+
+    def get_call_volume(self, story_dates, months):
         json = {}
         for date in story_dates:
             if date.year in json:
@@ -138,20 +218,19 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             )
 
         ordered_per_month_json = {}
-        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
         for year in per_month_json:
             ordered_per_month_json[year] = OrderedDict()
             for month in months:
                 ordered_per_month_json[year][month] = per_month_json[year].get(month, 0)
 
-        response_json['volumes'] = ordered_per_month_json
-        return Response(response_json)
+        return ordered_per_month_json
 
 
 class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -163,8 +242,9 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     school_type -- Type of School [Primary School/PreSchool].
     """
 
-    def get(self, request, boundary=None):
+    def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -175,18 +255,6 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
-
-        # This boundary variable and check is for the time
-        # when this endpoint is being called from within the
-        # BoundarySchoolAggView
-        if boundary:
-            boundary_type = boundary.hierarchy.name
-            if boundary_type == u'district':
-                admin1_id = boundary.id
-            elif boundary_type in [u'block', u'project']:
-                admin2_id = boundary.id
-            else:
-                admin3_id = boundary.id
 
         date = Date()
         if start_date:
@@ -207,6 +275,10 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         if source:
             stories = stories.filter(group__source__name=source)
+
+        if versions:
+            versions = map(int, versions)
+            stories = stories.filter(group__version__in=versions)
 
         if school_type:
             stories = stories.filter(school__admin3__type__name=school_type)
@@ -247,60 +319,67 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         # Sources and filters
         if source:
-            response_json[source] = self.get_que_and_ans(
-                stories, source, school_type)
+            response_json[source] = get_que_and_ans(
+                stories, source, school_type, versions)
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
-                response_json[source] = self.get_que_and_ans(
-                    stories, source, school_type)
+                response_json[source] = get_que_and_ans(
+                    stories, source, school_type, versions)
 
         return Response(response_json)
 
-    def get_que_and_ans(self, stories, source, school_type):
-        response_list = []
 
-        questions = Question.objects.filter(
-            is_featured=True).select_related(
-                'question_type', 'school_type'
-            )
+def get_que_and_ans(stories, source, school_type, versions):
+    response_list = []
 
-        if source:
-            questions = questions.filter(
-                questiongroup__source__name=source)
+    questions = Question.objects.filter(
+        is_featured=True).select_related(
+            'question_type', 'school_type'
+        )
 
-        if school_type:
-            questions = questions.filter(
-                school_type__name=school_type)
+    if source:
+        questions = questions.filter(
+            questiongroup__source__name=source)
+
+    if versions:
+        questions = questions.filter(
+            questiongroup__version__in=versions)
+
+    if school_type:
+        questions = questions.filter(
+            school_type__name=school_type)
 
 
-        for question in questions.distinct('id'):
-            j = {}
-            j['question'] = {}
-            j['question']['key'] = question.key
-            j['question']['text'] = question.text
-            j['question']['display_text'] = question.display_text
-            j['answers'] = {}
-            j['answers']['question_type'] = question.question_type.name
+    for question in questions.distinct('id'):
+        j = {}
+        j['question'] = {}
+        j['question']['key'] = question.key
+        j['question']['text'] = question.text
+        j['question']['display_text'] = question.display_text
+        j['answers'] = {}
+        j['answers']['question_type'] = question.question_type.name
 
-            answer_counts = question.answer_set.filter(
-                story__in=stories
-            ).values('text').annotate(answer_count=Count('text'))
+        answer_counts = question.answer_set.filter(
+            story__in=stories
+        ).values('text').annotate(answer_count=Count('text'))
 
-            options = {}
-            for count in answer_counts:
-                options[count['text']] = count['answer_count']
-            j['answers']['options'] = options
+        options = {}
+        for count in answer_counts:
+            options[count['text']] = count['answer_count']
+        j['answers']['options'] = options
 
-            response_list.append(j)
+        response_list.append(j)
 
-        return response_list
+    return response_list
+
 
 class StoryMetaView(KLPAPIView, CacheMixin):
     """Returns total number of stories and schools with stories
     along with respondent types.
 
     source -- Source of data [web/ivrs].
+    version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
     admin2 -- ID of the Block/Project.
     admin3 -- ID of the Cluster/Circle.
@@ -314,6 +393,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
     def get(self, request):
         source = self.request.QUERY_PARAMS.get('source', None)
+        versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
@@ -379,6 +459,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             stories_qset = stories_qset.filter(
                 school__electedrep__mla_const__id=mla_id)
 
+        # We need the stories qset with all filters except
+        # the date filter applied on it to calculate the
+        # last story date for each source.
+        last_date_stories_qset = stories_qset
+
         if start_date:
             #school_qset = school_qset.filter(
             #    story__date_of_visit__gte=start_date)
@@ -395,20 +480,50 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         response_json['total'] = {}
         response_json['total']['schools'] = school_qset.count()
-        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
         response_json['total']['stories'] = stories_qset.count()
+        response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
 
         if source:
             stories_qset = self.source_filter(
-                source, stories_qset)
+                source,
+                stories_qset
+            )
 
-            response_json[source] = self.get_json(source, stories_qset)
+            last_date_stories_qset = self.source_filter(
+                source,
+                last_date_stories_qset,
+            )
+
+            if versions:
+                versions = map(int, versions)
+                stories_qset = stories_qset.filter(
+                    group__version__in=versions
+                )
+                last_date_stories_qset = last_date_stories_qset.filter(
+                    group__version__in=versions
+                )
+
+            response_json[source] = self.get_json(
+                source,
+                stories_qset,
+                last_date_stories_qset,
+            )
         else:
             sources = Source.objects.all().values_list('name', flat=True)
             for source in sources:
                 stories = self.source_filter(
-                    source, stories_qset)
-                response_json[source] = self.get_json(source, stories)
+                    source,
+                    stories_qset
+                )
+                last_date_stories = self.source_filter(
+                    source,
+                    last_date_stories_qset,
+                )
+                response_json[source] = self.get_json(
+                    source,
+                    stories,
+                    last_date_stories,
+                )
 
         response_json['respondents'] = self.get_respondents(stories_qset)
 
@@ -441,10 +556,14 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         return stories_qset
 
-    def get_json(self, source, stories_qset):
+    def get_json(self, source, stories_qset, last_date_qset):
         json = {}
-        json['schools'] = stories_qset.distinct('school').count()
         json['stories'] = stories_qset.count()
+        json['schools'] = stories_qset.distinct('school').count()
+        if last_date_qset:
+            json['last_story'] = last_date_qset.latest('date_of_visit').date_of_visit
+        else:
+            json['last_story'] = None
         if source == "web":
             json['verified_stories'] = stories_qset.filter(
                 is_verified=True,

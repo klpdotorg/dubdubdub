@@ -47,9 +47,14 @@ class StateAdmin(admin.ModelAdmin):
                 version=4,
                 source=source
             )
-        else: # ivrs_type = 'ivrs-pre'
+        elif ivrs_type == 'gka-v3':
             question_group = Questiongroup.objects.get(
                 version=5,
+                source=source
+            )
+        else: # ivrs_type == 'ivrs-pre'
+            question_group = Questiongroup.objects.get(
+                version=999, # Not implemented
                 source=source
             )
 

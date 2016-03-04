@@ -4,7 +4,8 @@ from .school import (
     SchoolLibrary, SchoolNutrition
 )
 from .assessment import (
-    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,ProgrammePercentile
+    AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
+    ProgrammePercentile, PartnerList
 )
 from .reports import (
     ReportsDetail

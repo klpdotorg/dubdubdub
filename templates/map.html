@@ -6,9 +6,7 @@
 
 {% block endbody %}
     {% compress js %}
-      <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script> 
       <script type="text/javascript" src="{% static 'js/common/comparison.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/charts.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/share_story.js' %}"></script>
@@ -38,7 +36,6 @@
     <link rel="stylesheet" href="{% static 'js/lib/marker-cluster/MarkerCluster.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'js/lib/leaflet-draw/leaflet.draw.css' %}">
     <link rel="stylesheet" href="{% static 'css/map.css' %}" />
-
     <!-- <script type="text/javascript" src="{% static 'js/inline-map.js' %}"></script> -->
 {% endblock %}
 
@@ -55,14 +52,21 @@
 {% endblock %}
 
 {% block subheader %}
+  {% include 'advanced_search.html' %}
   <div class="map-subheader-wrapper subheader-wrapper">
     <div class="subheader-content">
+
       <div class="search-input-map">
         <input type="text" name="search" placeholder="Search" class="search-input input-text">
 <!--       <div class="volunteer-btn-wrapper fr">
           <a class="button blue js-volunteer-trigger">Volunteer</a>
         </div> -->
       </div>
+      <a href="#searchmodal">
+      <div class="adv-search-btn tooltip" aria-label="Advanced Search">
+          <span class="fa fa-search-plus"></span>
+      </div>
+      </a>
     </div>
   </div>
 {% endblock %}
@@ -87,7 +91,7 @@
     <div class="msg-filter-radius hide" id="msg-filter-radius">Click and drag on the map to draw circle</div>
 
     {% include 'includes/_compare_flow.html' %}
-    
+
     <div class="mobile-details-wrapper" id="mobile-details-wrapper"></div>
 
   </div>
@@ -95,5 +99,5 @@
   {% include 'frontend_templates/map.html' %}
 
   {% include 'frontend_templates/compare.html' %}
-  
+
 {% endblock %}

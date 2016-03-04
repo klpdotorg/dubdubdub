@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block endbody %}
-  {% compress js %}
-  <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  {% compress js %}  
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
@@ -113,6 +111,7 @@
 						<div class="chart-parent">
 			  	    <div id="ivrssummary" class="js-summary-container"></div>
 				  	</div><!--end inner parent-->
+				  	<div class="base-spacing-mid"></div>
 					  <div class="chart-parent">
 					  	<div class="chart-half-item">
 					  		<div id="ivrsquestions" class="js-detail-container"></div>
@@ -136,9 +135,9 @@
 					<div class='content' id="website">
 						<h2 class="heading-border brand-purple">Volunteer Observations</h2> 
 						<div class="chart-parent">
-			  	    <div id="websummary" class="js-summary-container"></div>				  	
+			  	    <div id="websummary" class="js-summary-container"></div>			  	
 					  </div><!--end inner parent-->	
-
+					  <div class="base-spacing-mid"></div>
 					  <!--
 					  <div class="chart-parent">
 					  	<div class="heading-tertiary center-text">What percentage of schools have these facilities?</div>	
@@ -158,6 +157,7 @@
 						<div class="chart-parent">
 			  	   	<div id="surveysummary" class="js-summary-container"></div>
 					  </div><!--end inner parent-->
+					   <div class="base-spacing-mid"></div>
 					 	<div class="chart-parent">
 			  	    <div id="surveyquestions" class="js-detail-container"></div>
 			  	  </div> <!-- End of Chart Parent -->
@@ -205,6 +205,7 @@
 						<div class="chart-parent">
 			  	    <div id="ivrssummary_ang" class="js-summary-container"></div>
 				  	</div><!--end inner parent-->
+				  	<div class="base-spacing-mid"></div>
 					  <div class="chart-parent">
 					  	<div class="chart-half-item">
 					  		<div id="ivrsquestions_ang" class="js-detail-container"></div>
@@ -228,8 +229,9 @@
 					<div class='content' id="website">
 						<h2 class="heading-border brand-purple">Volunteer Observations</h2> 
 						<div class="chart-parent">
-			  	    <div id="websummary_ang" class="js-summary-container"></div>				  	
+			  	    <div id="websummary_ang" class="js-summary-container"></div>
 					  </div><!--end inner parent-->	
+					  <div class="base-spacing-mid"></div>
 					  <!--		
 					  <div class="chart-parent">
 					  	<div class="heading-tertiary center-text">What percentage of preschools have these facilities?</div>	

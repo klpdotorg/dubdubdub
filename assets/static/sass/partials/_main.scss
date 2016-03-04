@@ -445,7 +445,17 @@ body {
 }
 
 .search-input-map {
+  float: left;
+  width: 85%;
 }
+
+.adv-search-btn {
+  float: right;
+  @extend %button;
+  padding: 10px 10px;
+  font-size: 12pt;
+}
+
 
 .breadcrumb {
   @extend %text-truncate;
