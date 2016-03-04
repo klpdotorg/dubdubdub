@@ -1,5 +1,5 @@
 'use strict';
-var BOUNDARY_TYPE="admin3";
+var BOUNDARY_TYPE="boundary";
 var KLP_ID="8908";
 var LANGUAGE="kannada";
 
@@ -14,7 +14,7 @@ var LANGUAGE="kannada";
     function fetchReportDetails()
     {
         var params = klp.router.getHash().queryParams;
-        var url = "reports/?report_type=demographics&boundary=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
+        var url = "reports/?report_name=demographics&report_type=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
         var $xhr = klp.api.do(url, params);
         $xhr.done(function(data) {
             var summaryJSON= getSummaryData(data);
