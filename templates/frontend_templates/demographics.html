@@ -9,12 +9,42 @@
     <div class="base-spacing-mid"></div>
     <div class="sect-parent">
       <div class="sect-third rounded-sect">
-          <div class="heading-tiny-uppercase">Boundary</div>
+          {% if data.boundary.type == "cluster" || data.boundary.type == "block" || data.boundary.type == "district" || data.boundary.type == "state" %}
+            <div class="heading-tiny-uppercase">Boundary</div>
+          {% elseif  data.boundary.type == "school" %}
+            <div class="heading-tiny-uppercase">School</div>
+          {% else %}
+            <div class="heading-tiny-uppercase">Electoral Region</div>
+          {% endif %}
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
           <div class="heading-tiny-uppercase">Type</div>
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
-          <div class="heading-tiny-uppercase">Elected Representative</div>
-          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+          {% if data.boundary.type in ["mp constituency","mla onstituency","ward"] %}
+            <div class="heading-tiny-uppercase">Elected Representative</div>
+            <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+          {% else %}
+            <ul class="map-location-labels brand-blue">  
+            {% if data.boundary.parent.cluster %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">CLUSTER</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.cluster|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.block %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">BLOCK</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.block|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.district %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">DISTRICT</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.district|upper }}</div>
+                </li>
+            {% endif %}
+            </ul>
+          {% endif %}
+         
       </div><!--sect-third-->
       <div class="sect-two-third grey-mist-bg rounded-sect">
           <div class="sect-parent">
@@ -183,7 +213,13 @@
               <div class="td-label-enroll">{{each.enrol_lower}}</div>  
             </td>
             <td>
-              <div class="td-label-ptr">{{each.ptr}}:1</div>
+              <div class="td-label-ptr">
+              {% if each.ptr !== "NA" %}
+                {{each.ptr|round}}:1
+              {% else %}
+                No data
+              {% endif %}
+              </div>
             </td>
             <td>
               <!-- Value is percentage of the nearest 100 to the highest value-->
@@ -218,7 +254,7 @@
       {% for each in neighbours %}
           <tr>
             <td>
-              <div class="bold td-label-boundary">{{each.name}}</div>
+              <div class="bold td-label-boundary">{{each.name|title}}</div>
             </td>
             <td>
               <div class="td-label-enrolu">{{each.enrol_upper}}</div>    
@@ -227,7 +263,13 @@
               <div class="td-label-enroll">{{each.enrol_lower}}</div>  
             </td>
             <td>
-              <div class="td-label-ptr">{{each.ptr}}:1</div>
+              <div class="td-label-ptr">
+                {% if each.ptr !== "NA" %}
+                  {{each.ptr|round}}:1
+                {% else %}
+                  No data
+                {% endif %}
+              </div>
             </td>
             <td>
               <!-- Value is percentage of the nearest 100 to the highest value-->

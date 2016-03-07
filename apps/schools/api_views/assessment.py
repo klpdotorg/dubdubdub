@@ -124,15 +124,7 @@ class AssessmentInfo(KLPListAPIView):
           assessmentinfo = BoundaryAssessmentSinglescore.objects.filter(boundary=bid,assessment=assid,studentgroup=studentgroup)\
 .select_related('boundary__name','studentgroup','assessment__name','assessment__programme__academic_year__name','singlescore', 'percentile','gradesinglescore')
         else:
-<<<<<<< HEAD
-            raise ParseError(
-                "Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
-
-        print >>sys.stderr, assessmentinfo
-=======
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
-
->>>>>>> develop
         return assessmentinfo
 
 
@@ -300,7 +292,3 @@ class ProgrammePercentile(KLPListAPIView):
           raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
 
         return programmeinfo
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
