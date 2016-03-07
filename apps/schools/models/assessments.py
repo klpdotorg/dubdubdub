@@ -197,11 +197,8 @@ class BoundaryAssessmentSinglescoreMt(BaseModel):
                                       blank=True, null=True)
     percentile = models.DecimalField(max_digits=6, decimal_places=2,
                                      blank=True, null=True)
-<<<<<<< HEAD
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
-=======
     gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
->>>>>>> develop
+
 
     def __unicode__(self):
         return "%s: %s: %s" % (self.boundary, self.assessment, self.mt,)
