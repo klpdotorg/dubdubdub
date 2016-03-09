@@ -47,6 +47,15 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
 
         return enrolmentdata
 
+    def checkValues(self, boundaryData):
+        if boundaryData["num_girls"] == None:
+            boundaryData["num_girls"] = 0
+        if boundaryData["num_boys"] == None:
+            boundaryData["num_boys"] = 0
+        if boundaryData["num_schools"] == None:
+            boundaryData["num_schools"] = 0
+        return boundaryData
+
 
     def get_yeardata(self, active_schools, year, year_id):
         yeardata = {"year": year, "enrol_upper": 0, "enrol_lower": 0,
@@ -55,6 +64,7 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
         yeardata["enrol_upper"] = enrolment["Class 5-8"]["student_count"]
         yeardata["enrol_lower"] = enrolment["Class 1-4"]["student_count"]
         boundaryData = self.get_aggregations(active_schools, year_id)
+        boundaryData = self.checkValues(boundaryData)
         teacher_count = self.get_teachercount(active_schools, year_id)
         student_count = boundaryData["num_boys"] + boundaryData["num_girls"]
         yeardata["student_count"] = student_count
@@ -74,10 +84,11 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
 
 
     def get_parentInfo(self, boundary):
-        parent = {}
-        parent["object"] = Boundary.objects.get(id=boundary.parent.id)
-        parent["schools"] = parent["object"].schools()
-        parent["schoolcount"] = parent["object"].schools().count()
+        parent = {"schoolcount": 0}
+        if boundary.get_admin_level() != 1:
+            parentObject = Boundary.objects.get(id=boundary.parent.id)
+            schools = parentObject.schools()
+            parent["schoolcount"] = schools.count()
         return parent
 
 
@@ -101,6 +112,8 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
                                     ["Class 1-4"]["student_count"],
                                 "student_count":
                                     self.boundaryInfo["student_count"],
+                                "school_count":
+                                    self.boundaryInfo["school_count"],
                                 "teacher_count":
                                     self.boundaryInfo["teacher_count"]}
         if self.boundaryInfo["teacher_count"] == 0:
@@ -126,7 +139,10 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
 
     def get_neighbour_comparison(self, academic_year, reporttype, boundary):
         comparisonData = {}
-        neighbours = Boundary.objects.filter(parent=boundary.parent)
+        if boundary.get_admin_level() == 1:
+            neighbours = Boundary.objects.filter(hierarchy = boundary.hierarchy)
+        else:
+            neighbours = Boundary.objects.filter(parent=boundary.parent)
         for neighbour in neighbours:
             comparisonData[neighbour.name] = {"name": neighbour.name,
                                                 "enrol_upper": 0,
@@ -138,6 +154,7 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
             if active_schools.exists():
                 boundaryData = self.get_aggregations(active_schools,
                                                      academic_year)
+                boundaryData =  self.checkValues(boundaryData)
                 enrolment = self.get_enrolment(active_schools, academic_year)
                 comparisonData[neighbour.name]["enrol_upper"] =\
                                    enrolment["Class 5-8"]["student_count"]
@@ -225,9 +242,7 @@ class ReportsDetail(KLPAPIView, BaseSchoolAggView):
 
             active_schools = boundary.schools()
             boundaryData = self.get_aggregations(active_schools, academic_year)
-            print >> sys.stderr, "----------------------------"
-            print >>sys.stderr, boundary
-            print >>sys.stderr, boundaryData
+            boundaryData = self.checkValues(boundaryData)
             self.getSummaryData(boundary, boundaryData)
             if reportname == "demographics":
                 self.getDetailsData(boundaryData, active_schools, academic_year)
