@@ -4842,7 +4842,22 @@ code {
     content: "Year: "; }
 
   .td-label-boundary:before {
-    content: "Boundary: "; } }
+    content: "Boundary: "; }
+
+  .td-label-schools:before {
+    content: "Schools: "; }
+
+  .td-label-ivrs:before {
+    content: "IVRS Calls: "; }
+
+  .td-label-ivrs-perc:before {
+    content: "Schools with Calls: "; }
+
+  .td-label-stories:before {
+    content: "Volunteer Stories: "; }
+
+  .td-label-story-perc:before {
+    content: "Schools with Stories: "; } }
 @media only screen and (min-width: 750px) {
   .sect-parent {
     margin-left: -20px;

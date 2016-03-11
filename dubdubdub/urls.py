@@ -152,6 +152,11 @@ urlpatterns = patterns(
         template_name='infrastructure.html'
         ), name='infrastructure'),
 
+    url(r'^reports/stories/$', StaticPageView.as_view(
+        template_name='story_report.html'
+        ), name='stories'),
+
+
 
     # url(r'^volunteer-map$', StaticPageView.as_view(
     #     template_name='volunteer-map.html',

@@ -115,6 +115,35 @@
 	  	  content: "Boundary: ";
 	  	}
 	}
+
+	.td-label-schools {
+	    &:before {
+	  	  content: "Schools: ";
+	  	}
+	}
+
+	.td-label-ivrs {
+	    &:before {
+	  	  content: "IVRS Calls: ";
+	  	}
+	}
+
+	.td-label-ivrs-perc {
+	    &:before {
+	  	  content: "Schools with Calls: ";
+	  	}
+	}
+
+	.td-label-stories {
+	    &:before {
+	  	  content: "Volunteer Stories: ";
+	  	}
+	}
+	.td-label-story-perc {
+	    &:before {
+	  	  content: "Schools with Stories: ";
+	  	}
+	}
 }
 
 @include media-med {
