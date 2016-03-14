@@ -499,7 +499,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                 stories_qset = stories_qset.filter(
                     group__version__in=versions
                 )
-                last_date_stories_qset = self.source_filter(
+                last_date_stories_qset = last_date_stories_qset.filter(
                     group__version__in=versions
                 )
 
@@ -560,7 +560,10 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         json = {}
         json['stories'] = stories_qset.count()
         json['schools'] = stories_qset.distinct('school').count()
-        json['last_story'] = last_date_qset.latest('date_of_visit').date_of_visit
+        if last_date_qset:
+            json['last_story'] = last_date_qset.latest('date_of_visit').date_of_visit
+        else:
+            json['last_story'] = None
         if source == "web":
             json['verified_stories'] = stories_qset.filter(
                 is_verified=True,
