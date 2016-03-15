@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 0.5.3: 90b86785af0339678ed1f7d7bd0fd5f40cfe426a - 2016-03-15
+  - Added GKA Boundary filters and last call/story timestamp on the stories dashboard
+
 Release 0.5.2: dc215c0166a6ec5bc876787c9d56309c96a9abdc - 2016-02-06
   - Updates the GKA dashboard
 
