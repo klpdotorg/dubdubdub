@@ -12,3 +12,9 @@
 	position:relative;
 	overflow:hidden;
 }
+
+@media print {
+	.content { 
+		display:block;
+	}
+}
