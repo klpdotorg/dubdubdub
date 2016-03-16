@@ -6,7 +6,7 @@
 
 {% block endbody %}
     {% compress js %}
-      <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/comparison.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/charts.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/common/share_story.js' %}"></script>
@@ -14,7 +14,7 @@
       <script src="{% static 'js/common/dise_infra.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/init.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/router.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/map/map.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/map/advanced_map.js' %}"></script>
       <!-- <script type="text/javascript" src="{% static 'js/map/volunteer_modal.js' %}"></script> -->
       <script type="text/javascript" src="{% static 'js/map/place_info.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/map/filters_modal.js' %}"></script>
@@ -63,10 +63,9 @@
         </div> -->
       </div>
       <a href="#searchmodal">
-      <div class="adv-search-btn tooltip" aria-label="Advanced Search">
-          <span class="fa fa-search-plus"></span>
-      </div>
+      <div style="font-size: 0.9em" class="adv-search-btn tooltip" aria-label="Advanced Search">Advanced</div>
       </a>
+      <div style="font-size: 0.9em; display:none; padding: 10px;" class="adv-search-reset-btn button tooltip" aria-label="Advanced Search Reset">Reset</div>
     </div>
   </div>
 {% endblock %}
@@ -74,8 +73,11 @@
 {% block content %}
 
 
-  <div class="map_page no-sidebar">
-    <section class="map-canvas-full">
+  <div class="map_page">
+    <section class="sidebar-volunteer-map">
+        <ul id="school-list"></ul>
+    </section>
+    <section class="map-canvas-full  map-volunteer-canvas-full">
       <div id="js-map-canvas"></div>
     </section>
 
@@ -96,7 +98,7 @@
 
   </div>
 
-  {% include 'frontend_templates/map.html' %}
+  {% include 'frontend_templates/advanced_map.html' %}
 
   {% include 'frontend_templates/compare.html' %}
 

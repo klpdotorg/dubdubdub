@@ -16,22 +16,11 @@
   <script type="text/javascript" src="{% static 'js/story/ivrs.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/jquery.yearMonthSelect.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/story/gka_filters_modal.js' %}"></script>
+  
   {% endcompress %}
 {% endblock %}
 
-{% block subheader %}
-<div id="searchmodal" class="modalDialog">
- <div class="map-subheader-wrapper subheader-wrapper">
- 	<a href="#close" title="Close" class="close">X</a>
-    <div class="subheader-content">
-      <div class="top-search search-input-map">
-        <input type="text" name="search" id="select2search" placeholder="Search by primary school or boundary" class="search-input input-text"/>
-      </div>
-    </div>
-  </div>
-</div>
-
-{% endblock %} <!-- Currently unsure what CSS is needed. JS is in map.js so we need to move that to common -->
 
 {% block content %}
 <div id="datemodal" class="modalDialog">
@@ -73,8 +62,9 @@
 		</div>
 	</div>
 </div>
+
 <div class="side-button-bar">
-	<a href="#searchmodal"><div class="button square sq-tooltip" aria-label="Search"><span class="white fa fa-search"></span></div></a>
+	<a id="searchModal" href="#searchModal"><div class="button square sq-tooltip" aria-label="Search"><span class="white fa fa-search"></span></div></a>
 	<div class="base-spacing-sm"></div>
 	<a href="#resetButton"><div class="button-orange square sq-tooltip" aria-label="Reset" ><span class="white fa fa-refresh"></span></div></a>
 	<div class="base-spacing-sm"></div>
@@ -94,7 +84,7 @@
 				</div>
 				<div class="chart-half-item">
 					<div id="ivrsyears" class="js-volume-container base-spacing-mid"></div>
-					<div id="chart_ivrs" class="ct-chart ct-major-tenth js-volume-container chartist-container"></div>
+					<div id="chart_ivrs" class="ct-chart ct-major-sixth js-volume-container chartist-container"></div>
 				</div> <!-- /chart-half-item -->
 		    </div>
 		</section>

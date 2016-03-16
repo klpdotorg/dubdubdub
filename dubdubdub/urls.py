@@ -2,18 +2,21 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from django.contrib import admin
-admin.autodiscover()
 from schools.views import (SchoolPageView, ProgrammeView,
-                           BoundaryPageView)
+                           BoundaryPageView, AdvancedMapView)
 from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
-from users.views import (ProfilePageView, OrganizationSlugPageView,
+from users.views import (
+    ProfilePageView, OrganizationSlugPageView,
     OrganizationPKPageView, ProfileEditPageView, OrganizationEditPageView,
     VolunteerActivityAddPageView, VolunteerActivityEditPageView,
     EmailVerificationView, VolunteerMapPageView, DonatePageView,
     DonationRequirementsView, DonationRequirementView,
-    DonationRequirementAddEditPageView)
+    DonationRequirementAddEditPageView
+)
+
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns(
     '',
@@ -23,16 +26,16 @@ urlpatterns = patterns(
     # home page
     url(r'^$', StaticPageView.as_view(
         template_name='home.html',
-        ), name='home'),
+    ), name='home'),
 
     url(r'^status/$', StaticPageView.as_view(
         template_name='comingsoon.html'
-        ), name='status'),
+    ), name='status'),
 
     # story dashboard
     url(r'^stories/$', StaticPageView.as_view(
         template_name='story_dashboard.html'
-        ), name='story_dashboard'),
+    ), name='story_dashboard'),
 
     # gka ivrs
     url(r'^gka/$', StaticPageView.as_view(
@@ -42,36 +45,36 @@ urlpatterns = patterns(
     # styleguide page
     url(r'^styleguide/$', StaticPageView.as_view(
         template_name='styleguide.html'
-        ), name='styleguide'),
+    ), name='styleguide'),
 
     # about pages
     url(r'^about/$', StaticPageView.as_view(
         template_name='aboutus.html',
-        ), name='aboutus'),
+    ), name='aboutus'),
     url(r'text/aboutus/$', RedirectView.as_view(url='/about')),
 
     url(r'^partners/$', StaticPageView.as_view(
         template_name='partners.html',
-        ), name='partners'),
+    ), name='partners'),
     url(r'text/partners/$', RedirectView.as_view(url='/partners')),
 
     url(r'^disclaimer/$', StaticPageView.as_view(
         template_name='disclaimer.html',
-        ), name='disclaimer'),
+    ), name='disclaimer'),
     url(r'text/disclaimer/$', RedirectView.as_view(url='/disclaimer')),
 
     # reports page
     url(r'^reports/$', StaticPageView.as_view(
         template_name='reports.html',
-        ), name='reports'),
+    ), name='reports'),
     url(r'text/reports/$', RedirectView.as_view(url='/reports')),
 
-    #temporary klp reports page to link to static pdfs
+    # temporary klp reports page to link to static pdfs
     url(r'^reports/klp/$', StaticPageView.as_view(
         template_name='klpreports.html',
     ), name='klpreports'),
 
-    #temporary dise reports page to link to static pdfs
+    # temporary dise reports page to link to static pdfs
     url(r'^reports/dise/$', StaticPageView.as_view(
         template_name='disereports.html',
     ), name='disereports'),
@@ -79,7 +82,7 @@ urlpatterns = patterns(
     # data page
     url(r'^data/$', StaticPageView.as_view(
         template_name='data.html',
-        ), name='data'),
+    ), name='data'),
     url(r'text/data$', RedirectView.as_view(url='/data')),
     url(r'listFiles/2$', RedirectView.as_view(url='/data')),
 
@@ -87,41 +90,42 @@ urlpatterns = patterns(
 
     url(r'^partners/akshara/reading/$', StaticPageView.as_view(
         template_name='partners/akshara/reading.html',
-        ), name='reading_programme'),
+    ), name='reading_programme'),
+
     url(r'^programmes/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
     url(r'text/reading/$', RedirectView.as_view(url='/partners/akshara/reading/')),
 
     url(r'^partners/akshara/maths/$', StaticPageView.as_view(
         template_name='partners/akshara/maths.html',
-        ), name='maths_programme'),
+    ), name='maths_programme'),
     url(r'^text/maths/$', RedirectView.as_view(url='/partners/akshara/maths/')),
 
     url(r'^partners/akshara/library/$', StaticPageView.as_view(
         template_name='partners/akshara/library.html',
-        ), name='library_programme'),
+    ), name='library_programme'),
     url(r'^text/library/$', RedirectView.as_view(url='/partners/akshara/library/')),
 
     url(r'^partners/akshara/preschool/$', StaticPageView.as_view(
         template_name='partners/akshara/preschool.html',
-        ), name='preschool_programme'),
+    ), name='preschool_programme'),
     url(r'^text/preschool/$', RedirectView.as_view(url='/partners/akshara/preschool/')),
 
     url(r'^partners/sikshana/reading/$', StaticPageView.as_view(
         template_name='partners/sikshana/reading.html',
-        ), name='sikshana_programme'),
+    ), name='sikshana_programme'),
     url(r'^programmes/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
     url(r'^text/sikshana/$', RedirectView.as_view(url='/partners/sikshana/reading/')),
 
     url(r'^partners/pratham/learn-out-of-the-box/$', StaticPageView.as_view(
         template_name='partners/pratham/learn.html',
-        ), name='partners_pratham_learn'),
+    ), name='partners_pratham_learn'),
 
     url(r'^volunteer/$', StaticPageView.as_view(
         template_name='volunteer.html',
-        ), name='volunteer'),
+    ), name='volunteer'),
     url(r'text/volunteer/$', RedirectView.as_view(url='/volunteer/')),
 
-    #URL for assessment programme details
+    # URL for assessment programme details
     url(r'^programme/(?P<pk>[0-9]+)$', ProgrammeView.as_view(), name='programme'),
 
     url(r'^map/$', StaticPageView.as_view(
@@ -130,14 +134,7 @@ urlpatterns = patterns(
             'hide_footer': True,
         }), name='map'),
 
-
-    # url(r'^volunteer-map$', StaticPageView.as_view(
-    #     template_name='volunteer-map.html',
-    #     extra_context={
-    #         'header_full_width': True,
-    #         'header_fixed': True,
-    #         'hide_footer': True
-    #     }), name='volunteer_map'),
+    url(r'^advanced-map/$', AdvancedMapView.as_view(), name='advanced_map'),
 
     url(r'^volunteer-map$', VolunteerMapPageView.as_view(
         template_name='volunteer-map.html',
@@ -146,20 +143,20 @@ urlpatterns = patterns(
         }), name='volunteer_map'),
 
     url('^donate$', DonatePageView.as_view(
-        template_name = 'donate/donate.html',
-        ), name='donate'),
+        template_name='donate/donate.html',
+    ), name='donate'),
 
     url('^donate/requests/$', DonationRequirementsView.as_view(
-        template_name = 'donate/donate_requests.html'
-        ), name='donate_requests'),
+        template_name='donate/donate_requests.html'
+    ), name='donate_requests'),
 
     url('^donate/requests/(?P<pk>[0-9]+)$', DonationRequirementView.as_view(
-        template_name = 'donate/donate_request.html'
-        ), name='donate_request'),
+        template_name='donate/donate_request.html'
+    ), name='donate_request'),
 
     url(r'^organisation/(?P<pk>[0-9]+)/donation_requirement$',
         DonationRequirementAddEditPageView.as_view(
-            extra_context = {
+            extra_context={
                 'action': 'Add'
             }
         ),
@@ -167,7 +164,7 @@ urlpatterns = patterns(
 
     url(r'^organisation/(?P<org_pk>[0-9]+)/donation_requirement/(?P<pk>[0-9]+)$',
         DonationRequirementAddEditPageView.as_view(
-            extra_context = {
+            extra_context={
                 'action': 'Edit'
             }
         ),
@@ -182,8 +179,7 @@ urlpatterns = patterns(
     ), name='old_school_page'),
 
     # boundary page
-    url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(
-        ), name='boundary_page'),
+    url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(), name='boundary_page'),
 
 
     url(r'^users/verify_email',
@@ -238,8 +234,5 @@ if settings.DEBUG:
         '',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
-        }),
-        url(r'^favicon\.ico$', 'django.views.static.serve', {
-            'url': '/static/images/favicon.ico'
-        }),
+        })
     )

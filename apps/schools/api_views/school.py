@@ -25,12 +25,12 @@ class SchoolsList(KLPListAPIView, CacheMixin):
     search_fields = ('name', 'id', 'dise_info__dise_code',)
 
     def get_queryset(self):
-        qset = School.objects.filter(status=2)
+        qset = School.objects.filter(status=2).distinct('id')
         get_geom = self.request.GET.get('geometry', 'no')
         if get_geom == 'yes':
             qset = qset.select_related('instcoord')
 
-        stype = self.request.GET.get('type', 'all')
+        stype = self.request.GET.get('school_type', 'both')
 
         if stype == 'preschools':
             qset = qset.filter(schooldetails__type=2)
@@ -41,14 +41,30 @@ class SchoolsList(KLPListAPIView, CacheMixin):
         if self.request.GET.get('admin1', ''):
             admin1 = self.request.GET.get('admin1')
             qset = qset.filter(schooldetails__admin1_id=admin1)
-
-        if self.request.GET.get('admin2', ''):
+        elif self.request.GET.get('admin2', ''):
             admin2 = self.request.GET.get('admin2')
             qset = qset.filter(schooldetails__admin2_id=admin2)
-
-        if self.request.GET.get('admin3', ''):
+        elif self.request.GET.get('admin3', ''):
             admin3 = self.request.GET.get('admin3')
             qset = qset.filter(schooldetails__admin3_id=admin3)
+
+        acyear = self.request.GET.get('academic_year', settings.DEFAULT_ACADEMIC_YEAR)
+
+        if self.request.GET.get('partner_id', ''):
+            qset = qset.filter(institutionassessmentcohorts__assessment__programme__partner_id=self.request.GET.get('partner_id'))
+
+        if self.request.GET.get('programmes', ''):
+            programme_ids = self.request.GET.get('programmes').split(',')
+            try:
+                programme_ids = map(lambda x: int(x), programme_ids)
+                qset = qset.filter(institutionassessmentcohorts__assessment__programme_id__in=programme_ids)
+            except Exception as e:
+                print 'Malformed "programmes" param in advanced search'
+                print e
+                # FIXME: nothing to do, just ignore it for now
+                pass
+
+            qset = qset.filter(institutionassessmentcohorts__assessment__programme__academic_year__name=acyear)
 
         return qset
 

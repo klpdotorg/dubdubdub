@@ -20,6 +20,8 @@
     <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2>
     <div class="heading-tiny-uppercase align-left" >Schools with Calls</div>
     <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2> 
+    <div class="heading-tiny-uppercase align-left" >Last Call</div>
+    <h2 class="heading-secondary black align-left">{{ ivrs.last_story }}</h2> 
   </script>
 
   <script type="text/html" id="tpl-tlmTable">
@@ -205,6 +207,43 @@
   <script type="text/html" id="tpl-ivrsVolume">           
     <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
   </script>
+
+  <script type="text/html" id="tpl-gka-filters-modal">
+  <div class="modal modal-map-filter">
+    <h3 class="heading-border">Filter by Geography</h3>
+    <div class="filter-school-block">
+ 
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">District</div>
+        <input type="hidden" class="filter-dropdown" id="select-district" />
+        </select>
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Block</div>
+        <input type="hidden" class="filter-dropdown" id="select-block" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Cluster</div>
+        <input type="hidden" class="filter-dropdown" id="select-cluster" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">School</div>
+        <input type="hidden" class="filter-dropdown" id="select-school" />
+      </div>
+    </div> <!-- /filter-school-block -->
+
+    <div class="base-spacing"></div>
+      <div class="center-text">
+      <a href="" class="button" id="search">Search</a>
+      </div>
+    </div>
+ 
+
+</script>
+
 
 {% endverbatim %}
 

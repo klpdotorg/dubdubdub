@@ -2,6 +2,8 @@
 (function() {
     var klp = window.klp;
     klp.init = function() {
+        klp.search_mode = false;
+
         klp.router.init();
         klp.filters_modal.init();
         //klp.login_modal.init();
@@ -21,12 +23,13 @@
             var $tool = $(this);
             $tool.toggleClass("active");
         });
-
+        $(".js-select-multiple").select2({
+        });
         // $(document).ready(function(){
         // });
 
         klp._tpl = klp.utils.compile_templates();
         klp.router.start();
-    };    
+    };
 
 })();

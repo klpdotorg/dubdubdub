@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* RESET.CSS */
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -111,7 +111,7 @@ a {
 .italic, em, i {
   font-style: italic; }
 
-.bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.bold, strong, b, .heading-tertiary, .heading-tiny-uppercase, .table-base-heading, .heading-section-ul-alt, .table-data tr td:first-of-type, .icon-number, .verified, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .module-stats-label, .bar-label, .enrolment, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
@@ -341,7 +341,7 @@ ol {
 .brand-blue, .module-stats-label, .form-edit-heading, .rbox_lightBox .heading-border, .home-help-volunteer h3:first-of-type, .volunteer-works-teach h3:first-of-type, .icon-compare-boy, .facility-items .k-icon, .gender-item-boy .gender-item-count, .demo-color-blue-extend, .brand-school-cluster {
   color: #3891e3; }
 
-.brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .alert, .tab-heading.tab-heading-active, .picker__day--highlighted:hover,
+.brand-blue-bg, .icon-boy, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .alert, .tab-heading.tab-heading-active, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .home-help-volunteer .module-img, .home-current-stories h3:first-of-type:after, .volunteer-works-teach .module-img, .brand-school-cluster-bg {
@@ -383,7 +383,7 @@ ol {
 .pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: #f87c84; }
 
-.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .adv-search-btn:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .adv-search-btn:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .leaflet-container a.button--sm {
@@ -503,7 +503,7 @@ ol {
 .border-radius, .alert {
   border-radius: 6px; }
 
-.border-radius-sm, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.border-radius-sm, .heading-section, .text-bordered, .dropdown-base > li, .dropdown-base ul, .table-infra-key-color:after, .verified:before, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
@@ -532,7 +532,7 @@ img, video {
 .align-right {
   text-align: right; }
 
-.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.center-text, .heading-border, .heading-primary:after, .heading-primary, .heading-secondary, .heading-section, .table-infra-key-color:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .tooltip:after, .banner-full, .scroll-smooth-block, .module-img-each, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .form-edit-heading, .rbox_overlay, .rbox_lightBoxBlock, .picker__header, .picker__table, .picker__footer, .nav-wrap, .about-map, .logo-wrapper, .partners-list-block, .compare-button-block a, .label-compare-block, .icon-compare-gender, .facility-items, .gender-icons-title, .facility-icons-title {
   text-align: center; }
@@ -565,7 +565,7 @@ img, video {
   display: inline-block;
   vertical-align: top; }
 
-.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.vertical-inline-middle, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .bar-percent, .bar-custom, .label-inline, .input-checkbox, .radio-checkbox, .input-checkbox-label, .radio-checkbox-label, .input-checkbox + .input-checkbox-label:before, .input-radio + .input-radio-label:before, .rbox_lightBoxBlock, .banner-reading .banner-full-caption span.h1, .pie-chart-gender, .compare-gender-pie {
   display: inline-block;
@@ -790,7 +790,7 @@ hr {
     right: 7px; }
 
 /*-------------------------------------*/
-.button, .button-grey, .button-filter-volunteer, .button-orange, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
+.button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button-hollow, .nav-trigger, .profile-options, .button-back,
 .button-next,
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"] {
   font-size: 75%;
@@ -801,12 +801,12 @@ hr {
   cursor: pointer;
   outline: none; }
 
-.button, .button-grey, .button-filter-volunteer, .button-orange, .square {
+.button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square {
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px -3px 0px rgba(0, 0, 0, 0.2) inset;
   position: relative;
   border: none; }
-  .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .square:focus {
+  .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .adv-search-btn:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .adv-search-btn:focus, .square:focus {
     box-shadow: none;
     top: 1px; }
 
@@ -2258,7 +2258,7 @@ increase padding of lightbox icons
 
 //on library page, both blue and yellow show 9-10 sentences
 
-//consider adding a separate class for the header in breadcrumb for map and removing 
+//consider adding a separate class for the header in breadcrumb for map and removing
 the css in the head of map.html
 
 // role=tooltip is technically wrong because it violates when there's no described by
@@ -2528,6 +2528,15 @@ body {
 
 .map-subheader-wrapper {
   height: 53px; }
+
+.search-input-map {
+  float: left;
+  width: 85%; }
+
+.adv-search-btn {
+  float: right;
+  padding: 10px 10px;
+  font-size: 12pt; }
 
 .breadcrumb a {
   padding: 0 10px 0 0; }
@@ -4371,9 +4380,6 @@ code {
 
   .align-fromdate {
     text-align: left; } }
-.button-orange {
-  margin-top: 5px; }
-
 .chartist-tooltip {
   position: absolute;
   display: inline-block;
@@ -4402,8 +4408,8 @@ code {
 .chartist-container {
   position: relative; }
 
-/*.subheader-wrapper { 
-	text-transform: none; 
+/*.subheader-wrapper {
+	text-transform: none;
 }*/
 .square {
   padding: 10px 10px; }
@@ -4741,11 +4747,11 @@ code {
   color: #4d4d4d; }
 
 /*--- with font awesome icons ----*/
-/*.stepy-header li.stepy-active div {visibility: collapse;} 
-    .stepy-header li.stepy-active div:after { 
+/*.stepy-header li.stepy-active div {visibility: collapse;}
+    .stepy-header li.stepy-active div:after {
         visibility: visible;
         margin: -30px auto;
-        content: "\f21c"; 
+        content: "\f21c";
         background-image: url(/static/images/story/auto.png);
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -4756,5 +4762,93 @@ code {
   position: fixed;
   bottom: 2px;
   right: 2px; }
+
+/*http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/*/
+.modalDialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  /*99999;*/
+  opacity: 0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none; }
+
+@media only screen and (max-width: 749px) {
+  .modalDialog {
+    margin-top: 10%; } }
+.modalDialog:target {
+  opacity: 1;
+  pointer-events: auto; }
+
+.modalDialog > div {
+  width: 80%;
+  position: relative;
+  margin: 10% auto;
+  padding: 5px 20px 13px 20px;
+  border-radius: 10px;
+  background: #fff; }
+
+.close {
+  background: #606061;
+  color: #FFFFFF;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000; }
+
+.close:hover {
+  background: #00d9ff; }
+
+@media only screen and (min-width: 750px) {
+  .search-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .search-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .search-half-col {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .search-quarter-col {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .search-third-col {
+    width: 33%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+.search-scroll {
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 10px 10px; }
+
+.program-select {
+  width: 80%;
+  margin: auto; }
 
 /*# sourceMappingURL=style.css.map */

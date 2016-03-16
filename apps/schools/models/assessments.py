@@ -27,14 +27,14 @@ class InstitutionAssessmentCohorts(BaseModel):
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    cohortsnum= models.IntegerField()
+    cohortsnum = models.IntegerField()
 
     def __unicode__(self):
-        return "%s: %s: %s: %s" % (self.school,self.assessment, self.sex, self.mt,)
+        return "%s: %s: %s: %s" % (self.school, self.assessment, self.sex, self.mt,)
 
     class Meta:
 
-        #workaround for https://code.djangoproject.com/ticket/8162
+        # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssAggCohorts'
         managed = False
         db_table = 'tb_institution_assessment_cohorts'
@@ -46,17 +46,17 @@ class InstitutionAssessmentSinglescore(BaseModel):
     studentgroup = models.CharField(max_length=50, blank=True)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+                                     blank=True, null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
 
-        return "%s: %s" %(self.school, self.assessment,)
+        return "%s: %s" % (self.school, self.assessment,)
 
     class Meta:
 
-        #workaround for https://code.djangoproject.com/ticket/8162
+        # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssSingleScore'
         managed = False
         db_table = 'tb_institution_assessment_singlescore'
@@ -65,21 +65,18 @@ class InstitutionAssessmentSinglescore(BaseModel):
 class InstitutionAssessmentPercentile(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+                                     blank=True, null=True)
 
     def __unicode__(self):
 
-        return "%s: %s" %(self.school, self.assessment,)
+        return "%s: %s" % (self.school, self.assessment,)
 
     class Meta:
-
-        #workaround for https://code.djangoproject.com/ticket/8162
+        # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssPercentile'
         managed = False
         db_table = 'tb_institution_assessment_percentile'
-
-
 
 
 class InstitutionAssessmentSinglescoreGender(BaseModel):
@@ -126,6 +123,7 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
 
+
 class BoundaryAssessmentSinglescore(BaseModel):
     boundary= models.ForeignKey('Boundary', db_column='bid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
@@ -164,8 +162,6 @@ class BoundaryAssessmentPercentile(BaseModel):
         db_table = 'tb_boundary_assessment_percentile'
 
 
-
-
 class BoundaryAssessmentSinglescoreGender(BaseModel):
     boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
@@ -196,20 +192,19 @@ class BoundaryAssessmentSinglescoreMt(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+                                     blank=True, null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" %(self.boundary, self.assessment, self.mt,)
+        return "%s: %s: %s" % (self.boundary, self.assessment, self.mt,)
 
     class Meta:
 
-        #workaround for https://code.djangoproject.com/ticket/8162
+        # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'BoundaryAssSingleScoreMt'
         managed = False
         db_table = 'tb_boundary_assessment_singlescore_mt'
-
 
 
 class Partner(BaseModel):
@@ -263,7 +258,6 @@ class Question(BaseModel):
     class Meta:
         managed = False
         db_table = 'tb_question'
-
 
 
 class StudentEval(BaseModel):

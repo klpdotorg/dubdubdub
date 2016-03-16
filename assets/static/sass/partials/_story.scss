@@ -28,7 +28,7 @@
 /* Defining a text align -left */
 
 .align-left {
-  text-align: left; 
+  text-align: left;
 }
 
 .img-symbol {
@@ -46,7 +46,7 @@
 }
 
 .bar-label {
-  width: 100%; 
+  width: 100%;
 }
 
 @include media-med-maxwidth{
@@ -81,10 +81,6 @@
 	}
 }
 
-.button-orange{
-	margin-top: 5px;
-}	
-
 .chartist-tooltip{
 	position:absolute;
 	display:inline-block;
@@ -116,8 +112,8 @@
 	position:relative;
 }
 
-/*.subheader-wrapper { 
-	text-transform: none; 
+/*.subheader-wrapper {
+	text-transform: none;
 }*/
 
 .square{
@@ -129,7 +125,7 @@
 	position: relative;
 	top: 0;
 	right: 0;
-	text-decoration: none; 
+	text-decoration: none;
  }
 .sq-tooltip:before, .sq-tooltip:after {
 	position: absolute;
@@ -137,7 +133,7 @@
 	opacity: 0;
 	visibility: hidden;
 	-webkit-transition: opacity 0.25s ease-in-out;
-	transition: opacity 0.25s ease-in-out; 
+	transition: opacity 0.25s ease-in-out;
 }
 .sq-tooltip:after {
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -148,7 +144,7 @@
 	background: #000;
 	left: -9999px;
 	margin-top: 12px;
-	text-transform: initial; 
+	text-transform: initial;
 	z-index: 99999;
 }
 .sq-tooltip:before {
@@ -158,17 +154,17 @@
     border-width: 6px;
     border-style: solid;
     border-color: transparent transparent #000 transparent;
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .sq-tooltip:hover:after, .sq-tooltip:hover:before, .sq-tooltip:focus:after, .sq-tooltip:focus:before {
 	visibility: visible;
 	opacity: 1;
 	top: 50%;
-	left: -100%; 
+	left: -100%;
 }
 .sq-tooltip:hover:before, .sq-tooltip:focus:before {
-	left: 10px; 
+	left: 10px;
 }
 
 .side-button-bar {

@@ -225,6 +225,10 @@ class School(GeoBaseModel):
     def has_volunteer_activities(self):
         return self.volunteeractivity_set.all().count() > 0
 
+    @cached_property
+    def full_address(self):
+        return self.address.full if (self.address and self.address.full) else self.admin3.name.title()
+
     def get_basic_facilities(self):
         facilities = {
             'computer_lab': False,

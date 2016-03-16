@@ -1,0 +1,29 @@
+@include media-med {
+    .search-parent {
+      @include grid-parent;
+    }
+
+    .search-half-col {
+      @include col-50-flt;
+    }
+
+    .search-quarter-col {
+      @include col-25-flt;
+    }
+
+    .search-third-col {
+    	@include col-33-flt;
+    }
+}
+
+.search-scroll {
+	height: 500px; 
+	overflow-x: hidden; 
+	overflow-y: auto; 
+	padding: 10px 10px;
+}
+
+.program-select {
+	width: 80%;
+	margin:auto;
+}

@@ -1,0 +1,200 @@
+{% verbatim %}
+
+  <script type="text/template" class="tpl-raw" data-tpl="marker_overlay" id="tpl_mobile_place_details">
+    <section class="map-pin-details">
+      <div class="content">
+        <div class="info school">
+          <div class="icon-close fr js-close-details"></div>
+          <h2 class="name">{{ name }}</h2>
+          <div class="item">
+            <div class="label">District</div>
+            <div class="value">{{ admin1.name|capitalize }}</div>
+          </div>
+          <div class="item">
+            <div class="label">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+            <div class="value">{{ admin2.name|capitalize }}</div>
+          </div>
+          <div class="item">
+            <div class="label">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+            <div class="value">{{ admin3.name|capitalize }}</div>
+          </div>
+        </div>
+        <div class="details">
+          <div class="detail-item">
+            <h4 class="heading-tiny-uppercase">Students</h4>
+            <div class="gender-icons">
+              <div class="gender-item boy">
+                <span class="k-icon"></span>
+                <p class="label">Boys</p>
+                <p class="value">{{ num_boys }}</p>
+              </div>
+              <div class="gender-item girl">
+                <span class="k-icon"></span>
+                <p class="label">Girls</p>
+                <p class="value">{{ num_girls }}</p>
+              </div>
+              <div class="gender-item total">
+                <span class="k-icon"></span>
+                <p class="label">Total</p>
+                <p class="value">{{ num_boys+num_girls }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="detail-item mar_top_20" style="display:none;">
+            {% if has_basic_facilities %}
+            <h4 class="purple-heading">Facilities</h4>
+            <div class="facility-items ta-c">
+              {% if basic_facilities.computer_lab %}<div class="icon computer"></div>{% endif %}
+              {% if basic_facilities.library %}<div class="icon books"></div>{% endif %}
+              {% if has_volunteer_activities %}<div class="icon events"></div>{% endif %}
+              {% if basic_facilities.playground %}<div class="icon football last"></div>{% endif %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mar_top_10">
+            <a class="button blue fl js-trigger-volunteer-map" href="/school/{{ id }}#?tab=volunteer">Volunteer</a>
+            <a class="button dark_grey last fr" href="/school/{{ id }}">More Info</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </script>
+
+
+
+<!-- Map Popup -->
+
+  <script type="text/template" id="tpl-map-popup">
+  <div class="map-pin-details">
+    <span class="icon-number">{% if type.id==1 %} S {% else %} P {% endif %}</span>
+    <h3 class="map-heading-main">{{ name }}</h3>
+    <ul class="map-location-labels">
+      <li class="map-label-each">
+        <div class="map-label-title">District</div>
+        <div class="map-label-name">{{ admin1.name|capitalize }}</div>
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Block {% else %} Circle {% endif %}</div>
+        <div class="map-label-name">{{ admin2.name|capitalize }}</div>
+      <li class="map-label-each">
+        <div class="map-label-title">{% if type.id==1 %}Cluster {% else %} Project {% endif %}</div>
+        <div class="map-label-name">{{ admin3.name|capitalize }}</div>
+    </ul>
+    {% if num_boys or num_girls %}
+    <h4 class="gender-icons-title">Students</h4>
+    <div class="gender-icons">
+      <div class="gender-item gender-item-boy">
+        <div class="icon-boy k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">
+            {% if num_boys %}
+              {{ num_boys }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
+          <div class="uppercase font-light font-larger">Boys</div>
+        </div>
+      </div>
+      <div class="gender-item gender-item-girl">
+        <div class="icon-girl k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">
+            {% if num_girls %}
+              {{ num_girls }}
+            {% else %}
+              0
+            {% endif %}
+          </div>
+          <div class="uppercase font-light font-larger">Girls</div>
+        </div>
+      </div>
+      <div class="gender-item gender-item-total">
+        <div class="icon-boy-girl k-icon"></div>
+        <div class="center-text">
+          <div class="gender-item-count">{{ total_students }}</div>
+          <div class="uppercase font-light font-larger">Total</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if has_basic_facilities %}
+    <div class="facility-items">
+      <h4 class="facility-icons-title">Facilities</h4>
+      {% if basic_facilities.computer_lab %}<span class="tooltip" aria-label="Has Computers"><div class="k-icon fa fa-laptop"></div></span>{% endif %}
+      {% if basic_facilities.library %}<span class="tooltip" aria-label="Has a Library"><span class="fa fa-book k-icon"></span></span>{% endif %}
+      {% if has_volunteer_activities %}<span class="tooltip" aria-label="Needs Volunteers"><div class="k-icon fa fa-calendar"></div></span>{% endif %}
+      {% if basic_facilities.playground %}<span class="tooltip" aria-label="Has a Playground"><div class="k-icon fa fa-soccer-ball-o"></div></span>{% endif %}
+    </div>
+    {% endif %}
+    {% if has_volunteer_activities %}
+    <div class="center-text">
+      <a class="button js-trigger-volunteer-map" href="/school/{{ id }}/#?tab=volunteer">Volunteer here</a>
+    </div>
+    <div class="base-spacing"></div>
+    {% endif %}
+    <div class="center-text">
+      <a class="button button-map-compare js-trigger-compare" href="">Compare to</a>
+      <a class="button Xjs-trigger-info" href="/school/{{ id }}/">More Info</a>
+      <a class="button-grey js-map-popup-close" href="#">Close</a>
+    </div>
+  </div>
+  </div>
+</script>
+
+<script type="text/html" id="tpl-filters-modal">
+  <div class="modal modal-map-filter">
+    <h3 class="heading-border">Filter Schools</h3>
+    <div class="filter-school-block">
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">School Type</div>
+        <select name="type" id="select-type" class="js-filters-dropdown">
+          <option></option>
+          <option>Primary School</option>
+          <option>Preschool</option>
+        </select>
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">District</div>
+        <input type="hidden" class="filter-dropdown" id="select-district" />
+        </select>
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Block</div>
+        <input type="hidden" class="filter-dropdown" id="select-block" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Cluster</div>
+        <input type="hidden" class="filter-dropdown" id="select-cluster" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">School</div>
+        <input type="hidden" class="filter-dropdown" id="select-school" />
+      </div>
+    </div> <!-- /filter-school-block -->
+
+    <div class="base-spacing"></div>
+    <div class="center-text">
+    <a href="" class="button hide" id="download">Download CSV</a>
+    </div>
+  </div>
+
+</script>
+
+<script type="text/html" id="tpl-school-item">
+    <li class="list-sidebar sidebar-school" data-id="{{ properties.id }}" data-type="{{ properties.type.name }}" data-latlng="{{ geometry.coordinates }}">
+        {% if properties.type.name == 'PreSchool' %}
+            <img title="PreSchool" style="float:left; margin: 0 10px 20px 0" src="/static/images/map/icon_preschool.png" />
+        {% else %}
+            <img title="Primary School" style="float:left; margin: 0 10px 10px 0" src="/static/images/map/icon_school.png" />
+        {% endif %}
+        <div class="uppercase font-smaller"><strong>{{ properties.name }}</strong></div>
+        <div class="font-smallest">{% if properties.address_full != null %}{{ properties.address_full }}{% endif%}</div>
+    </li>
+</script>
+{% endverbatim %}
