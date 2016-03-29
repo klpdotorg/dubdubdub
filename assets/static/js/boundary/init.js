@@ -35,7 +35,9 @@
       geometry: 'yes',
       year: acadYear,
       school_type: 'PreSchool',
-      source: 'anganwadi'
+      source: 'anganwadi',
+      from: acadYear.slice(0,4) + "-06-01", // Starts from Jun 1
+      to: acadYear.slice(5,9) + "-05-31" // To May 31
     });
 
     // FIX THIS LATER
