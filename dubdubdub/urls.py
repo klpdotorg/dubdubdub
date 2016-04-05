@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-from schools.views import (SchoolPageView, ProgrammeView,
+from schools.views import (SchoolPageView, ProgrammeView, NewBoundaryPageView,
                            BoundaryPageView, AdvancedMapView)
 from stories.views import IVRSPageView, SYSView
 from common.views import StaticPageView
@@ -180,6 +180,7 @@ urlpatterns = patterns(
 
     # boundary page
     url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(), name='boundary_page'),
+    url(r'^(?P<boundary_type>preschool-district|primary-district|circle|cluster|project|block)/(?P<pk>[0-9]+)/$', NewBoundaryPageView.as_view(), name='boundary_page_new'),
 
 
     url(r'^users/verify_email',

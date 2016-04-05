@@ -4,7 +4,7 @@ from common.views import StaticPageView
 from .models import School, Programme, Boundary
 from django.conf import settings
 import urllib2
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.core.urlresolvers import reverse
 
 
@@ -42,6 +42,32 @@ class ProgrammeView(DetailView):
 class BoundaryPageView(DetailView):
     model = Boundary
     template_name = 'boundary.html'
+
+
+class NewBoundaryPageView(DetailView):
+    model = Boundary
+    template_name = 'boundary.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        pk = self.kwargs.get('pk')
+        boundary_type = self.kwargs.get('boundary_type')
+
+        if boundary_type in ['preschool-district', 'circle', 'project']:
+            queryset = queryset.filter(type_id=2)
+        elif boundary_type in ['primary-district', 'cluster', 'block']:
+            queryset = queryset.filter(type_id=1)
+
+        try:
+            boundary = queryset.get(
+                id=pk,
+                hierarchy__name=boundary_type.replace('preschool-', '').replace('primary-', '')
+            )
+            return boundary
+        except self.model.DoesNotExist:
+            raise Http404
 
 
 class AdvancedMapView(StaticPageView):
