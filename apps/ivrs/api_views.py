@@ -58,13 +58,18 @@ class SMSView(KLPAPIView):
             return Response(message, status=status_code)
 
         for question_number, response in enumerate(data):
-            # question_number starts from 0, and hence we need to add 1
-            # to it in order to get the correct sequence of questions.
-            state, status_code, message = verify_answer(
-                session_id, question_number+1, response, ivrs_type,
-            )
-            if status_code != status.HTTP_200_OK:
-                return Response(message, status=status_code)
+            # Blank data corresponds to NA and indicates that we should
+            # skip the corresponding question.
+            if data == '':
+                continue
+            else:
+                # question_number starts from 0, and hence we need to add 1
+                # to it in order to get the correct sequence of questions.
+                state, status_code, message = verify_answer(
+                    session_id, question_number+1, response, ivrs_type,
+                )
+                if status_code != status.HTTP_200_OK:
+                    return Response(message, status=status_code)
         else:
             message = "Thank you. Your survey has been saved"
 
