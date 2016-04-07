@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework import status
 
 from schools.models import School, BoundaryType
@@ -11,6 +13,17 @@ PRE = "08039510414"
 GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
+
+
+def get_date(date):
+    date = datetime.datetime.strptime(
+        date, '%Y-%m-%d %H:%M:%S'
+    )
+    date = timezone.make_aware(
+        date, timezone.get_current_timezone()
+    )
+    return date
+
 
 def check_school(state, school_id):
     school_type = None

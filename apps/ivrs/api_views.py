@@ -1,5 +1,4 @@
 import os
-import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -8,7 +7,9 @@ from django.conf import settings
 from django.utils import timezone
 
 from .models import State
-from .utils import get_question, save_answer, check_school, verify_answer
+from .utils import (
+    get_question, save_answer, check_school, verify_answer, get_date
+)
 
 from schools.models import School
 from common.views import KLPAPIView
@@ -130,15 +131,8 @@ class VerifyAnswer(KLPAPIView):
         session_id = request.QUERY_PARAMS.get('CallSid', None)
         response = request.QUERY_PARAMS.get('digits', None)
 
-        verify_answer(session_id, question_number, response)
+        state, status_code, message = verify_answer(
+            session_id, question_number, response
+        )
 
         return Response("", status=status_code)
-
-def get_date(date):
-    date = datetime.datetime.strptime(
-        date, '%Y-%m-%d %H:%M:%S'
-    )
-    date = timezone.make_aware(
-        date, timezone.get_current_timezone()
-    )
-    return date
