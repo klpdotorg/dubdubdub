@@ -1,6 +1,6 @@
 from rest_framework import status
 
-from schools.models import BoundaryType
+from schools.models import School, BoundaryType
 from stories.models import (
     Question, Questiongroup
 )
@@ -10,12 +10,64 @@ GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
 
+
+def check_school(state, school_id):
+    school_type = None
+
+    if not school_id:
+        status_code = status.HTTP_404_NOT_FOUND
+        message = "School ID not entered"
+
+    elif School.objects.filter(id=school_id).exists():
+        state.school_id = school_id
+        school_type = School.objects.filter(
+            id=school_id
+        ).values(
+            'admin3__type__name'
+        )[0]['admin3__type__name']
+
+    else:
+        status_code = status.HTTP_404_NOT_FOUND
+        message = "School ID not found"
+
+    # Validating whether the entered school ID corresponds to the
+    # correct school_type. Assigns the ivrs_type based on the call
+    # number as well.
+    if school_type:
+        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+                message = "Please enter Primary School ID"
+            state.ivrs_type = 'gka-v3'
+            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
+                state.answers.append('NA')
+
+        elif ivrs_type == PRI:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+                message = "Please enter Primary School ID"
+            state.ivrs_type = 'ivrs-pri'
+            # Initializing answer slots 1 to 6 with NA
+            for i in range(0,6):
+                state.answers.append('NA')
+
+        # ivrs_type == PRE
+        else:
+            if school_type != u'PreSchool':
+                status_code = status.HTTP_404_NOT_FOUND
+                message = "Please enter PreSchool ID"
+            state.ivrs_type = 'ivrs-pre'
+            # Initializing answer slots 1 to 6 with NA
+            for i in range(0,6):
+                state.answers.append('NA')
+
+    state.save()
+    return (state, status, message)
+
 # GKA v3 questions are at https://github.com/klpdotorg/dubdubdub/issues/549#issuecomment-170913566
 # We special case question Q1 and question Q5. Q1 should be split into Q1 and Q2. Q5 should
 # be split into Q5, Q6 and Q7.
 # DISCLAIMER: There is no neat way of doing this. Beware of the mess below!
-
-
 def save_answer(state, question_number, question, ivrs_type, response):
     # Perform sanity check for GKA & PRI. PRE (old ivrs) only
     # has checkbox and numeric as answers types. Answers other
