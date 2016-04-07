@@ -8,12 +8,12 @@ from django.conf import settings
 from django.utils import timezone
 
 from .models import State
-from .utils import get_question, save_answer
+from .utils import get_question, save_answer, check_school
 
 from schools.models import School
 from common.views import KLPAPIView
 
-
+# Exotel numbers. Find them at http://my.exotel.in/viamentis/apps#installed-apps
 PRI = "08039236431"
 PRE = "08039510414"
 GKA_DEV = "08039510185"
@@ -43,47 +43,7 @@ class SMSView(KLPAPIView):
         data = data.split(',')
         school_id = data.pop(0)
 
-        # Checking if school_id has been entered and whether the
-        # entered ID is valid.
-        school_type = None
-        if not school_id:
-            status_code = status.HTTP_404_NOT_FOUND
-        elif School.objects.filter(id=school_id.strip('"')).exists():
-            state.school_id = school_id.strip('"')
-            school_type = School.objects.filter(
-                id=school_id.strip('"')
-            ).values(
-                'admin3__type__name'
-            )[0]['admin3__type__name']
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
-
-        # Validating whether the entered school ID corresponds to the
-        # correct school_type. Assigns the ivrs_type based on the call
-        # number as well.
-        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'gka-v3'
-            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
-                state.answers.append('NA')
-        elif ivrs_type == PRI:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pri'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-        else: # ivrs_type == PRE
-            if school_type != u'PreSchool':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pre'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-
-        state.save()
+        state, status_code, message = check_school(state, school_id)
 
 
 # This view is on hold for now.
@@ -131,47 +91,10 @@ class CheckSchool(KLPAPIView):
         state.answers = []
         state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
 
-        # Checking if school_id has been entered and whether the
-        # entered ID is valid.
-        school_type = None
-        if not school_id:
-            status_code = status.HTTP_404_NOT_FOUND
-        elif School.objects.filter(id=school_id.strip('"')).exists():
-            state.school_id = school_id.strip('"')
-            school_type = School.objects.filter(
-                id=school_id.strip('"')
-            ).values(
-                'admin3__type__name'
-            )[0]['admin3__type__name']
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
+        if school_id:
+            school_id = school_id.strip('"')
 
-        # Validating whether the entered school ID corresponds to the
-        # correct school_type. Assigns the ivrs_type based on the call
-        # number as well.
-        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'gka-v3'
-            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
-                state.answers.append('NA')
-        elif ivrs_type == PRI:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pri'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-        else: # ivrs_type == PRE
-            if school_type != u'PreSchool':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pre'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-
-        state.save()
+        state, status_code, message = check_school(state, school_id)
 
         return Response("", status=status_code)
 
