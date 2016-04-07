@@ -29,7 +29,7 @@ def get_date(date):
     return date
 
 
-def check_school(state, school_id):
+def check_school(state, school_id, ivrs_type):
     school_type = None
 
     if not school_id:
@@ -37,12 +37,14 @@ def check_school(state, school_id):
         message = "School ID not entered"
 
     elif School.objects.filter(id=school_id).exists():
+        status_code = status.HTTP_200_OK
         state.school_id = school_id
         school_type = School.objects.filter(
             id=school_id
         ).values(
             'admin3__type__name'
         )[0]['admin3__type__name']
+        message = ''
 
     else:
         status_code = status.HTTP_404_NOT_FOUND
@@ -84,7 +86,7 @@ def check_school(state, school_id):
     return (state, status_code, message)
 
 
-def verify_answer(session_id, question_number, response):
+def verify_answer(session_id, question_number, response, ivrs_type):
     if State.objects.filter(session_id=session_id).exists():
         state = State.objects.get(session_id=session_id)
 
@@ -190,7 +192,8 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
 
 def get_question(question_number, ivrs_type):
-    if ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER:
+    print "WHAT : " + str(question_number)
+    if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
         question_group = Questiongroup.objects.get(
             version=5,
             source__name='ivrs'

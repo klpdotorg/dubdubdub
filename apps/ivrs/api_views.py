@@ -35,7 +35,7 @@ class SMSView(KLPAPIView):
             session_id=session_id
         )
         state.telephone = telephone
-        state.date_of_visit = get_date(date)
+        state.date_of_visit = get_date(date.strip("'"))
         state.answers = []
         # Ignoring index 0 since question_numbers start from 1
         state.answers.append('IGNORED_INDEX')
@@ -43,7 +43,22 @@ class SMSView(KLPAPIView):
         data = data.split(',')
         school_id = data.pop(0)
 
-        state, status_code, message = check_school(state, school_id)
+        state, status_code, message = check_school(state, school_id, ivrs_type)
+        if status_code != status.HTTP_200_OK:
+            return Response(message, status=status_code)
+
+        for question_number, response in enumerate(data):
+            # question_number starts from 0, and hence we need to add 1
+            # to it in order to get the correct sequence of questions.
+            state, status_code, message = verify_answer(
+                session_id, question_number+1, response, ivrs_type,
+            )
+            if status_code != status.HTTP_200_OK:
+                return Response(message, status=status_code)
+        else:
+            message = "Thank you. Your survey has been saved"
+
+        return Response(message, status=status_code)
 
 
 # This view is on hold for now.
@@ -95,7 +110,7 @@ class CheckSchool(KLPAPIView):
         if school_id:
             school_id = school_id.strip('"')
 
-        state, status_code, message = check_school(state, school_id)
+        state, status_code, message = check_school(state, school_id, ivrs_type)
 
         return Response("", status=status_code)
 
@@ -131,7 +146,7 @@ class VerifyAnswer(KLPAPIView):
         response = request.QUERY_PARAMS.get('digits', None)
 
         state, status_code, message = verify_answer(
-            session_id, question_number, response
+            session_id, question_number, response, ivrs_type,
         )
 
         return Response("", status=status_code)
