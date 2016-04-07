@@ -21,7 +21,7 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 
-class SmsResponse(KLPAPIView):
+class SMSView(KLPAPIView):
     def get(self, request):
         status_code = status.HTTP_200_OK
 
