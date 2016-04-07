@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from .models import State
-from .utils import get_question, save_answer, check_school
+from .utils import get_question, save_answer, check_school, verify_answer
 
 from schools.models import School
 from common.views import KLPAPIView
@@ -89,7 +89,8 @@ class CheckSchool(KLPAPIView):
         state.telephone = telephone
         state.date_of_visit = get_date(date)
         state.answers = []
-        state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
+        # Ignoring index 0 since question_numbers start from 1
+        state.answers.append('IGNORED_INDEX')
 
         if school_id:
             school_id = school_id.strip('"')
@@ -127,39 +128,9 @@ class VerifyAnswer(KLPAPIView):
     def get(self, request, question_number):
         ivrs_type = request.QUERY_PARAMS.get('To', None)
         session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if State.objects.filter(session_id=session_id).exists():
-            state = State.objects.get(session_id=session_id)
+        response = request.QUERY_PARAMS.get('digits', None)
 
-            status_code = status.HTTP_200_OK
-            question_number = int(question_number)
-            question = get_question(question_number, ivrs_type)
-            response = request.QUERY_PARAMS.get('digits', None)
-
-            if response:
-                response = int(response.strip('"'))
-
-                # Mapping integers to Yes/No.
-                accepted_answers = {1: 'Yes', 2: 'No'}
-                if question.question_type.name == 'checkbox' and response in accepted_answers:
-                    if question_number == 1 and (ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER):
-                        # This special case is there for question 1 which clubs "Was the school
-                        # open?" and "Class visited". Since "Class visited accepts answers from
-                        # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
-                        # whether the school was open or not is handled in the save_answer
-                        # function within utils.py
-                        response = response
-                    else:
-                        response = accepted_answers[response]
-
-                # Save the answer.
-                status_code = save_answer(
-                    state, question_number, question, ivrs_type, response
-                )
-
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
+        verify_answer(session_id, question_number, response)
 
         return Response("", status=status_code)
 
