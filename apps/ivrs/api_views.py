@@ -7,7 +7,12 @@ from django.conf import settings
 
 from .models import State
 from .utils import (
-    get_question, save_answer, check_school, verify_answer, get_date
+    get_question,
+    save_answer,
+    check_school,
+    verify_answer,
+    get_date,
+    check_data_validity
 )
 
 from schools.models import School
@@ -41,6 +46,11 @@ class SMSView(KLPAPIView):
         state.answers.append('IGNORED_INDEX')
 
         data = data.split(',')
+        valid, message = check_data_validity(data)
+        if not valid:
+            status_code = status.HTTP_404_NOT_FOUND
+            return Response(message, status=status_code)
+
         school_id = data.pop(0)
 
         state, status_code, message = check_school(state, school_id, ivrs_type)

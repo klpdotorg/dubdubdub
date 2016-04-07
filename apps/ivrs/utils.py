@@ -18,6 +18,17 @@ GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
+def data_valid(data):
+    expected_response = "38875,1,4,1,1,1,15,2,1,2,2"
+    if len(data) != 11:
+        valid = False
+        message = "Error. Format is: " + expected_response
+    else:
+        valid = True
+        message = ''
+
+    return (valid, message)
+
 
 def get_date(date):
     date = datetime.datetime.strptime(
