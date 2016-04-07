@@ -28,8 +28,11 @@ GKA_SERVER = "08039591332"
 
 class SMSView(KLPAPIView):
     def get(self, request):
+        # In the SMS functionality of exotel, it expects a 200 response for all
+        # its requests if it is to send the 'body' of your response as an sms
+        # reply to the sender. Hence you will find places below where
+        # status.HTTP_200_OK has been hardcoded in the response.
         content_type = "text/plain"
-        status_code = status.HTTP_200_OK
 
         date = request.QUERY_PARAMS.get('Date', None)
         data = request.QUERY_PARAMS.get('Body', None)
@@ -50,10 +53,9 @@ class SMSView(KLPAPIView):
         data = data.split(',')
         valid, message = check_data_validity(data)
         if not valid:
-            status_code = status.HTTP_404_NOT_FOUND
             return Response(
                 message,
-                status=status_code,
+                status=status.HTTP_200_OK,
                 content_type=content_type
             )
 
@@ -63,7 +65,7 @@ class SMSView(KLPAPIView):
         if status_code != status.HTTP_200_OK:
             return Response(
                 message,
-                status=status_code,
+                status=status.HTTP_200_OK
                 content_type=content_type
             )
 
@@ -85,13 +87,17 @@ class SMSView(KLPAPIView):
                     # an error response.
                     return Response(
                         message,
-                        status=status_code,
+                        status=status.HTTP_200_OK,
                         content_type=content_type
                     )
         else:
             message = "Thank you. Your survey has been saved"
 
-        return Response(message, status=status_code, content_type=content_type)
+        return Response(
+            message,
+            status=status.HTTP_200_OK,
+            content_type=content_type
+        )
 
 
 # This view is on hold for now.
