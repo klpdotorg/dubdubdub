@@ -5,11 +5,12 @@ from stories.models import (
     Question, Questiongroup
 )
 
-GKA_SERVER = "08039591332"
-GKA_DEV = "08039510185"
+# Exotel numbers. Find them at http://my.exotel.in/viamentis/apps#installed-apps
 PRI = "08039236431"
 PRE = "08039510414"
-
+GKA_DEV = "08039510185"
+GKA_SMS = "08039514048"
+GKA_SERVER = "08039591332"
 
 def check_school(state, school_id):
     school_type = None
