@@ -44,6 +44,7 @@ class SMSView(KLPAPIView):
         state.answers = []
         # Ignoring index 0 since question_numbers start from 1
         state.answers.append('IGNORED_INDEX')
+        state.save()
 
         data = data.split(',')
         valid, message = check_data_validity(data)
