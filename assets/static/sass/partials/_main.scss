@@ -493,11 +493,10 @@ body {
 /*-------------------------------------*/
 //MAP: MAP, SCHOOL, VOLUNTEER
 
-.map-canvas-full, .map-volunteer-canvas-full {
+.map-canvas-full, .map-volunteer-canvas-full .map-advanced-canvas-full {
   position:fixed; 
   right:0; 
   bottom: 0;
-
   > div{
     height: 100%;
   }
@@ -511,6 +510,14 @@ body {
 .map-volunteer-canvas-full {
   left: $sidebar-map-width;
   top: ($header-height + $map-subheader-height);  
+}
+
+.map-advanced-canvas-full {
+  @include media-lg {
+    display: block;
+    left: $sidebar-map-width;
+    top: ($header-height + $map-subheader-height);  
+  }
 }
 
 /*-------------------------------------*/
@@ -1085,6 +1092,23 @@ body {
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto;
+  }
+}
+
+.sidebar-advanced-map {
+  @extend %grey-mist-bg;
+  @extend %scrollbar-webkit;
+  display: none;
+
+  @include media-lg {
+    width: $sidebar-map-width;
+    position: fixed;
+    left: 0;
+    top: $header-height + $map-subheader-height;  //consolidate later
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display:block;
   }
 }
 
