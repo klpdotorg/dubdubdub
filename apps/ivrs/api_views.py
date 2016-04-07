@@ -65,7 +65,7 @@ class SMSView(KLPAPIView):
         if status_code != status.HTTP_200_OK:
             return Response(
                 message,
-                status=status.HTTP_200_OK
+                status=status.HTTP_200_OK,
                 content_type=content_type
             )
 
