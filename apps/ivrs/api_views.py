@@ -14,12 +14,79 @@ from schools.models import School
 from common.views import KLPAPIView
 
 
-GKA_SERVER = "08039591332"
-GKA_DEV = "08039510185"
 PRI = "08039236431"
 PRE = "08039510414"
+GKA_DEV = "08039510185"
+GKA_SMS = "08039514048"
+GKA_SERVER = "08039591332"
 
 
+class SmsResponse(KLPAPIView):
+    def get(self, request):
+        status_code = status.HTTP_200_OK
+
+        date = request.QUERY_PARAMS.get('Date', None)
+        data = request.QUERY_PARAMS.get('Body', None)
+        ivrs_type = request.QUERY_PARAMS.get('To', None)
+        telephone = request.QUERY_PARAMS.get('From', None)
+        session_id = request.QUERY_PARAMS.get('SmsSid', None)
+
+        state, created = State.objects.get_or_create(
+            session_id=session_id
+        )
+        state.telephone = telephone
+        state.date_of_visit = get_date(date)
+        state.answers = []
+        # Ignoring index 0 since question_numbers start from 1
+        state.answers.append('IGNORED_INDEX')
+
+        data = data.split(',')
+        school_id = data.pop(0)
+
+        # Checking if school_id has been entered and whether the
+        # entered ID is valid.
+        school_type = None
+        if not school_id:
+            status_code = status.HTTP_404_NOT_FOUND
+        elif School.objects.filter(id=school_id.strip('"')).exists():
+            state.school_id = school_id.strip('"')
+            school_type = School.objects.filter(
+                id=school_id.strip('"')
+            ).values(
+                'admin3__type__name'
+            )[0]['admin3__type__name']
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+
+        # Validating whether the entered school ID corresponds to the
+        # correct school_type. Assigns the ivrs_type based on the call
+        # number as well.
+        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'gka-v3'
+            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
+                state.answers.append('NA')
+        elif ivrs_type == PRI:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'ivrs-pri'
+            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
+                state.answers.append('NA')
+        else: # ivrs_type == PRE
+            if school_type != u'PreSchool':
+                status_code = status.HTTP_404_NOT_FOUND
+
+            state.ivrs_type = 'ivrs-pre'
+            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
+                state.answers.append('NA')
+
+        state.save()
+
+
+# This view is on hold for now.
 class DynamicResponse(KLPAPIView):
     def get(self, request):
         sound_file_paths = ""
