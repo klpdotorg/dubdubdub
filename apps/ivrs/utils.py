@@ -4,6 +4,8 @@ from rest_framework import status
 
 from django.utils import timezone
 
+from .models import State
+
 from schools.models import School, BoundaryType
 from stories.models import (
     Question, Questiongroup
@@ -50,12 +52,13 @@ def check_school(state, school_id):
     # correct school_type. Assigns the ivrs_type based on the call
     # number as well.
     if school_type:
-        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
+        if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
                 message = "Please enter Primary School ID"
             state.ivrs_type = 'gka-v3'
-            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
+            # Initializing answer slots 1 to 10 with NA
+            for i in range(0, 10):
                 state.answers.append('NA')
 
         elif ivrs_type == PRI:
@@ -64,7 +67,7 @@ def check_school(state, school_id):
                 message = "Please enter Primary School ID"
             state.ivrs_type = 'ivrs-pri'
             # Initializing answer slots 1 to 6 with NA
-            for i in range(0,6):
+            for i in range(0, 6):
                 state.answers.append('NA')
 
         # ivrs_type == PRE
@@ -74,7 +77,7 @@ def check_school(state, school_id):
                 message = "Please enter PreSchool ID"
             state.ivrs_type = 'ivrs-pre'
             # Initializing answer slots 1 to 6 with NA
-            for i in range(0,6):
+            for i in range(0, 6):
                 state.answers.append('NA')
 
     state.save()
@@ -95,7 +98,7 @@ def verify_answer(session_id, question_number, response):
             # Mapping integers to Yes/No.
             accepted_answers = {1: 'Yes', 2: 'No'}
             if question.question_type.name == 'checkbox' and response in accepted_answers:
-                if question_number == 1 and (ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER):
+                if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
                     # open?" and "Class visited". Since "Class visited accepts answers from
                     # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
@@ -133,7 +136,7 @@ def save_answer(state, question_number, question, ivrs_type, response):
     # than 1 or 2 are already moderated on the exotel end. The
     # numeric answers cannot be moderated for the old ivrs.
     status_code = status.HTTP_200_OK
-    if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
+    if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
         if question_number == 1: # Question 1 & 2 based on responses.
             if response == 0:
                 # Q1. School is closed.
