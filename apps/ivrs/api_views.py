@@ -28,6 +28,7 @@ GKA_SERVER = "08039591332"
 
 class SMSView(KLPAPIView):
     def get(self, request):
+        content_type = "text/plain"
         status_code = status.HTTP_200_OK
 
         date = request.QUERY_PARAMS.get('Date', None)
@@ -50,14 +51,24 @@ class SMSView(KLPAPIView):
         valid, message = check_data_validity(data)
         if not valid:
             status_code = status.HTTP_404_NOT_FOUND
-            return Response(message, status=status_code)
+            return Response(
+                message,
+                status=status_code,
+                content_type=content_type
+            )
 
         school_id = data.pop(0)
 
         state, status_code, message = check_school(state, school_id, ivrs_type)
         if status_code != status.HTTP_200_OK:
-            return Response(message, status=status_code)
+            return Response(
+                message,
+                status=status_code,
+                content_type=content_type
+            )
 
+        # Loop over the entire data array and try to validate and save
+        # each answer.
         for question_number, response in enumerate(data):
             # Blank data corresponds to NA and indicates that we should
             # skip the corresponding question.
@@ -70,11 +81,17 @@ class SMSView(KLPAPIView):
                     session_id, question_number+1, response, ivrs_type,
                 )
                 if status_code != status.HTTP_200_OK:
-                    return Response(message, status=status_code)
+                    # If we find any of the answers are corrupt, we return
+                    # an error response.
+                    return Response(
+                        message,
+                        status=status_code,
+                        content_type=content_type
+                    )
         else:
             message = "Thank you. Your survey has been saved"
 
-        return Response(message, status=status_code)
+        return Response(message, status=status_code, content_type=content_type)
 
 
 # This view is on hold for now.
