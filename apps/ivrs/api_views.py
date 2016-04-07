@@ -4,7 +4,6 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from django.conf import settings
-from django.utils import timezone
 
 from .models import State
 from .utils import (
