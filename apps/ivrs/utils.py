@@ -205,7 +205,6 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
 
 def get_question(question_number, ivrs_type):
-    print "WHAT : " + str(question_number)
     if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
         question_group = Questiongroup.objects.get(
             version=5,
