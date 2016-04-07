@@ -63,7 +63,50 @@ def check_school(state, school_id):
                 state.answers.append('NA')
 
     state.save()
-    return (state, status, message)
+    return (state, status_code, message)
+
+
+def verify_answer(session_id, question_number, response):
+    if State.objects.filter(session_id=session_id).exists():
+        state = State.objects.get(session_id=session_id)
+
+        status_code = status.HTTP_200_OK
+        question_number = int(question_number)
+        question = get_question(question_number, ivrs_type)
+
+        if response:
+            response = int(response.strip('"'))
+
+            # Mapping integers to Yes/No.
+            accepted_answers = {1: 'Yes', 2: 'No'}
+            if question.question_type.name == 'checkbox' and response in accepted_answers:
+                if question_number == 1 and (ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER):
+                    # This special case is there for question 1 which clubs "Was the school
+                    # open?" and "Class visited". Since "Class visited accepts answers from
+                    # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
+                    # whether the school was open or not is handled in the save_answer
+                    # function within utils.py
+                    response = response
+                else:
+                    response = accepted_answers[response]
+
+            # Save the answer.
+            state, status_code = save_answer(
+                state, question_number, question, ivrs_type, response
+            )
+
+        else:
+            status_code = status.HTTP_404_NOT_FOUND
+    else:
+        status_code = status.HTTP_404_NOT_FOUND
+
+    if status_code == status.HTTP_404_NOT_FOUND:
+        message = "Error in data"
+    else:
+        message = "Data accepted"
+
+    return (state, status_code, message)
+
 
 # GKA v3 questions are at https://github.com/klpdotorg/dubdubdub/issues/549#issuecomment-170913566
 # We special case question Q1 and question Q5. Q1 should be split into Q1 and Q2. Q5 should
@@ -125,7 +168,7 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
     state.save()
 
-    return status_code
+    return (state, status_code)
 
 
 def get_question(question_number, ivrs_type):
