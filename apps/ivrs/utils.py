@@ -23,8 +23,8 @@ def check_data_validity(data):
     expected_response_2 = "3885,1,4,1,2,,,,,,1"
     if len(data) != 11:
         valid = False
-        message = "Error. Example 1: " + expected_response_1 + "\n" + \
-                  "Example 2: " + expected_response_2
+        message = "Error. Example 1: " + expected_response_1 + \
+                  " Example 2: " + expected_response_2
     else:
         valid = True
         message = ''
