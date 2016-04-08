@@ -74,7 +74,7 @@ class SMSView(KLPAPIView):
         for question_number, response in enumerate(data):
             # Blank data corresponds to NA and indicates that we should
             # skip the corresponding question.
-            if data == '':
+            if response == '':
                 continue
             else:
                 # question_number starts from 0, and hence we need to add 1
