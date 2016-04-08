@@ -113,7 +113,7 @@ def verify_answer(session_id, question_number, response, ivrs_type):
             # Mapping integers to Yes/No.
             accepted_answers = {1: 'Yes', 2: 'No'}
             if question.question_type.name == 'checkbox' and response in accepted_answers:
-                if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]):
+                if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
                     # open?" and "Class visited". Since "Class visited accepts answers from
                     # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
@@ -151,7 +151,7 @@ def save_answer(state, question_number, question, ivrs_type, response):
     # than 1 or 2 are already moderated on the exotel end. The
     # numeric answers cannot be moderated for the old ivrs.
     status_code = status.HTTP_200_OK
-    if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
+    if ivrs_type in [GKA_SERVER, GKA_DEV]:
         if question_number == 1: # Question 1 & 2 based on responses.
             if response == 0:
                 # Q1. School is closed.
@@ -191,7 +191,7 @@ def save_answer(state, question_number, question, ivrs_type, response):
             else:
                 status_code = status.HTTP_404_NOT_FOUND
 
-    elif ivrs_type == PRI:
+    elif ivrs_type in [PRI, GKA_SMS]:
         if response in eval(question.options):
             state.answers[question_number] = response
         else:
