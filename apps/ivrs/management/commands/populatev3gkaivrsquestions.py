@@ -61,7 +61,7 @@ class Command(BaseCommand):
         q7 = Question.objects.get_or_create(
             text="Were multiple TLMs being used?",
             data_type=1,
-            question_type=qtype_numeric,
+            question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
         )[0]
