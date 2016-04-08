@@ -430,7 +430,7 @@ ol {
 .grey-mist {
   color: #f6f6f6; }
 
-.grey-mist-bg, .heading-section-block, .dropdown-base > li, .dropdown-base li:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .vol-oppor-count, .filter-tool:hover, .dropdown-styleguide li.selected, .styleguide-nav-trigger, code {
+.grey-mist-bg, .heading-section-block, .dropdown-base > li, .dropdown-base li:hover, .scroll-smooth-links a:hover, .scroll-smooth-links a:focus, .form-edit-password, .select2-container.select2-container-disabled .select2-choice, .volunteer-stories, .sidebar-volunteer-map, .sidebar-advanced-map, .vol-oppor-count, .filter-tool:hover, .dropdown-styleguide li.selected, .styleguide-nav-trigger, code {
   background-color: #f6f6f6; }
 
 .grey-cloud, .circle-bullet.white:before, .nextLightBox:hover, .prevLightBox:hover, .closeLightBox:hover, .rbox_caption, .picker__day--outfocus, .picker__day--disabled,
@@ -1168,15 +1168,15 @@ hr {
 
 /*-------------------------------------*/
 /* SCROLLBAR: WEBKIT - NON STANDARD */
-.scrollbar-webkit::-webkit-scrollbar, .table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar, .demo-sidebar::-webkit-scrollbar {
+.scrollbar-webkit::-webkit-scrollbar, .table-responsive-wrap::-webkit-scrollbar, .sidebar-volunteer-map::-webkit-scrollbar, .sidebar-advanced-map::-webkit-scrollbar, .demo-sidebar::-webkit-scrollbar {
   width: 12px;
   height: 10px; }
-.scrollbar-webkit::-webkit-scrollbar-track, .table-responsive-wrap::-webkit-scrollbar-track, .sidebar-volunteer-map::-webkit-scrollbar-track, .demo-sidebar::-webkit-scrollbar-track {
+.scrollbar-webkit::-webkit-scrollbar-track, .table-responsive-wrap::-webkit-scrollbar-track, .sidebar-volunteer-map::-webkit-scrollbar-track, .sidebar-advanced-map::-webkit-scrollbar-track, .demo-sidebar::-webkit-scrollbar-track {
   background: #ececec;
   border-radius: 3px; }
-.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
+.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .sidebar-advanced-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
   background: #d8d8d8; }
-.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
+.scrollbar-webkit::-webkit-scrollbar-thumb, .table-responsive-wrap::-webkit-scrollbar-thumb, .sidebar-volunteer-map::-webkit-scrollbar-thumb, .sidebar-advanced-map::-webkit-scrollbar-thumb, .demo-sidebar::-webkit-scrollbar-thumb {
   border-radius: 10px; }
 
 .label-compare-block {
@@ -1228,6 +1228,9 @@ hr {
   z-index: 1; }
 
 .picker {
+  z-index: 10000; }
+
+.sidebar-advanced-map {
   z-index: 10000; }
 
 /*-------------------------------------*/
@@ -2562,11 +2565,11 @@ body {
     color: #7bb6ec; }
 
 /*-------------------------------------*/
-.map-canvas-full, .map-volunteer-canvas-full {
+.map-canvas-full, .map-volunteer-canvas-full .map-advanced-canvas-full {
   position: fixed;
   right: 0;
   bottom: 0; }
-  .map-canvas-full > div, .map-volunteer-canvas-full > div {
+  .map-canvas-full > div, .map-volunteer-canvas-full .map-advanced-canvas-full > div {
     height: 100%; }
 
 .map-canvas-full {
@@ -2576,6 +2579,12 @@ body {
 .map-volunteer-canvas-full {
   left: 300px;
   top: 98px; }
+
+@media only screen and (min-width: 990px) {
+  .map-advanced-canvas-full {
+    display: block;
+    left: 300px;
+    top: 98px; } }
 
 /*-------------------------------------*/
 .rbox_lightBox .heading-border {
@@ -2883,6 +2892,19 @@ body {
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto; } }
+
+.sidebar-advanced-map {
+  display: none; }
+  @media only screen and (min-width: 990px) {
+    .sidebar-advanced-map {
+      width: 300px;
+      position: fixed;
+      left: 0;
+      top: 98px;
+      bottom: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: block; } }
 
 .list-sidebar {
   border-top: 1px solid #fff;

@@ -7,6 +7,7 @@ from schools.serializers import (
 
 import dubdubdub.urls
 
+from common.utils import Date
 from common.models import SumCase
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.exceptions import APIError
@@ -107,6 +108,25 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
         # Getting the Anganwadi infrastructure data from the
         # StoryDetail view.
         if source:
+            start_date = self.request.QUERY_PARAMS.get('from', None)
+            end_date = self.request.QUERY_PARAMS.get('to', None)
+
+            date = Date()
+            if start_date:
+                sane = date.check_date_sanity(start_date)
+                if not sane:
+                    raise APIException("Please enter `from` in the format YYYY-MM-DD")
+                else:
+                    start_date = date.get_datetime(start_date)
+
+            if end_date:
+                sane = date.check_date_sanity(end_date)
+                if not sane:
+                    raise APIException("Please enter `to` in the format YYYY-MM-DD")
+                else:
+                    end_date = date.get_datetime(end_date)
+
+
             schools_with_anganwadi_stories = active_schools.filter(
                 story__group__source__name='anganwadi',
             ).distinct('id')
@@ -120,6 +140,12 @@ class BoundarySchoolAggView(KLPAPIView, BaseSchoolAggView):
             ).distinct(
                 'school'
             )
+
+            if start_date:
+                stories = stories.filter(date_of_visit__gte=start_date)
+
+            if end_date:
+                stories = stories.filter(date_of_visit__lte=end_date)
 
             data = get_que_and_ans(stories, 'anganwadi', 'PreSchool', None)
             agg['infrastructure'] = data
