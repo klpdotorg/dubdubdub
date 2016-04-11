@@ -17,11 +17,12 @@
                 if($(this).attr("value")=="elec"){
                     $(".box").not(".electoral").hide();
                     $(".electoral").show();
+                    initElectSearch();
                 }
             });
             $(".js-example-basic-single").select2();
             $(".js-example-basic-single").change(function(){
-               $(".report-list").show();
+            $(".report-list").show();
             });
         });
         
@@ -29,23 +30,33 @@
 
 
     function format(item) {
-        return _.str.titleize(item.properties.name);
+        if (item.properties != undefined)
+            return _.str.titleize(item.properties.name);
+        else
+            return _.str.titleize(item.name);
     }
 
     function populateSelect(container, data) {
         data.features.forEach(function(d) {
-            d.id = d.properties.id;
+            if(d.properties !=undefined)
+                d.id = d.properties.id;
         });
         container.select2({
             sortResults: function(results) {
                 return _.sortBy(results, function(result) {
-                    return result.properties.name;
+                    if (result.properties != undefined)
+                        return result.properties.name;
+                    else
+                        return result.name;
                 });
             },
             data: {
                 results: data.features,
                 text: function(item) {
-                    return item.properties.name;
+                    if (item.properties != undefined)
+                        return item.properties.name;
+                    else
+                        return item.name;
                 }
             },
             formatSelection: format,
@@ -78,14 +89,34 @@
                 populateSelect($select_cluster, data);
             });
         });
+    }
+    
+    function initElectSearch() {
+        var $select_mp = $("#select-mp");
+        var $select_mla = $("#select-mla");
+        var $select_ward = $("#select-ward");
 
-        $select_cluster.on("change", function(selected) {
-            var schoolXHR = klp.api.do('schools/info', {'admin3':selected.val, 'geometry': 'yes', 'per_page': 0});
-            schoolXHR.done(function (data) {
-                // console.log('schools', data);
-                populateSelect($select_school, data);
-            });
+        var mpXHR = klp.api.do('boundary/parliaments',{});
+        //var mpXHR = klp.api.do('boundary/admin1s', {'school_type':"primaryschool", 'geometry': 'yes'});
+        
+        mpXHR.done(function (data) {
+            populateSelect($select_mp, data);
         });
+
+        //$select_mp.on("change", function(selected) {
+            //console.log(selected.val);
+        var mlaXHR = klp.api.do('boundary/assemblies',{});
+        mlaXHR.done(function (data) {
+            populateSelect($select_mla, data);
+        });
+        //});
+
+        //$select_mla.on("change", function(selected) {
+            // var wardXHR = klp.api.do('boundary/wards/');
+            // wardXHR.done(function (data) {
+            //     populateSelect($select_ward, data);
+            // });
+        //});
     }
 
     function makeResults(array, type) {

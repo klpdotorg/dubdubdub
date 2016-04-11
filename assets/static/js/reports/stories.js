@@ -30,12 +30,12 @@
         var $dataXHR = klp.api.do(detailURL, params);
         $datadetailXHR.done(function(data) {*/
             var metadata = { 
-                "web": {
-                    "schools": 3163, 
-                    "last_story": "2040-08-27T00:00:00", 
-                    "verified_stories": 6587, 
-                    "stories": 6587
-                }, 
+                // "web": {
+                //     "schools": 3163, 
+                //     "last_story": "2040-08-27T00:00:00", 
+                //     "verified_stories": 6587, 
+                //     "stories": 6587
+                // }, 
                 "ivrs": {
                     "schools": 1903, 
                     "last_story": 
@@ -80,17 +80,18 @@
 
             var comparisonJson = {
                 "year-wise": {
-                    "2013":{"year":"2013","schools":5919,"ivrs_calls":1345,"ivrs_perc":10,"ivrs_schools":590,"stories":200,"story_perc":5, "story_schools":250},
-                    "2014":{"year":"2014","schools":5800,"ivrs_calls":5345,"ivrs_perc":90,"ivrs_schools":5200,"stories":800,"story_perc":15, "story_schools":750},
-                    "2015":{"year":"2015","schools":5805,"ivrs_calls":11345,"ivrs_perc":100,"ivrs_schools":5805,"stories":1200,"story_perc":25, "story_schools":1250}
+                    "2013":{"year":"2013","schools":5919,"ivrs_calls":1345,"surveys":200},
+                    "2014":{"year":"2014","schools":5800,"ivrs_calls":5345,"surveys":800},
+                    "2015":{"year":"2015","schools":5805,"ivrs_calls":11345,"surveys":1200}
+
                 }, /* maybe entrolment can be calculated with student and school count 
                     Percentage could be percentage of schools in district */
                 "neighbours" : {
-                    "Bangalore Central":{"name":"Bangalore Central","schools":5919,"ivrs_calls":1345,"ivrs_perc":10,"ivrs_schools":590,"stories":200,"story_perc":5, "story_schools":250},
-                    "Bangalore North":{"name":"Bangalore North","schools":5800,"ivrs_calls":5345,"ivrs_perc":90,"ivrs_schools":5200,"stories":800,"story_perc":15, "story_schools":750},
-                    "Bangalore South":{"name":"Bangalore South","schools":5805,"ivrs_calls":11345,"ivrs_perc":100,"ivrs_schools":5805,"stories":1200,"story_perc":25, "story_schools":1250},
-                    "Bangalore Rural":{"name":"Bangalore Rural","schools":5919,"ivrs_calls":1345,"ivrs_perc":10,"ivrs_schools":590,"stories":200,"story_perc":5, "story_schools":250},
-                    "Chikkabalapur":{"name":"Chikkabalapur","schools":5800,"ivrs_calls":5345,"ivrs_perc":90,"ivrs_schools":5200,"stories":800,"story_perc":15, "story_schools":750}
+                    "Bangalore Central":{"name":"Bangalore Central","schools":5919,"ivrs_calls":6545,"surveys":200},
+                    "Bangalore North":{"name":"Bangalore North","schools":5800,"ivrs_calls":5005,"surveys":800},
+                    "Bangalore South":{"name":"Bangalore South","schools":5805,"ivrs_calls":5543,"surveys":1200},
+                    "Bangalore Rural":{"name":"Bangalore Rural","schools":5919,"ivrs_calls":3456,"surveys":200},
+                    "Chikkabalapur":{"name":"Chikkabalapur","schools":5800,"ivrs_calls":5345,"surveys":200}
                 }
             }
             renderComparison(comparisonJson);
@@ -233,26 +234,25 @@
         var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
         var webQuestionKeys = [];
         var qsets = [
-          {"web":"webs-pucca-building"},
-          {"ivrs":"ivrss-school-open"},
           {"ivrs":"ivrss-toilets-condition","community":"comms2-functioning-toilets"},
           {"ivrs":"ivrss-functional-toilets-girls","web":"webs-separate-toilets"},
-          {"ivrs":"ivrss-midday-meal","web":"webs-food-being-cooked"},
           {"ivrs":"ivrss-teachers-present","web":"webs-teachers-present"},
-          {"ivrs":"ivrss-drinking-water","community":"comms2-drinking-water","web":"webs-drinking-water"}
+          {"ivrs":"ivrss-drinking-water","community":"comms2-drinking-water","web":"webs-drinking-water"},
+          {"community":"comms2-sdmc-involved"},
+          {"community":"comms2-sufficient-teachers"}
+
           
         ]
         
         var questions = mergeQuestions(data, qsets);
-        //var html = '<div class="sect-parent"><div class="sect-half">'
-        var html = '';
+        var html = '<div class="sect-parent"><div class="sect-half">';
         for (var pos in questions) {
             console.log(questions[pos]);
-            //if (pos > (questions.length/2)-1)
-            //    html = html + "</div><div class='sect-half'>";
-            html = html + tplPercentGraph(questions[pos]);
+            if (pos > (questions.length/2)-1)
+                html = html + "</div><div class='sect-half'>";
+            html = html + tplPercentGraph(questions[pos]); 
         }
-        //html = html + "</div></div>"
+        html = html + "</div></div>";
         $('#response-summary').html(html);
         
     }
