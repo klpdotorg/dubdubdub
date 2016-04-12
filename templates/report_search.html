@@ -49,76 +49,40 @@
 			<span> Search by  selecting a geography </span>
 			<fieldset id="boundary" class="sect-parent">
 				<div class="form-field-wrap sect-half">
-					<input type="radio" class="input-radio" value="edu" id="radio3" name="radios">
+					<input type="radio" class="input-radio" value="edu" id="radio3" checked="" name="radios">
 				    <label for="radio3" class="input-radio-label">Educational Boundary</label>
 				</div>
 				<div class="form-field-wrap sect-half">
-				    <input type="radio" class="input-radio" value="elec" id="radio4">
+				    <input type="radio" class="input-radio" value="elec" id="radio4" checked="" name="radios">
 				    <label for="radio4" class="input-radio-label">Electoral Region</label>
 				</div>
 			 </fieldset>
 			 <div class="electoral box sect-parent"> 
-			 	<div class="sect-third">
-				 	<label class="label inline">MP : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Bangalore Central</option>
-	  					<option value="WY">Bangalore North</option>
-	  					<option value="AL">Bangalore South</option>
-	  					<option value="AL">Chikkaballapur</option>
-					</select>
+				<div class="sect-third"> 
+				 	<label class="label center-text">MP Constituency: </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-mp">
 				</div>
 				<div class="sect-third">
-					<label class="label inline">MLA : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Jayanagar</option>
-	  					<option value="WY">Malleshwaram</option>
-	  					<option value="AL">Rajajinagar</option>
-	  					<option value="AL">Pulakeshinagar</option>
-					</select>
+					<label class="label center-text">MLA Constituency : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-mla">
 				</div>
 				<div class="sect-third">
-					<label class="label inline">WARD : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Puttenhalli</option>
-	  					<option value="WY">Srirampura</option>
-	  					<option value="AL">Sampangiramanagar</option>
-	  					<option value="AL">Chikkaballapur</option>
-					</select>
+					<label class="label center-text">Ward/GP/ZP : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-ward">
 				</div>
 			</div>
 			<div class="educational box sect-parent">
 				<div class="sect-third"> 
-				 	<label class="label inline">DISTRICT : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Bangalore Rural</option>
-	  					<option value="WY">Bangalore North</option>
-	  					<option value="AL">Bangalore South</option>
-	  					<option value="AL">Chikkaballapur</option>
-					</select>
+				 	<label class="label center-text">DISTRICT : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-district">
 				</div>
 				<div class="sect-third">
-					<label class="label inline">BLOCK : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Anekal</option>
-	  					<option value="WY">Malleshwaram</option>
-	  					<option value="AL">Rajajinagar</option>
-	  					<option value="AL">Pulakeshinagar</option>
-					</select>
+					<label class="label center-text">BLOCK : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-block">
 				</div>
 				<div class="sect-third">
-					<label class="label inline">CLUSTER : </label>
-				 	<select class="js-example-basic-single">
-				 		<option value="AL">Type to Select</option>
-	  					<option value="AL">Attibele</option>
-	  					<option value="WY">Srirampura</option>
-	  					<option value="AL">Sampangiramanagar</option>
-	  					<option value="AL">Chikkaballapur</option>
-					</select>
+					<label class="label center-text">CLUSTER : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-cluster">
 				</div>
 			</div>
 		</form>
