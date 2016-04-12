@@ -123,22 +123,25 @@
         <tbody>
           <tr class="table-base-heading">
             <th>Category</th>
-            <th colspan='2'>Infrastructure</th>
-            <th>2013</th>
-            <th>2014</th>
-            <th>2015</th>
+            <th colspan="2"></th>
+            {% for year in transpose["year"]%}
+                    <th>{{year}}</th>
+            {% endfor %}
           </tr>
+
           {% for key in transpose %}
             {% if key.name == "school_count" %}
               <tr class="font-smaller">
                 <td>Total Schools</td>  
                 <td> </td>
                 <td> </td>
-                <td>{{key.yr2013}}</td>
-                <td>{{key.yr2014}}</td>
-                <td>{{key.yr2015}}</td>
+                {% for index, year in key %}
+                    {% if index != "name" %}
+                        <td>{{index}} - {{year}}</td>
+                    {% endif%}
+                {% endfor %}
               </tr>
-            {% else %}
+            {% elif key != "year" %}
               {% set counter=1%}
               {%for each in key%}
                 {% if counter > 1 %}

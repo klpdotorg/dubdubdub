@@ -15,7 +15,7 @@ from schools.api_views import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
-    ReportsDetail,
+    ReportDetails,
 )
 
 from users.api_views import (
@@ -256,7 +256,7 @@ urlpatterns = patterns(
 
     # Reports urls
     url(r'^reports/$',
-        ReportsDetail.as_view(), name='api_reports_detail')
+        ReportDetails.as_view(), name='api_reports_detail')
     #url(r'^reports/(?P<boundary>["admin_1", "admin_2", "admin_3", "assembly", "partliament"]+)/(?P<id>[0-9]+)/(?P<report_type>["finance", "demographics"]+)/(?P<language>["kannada", "english"]+)/$',
         #ReportsDetail.as_view(), name='api_reports_detail'),
 )
