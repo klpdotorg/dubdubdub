@@ -68,7 +68,7 @@ class SchoolsList(KLPListAPIView, CacheMixin):
             qset = qset.filter(institutionassessmentcohorts__assessment__programme__academic_year__name=acyear)
 
         # find schools that have SDMC meeting reports
-        if self.request.GET.get('meetingreport', '') and self.request.GET.get('meetingreport') == 'on':
+        if self.request.GET.get('meetingreport', '') and self.request.GET.get('meetingreport') == 'yes':
             meetingreport_count = MeetingReport.objects.filter(school__in=qset).count()
             if meetingreport_count > 0:
                 sch_ids_with_reports = MeetingReport.objects.filter(
