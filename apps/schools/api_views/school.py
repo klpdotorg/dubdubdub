@@ -1,5 +1,6 @@
 from django.conf import settings
-from schools.models import School, DiseInfo, MdmAgg
+from django.db.models import Count
+from schools.models import School, DiseInfo, MdmAgg, MeetingReport
 from schools.filters import SchoolFilter
 from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
 from common.mixins import CacheMixin
@@ -65,6 +66,15 @@ class SchoolsList(KLPListAPIView, CacheMixin):
                 pass
 
             qset = qset.filter(institutionassessmentcohorts__assessment__programme__academic_year__name=acyear)
+
+        # find schools that have SDMC meeting reports
+        if self.request.GET.get('meetingreport', '') and self.request.GET.get('meetingreport') == 'on':
+            meetingreport_count = MeetingReport.objects.filter(school__in=qset).count()
+            if meetingreport_count > 0:
+                sch_ids_with_reports = MeetingReport.objects.filter(
+                    school__in=qset
+                ).values_list('school_id', flat=True)
+                qset = qset.filter(id__in=sch_ids_with_reports)
 
         return qset
 
