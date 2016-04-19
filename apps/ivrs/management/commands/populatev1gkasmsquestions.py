@@ -10,7 +10,7 @@ class Command(BaseCommand):
     ./manage.py populatev1gkasmsquestions"""
 
     def handle(self, *args, **options):
-        s = Source.objects.get_or_create(name='sms')
+        s = Source.objects.get_or_create(name='sms')[0]
         q = Questiongroup.objects.get_or_create(version=1, source=s)[0]
         b = BoundaryType.objects.get(name='Primary School')
         qtype_checkbox = QuestionType.objects.get(name='checkbox')
