@@ -16,53 +16,53 @@ class Command(BaseCommand):
         qtype_checkbox = QuestionType.objects.get(name='checkbox')
         qtype_numeric = QuestionType.objects.get(name='numeric')
 
-        q1 = Question.objects.get_or_create(
+        q1 = Question.objects.get(
             text="Were the class 4 and 5 math teachers trained in GKA methodology in the school you have visited?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q1.options = "{'Yes','No','Unknown'}"
         q1.save()
 
-        q2 = Question.objects.get_or_create(
+        q2 = Question.objects.get(
             text="Was Math class happening on the day of your visit?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q2.text = "Did you observe the math class happening in class 4 or 5 at the time of your visit?"
         q2.save()
 
-        q3 = Question.objects.get_or_create(
+        q3 = Question.objects.get(
             text="Did you see children using the Ganitha Kalika Andolana TLM?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q3.text = "Did you see the Ganitha Kalika Andolana TLM being used in class 4 or 5 at the time of your visit?"
         q3.save()
 
-        q4 = Question.objects.get_or_create(
+        q4 = Question.objects.get(
             text="Did you see representational stage being practiced during the class?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q4.text = "Did you see representational stage being practiced during Math classes in class 4 and 5 at the time of your visit?"
         q4.save()
 
-        q5 = Question.objects.get_or_create(
+        q5 = Question.objects.get(
             text="Was group work happening in the class on the day of your visit?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )[0]
+        )
         q5.text = "Was group work happening during Math classes in class 4 and 5 at the time of your visit?"
         q5.save()
       
