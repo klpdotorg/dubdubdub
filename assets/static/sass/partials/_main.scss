@@ -450,12 +450,12 @@ body {
 }
 
 .adv-search-btn {
-  float: right;
+  float: left;
   @extend %button;
   padding: 10px 10px;
-  font-size: 12pt;
+  font-size: 8pt;
+  margin-left: 5px;
 }
-
 
 .breadcrumb {
   @extend %text-truncate;
