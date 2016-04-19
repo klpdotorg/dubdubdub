@@ -120,7 +120,7 @@ def verify_answer(session_id, question_number, response, ivrs_type):
             response = int(response.strip('"'))
 
             # Mapping integers to Yes/No.
-            accepted_answers = {1: 'Yes', 2: 'No'}
+            accepted_answers = {1: 'Yes', 2: 'No', 3: 'Unknown'}
             if question.question_type.name == 'checkbox' and response in accepted_answers:
                 if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
