@@ -16,13 +16,15 @@ class Command(BaseCommand):
         qtype_checkbox = QuestionType.objects.get(name='checkbox')
         qtype_numeric = QuestionType.objects.get(name='numeric')
 
-        q1 = Question.objects.get(
+        q1 = Question.objects.get_or_create(
             text="Were the class 4 and 5 math teachers trained in GKA methodology in the school you have visited?",
             data_type=1,
             question_type=qtype_checkbox,
             options="{'Yes','No'}",
             school_type=b
-        )
+        )[0]
+        q1.options = "{'Yes','No','Unknown'}"
+        q1.save()
 
         q2 = Question.objects.get_or_create(
             text="Was Math class happening on the day of your visit?",
