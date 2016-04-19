@@ -67,13 +67,22 @@ def check_school(state, school_id, ivrs_type):
     # correct school_type. Assigns the ivrs_type based on the call
     # number as well.
     if school_type:
-        if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
+        if ivrs_type in [GKA_SERVER, GKA_DEV]:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
                 message = "Please enter Primary School ID"
             state.ivrs_type = 'gka-v3'
             # Initializing answer slots 1 to 10 with NA
             for i in range(0, 10):
+                state.answers.append('NA')
+
+        elif ivrs_type == GKA_SMS:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+                message = "Please enter Primary School ID"
+            state.ivrs_type = 'gka-sms'
+            # Initializing answer slots 1 to 5 with NA
+            for i in range(0, 5):
                 state.answers.append('NA')
 
         elif ivrs_type == PRI:
