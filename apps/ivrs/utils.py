@@ -19,9 +19,9 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def check_data_validity(data):
-    expected_response_1 = "3885,1,4,1,1,1,15,2,1,2,2"
-    expected_response_2 = "3885,1,4,1,2,,,,,,1"
-    if len(data) != 11:
+    expected_response_1 = "3885,1,1,1,2,1"
+    expected_response_2 = "3885,1,2,,,"
+    if len(data) != 6:
         valid = False
         message = "Error. Example 1: " + expected_response_1 + \
                   " Example 2: " + expected_response_2
