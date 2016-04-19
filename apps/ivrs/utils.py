@@ -214,10 +214,16 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
 
 def get_question(question_number, ivrs_type):
-    if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
+    if ivrs_type in [GKA_SERVER, GKA_DEV]:
         question_group = Questiongroup.objects.get(
             version=5,
             source__name='ivrs'
+        )
+        school_type = BoundaryType.objects.get(name="Primary School")
+    elif ivrs_type == GKA_SMS:
+        question_group = Questiongroup.objects.get(
+            version=1,
+            source__name='sms'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
     elif ivrs_type == PRI:
