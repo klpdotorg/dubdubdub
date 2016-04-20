@@ -141,15 +141,8 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         self.boundaryInfo["boundary_info"]["id"] = boundary.id
         self.boundaryInfo["boundary_info"]["parent"] = {}
         self.boundaryInfo["boundary_info"]["btype"] = boundary.type.id
-        if boundary.get_admin_level() == 2:
-            self.boundaryInfo["boundary_info"]["parent"] = {
-                    boundary.parent.hierarchy.name: boundary.parent.name}
-        elif boundary.get_admin_level() == 3:
-            self.boundaryInfo["boundary_info"]["parent"][boundary.parent.hierarchy.name] =\
-            boundary.parent.name
-            self.boundaryInfo["boundary_info"]["parent"][boundary.parent.parent.hierarchy.name] =\
-            boundary.parent.parent.name
-
+        self.boundaryInfo["boundary_info"]["parent"] = {
+                    "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
         self.boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
                                       "girls": boundaryData["num_girls"]}
         self.boundaryInfo["school_count"] = boundaryData["num_schools"]
@@ -360,6 +353,7 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
                                                 year)
                 else:
                     self.get_comparison(boundary, active_schools, academic_year, year)
+                    print >>sys.stderr, self.boundaryInfo
 
         else:
             obj = ElectedrepMaster.objects.filter(id=boundaryid)
