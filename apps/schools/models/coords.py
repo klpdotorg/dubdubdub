@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from common.models import GeoBaseModel
+from common.models import GeoBaseModel, BaseModel
 from django.contrib.gis.db import models
 import json
 
@@ -126,11 +126,18 @@ class Postal(GeoBaseModel):
         db_table = 'mvw_postal'
 
 
+class GramPanchayat(BaseModel):
+    name = models.CharField(max_length=150)
+    assembly_id = models.IntegerField(db_index=True)
+    parliament_id = models.IntegerField(db_index=True)
+
+
 class Locality(GeoBaseModel):
     school = models.ForeignKey('School', primary_key=True)
     assembly = models.ForeignKey('Assembly', blank=True, null=True)
     parliament = models.ForeignKey('Parliament', blank=True, null=True)
     pincode = models.ForeignKey('Postal', blank=True, null=True)
+    gram_panchayat = models.ForeignKey('GramPanchayat', blank=True, null=True)
 
 
 class SchoolGIS(GeoBaseModel):

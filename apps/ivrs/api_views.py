@@ -1,25 +1,106 @@
 import os
-import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
 
 from django.conf import settings
-from django.utils import timezone
 
 from .models import State
-from .utils import get_question, save_answer
+from .utils import (
+    get_question,
+    save_answer,
+    check_school,
+    verify_answer,
+    get_date,
+    check_data_validity
+)
 
 from schools.models import School
 from common.views import KLPAPIView
 
-
-GKA_SERVER = "08039591332"
-GKA_DEV = "08039510185"
+# Exotel numbers. Find them at http://my.exotel.in/viamentis/apps#installed-apps
 PRI = "08039236431"
 PRE = "08039510414"
+GKA_DEV = "08039510185"
+GKA_SMS = "08039514048"
+GKA_SERVER = "08039591332"
 
 
+class SMSView(KLPAPIView):
+    def get(self, request):
+        # In the SMS functionality of exotel, it expects a 200 response for all
+        # its requests if it is to send the 'body' of your response as an sms
+        # reply to the sender. Hence you will find places below where
+        # status.HTTP_200_OK has been hardcoded in the response.
+        content_type = "text/plain"
+
+        date = request.QUERY_PARAMS.get('Date', None)
+        data = request.QUERY_PARAMS.get('Body', None)
+        ivrs_type = request.QUERY_PARAMS.get('To', None)
+        telephone = request.QUERY_PARAMS.get('From', None)
+        session_id = request.QUERY_PARAMS.get('SmsSid', None)
+
+        state, created = State.objects.get_or_create(
+            session_id=session_id
+        )
+        state.telephone = telephone
+        state.date_of_visit = get_date(date.strip("'"))
+        state.answers = []
+        # Ignoring index 0 since question_numbers start from 1
+        state.answers.append('IGNORED_INDEX')
+        state.save()
+
+        data = data.split(',')
+        valid, message = check_data_validity(data)
+        if not valid:
+            return Response(
+                message,
+                status=status.HTTP_200_OK,
+                content_type=content_type
+            )
+
+        school_id = data.pop(0)
+
+        state, status_code, message = check_school(state, school_id, ivrs_type)
+        if status_code != status.HTTP_200_OK:
+            return Response(
+                message,
+                status=status.HTTP_200_OK,
+                content_type=content_type
+            )
+
+        # Loop over the entire data array and try to validate and save
+        # each answer.
+        for question_number, response in enumerate(data):
+            # Blank data corresponds to NA and indicates that we should
+            # skip the corresponding question.
+            if response == '':
+                continue
+            else:
+                # question_number starts from 0, and hence we need to add 1
+                # to it in order to get the correct sequence of questions.
+                state, status_code, message = verify_answer(
+                    session_id, question_number+1, response, ivrs_type,
+                )
+                if status_code != status.HTTP_200_OK:
+                    # If we find any of the answers are corrupt, we return
+                    # an error response.
+                    return Response(
+                        message,
+                        status=status.HTTP_200_OK,
+                        content_type=content_type
+                    )
+        else:
+            message = "Thank you. Your survey has been saved"
+
+        return Response(
+            message,
+            status=status.HTTP_200_OK,
+            content_type=content_type
+        )
+
+
+# This view is on hold for now.
 class DynamicResponse(KLPAPIView):
     def get(self, request):
         sound_file_paths = ""
@@ -62,49 +143,13 @@ class CheckSchool(KLPAPIView):
         state.telephone = telephone
         state.date_of_visit = get_date(date)
         state.answers = []
-        state.answers.append('IGNORED_INDEX') # Ignoring index 0 since question_numbers start from 1
+        # Ignoring index 0 since question_numbers start from 1
+        state.answers.append('IGNORED_INDEX')
 
-        # Checking if school_id has been entered and whether the
-        # entered ID is valid.
-        school_type = None
-        if not school_id:
-            status_code = status.HTTP_404_NOT_FOUND
-        elif School.objects.filter(id=school_id.strip('"')).exists():
-            state.school_id = school_id.strip('"')
-            school_type = School.objects.filter(
-                id=school_id.strip('"')
-            ).values(
-                'admin3__type__name'
-            )[0]['admin3__type__name']
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
+        if school_id:
+            school_id = school_id.strip('"')
 
-        # Validating whether the entered school ID corresponds to the
-        # correct school_type. Assigns the ivrs_type based on the call
-        # number as well.
-        if ivrs_type == GKA_SERVER or ivrs_type == GKA_DEV:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'gka-v3'
-            for i in range(0,10): # Initializing answer slots 1 to 10 with NA
-                state.answers.append('NA')
-        elif ivrs_type == PRI:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pri'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-        else: # ivrs_type == PRE
-            if school_type != u'PreSchool':
-                status_code = status.HTTP_404_NOT_FOUND
-
-            state.ivrs_type = 'ivrs-pre'
-            for i in range(0,6): # Initializing answer slots 1 to 6 with NA
-                state.answers.append('NA')
-
-        state.save()
+        state, status_code, message = check_school(state, school_id, ivrs_type)
 
         return Response("", status=status_code)
 
@@ -137,47 +182,10 @@ class VerifyAnswer(KLPAPIView):
     def get(self, request, question_number):
         ivrs_type = request.QUERY_PARAMS.get('To', None)
         session_id = request.QUERY_PARAMS.get('CallSid', None)
-        if State.objects.filter(session_id=session_id).exists():
-            state = State.objects.get(session_id=session_id)
+        response = request.QUERY_PARAMS.get('digits', None)
 
-            status_code = status.HTTP_200_OK
-            question_number = int(question_number)
-            question = get_question(question_number, ivrs_type)
-            response = request.QUERY_PARAMS.get('digits', None)
-
-            if response:
-                response = int(response.strip('"'))
-
-                # Mapping integers to Yes/No.
-                accepted_answers = {1: 'Yes', 2: 'No'}
-                if question.question_type.name == 'checkbox' and response in accepted_answers:
-                    if question_number == 1 and (ivrs_type == GKA_DEV or ivrs_type == GKA_SERVER):
-                        # This special case is there for question 1 which clubs "Was the school
-                        # open?" and "Class visited". Since "Class visited accepts answers from
-                        # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
-                        # whether the school was open or not is handled in the save_answer
-                        # function within utils.py
-                        response = response
-                    else:
-                        response = accepted_answers[response]
-
-                # Save the answer.
-                status_code = save_answer(
-                    state, question_number, question, ivrs_type, response
-                )
-
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
+        state, status_code, message = verify_answer(
+            session_id, question_number, response, ivrs_type,
+        )
 
         return Response("", status=status_code)
-
-def get_date(date):
-    date = datetime.datetime.strptime(
-        date, '%Y-%m-%d %H:%M:%S'
-    )
-    date = timezone.make_aware(
-        date, timezone.get_current_timezone()
-    )
-    return date

@@ -13,7 +13,7 @@ from .assessments import (Assessment, InstitutionAgg, InstitutionAssessmentCohor
     AngInfraAgg, AngDisplayMaster)
 
 from .coords import (InstCoord, BoundaryCoord, Assembly, Parliament, Postal,
-                     SchoolGIS)
+                     SchoolGIS, Locality, GramPanchayat)
 
 from .partners import (DiseDisplayMaster, DiseFacilityAgg, DiseInfo, PaisaData,
     DiseRteAgg, LibBorrow, LibLangAgg, LibLevelAgg, Libinfra,
