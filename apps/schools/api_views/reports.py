@@ -141,7 +141,8 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         self.boundaryInfo["boundary_info"]["id"] = boundary.id
         self.boundaryInfo["boundary_info"]["parent"] = {}
         self.boundaryInfo["boundary_info"]["btype"] = boundary.type.id
-        self.boundaryInfo["boundary_info"]["parent"] = {
+        if boundary.get_admin_level() != 1 :
+            self.boundaryInfo["boundary_info"]["parent"] = {
                     "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
         self.boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
                                       "girls": boundaryData["num_girls"]}
@@ -189,13 +190,13 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         self.boundaryData["comparisonData"] = {"year-wise": {}, "neighbours": {}}
 
     def get_demographics_neighbour_comparison(self, academic_year, reporttype, boundary):
-        comparisonData = {}
+        comparisonData = []
         if boundary.get_admin_level() == 1:
-            neighbours = Boundary.objects.filter(hierarchy=boundary.hierarchy)
+            neighbours = Boundary.objects.filter(hierarchy=boundary.hierarchy).order_by("name")
         else:
-            neighbours = Boundary.objects.filter(parent=boundary.parent)
+            neighbours = Boundary.objects.filter(parent=boundary.parent).order_by("name")
         for neighbour in neighbours:
-            comparisonData[neighbour.name] = {"name": neighbour.name,
+            data = {"name": neighbour.name,
                                                 "enrol_upper": 0,
                                                 "enrol_lower": 0,
                                                 "ptr": 0,
@@ -207,29 +208,30 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
                                                      academic_year)
                 boundaryData = self.check_values(boundaryData)
                 enrolment = self.get_enrolment(active_schools, academic_year)
-                comparisonData[neighbour.name]["enrol_upper"] =\
+                data["enrol_upper"] =\
                                    enrolment["Class 5-8"]["student_count"]
-                comparisonData[neighbour.name]["enrol_lower"] =\
+                data["enrol_lower"] =\
                                    enrolment["Class 1-4"]["student_count"]
-                comparisonData[neighbour.name]["school_count"] =\
+                data["school_count"] =\
                                     boundaryData["num_schools"]
                 teacher_count = self.get_teachercount(active_schools,
                         academic_year)
                 student_count = boundaryData["num_boys"] +\
                                     boundaryData["num_girls"]
-                comparisonData[neighbour.name]["student_count"] = student_count
-                comparisonData[neighbour.name]["teacher_count"] = teacher_count
+                data["student_count"] = student_count
+                data["teacher_count"] = teacher_count
                 if self.parentInfo["schoolcount"] == 0:
-                    comparisonData[neighbour.name]["school_perc"] = 100
+                    data["school_perc"] = 100
                 else:
-                    comparisonData[neighbour.name]["school_perc"] = round(
+                    data["school_perc"] = round(
                             boundaryData["num_schools"] * 100 /
                             float(self.parentInfo["schoolcount"]), 2)
                 if teacher_count == 0:
-                    comparisonData[neighbour.name]["ptr"] = "NA"
+                    data["ptr"] = "NA"
                 else:
-                    comparisonData[neighbour.name]["ptr"] = round(
+                    data["ptr"] = round(
                             student_count / float(teacher_count), 2)
+            comparisonData.append(data)
 
         return comparisonData
 
@@ -268,23 +270,6 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
 
         return comparisonData
 
-    def get_infra_neighbour_comparison(self, boundary, active_schools,
-            academic_year, year):
-        comparisonData = {}
-        if boundary.get_admin_level() == 1:
-            neighbours = Boundary.objects.filter(hierarchy=boundary.hierarchy)
-        else:
-            neighbours = Boundary.objects.filter(parent=boundary.parent)
-        for neighbour in neighbours:
-            comparisonData[neighbour.name] = {"name": neighbour.name}
-            active_schools = neighbour.schools()
-            if active_schools.exists():
-                comparisonData[neighbour.name]["infra"] = self.get_infra_data(
-                                                    boundary, active_schools,
-                                                    academic_year, year)
-
-        return comparisonData
-
     def get_infra_comparison(self, boundary, active_schools, academic_year,
                             year):
         self.parentInfo = self.get_parent_info(boundary)
@@ -292,10 +277,7 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         self.boundaryInfo["comparison"]["year-wise"] =\
                     self.get_infra_year_comparison(boundary, active_schools,
                             academic_year, year)
-        self.boundaryInfo["comparison"]["neighbours"] =\
-                    self.get_infra_neighbour_comparison(
-                                                    boundary, active_schools,
-                                                    academic_year, year)
+        self.boundaryInfo["comparison"]["neighbours"] = {}
 
     def get_comparison(self, boundary, active_schools, academic_year, year):
         self.parentInfo = self.get_parent_info(boundary)
