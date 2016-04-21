@@ -219,27 +219,10 @@
   {% endfor %}
 
 </script>
-<!--script type="text/html" id="tpl-language">
-  {% for language in languages %}  
-    <div class="bar-graph-wrap">
-      <div class="bar-graph">
-        
-        <div class="bar-custom tooltip" aria-label="{{language.count}}">
-          <div class="bar-value bar-value-100" style="width:100%;">
-            <div class="bar-value bar-value-{{ language.perc }} grey-gravel-bg" style="width:{{ language.perc }}%;"></div>
-            <div class="font-smaller center-text"><strong>{{ language.typename|capitalize}}</strong></div>
-          </div>
-        </div>
-        <div class="bar-percent grey-gravel">{{ language.perc }}%</div>
-      </div> <!-- /bar-graph >
-    </div> <!-- /bar-graph-wrap >
-  {%endfor%}
-</script-->
 
 <script type="text/html" id="tpl-language">
   {% if languages | length %}
     {% for name, language in languages %}
-      {% if language.mt_count && language.mt_count > -1  %} 
         <div class=" compare-each-block">
           <div class="bar-graph-wrap float-left">
             <div class="bar-custom">
@@ -248,27 +231,16 @@
               <div class="green-leaf font-smaller center-text"><strong>{{ language.mt_count }} students</strong></div>
             </div>
             <div class="bar-percent green-leaf">{{ language.mt_perc }}%</div>
-          </div>
-        {% else %}
-          <div class="float-left">
-            No Data
-          </div>
-        {% endif %}
+          </div>       
 
-        <div class="compare-section-heading center-text">{{ name|capitalize }}</div>
-        {% if language.moi_count && language.moi_count > -1 %} 
+        <div class="compare-section-heading center-text">{{ name|capitalize }}</div>   
           <div class="bar-graph-wrap float-right">
             <div class="bar-percent">{{ language.moi_perc }}%</div>
             <div class="bar-custom">
               <div class="bar-value grey-gravel-bg" style="width:{{ language.moi_perc }}%;"></div>
               <div class="font-smaller center-text"><strong>{{ language.moi_count }} schools</strong></div>
             </div>
-          </div>
-        {% else %}
-          <div class="float-right">
-            No Data
-          </div>
-        {% endif %}
+          </div>        
       </div>
     {% endfor %}
   {% else %}

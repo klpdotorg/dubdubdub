@@ -297,8 +297,7 @@
     .reduce(function(result, key) {
       result[key] = modified[key];
       return result;
-    }, {})
-
+    }, {})    
     return modified;
   };
 
