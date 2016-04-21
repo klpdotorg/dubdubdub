@@ -119,10 +119,9 @@
     klp.dise_api.queryBoundaryName(boundaryName, boundaryType, acadYear)
       .done(function(diseData) {
         var boundary = diseData[0].children[0]
-        console.log('boundary', boundary);
+        
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear)
-          .done(function(diseData) {
-            console.log('diseData', diseData);
+          .done(function(diseData) {            
             renderSummary(utils.getPrimarySchoolSummary(data, diseData, academicYear), 'school');
             renderGenderCharts(utils.getGenderData(data.properties, diseData.properties), 'school');
             renderCategories(utils.getPrimarySchoolCategories(data.properties, diseData.properties), 'school');
@@ -131,11 +130,11 @@
             renderGrants(utils.getGrants(diseData.properties));
           })
           .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+            klp.utils.alertMessage("Sorry, could not fetch DISE data", "error");
           })
       })
       .fail(function(err) {
-        klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+        klp.utils.alertMessage("Sorry, could not fetch DISE data", "error");
       });
 
     renderLanguages(utils.getSchoolsByLanguage(data.properties), 'school');
@@ -147,7 +146,6 @@
       .fail(function(err) {
         klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
       });
-    console.log('data', data);
   }
 
   function renderPreSchool(data, academicYear) {
@@ -156,8 +154,7 @@
     var adminLevel = ADMIN_LEVEL_MAP[data.properties.boundary.type];
     queryParams[adminLevel] = boundaryID;
     klp.api.do('programme/', queryParams)
-      .done(function(progData) {
-        console.log('prog',progData)
+      .done(function(progData) {        
         renderPrograms(utils.getSchoolPrograms(progData, boundaryID, adminLevel), 'preschool');
       })
       .fail(function(err) {
@@ -168,9 +165,7 @@
     renderGenderCharts(utils.getGenderData(data.properties), 'preschool');
     renderCategories(utils.getPreSchoolCategories(data.properties), 'preschool');
     renderLanguages(utils.getMotherTongue(data.properties), 'preschool');
-    renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");
-    //To do: Render Infra
-    console.log('data', data);
+    renderEnrollment(utils.getPreSchoolEnrollment(data.properties), "preschool");    
     renderInfra(utils.getPreSchoolInfra(data.properties), "preschool");    
   }
 

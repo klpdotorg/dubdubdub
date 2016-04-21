@@ -43,35 +43,35 @@
 
 // extra large: 1200px
 @mixin media-lg-x {
-  @media only screen and (min-width: #{$mq-lg-x}) {
+  @media only print, only screen and (min-width: #{$mq-lg-x}) {
     @content;
   }
 }
 
 // large: 990px
 @mixin media-lg {
-  @media only screen and  (min-width: #{$mq-lg}) {
+  @media only print, only screen and  (min-width: #{$mq-lg}) {
     @content;
   }
 }
 
 // medium: 750px
 @mixin media-med {
-  @media only screen and  (min-width: #{$mq-med}) {
+  @media only print, only screen and  (min-width: #{$mq-med}) {
     @content;
   }
 }
 
 // small: max-width: 749px
 @mixin media-med-maxwidth {
-  @media only screen and (max-width: #{$mq-med - 1}) {
+  @media only print, only screen and (max-width: #{$mq-med - 1}) {
     @content;
   }
 }
 
 // small: 600px
 @mixin media-sm {
-  @media only screen and  (min-width: #{$mq-sm}) {
+  @media only print, only screen and  (min-width: #{$mq-sm}) {
     @content;
   }
 }

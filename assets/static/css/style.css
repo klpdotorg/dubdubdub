@@ -674,13 +674,13 @@ img, video {
 .infra-key-legend {
   padding: 10px;
   margin-top: 40px; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .infra-key-legend {
       float: right;
       width: 30%; } }
 
 /*-------------------------------------*/
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .table-base.table-list-view {
     display: block; }
     .table-base.table-list-view .table-base-heading {
@@ -832,7 +832,7 @@ hr {
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .alert {
       left: 20%;
       right: 20%;
@@ -908,7 +908,7 @@ hr {
   .banner-full .heading-primary {
     font-size: 140%;
     margin: 25px 0; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .banner-full {
       padding-bottom: 50px; }
       .banner-full .heading-primary {
@@ -937,7 +937,7 @@ hr {
   border-bottom: 1px solid #d8d8d8;
   letter-spacing: 1px;
   display: none; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .scroll-smooth-block {
       display: block; } }
 
@@ -991,7 +991,7 @@ hr {
 /* NO DATA */
 /*-------------------------------------*/
 /* MODULE: IMG */
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .module-img-block {
     margin-left: -20px;
     margin-right: -20px; }
@@ -1004,7 +1004,7 @@ hr {
 
 .module-img-each {
   margin-bottom: 50px; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .module-img-each {
       width: 33.33%;
       display: inline-block;
@@ -1031,7 +1031,7 @@ hr {
   overflow: hidden; }
   .module-img img {
     max-width: 85%; }
-    @media only screen and (min-width: 600px) {
+    @media only print, only screen and (min-width: 600px) {
       .module-img img {
         max-width: none; } }
 
@@ -1076,13 +1076,13 @@ hr {
 .tab-wrap {
   border-bottom: none;
   margin-top: 25px; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-wrap {
       border: none; } }
 
 .tab-wrap-widescreen {
   display: none; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-wrap-widescreen {
       display: block; } }
 
@@ -1093,7 +1093,7 @@ hr {
   border-bottom: 1px solid;
   cursor: pointer;
   color: #fff; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-heading {
       display: inline-block;
       vertical-align: top;
@@ -1102,14 +1102,14 @@ hr {
       top: 1px;
       border-bottom: none;
       background: none; } }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-heading.tab-heading-active {
       background: #fff; } }
 
 .tab-heading, .tab-heading-active {
   border-color: #d8d8d8; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .tab-heading-active {
     border: 1px solid #d8d8d8;
     border-bottom: none; } }
@@ -1121,7 +1121,7 @@ hr {
     position: absolute;
     right: 10px;
     top: 8px; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-each .tab-heading {
       display: none; } }
 
@@ -1129,7 +1129,7 @@ hr {
   display: none;
   padding: 25px 10px 10px 10px;
   border-bottom: 1px solid #d8d8d8; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .tab-content {
       border-top: 1px solid;
       border-bottom: 1px solid;
@@ -1142,7 +1142,7 @@ hr {
   margin: 25px auto;
   display: block; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .float-left-padding {
     float: left;
     margin: 10px 25px 10px 0; }
@@ -1223,7 +1223,7 @@ hr {
   z-index: 10000; }
 
 .sidebar-advanced-map {
-  z-index: 10000; }
+  z-index: 1; }
 
 /*-------------------------------------*/
 /* FORM: DEFAULT STYLES */
@@ -1343,7 +1343,7 @@ input.error {
 /* FORM: PROFILE EDIT PASSWORD */
 .form-edit-password {
   padding: 25px; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .form-edit-password {
       margin-top: 0; } }
 
@@ -1830,7 +1830,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   overflow: scroll; }
 
 /* Retina-ize icons */
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
+@media only print, only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
   .select2-search input,
   .select2-search-choice-close,
   .select2-container .select2-choice abbr,
@@ -1897,7 +1897,7 @@ html[dir="rtl"] .select2-container-multi .select2-search-choice-close {
   padding: 20px;
   box-shadow: 0 2px 0 0 #d8d8d8; }
 
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .nextLightBox {
     right: -20px; }
 
@@ -2331,7 +2331,7 @@ body {
   right: 10px;
   top: 10px;
   cursor: pointer; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav-trigger {
       display: none; } }
 
@@ -2344,7 +2344,7 @@ body {
   overflow: auto;
   box-shadow: 0 2px 2px 0 rgba(77, 77, 77, 0.2);
   height: 100%; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav {
       position: static;
       right: auto;
@@ -2359,7 +2359,7 @@ body {
 
 .nav ul {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav ul {
       position: absolute;
       left: 0;
@@ -2373,14 +2373,14 @@ body {
   padding: 0 10px;
   letter-spacing: 1px;
   text-align: left; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav > li {
       border-top: 5px solid;
       border-left: none; } }
 
 .nav li {
   padding: 0 10px; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav li {
       display: inline-block;
       vertical-align: top;
@@ -2396,7 +2396,7 @@ body {
   display: block;
   font-weight: normal;
   letter-spacing: normal; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav li li {
       text-align: left; }
       .nav li li:hover a:before {
@@ -2404,7 +2404,7 @@ body {
   .nav li li a {
     line-height: 1;
     padding: 10px; }
-    @media only screen and (min-width: 990px) {
+    @media only print, only screen and (min-width: 990px) {
       .nav li li a {
         padding: 10px;
         position: relative; }
@@ -2421,7 +2421,7 @@ body {
   border-left: 3px solid;
   padding: 0 10px;
   margin: 15px 0; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .nav > li > a {
       border-left: none;
       position: relative;
@@ -2445,7 +2445,7 @@ body {
 
 .nav-footer {
   margin-bottom: 10px; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .nav-footer {
       float: left;
       margin-bottom: 0;
@@ -2464,7 +2464,7 @@ body {
 .nav-footer-menu-links {
   text-transform: uppercase; }
 
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .footer-copyright {
     float: right; }
     .footer-copyright img {
@@ -2487,7 +2487,7 @@ body {
   right: 55px;
   top: 0;
   margin-top: 9px; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .profile-login-block {
       float: right;
       right: 0;
@@ -2496,7 +2496,7 @@ body {
     padding: 1.7px 10px; }
   .profile-login-block ul {
     left: -38px; }
-    @media only screen and (min-width: 1200px) {
+    @media only print, only screen and (min-width: 1200px) {
       .profile-login-block ul {
         left: 0; } }
 
@@ -2537,13 +2537,14 @@ body {
   width: 85%; }
 
 .adv-search-btn {
-  float: right;
+  float: left;
   padding: 10px 10px;
-  font-size: 12pt; }
+  font-size: 8pt;
+  margin-left: 5px; }
 
 .breadcrumb a {
   padding: 0 10px 0 0; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .breadcrumb a {
       font-size: 100%; } }
   .breadcrumb a:after {
@@ -2585,20 +2586,20 @@ body {
 /*-------------------------------------*/
 .banner-home {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .banner-home .banner-caption-klp, .banner-home .banner-full-caption {
       max-width: 340px; } }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .banner-home {
       padding-bottom: 0; } }
   .banner-home .banner-full-caption {
     margin-left: 0; }
-    @media only screen and (min-width: 600px) {
+    @media only print, only screen and (min-width: 600px) {
       .banner-home .banner-full-caption {
         padding-bottom: 100px;
         font-size: 110%;
         font-weight: 300; } }
-    @media only screen and (min-width: 750px) {
+    @media only print, only screen and (min-width: 750px) {
       .banner-home .banner-full-caption {
         max-width: 480px; } }
     .banner-home .banner-full-caption a:hover, .banner-home .banner-full-caption a:focus {
@@ -2616,14 +2617,14 @@ body {
   right: 0;
   max-width: 200px;
   display: none; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .banner-home-student {
       display: block; } }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .banner-home-student {
       max-width: none; } }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .banner-logo-klp {
     width: 170px; } }
 .banner-caption-klp {
@@ -2646,7 +2647,7 @@ body {
   background-color: #c7e0f7; }
 
 /*-------------------------------------*/
-@media only screen and (min-width: 1200px) {
+@media only print, only screen and (min-width: 1200px) {
   .filter-school-block {
     border-top: 1px solid;
     border-bottom: 1px solid;
@@ -2659,7 +2660,7 @@ body {
   .filter-school-each .heading-tiny-uppercase {
     line-height: 1;
     margin-bottom: 10px; }
-  @media only screen and (min-width: 1200px) {
+  @media only print, only screen and (min-width: 1200px) {
     .filter-school-each {
       border-right: 1px solid;
       border-color: #d8d8d8;
@@ -2685,7 +2686,7 @@ body {
   border: 1px solid #cb0012;
   margin-right: 15px;
   max-width: 100px; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .about-map-image {
       max-width: none;
       display: inline-block;
@@ -2693,7 +2694,7 @@ body {
 
 .about-map-url {
   display: block; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .about-map-url {
       display: inline-block; } }
 
@@ -2701,14 +2702,14 @@ body {
 .logo-wrapper > img {
   padding: 20px;
   max-width: 130px; }
-  @media only screen and (min-width: 600px) {
+  @media only print, only screen and (min-width: 600px) {
     .logo-wrapper > img {
       padding: 25px;
       max-width: none; } }
 
 .partners-list-block {
   margin: 50px 0; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .partners-list-block {
       margin-left: -20px;
       margin-right: -20px; }
@@ -2720,7 +2721,7 @@ body {
     line-height: 1.8; }
   .partners-list-block .partners-list {
     padding-bottom: 20px; }
-    @media only screen and (min-width: 750px) {
+    @media only print, only screen and (min-width: 750px) {
       .partners-list-block .partners-list {
         width: 50%;
         float: left;
@@ -2778,13 +2779,13 @@ body {
 
 .banner-volunteer-girl, .banner-volunteer-boy {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .banner-volunteer-girl, .banner-volunteer-boy {
       display: block;
       position: absolute;
       top: 0; } }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .banner-volunteer-girl {
     left: 10px; }
 
@@ -2798,7 +2799,7 @@ body {
 .volunteer-works-locate h3:first-of-type {
   color: #e17e5b; }
 
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .volunteer-story-block {
     margin-left: -20px;
     margin-right: -20px; }
@@ -2806,7 +2807,7 @@ body {
       content: "";
       display: table;
       clear: both; } }
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .volunteer-story-each {
     padding-left: 20px;
     padding-right: 20px;
@@ -2829,13 +2830,13 @@ body {
   vertical-align: top;
   margin-left: 5px;
   padding-top: 12px; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .button-filter-volunteer {
       display: none; } }
 
 .volunteer-filters-wrapper, .map-volunteer-canvas-full {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .volunteer-filters-wrapper, .map-volunteer-canvas-full {
       display: block; } }
 
@@ -2850,20 +2851,20 @@ body {
   position: absolute;
   left: 0;
   right: 0; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .volunteer-filters-wrapper {
       border: none;
       margin: 0;
       position: static; } }
   .volunteer-filters-wrapper .filter-item {
     padding: 15px 20px; }
-    @media only screen and (min-width: 990px) {
+    @media only print, only screen and (min-width: 990px) {
       .volunteer-filters-wrapper .filter-item {
         padding: 0 10px 0 0; } }
 
 .filter-item {
   display: block; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .filter-item {
       padding: 0 10px 0 0; } }
   .filter-item .input-text, .filter-item select {
@@ -2875,7 +2876,7 @@ body {
   min-width: 120px;
   display: inline-block; }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .sidebar-volunteer-map {
     width: 300px;
     position: fixed;
@@ -2910,7 +2911,7 @@ body {
   width: -webkit-calc(100% - 300px);
   width: calc(100% - 300px); }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .filter-item, .volunteer-filters-wrapper, .volunteer-filters-wrapper.filter-toggle {
     display: inline-block;
     vertical-align: top; }
@@ -2950,7 +2951,7 @@ body {
 
 .button-compare-wrap {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .button-compare-wrap {
       display: block; } }
 
@@ -2979,7 +2980,7 @@ body {
   display: block;
   margin-left: 10px; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .school-data-wrap, .tab-school-infra-block, .school-tab-story {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3147,7 +3148,7 @@ body {
 .profile-meta-edit .heading-tertiary:first-of-type, .page-org-profile .heading-tertiary:first-of-type {
   margin: 5px 0; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .profile-meta-edit, .org-meta-edit {
     width: 65%; }
 
@@ -3157,7 +3158,7 @@ body {
       margin-top: 0; } }
 .profile-meta-block, .org-meta-block {
   margin: 50px 0 0 0; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .profile-meta-block, .org-meta-block {
       margin-left: -20px;
       margin-right: -20px; }
@@ -3166,7 +3167,7 @@ body {
         display: table;
         clear: both; } }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .org-meta-each, .profile-meta-each {
     padding-left: 20px;
     padding-right: 20px;
@@ -3186,7 +3187,7 @@ body {
   max-width: 200px;
   display: block;
   margin: 30px 0 0 0; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .org-profile-img {
       margin: 0; } }
 
@@ -3211,7 +3212,7 @@ body {
   .table-base-donation-items input[type="number"] {
     width: 80px; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .org-tab-org {
     float: left; }
 
@@ -3222,7 +3223,7 @@ body {
 
   .form-edit-profile-tab {
     max-width: 50%; } }
-@media only screen and (min-width: 600px) {
+@media only print, only screen and (min-width: 600px) {
   .org-tab-date-block:after {
     content: "";
     display: table;
@@ -3242,7 +3243,7 @@ body {
 .form-edit-password {
   margin-top: 25px; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .edit-profile-block {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3301,7 +3302,7 @@ body {
 
 .facility-items {
   display: none; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .facility-items {
       display: block; } }
   .facility-items .k-icon {
@@ -3432,13 +3433,13 @@ body {
 
 .leaflet-control-container {
   display: none; }
-  @media only screen and (min-width: 750px) {
+  @media only print, only screen and (min-width: 750px) {
     .leaflet-control-container {
       display: block; } }
 
 .button-map-compare {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .button-map-compare {
       display: inline-block; } }
 
@@ -3474,7 +3475,7 @@ body {
 .assessment-gender-icon {
   float: left; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .programme-meta-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3494,7 +3495,7 @@ body {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .assessment-score-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3520,7 +3521,7 @@ body {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .overall-score-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3546,7 +3547,7 @@ body {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .assessment-graph-container {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3566,7 +3567,7 @@ body {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .entity-container {
     margin-left: -20px;
     margin-right: -20px; }
@@ -3592,7 +3593,7 @@ body {
 
   .padded-text {
     padding-top: 30px; } }
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .legend {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -3662,7 +3663,7 @@ code {
 .demo-color-background p {
   padding: 5px; }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .dropdown-styleguide ul {
     position: absolute; }
 
@@ -3681,7 +3682,7 @@ code {
     width: calc(100% - 200px);
     float: right; } }
 /* Defining mixins for the chart trials page*/
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .page-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -4332,7 +4333,7 @@ code {
     left: 0; }
 
 /* Defining mixins for the chart trials page*/
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .chart-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -4372,13 +4373,13 @@ code {
   max-width: 100px;
   display: block; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .img-symbol {
     max-width: 100px; } }
 .bar-label, .enrolment {
   width: 100%; }
 
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .ct-label.ct-horizontal {
     -ms-transform-origin: 50% 50%;
     -ms-transform: translateX(0px) translateY(20px) rotate(-45deg);
@@ -4489,10 +4490,10 @@ code {
   padding: 10px 10px;
   border-radius: 5px; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .side-button-bar {
     top: 10%; } }
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .side-button-bar {
     top: 30%; } }
 .modalDialog {
@@ -4509,7 +4510,7 @@ code {
   transition: opacity 400ms ease-in;
   pointer-events: none; }
 
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .modalDialog {
     margin-top: 10%; } }
 .modalDialog:target {
@@ -4559,6 +4560,9 @@ code {
   position: relative;
   overflow: hidden; }
 
+@media print {
+  .content {
+    display: block; } }
 .required:after {
   content: "\f069";
   color: #ec6608;
@@ -4567,7 +4571,7 @@ code {
   font-size: 60%;
   margin-left: 5px; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .table-base-sys tr td:nth-of-type(1) {
     width: 65%; }
   .table-base-sys tr td:nth-of-type(2) {
@@ -4602,7 +4606,7 @@ code {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .table-base-sys tr th, .table-base-sys tr td {
     padding: 0 0; }
 
@@ -4669,7 +4673,7 @@ code {
 .stepy-header li.stepy-active span {
   color: #ec6608; }
 
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .stepy-header li div {
     display: none; }
 
@@ -4793,7 +4797,7 @@ code {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 10;
   /*99999;*/
   opacity: 0;
   -webkit-transition: opacity 400ms ease-in;
@@ -4801,7 +4805,7 @@ code {
   transition: opacity 400ms ease-in;
   pointer-events: none; }
 
-@media only screen and (max-width: 749px) {
+@media only print, only screen and (max-width: 749px) {
   .modalDialog {
     margin-top: 10%; } }
 .modalDialog:target {
@@ -4837,7 +4841,7 @@ code {
 .close:hover {
   background: #00d9ff; }
 
-@media only screen and (min-width: 750px) {
+@media only print, only screen and (min-width: 750px) {
   .search-parent {
     margin-left: -20px;
     margin-right: -20px; }
@@ -4872,5 +4876,41 @@ code {
 .program-select {
   width: 80%;
   margin: auto; }
+
+@media print {
+  pre, blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+
+  thead {
+    display: table-header-group; }
+
+  /* h5bp.com/t */
+  tr, img {
+    page-break-inside: avoid; }
+
+  img {
+    max-width: 100% !important; }
+
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3; }
+
+  h2, h3 {
+    page-break-after: avoid; }
+
+  @page {
+    size: A4 portrait; }
+  @viewport {
+    width: 1200px; }
+  header, footer {
+    display: none; }
+
+  .no-print {
+    display: none; }
+
+  .page-break {
+    display: block;
+    page-break-before: always; } }
 
 /*# sourceMappingURL=style.css.map */
