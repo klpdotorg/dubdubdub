@@ -7,7 +7,7 @@ CREATE EXTENSION pg_trgm;
 -- DISTRICT ----------------------------
 -- update primary district slugs - hid=9
 ----------------------------------------
-SELECT set_limit(0.525)
+SELECT set_limit(0.525);
 
 CREATE MATERIALIZED VIEW mvw_dise_districts AS
 SELECT t1.district, t1.slug
