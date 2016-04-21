@@ -74,6 +74,7 @@ class Boundary(BaseModel):
     parent = models.ForeignKey("Boundary", blank=True, null=True,
                                db_column='parent', on_delete=models.SET_NULL)
     name = models.CharField(max_length=300)
+    dise_slug = models.SlugField(max_length=300)
     hierarchy = models.ForeignKey('BoundaryHierarchy', db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
 
