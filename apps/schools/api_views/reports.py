@@ -91,7 +91,7 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
 
     def get_demographics_year_comparison(self, active_schools, academic_year,
             year, reporttype, boundary):
-        comparisonData = {}
+        comparisonData = []
         start_year = year.split('-')[0]
         end_year = year.split('-')[1]
         prev_year = str(int(start_year)-1) + "-" + str(int(end_year)-1)
@@ -100,7 +100,7 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         prev_year_id = AcademicYear.objects.get(name=prev_year)
         prev_prev_year_id = AcademicYear.objects.get(name=prev_prev_year)
 
-        comparisonData[year] = {"year": year,
+        yearData = {"year": year,
                                 "enrol_upper":
                                     self.boundaryInfo["enrolment"]
                                     ["Class 5-8"]["student_count"],
@@ -114,23 +114,27 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
                                 "teacher_count":
                                     self.boundaryInfo["teacher_count"]}
         if self.boundaryInfo["teacher_count"] == 0:
-            comparisonData[year]["ptr"] = "NA"
+            yearData["ptr"] = "NA"
         else:
-            comparisonData[year]["ptr"] = round(
+            yearData["ptr"] = round(
                     self.boundaryInfo["student_count"] /
                     float(self.boundaryInfo["teacher_count"]), 2)
 
         if self.parentInfo["schoolcount"] == 0:
-            comparisonData[year]["school_perc"] = 100
+            yearData["school_perc"] = 100
         else:
-            comparisonData[year]["school_perc"] = round(
+            yearData["school_perc"] = round(
                     self.boundaryInfo["school_count"] *
                     100 / float(self.parentInfo["schoolcount"]), 2)
 
-        comparisonData[prev_year] = self.get_yeardata(active_schools, prev_year,
+        prevYearData = self.get_yeardata(active_schools, prev_year,
                                                         prev_year_id)
-        comparisonData[prev_prev_year] = self.get_yeardata(active_schools,
+        prevPrevYearData = self.get_yeardata(active_schools,
                                             prev_prev_year, prev_prev_year_id)
+
+        comparisonData.append(yearData)
+        comparisonData.append(prevYearData)
+        comparisonData.append(prevPrevYearData)
 
         return comparisonData
 
