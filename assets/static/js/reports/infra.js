@@ -1,6 +1,6 @@
 'use strict';
 var BOUNDARY_TYPE="boundary";
-var KLP_ID="8957";
+var KLP_ID="8877";
 var LANGUAGE="kannada";
 var utils;
 
@@ -120,6 +120,7 @@ var utils;
                 var boundary = diseData[0].children[0];
                 klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
                     console.log('summary diseData', diseData);
+                    renderGrantSummary(diseData);
                 })
                 .fail(function(err) {
                     klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -298,14 +299,13 @@ var utils;
 
     function renderGrantSummary(data){
         var tpl = swig.compile($('#tpl-grantSummary').html());
-        var total = data["received"]["sg_amt"] + data["received"]["smg_amt"] + data["received"]["tlm_amt"];
+        var total = data.properties["sum_school_dev_grant_recd"] + data.properties["sum_tlm_grant_recd"];
         var received = {
-                        "sg":data["received"]["sg_amt"],
-                        "smg": data["received"]["smg_amt"],
-                        "tlm": data["received"]["tlm_amt"],
+                        "sdg":data.properties["sum_school_dev_grant_recd"],
+                        "tlm": data.properties["sum_tlm_grant_recd"],
                         "total": total,
-                        "per_student": total/data["student_total"],
-                        "per_teacher": data["received"]["tlm_amt"]/data["teacher_count"]
+                        "per_student": total/(data.properties["sum_girls"]+data.properties["sum_boys"]),
+                        "per_teacher": data.properties["sum_tlm_grant_recd"]/(data.properties["sum_graduate_teachers"]+data.properties["sum_head_teacher"])
         };
         var html = tpl({"received":received});
         $('#grant-summary').html(html);

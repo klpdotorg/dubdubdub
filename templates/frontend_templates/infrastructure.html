@@ -81,8 +81,7 @@
       <table class="table-base table-list-view table-base-comparison">
         <tbody>
           <tr class="table-base-heading">
-            <th>School Grant</th>
-            <th>School Maintenance Grant</th>
+            <th>School Development Grant</th>
             <th>TLM Grant</th>
             <th>Total Grant</th>
             <th>Per Child</th>
@@ -91,10 +90,7 @@
 
           <tr class="font-smaller">
             <td>
-              <div>&#8377; {{received.sg}}</div>
-            </td>
-            <td>
-              <div>&#8377; {{received.smg}}</div>    
+              <div>&#8377; {{received.sdg}}</div>
             </td>
             <td>
               <div>&#8377; {{received.tlm}}</div>  
@@ -103,10 +99,10 @@
               <div>&#8377; {{received.total}}</div>
             </td>
              <td>
-              <div>&#8377; {{received.per_student}}</div>
+              <div>&#8377; {{received.per_student | round}}</div>
             </td>
             <td>
-              <div>&#8377; {{received.per_teacher}}</div>
+              <div>&#8377; {{received.per_teacher | round}}</div>
             </td>
           </tr>
           
