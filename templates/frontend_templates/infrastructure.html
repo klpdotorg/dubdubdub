@@ -24,7 +24,7 @@
                   <div class="heading-tiny-uppercase">Teachers</div>
                   <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}}:1 > <span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">(Recommended)</span></div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}} (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>
@@ -81,8 +81,7 @@
       <table class="table-base table-list-view table-base-comparison">
         <tbody>
           <tr class="table-base-heading">
-            <th>School Grant</th>
-            <th>School Maintenance Grant</th>
+            <th>School Development Grant</th>
             <th>TLM Grant</th>
             <th>Total Grant</th>
             <th>Per Child</th>
@@ -91,10 +90,7 @@
 
           <tr class="font-smaller">
             <td>
-              <div>&#8377; {{received.sg}}</div>
-            </td>
-            <td>
-              <div>&#8377; {{received.smg}}</div>    
+              <div>&#8377; {{received.sdg}}</div>
             </td>
             <td>
               <div>&#8377; {{received.tlm}}</div>  
@@ -103,10 +99,10 @@
               <div>&#8377; {{received.total}}</div>
             </td>
              <td>
-              <div>&#8377; {{received.per_student}}</div>
+              <div>&#8377; {{received.per_student | round}}</div>
             </td>
             <td>
-              <div>&#8377; {{received.per_teacher}}</div>
+              <div>&#8377; {{received.per_teacher | round}}</div>
             </td>
           </tr>
           
@@ -123,40 +119,44 @@
         <tbody>
           <tr class="table-base-heading">
             <th>Category</th>
-            <th colspan='2'>Infrastructure</th>
-            <th>2013</th>
-            <th>2014</th>
-            <th>2015</th>
+            <th colspan="2"></th>
+            {% for year in transpose["year"]%}
+                    <th>{{year}}</th>
+            {% endfor %}
+          </tr>
+          <tr class="font-smaller">
+            <td>Total Schools</td>  
+            <td> </td>
+            <td> </td>
+            {% for year in transpose["year"] %}
+                {% if year in transpose["school_count"] %}
+                  <td>{{transpose["school_count"][year]}}
+                {% endif %}
+            {% endfor %}
           </tr>
           {% for key in transpose %}
-            {% if key.name == "school_count" %}
-              <tr class="font-smaller">
-                <td>Total Schools</td>  
-                <td> </td>
-                <td> </td>
-                <td>{{key.yr2013}}</td>
-                <td>{{key.yr2014}}</td>
-                <td>{{key.yr2015}}</td>
-              </tr>
-            {% else %}
+            {% if "name" in key %}
               {% set counter=1%}
               {%for each in key%}
                 {% if counter > 1 %}
-                <tr class="font-smaller">
-                  {% if counter == 2 %}
-                    <td>{{key.name}}</td>
-                  {% else %}
-                    <td></td>
-                  {% endif %} 
-                  <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
-                  <td>{{each.name}}</td>
-                  <td class="bold {% if each.yr2013 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2013 | round}}%</td>
-                  <td class="bold {% if each.yr2014 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2014 | round}}%</td>
-                  <td class="bold {% if each.yr2015 > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each.yr2015 | round}}%</td>
-                </tr>
+                  <tr class="font-smaller">
+                    {% if counter == 2 %}
+                      <td>{{key.name}}</td>
+                    {% else %}
+                      <td></td>
+                    {% endif %} 
+                    <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
+                    <td>{{each.name}}</td>
+                    {% for year in transpose["year"] %}
+                      {% if year in each %}
+                        <td class="bold {% if each[year] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[year] | round}}%</td>
+                      {% else %}
+                        <td>"NA"</td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
                 {% endif %}
                 {% set counter = counter|increment %}
-                 
               {% endfor %}
             {% endif %}
           {% endfor %}
@@ -174,36 +174,25 @@
         <tbody>
           <tr class="table-base-heading">
             <th colspan="2"></th>
-            {% set counter = 1 %}
-            {% for each in neighbours %}
-              {% if counter == 1 %}
-                {% for key in each %}
-                  {% if key.perc %}
-                    <th>{{key.name}}</th>
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-              {% set counter = counter | increment %}
+            {% for key in neighbours["keys"] %}
+              <td align="center">{{key.name}}</br>{% autoescape false %}{{key.icon}}{% endautoescape %}</td>
             {% endfor %}
           </tr>
           {% for each in neighbours %}
             <tr class="font-smaller">
-              {% for key in each %}
-                {% if key.perc %}
-                  <td class="bold {% if key.perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{key.perc | round}}%</td>
-                {% else %}
-                  {%if key.indexOf("</span>") != -1 %}
-                    <td style="width:50px">{% autoescape false %}{{key}}{% endautoescape %}</td>
+              {% if "name" in each %}
+                <td>{{each.name}}</td><td></td>
+                {% for key in neighbours["keys"] %}
+                  {% if key.name in each %}
+                    <td align="center" class="bold {% if each[key.name].perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[key.name].perc | round}}%</td>
                   {% else %}
-                    <td style="width:200px">{{key}}</td>
+                    <td>"NA"</td> 
                   {% endif %}
-                {% endif %}
-              {% endfor %}
+                {% endfor %}
+              {% endif %}
             </tr>
           {% endfor %}
-          
         </tbody>
     </table>
   </script>
-
 {% endverbatim %}

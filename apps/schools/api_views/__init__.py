@@ -8,7 +8,7 @@ from .assessment import (
     ProgrammePercentile, PartnerList
 )
 from .reports import (
-    ReportsDetail
+    ReportDetails
 )
 from .aggregations import *
 from .boundary import (
