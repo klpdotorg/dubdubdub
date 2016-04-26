@@ -14,7 +14,8 @@ class StateAdmin(admin.ModelAdmin):
     list_filter = ['date_of_visit', 'ivrs_type']
 
     def download_csv(self, request, queryset):
-        source = Source.objects.get(name='ivrs')
+        source_ivrs = Source.objects.get(name='ivrs')
+        source_sms = Source.objects.get(name='sms')
 
         f = StringIO.StringIO()
         writer = csv.writer(f)
@@ -35,27 +36,32 @@ class StateAdmin(admin.ModelAdmin):
         if ivrs_type == 'gka':
             question_group = Questiongroup.objects.get(
                 version=2,
-                source=source
+                source=source_ivrs
             )
         elif ivrs_type == 'ivrs-pri':
             question_group = Questiongroup.objects.get(
                 version=3,
-                source=source
+                source=source_ivrs
             )
         elif ivrs_type == 'gka-new':
             question_group = Questiongroup.objects.get(
                 version=4,
-                source=source
+                source=source_ivrs
             )
         elif ivrs_type == 'gka-v3':
             question_group = Questiongroup.objects.get(
                 version=5,
-                source=source
+                source=source_ivrs
+            )
+        elif ivrs_type == 'gka-sms':
+            question_group = Questiongroup.objects.get(
+                version=1,
+                source=source_sms
             )
         else: # ivrs_type == 'ivrs-pre'
             question_group = Questiongroup.objects.get(
                 version=999, # Not implemented
-                source=source
+                source=source_ivrs
             )
 
         questions = question_group.questions.all().values_list(

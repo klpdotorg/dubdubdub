@@ -9,13 +9,14 @@ from ivrs.utils import get_question
 from common.utils import post_to_slack
 from stories.models import Story, UserType, Questiongroup, Answer
 
-GKA_SERVER = "08039591332"
 PRI = "08039236431"
+GKA_SMS = "08039514048"
+GKA_SERVER = "08039591332"
 # PRE = "08039510414" - Not implemented.
 
 class Command(BaseCommand):
     args = ""
-    help = """Analyzes the GKA IVRS states and saves stories.
+    help = """Analyzes the GKA IVRS/SMS states and saves stories.
 
     ./manage.py fetchgkaivrs"""
 
@@ -26,6 +27,7 @@ class Command(BaseCommand):
             'gka-new' : 4,
             'gka-v3' : 5,
             'ivrs-pri' : 3,
+            'gka-sms', 1,
             # 'ivrs-pre' : 999 - Not implemented.
         }
 
@@ -35,20 +37,21 @@ class Command(BaseCommand):
     def process_state(self, ivrs_type, version):
         valid_count = 0 # For posting daily notifications to slack.
         invalid_count = 0
-        fifteen_minutes = datetime.now() - timedelta(minutes=15)
+        # fifteen_minutes = datetime.now() - timedelta(minutes=15)
 
         ivrs_type_number_dict = {
             'gka' : GKA_SERVER,
             'gka-new' : GKA_SERVER,
             'gka-v3' : GKA_SERVER,
             'ivrs-pri' : PRI,
+            'gka-sms' : GKA_SMS,
             # 'ivrs-pre' : PRE, - Not implemented.
         }
 
         states = State.objects.filter(
             ivrs_type=ivrs_type,
             is_processed=False,
-            date_of_visit__lte=fifteen_minutes
+            # date_of_visit__lte=fifteen_minutes
         )
 
         for state in states:
@@ -90,10 +93,15 @@ class Command(BaseCommand):
             state.is_processed = True
             state.save()
 
-        if ivrs_type in ['gka-v3']:
+        if ivrs_type == 'gka-v3':
             author = 'GKA IVRS'
+            emoji = ':calling:'
+        elif ivrs_type == 'gka-sms':
+            author = 'GKA SMS'
+            emoji = ':memo:'
         elif ivrs_type == 'ivrs-pri':
             author = 'Primary School IVRS'
+            emoji = ':calling:'
         else:
             author = None
 
@@ -103,7 +111,7 @@ class Command(BaseCommand):
                     channel='#klp',
                     author=author,
                     message='%s Valid calls & %s Invalid calls' %(valid_count, invalid_count),
-                    emoji=':calling:',
+                    emoji=emoji,
                 )
             except:
                 pass

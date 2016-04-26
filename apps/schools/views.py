@@ -4,7 +4,7 @@ from common.views import StaticPageView
 from .models import School, Programme, Boundary
 from django.conf import settings
 import urllib2
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
@@ -42,6 +42,29 @@ class ProgrammeView(DetailView):
 class BoundaryPageView(DetailView):
     model = Boundary
     template_name = 'boundary.html'
+
+    def get(self, request, **kwargs):
+        queryset = self.get_queryset()
+
+        pk = self.kwargs.get('pk')
+        boundary = queryset.get(pk=pk)
+
+        entity_type = ''
+        if boundary.hierarchy_id in (9, 13):
+            entity_type = '-district'
+            if boundary.type_id == 1:
+                entity_type = 'primary' + entity_type
+            elif boundary.type_id == 2:
+                entity_type = 'preschool' + entity_type
+        else:
+            entity_type = boundary.hierarchy.name
+
+        verbose_url = reverse('boundary_page_new', kwargs={
+            'boundary_type': entity_type,
+            'pk': boundary.id
+        })
+
+        return HttpResponseRedirect(verbose_url)
 
 
 class NewBoundaryPageView(DetailView):

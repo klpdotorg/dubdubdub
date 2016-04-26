@@ -127,11 +127,10 @@
           <tr class="table-base-heading">
             <th>Year</th>
             <th>Schools</th>
-            <th>IVRS Calls</th>
-            <th>Surveys</th>
-            <th class="center-text"><span class="fa fa-tint"></span><br/>Drinking Water</th>
-            <th class="center-text"><div class="icon-boy-girl"></div><br/>Separate Toilets</th>
-            <th class="center-text"><div class="icon-teacher"></div><br/>Sufficient Teachers</th>
+            <th>Responses</th>
+            <th><span class="fa fa-tint"></span> Drinking Water</th>
+            <th><span class="fa fa-male"></span><span class="fa fa-female"></span> Separate Toilets</th>
+            <th><span class="fa fa-graduation-cap"></span> Enough Teachers</th>
           </tr>
           {% for each in years %}
             <tr class="font-smaller">
@@ -142,31 +141,37 @@
                 <div class="td-label-schools">{{each.schools}}</div>
               </td>
               <td>
-                <div class="td-label-ivrs">{{each.ivrs_calls}}</div>  
-              </td>
+                <div class="td-label-responses">{{each.ivrs_calls + each.surveys}}</div>  
+              </td>           
               <td>
-                <div class="td-label-stories">{{each.surveys}}</div>  
-              </td>
-              
-              <td>
-                <div class="bar-graph-wrap td-label-ivrs-perc">
-                  <div class="bar-custom tooltip" aria-label="{{each.ivrs_perc}}% schools">
-                    <div class="bar-value green-leaf-bg" style="width:{{each.ivrs_perc}}%;">
+                <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.water}}% schools">
+                    <div class="bar-value green-leaf-bg" style="width:{{each.water}}%;">
                   </div>
-                  <div class="bar-percent center-text font-smallest"> {{each.ivrs_schools}} schools </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.water}}% schools </div>
                 </div><!--bar-graph-wrap-->    
               </td>
               
               <td>
-               <div class="bar-graph-wrap td-label-story-perc">
-                  <div class="bar-custom tooltip" aria-label="{{each.story_perc}}% schools">
-                    <div class="bar-value grey-gravel-bg" style="width:{{each.story_perc}}%;">
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.toilets}}% schools">
+                    <div class="bar-value grey-gravel-bg" style="width:{{each.toilets}}%;">
                     </div>
                   </div><!--bar-custom-->
-                  <br/><div class="bar-percent center-text font-smallest"> {{each.story_schools}} schools </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.toilets}}% schools </div>
                 </div><!--bar-graph-wrap-->    
               </td>
-                
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.teachers}}% schools">
+                    <div class="bar-value brand-purple-bg" style="width:{{each.teachers}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.teachers}}% schools </div>
+                </div><!--bar-graph-wrap--> 
+
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -184,11 +189,10 @@
           <tr class="table-base-heading">
             <th>Boundary</th>
             <th>Schools</th>
-            <th>IVRS Calls</th>
-            <th>Surveys</th>
-            <th><span class="fa fa-tint"></span>Drinking Water</th>
-            <th><span class="fa fa-male"></span><span class="fa fa-female"></span>Separate Toilets</th>
-            <th><span class="fa fa-graduation-cap"></span>Sufficient Teachers</th>
+            <th>Responses</th>
+            <th><span class="fa fa-tint"></span> Drinking Water</th>
+            <th><span class="fa fa-male"></span><span class="fa fa-female"></span> Separate Toilets</th>
+            <th><span class="fa fa-graduation-cap"></span> Enough Teachers</th>
           </tr>
           {% for each in neighbours %}
             <tr class="font-smaller">
@@ -199,27 +203,36 @@
                 <div class="td-label-schools">{{each.schools}}</div>
               </td>
               <td>
-                <div class="td-label-ivrs">{{each.ivrs_calls}}</div>  
-              </td>
-               <td>
-                <div class="td-label-stories">{{each.surveys}}</div>  
+                <div class="td-label-responses">{{each.ivrs_calls + each.surveys}}</div>  
               </td>
               <td>
-                <div class="bar-graph-wrap td-label-ivrs-perc">
-                  <div class="bar-custom tooltip" aria-label="{{each.ivrs_perc}}% schools">
-                    <div class="bar-value green-leaf-bg" style="width:{{each.ivrs_perc}}%;">
+                <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.water}}% schools">
+                    <div class="bar-value green-leaf-bg" style="width:{{each.water}}%;">
                   </div>
-                  <div class="bar-percent center-text font-smallest"> {{each.ivrs_schools}} schools </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.water}}% schools </div>
                 </div><!--bar-graph-wrap-->    
               </td>
+              
               <td>
-               <div class="bar-graph-wrap td-label-story-perc">
-                  <div class="bar-custom tooltip" aria-label="{{each.story_perc}}% schools">
-                    <div class="bar-value grey-gravel-bg" style="width:{{each.story_perc}}%;">
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.toilets}}% schools">
+                    <div class="bar-value grey-gravel-bg" style="width:{{each.toilets}}%;">
                     </div>
                   </div><!--bar-custom-->
-                  <br/><div class="bar-percent center-text font-smallest"> {{each.story_schools}} schools </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.toilets}}% schools </div>
                 </div><!--bar-graph-wrap-->    
+              </td>
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.teachers}}% schools">
+                    <div class="bar-value brand-purple-bg" style="width:{{each.teachers}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.teachers}}% schools </div>
+                </div><!--bar-graph-wrap--> 
+
               </td>
             </tr>
           {% endfor %}

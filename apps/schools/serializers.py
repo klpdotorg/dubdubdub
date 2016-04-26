@@ -25,7 +25,7 @@ class BoundarySerializer(KLPSerializer):
 
     class Meta:
         model = Boundary
-        fields = ('id', 'name', 'type', 'school_type')
+        fields = ('id', 'name', 'dise_slug', 'type', 'school_type')
 
 
 class BoundaryWithParentSerializer(KLPSerializer):
@@ -35,7 +35,7 @@ class BoundaryWithParentSerializer(KLPSerializer):
 
     class Meta:
         model = Boundary
-        fields = ('id', 'name', 'type', 'school_type', 'parent')
+        fields = ('id', 'name', 'dise_slug', 'type', 'school_type', 'parent')
 
 
 class BoundaryWithGrandparentSerializer(KLPSerializer):

@@ -19,9 +19,9 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def check_data_validity(data):
-    expected_response_1 = "3885,1,4,1,1,1,15,2,1,2,2"
-    expected_response_2 = "3885,1,4,1,2,,,,,,1"
-    if len(data) != 11:
+    expected_response_1 = "3885,1,1,1,2,1"
+    expected_response_2 = "3885,1,2,,,"
+    if len(data) != 6:
         valid = False
         message = "Error. Example 1: " + expected_response_1 + \
                   " Example 2: " + expected_response_2
@@ -67,13 +67,22 @@ def check_school(state, school_id, ivrs_type):
     # correct school_type. Assigns the ivrs_type based on the call
     # number as well.
     if school_type:
-        if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
+        if ivrs_type in [GKA_SERVER, GKA_DEV]:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
                 message = "Please enter Primary School ID"
             state.ivrs_type = 'gka-v3'
             # Initializing answer slots 1 to 10 with NA
             for i in range(0, 10):
+                state.answers.append('NA')
+
+        elif ivrs_type == GKA_SMS:
+            if school_type != u'Primary School':
+                status_code = status.HTTP_404_NOT_FOUND
+                message = "Please enter Primary School ID"
+            state.ivrs_type = 'gka-sms'
+            # Initializing answer slots 1 to 5 with NA
+            for i in range(0, 5):
                 state.answers.append('NA')
 
         elif ivrs_type == PRI:
@@ -111,7 +120,7 @@ def verify_answer(session_id, question_number, response, ivrs_type):
             response = int(response.strip('"'))
 
             # Mapping integers to Yes/No.
-            accepted_answers = {1: 'Yes', 2: 'No'}
+            accepted_answers = {1: 'Yes', 2: 'No', 3: 'Unknown'}
             if question.question_type.name == 'checkbox' and response in accepted_answers:
                 if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
@@ -205,10 +214,16 @@ def save_answer(state, question_number, question, ivrs_type, response):
 
 
 def get_question(question_number, ivrs_type):
-    if ivrs_type in [GKA_SERVER, GKA_SMS, GKA_DEV]:
+    if ivrs_type in [GKA_SERVER, GKA_DEV]:
         question_group = Questiongroup.objects.get(
             version=5,
             source__name='ivrs'
+        )
+        school_type = BoundaryType.objects.get(name="Primary School")
+    elif ivrs_type == GKA_SMS:
+        question_group = Questiongroup.objects.get(
+            version=1,
+            source__name='sms'
         )
         school_type = BoundaryType.objects.get(name="Primary School")
     elif ivrs_type == PRI:
