@@ -25,7 +25,7 @@
 			<div class="filter-item">
 				<span class="filter-label">Report Type</span>	
 				<select>
-			      <option>KLP and DISE data</option>
+			      <option>KLP data only</option>
 			      <option>DISE data only</option>
 			    </select>	
 			</div>
@@ -46,13 +46,19 @@
 			    <input type="text" id="select2search" name="search" placeholder="Start typing to search" class="search-input input-text full-width">
 			</div> 
 			<h2>OR</h2>
-			<span> Search by  selecting a geography </span>
+			<span> Search by  selecting a geography  </span>
+			<div class="base-spacing-mid"></div>
+			
 			<fieldset id="boundary" class="sect-parent">
-				<div class="form-field-wrap sect-half">
-					<input type="radio" class="input-radio" value="edu" id="radio3" checked="" name="radios">
-				    <label for="radio3" class="input-radio-label">Educational Boundary</label>
+				<div class="form-field-wrap sect-third">
+					<input type="radio" class="input-radio" value="pre" id="radio2" checked="" name="radios">
+				    <label for="radio2" class="input-radio-label">PreSchool Boundaries</label>
 				</div>
-				<div class="form-field-wrap sect-half">
+				<div class="form-field-wrap sect-third">
+					<input type="radio" class="input-radio" value="primary" id="radio3" checked="" name="radios">
+				    <label for="radio3" class="input-radio-label">Primary School Boundaries</label>
+				</div>
+				<div class="form-field-wrap sect-third">
 				    <input type="radio" class="input-radio" value="elec" id="radio4" checked="" name="radios">
 				    <label for="radio4" class="input-radio-label">Electoral Region</label>
 				</div>
@@ -77,43 +83,16 @@
 				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-district">
 				</div>
 				<div class="sect-third">
-					<label class="label center-text">BLOCK : </label>
+					<label class="label center-text">BLOCK/PROJECT : </label>
 				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-block">
 				</div>
 				<div class="sect-third">
-					<label class="label center-text">CLUSTER : </label>
+					<label class="label center-text">CLUSTER/CIRCLE : </label>
 				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-cluster">
 				</div>
 			</div>
 		</form>
 	</div>
-	<div class="report-list container">
-		<table class="table-base">
-		  <thead class="table-base-heading">
-		    <tr>
-		      <th colspan=3>List of Reports</th>
-		      <th></th>
-		      <th></th>
-		  	</tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		      <td colspan="3">Demographics</td>
-		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
-		      <td><span class="fa fa-external-link">  View</span></td>
-		    </tr>
-		    <tr>
-		      <td colspan="3">Finance</td>
-		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
-		      <td><span class="fa fa-external-link"></span>  View</td>
-		    </tr>
-		    <tr>
-		      <td colspan="3">Infrastructure</td>
-		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
-		      <td><span class="fa fa-external-link"></span>  View</td>
-		    </tr>
-		  </tbody>
-		</table>
-	</div>
-
+	<div id="report-list"></div>
+{% include 'frontend_templates/report_search.html' %} 
 {% endblock %}

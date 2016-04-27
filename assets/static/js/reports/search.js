@@ -6,28 +6,33 @@
         klp.router.start();
         initSelect2();
         $(".box").hide();
-        $(".report-list").hide();
+        $("#report-list").hide();
         $(document).ready(function(){
             $('input[type="radio"]').click(function(){
-                if($(this).attr("value")=="edu"){
+                if($(this).attr("value")=="pre"){
                     $(".box").not(".educational").hide();
                     $(".educational").show();
-                    initEduSearch();
+                    initEduSearch("preschool");
+                }
+                if($(this).attr("value")=="primary"){
+                    $(".box").not(".educational").hide();
+                    $(".educational").show();
+                    initEduSearch("primaryschool");
                 }
                 if($(this).attr("value")=="elec"){
                     $(".box").not(".electoral").hide();
                     $(".electoral").show();
                     initElectSearch();
                 }
-            });
-            $(".js-example-basic-single").select2();
-            $(".js-example-basic-single").change(function(){
-            $(".report-list").show();
+                $(".js-example-basic-single").select2();
             });
         });
         
     }
 
+    var districtsXHR = function(school_type) {
+        return klp.api.do('boundary/admin1s', {'school_type':school_type, 'geometry': 'yes'});
+    };
 
     function format(item) {
         if (item.properties != undefined)
@@ -64,19 +69,27 @@
         });
     }
 
+    function showReport(selected) {
+        var tplReportLinks= swig.compile($('#tpl-reportLinks').html());
+        $('#report-list').html(tplReportLinks({"boundary":selected.val}));
+        $("#report-list").show();
+    }
 
-    function initEduSearch() {
+    function initEduSearch(school_type) {
         var $select_district = $("#select-district");
         var $select_block = $("#select-block");
         var $select_cluster = $("#select-cluster");
+        $select_district.select2("val","");
+        $select_block.select2("val","");
+        $select_cluster.select2("val","");
 
-        var districtsXHR = klp.api.do('boundary/admin1s', {'school_type':"primaryschool", 'geometry': 'yes'});
-        districtsXHR.done(function (data) {
+        console.log(school_type);
+        districtsXHR(school_type+'s').done(function (data) {
             populateSelect($select_district, data);
         });
 
         $select_district.on("change", function(selected) {
-            console.log(selected.val);
+            showReport(selected);
             var blockXHR = klp.api.do('boundary/admin1/'+selected.val+'/admin2', {'geometry': 'yes', 'per_page': 0});
             blockXHR.done(function (data) {
                 populateSelect($select_block, data);
@@ -84,10 +97,15 @@
         });
 
         $select_block.on("change", function(selected) {
+            showReport(selected);
             var clusterXHR = klp.api.do('boundary/admin2/'+selected.val+'/admin3', {'geometry': 'yes', 'per_page': 0});
             clusterXHR.done(function (data) {
                 populateSelect($select_cluster, data);
             });
+        });
+
+        $select_cluster.on("change", function(selected) {
+            showReport(selected);
         });
     }
     
@@ -95,6 +113,9 @@
         var $select_mp = $("#select-mp");
         var $select_mla = $("#select-mla");
         var $select_ward = $("#select-ward");
+        $select_mp.select2("val","");
+        $select_mla.select2("val","");
+        $select_ward.select2("val","");
 
         var mpXHR = klp.api.do('boundary/parliaments',{});
         //var mpXHR = klp.api.do('boundary/admin1s', {'school_type':"primaryschool", 'geometry': 'yes'});
@@ -103,11 +124,18 @@
             populateSelect($select_mp, data);
         });
 
+        $select_mp.on("change", function(selected) {
+            showReport(selected);
+        });
+
         //$select_mp.on("change", function(selected) {
             //console.log(selected.val);
         var mlaXHR = klp.api.do('boundary/assemblies',{});
         mlaXHR.done(function (data) {
             populateSelect($select_mla, data);
+        });
+        $select_mla.on("change", function(selected) {
+            showReport(selected);
         });
         //});
 
@@ -143,7 +171,6 @@
         });
     }
 
-
     function initSelect2() {
         $('#select2search').select2({
             placeholder: 'Search for schools and boundaries',
@@ -162,7 +189,7 @@
                     var searchResponse = {
                         results: [{
                             text: "Pre-Schools",
-                            children: makeResults(data.pre_schools.features, 'school')
+                            children: makeResults(data.pre_schools.features, 'preschool')
                         }, {
                             text: "Primary Schools",
                             children: makeResults(data.primary_schools.features, 'school')

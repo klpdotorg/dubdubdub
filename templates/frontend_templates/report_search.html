@@ -1,0 +1,34 @@
+{% verbatim %}
+
+	<script type="text/html" id="tpl-reportLinks">
+	<div class="container">
+		<table class="table-base">
+		  <thead class="table-base-heading">
+		    <tr>
+		      <th colspan=3>List of Reports</th>
+		      <th></th>
+		      <th></th>
+		  	</tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <td colspan="3">Demographics</td>
+		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
+		      <td><a href="/reports/demographics" target="_blank"><span class="fa fa-external-link"></span>  View {{boundary}}</a></td>
+		    </tr>
+		    <tr>
+		      <td colspan="3">Finance</td>
+		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
+		      <td><a href="/reports/finance" target="_blank"><span class="fa fa-external-link"></span>  View {{boundary}}</a></td>
+		    </tr>
+		    <tr>
+		      <td colspan="3">Infrastructure</td>
+		      <td><span class="fa fa-file-pdf-o"></span>  Download</td>
+		      <td><a href="/reports/infrastructure" target="_blank"><span class="fa fa-external-link"></span>  View {{boundary}}</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+	</script>
+
+{% endverbatim %}
