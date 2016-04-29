@@ -8,7 +8,8 @@
 {% block endbody %}
   {% compress js %}
       <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/reports/demographics.js' %}"></script>  
+      <script type="text/javascript" src="{% static 'js/reports/demographics.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/utils.js' %}"></script> 
   {% endcompress %}
 {% endblock %}
 {% block content %}

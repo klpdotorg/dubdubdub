@@ -24,7 +24,6 @@
                     $(".electoral").show();
                     initElectSearch();
                 }
-                //$(".js-example-basic-single").select2();
             });
         });
         

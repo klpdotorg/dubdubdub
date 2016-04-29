@@ -1,21 +1,23 @@
 'use strict';
-var BOUNDARY_TYPE="boundary";
-var KLP_ID="8904";
-var LANGUAGE="kannada";
-
 (function() {
+    var utils;
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
+        utils  = klp.reportUtils;
         fetchReportDetails();
         klp.router.start();
     };
 
     function fetchReportDetails()
     {
-        var params = klp.router.getHash().queryParams;
-        var url = "reports/?report_name=demographics&report_type=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
-        var $xhr = klp.api.do(url, params);
+        var repType,bid,lang;
+        repType = utils.getParameterByName("report_type");
+        bid = utils.getParameterByName("id");
+        lang = utils.getParameterByName("language");
+
+        var url = "reports/?report_name=demographics&report_type=" +repType+"&id="+bid+"&language="+lang ;
+        var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");

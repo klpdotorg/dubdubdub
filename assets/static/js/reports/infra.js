@@ -1,12 +1,10 @@
 'use strict';
-var BOUNDARY_TYPE="boundary";
-var KLP_ID="8877";
-var LANGUAGE="kannada";
-var utils;
-
 (function() {
+    var utils;
+    var repUtils;
     klp.init = function() {
         utils = klp.boundaryUtils;
+        repUtils = klp.reportUtils;
         klp.router = new KLPRouter();
         klp.router.init();
         fetchReportDetails();
@@ -89,9 +87,13 @@ var utils;
 
     function fetchReportDetails()
     {
-        var params = klp.router.getHash().queryParams;
-        var url = "reports/?report_name=infrastructure&report_type=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
-        var $xhr = klp.api.do(url, params);
+        var repType,bid,lang;
+        repType = repUtils.getParameterByName("report_type");
+        bid = repUtils.getParameterByName("id");
+        lang = repUtils.getParameterByName("language");
+
+        var url = "reports/?report_name=infrastructure&report_type=" +repType+"&id="+bid+"&language="+lang ;
+        var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             console.log('data', data);
             var schooltype = "Schools";
