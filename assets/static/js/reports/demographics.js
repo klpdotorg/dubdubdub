@@ -12,9 +12,9 @@
     function fetchReportDetails()
     {
         var repType,bid,lang;
-        repType = utils.getParameterByName("report_type");
-        bid = utils.getParameterByName("id");
-        lang = utils.getParameterByName("language");
+        repType = utils.getSlashParameterByName("report_type");
+        bid = utils.getSlashParameterByName("id");
+        lang = utils.getSlashParameterByName("language");
 
         var url = "reports/?report_name=demographics&report_type=" +repType+"&id="+bid+"&language="+lang ;
         var $xhr = klp.api.do(url);

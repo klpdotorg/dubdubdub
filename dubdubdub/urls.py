@@ -140,19 +140,23 @@ urlpatterns = patterns(
         template_name='report_search.html'
         ), name='report_search'),
 
-    url(r'^reports/demographics$', StaticPageView.as_view(
-        template_name='demographics.html'
-        ), name='demographics'),
-
-    # url(r'^reports/demographics/(?P<report_type>assembly|parliament|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+    # url(r'^reports/demographics$', StaticPageView.as_view(
     #     template_name='demographics.html'
     #     ), name='demographics'),
+
+    url(r'^reports/demographics/(?P<report_type>assembly|parliament|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+        template_name='demographics.html'
+        ), name='demographics'),
 
     url(r'^reports/finance$', StaticPageView.as_view(
         template_name='finance.html'
         ), name='finance'),
 
-    url(r'^reports/infrastructure$', StaticPageView.as_view(
+    # url(r'^reports/infrastructure$', StaticPageView.as_view(
+    #     template_name='infrastructure.html'
+    #     ), name='infrastructure'),
+
+    url(r'^reports/infrastructure/(?P<report_type>assembly|parliament|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
         template_name='infrastructure.html'
         ), name='infrastructure'),
 
