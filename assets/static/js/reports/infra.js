@@ -88,9 +88,9 @@
     function fetchReportDetails()
     {
         var repType,bid,lang;
-        repType = repUtils.getParameterByName("report_type");
-        bid = repUtils.getParameterByName("id");
-        lang = repUtils.getParameterByName("language");
+        repType = repUtils.getSlashParameterByName("report_type");
+        bid = repUtils.getSlashParameterByName("id");
+        lang = repUtils.getSlashParameterByName("language");
 
         var url = "reports/?report_name=infrastructure&report_type=" +repType+"&id="+bid+"&language="+lang ;
         var $xhr = klp.api.do(url);
