@@ -20,18 +20,25 @@ GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
     if kwargs['valid']:
-        data = kwargs['data']
-        message = "Response accepted. Your message was: " + str(data)
+        data = str(kwargs['data'])
+        message = "Response accepted. Your message was: " + data + "."
+
     elif kwargs['no_school_id']:
-        message = "School ID not entered"
+        message = "School ID not entered."
+
     elif kwargs['invalid_school_id']:
-        message = "School ID not found"
+        school_id = str(kwargs['school_id'])
+        message = "School ID " + school_id + "not found."
+
     elif kwargs['not_primary_school']:
-        message = "Please enter Primary School ID"
+        message = "Please enter Primary School ID."
+
     elif kwargs['not_pre_school']:
-        message = "Please enter PreSchool ID"
+        message = "Please enter PreSchool ID."
+
     elif kwargs['error_question_number']:
-        message = "Error at que.no: " + str(kwargs['error_question_number'])
+        question_number = str(kwargs['error_question_number'])
+        message = "Error at que.no: " + question_number + "."
 
     return message
 
@@ -78,7 +85,7 @@ def check_school(state, school_id, ivrs_type):
 
     else:
         status_code = status.HTTP_404_NOT_FOUND
-        message = get_message(invalid_school_id=True)
+        message = get_message(invalid_school_id=True, school_id=school_id)
 
     # Validating whether the entered school ID corresponds to the
     # correct school_type. Assigns the ivrs_type based on the call
