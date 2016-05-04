@@ -9,10 +9,12 @@ from schools.models import School, SchoolDetails
 from users.models import User
 from .models import (Question, Story, StoryImage, Answer, Questiongroup,
                      UserType, Source)
-from .serializers import (SchoolQuestionsSerializer, StorySerializer,
-    StoryWithAnswersSerializer)
+from .serializers import (
+    SchoolQuestionsSerializer, StorySerializer,
+    StoryWithAnswersSerializer, QuestiongroupSerializer
+)
 
-from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
+from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView, KLPModelViewSet
 from common.mixins import CacheMixin
 from common.utils import Date
 from rest_framework.exceptions import (APIException, PermissionDenied,
@@ -28,6 +30,12 @@ from django.core.files.base import ContentFile
 from PIL import Image
 from dateutil.parser import parse as date_parse
 
+
+class SurveysViewSet(KLPModelViewSet):
+    queryset = Questiongroup.objects.all()
+    serializer = QuestiongroupSerializer
+
+
 class StoryInfoView(KLPAPIView):
     def get(self, request):
         return Response({
@@ -36,6 +44,7 @@ class StoryInfoView(KLPAPIView):
                 is_verified=True).count(),
             'total_images': StoryImage.objects.all().count()
         })
+
 
 class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
