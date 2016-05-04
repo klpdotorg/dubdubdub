@@ -8,6 +8,8 @@ from .models import (Question, Questiongroup, QuestionType,
 
 class QuestiongroupSerializer(KLPSerializer):
 
+    source = serializers.CharField(source='source.name')
+
     class Meta:
         model = Questiongroup
         fields = (
