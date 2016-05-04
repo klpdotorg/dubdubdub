@@ -23,7 +23,7 @@ class QuestionSerializer(KLPSerializer):
 
     class Meta:
         model = Question
-        fields = ('question_type', 'text', 'qid', 'options')
+        fields = ('id', 'question_type', 'text', 'qid', 'options')
 
     def get_options(self, obj):
         return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
