@@ -40,13 +40,32 @@ from .models import (
 )
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
-    StoryWithAnswersSerializer, QuestiongroupSerializer
+    StoryWithAnswersSerializer, QuestiongroupSerializer,
+    QuestionSerializer
 )
 
 
 class SurveysViewSet(KLPModelViewSet):
     queryset = Questiongroup.objects.all()
     serializer_class = QuestiongroupSerializer
+
+
+class SurveysQuestionsViewSet(KLPModelViewSet):
+    serializer_class = QuestionSerializer
+
+    def get_queryset(self):
+        queryset = Question.objects.all()
+
+        survey_id = self.kwargs.get('survey_pk', None)
+        question_id = self.kwargs.get('pk', None)
+
+        if survey_id:
+            queryset = queryset.filter(questiongroup=survey_id)
+
+        if question_id:
+            queryset = queryset.filter(id=question_id)
+
+        return queryset
 
 
 class StoryInfoView(KLPAPIView):
