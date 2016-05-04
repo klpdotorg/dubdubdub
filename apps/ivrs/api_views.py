@@ -7,6 +7,7 @@ from django.conf import settings
 
 from .models import State
 from .utils import (
+    get_message,
     get_question,
     save_answer,
     check_school,
@@ -91,7 +92,7 @@ class SMSView(KLPAPIView):
                         content_type=content_type
                     )
         else:
-            message = "Thank you. Your survey has been saved"
+            message = get_message(valid=True, data=data)
 
         return Response(
             message,

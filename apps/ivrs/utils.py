@@ -19,8 +19,9 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
-    if kwargs['valid']
-        message = "Response accepted"
+    if kwargs['valid']:
+        data = kwargs['data']
+        message = "Response accepted. Your message was: " + str(data)
     elif kwargs['no_school_id']:
         message = "School ID not entered"
     elif kwargs['invalid_school_id']:
