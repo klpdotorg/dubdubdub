@@ -6,6 +6,15 @@ from .models import (Question, Questiongroup, QuestionType,
     QuestiongroupQuestions, Story, Answer, StoryImage)
 
 
+class QuestiongroupSerializer(KLPSerializer):
+
+    class Meta:
+        model = Questiongroup
+        fields = (
+            'version', 'source', 'start_date', 'end_date', 'name'
+        )
+
+
 class QuestionSerializer(KLPSerializer):
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
