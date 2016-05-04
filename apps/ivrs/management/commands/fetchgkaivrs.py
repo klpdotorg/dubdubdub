@@ -27,7 +27,7 @@ class Command(BaseCommand):
             'gka-new' : 4,
             'gka-v3' : 5,
             'ivrs-pri' : 3,
-            'gka-sms', 1,
+            'gka-sms': 1,
             # 'ivrs-pre' : 999 - Not implemented.
         }
 
