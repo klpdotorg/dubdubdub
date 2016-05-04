@@ -32,9 +32,21 @@ from users.api_views import (
 
 from stories.api_views import (
     StoryQuestionsView, StoriesView, StoryInfoView,
-    ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView
+    ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
+    SurveysViewSet
 )
 
+ListCreateMapper = {
+    'get' : 'list',
+    'post' : 'create',
+}
+
+RetrieveUpdateDestroyMapper = {
+    'get' : 'retrieve',
+    'put' : 'update',
+    'patch' : 'update',
+    'delete' : 'destroy',
+}
 
 urlpatterns = patterns(
     '',
@@ -133,6 +145,11 @@ urlpatterns = patterns(
         name="api_stories_info"),
     url(r'^stories/volume/$', StoryVolumeView.as_view(),
         name="api_stories_info"),
+
+    url(r'^surveys/$', SurveysViewSet.as_view(ListCreateMapper),
+        name="api_surveys"),
+    url(r'^surveys/(?P<pk>[0-9]+)/$', SurveysViewSet.as_view(RetrieveUpdateDestroyMapper),
+        name="api_surveys_detail"),
 
     url('^organizations$', OrganizationsView.as_view(),
         name='api_organizations_view'),
