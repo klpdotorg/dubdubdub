@@ -46,7 +46,7 @@ from .serializers import (
 
 class SurveysViewSet(KLPModelViewSet):
     queryset = Questiongroup.objects.all()
-    serializer = QuestiongroupSerializer
+    serializer_class = QuestiongroupSerializer
 
 
 class StoryInfoView(KLPAPIView):
