@@ -13,7 +13,7 @@ class QuestiongroupSerializer(KLPSerializer):
     class Meta:
         model = Questiongroup
         fields = (
-            'version', 'source', 'start_date', 'end_date', 'name'
+            'id', 'version', 'source', 'start_date', 'end_date', 'name'
         )
 
 
