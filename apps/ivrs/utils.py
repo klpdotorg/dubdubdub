@@ -18,6 +18,22 @@ GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
+def get_message(**kwargs):
+    if kwargs['valid']
+        message = "Response accepted"
+    elif kwargs['no_school_id']:
+        message = "School ID not entered"
+    elif kwargs['invalid_school_id']:
+        message = "School ID not found"
+    elif kwargs['not_primary_school']:
+        message = "Please enter Primary School ID"
+    elif kwargs['not_pre_school']:
+        message = "Please enter PreSchool ID"
+    elif kwargs['error_question_number']:
+        message = "Error at que.no: " + str(kwargs['error_question_number'])
+
+    return message
+
 def check_data_validity(data):
     expected_response_1 = "3885,1,1,1,2,1"
     expected_response_2 = "3885,1,2,,,"
@@ -44,10 +60,11 @@ def get_date(date):
 
 def check_school(state, school_id, ivrs_type):
     school_type = None
+    message = None
 
     if not school_id:
         status_code = status.HTTP_404_NOT_FOUND
-        message = "School ID not entered"
+        message = get_message(no_school_id=True)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
@@ -57,11 +74,10 @@ def check_school(state, school_id, ivrs_type):
         ).values(
             'admin3__type__name'
         )[0]['admin3__type__name']
-        message = ''
 
     else:
         status_code = status.HTTP_404_NOT_FOUND
-        message = "School ID not found"
+        message = get_message(invalid_school_id=True)
 
     # Validating whether the entered school ID corresponds to the
     # correct school_type. Assigns the ivrs_type based on the call
@@ -70,7 +86,7 @@ def check_school(state, school_id, ivrs_type):
         if ivrs_type in [GKA_SERVER, GKA_DEV]:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'gka-v3'
             # Initializing answer slots 1 to 10 with NA
             for i in range(0, 10):
@@ -79,7 +95,7 @@ def check_school(state, school_id, ivrs_type):
         elif ivrs_type == GKA_SMS:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'gka-sms'
             # Initializing answer slots 1 to 5 with NA
             for i in range(0, 5):
@@ -88,7 +104,7 @@ def check_school(state, school_id, ivrs_type):
         elif ivrs_type == PRI:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'ivrs-pri'
             # Initializing answer slots 1 to 6 with NA
             for i in range(0, 6):
@@ -98,7 +114,7 @@ def check_school(state, school_id, ivrs_type):
         else:
             if school_type != u'PreSchool':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter PreSchool ID"
+                message = get_message(not_pre_school=True)
             state.ivrs_type = 'ivrs-pre'
             # Initializing answer slots 1 to 6 with NA
             for i in range(0, 6):
@@ -112,6 +128,7 @@ def verify_answer(session_id, question_number, response, ivrs_type):
     if State.objects.filter(session_id=session_id).exists():
         state = State.objects.get(session_id=session_id)
 
+        message = None
         status_code = status.HTTP_200_OK
         question_number = int(question_number)
         question = get_question(question_number, ivrs_type)
@@ -143,9 +160,7 @@ def verify_answer(session_id, question_number, response, ivrs_type):
         status_code = status.HTTP_404_NOT_FOUND
 
     if status_code == status.HTTP_404_NOT_FOUND:
-        message = "Error at que.no: " + str(question_number)
-    else:
-        message = "Data accepted"
+        message = get_message(error_question_number=question_number)
 
     return (state, status_code, message)
 
