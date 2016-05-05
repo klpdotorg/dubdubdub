@@ -62,18 +62,35 @@ def check_data_validity(data):
         if data[2] != 2:
             valid = False
             message = get_message(valid=valid, data=data)
+        else:
+            # If the answer to 2nd question is "2" (which means "No"), then
+            # We manually populate the rest of the answers as "2". This is
+            # to maintain the consistency of the length of the data list to
+            # always remain 6 for every valid sms.
+            for i in range(0, 3):
+                data.append(2)
 
     elif len(data) == 6:
         if all(response == '' for response in data[3:]):
             if data[2] != 2:
                 valid = False
                 message = get_message(valid=valid, data=data)
+            else:
+                # If the answer to 2nd question is "2" (which means "No"), then
+                # We manually populate the rest of the answers as "2". This is
+                # to maintain the consistency of the responses for all valid sms
+                # that we receive.
+                data = ['2' if response == '' else response for response in data]
+        elif any(response == '' for response in data):
+            # Responses like 3885,1,2,1,,2 are not accepted.
+            valid = False
+            message = get_message(valid=valid, data=data)
 
     elif len(data) != 6:
         valid = False
         message = get_message(valid=valid, data=data)
 
-    return (valid, message)
+    return (data, valid, message)
 
 
 def get_date(date):
