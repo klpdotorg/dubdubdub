@@ -132,6 +132,15 @@ def sane_state(state, ivrs_type):
         if state.answers[2] != 'NA':
             if all(answer == 'NA' for answer in state.answers[3:]):
                 return NOT_SANE
+    if ivrs_type == 'gka-sms':
+        # If there is only 'IGNORED_INDEX' in the answers list. The answers
+        # list will remain having only "IGNORED_INDEX" for every erroneous
+        # sms that we receive. The error checking happens on the receipt
+        # of the message itself, even before processing.
+        if len(state.answers) == 1:
+            return NOT_SANE
+        elif len(state.answers) != 6:
+            return NOT_SANE
 
     # If not both, then sane.
     return SANE
