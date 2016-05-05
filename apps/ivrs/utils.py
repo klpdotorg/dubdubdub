@@ -23,6 +23,18 @@ def get_message(**kwargs):
         data = str(kwargs['data'])
         message = "Response accepted. Your message was: " + data + "."
 
+    elif not kwargs['valid']:
+        data = str(kwargs['data'])
+        expected_response_1 = "3885,1,1,1,2,1"
+        expected_response_2 = "3885,1,2,,,"
+        expected_response_3 = "3885,1,2"
+
+        message = "Error. Your response: " + data + \
+                  "Expected response: " + expected_response_1 + \
+                  "OR: " + expected_response_2 + \
+                  "OR: " + expected_response_3 + \
+                  "."
+
     elif kwargs['no_school_id']:
         message = "School ID not entered."
 
@@ -43,15 +55,23 @@ def get_message(**kwargs):
     return message
 
 def check_data_validity(data):
-    expected_response_1 = "3885,1,1,1,2,1"
-    expected_response_2 = "3885,1,2,,,"
-    if len(data) != 6:
+    valid = True
+    message = None
+
+    if len(data) == 3:
+        if data[2] != 2:
+            valid = False
+            message = get_message(valid=valid, data=data)
+
+    elif len(data) == 6:
+        if all(response == '' for response in data[3:]):
+            if data[2] != 2:
+                valid = False
+                message = get_message(valid=valid, data=data)
+
+    elif len(data) != 6:
         valid = False
-        message = "Error. Example 1: " + expected_response_1 + \
-                  " Example 2: " + expected_response_2
-    else:
-        valid = True
-        message = ''
+        message = get_message(valid=valid, data=data)
 
     return (valid, message)
 
