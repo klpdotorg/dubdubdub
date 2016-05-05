@@ -52,7 +52,7 @@ class SMSView(KLPAPIView):
         state.save()
 
         data = data.split(',')
-        valid, message = check_data_validity(data)
+        data, valid, message = check_data_validity(data)
         if not valid:
             return Response(
                 message,
