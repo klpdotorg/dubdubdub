@@ -68,7 +68,7 @@ def check_data_validity(data):
             # to maintain the consistency of the length of the data list to
             # always remain 6 for every valid sms.
             for i in range(0, 3):
-                data.append(2)
+                data.append('2')
 
     elif len(data) == 6:
         if all(response == '' for response in data[3:]):
