@@ -30,10 +30,9 @@ def get_message(**kwargs):
         expected_response_3 = "3885,1,2"
 
         message = "Error. Your response: " + data + \
-                  "Expected response: " + expected_response_1 + \
-                  "OR: " + expected_response_2 + \
-                  "OR: " + expected_response_3 + \
-                  "."
+                  " Expected response: " + expected_response_1 + \
+                  " OR: " + expected_response_2 + \
+                  " OR: " + expected_response_3
 
     elif kwargs['no_school_id']:
         message = "School ID not entered."
