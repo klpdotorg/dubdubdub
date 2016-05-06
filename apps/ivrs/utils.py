@@ -19,13 +19,13 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
-    if kwargs['valid']:
+    if kwargs.get('valid', False):
         date = str(kwargs['date'])
         data = str(kwargs['data'])
         message = "Response accepted. Your message was: " + data + \
                   " received at: " + date
 
-    elif not kwargs['valid']:
+    elif not kwargs.get('valid', True):
         data = str(kwargs['data'])
         expected_response_1 = "3885,1,1,1,2,1"
         expected_response_2 = "3885,1,2,,,"
@@ -36,20 +36,20 @@ def get_message(**kwargs):
                   " OR " + expected_response_2 + \
                   " OR " + expected_response_3
 
-    elif kwargs['no_school_id']:
+    elif kwargs.get('no_school_id', False):
         message = "School ID not entered."
 
-    elif kwargs['invalid_school_id']:
+    elif kwargs.get('invalid_school_id', False):
         school_id = str(kwargs['school_id'])
-        message = "School ID " + school_id + "not found."
+        message = "School ID " + school_id + " not found."
 
-    elif kwargs['not_primary_school']:
+    elif kwargs.get('not_primary_school', False):
         message = "Please enter Primary School ID."
 
-    elif kwargs['not_pre_school']:
+    elif kwargs.get('not_pre_school', False):
         message = "Please enter PreSchool ID."
 
-    elif kwargs['error_question_number']:
+    elif kwargs.get('error_question_number', False):
         question_number = str(kwargs['error_question_number'])
         message = "Error at que.no: " + question_number + "."
 
@@ -187,8 +187,8 @@ def verify_answer(session_id, question_number, response, ivrs_type):
             if question.question_type.name == 'checkbox' and response in accepted_answers:
                 if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
-                    # open?" and "Class visited". Since "Class visited accepts answers from
-                    # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
+                    # open?" and "Class visited". Since "Class visited" accepts answers from
+                    # 1 to 8, we can't cast "1" and "2" to "yes" and "no". The answer to
                     # whether the school was open or not is handled in the save_answer
                     # function within utils.py
                     response = response
