@@ -51,6 +51,7 @@ class SMSView(KLPAPIView):
         state.answers.append('IGNORED_INDEX')
         state.save()
 
+        original_data = data # Used in the reply sms.
         data = data.split(',')
         data, valid, message = check_data_validity(data)
         if not valid:
@@ -80,6 +81,8 @@ class SMSView(KLPAPIView):
             else:
                 # question_number starts from 0, and hence we need to add 1
                 # to it in order to get the correct sequence of questions.
+                # question_number corresponds to questiongroupquestions__sequence
+                # while querying for the corresponding Question.
                 state, status_code, message = verify_answer(
                     session_id, question_number+1, response, ivrs_type,
                 )
@@ -92,7 +95,7 @@ class SMSView(KLPAPIView):
                         content_type=content_type
                     )
         else:
-            message = get_message(valid=True, data=data)
+            message = get_message(valid=True, data=original_data)
 
         return Response(
             message,
