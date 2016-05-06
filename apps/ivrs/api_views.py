@@ -53,7 +53,7 @@ class SMSView(KLPAPIView):
 
         original_data = data # Used in the reply sms.
         data = data.split(',')
-        data, valid, message = check_data_validity(data)
+        data, valid, message = check_data_validity(original_data, data)
         if not valid:
             return Response(
                 message,

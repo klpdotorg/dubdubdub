@@ -32,9 +32,9 @@ def get_message(**kwargs):
         expected_response_3 = "3885,1,2"
 
         message = "Error. Your response: " + data + \
-                  " Expected response: " + expected_response_1 + \
-                  " OR: " + expected_response_2 + \
-                  " OR: " + expected_response_3
+                  ". Expected response: " + expected_response_1 + \
+                  " OR " + expected_response_2 + \
+                  " OR " + expected_response_3
 
     elif kwargs['no_school_id']:
         message = "School ID not entered."
@@ -55,14 +55,14 @@ def get_message(**kwargs):
 
     return message
 
-def check_data_validity(data):
+def check_data_validity(original_data, data):
     valid = True
     message = None
 
     if len(data) == 3:
         if data[2] != '2':
             valid = False
-            message = get_message(valid=valid, data=data)
+            message = get_message(valid=valid, data=original_data)
         else:
             # If the answer to 2nd question is "2" (which means "No"), then
             # We manually populate the rest of the answers as "2". This is
@@ -75,7 +75,7 @@ def check_data_validity(data):
         if all(response == '' for response in data[3:]):
             if data[2] != '2':
                 valid = False
-                message = get_message(valid=valid, data=data)
+                message = get_message(valid=valid, data=original_data)
             else:
                 # If the answer to 2nd question is "2" (which means "No"), then
                 # We manually populate the rest of the answers as "2". This is
@@ -85,11 +85,11 @@ def check_data_validity(data):
         elif any(response == '' for response in data):
             # Responses like 3885,1,2,1,,2 are not accepted.
             valid = False
-            message = get_message(valid=valid, data=data)
+            message = get_message(valid=valid, data=original_data)
 
     elif len(data) != 6:
         valid = False
-        message = get_message(valid=valid, data=data)
+        message = get_message(valid=valid, data=original_data)
 
     return (data, valid, message)
 
