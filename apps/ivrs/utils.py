@@ -59,7 +59,7 @@ def check_data_validity(data):
     message = None
 
     if len(data) == 3:
-        if data[2] != 2:
+        if data[2] != '2':
             valid = False
             message = get_message(valid=valid, data=data)
         else:
@@ -72,7 +72,7 @@ def check_data_validity(data):
 
     elif len(data) == 6:
         if all(response == '' for response in data[3:]):
-            if data[2] != 2:
+            if data[2] != '2':
                 valid = False
                 message = get_message(valid=valid, data=data)
             else:
