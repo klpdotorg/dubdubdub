@@ -20,8 +20,10 @@ GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
     if kwargs['valid']:
+        date = str(kwargs['date'])
         data = str(kwargs['data'])
-        message = "Response accepted. Your message was: " + data + "."
+        message = "Response accepted. Your message was: " + data + \
+                  " received at: " + date
 
     elif not kwargs['valid']:
         data = str(kwargs['data'])

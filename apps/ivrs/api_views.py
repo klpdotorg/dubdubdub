@@ -95,7 +95,11 @@ class SMSView(KLPAPIView):
                         content_type=content_type
                     )
         else:
-            message = get_message(valid=True, data=original_data)
+            message = get_message(
+                valid=True,
+                date=date,
+                data=original_data
+            )
 
         return Response(
             message,
