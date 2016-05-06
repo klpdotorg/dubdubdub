@@ -84,7 +84,11 @@ class SMSView(KLPAPIView):
                 # question_number corresponds to questiongroupquestions__sequence
                 # while querying for the corresponding Question.
                 state, status_code, message = verify_answer(
-                    session_id, question_number+1, response, ivrs_type,
+                    session_id,
+                    question_number+1,
+                    response,
+                    ivrs_type,
+                    original_data=original_data
                 )
                 if status_code != status.HTTP_200_OK:
                     # If we find any of the answers are corrupt, we return

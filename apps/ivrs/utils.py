@@ -50,8 +50,10 @@ def get_message(**kwargs):
         message = "Please enter PreSchool ID."
 
     elif kwargs.get('error_question_number', False):
+        data = str(kwargs['original_data'])
         question_number = str(kwargs['error_question_number'])
-        message = "Error at que.no: " + question_number + "."
+        message = "Error at que.no: " + question_number + "." + \
+                  " Your response was " + data
 
     return message
 
@@ -170,7 +172,7 @@ def check_school(state, school_id, ivrs_type):
     return (state, status_code, message)
 
 
-def verify_answer(session_id, question_number, response, ivrs_type):
+def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
     if State.objects.filter(session_id=session_id).exists():
         state = State.objects.get(session_id=session_id)
 
@@ -206,7 +208,10 @@ def verify_answer(session_id, question_number, response, ivrs_type):
         status_code = status.HTTP_404_NOT_FOUND
 
     if status_code == status.HTTP_404_NOT_FOUND:
-        message = get_message(error_question_number=question_number)
+        message = get_message(
+            error_question_number=question_number,
+            original_data=original_data
+        )
 
     return (state, status_code, message)
 
