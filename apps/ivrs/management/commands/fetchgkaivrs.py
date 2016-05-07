@@ -23,6 +23,8 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         question_group_version_dict = {
+            # Corresponds to version numbers of the Questiongroups
+            # with source names 'ivrs' and 'sms' within stories app.
             'gka' : 2,
             'gka-new' : 4,
             'gka-v3' : 5,
@@ -38,6 +40,11 @@ class Command(BaseCommand):
         valid_count = 0 # For posting daily notifications to slack.
         invalid_count = 0
         # fifteen_minutes = datetime.now() - timedelta(minutes=15)
+
+        if ivrs_type == 'gka-sms':
+            source_name = 'sms'
+        else:
+            source_name = 'ivrs'
 
         ivrs_type_number_dict = {
             'gka' : GKA_SERVER,
@@ -67,7 +74,7 @@ class Command(BaseCommand):
                 )[0]
                 question_group = Questiongroup.objects.get(
                     version=version,
-                    source__name='ivrs'
+                    source__name=source_name
                 )
                 story = Story.objects.create(
                     school=school,
