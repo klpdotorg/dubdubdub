@@ -132,7 +132,7 @@ class Source(models.Model):
         db_table = 'stories_source'
 
 
-class Survey(TimestampedBasedModel):
+class Survey(TimestampedBaseModel):
     is_active = models.BooleanField(default=False)
     end_date = models.DateField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
