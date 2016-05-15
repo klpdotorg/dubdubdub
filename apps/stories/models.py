@@ -129,6 +129,22 @@ class Source(models.Model):
         db_table = 'stories_source'
 
 
+class Survey(TimestampedBasedModel):
+    is_active = models.BooleanField(default=False)
+    end_date = models.DateField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    name = models.CharField(max_length=150, blank=True, null=True)
+    partner = models.CharField(max_length=150, blank=True, null=True)
+    created_by = models.ForeignKey('users.User', blank=True, null=True)
+    school_type = models.ForeignKey(
+        'schools.BoundaryType', db_column='school_type', blank=True, null=True
+    )
+
+    def __unicode__(self):
+        return self.name
+
+
+
 class Story(TimestampedBaseModel):
     user = models.ForeignKey('users.User', blank=True, null=True)
     school = models.ForeignKey('schools.School')
