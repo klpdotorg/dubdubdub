@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel, TimestampedBaseModel
 from common.utils import send_templated_mail
+from users.models import Organization
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count
 from django.conf import settings
@@ -8,6 +9,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.sites.models import Site
 from django.utils import timezone
+
 
 class Answer(models.Model):
     story = models.ForeignKey('Story')
@@ -137,7 +139,7 @@ class Survey(TimestampedBaseModel):
     end_date = models.DateField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     name = models.CharField(max_length=150, blank=True, null=True)
-    partner = models.CharField(max_length=150, blank=True, null=True)
+    partner = models.ForeignKey(Organization, blank=True, null=True)
     created_by = models.ForeignKey('users.User', blank=True, null=True)
     school_type = models.ForeignKey(
         'schools.BoundaryType', db_column='school_type', blank=True, null=True
