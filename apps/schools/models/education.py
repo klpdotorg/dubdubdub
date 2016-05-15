@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from common.utils import cached_property
-from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
 from .partners import LibLevelAgg
@@ -218,6 +217,7 @@ class School(GeoBaseModel):
             return None
 
     def get_images(self):
+        from stories.models import StoryImage
         return [image.image.url for image in StoryImage.objects.filter(
             is_verified=True, story__is_verified=True, story__school=self
         )]
@@ -252,6 +252,7 @@ class School(GeoBaseModel):
         return facilities
 
     def get_questions(self):
+        from stories.models import Question
         questions = Question.objects.filter(
             school_type=self.schooldetails.type,
             is_active=True
