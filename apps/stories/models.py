@@ -135,7 +135,20 @@ class Source(models.Model):
 
 
 class Survey(TimestampedBaseModel):
-    is_active = models.BooleanField(default=False)
+    DRAFT_STATUS = 0
+    ACTIVE_STATUS = 1
+    ARCHIVED_STATUS = 2
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (ACTIVE_STATUS, 'Active'),
+        (ARCHIVED_STATUS, 'Archived'),
+    )
+
+    status = models.IntegerField(
+        choices=STATUS_CHOICES,
+        default=DRAFT_STATUS
+    )
     end_date = models.DateField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     name = models.CharField(max_length=150, blank=True, null=True)
