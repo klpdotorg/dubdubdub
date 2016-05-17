@@ -56,7 +56,6 @@ class Questiongroup(models.Model):
     source = models.ForeignKey('Source')
     end_date = models.DateField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
-    survey = models.ForeignKey('Survey', blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
     questions = models.ManyToManyField(
         'Question',
