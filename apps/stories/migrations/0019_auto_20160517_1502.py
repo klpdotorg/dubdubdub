@@ -31,4 +31,5 @@ class Migration(migrations.Migration):
             field=models.CharField(max_length=150),
             preserve_default=False,
         ),
+        migrations.RunSQL('ALTER TABLE stories_questiongroup DROP COLUMN survey_id'),
     ]
