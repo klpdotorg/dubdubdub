@@ -8,7 +8,6 @@ from django.contrib.gis.db import models
 from django.contrib.sites.models import Site
 from django.db.models.signals import post_save
 
-from schools.models import Partner
 from common.utils import send_templated_mail
 from common.models import BaseModel, GeoBaseModel, TimestampedBaseModel
 
@@ -159,11 +158,10 @@ class Survey(TimestampedBaseModel):
         choices=STATUS_CHOICES,
         default=DRAFT_STATUS
     )
-    end_date = models.DateField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
-    partner = models.ForeignKey(Partner, blank=True, null=True)
-    name = models.CharField(max_length=150, blank=True, null=True)
+    name = models.CharField(max_length=150)
+    group = models.OneToOneField(Questiongroup, blank=True, null=True)
     created_by = models.ForeignKey('users.User', blank=True, null=True)
+    partner = models.ForeignKey('schools.Partner', blank=True, null=True)
     school_type = models.ForeignKey(
         'schools.BoundaryType',
         db_column='school_type',
