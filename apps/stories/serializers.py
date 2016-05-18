@@ -2,8 +2,11 @@ from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
-from .models import (Question, Questiongroup, QuestionType,
-    QuestiongroupQuestions, Story, Answer, StoryImage)
+from .models import (
+    Question, Questiongroup, QuestionType,
+    QuestiongroupQuestions, Story, Answer,
+    StoryImage, Survey
+)
 
 
 class QuestiongroupSerializer(KLPSerializer):
@@ -14,6 +17,16 @@ class QuestiongroupSerializer(KLPSerializer):
         model = Questiongroup
         fields = (
             'id', 'version', 'source', 'start_date', 'end_date', 'name'
+        )
+
+
+class SurveySerializer(KLPSerializer):
+
+    class Meta:
+        model = Survey
+        fields = (
+            'id', 'status', 'name', 'group', 'created_by',
+            'partner', 'school_type'
         )
 
 
