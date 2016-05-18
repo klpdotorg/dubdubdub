@@ -36,18 +36,18 @@ from common.views import (
 from .models import (
     Question, Story, StoryImage,
     Answer, Questiongroup, UserType,
-    Source
+    Source, Survey
 )
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
-    QuestionSerializer
+    QuestionSerializer, SurveySerializer
 )
 
 
 class SurveysViewSet(KLPModelViewSet):
-    queryset = Questiongroup.objects.all()
-    serializer_class = QuestiongroupSerializer
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
 
 
 class SurveysQuestionsViewSet(KLPModelViewSet):
