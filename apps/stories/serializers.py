@@ -2,6 +2,8 @@ from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
+from schools.serializers import PartnerSerializer, BoundaryTypeSerializer
+from users.serializers import UserBasicSerializer
 from .models import (
     Question, Questiongroup, QuestionType,
     QuestiongroupQuestions, Story, Answer,
@@ -21,6 +23,11 @@ class QuestiongroupSerializer(KLPSerializer):
 
 
 class SurveySerializer(KLPSerializer):
+
+    group = QuestiongroupSerializer()
+    created_by = UserBasicSerializer()
+    partner = PartnerSerializer()
+    school_type = BoundaryTypeSerializer()
 
     class Meta:
         model = Survey
