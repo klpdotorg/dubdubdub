@@ -1,6 +1,8 @@
 'use strict';
 (function() {
     var utils;
+    var summaryData;
+    var detailsData;
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
@@ -16,18 +18,16 @@
         bid = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
 
-        var url = "reports/?report_name=demographics&report_type=" +repType+"&id="+bid+"&language="+lang ;
+        var url = "reports/summary/?id="+bid;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
+            summaryData = data;
             var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");
-            var detailsJSON= getDetailsData(data);
-            renderCategories(detailsJSON);
-            renderLanguage(detailsJSON);
-            var comparisonJSON = data["comparison"];
-            renderComparison(comparisonJSON);
-        });
+        })
 
+        getDetailsData(bid, lang, repType);
+        getComparisonData(bid, lang, repType);
     }
 
     function getSummaryData(data)
@@ -63,19 +63,39 @@
         $('#top-summary').html(topSummaryHTML);
     }
 
-    function getDetailsData(data)
+    function getDetailsData(bid, lang, repType)
     {
-        var detailsJson = {
-                "categories" : data["categories"],
-                "enrolment" : data["enrolment"],
-                "languages" : data["languages"],
-            };
-        return detailsJson;
+        var url = "reports/demographics/"+repType+"/details/?id="+bid+"&language="+lang;
+        var $xhr = klp.api.do(url);
+        $xhr.done(function(data) {
+            detailsData = data;
+            getComparisonData(bid, lang, repType);
+            renderCategories(data);
+            renderLanguage(data["languages"]);
+        });
     }
 
+    function getComparisonData(bid, lang, repType)
+    {
+        var url = "reports/demographics/"+repType+"/comparison/?id="+bid+"&language="+lang;
+        var $xhr = klp.api.do(url);
+        $xhr.done(function(data) {
+            data["comparison"]["year-wise"][0] = {
+                            "year": detailsData["report_info"]["year"],
+                             "enrol_upper": detailsData["enrolment"]["Class 5-8"]["student_count"],
+                             "enrol_lower": detailsData["enrolment"]["Class 1-4"]["student_count"],
+                             "student_count": summaryData["student_count"],
+                             "school_count": summaryData["school_count"],
+                             "school_perc": summaryData["school_perc"],
+                             "teacher_count": summaryData["teacher_count"],
+                             "ptr": summaryData["ptr"]
+            };
+            renderComparison(data["comparison"]);
+        });
+    }
 
     function renderCategories(data) {
-        var categories = data ["categories"];
+        var categories = data["categories"];
         var school_total = 0;
         for (var cat in categories) {
             categories[cat]["name"] = cat;
@@ -94,8 +114,7 @@
         $('#category-profile').html(categoryHTML);
     }
 
-    function renderLanguage(data) {
-        var languages = data["languages"];
+    function renderLanguage(languages) {
         var new_lang = {};
         var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU","OTHERS"];
         var moi_school_total = 0;

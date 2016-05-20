@@ -1,7 +1,7 @@
 import sys
 from rest_framework.response import Response
 from schools.models import ElectedrepMaster, Boundary, AcademicYear
-from .aggregations import BaseSchoolAggView
+from schools.api_views.aggregations import BaseSchoolAggView
 from stories.models import Story
 from stories.api_views import get_que_and_ans
 from common.views import KLPAPIView
@@ -11,16 +11,30 @@ from django.conf import settings
 from django.db.models import Count, Sum
 
 
-class ReportDetails(KLPAPIView, BaseSchoolAggView):
-
+class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView):
     '''
-        Returns report details
+        Returns report summary
     '''
-    boundaryInfo = {"boundary_info": {}, "school_count": {}, "teacher_count": 0,
-                    "gender": {}, "comparison": {"year-wise": {},
-                                                 "neighbours": {}}}
+    reportInfo = {"boundary_info": {}}
 
-    parentInfo = {}
+    def get_summary_data(self, boundary, boundaryData, active_schools,
+                         academic_year):
+        self.boundaryInfo["boundary_info"]["name"] = boundary.name
+        self.boundaryInfo["boundary_info"]["type"] = boundary.hierarchy.name
+        self.boundaryInfo["boundary_info"]["id"] = boundary.id
+        self.boundaryInfo["boundary_info"]["parent"] = {}
+        self.boundaryInfo["boundary_info"]["btype"] = boundary.type.id
+        self.boundaryInfo["boundary_info"]["dise"] = boundary.dise_slug
+        if boundary.get_admin_level() != 1:
+            self.boundaryInfo["boundary_info"]["parent"] = {
+                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
+
+
+class ReportBoundaryCounts(KLPAPIView, BaseSchoolAggView):
+    '''
+        Returns Report Counts
+    '''
+    reportInfo = {"school_count": {}, "teacher_count": 0, "gender": {}}
 
     def get_teachercount(self, active_schools, academic_year):
         teachers = active_schools.filter(
@@ -29,6 +43,37 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
             count=Count('studentgroup__teachers__id', distinct=True))
         numteachers = teachers["count"]
         return numteachers
+
+    def get_summary_data(self, boundary, boundaryData, active_schools,
+                         academic_year):
+        self.boundaryInfo["boundary_info"]["name"] = boundary.name
+        self.boundaryInfo["boundary_info"]["type"] = boundary.hierarchy.name
+        self.boundaryInfo["boundary_info"]["id"] = boundary.id
+        self.boundaryInfo["boundary_info"]["parent"] = {}
+        self.boundaryInfo["boundary_info"]["btype"] = boundary.type.id
+        self.boundaryInfo["boundary_info"]["dise"] = boundary.dise_slug
+        if boundary.get_admin_level() != 1:
+            self.boundaryInfo["boundary_info"]["parent"] = {
+                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
+        self.boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
+                                       "girls": boundaryData["num_girls"]}
+        self.boundaryInfo["school_count"] = boundaryData["num_schools"]
+        self.boundaryInfo["student_count"] = boundaryData["num_boys"] +\
+            boundaryData["num_girls"]
+        self.boundaryInfo["teacher_count"] =\
+            self.get_teachercount(active_schools, academic_year)
+
+
+
+
+class ReportDetails(KLPAPIView, BaseSchoolAggView):
+
+    '''
+        Returns report details
+    '''
+    boundaryInfo = {"comparison": {"year-wise": {}, "neighbours": {}}}
+
+    parentInfo = {}
 
     def get_enrolment(self, active_schools, academic_year):
         active_schools = active_schools.filter(
@@ -137,25 +182,6 @@ class ReportDetails(KLPAPIView, BaseSchoolAggView):
         comparisonData.append(prevPrevYearData)
 
         return comparisonData
-
-    def get_summary_data(self, boundary, boundaryData, active_schools,
-                         academic_year):
-        self.boundaryInfo["boundary_info"]["name"] = boundary.name
-        self.boundaryInfo["boundary_info"]["type"] = boundary.hierarchy.name
-        self.boundaryInfo["boundary_info"]["id"] = boundary.id
-        self.boundaryInfo["boundary_info"]["parent"] = {}
-        self.boundaryInfo["boundary_info"]["btype"] = boundary.type.id
-        self.boundaryInfo["boundary_info"]["dise"] = boundary.dise_slug
-        if boundary.get_admin_level() != 1:
-            self.boundaryInfo["boundary_info"]["parent"] = {
-                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
-        self.boundaryInfo["gender"] = {"boys": boundaryData["num_boys"],
-                                       "girls": boundaryData["num_girls"]}
-        self.boundaryInfo["school_count"] = boundaryData["num_schools"]
-        self.boundaryInfo["student_count"] = boundaryData["num_boys"] +\
-            boundaryData["num_girls"]
-        self.boundaryInfo["teacher_count"] =\
-            self.get_teachercount(active_schools, academic_year)
 
     def get_details_data(self, boundaryData, active_schools, academic_year):
         self.boundaryInfo["categories"] = {}
