@@ -1,3 +1,5 @@
+import time
+
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
@@ -24,17 +26,19 @@ class QuestiongroupSerializer(KLPSerializer):
 
 class SurveySerializer(KLPSerializer):
 
-    group = QuestiongroupSerializer()
-    created_by = UserBasicSerializer()
     partner = PartnerSerializer()
-    school_type = BoundaryTypeSerializer()
+    created_at = serializers.SerializerMethodField('get_created_at')
 
     class Meta:
         model = Survey
         fields = (
-            'id', 'status', 'name', 'group', 'created_by',
-            'partner', 'school_type'
+            'id', 'name', 'partner', 'created_at'
         )
+
+    def get_created_at(self, obj):
+        created_at = obj.created_at
+        created_at_epoch = int(time.mktime(created_at.timetuple()))
+        return created_at_epoch
 
 
 class QuestionSerializer(KLPSerializer):
