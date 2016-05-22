@@ -143,30 +143,8 @@ class Source(models.Model):
 
 
 class Survey(TimestampedBaseModel):
-    DRAFT_STATUS = 0
-    ACTIVE_STATUS = 1
-    ARCHIVED_STATUS = 2
-
-    STATUS_CHOICES = (
-        (DRAFT_STATUS, 'Draft'),
-        (ACTIVE_STATUS, 'Active'),
-        (ARCHIVED_STATUS, 'Archived'),
-    )
-
-    status = models.IntegerField(
-        choices=STATUS_CHOICES,
-        default=DRAFT_STATUS
-    )
     name = models.CharField(max_length=150)
-    group = models.OneToOneField(Questiongroup, blank=True, null=True)
-    created_by = models.ForeignKey('users.User', blank=True, null=True)
     partner = models.ForeignKey('schools.Partner', blank=True, null=True)
-    school_type = models.ForeignKey(
-        'schools.BoundaryType',
-        db_column='school_type',
-        blank=True,
-        null=True
-    )
 
     def __unicode__(self):
         return self.name
