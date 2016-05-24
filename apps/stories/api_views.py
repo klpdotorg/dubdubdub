@@ -74,13 +74,11 @@ class QuestionsViewSet(KLPModelViewSet):
     def get_queryset(self):
         queryset = Question.objects.all()
 
-        survey_id = self.kwargs.get('survey_pk', None)
+        questiongroup_id = self.kwargs.get('group_pk', None)
         question_id = self.kwargs.get('pk', None)
 
-        survey = Survey.objects.get(id=survey_id)
-
-        if survey_id:
-            queryset = queryset.filter(questiongroup=survey.group)
+        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+        queryset = queryset.filter(questiongroup=questiongroup)
 
         if question_id:
             queryset = queryset.filter(id=question_id)
