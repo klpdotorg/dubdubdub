@@ -50,6 +50,11 @@ class SurveysViewSet(KLPModelViewSet):
     serializer_class = SurveySerializer
 
 
+class QuestiongroupsViewSet(KLPModelViewSet):
+    queryset = Questiongroup.objects.all()
+    serializer_class = QuestiongroupSerializer
+
+
 class QuestionsViewSet(KLPModelViewSet):
     serializer_class = QuestionSerializer
 
