@@ -50,7 +50,7 @@ class SurveysViewSet(KLPModelViewSet):
     serializer_class = SurveySerializer
 
 
-class SurveysQuestionsViewSet(KLPModelViewSet):
+class QuestionsViewSet(KLPModelViewSet):
     serializer_class = QuestionSerializer
 
     def get_queryset(self):
