@@ -13,17 +13,6 @@ from .models import (
 )
 
 
-class QuestiongroupSerializer(KLPSerializer):
-
-    source = serializers.CharField(source='source.name')
-
-    class Meta:
-        model = Questiongroup
-        fields = (
-            'id', 'version', 'source', 'start_date', 'end_date', 'name'
-        )
-
-
 class SurveySerializer(KLPSerializer):
 
     partner = PartnerSerializer()
@@ -33,6 +22,42 @@ class SurveySerializer(KLPSerializer):
         fields = (
             'id', 'name', 'partner',
         )
+
+
+class QuestiongroupSerializer(KLPSerializer):
+
+    source = serializers.CharField(source='source.name')
+    start_date = serializers.SerializerMethodField('get_start_date')
+    end_date = serializers.SerializerMethodField('get_end_date')
+    survey = SurveySerializer()
+    created_by = UserBasicSerializer()
+    school_type = BoundaryTypeSerializer()
+    created_at = serializers.SerializerMethodField('get_created_at')
+    updated_at = serializers.SerializerMethodField('get_updated_at')
+
+    class Meta:
+        model = Questiongroup
+        fields = (
+            'id', 'status', 'version', 'source',
+            'start_date', 'end_date', 'survey',
+            'name', 'created_by', 'school_type',
+            'created_at', 'updated_at'
+        )
+
+    def get_created_at(self, obj):
+        return make_epoch(obj.created_at)
+
+    def get_updated_at(self, obj):
+        return make_epoch(obj.updated_at)
+
+    def get_start_date(self, obj):
+        return make_epoch(obj.start_date)
+
+    def get_end_date(self, obj):
+        return make_epoch(obj.end_date)
+
+    def make_epoch(date):
+        return int(time.mktime(date.timetuple()))
 
 
 class QuestionSerializer(KLPSerializer):
