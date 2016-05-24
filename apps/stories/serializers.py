@@ -45,19 +45,22 @@ class QuestiongroupSerializer(KLPSerializer):
         )
 
     def get_created_at(self, obj):
-        return make_epoch(obj.created_at)
+        return self.make_epoch(obj.created_at)
 
     def get_updated_at(self, obj):
-        return make_epoch(obj.updated_at)
+        return self.make_epoch(obj.updated_at)
 
     def get_start_date(self, obj):
-        return make_epoch(obj.start_date)
+        return self.make_epoch(obj.start_date)
 
     def get_end_date(self, obj):
-        return make_epoch(obj.end_date)
+        return self.make_epoch(obj.end_date)
 
-    def make_epoch(date):
-        return int(time.mktime(date.timetuple()))
+    def make_epoch(self, date):
+        if date:
+            return int(time.mktime(date.timetuple()))
+        else:
+            return date
 
 
 class QuestionSerializer(KLPSerializer):
