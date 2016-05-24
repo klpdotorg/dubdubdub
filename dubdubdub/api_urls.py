@@ -33,7 +33,7 @@ from users.api_views import (
 from stories.api_views import (
     StoryQuestionsView, StoriesView, StoryInfoView,
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
-    SurveysViewSet, QuestionsViewSet
+    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet
 )
 
 ListCreateMapper = {
