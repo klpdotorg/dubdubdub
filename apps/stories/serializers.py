@@ -27,18 +27,12 @@ class QuestiongroupSerializer(KLPSerializer):
 class SurveySerializer(KLPSerializer):
 
     partner = PartnerSerializer()
-    created_at = serializers.SerializerMethodField('get_created_at')
 
     class Meta:
         model = Survey
         fields = (
-            'id', 'name', 'partner', 'created_at'
+            'id', 'name', 'partner',
         )
-
-    def get_created_at(self, obj):
-        created_at = obj.created_at
-        created_at_epoch = int(time.mktime(created_at.timetuple()))
-        return created_at_epoch
 
 
 class QuestionSerializer(KLPSerializer):
