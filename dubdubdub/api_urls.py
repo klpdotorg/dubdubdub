@@ -156,6 +156,16 @@ urlpatterns = patterns(
         SurveysViewSet.as_view(RetrieveUpdateDestroyMapper),
         name="api_surveys_detail"
     ),
+     url(
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/$',
+        SurveysQuestionsViewSet.as_view(ListCreateMapper),
+        name="api_surveys_questiongroups"
+    ),
+    url(
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/(?P<pk>[0-9]+)/$',
+        SurveysQuestionsViewSet.as_view(RetrieveUpdateDestroyMapper),
+        name="api_surveys_questiongroups_detail"
+    ),
     url(
         r'^surveys/(?P<survey_pk>[0-9]+)/questions/$',
         SurveysQuestionsViewSet.as_view(ListCreateMapper),
