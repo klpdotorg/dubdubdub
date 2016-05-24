@@ -51,8 +51,21 @@ class SurveysViewSet(KLPModelViewSet):
 
 
 class QuestiongroupsViewSet(KLPModelViewSet):
-    queryset = Questiongroup.objects.all()
     serializer_class = QuestiongroupSerializer
+
+    def get_queryset(self):
+        queryset = Questiongroup.objects.all()
+
+        survey_id = self.kwargs.get('survey_pk', None)
+        questiongroup_id = self.kwargs.get('pk', None)
+
+        survey = Survey.objects.get(id=survey_id)
+        queryset = queryset.filter(survey=survey)
+
+        if questiongroup_id:
+            queryset = queryset.filter(id=questiongroup_id)
+
+        return queryset
 
 
 class QuestionsViewSet(KLPModelViewSet):
