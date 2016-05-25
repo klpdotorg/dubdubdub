@@ -59,8 +59,9 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         survey_id = self.kwargs.get('survey_pk', None)
         questiongroup_id = self.kwargs.get('pk', None)
 
-        survey = Survey.objects.get(id=survey_id)
-        queryset = queryset.filter(survey=survey)
+        if survey_id:
+            survey = Survey.objects.get(id=survey_id)
+            queryset = queryset.filter(survey=survey)
 
         if questiongroup_id:
             queryset = queryset.filter(id=questiongroup_id)
@@ -77,8 +78,9 @@ class QuestionsViewSet(KLPModelViewSet):
         questiongroup_id = self.kwargs.get('group_pk', None)
         question_id = self.kwargs.get('pk', None)
 
-        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
-        queryset = queryset.filter(questiongroup=questiongroup)
+        if questiongroup_id:
+            questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+            queryset = queryset.filter(questiongroup=questiongroup)
 
         if question_id:
             queryset = queryset.filter(id=question_id)
