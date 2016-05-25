@@ -146,6 +146,15 @@ urlpatterns = patterns(
     url(r'^stories/volume/$', StoryVolumeView.as_view(),
         name="api_stories_info"),
 
+    url(r'^questiongroups/$',
+        QuestiongroupsViewSet.as_view({'get' : 'list'}),
+        name="api_questiongroups"
+    ),
+    url(r'^questions/$',
+        QuestionsViewSet.as_view({'get' : 'list'}),
+        name="api_questions"
+    ),
+
     # Surveys endpoints
     url(
         r'^surveys/$',
