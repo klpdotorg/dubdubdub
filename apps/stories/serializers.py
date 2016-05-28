@@ -67,12 +67,14 @@ class QuestionSerializer(KLPSerializer):
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
     school_type = BoundaryTypeSerializer()
+    questiongroup_set = QuestiongroupSerializer(read_only=True, many=True)
 
     class Meta:
         model = Question
         fields = (
             'id', 'question_type', 'text', 'qid',
             'options', 'display_text', 'key', 'school_type',
+            'questiongroup_set',
         )
 
     def get_options(self, obj):
