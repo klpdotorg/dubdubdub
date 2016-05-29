@@ -18,7 +18,7 @@ newrelic==2.32.0.28
 djangorestframework==2.3.14
 pygments==1.6
 markdown==2.4.1
-django-filter==0.13.0
+django-filter==0.10.0
 
 #https://pypi.python.org/pypi/drf-compound-fields/0.2.0
 drf-compound-fields==0.2.1
