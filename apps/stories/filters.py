@@ -11,7 +11,6 @@ class QuestionFilter(django_filters.FilterSet):
         fields = ['text', 'type', 'source']
 
     def source_filter(self, queryset, value):
-        print value
         return queryset.filter(
             questiongroup__source__name=value
         )
