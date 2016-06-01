@@ -41,7 +41,7 @@ from .models import (
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
-    QuestionSerializer, SurveySerializer
+    QuestionSerializer, SurveySerializer, SourceSerializer
 )
 
 from. filters import (
@@ -91,6 +91,11 @@ class QuestionsViewSet(KLPModelViewSet):
             queryset = queryset.filter(id=question_id)
 
         return queryset
+
+
+class SourceListView(KLPListAPIView):
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer()
 
 
 class StoryInfoView(KLPAPIView):
