@@ -15,14 +15,16 @@ from .models import (
 
 class SurveySerializer(KLPSerializer):
 
-    partner = serializers.PrimaryKeyRelatedField(
-        queryset=Partner.objects.all()
+    partner = PartnerSerializer(read_only=True)
+    partner_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='partner'
         )
 
     class Meta:
         model = Survey
         fields = (
-            'id', 'name', 'partner',
+            'id', 'name', 'partner', 'partner_id'
         )
 
 
