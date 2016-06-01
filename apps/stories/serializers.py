@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
@@ -28,12 +29,20 @@ class SurveySerializer(KLPSerializer):
         )
 
 
-class TimestampField(serializers.Field):
+class TimestampField(serializers.DateTimeField):
     def to_native(self, value):
         if value:
             return int(time.mktime(value.timetuple()))
         else:
             return value
+
+    def from_native(self, value):
+        try:
+            return datetime.strptime(value,'%Y-%m-%dT%H:%M:%S')
+        except:
+            raise serializers.ValidationError(
+                'Date format should be: YYYY-MM-DDTHH:MM:SS'
+            )
 
 
 class QuestiongroupSerializer(KLPSerializer):
@@ -46,7 +55,7 @@ class QuestiongroupSerializer(KLPSerializer):
         write_only=True,
         source='source'
     )
-    start_date = TimestampField()
+    start_date = TimestampField(source='start_date')
     end_date = serializers.SerializerMethodField('get_end_date')
     survey = SurveySerializer()
     created_by = UserBasicSerializer()
