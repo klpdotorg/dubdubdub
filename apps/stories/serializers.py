@@ -9,7 +9,7 @@ from users.serializers import UserBasicSerializer
 from .models import (
     Question, Questiongroup, QuestionType,
     QuestiongroupQuestions, Story, Answer,
-    StoryImage, Survey
+    StoryImage, Survey, Source
 )
 
 
@@ -83,6 +83,11 @@ class QuestionSerializer(KLPSerializer):
 
     def get_options(self, obj):
         return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
+
+
+class SourceSerializer(KLPSerializer):
+    class Meta:
+        model = Source
 
 
 class SchoolQuestionsSerializer(KLPSerializer):
