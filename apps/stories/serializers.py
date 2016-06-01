@@ -28,10 +28,25 @@ class SurveySerializer(KLPSerializer):
         )
 
 
+class TimestampField(serializers.Field):
+    def to_native(self, value):
+        if value:
+            return int(time.mktime(value.timetuple()))
+        else:
+            return value
+
+
 class QuestiongroupSerializer(KLPSerializer):
 
-    source = serializers.CharField(source='source.name')
-    start_date = serializers.SerializerMethodField('get_start_date')
+    source = serializers.CharField(
+        read_only=True,
+        source='source.name'
+    )
+    source_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='source'
+    )
+    start_date = TimestampField()
     end_date = serializers.SerializerMethodField('get_end_date')
     survey = SurveySerializer()
     created_by = UserBasicSerializer()
