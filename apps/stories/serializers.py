@@ -16,6 +16,7 @@ from .models import (
 class SurveySerializer(KLPSerializer):
 
     partner = serializers.PrimaryKeyRelatedField(
+        write_only=True,
         queryset=Partner.objects.all()
         )
 
