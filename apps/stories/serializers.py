@@ -61,9 +61,23 @@ class QuestiongroupSerializer(KLPSerializer):
     created_at = TimestampField(source='created_at')
     updated_at = TimestampField(source='updated_at')
 
-    survey = SurveySerializer()
-    created_by = UserBasicSerializer()
-    school_type = BoundaryTypeSerializer()
+    survey = SurveySerializer(read_only=True)
+    survey_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='survey'
+    )
+
+    created_by = UserBasicSerializer(read_only=True)
+    created_by_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='user'
+    )
+
+    school_type = BoundaryTypeSerializer(read_only=True)
+    school_type_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='school_type'
+    )
 
     class Meta:
         model = Questiongroup
