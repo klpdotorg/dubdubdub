@@ -55,13 +55,15 @@ class QuestiongroupSerializer(KLPSerializer):
         write_only=True,
         source='source'
     )
+
+    end_date = TimestampField(source='end_date')
     start_date = TimestampField(source='start_date')
-    end_date = serializers.SerializerMethodField('get_end_date')
+    created_at = TimestampField(source='created_at')
+    updated_at = TimestampField(source='updated_at')
+
     survey = SurveySerializer()
     created_by = UserBasicSerializer()
     school_type = BoundaryTypeSerializer()
-    created_at = serializers.SerializerMethodField('get_created_at')
-    updated_at = serializers.SerializerMethodField('get_updated_at')
 
     class Meta:
         model = Questiongroup
