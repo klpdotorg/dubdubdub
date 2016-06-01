@@ -3,7 +3,7 @@ import time
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
+    BoundaryType, Assembly, Parliament, Partner, Postal, PaisaData, MdmAgg)
 from schools.serializers import PartnerSerializer, BoundaryTypeSerializer
 from users.serializers import UserBasicSerializer
 from .models import (
@@ -15,7 +15,9 @@ from .models import (
 
 class SurveySerializer(KLPSerializer):
 
-    partner = PartnerSerializer()
+    partner = serializers.PrimaryKeyRelatedField(
+        queryset=Partner.objects.all()
+        )
 
     class Meta:
         model = Survey
