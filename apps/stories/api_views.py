@@ -95,7 +95,7 @@ class QuestionsViewSet(KLPModelViewSet):
 
 class SourceListView(KLPListAPIView):
     queryset = Source.objects.all()
-    serializer_class = SourceSerializer()
+    serializer_class = SourceSerializer
 
 
 class StoryInfoView(KLPAPIView):
