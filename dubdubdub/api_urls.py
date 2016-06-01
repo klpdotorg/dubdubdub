@@ -31,7 +31,7 @@ from users.api_views import (
 )
 
 from stories.api_views import (
-    StoryQuestionsView, StoriesView, StoryInfoView,
+    StoryQuestionsView, StoriesView, StoryInfoView, SourceListView,
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
     SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet
 )
@@ -153,6 +153,10 @@ urlpatterns = patterns(
     url(r'^questions/$',
         QuestionsViewSet.as_view({'get' : 'list'}),
         name="api_questions"
+    ),
+    url(r'sources/$',
+        SourceListView.as_view(),
+        name="api_sources"
     ),
 
     # Surveys endpoints
