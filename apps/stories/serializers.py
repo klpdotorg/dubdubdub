@@ -69,12 +69,14 @@ class QuestiongroupSerializer(KLPSerializer):
 
     created_by = UserBasicSerializer(read_only=True)
     created_by_id = serializers.PrimaryKeyRelatedField(
+        required=False,
         write_only=True,
-        source='user'
+        source='created_by'
     )
 
     school_type = BoundaryTypeSerializer(read_only=True)
     school_type_id = serializers.PrimaryKeyRelatedField(
+        required=False,
         write_only=True,
         source='school_type'
     )
@@ -83,8 +85,10 @@ class QuestiongroupSerializer(KLPSerializer):
         model = Questiongroup
         fields = (
             'id', 'status', 'version', 'source',
-            'start_date', 'end_date', 'survey',
-            'name', 'created_by', 'school_type',
+            'source_id', 'start_date', 'end_date',
+            'survey', 'survey_id', 'name',
+            'created_by', 'created_by_id',
+            'school_type', 'school_type_id',
             'created_at', 'updated_at'
         )
 
