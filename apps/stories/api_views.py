@@ -1,3 +1,4 @@
+import ast
 import random
 import calendar
 import datetime
@@ -7,6 +8,7 @@ from base64 import b64decode
 from collections import Counter, OrderedDict
 from dateutil.parser import parse as date_parse
 
+from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -71,6 +73,23 @@ class QuestiongroupsViewSet(KLPModelViewSet):
             queryset = queryset.filter(id=questiongroup_id)
 
         return queryset
+
+    def create(self, request, *args, **kwargs):
+        question_ids = request.DATA.get('question_ids', None)
+        if question_ids:
+            question_ids = ast.literal_eval(question_ids)
+
+        print type(question_ids)
+        print question_ids
+
+        serializer = self.get_serializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class QuestionsViewSet(KLPModelViewSet):
