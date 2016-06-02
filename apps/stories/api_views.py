@@ -79,9 +79,6 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
 
-        print type(question_ids)
-        print question_ids
-
         serializer = self.get_serializer(data=request.DATA)
         if serializer.is_valid():
             serializer.save()
