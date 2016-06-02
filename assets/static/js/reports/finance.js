@@ -1,27 +1,64 @@
 'use strict';
+var BOUNDARY_TYPE="boundary";
+var KLP_ID="8877";
+var LANGUAGE="kannada";
+
 (function() {
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
+        fetchReportDetails();
         klp.router.start();
+    };
+
+    function fetchReportDetails()
+    {
+        var params = klp.router.getHash().queryParams;
+        var url = "reports/?report_name=finance&report_type=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
+        var $xhr = klp.api.do(url, params);
+        $xhr.done(function(data) {
+            var summaryJSON= getSummaryData(data);
+            renderSummary(summaryJSON,"Schools");
+            fetchSchoolData(data);
+        });
+
+    }
+
+    function getSummaryData(data){
         var summaryJSON = {
-            "boundary"  : {
-                "name"  : "Bangalore Central",
-                "type"  : "MP Constituency",
-                "id"    : 1234,
-                "code"  : 25,
-                "elected_rep" : "PC Mohan",
-                "elected_party" : "INC"
-            },
-            "school_count" : 314,
-            "teacher_count" : 2000,
-            "gender" : {
-                "boys": 23118,
-                "girls": 24027
+            "boundary": data["boundary_info"],
+            "school_count" : data["school_count"],
+            "teacher_count" : data["teacher_count"],
+            "gender" : data["gender"]
+        };
+        return summaryJSON;
+    }
+
+    function fetchSchoolData(data)
+    {
+        var acadYear = data["boundary_info"]["academic_year"].replace(/20/g, '');
+        klp.dise_api.queryBoundaryName(data["boundary_info"]["name"], data["boundary_info"]["type"],acadYear).done(function(diseData) {
+            if( diseData.length != 0 )
+            {
+                var boundary = diseData[0].children[0];
+                klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
+                    console.log('diseData', diseData);
+                    renderGrantSummary(diseData);
+                })
+                .fail(function(err) {
+                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                });
             }
-        }
-        renderSummary(summaryJSON,"Schools");
-        loadData(null, null);
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+        });
+        
+        getNeighbourData(data, acadYear);
+        
+        var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"]};
+        getMultipleData(data["comparison"]["year-wise"], passYearData, getLoopData, renderComparison,"acadYear");
+        
     }
 
     function loadData(schoolType, params) {
