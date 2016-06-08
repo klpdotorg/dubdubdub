@@ -1,14 +1,14 @@
 from rest_framework.response import Response
 from schools.models import Boundary, AcademicYear
 from schools.api_views.aggregations import BaseSchoolAggView
-from . import ReportBoundaryCounts
+from . import BaseBoundaryReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
 from django.db.models import Sum
 
 
-class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, ReportBoundaryCounts):
+class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
     reportInfo = {}
 
     def get_details_data(self, boundaryData, active_schools, academic_year):
@@ -58,7 +58,7 @@ class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, ReportBou
         return Response(self.reportInfo)
 
 
-class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, ReportBoundaryCounts):
+class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
 
     '''
         Returns report details

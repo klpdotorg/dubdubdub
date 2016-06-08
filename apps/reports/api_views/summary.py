@@ -1,14 +1,14 @@
 from rest_framework.response import Response
-from schools.models import ElectedrepMaster, Boundary, AcademicYear
+from schools.models import Boundary, AcademicYear
 from schools.api_views.aggregations import BaseSchoolAggView
-from . import ReportBoundaryCounts
+from . import BaseBoundaryReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from rest_framework.exceptions import ParseError
 from django.conf import settings
 
 
-class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, ReportBoundaryCounts):
+class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
     '''
         Returns report summary
     '''
@@ -47,18 +47,6 @@ class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, ReportBoundaryCounts)
                 self.reportInfo["school_count"] *
                 100 / float(self.parentInfo["schoolcount"]), 2)
 
-    def get_boundary_summary_data(self, boundary, boundaryData, active_schools,
-                                  academic_year):
-        self.reportInfo["boundary_info"]["name"] = boundary.name
-        self.reportInfo["boundary_info"]["type"] = boundary.hierarchy.name
-        self.reportInfo["boundary_info"]["id"] = boundary.id
-        self.reportInfo["boundary_info"]["parent"] = {}
-        self.reportInfo["boundary_info"]["btype"] = boundary.type.id
-        self.reportInfo["boundary_info"]["dise"] = boundary.dise_slug
-        if boundary.get_admin_level() != 1:
-            self.reportInfo["boundary_info"]["parent"] = {
-                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
-
     def get_boundary_data(self, boundaryid):
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
         try:
@@ -77,7 +65,7 @@ class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, ReportBoundaryCounts)
         boundaryData = self.get_aggregations(active_schools, academic_year)
         boundaryData = self.check_values(boundaryData)
         self.parentInfo = self.get_parent_info(boundary)
-        self.get_boundary_summary_data(boundary, boundaryData, active_schools, academic_year)
+        self.get_boundary_summary_data(boundary, self.reportInfo)
         self.get_counts(boundaryData, active_schools, academic_year)
 
     def get(self, request):

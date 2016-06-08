@@ -14,7 +14,7 @@ var LANGUAGE="kannada";
     function fetchReportDetails()
     {
         var params = klp.router.getHash().queryParams;
-        var url = "reports/?report_name=finance&report_type=" +BOUNDARY_TYPE+"&id="+KLP_ID+"&language="+LANGUAGE ;
+        var url = "reports/finance/"+BOUNDARY_TYPE+"/comparison/?language="+LANGUAGE+"&id="+KLP_ID;
         var $xhr = klp.api.do(url, params);
         $xhr.done(function(data) {
             var summaryJSON= getSummaryData(data);

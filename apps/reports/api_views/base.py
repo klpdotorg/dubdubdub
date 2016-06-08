@@ -1,14 +1,24 @@
-from schools.models import Boundary
+from schools.models import Boundary, DiseInfo
 from django.db.models import Count, Sum
 from rest_framework.exceptions import ParseError
 import sys
 
 
-class ReportBoundaryCounts(object):
+class BaseBoundaryReport(object):
     '''
         Returns Report Counts
     '''
-    reportInfo = {"school_count": {}, "teacher_count": 0, "gender": {}}
+    reportInfo = {}
+
+    def get_dise_school_info(self, active_schools, academic_year):
+        dise_schools = DiseInfo.objects.filter(dise_code=active_schools.dise_slug, ac_year=academic_year)
+        agg = {
+            'num_schools': dise_schools.count(),
+            'num_boys': dise_schools.aggregate(num_boys=Sum('boys_count')).get('boys_count', 0),
+            'num_girls': dise_schools.aggregate(num_girls=Sum('girls_count')).get('girls_count', 0)
+        }
+        agg['num_students'] = agg['num_boys'] + agg['num_girls']
+        return agg
 
     def get_teachercount(self, active_schools, academic_year):
         teachers = active_schools.filter(
@@ -63,3 +73,15 @@ class ReportBoundaryCounts(object):
                 enrolmentdata["Class 5-8"]["student_count"] += data["num"]
 
         return enrolmentdata
+
+    def get_boundary_summary_data(self, boundary, reportData):
+        reportData["boundary_info"] = {}
+        reportData["boundary_info"]["name"] = boundary.name
+        reportData["boundary_info"]["type"] = boundary.hierarchy.name
+        reportData["boundary_info"]["id"] = boundary.id
+        reportData["boundary_info"]["parent"] = {}
+        reportData["boundary_info"]["btype"] = boundary.type.id
+        reportData["boundary_info"]["dise"] = boundary.dise_slug
+        if boundary.get_admin_level() != 1:
+            reportData["boundary_info"]["parent"] = {
+                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}

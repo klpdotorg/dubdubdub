@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from common.utils import cached_property
+from .partners import DiseInfo
 from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES
@@ -112,6 +113,11 @@ class Boundary(BaseModel):
         return School.objects.filter(
             Q(status=2),
             Q(schooldetails__admin1=self) | Q(schooldetails__admin2=self) | Q(schooldetails__admin3=self)
+        )
+
+    def dise_schools(self):
+        return DiseInfo.objects.filter(
+            Q(school__schooldetails__admin1=self) | Q(school__schooldetails__admin2=self) | Q(school__schooldetails__admin3=self)
         )
 
     class Meta:

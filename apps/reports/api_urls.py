@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 
 
 from api_views import (
-    DemographicsBoundaryReportDetails, ReportBoundarySummary, DemographicsBoundaryComparisonDetails
+    DemographicsBoundaryReportDetails, ReportBoundarySummary, DemographicsBoundaryComparisonDetails,
+    FinanceBoundaryComparisonDetails
 )
 
 urlpatterns = patterns(
@@ -15,5 +16,7 @@ urlpatterns = patterns(
     url(r'demographics/boundary/details/$',
         DemographicsBoundaryReportDetails.as_view(), name='api_reports_detail'),
     url(r'demographics/boundary/comparison/$',
-        DemographicsBoundaryComparisonDetails.as_view(), name='api_reports_detail')
+        DemographicsBoundaryComparisonDetails.as_view(), name='api_reports_detail'),
+ 	url(r'finance/boundary/comparison/$',
+        FinanceBoundaryComparisonDetails.as_view(), name='api_reports_detail')       
 )

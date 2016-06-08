@@ -1,5 +1,5 @@
 from .base import (
-	ReportBoundaryCounts
+	BaseBoundaryReport
 )
 from .summary import (
     ReportBoundarySummary
@@ -7,4 +7,7 @@ from .summary import (
 from .demographics import(
 	DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
 
+)
+from .finance import(
+	FinanceBoundaryComparisonDetails
 )
