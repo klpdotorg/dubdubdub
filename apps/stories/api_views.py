@@ -109,6 +109,9 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         if source:
             self.is_source_exists(survey_id, source)
+        else:
+            raise APIException("Please specify the source field")
+
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
             self.is_questiongroup_exists(survey_id, question_ids)
