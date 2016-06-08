@@ -78,7 +78,10 @@ class QuestiongroupsViewSet(KLPModelViewSet):
     def create(self, request, *args, **kwargs):
         question_ids = request.DATA.get('question_ids', None)
         if question_ids:
+            survey_id = kwargs.get('survey_pk', None)
             question_ids = ast.literal_eval(question_ids)
+        else:
+            raise APIException("Please select one or more questions")
 
         serializer = self.get_serializer(data=request.DATA)
         if serializer.is_valid():
