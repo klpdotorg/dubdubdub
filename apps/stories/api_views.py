@@ -75,7 +75,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         return queryset
 
-    def check_if_qg_exists(survey_id, question_ids):
+    def check_if_qg_exists(self, survey_id, question_ids):
         survey = Survey.objects.get(id=survey_id)
         questiongroups = survey.questiongroup_set.all()
         for questiongroup in questiongroups:
@@ -87,9 +87,9 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                 group_id = questiongroup.id
                 version = questiongroup.version
                 message = "Questiongroup already exists. Group ID: " + \
-                    group_id + \
+                    str(group_id) + \
                     " and Version: " + \
-                    version
+                    str(version)
                 raise APIException(message)
 
     def create(self, request, *args, **kwargs):
