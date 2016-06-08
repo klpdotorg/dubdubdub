@@ -47,7 +47,7 @@ from .serializers import (
 )
 
 from. filters import (
-    QuestionFilter
+    QuestionFilter, QuestiongroupFilter
 )
 
 
@@ -58,6 +58,7 @@ class SurveysViewSet(KLPModelViewSet):
 
 class QuestiongroupsViewSet(KLPModelViewSet):
     serializer_class = QuestiongroupSerializer
+    filter_class = QuestiongroupFilter
 
     def get_queryset(self):
         queryset = Questiongroup.objects.all()

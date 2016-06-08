@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import Question
+from .models import Question, Questiongroup
 
 class QuestionFilter(django_filters.FilterSet):
     source = django_filters.MethodFilter(action='source_filter')
@@ -19,3 +19,8 @@ class QuestionFilter(django_filters.FilterSet):
         return queryset.filter(
             question_type__name=value
         )
+
+class QuestiongroupFilter(django_filters.FilterSet):
+    class Meta:
+        model = Questiongroup
+        fields = ['status']
