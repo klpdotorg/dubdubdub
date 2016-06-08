@@ -7,6 +7,7 @@ from django.conf import settings
 
 from .models import State
 from .utils import (
+    get_message,
     get_question,
     save_answer,
     check_school,
@@ -50,8 +51,9 @@ class SMSView(KLPAPIView):
         state.answers.append('IGNORED_INDEX')
         state.save()
 
+        original_data = data # Used in the reply sms.
         data = data.split(',')
-        valid, message = check_data_validity(data)
+        data, valid, message = check_data_validity(original_data, data)
         if not valid:
             return Response(
                 message,
@@ -79,8 +81,14 @@ class SMSView(KLPAPIView):
             else:
                 # question_number starts from 0, and hence we need to add 1
                 # to it in order to get the correct sequence of questions.
+                # question_number corresponds to questiongroupquestions__sequence
+                # while querying for the corresponding Question.
                 state, status_code, message = verify_answer(
-                    session_id, question_number+1, response, ivrs_type,
+                    session_id,
+                    question_number+1,
+                    response,
+                    ivrs_type,
+                    original_data=original_data
                 )
                 if status_code != status.HTTP_200_OK:
                     # If we find any of the answers are corrupt, we return
@@ -91,7 +99,11 @@ class SMSView(KLPAPIView):
                         content_type=content_type
                     )
         else:
-            message = "Thank you. Your survey has been saved"
+            message = get_message(
+                valid=True,
+                date=date,
+                data=original_data
+            )
 
         return Response(
             message,

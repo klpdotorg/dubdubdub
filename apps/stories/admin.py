@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Answer, Question, Questiongroup, QuestiongroupQuestions,
-                     QuestionType, Source, Story, StoryImage)
+                     QuestionType, Source, Story, StoryImage, Survey)
 
 
 class AnswerInline(admin.StackedInline):
@@ -14,6 +14,14 @@ class StoryImageInline(admin.StackedInline):
     model = StoryImage
     extra = 0
     readonly_fields = ('image', 'image_tag')
+
+
+class SurveyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'group', 'group_name')
+    ordering = ['-created_at']
+
+    def group_name(self, instance):
+        return instance.group.name
 
 
 class StoryAdmin(admin.ModelAdmin):
@@ -109,6 +117,7 @@ class QuestiongroupAdmin(admin.ModelAdmin):
     inlines = [QuestionInline, ]
     readonly_fields = ('source', 'version',)
 
+admin.site.register(Survey, SurveyAdmin)
 admin.site.register([Answer,
                     QuestionType, Source])
 

@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 from django.core.exceptions import PermissionDenied
 from common.pagination import KLPPaginationSerializer
 from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from common.filters import KLPInBBOXFilter
@@ -57,6 +58,10 @@ class KLPListAPIView(generics.ListAPIView):
         if per_page == 0:
             return None
         return per_page
+
+
+class KLPModelViewSet(viewsets.ModelViewSet):
+    pass
 
 
 class KLPDetailAPIView(generics.RetrieveAPIView):

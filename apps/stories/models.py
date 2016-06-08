@@ -1,18 +1,21 @@
 from __future__ import unicode_literals
-from common.models import BaseModel, GeoBaseModel, TimestampedBaseModel
-from common.utils import send_templated_mail
-from django.contrib.gis.db import models
-from django.db.models import Sum, Count
+
 from django.conf import settings
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.sites.models import Site
 from django.utils import timezone
+from django.dispatch import receiver
+from django.db.models import Sum, Count
+from django.contrib.gis.db import models
+from django.contrib.sites.models import Site
+from django.db.models.signals import post_save
+
+from common.utils import send_templated_mail
+from common.models import BaseModel, GeoBaseModel, TimestampedBaseModel
+
 
 class Answer(models.Model):
+    text = models.TextField()
     story = models.ForeignKey('Story')
     question = models.ForeignKey('Question')
-    text = models.TextField()
 
     def __unicode__(self):
         return ' - '.join([self.story.name, self.question.text, self.text])
@@ -25,15 +28,20 @@ class Answer(models.Model):
 class Question(models.Model):
     text = models.TextField()
     data_type = models.IntegerField()
-    user_type = models.ForeignKey('UserType', blank=True, null=True)
-    question_type = models.ForeignKey('QuestionType')
-    is_featured = models.BooleanField(default=False)
     display_text = models.TextField()
-    key = models.CharField(max_length=100, blank=True, null=True)
     options = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
-    school_type = models.ForeignKey('schools.BoundaryType', db_column='school_type', blank=True, null=True)
     qid = models.IntegerField(blank=True, null=True)
+    is_featured = models.BooleanField(default=False)
+    question_type = models.ForeignKey('QuestionType')
+    key = models.CharField(max_length=100, blank=True, null=True)
+    user_type = models.ForeignKey('UserType', blank=True, null=True)
+    school_type = models.ForeignKey(
+        'schools.BoundaryType',
+        db_column='school_type',
+        blank=True,
+        null=True
+    )
 
     def __unicode__(self):
         return ' - '.join([self.text, self.question_type.name])
@@ -46,9 +54,13 @@ class Question(models.Model):
 class Questiongroup(models.Model):
     version = models.IntegerField()
     source = models.ForeignKey('Source')
-    questions = models.ManyToManyField('Question', through='QuestiongroupQuestions')
-    start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    questions = models.ManyToManyField(
+        'Question',
+        through='QuestiongroupQuestions'
+    )
 
     class Meta:
         managed = False
@@ -59,8 +71,8 @@ class Questiongroup(models.Model):
 
 
 class QuestiongroupQuestions(models.Model):
-    questiongroup = models.ForeignKey('Questiongroup')
     question = models.ForeignKey('Question')
+    questiongroup = models.ForeignKey('Questiongroup')
     sequence = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -80,6 +92,7 @@ class QuestionType(models.Model):
     class Meta:
         managed = False
         db_table = 'stories_questiontype'
+
 
 class UserType(models.Model):
     PARENTS = "PR"
@@ -117,6 +130,7 @@ class UserType(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Source(models.Model):
     name = models.CharField(max_length=64)
 
@@ -126,6 +140,36 @@ class Source(models.Model):
     class Meta:
         managed = False
         db_table = 'stories_source'
+
+
+class Survey(TimestampedBaseModel):
+    DRAFT_STATUS = 0
+    ACTIVE_STATUS = 1
+    ARCHIVED_STATUS = 2
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (ACTIVE_STATUS, 'Active'),
+        (ARCHIVED_STATUS, 'Archived'),
+    )
+
+    status = models.IntegerField(
+        choices=STATUS_CHOICES,
+        default=DRAFT_STATUS
+    )
+    name = models.CharField(max_length=150)
+    group = models.OneToOneField(Questiongroup, blank=True, null=True)
+    created_by = models.ForeignKey('users.User', blank=True, null=True)
+    partner = models.ForeignKey('schools.Partner', blank=True, null=True)
+    school_type = models.ForeignKey(
+        'schools.BoundaryType',
+        db_column='school_type',
+        blank=True,
+        null=True
+    )
+
+    def __unicode__(self):
+        return self.name
 
 
 class Story(TimestampedBaseModel):

@@ -18,18 +18,82 @@ GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
-def check_data_validity(data):
-    expected_response_1 = "3885,1,1,1,2,1"
-    expected_response_2 = "3885,1,2,,,"
-    if len(data) != 6:
-        valid = False
-        message = "Error. Example 1: " + expected_response_1 + \
-                  " Example 2: " + expected_response_2
-    else:
-        valid = True
-        message = ''
+def get_message(**kwargs):
+    if kwargs.get('valid', False):
+        date = str(kwargs['date'])
+        data = str(kwargs['data'])
+        message = "Response accepted. Your message was: " + data + \
+                  " received at: " + date
 
-    return (valid, message)
+    elif not kwargs.get('valid', True):
+        data = str(kwargs['data'])
+        expected_response_1 = "3885,1,1,1,2,1"
+        expected_response_2 = "3885,1,2,,,"
+        expected_response_3 = "3885,1,2"
+
+        message = "Error. Your response: " + data + \
+                  ". Expected response: " + expected_response_1 + \
+                  " OR " + expected_response_2 + \
+                  " OR " + expected_response_3
+
+    elif kwargs.get('no_school_id', False):
+        message = "School ID not entered."
+
+    elif kwargs.get('invalid_school_id', False):
+        school_id = str(kwargs['school_id'])
+        message = "School ID " + school_id + " not found."
+
+    elif kwargs.get('not_primary_school', False):
+        message = "Please enter Primary School ID."
+
+    elif kwargs.get('not_pre_school', False):
+        message = "Please enter PreSchool ID."
+
+    elif kwargs.get('error_question_number', False):
+        data = str(kwargs['original_data'])
+        question_number = str(kwargs['error_question_number'])
+        message = "Error at que.no: " + question_number + "." + \
+                  " Your response was " + data
+
+    return message
+
+def check_data_validity(original_data, data):
+    valid = True
+    message = None
+
+    if len(data) == 3:
+        if data[2] != '2':
+            valid = False
+            message = get_message(valid=valid, data=original_data)
+        else:
+            # If the answer to 2nd question is "2" (which means "No"), then
+            # We manually populate the rest of the answers as "2". This is
+            # to maintain the consistency of the length of the data list to
+            # always remain 6 for every valid sms.
+            for i in range(0, 3):
+                data.append('2')
+
+    elif len(data) == 6:
+        if all(response == '' for response in data[3:]):
+            if data[2] != '2':
+                valid = False
+                message = get_message(valid=valid, data=original_data)
+            else:
+                # If the answer to 2nd question is "2" (which means "No"), then
+                # We manually populate the rest of the answers as "2". This is
+                # to maintain the consistency of the responses for all valid sms
+                # that we receive.
+                data = ['2' if response == '' else response for response in data]
+        elif any(response == '' for response in data):
+            # Responses like 3885,1,2,1,,2 are not accepted.
+            valid = False
+            message = get_message(valid=valid, data=original_data)
+
+    elif len(data) != 6:
+        valid = False
+        message = get_message(valid=valid, data=original_data)
+
+    return (data, valid, message)
 
 
 def get_date(date):
@@ -44,10 +108,11 @@ def get_date(date):
 
 def check_school(state, school_id, ivrs_type):
     school_type = None
+    message = None
 
     if not school_id:
         status_code = status.HTTP_404_NOT_FOUND
-        message = "School ID not entered"
+        message = get_message(no_school_id=True)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
@@ -57,11 +122,10 @@ def check_school(state, school_id, ivrs_type):
         ).values(
             'admin3__type__name'
         )[0]['admin3__type__name']
-        message = ''
 
     else:
         status_code = status.HTTP_404_NOT_FOUND
-        message = "School ID not found"
+        message = get_message(invalid_school_id=True, school_id=school_id)
 
     # Validating whether the entered school ID corresponds to the
     # correct school_type. Assigns the ivrs_type based on the call
@@ -70,7 +134,7 @@ def check_school(state, school_id, ivrs_type):
         if ivrs_type in [GKA_SERVER, GKA_DEV]:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'gka-v3'
             # Initializing answer slots 1 to 10 with NA
             for i in range(0, 10):
@@ -79,7 +143,7 @@ def check_school(state, school_id, ivrs_type):
         elif ivrs_type == GKA_SMS:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'gka-sms'
             # Initializing answer slots 1 to 5 with NA
             for i in range(0, 5):
@@ -88,7 +152,7 @@ def check_school(state, school_id, ivrs_type):
         elif ivrs_type == PRI:
             if school_type != u'Primary School':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter Primary School ID"
+                message = get_message(not_primary_school=True)
             state.ivrs_type = 'ivrs-pri'
             # Initializing answer slots 1 to 6 with NA
             for i in range(0, 6):
@@ -98,7 +162,7 @@ def check_school(state, school_id, ivrs_type):
         else:
             if school_type != u'PreSchool':
                 status_code = status.HTTP_404_NOT_FOUND
-                message = "Please enter PreSchool ID"
+                message = get_message(not_pre_school=True)
             state.ivrs_type = 'ivrs-pre'
             # Initializing answer slots 1 to 6 with NA
             for i in range(0, 6):
@@ -108,10 +172,11 @@ def check_school(state, school_id, ivrs_type):
     return (state, status_code, message)
 
 
-def verify_answer(session_id, question_number, response, ivrs_type):
+def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
     if State.objects.filter(session_id=session_id).exists():
         state = State.objects.get(session_id=session_id)
 
+        message = None
         status_code = status.HTTP_200_OK
         question_number = int(question_number)
         question = get_question(question_number, ivrs_type)
@@ -124,8 +189,8 @@ def verify_answer(session_id, question_number, response, ivrs_type):
             if question.question_type.name == 'checkbox' and response in accepted_answers:
                 if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
                     # This special case is there for question 1 which clubs "Was the school
-                    # open?" and "Class visited". Since "Class visited accepts answers from
-                    # 1 tp 8, we can't cast "1" and "2" to "yes" and "no". The answer to
+                    # open?" and "Class visited". Since "Class visited" accepts answers from
+                    # 1 to 8, we can't cast "1" and "2" to "yes" and "no". The answer to
                     # whether the school was open or not is handled in the save_answer
                     # function within utils.py
                     response = response
@@ -143,9 +208,10 @@ def verify_answer(session_id, question_number, response, ivrs_type):
         status_code = status.HTTP_404_NOT_FOUND
 
     if status_code == status.HTTP_404_NOT_FOUND:
-        message = "Error at que.no: " + str(question_number)
-    else:
-        message = "Data accepted"
+        message = get_message(
+            error_question_number=question_number,
+            original_data=original_data
+        )
 
     return (state, status_code, message)
 

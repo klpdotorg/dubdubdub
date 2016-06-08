@@ -1,32 +1,74 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from django.core.urlresolvers import resolve, Resolver404
-from django.conf import settings
-from django.db.models import Q, Count
-
-from schools.models import School, SchoolDetails
-from users.models import User
-from .models import (Question, Story, StoryImage, Answer, Questiongroup,
-                     UserType, Source)
-from .serializers import (SchoolQuestionsSerializer, StorySerializer,
-    StoryWithAnswersSerializer)
-
-from common.views import KLPAPIView, KLPDetailAPIView, KLPListAPIView
-from common.mixins import CacheMixin
-from common.utils import Date
-from rest_framework.exceptions import (APIException, PermissionDenied,
-    ParseError, MethodNotAllowed, AuthenticationFailed)
-from rest_framework import authentication, permissions
-
 import random
 import calendar
 import datetime
+
+from PIL import Image
 from base64 import b64decode
 from collections import Counter, OrderedDict
-from django.core.files.base import ContentFile
-from PIL import Image
 from dateutil.parser import parse as date_parse
+
+from rest_framework.reverse import reverse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import authentication, permissions
+from rest_framework.exceptions import (
+    APIException, PermissionDenied,
+    ParseError, MethodNotAllowed,
+    AuthenticationFailed
+)
+
+from django.conf import settings
+from django.db.models import Q, Count
+from django.core.files.base import ContentFile
+from django.core.urlresolvers import resolve, Resolver404
+
+from users.models import User
+
+from schools.models import School, SchoolDetails
+
+from common.utils import Date
+from common.mixins import CacheMixin
+from common.views import (
+    KLPAPIView, KLPDetailAPIView,
+    KLPListAPIView, KLPModelViewSet
+)
+
+from .models import (
+    Question, Story, StoryImage,
+    Answer, Questiongroup, UserType,
+    Source, Survey
+)
+from .serializers import (
+    SchoolQuestionsSerializer, StorySerializer,
+    StoryWithAnswersSerializer, QuestiongroupSerializer,
+    QuestionSerializer, SurveySerializer
+)
+
+
+class SurveysViewSet(KLPModelViewSet):
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
+
+
+class SurveysQuestionsViewSet(KLPModelViewSet):
+    serializer_class = QuestionSerializer
+
+    def get_queryset(self):
+        queryset = Question.objects.all()
+
+        survey_id = self.kwargs.get('survey_pk', None)
+        question_id = self.kwargs.get('pk', None)
+
+        survey = Survey.objects.get(id=survey_id)
+
+        if survey_id:
+            queryset = queryset.filter(questiongroup=survey.group)
+
+        if question_id:
+            queryset = queryset.filter(id=question_id)
+
+        return queryset
+
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -36,6 +78,7 @@ class StoryInfoView(KLPAPIView):
                 is_verified=True).count(),
             'total_images': StoryImage.objects.all().count()
         })
+
 
 class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.

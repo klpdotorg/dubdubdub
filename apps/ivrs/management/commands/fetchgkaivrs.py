@@ -23,11 +23,13 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         question_group_version_dict = {
+            # Corresponds to version numbers of the Questiongroups
+            # with source names 'ivrs' and 'sms' within stories app.
             'gka' : 2,
             'gka-new' : 4,
             'gka-v3' : 5,
             'ivrs-pri' : 3,
-            'gka-sms', 1,
+            'gka-sms': 1,
             # 'ivrs-pre' : 999 - Not implemented.
         }
 
@@ -38,6 +40,11 @@ class Command(BaseCommand):
         valid_count = 0 # For posting daily notifications to slack.
         invalid_count = 0
         # fifteen_minutes = datetime.now() - timedelta(minutes=15)
+
+        if ivrs_type == 'gka-sms':
+            source_name = 'sms'
+        else:
+            source_name = 'ivrs'
 
         ivrs_type_number_dict = {
             'gka' : GKA_SERVER,
@@ -67,7 +74,7 @@ class Command(BaseCommand):
                 )[0]
                 question_group = Questiongroup.objects.get(
                     version=version,
-                    source__name='ivrs'
+                    source__name=source_name
                 )
                 story = Story.objects.create(
                     school=school,
@@ -132,6 +139,15 @@ def sane_state(state, ivrs_type):
         if state.answers[2] != 'NA':
             if all(answer == 'NA' for answer in state.answers[3:]):
                 return NOT_SANE
+    if ivrs_type == 'gka-sms':
+        # If there is only 'IGNORED_INDEX' in the answers list. The answers
+        # list will remain having only "IGNORED_INDEX" for every erroneous
+        # sms that we receive. The error checking happens on the receipt
+        # of the message itself, even before processing.
+        if len(state.answers) == 1:
+            return NOT_SANE
+        elif len(state.answers) != 6:
+            return NOT_SANE
 
     # If not both, then sane.
     return SANE

@@ -2,8 +2,39 @@ from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
     BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
-from .models import (Question, Questiongroup, QuestionType,
-    QuestiongroupQuestions, Story, Answer, StoryImage)
+from schools.serializers import PartnerSerializer, BoundaryTypeSerializer
+from users.serializers import UserBasicSerializer
+from .models import (
+    Question, Questiongroup, QuestionType,
+    QuestiongroupQuestions, Story, Answer,
+    StoryImage, Survey
+)
+
+
+class QuestiongroupSerializer(KLPSerializer):
+
+    source = serializers.CharField(source='source.name')
+
+    class Meta:
+        model = Questiongroup
+        fields = (
+            'id', 'version', 'source', 'start_date', 'end_date', 'name'
+        )
+
+
+class SurveySerializer(KLPSerializer):
+
+    group = QuestiongroupSerializer()
+    created_by = UserBasicSerializer()
+    partner = PartnerSerializer()
+    school_type = BoundaryTypeSerializer()
+
+    class Meta:
+        model = Survey
+        fields = (
+            'id', 'status', 'name', 'group', 'created_by',
+            'partner', 'school_type'
+        )
 
 
 class QuestionSerializer(KLPSerializer):
@@ -12,7 +43,7 @@ class QuestionSerializer(KLPSerializer):
 
     class Meta:
         model = Question
-        fields = ('question_type', 'text', 'qid', 'options')
+        fields = ('id', 'question_type', 'text', 'qid', 'options')
 
     def get_options(self, obj):
         return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
