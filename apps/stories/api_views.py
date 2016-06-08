@@ -41,7 +41,11 @@ from .models import (
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
-    QuestionSerializer, SurveySerializer
+    QuestionSerializer, SurveySerializer, SourceSerializer
+)
+
+from. filters import (
+    QuestionFilter
 )
 
 
@@ -50,24 +54,48 @@ class SurveysViewSet(KLPModelViewSet):
     serializer_class = SurveySerializer
 
 
-class SurveysQuestionsViewSet(KLPModelViewSet):
+class QuestiongroupsViewSet(KLPModelViewSet):
+    serializer_class = QuestiongroupSerializer
+
+    def get_queryset(self):
+        queryset = Questiongroup.objects.all()
+
+        survey_id = self.kwargs.get('survey_pk', None)
+        questiongroup_id = self.kwargs.get('pk', None)
+
+        if survey_id:
+            survey = Survey.objects.get(id=survey_id)
+            queryset = queryset.filter(survey=survey)
+
+        if questiongroup_id:
+            queryset = queryset.filter(id=questiongroup_id)
+
+        return queryset
+
+
+class QuestionsViewSet(KLPModelViewSet):
     serializer_class = QuestionSerializer
+    filter_class = QuestionFilter
 
     def get_queryset(self):
         queryset = Question.objects.all()
 
-        survey_id = self.kwargs.get('survey_pk', None)
+        questiongroup_id = self.kwargs.get('group_pk', None)
         question_id = self.kwargs.get('pk', None)
 
-        survey = Survey.objects.get(id=survey_id)
-
-        if survey_id:
-            queryset = queryset.filter(questiongroup=survey.group)
+        if questiongroup_id:
+            questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+            queryset = queryset.filter(questiongroup=questiongroup)
 
         if question_id:
             queryset = queryset.filter(id=question_id)
 
         return queryset
+
+
+class SourceListView(KLPListAPIView):
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer
 
 
 class StoryInfoView(KLPAPIView):

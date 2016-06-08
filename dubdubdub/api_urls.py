@@ -31,9 +31,9 @@ from users.api_views import (
 )
 
 from stories.api_views import (
-    StoryQuestionsView, StoriesView, StoryInfoView,
+    StoryQuestionsView, StoriesView, StoryInfoView, SourceListView,
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
-    SurveysViewSet, SurveysQuestionsViewSet
+    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet
 )
 
 ListCreateMapper = {
@@ -146,6 +146,20 @@ urlpatterns = patterns(
     url(r'^stories/volume/$', StoryVolumeView.as_view(),
         name="api_stories_info"),
 
+    url(r'^questiongroups/$',
+        QuestiongroupsViewSet.as_view({'get' : 'list'}),
+        name="api_questiongroups"
+    ),
+    url(r'^questions/$',
+        QuestionsViewSet.as_view({'get' : 'list'}),
+        name="api_questions"
+    ),
+    url(r'sources/$',
+        SourceListView.as_view(),
+        name="api_sources"
+    ),
+
+    # Surveys endpoints
     url(
         r'^surveys/$',
         SurveysViewSet.as_view(ListCreateMapper),
@@ -156,14 +170,24 @@ urlpatterns = patterns(
         SurveysViewSet.as_view(RetrieveUpdateDestroyMapper),
         name="api_surveys_detail"
     ),
+     url(
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/$',
+        QuestiongroupsViewSet.as_view(ListCreateMapper),
+        name="api_surveys_questiongroups"
+    ),
     url(
-        r'^surveys/(?P<survey_pk>[0-9]+)/questions/$',
-        SurveysQuestionsViewSet.as_view(ListCreateMapper),
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/(?P<pk>[0-9]+)/$',
+        QuestiongroupsViewSet.as_view(RetrieveUpdateDestroyMapper),
+        name="api_surveys_questiongroups_detail"
+    ),
+    url(
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/(?P<group_pk>[0-9]+)/questions/$',
+        QuestionsViewSet.as_view(ListCreateMapper),
         name="api_surveys_questions"
     ),
     url(
-        r'^surveys/(?P<survey_pk>[0-9]+)/questions/(?P<pk>[0-9]+)/$',
-        SurveysQuestionsViewSet.as_view(RetrieveUpdateDestroyMapper),
+        r'^surveys/(?P<survey_pk>[0-9]+)/questiongroups/(?P<group_pk>[0-9]+)/questions/(?P<pk>[0-9]+)/$',
+        QuestionsViewSet.as_view(RetrieveUpdateDestroyMapper),
         name="api_surveys_questions_detail"
     ),
 

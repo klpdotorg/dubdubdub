@@ -17,11 +17,8 @@ class StoryImageInline(admin.StackedInline):
 
 
 class SurveyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'group', 'group_name')
+    list_display = ('id', 'name', 'partner')
     ordering = ['-created_at']
-
-    def group_name(self, instance):
-        return instance.group.name
 
 
 class StoryAdmin(admin.ModelAdmin):

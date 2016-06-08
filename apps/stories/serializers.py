@@ -1,52 +1,137 @@
+import time
+from datetime import datetime
+
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
-    BoundaryType, Assembly, Parliament, Postal, PaisaData, MdmAgg)
+    BoundaryType, Assembly, Parliament, Partner, Postal, PaisaData, MdmAgg)
 from schools.serializers import PartnerSerializer, BoundaryTypeSerializer
 from users.serializers import UserBasicSerializer
 from .models import (
     Question, Questiongroup, QuestionType,
     QuestiongroupQuestions, Story, Answer,
-    StoryImage, Survey
+    StoryImage, Survey, Source
 )
-
-
-class QuestiongroupSerializer(KLPSerializer):
-
-    source = serializers.CharField(source='source.name')
-
-    class Meta:
-        model = Questiongroup
-        fields = (
-            'id', 'version', 'source', 'start_date', 'end_date', 'name'
-        )
 
 
 class SurveySerializer(KLPSerializer):
 
-    group = QuestiongroupSerializer()
-    created_by = UserBasicSerializer()
-    partner = PartnerSerializer()
-    school_type = BoundaryTypeSerializer()
+    partner = PartnerSerializer(read_only=True)
+    partner_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='partner'
+        )
 
     class Meta:
         model = Survey
         fields = (
-            'id', 'status', 'name', 'group', 'created_by',
-            'partner', 'school_type'
+            'id', 'name', 'partner', 'partner_id'
         )
+
+
+class TimestampField(serializers.DateTimeField):
+    def to_native(self, value):
+        if value:
+            return int(time.mktime(value.timetuple()))
+        else:
+            return value
+
+    def from_native(self, value):
+        try:
+            return datetime.strptime(value,'%Y-%m-%dT%H:%M:%S')
+        except:
+            raise serializers.ValidationError(
+                'Date format should be: YYYY-MM-DDTHH:MM:SS'
+            )
+
+
+class QuestiongroupSerializer(KLPSerializer):
+
+    source = serializers.CharField(
+        read_only=True,
+        source='source.name'
+    )
+    source_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='source'
+    )
+
+    end_date = TimestampField(source='end_date')
+    start_date = TimestampField(source='start_date')
+    created_at = TimestampField(source='created_at')
+    updated_at = TimestampField(source='updated_at')
+
+    survey = SurveySerializer(read_only=True)
+    survey_id = serializers.PrimaryKeyRelatedField(
+        write_only=True,
+        source='survey'
+    )
+
+    created_by = UserBasicSerializer(read_only=True)
+    created_by_id = serializers.PrimaryKeyRelatedField(
+        required=False,
+        write_only=True,
+        source='created_by'
+    )
+
+    school_type = BoundaryTypeSerializer(read_only=True)
+    school_type_id = serializers.PrimaryKeyRelatedField(
+        required=False,
+        write_only=True,
+        source='school_type'
+    )
+
+    class Meta:
+        model = Questiongroup
+        fields = (
+            'id', 'status', 'version', 'source',
+            'source_id', 'start_date', 'end_date',
+            'survey', 'survey_id', 'name',
+            'created_by', 'created_by_id',
+            'school_type', 'school_type_id',
+            'created_at', 'updated_at'
+        )
+
+    def get_created_at(self, obj):
+        return self.make_epoch(obj.created_at)
+
+    def get_updated_at(self, obj):
+        return self.make_epoch(obj.updated_at)
+
+    def get_start_date(self, obj):
+        return self.make_epoch(obj.start_date)
+
+    def get_end_date(self, obj):
+        return self.make_epoch(obj.end_date)
+
+    def make_epoch(self, date):
+        if date:
+            return int(time.mktime(date.timetuple()))
+        else:
+            return date
 
 
 class QuestionSerializer(KLPSerializer):
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
+    school_type = BoundaryTypeSerializer()
+    questiongroup_set = QuestiongroupSerializer(read_only=True, many=True)
 
     class Meta:
         model = Question
-        fields = ('id', 'question_type', 'text', 'qid', 'options')
+        fields = (
+            'id', 'question_type', 'text', 'qid',
+            'options', 'display_text', 'key', 'school_type',
+            'questiongroup_set',
+        )
 
     def get_options(self, obj):
         return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
+
+
+class SourceSerializer(KLPSerializer):
+    class Meta:
+        model = Source
 
 
 class SchoolQuestionsSerializer(KLPSerializer):
