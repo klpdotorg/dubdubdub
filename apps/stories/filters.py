@@ -21,6 +21,18 @@ class QuestionFilter(django_filters.FilterSet):
         )
 
 class QuestiongroupFilter(django_filters.FilterSet):
+    DRAFT_STATUS = 0
+    ACTIVE_STATUS = 1
+    ARCHIVED_STATUS = 2
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (ACTIVE_STATUS, 'Active'),
+        (ARCHIVED_STATUS, 'Archived'),
+    )
+
+    status = django_filters.MultipleChoiceFilter(choices=STATUS_CHOICES)
+
     class Meta:
         model = Questiongroup
         fields = ['status']
