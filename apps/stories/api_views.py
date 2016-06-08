@@ -92,10 +92,25 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                     str(version)
                 raise APIException(message)
 
+    def check_if_source_exists(self, survey_id, source):
+        sources = Questiongroup.objects.filter(
+            survey=survey_id
+        ).values_list(
+            'source__name',
+            flat=True
+        )
+        return (source in sources)
+
     def create(self, request, *args, **kwargs):
+        survey_id = kwargs.get('survey_pk', None)
+
+        source = request.DATA.get('source', None)
         question_ids = request.DATA.get('question_ids', None)
+
+        if source:
+            self.check_if_source_exists(survey_id, source)
+
         if question_ids:
-            survey_id = kwargs.get('survey_pk', None)
             question_ids = ast.literal_eval(question_ids)
             self.check_if_qg_exists(survey_id, question_ids)
         else:
