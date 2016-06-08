@@ -75,7 +75,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         return queryset
 
-    def check_if_qg_exists(self, survey_id, question_ids):
+    def is_questiongroup_exists(self, survey_id, question_ids):
         survey = Survey.objects.get(id=survey_id)
         questiongroups = survey.questiongroup_set.all()
         for questiongroup in questiongroups:
@@ -92,7 +92,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                     str(version)
                 raise APIException(message)
 
-    def check_if_source_exists(self, survey_id, source):
+    def is_source_exists(self, survey_id, source):
         sources = Questiongroup.objects.filter(
             survey=survey_id
         ).values_list(
@@ -108,11 +108,10 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         question_ids = request.DATA.get('question_ids', None)
 
         if source:
-            self.check_if_source_exists(survey_id, source)
-
+            self.is_source_exists(survey_id, source)
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
-            self.check_if_qg_exists(survey_id, question_ids)
+            self.is_questiongroup_exists(survey_id, question_ids)
         else:
             raise APIException("Please select one or more questions")
 
