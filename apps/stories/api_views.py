@@ -102,7 +102,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         return (source in sources)
 
     def create(self, request, *args, **kwargs):
-        survey_id = kwargs.get('survey_pk', None)
+        survey_id = kwargs.get('survey_pk')
 
         source = request.DATA.get('source', None)
         question_ids = request.DATA.get('question_ids', None)
