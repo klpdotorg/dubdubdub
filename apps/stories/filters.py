@@ -31,8 +31,9 @@ class QuestiongroupFilter(django_filters.FilterSet):
         (ARCHIVED_STATUS, 'Archived'),
     )
 
+    source = django_filters.CharFilter(name="source__name")
     status = django_filters.MultipleChoiceFilter(choices=STATUS_CHOICES)
 
     class Meta:
         model = Questiongroup
-        fields = ['status']
+        fields = ['source', 'status']
