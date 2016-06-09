@@ -114,13 +114,14 @@ class QuestiongroupSerializer(KLPSerializer):
 class QuestiongroupQuestionsSerializer(KLPSerializer):
     through_id = serializers.Field('id')
     sequence = serializers.Field('sequence')
+    status = serializers.Field('questiongroup.status')
     questiongroup = serializers.Field('questiongroup.id')
     source = serializers.Field('questiongroup.source.name')
 
     class Meta:
         model = QuestiongroupQuestions
         fields = (
-            'through_id', 'sequence', 'questiongroup', 'source'
+            'through_id', 'sequence', 'status', 'questiongroup', 'source'
         )
 
 
