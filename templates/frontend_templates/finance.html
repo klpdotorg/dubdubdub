@@ -89,32 +89,28 @@
             </div><!--bar-graph-wrap-->
 
           {% endif %}
-          {% if (data.gender) %}
+          {% if (data.total_girl) %}
             <div class="module-stats-icon module-stats-girl"><!--2-->
                 <span class="icon-girl"></span>
                 <div class="module-stats-info align-left"><!--3-->
-                    Total  : {{data.gender.total_girl |inrformat}}
-                    <p class="module-stats-label align-left">
-                      Per Girl : &#8377; {{data.gender.per_girl}}
-                    </p>
+                    Total  : {{data.total_girl}}            
                 </div><!--3-->          
             </div><!--2--> </br>
             <div class="module-stats-icon"><!--4-->
                 <span class="icon-boy"></span>
                 <div class="module-stats-info align-left">
-                    Total : {{data.gender.total_boy|inrformat}}
-                    <p class="module-stats-label align-left">Per Boy : &#8377; {{data.gender.per_boy}}</p>
+                    Total : {{data.total_boy}}
                 </div><!--5-->
             </div><!--4-->   
-          {% else %}
-            <div class="module-stats-icon center-text"><!--4-->
-                <span class="icon-boy-girl"></span>
-                <div class="module-stats-info"><!--5-->
-                    <div class="uppercase align-left">Per Student</div>
-                    <p class="module-stats-label align-left"> &#8377; {{data.per_stu}}</p>
-                </div><!--5-->
-            </div><!--4-->  
           {% endif %}
+          <div class="module-stats-icon center-text"><!--4-->
+              <span class="icon-boy-girl"></span>
+              <div class="module-stats-info"><!--5-->
+                  <div class="uppercase align-left">Per Student</div>
+                  <p class="module-stats-label align-left"> &#8377; {{data.per_stu}}</p>
+              </div><!--5-->
+          </div><!--4-->  
+          
   </script>
 
   <script type="text/javascript" id="tpl-allocSummary">
@@ -142,16 +138,16 @@
             <div class="sect-parent"><!--inner sect-->
 
               <div class="sect-quarter">    
-                <div class="bar-lookup">{{each.name}}</div>
+                <div class="bar-lookup">{{each.name|capitalize}}</div>
               </div><!--sect-third-->
 
               <div class="sect-three-quarter">
                 <div class="bar-graph-wrap float-left"><!--1-->
-                  <div class="bar-num-label brand-blue">&#8377; {{each.alloc_amt}}</div>
-                  <div class="bar-custom tooltip" aria-label="{{each.alloc_perc}}%"><!--2-->
-                    <div class="bar-value grey-gravel-bg float-left" style="width:{{each.alloc_perc}}%;"></div><!--3-->
+                  <div class="bar-num-label brand-blue">&#8377; {{each.school_grant.grant}}</div>
+                  <div class="bar-custom tooltip" aria-label="{{each.school_grant.grant_perc}}%"><!--2-->
+                    <div class="bar-value grey-gravel-bg float-left" style="width:{{each.school_grant.grant_perc}}%;"></div><!--3-->
                   </div><!--2-->
-                  <div class="bar-percent grey-gravel">{{each.alloc_perc}}%</div><!--6-->
+                  <div class="bar-percent grey-gravel">{{each.school_grant.grant_perc}}%</div><!--6-->
                 </div><!--1-->
                 <div class="bar-lookup">across {{each.school_count}} schools</div>
               </div><!--sect-two-third-->
@@ -162,10 +158,10 @@
           <div class="sect-quarter rounded-sect">
             <div class="sect-parent">
               <div class="sect-half">
-                <div class="per-lookup">&#8377; {{each.per_school}}</div>
+                <div class="per-lookup">&#8377; {{each.school_grant.per_school}}</div>
               </div><!--half-->
               <div class="sect-half">
-                <div class="per-lookup">&#8377; {{each.per_student}}</div>
+                <div class="per-lookup">&#8377; {{each.school_grant.per_student}}</div>
               </div><!--half-->
             </div><!--parent-->
           </div><!--sect-quarter-->
@@ -191,7 +187,7 @@
           {% for each in neighbours %}
             <tr class="font-smaller">
               <td>
-                <div class="bold td-label-boundary">{{each.name}}</div>
+                <div class="bold td-label-boundary">{{each.name|capitalize}}</div>
               </td>
               <td>
                 <div class="td-label-perstu">&#8377; {{each.expected}}</div>    
@@ -208,7 +204,7 @@
                   <div class="bar-custom">
                     <div class="bar-value grey-gravel-bg" style="width:{{each.total_perc}}%;"></div>
                   </div><!--bar-custom-->
-                  <div class="bar-percent center-text font-smallest">&#8377; {{each.total}}</div>
+                  <div class="bar-percent center-text font-smallest">{{each.total}}</div>
                 </div><!--bar-graph-wrap-->
               </td>
             </tr>

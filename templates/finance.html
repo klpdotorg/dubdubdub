@@ -8,8 +8,10 @@
 {% block endbody %}
   {% compress js %}
       <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/dise_api.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js'%}"></script>
       <script type="text/javascript" src="{% static 'js/reports/finance.js' %}"></script>  
+      <script type="text/javascript" src="{% static 'js/reports/utils.js' %}"></script> 
   {% endcompress %}
 {% endblock %}
 {% block content %}
@@ -28,7 +30,7 @@
     <div id="allocation" class="container">
       <div class="base-spacing-sm"></div>
       <hr/>
-      <h2 class="heading-border brand-turquoise">Allocation Summary</h2>
+      <h2 class="heading-border brand-turquoise">Expected Allocation Summary</h2>
       <div id="sg-alloc"></div>
       <hr/>
       <div id="smg-alloc"></div> 

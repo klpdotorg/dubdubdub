@@ -78,6 +78,8 @@ class FinanceBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseBounda
         except Exception:
             raise APIError('Boundary not found', 404)
         self.get_boundary_summary_data(boundary, self.reportInfo)
+        dise_schools = boundary.dise_schools()
+        self.reportInfo["summary_data"] = self.get_dise_school_info(dise_schools, academic_year)
 
     def get(self, request):
         mandatoryparams = {'id': [], 'language': ["english", "kannada"]}
