@@ -7,7 +7,7 @@ from common.exceptions import APIError
 from django.conf import settings
 
 
-class FinanceBoundaryDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
+class DemographicsDiseBoundaryDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
 
     def get_boundary_info(self, boundaryid):
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)

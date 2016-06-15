@@ -1,13 +1,17 @@
 from .base import (
-	BaseBoundaryReport
+    BaseBoundaryReport
 )
 from .summary import (
     ReportBoundarySummary
 )
 from .demographics import(
-	DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
+    DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
 
 )
 from .finance import(
-	FinanceBoundaryComparisonDetails
+    FinanceBoundaryDetails
+)
+
+from .demographics_dise import(
+    DemographicsDiseBoundaryDetails
 )
