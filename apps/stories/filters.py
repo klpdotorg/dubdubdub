@@ -1,6 +1,15 @@
 import django_filters
 
-from .models import Question, Questiongroup
+from .models import Question, Questiongroup, Survey
+
+
+class SurveyFilter(django_filters.FilterSet):
+    source = django_filters.CharFilter(name="questiongroup__source__name")
+
+    class Meta:
+        model = Survey
+        fields = ['source']
+
 
 
 class QuestionFilter(django_filters.FilterSet):
