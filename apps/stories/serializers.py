@@ -111,11 +111,30 @@ class QuestiongroupSerializer(KLPSerializer):
             return date
 
 
+class QuestiongroupQuestionsSerializer(KLPSerializer):
+    through_id = serializers.Field('id')
+    sequence = serializers.Field('sequence')
+    status = serializers.Field('questiongroup.status')
+    questiongroup = serializers.Field('questiongroup.id')
+    source = serializers.Field('questiongroup.source.name')
+
+    class Meta:
+        model = QuestiongroupQuestions
+        fields = (
+            'through_id', 'sequence', 'status', 'questiongroup', 'source'
+        )
+
+
 class QuestionSerializer(KLPSerializer):
+
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
     school_type = BoundaryTypeSerializer()
-    questiongroup_set = QuestiongroupSerializer(read_only=True, many=True)
+    questiongroup_set = QuestiongroupQuestionsSerializer(
+        source='questiongroupquestions_set',
+        read_only=True,
+        many=True
+    )
 
     class Meta:
         model = Question

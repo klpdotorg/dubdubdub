@@ -1,3 +1,4 @@
+import ast
 import random
 import calendar
 import datetime
@@ -7,6 +8,7 @@ from base64 import b64decode
 from collections import Counter, OrderedDict
 from dateutil.parser import parse as date_parse
 
+from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -45,7 +47,7 @@ from .serializers import (
 )
 
 from. filters import (
-    QuestionFilter
+    QuestionFilter, QuestiongroupFilter
 )
 
 
@@ -56,6 +58,7 @@ class SurveysViewSet(KLPModelViewSet):
 
 class QuestiongroupsViewSet(KLPModelViewSet):
     serializer_class = QuestiongroupSerializer
+    filter_class = QuestiongroupFilter
 
     def get_queryset(self):
         queryset = Questiongroup.objects.all()
@@ -71,6 +74,56 @@ class QuestiongroupsViewSet(KLPModelViewSet):
             queryset = queryset.filter(id=questiongroup_id)
 
         return queryset
+
+    def check_if_qg_exists(self, survey_id, question_ids):
+        survey = Survey.objects.get(id=survey_id)
+        questiongroups = survey.questiongroup_set.all()
+        for questiongroup in questiongroups:
+            questiongroup_question_ids = questiongroup.questions.all().values_list(
+                'id',
+                flat=True
+            )
+            if set(questiongroup_question_ids) == set(question_ids):
+                group_id = questiongroup.id
+                version = questiongroup.version
+                message = "Questiongroup already exists. Group ID: " + \
+                    str(group_id) + \
+                    " and Version: " + \
+                    str(version)
+                raise APIException(message)
+
+    def check_if_source_exists(self, survey_id, source):
+        sources = Questiongroup.objects.filter(
+            survey=survey_id
+        ).values_list(
+            'source__name',
+            flat=True
+        )
+        return (source in sources)
+
+    def create(self, request, *args, **kwargs):
+        survey_id = kwargs.get('survey_pk')
+
+        source = request.DATA.get('source', None)
+        question_ids = request.DATA.get('question_ids', None)
+
+        if source:
+            self.check_if_source_exists(survey_id, source)
+
+        if question_ids:
+            question_ids = ast.literal_eval(question_ids)
+            self.check_if_qg_exists(survey_id, question_ids)
+        else:
+            raise APIException("Please select one or more questions")
+
+        serializer = self.get_serializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class QuestionsViewSet(KLPModelViewSet):

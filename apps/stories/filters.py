@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import Question
+from .models import Question, Questiongroup
 
 class QuestionFilter(django_filters.FilterSet):
     source = django_filters.MethodFilter(action='source_filter')
@@ -19,3 +19,21 @@ class QuestionFilter(django_filters.FilterSet):
         return queryset.filter(
             question_type__name=value
         )
+
+class QuestiongroupFilter(django_filters.FilterSet):
+    DRAFT_STATUS = 0
+    ACTIVE_STATUS = 1
+    ARCHIVED_STATUS = 2
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (ACTIVE_STATUS, 'Active'),
+        (ARCHIVED_STATUS, 'Archived'),
+    )
+
+    source = django_filters.CharFilter(name="source__name")
+    status = django_filters.MultipleChoiceFilter(choices=STATUS_CHOICES)
+
+    class Meta:
+        model = Questiongroup
+        fields = ['source', 'status']

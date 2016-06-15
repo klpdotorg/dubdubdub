@@ -78,10 +78,11 @@ class PincodeSerializer(KLPSimpleGeoSerializer):
 class SchoolListSerializer(KLPSerializer):
     type = BoundaryTypeSerializer(source='schooldetails.type')
     address_full = serializers.CharField(source='full_address')
+    boundary = BoundarySerializer(source='admin3')
 
     class Meta:
         model = School
-        fields = ('id', 'name', 'address_full', 'dise_info', 'type', )
+        fields = ('id', 'name', 'boundary', 'address_full', 'dise_info', 'type',)
 
 
 class MeetingReportSerializer(serializers.ModelSerializer):
