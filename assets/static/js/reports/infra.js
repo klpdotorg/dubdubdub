@@ -92,7 +92,7 @@
         bid = repUtils.getSlashParameterByName("id");
         lang = repUtils.getSlashParameterByName("language");
 
-        var url = "reports/?report_name=infrastructure&report_type=" +repType+"&id="+bid+"&language="+lang ;
+        var url = "reports/dise/"+repType+"/?language="+lang+"&id="+bid;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             console.log('data', data);
@@ -133,9 +133,13 @@
             klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
         });
         getNeighbourData(data, acadYear);
-        
+        var yearData = []; 
+        yearData[acadYear] = data["academic_year"];
+        var years = acadYear.split("-").map(Number);
+        yearData[(years[0]-1).toString()+"-"+(years[1]-1).toString()] = "20"+(years[0]-1).toString()+"-"+"20"+(years[1]-1).toString();
+        yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();        
         var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"]};
-        getMultipleData(data["comparison"]["year-wise"], passYearData, getLoopData, renderComparison,"acadYear");
+        getMultipleData(yearData, passYearData, getLoopData, renderComparison,"acadYear");
         
     }
 
@@ -223,11 +227,6 @@
             var boundary = diseNameData[0].children[0];
             klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
                 console.log('diseData', diseData);
-                for(var key in data["value"] )
-                {
-                    diseData[key] = data["value"][key];
-                }
-
                 loop.addData(diseData);
                 loop.next();
             })
@@ -245,9 +244,10 @@
     {
         var summaryJSON = {
             "boundary"  : data["boundary_info"],
-            "school_count" : data["school_count"],
-            "teacher_count" : data["teacher_count"],
-            "gender" : data["gender"]
+            "school_count" : data["summary_data"]["num_schools"],
+            "teacher_count" : data["summary_data"]["teacher_count"],
+            "gender" : data["summary_data"]["gender"],
+            "student_total": data["summary_data"]["num_students"]
         };
 
         return summaryJSON;

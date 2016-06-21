@@ -12,6 +12,6 @@ from .finance import(
     FinanceBoundaryDetails
 )
 
-from .demographics_dise import(
-    DemographicsDiseBoundaryDetails
+from .dise import(
+    DiseBoundaryDetails
 )

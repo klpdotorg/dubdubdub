@@ -17,7 +17,7 @@
         repType = utils.getSlashParameterByName("report_type");
         bid = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
-		var url = "reports/demographics/dise/"+repType+"/?language="+lang+"&id="+bid;
+		var url = "reports/dise/"+repType+"/?language="+lang+"&id="+bid;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             var summaryJSON= getSummaryData(data);
