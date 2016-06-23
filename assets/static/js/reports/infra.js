@@ -11,33 +11,6 @@
         klp.router.start();
     };
 
-    var preschoolInfraHash = {
-        'ang-drinking-water': {
-            display: 'Drinking Water',
-            icon: ['fa  fa-tint']
-        },
-        'ang-toilet-for-use': {
-            display:'Toilets',
-            icon: ['fa fa-male', 'fa fa-female']
-        },
-        'ang-bvs-present': {
-            display: 'Functional Bal Vikas Samithis',
-            icon: ['fa fa-users']
-        },
-        'ang-separate-handwash': {
-            display: 'Separate Hand-Wash',
-            icon: ['fa fa-hand-o-up']
-        },
-        'ang-activities-use-tlm': {
-            display: 'Uses Learning Material',
-            icon: ['fa fa-cubes']
-        },
-        'ang-in-spacious-room': {
-            display: 'Spacious Room',
-            icon: ['fa fa-arrows-alt']
-        }
-    };
-
     var schoolInfraHash = {
         'sum_has_playground': {
             'icon': ['fa fa-futbol-o'],
@@ -99,30 +72,19 @@
             var schooltype = "Schools";
             var summaryJson = getSummaryData(data);
             renderSummary(summaryJson, schooltype);
-            if ( data["btype"] == 2 ){
-                schooltype = "PreSchool";
-                var comparisonJSON = data["comparison"]["year-wise"];
-                renderComparison(comparisonJSON, preschoolInfraHash);
-                var neighboursJSON = data["comparison"]["neighbours"];
-                renderNeighbours(neighboursJSON, preschoolInfraHash);
-            }
-            else
-            {
-                fetchSchoolData(data);
-            }
+            fetchSchoolData(data);
         });
     }
 
     function fetchSchoolData(data)
     {
-        var acadYear = data["boundary_info"]["academic_year"].replace(/20/g, '');
+        var acadYear = data["academic_year"].replace(/20/g, '');
         klp.dise_api.queryBoundaryName(data["boundary_info"]["name"], data["boundary_info"]["type"],acadYear).done(function(diseData) {
             if( diseData.length != 0 )
             {
                 var boundary = diseData[0].children[0];
                 klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
                     console.log('summary diseData', diseData);
-                    renderGrantSummary(diseData);
                 })
                 .fail(function(err) {
                     klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -150,7 +112,7 @@
         {
             klp.dise_api.getMultipleBoundaryData(null, null, type, acadYear).done(function(diseData) {
                 console.log('neighbours diseData', diseData);
-                renderNeighbours(diseData["results"]["features"],schoolInfraHash);
+                renderNeighbours(diseData["results"]["features"]);
             })
             .fail(function(err) {
                 klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -162,7 +124,7 @@
                 var boundary = diseData[0].children[0];
                 klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
                     console.log('neighbours diseData', diseData);
-                    renderNeighbours(diseData["results"]["features"],schoolInfraHash);
+                    renderNeighbours(diseData["results"]["features"]);
                 })
                 .fail(function(err) {
                     klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
@@ -185,7 +147,7 @@
             next:function(){
                 if(done){
                     if(shouldExit && exit){
-                        return exit(outputData,schoolInfraHash); // Exit if we're done
+                        return exit(outputData); // Exit if we're done
                     }
                 }
                 if(index <  numberOfIterations){
@@ -195,7 +157,7 @@
                 else {
                     done = true; // Make sure we say we're done
                     if(exit)
-                        exit(outputData,schoolInfraHash); // Call the callback on exit
+                        exit(outputData); // Call the callback on exit
                 }
             },
             iteration:function(){
@@ -255,28 +217,6 @@
 
 
 
-    function loadData(schoolType, params) {
-
-        /*var dataURL = "reports/infrastructure/xxx";
-        var $dataXHR = klp.api.do(detailURL, params);
-        $datadetailXHR.done(function(data) {*/
-            var grantdata = { 
-                "received": {
-                    "sg_perc": 25,
-                    "sg_amt": 350000,
-                    "smg_perc": 65,
-                    "smg_amt": 550000,
-                    "tlm_perc": 10,
-                    "tlm_amt": 60000   
-                },
-                "teacher_count": 120,
-                "student_total":48000
-            };
-            renderGrantSummary(grantdata);
-
-    }
-
-
     function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplReportDate = swig.compile($('#tpl-reportDate').html());
@@ -299,28 +239,15 @@
 
     }
 
-    function renderGrantSummary(data){
-        var tpl = swig.compile($('#tpl-grantSummary').html());
-        var total = data.properties["sum_school_dev_grant_recd"] + data.properties["sum_tlm_grant_recd"];
-        var received = {
-                        "sdg":data.properties["sum_school_dev_grant_recd"],
-                        "tlm": data.properties["sum_tlm_grant_recd"],
-                        "total": total,
-                        "per_student": total/(data.properties["sum_girls"]+data.properties["sum_boys"]),
-                        "per_teacher": data.properties["sum_tlm_grant_recd"]/(data.properties["sum_graduate_teachers"]+data.properties["sum_head_teacher"])
-        };
-        var html = tpl({"received":received});
-        $('#grant-summary').html(html);
-    }
-
-    function renderComparison(data, hash) {
-        var transpose = transposeData(data, hash);
+    function renderComparison(data) {
+        var transpose = transposeData(data);
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
         var yrcompareHTML = tplYearComparison({"transpose":transpose});
         $('#comparison-year').html(yrcompareHTML);
     }
 
-    function renderNeighbours(data,hash) {
+    function renderNeighbours(data) {
+        var hash = schoolInfraHash;
         var percData = {"keys":{}};
         
         for (var each in data) {
@@ -343,7 +270,8 @@
         $('#comparison-neighbour').html(compareHTML);
     }
 
-    function transposeData(data,hash) {
+    function transposeData(data) {
+        var hash = schoolInfraHash;
         var transpose = {
             "year": [],
             "school_count" : {},
@@ -359,7 +287,7 @@
         var toilets = ["sum_has_toilet","sum_has_toilet_girls"];
 
         for (var truncyear in data) {
-            var year = data[truncyear]["year"];
+            var year = "20"+truncyear.replace("-","-20");
             transpose["year"].push(year);
             transpose["school_count"][year] = data[truncyear]["properties"]["sum_schools"];
             var infraData = data[truncyear]["properties"];

@@ -222,13 +222,7 @@
               </div>
             </td>
             <td>
-              <!-- Value is percentage of the nearest 100 to the highest value-->
-              <div class="bar-graph-wrap">
-                <div class="bar-custom">
-                  <div class="bar-value grey-gravel-bg" style="width:{{each.school_perc}}%;"></div>
-                </div><!--bar-custom-->
-                <div class="bar-percent">{{each.school_count|checkzero}}</div>
-              </div><!--bar-graph-wrap-->
+              <div class="td-label-enroll">{{each.school_count|checkzero}}</div>  
             </td>
           </tr>
       {% endfor %}

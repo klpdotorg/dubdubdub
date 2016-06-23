@@ -87,8 +87,10 @@
         var yearData = []; 
         yearData[acadYear] = data["academic_year"];
         var years = acadYear.split("-").map(Number);
-        yearData[(years[0]-1).toString()+"-"+(years[1]-1).toString()] = "20"+(years[0]-1).toString()+"-"+"20"+(years[1]-1).toString();
-        yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();
+        var startyear = years[0];
+        var endyear = years[1];
+        yearData[(startyear-1).toString()+"-"+(endyear-1).toString()] = "20"+(startyear-1).toString()+"-"+"20"+(endyear-1).toString();
+        yearData[(startyear-2).toString()+"-"+(endyear-2).toString()] = "20"+(startyear-2).toString()+"-"+"20"+(endyear-2).toString();
         var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"]};
         getMultipleData(yearData, passYearData, getLoopData, renderComparison,"acadYear");
   
