@@ -16,8 +16,9 @@ class Command(BaseCommand):
     ./manage.py populatenewgkaivrsdata"""
 
     def handle(self, *args, **options):
-        d1 = datetime.datetime.now() - datetime.timedelta(days=23)
-        d2 = datetime.datetime.now() - datetime.timedelta(days=17)
+        d1 = datetime.datetime.now() - datetime.timedelta(days=39)
+        d2 = datetime.datetime.now() - datetime.timedelta(days=33)
+
         states = State.objects.filter(
             ivrs_type="gka-sms",
             date_of_visit__gte=d1,
@@ -102,6 +103,18 @@ class Command(BaseCommand):
 
             district_answers_mapping[district]['schools_visited'] = number_of_schools_visited
             district_answers_mapping[district]['classes_visited'] = number_of_classes_visited
+
+            blocks = schools.filter(
+                admin3__parent__parent__name=district
+            ).values_list(
+            'admin3__parent__name',
+            flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__parent__parent__name'
+            )
+            block = blocks[0]
+            district_answers_mapping[district]['blocks'] = block
 
         print json.dumps(district_answers_mapping, indent=4)
 
