@@ -17,7 +17,7 @@ class AdminDetails(KLPDetailAPIView, CacheMixin):
     lookup_url_kwarg = 'id'
 
     def get_queryset(self):
-        return Boundary.objects.all()
+        return Boundary.objects.all_active()
 
 
 class AssemblyList(KLPListAPIView):
