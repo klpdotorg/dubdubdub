@@ -46,7 +46,7 @@ WHERE
     parent_bdry.id=tb_boundary.parent AND 
     t2.district=t1.district AND 
     t2.slug=parent_bdry.dise_slug AND 
-    jarowinkler(lower(tb_boundary.name), lower(t1.block_name)) >= 0.85;
+    jarowinkler(lower(tb_boundary.name), lower(t1.block_name)) >= 0.9;
 
 UPDATE tb_boundary SET dise_slug='uttara-kannada-sirsi-mundagod' WHERE hid=10 and name='mundagod';
 UPDATE tb_boundary SET dise_slug='uttara-kannada-sirsi-joida' WHERE hid=10 and name='joida';
