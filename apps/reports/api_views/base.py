@@ -36,6 +36,11 @@ class BaseBoundaryReport(object):
             parentObject = Boundary.objects.get(id=boundary.parent.id)
             schools = parentObject.schools()
             parent["schoolcount"] = schools.count()
+        else:
+            neighbours = Boundary.objects.filter(parent=1, type=1)
+            for neighbour in neighbours:
+                count = neighbour.schools().count()
+                parent["schoolcount"] += count
         return parent
 
     def check_values(self, boundaryData):

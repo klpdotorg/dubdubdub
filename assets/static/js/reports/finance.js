@@ -1,21 +1,22 @@
 'use strict';
-var BOUNDARY_TYPE="boundary";
-var KLP_ID="8877";
-var LANGUAGE="kannada";
-
 (function() {
+    var utils;
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
+        utils  = klp.reportUtils;
         fetchReportDetails();
         klp.router.start();
     };
 
     function fetchReportDetails()
     {
-        var params = klp.router.getHash().queryParams;
-        var url = "reports/finance/"+BOUNDARY_TYPE+"/?language="+LANGUAGE+"&id="+KLP_ID;
-        var $xhr = klp.api.do(url, params);
+        var repType,bid,lang;
+        repType = utils.getSlashParameterByName("report_type");
+        bid = utils.getSlashParameterByName("id");
+        lang = utils.getSlashParameterByName("language");
+        var url = "reports/finance/"+repType+"/?language="+lang+"&id="+bid;
+        var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");
@@ -153,6 +154,71 @@ var LANGUAGE="kannada";
                                   "school_grant": {"grant": 0, "per_school": 0, "per_student": 0},
                                   "maintenance_grant":{"grant": 0, "per_school": 0, "per_student":0 }}
         };
+        expectedGrant["classrooms"] = [
+                {
+                    "type":"With <= 3 Classrooms",
+                    "categories": [
+                        { "name": "Lower and Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0},
+                        { "name": "Primary with Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0}
+                    ]
+                },
+                {
+                    "type":"With 4 Classrooms",
+                    "categories": [
+                        { "name": "Lower and Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0},
+                        { "name": "Primary with Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0}
+                    ]
+                },
+                {
+                    "type": "With 5 Classrooms",
+                    "categories": [
+                        { "name": "Lower and Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0},
+                        { "name": "Primary with Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0}
+                    ]
+                },
+                {   "type": "With 6-7 Classrooms",
+                    "categories" : [
+                        { "name": "Lower and Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0},
+                        { "name": "Primary with Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0}
+                    ]
+                },
+                {   "type": "With >= 8 Classrooms",
+                    "categories" : [
+                        { "name": "Lower and Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0},
+                        { "name": "Primary with Upper Primary",
+                          "schools" : 0,
+                          "grant_amount" : 0,
+                          "students" : 0}
+                    ]
+                }
+            ];
 
         for( var index in diseData["school_categories"])
         {
@@ -167,11 +233,40 @@ var LANGUAGE="kannada";
                 total_students = type["sum_boys"] + type["sum_girls"];
                 maintenance_grant = 0;
                 if(numclassrooms <= 3 )
+                {
                     maintenance_grant = 5000 * type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][0]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
                 else if(numclassrooms == 4)
+                {
                     maintenance_grant = 7500 * type["sum_schools"];
-                else if(numclassrooms >= 5)
+                    expectedGrant["classrooms"][1]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][1]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(numclassrooms == 5)
+                {
                     maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][2]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][2]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(6 <= numclassrooms <= 7)
+                {
+                    maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][3]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(numclassrooms >= 8)
+                {
+                    maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][4]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
                 expectedGrant["categories"]["lprimary_grant"]["school_count"] = type["sum_schools"];
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["per_school"] = 5000;
@@ -187,17 +282,40 @@ var LANGUAGE="kannada";
                 devgrant = type["sum_schools"] * 12000;
                 total_students = type["sum_boys"] + type["sum_girls"];
                 if(numclassrooms <= 3 )
+                {
                     maintenance_grant = 5000 * type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][1]["schools"] = type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][1]["students"] = total_students;
+                    expectedGrant["classrooms"][0]["categories"][1]["grant_amount"] = maintenance_grant;
+                }
                 else if(numclassrooms == 4)
+                {
                     maintenance_grant = 7500 * type["sum_schools"];
+                    expectedGrant["classrooms"][1]["categories"][1]["schools"] = type["sum_schools"];
+                    expectedGrant["classrooms"][1]["categories"][1]["students"] = total_students;
+                    expectedGrant["classrooms"][1]["categories"][1]["grant_amount"] = maintenance_grant;
+                }
                 else if(numclassrooms == 5)
+                {
                     maintenance_grant = 10000 * type["sum_schools"];
-                else if(numclassrooms == 6)
+                    expectedGrant["classrooms"][2]["categories"][1]["schools"] = type["sum_schools"];
+                    expectedGrant["classrooms"][2]["categories"][1]["students"] = total_students;
+                    expectedGrant["classrooms"][2]["categories"][1]["grant_amount"] = maintenance_grant;
+                }
+                else if(6<= numclassrooms <= 7)
+                {
                     maintenance_grant = 15000 * type["sum_schools"];
-                else if(numclassrooms == 7)
-                    maintenance_grant = 15000 * type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][1]["schools"] = type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][1]["students"] = total_students;
+                    expectedGrant["classrooms"][3]["categories"][1]["grant_amount"] = maintenance_grant;
+                }
                 else if(numclassrooms >= 8)
+                {
                     maintenance_grant = 20000 * type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][1]["schools"] = type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][1]["students"] = total_students;
+                    expectedGrant["classrooms"][4]["categories"][1]["grant_amount"] = maintenance_grant;
+                }
                 expectedGrant["categories"]["l_uprimary_grant"]["school_count"] = type["sum_schools"];
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["per_school"] = 12000;
@@ -214,11 +332,40 @@ var LANGUAGE="kannada";
                 devgrant = type["sum_schools"] * 7000;
                 total_students = type["sum_boys"] + type["sum_girls"];
                 if(numclassrooms <= 3 )
+                {
                     maintenance_grant = 5000 * type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][0]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
                 else if(numclassrooms == 4)
+                {
                     maintenance_grant = 7500 * type["sum_schools"];
-                else if(numclassrooms >= 5)
+                    expectedGrant["classrooms"][1]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][1]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(numclassrooms == 5)
+                {
                     maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][2]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][2]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(6 <= numclassrooms <= 7)
+                {
+                    maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][3]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
+                else if(numclassrooms >= 8)
+                {
+                    maintenance_grant = 10000 * type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][0]["schools"] += type["sum_schools"];
+                    expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
+                    expectedGrant["classrooms"][4]["categories"][0]["grant_amount"] += maintenance_grant;
+                }
                 expectedGrant["categories"]["uprimary_grant"]["school_count"] = type["sum_schools"];
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["per_school"] = 7000;
@@ -248,39 +395,6 @@ var LANGUAGE="kannada";
         grantdata["received"]["per_stu"] = Math.round(grantdata["received"]["grand_total"]/sum_students*100)/100;
         grantdata["expenditure"] = {"grand_total": diseData["sum_school_dev_grant_expnd"] + diseData["sum_tlm_grant_expnd"]};
         grantdata["expenditure"]["per_stu"] = Math.round(grantdata["expenditure"]["grand_total"]/sum_students*100)/100;
-        //DUMMY DATA ADDED HERE -----
-        grantdata["expected"]["classrooms"] = [
-                {   "type":"With <= 3 Classrooms",
-                    "categories": [
-                        { "name": "Lower and Upper Primary", "schools" : 50,"grant_amount" : 5000,"students" : 20000},
-                        { "name": "Primary with Upper Primary", "schools" : 50,"grant_amount" : 5000,"students" : 20000}
-                    ]
-                },
-                {   "type":"With 4 Classrooms",
-                    "categories": [
-                        { "name": "Lower and Upper Primary", "schools" : 50,"grant_amount" : 7500,"students" : 20000},
-                        { "name": "Primary with Upper Primary", "schools" : 50,"grant_amount" : 7500,"students" : 20000}
-                    ]
-                },
-                {   "type": "With 5 Classrooms",
-                    "categories": [
-                        { "name": "Lower and Upper Primary", "schools" : 50,"grant_amount" : 10000,"students" : 20000},
-                        { "name": "Primary with Upper Primary", "schools" : 50,"grant_amount" : 10000,"students" : 20000}
-                    ]
-                },
-                {   "type": "With 6-7 Classrooms",
-                    "categories" : [
-                        { "name": "Lower and Upper Primary", "schools" : 50,"grant_amount" : 10000,"students" : 20000},
-                        { "name": "Primary with Upper Primary", "schools" : 50,"grant_amount" : 15000,"students" : 20000}
-                    ]
-                },
-                {   "type": "With >= 8 Classrooms",
-                    "categories" : [
-                        { "name": "Lower and Upper Primary", "schools" : 50,"grant_amount" : 10000,"students" : 20000},
-                        { "name": "Primary with Upper Primary", "schools" : 50,"grant_amount" : 20000,"students" : 20000}
-                    ]
-                }
-            ]
         
         
         renderGrants(grantdata);

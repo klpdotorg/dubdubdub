@@ -5,7 +5,6 @@ from . import BaseBoundaryReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
-from django.db.models import Sum
 
 
 class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
@@ -139,8 +138,7 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
                     enrolment["Class 5-8"]["student_count"]
                 data["enrol_lower"] =\
                     enrolment["Class 1-4"]["student_count"]
-                data["school_count"] =\
-                    boundaryData["num_schools"]
+                data["school_count"] = active_schools.count()
                 teacher_count = self.get_teachercount(active_schools,
                                                       academic_year)
                 student_count = boundaryData["num_boys"] +\
@@ -159,11 +157,11 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
                     data["ptr"] = round(
                         student_count / float(teacher_count), 2)
             comparisonData.append(data)
-
         return comparisonData
 
     def get_comparison_data(self, boundary, active_schools, academic_year, year):
         self.parentInfo = self.get_parent_info(boundary)
+        self.reportInfo["parent"] = self.parentInfo
         self.reportInfo["comparison"] = {}
         self.reportInfo["comparison"]["year-wise"] =\
             self.get_year_comparison(active_schools, academic_year, year,

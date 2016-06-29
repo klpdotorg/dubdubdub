@@ -152,7 +152,7 @@ urlpatterns = patterns(
         template_name='demographics_dise.html'
         ), name='demographics_dise'),
 
-    url(r'^reports/finance$', StaticPageView.as_view(
+    url(r'^reports/finance/(?P<report_type>assembly|parliament|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
         template_name='finance.html'
         ), name='finance'),
 
