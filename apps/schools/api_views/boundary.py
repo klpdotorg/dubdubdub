@@ -117,7 +117,7 @@ class Admin1s(KLPListAPIView, CacheMixin):
 
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
-        qset = Boundary.objects\
+        qset = Boundary.objects.all_active()\
             .select_related('boundarycoord__coord', 'hierarchy__name')\
             .prefetch_related('hierarchy')
 
@@ -147,8 +147,10 @@ class Admin2sInsideAdmin1(KLPListAPIView):
     def get_queryset(self):
         admin1_id = self.kwargs.get('id', 0)
         admin1 = Boundary.objects.get(id=admin1_id)
-        return Boundary.objects.filter(parent_id=admin1_id, type=admin1.type)\
-            .select_related('boundarycoord__coord', 'type__name',
+        return Boundary.objects.all_active().filter(
+            parent_id=admin1_id, 
+            type=admin1.type
+        ).select_related('boundarycoord__coord', 'type__name',
                             'hierarchy__name')
 
 
@@ -165,9 +167,10 @@ class Admin3sInsideAdmin1(KLPListAPIView):
     def get_queryset(self):
         admin1_id = self.kwargs.get('id', 0)
         admin1 = Boundary.objects.get(id=admin1_id)
-        return Boundary.objects.filter(parent__parent_id=admin1_id,
-                                       type=admin1.type)\
-            .select_related('boundarycoord__coord', 'type__name',
+        return Boundary.objects.all_active().filter(
+            parent__parent_id=admin1_id,
+            type=admin1.type
+        ).select_related('boundarycoord__coord', 'type__name',
                             'hierarchy__name')
 
 
@@ -182,7 +185,7 @@ class Admin2s(KLPListAPIView, CacheMixin):
 
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
-        qset = Boundary.objects\
+        qset = Boundary.objects.all_active()\
             .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 
@@ -207,7 +210,7 @@ class Admin3sInsideAdmin2(KLPListAPIView):
     def get_queryset(self):
         admin2_id = self.kwargs.get('id', 0)
         admin2 = Boundary.objects.get(id=admin2_id)
-        return Boundary.objects.filter(parent_id=admin2_id, type=admin2.type)\
+        return Boundary.objects.all_active().filter(parent_id=admin2_id, type=admin2.type)\
             .select_related('boundarycoord__coord', 'type__name',
                             'hierarchy__name')
 
@@ -223,7 +226,7 @@ class Admin3s(KLPListAPIView, CacheMixin):
 
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
-        qset = Boundary.objects\
+        qset = Boundary.objects.all_active()\
             .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 
