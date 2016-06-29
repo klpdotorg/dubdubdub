@@ -211,8 +211,7 @@ class Admin3sInsideAdmin2(KLPListAPIView):
         admin2_id = self.kwargs.get('id', 0)
         admin2 = Boundary.objects.get(id=admin2_id)
         return Boundary.objects.all_active().filter(parent_id=admin2_id, type=admin2.type)\
-            .select_related('boundarycoord__coord', 'type__name',
-                            'hierarchy__name')
+            .select_related('boundarycoord__coord', 'type__name', 'hierarchy__name')
 
 
 class Admin3s(KLPListAPIView, CacheMixin):
