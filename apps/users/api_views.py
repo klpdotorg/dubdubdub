@@ -105,7 +105,7 @@ def logout(request):
 def login(request):
     email = request.POST.get("email", "")
     password = request.POST.get("password", "")
-    user = authenticate(username=email.lower(), password=password)
+    user = authenticate(username=email, password=password)
     if user is not None:
         auth_login(request, user)
         user_data = {
