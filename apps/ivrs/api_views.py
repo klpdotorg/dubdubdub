@@ -175,7 +175,7 @@ class VerifyAnswer(KLPAPIView):
 
 def get_date(date):
     date = datetime.datetime.strptime(
-        date, '%Y-%m-%d %H:%M:%S'
+        date, '%Y-%m-%d %H-%M-%S'
     )
     date = timezone.make_aware(
         date, timezone.get_current_timezone()
