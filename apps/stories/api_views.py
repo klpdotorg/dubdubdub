@@ -97,7 +97,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         sources = Questiongroup.objects.filter(
             survey=survey_id
         ).values_list(
-            'source__name',
+            'source__id',
             flat=True
         )
         return (source in sources)
@@ -105,13 +105,13 @@ class QuestiongroupsViewSet(KLPModelViewSet):
     def create(self, request, *args, **kwargs):
         survey_id = kwargs.get('survey_pk')
 
-        source = request.DATA.get('source', None)
+        source_id = request.DATA.get('source_id', None)
         question_ids = request.DATA.get('question_ids', None)
 
-        if source:
-            self.is_source_exists(survey_id, source)
+        if source_id:
+            self.is_source_exists(survey_id, source_id)
         else:
-            raise APIException("Please specify the source field")
+            raise APIException("Please specify the source_id field")
 
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
