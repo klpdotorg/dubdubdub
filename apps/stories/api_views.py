@@ -175,18 +175,28 @@ class StoriesSyncView(KLPAPIView):
         except ValueError as e:
             print e
             response['error'] = 'Invalid JSON data'
-        
+
         if response['error'] is None:
             for story in stories.get('stories', []):
                 timestamp = int(story.get('created_at'))/1000
+                sysid = None
+
                 try:
+                    sysid = int(story.get('sysid'))
+                except ValueError:
+                    sysid = None
+
+                try:
+                    if story.get('respondent_type') not in dict(UserType.USER_TYPE_CHOICES).keys():
+                        raise Exception("Invalid respondent type")
+                    user_type = UserType.objects.get(name__iexact=story.get('respondent_type'))
                     new_story, created = Story.objects.get_or_create(
                         user=request.user,
                         school=School.objects.get(pk=story.get('school_id')),
                         group=Questiongroup.objects.get(pk=story.get('group_id')),
-                        user_type_id=story.get('respondent_type'),
+                        user_type=user_type,
                         date_of_visit=datetime.datetime.fromtimestamp(timestamp),
-                        sysid=story.get('sysid')
+                        sysid=sysid
                     )
 
                     if created:
@@ -196,19 +206,16 @@ class StoriesSyncView(KLPAPIView):
                         new_story.email = request.user.email
                         new_story.save()
 
+                    for answer in story.get('answers', []):
+                        new_answer, created = Answer.objects.get_or_create(
+                            text=answer.get('text'),
+                            story=new_story,
+                            question=Question.objects.get(pk=answer.get('question_id'))
+                        )
                     response['success'].append(story.get('_id'))
                 except Exception as e:
-                    print e
+                    print "Error saving stories and answers:", e
                     response['failed'].append(story.get('_id'))
-                
-                for answer in story.get('answers', []):
-                    new_answer = Answer(
-                        text=answer('text'),
-                        story=new_story,
-                        question=Question.objects.get(pk=answer.get('question_id'))
-                    )
-                    new_answer.save()
-
         return Response(response)
 
 class StoryInfoView(KLPAPIView):
