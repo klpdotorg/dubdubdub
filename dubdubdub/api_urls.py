@@ -33,8 +33,10 @@ from users.api_views import (
 from stories.api_views import (
     StoryQuestionsView, StoriesView, StoryInfoView, SourceListView,
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
-    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet
+    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet, StoriesSyncView
 )
+
+from django.views.decorators.csrf import csrf_exempt
 
 ListCreateMapper = {
     'get' : 'list',
@@ -129,6 +131,9 @@ urlpatterns = patterns(
         name="api_password_reset_request"),
     url(r'^password-change/$', PasswordChangeView.as_view(),
         name="api_password_change"),
+
+    # Mobile app related urls
+    url(r'^sync$', csrf_exempt(StoriesSyncView.as_view()), name='api_stories_sync'),
 
     # SYS urls
     url(r'^stories/(?P<pk>[0-9]+)$', ShareYourStoryView.as_view(),

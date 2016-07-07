@@ -2,6 +2,7 @@ import ast
 import random
 import calendar
 import datetime
+import json
 
 from PIL import Image
 from base64 import b64decode
@@ -22,7 +23,6 @@ from rest_framework.exceptions import (
 from django.conf import settings
 from django.db.models import Q, Count
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import resolve, Resolver404
 
 from users.models import User
 
@@ -153,6 +153,63 @@ class SourceListView(KLPListAPIView):
     queryset = Source.objects.all()
     serializer_class = SourceSerializer
 
+
+class StoriesSyncView(KLPAPIView):
+    """
+    Expects a POST request with JSON body
+    in the format - https://gist.github.com/iambibhas/fe26fbaa252d0a4f317542d650d4979f
+    """
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        response = {
+            'success': [],
+            'failed': [],
+            'error': None
+        }
+        try:
+            stories = json.loads(request.body)
+            print stories
+        except ValueError as e:
+            print e
+            response['error'] = 'Invalid JSON data'
+        
+        if response['error'] is None:
+            for story in stories.get('stories', []):
+                timestamp = int(story.get('created_at'))/1000
+                try:
+                    new_story, created = Story.objects.get_or_create(
+                        user=request.user,
+                        school=School.objects.get(pk=story.get('school_id')),
+                        group=Questiongroup.objects.get(pk=story.get('group_id')),
+                        user_type_id=story.get('respondent_type'),
+                        date_of_visit=datetime.datetime.fromtimestamp(timestamp),
+                        sysid=story.get('sysid')
+                    )
+
+                    if created:
+                        new_story.is_verified = True
+                        new_story.telephone = request.user.mobile_no
+                        new_story.name = request.user.get_full_name()
+                        new_story.email = request.user.email
+                        new_story.save()
+
+                    response['success'].append(story.get('_id'))
+                except Exception as e:
+                    print e
+                    response['failed'].append(story.get('_id'))
+                
+                for answer in story.get('answers', []):
+                    new_answer = Answer(
+                        text=answer('text'),
+                        story=new_story,
+                        question=Question.objects.get(pk=answer.get('question_id'))
+                    )
+                    new_answer.save()
+
+        return Response(response)
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -429,11 +486,11 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(school__id=school_id)
 
         if mp_id:
-            stories_qset = stories_qset.filter(
+            stories = stories.filter(
                 school__electedrep__mp_const__id=mp_id)
 
         if mla_id:
-            stories_qset = stories_qset.filter(
+            stories = stories.filter(
                 school__electedrep__mla_const__id=mla_id)
 
         if start_date:
