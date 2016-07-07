@@ -201,3 +201,13 @@ class VerifyAnswer(KLPAPIView):
         )
 
         return Response("", status=status_code)
+
+def get_date(date):
+    date = datetime.datetime.strptime(
+        date, '%Y-%m-%d %H:%M:%S'
+    )
+    date = timezone.make_aware(
+        date, timezone.get_current_timezone()
+    )
+    return date
+
