@@ -107,6 +107,7 @@ class OmniSearch(KLPAPIView):
 
         response['boundaries'] = BoundarySerializer(
             Boundary.objects.filter(
+                status=2,
                 name__icontains=text,
                 boundarycoord__coord__isnull=False
             ).select_related(

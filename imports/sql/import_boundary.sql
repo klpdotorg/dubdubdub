@@ -39,3 +39,10 @@ SET parent=ems_www_tb_boundary.parent_id,
 FROM ems_www_tb_boundary
 WHERE tb_boundary.id=ems_www_tb_boundary.id;
 
+UPDATE tb_boundary
+SET status=2
+WHERE id IN (SELECT id FROM ems_tb_boundary);
+
+UPDATE tb_boundary
+SET status=1
+WHERE id NOT IN (SELECT id FROM ems_tb_boundary);

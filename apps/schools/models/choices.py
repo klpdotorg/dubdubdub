@@ -2,6 +2,12 @@ from __future__ import unicode_literals
 
 ### Start common choices definitions
 
+STATUS_CHOICES = (
+    (0, 'Deleted'),
+    (1, 'Inactive'),
+    (2, 'Active')
+)
+
 CAT_CHOICES = (
     ('Model Primary', 'Model Primary'),
     ('Anganwadi', 'Anganwadi'),

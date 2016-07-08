@@ -8,6 +8,8 @@ CREATE EXTENSION pg_trgm;
 -- update primary district slugs - hid=9
 ----------------------------------------
 SELECT set_limit(0.525);
+-- trim names
+update tb_boundary set name=trim(name) where name like ' %' or name like '% ';
 
 CREATE MATERIALIZED VIEW mvw_dise_districts AS
 SELECT t1.district, t1.slug
@@ -16,13 +18,31 @@ FROM dblink('host=localhost dbname=klpdise_olap user=klp'::text, 'select distinc
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 FROM mvw_dise_districts t1
-WHERE hid=9 AND lower(name)%lower(t1.district);
+WHERE status=2 AND hid=9 AND dise_slug is null 
+AND jarowinkler(name, t1.district) = 1;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+FROM mvw_dise_districts t1
+WHERE status=2 AND hid=9 AND dise_slug is null 
+AND jarowinkler(name, t1.district) >= 0.95;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+FROM mvw_dise_districts t1
+WHERE status=2 AND hid=9 AND dise_slug is null 
+AND jarowinkler(name, t1.district) >= 9;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+FROM mvw_dise_districts t1
+WHERE status=2 AND hid=9 AND dise_slug is null 
+AND jarowinkler(name, t1.district) >= 0.85;
 
 -- update boundaries that didnt match by name
 
-UPDATE tb_boundary SET dise_slug='chikkamangalore' WHERE hid=9 AND name='chikmagalur';
-UPDATE tb_boundary SET dise_slug='chamarajanagara' WHERE hid=9 AND name='chamrajnagar';
-UPDATE tb_boundary SET dise_slug='uttara-kannada' WHERE hid=9 AND name='uttara kannada';
+UPDATE tb_boundary SET dise_slug='tumkur-madhugiri' WHERE hid=9 AND name='madhugiri';
+UPDATE tb_boundary SET dise_slug='belgaum-chikkodi' WHERE hid=9 AND name='chikkodi';
 
 -- no slug should be set for bangalore, as there are 2 districts in DISE
 -- for Bangalore. Bangalore U North and U South
@@ -34,13 +54,44 @@ UPDATE tb_boundary SET dise_slug = NULL WHERE id=8877;
 ----------------------------------------
 CREATE MATERIALIZED VIEW mvw_dise_blocks AS
 SELECT t1.block_name, t1.district, t1.slug
-FROM dblink('host=localhost dbname=klpdise_olap user=klp'::text, 'select block_name, district, slug from dise_1415_block_aggregations where block_name is not null'::text) t1(block_name text, district text, slug text);
+FROM dblink('host=localhost dbname=klpdise_olap user=klp'::text, 'select block_name, district, slug from dise_1415_block_aggregations where block_name <> '''' '::text) t1(block_name text, district text, slug text);
 
 -- select bdry.name, parent_bdry.name, t1.block_name, t1.district, t1.slug
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
-where tb_boundary.hid=10 and parent_bdry.id=tb_boundary.parent and t2.district=t1.district and t2.slug=parent_bdry.dise_slug and lower(tb_boundary.name) % lower(t1.block_name);
+WHERE 
+    tb_boundary.dise_slug is null AND
+    tb_boundary.status=2 AND 
+    tb_boundary.hid=10 AND 
+    parent_bdry.id=tb_boundary.parent AND 
+    t2.district=t1.district AND 
+    t2.slug=parent_bdry.dise_slug AND 
+    jarowinkler(tb_boundary.name, t1.block_name) = 1;
+-- select bdry.name, parent_bdry.name, t1.block_name, t1.district, t1.slug
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
+WHERE 
+    tb_boundary.dise_slug is null AND
+    tb_boundary.status=2 AND 
+    tb_boundary.hid=10 AND 
+    parent_bdry.id=tb_boundary.parent AND 
+    t2.district=t1.district AND 
+    t2.slug=parent_bdry.dise_slug AND 
+    jarowinkler(tb_boundary.name, t1.block_name) >= 0.95;
+-- select bdry.name, parent_bdry.name, t1.block_name, t1.district, t1.slug
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
+WHERE 
+    tb_boundary.dise_slug is null AND
+    tb_boundary.status=2 AND 
+    tb_boundary.hid=10 AND 
+    parent_bdry.id=tb_boundary.parent AND 
+    t2.district=t1.district AND 
+    t2.slug=parent_bdry.dise_slug AND 
+    jarowinkler(tb_boundary.name, t1.block_name) >= 0.9;
 
 UPDATE tb_boundary SET dise_slug='uttara-kannada-sirsi-mundagod' WHERE hid=10 and name='mundagod';
 UPDATE tb_boundary SET dise_slug='uttara-kannada-sirsi-joida' WHERE hid=10 and name='joida';
@@ -69,33 +120,60 @@ CREATE MATERIALIZED VIEW mvw_dise_clusters AS
 SELECT t1.cluster_name, t1.block_name, t1.district, t1.slug
 FROM dblink(
     'host=localhost dbname=klpdise_olap user=klp'::text,
-    'select cluster_name, block_name, district, slug from dise_1415_cluster_aggregations where cluster_name is not null'::text
+    'select cluster_name, block_name, district, slug from dise_1415_cluster_aggregations where cluster_name <> '''''::text
 ) t1(cluster_name text, block_name text, district text, slug text);
 
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 from tb_boundary parent_bdry, mvw_dise_clusters t1, mvw_dise_blocks t2
 where
-    tb_boundary.hid=11 and
-    parent_bdry.id=tb_boundary.parent and
-    t2.block_name=t1.block_name and
-    t2.slug=parent_bdry.dise_slug and
-    lower(tb_boundary.name) % lower(t1.cluster_name);
-
-UPDATE tb_boundary
-SET dise_slug=t1.slug
-from tb_boundary parent_bdry, mvw_dise_clusters t1, mvw_dise_blocks t2
-where
+    tb_boundary.status=2 and
     tb_boundary.dise_slug is null and
     tb_boundary.hid=11 and
     parent_bdry.id=tb_boundary.parent and
     t2.block_name=t1.block_name and
     t2.slug=parent_bdry.dise_slug and
-    jarowinkler(lower(tb_boundary.name), lower(t1.cluster_name)) >= 0.85;
+    jarowinkler(tb_boundary.name, t1.cluster_name) = 1;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+from tb_boundary parent_bdry, mvw_dise_clusters t1, mvw_dise_blocks t2
+where
+    tb_boundary.status=2 and
+    tb_boundary.dise_slug is null and
+    tb_boundary.hid=11 and
+    parent_bdry.id=tb_boundary.parent and
+    t2.block_name=t1.block_name and
+    t2.slug=parent_bdry.dise_slug and
+    jarowinkler(tb_boundary.name, t1.cluster_name) >= 0.95;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+from tb_boundary parent_bdry, mvw_dise_clusters t1, mvw_dise_blocks t2
+where
+    tb_boundary.status=2 and
+    tb_boundary.dise_slug is null and
+    tb_boundary.hid=11 and
+    parent_bdry.id=tb_boundary.parent and
+    t2.block_name=t1.block_name and
+    t2.slug=parent_bdry.dise_slug and
+    jarowinkler(tb_boundary.name, t1.cluster_name) >= 0.9;
+
+UPDATE tb_boundary
+SET dise_slug=t1.slug
+from tb_boundary parent_bdry, mvw_dise_clusters t1, mvw_dise_blocks t2
+where
+    tb_boundary.status=2 and
+    tb_boundary.dise_slug is null and
+    tb_boundary.hid=11 and
+    parent_bdry.id=tb_boundary.parent and
+    t2.block_name=t1.block_name and
+    t2.slug=parent_bdry.dise_slug and
+    jarowinkler(tb_boundary.name, t1.cluster_name) >= 0.85;
 
 ----------------------------------------
 ------------- CLEAN UP -----------------
 ----------------------------------------
-DROP MATERIALIZED VIEW mvw_dise_districts;
-DROP MATERIALIZED VIEW mvw_dise_blocks;
-DROP MATERIALIZED VIEW mvw_dise_clusters;
+-- DROP MATERIALIZED VIEW mvw_dise_districts;
+-- DROP MATERIALIZED VIEW mvw_dise_blocks;
+-- DROP MATERIALIZED VIEW mvw_dise_clusters;

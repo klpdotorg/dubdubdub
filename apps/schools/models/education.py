@@ -4,13 +4,24 @@ from common.utils import cached_property
 from .partners import DiseInfo
 from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
-    SEX_CHOICES, ALLOWED_GENDER_CHOICES
+    SEX_CHOICES, ALLOWED_GENDER_CHOICES, STATUS_CHOICES
 from .partners import LibLevelAgg
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count, Q
 from django.conf import settings
 from django.core.urlresolvers import reverse
 import json
+
+
+class StatusManager(models.Manager):
+    def all_active(self):
+        return self.filter(status=2)
+    
+    def all_inactive(self):
+        return self.filter(status=1)
+
+    def all_deleted(self):
+        return self.filter(status=0)
 
 
 class AcademicYear(BaseModel):
@@ -78,6 +89,10 @@ class Boundary(BaseModel):
     dise_slug = models.SlugField(max_length=300)
     hierarchy = models.ForeignKey('BoundaryHierarchy', db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
+
+    status = models.IntegerField(choices=STATUS_CHOICES)
+
+    objects = StatusManager()
 
     def __unicode__(self):
         return self.name
@@ -206,7 +221,9 @@ class School(GeoBaseModel):
     sex = models.CharField(max_length=128, choices=ALLOWED_GENDER_CHOICES)
     moi = models.CharField(max_length=128, choices=MT_CHOICES)
     mgmt = models.CharField(max_length=128, choices=MGMT_CHOICES)
-    status = models.IntegerField()
+    status = models.IntegerField(choices=STATUS_CHOICES)
+
+    objects = StatusManager()
 
     def __unicode__(self):
         return "%s: %s" % (self.id, self.name)

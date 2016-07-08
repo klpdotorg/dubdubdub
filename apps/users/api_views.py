@@ -247,7 +247,7 @@ class VolunteerActivitiesView(generics.ListCreateAPIView, KLPListAPIView):
     date -- date of activity (YYYY-MM-DD)
     school -- school where activity is (id)
     users -- filter by user associated with activity (id)
-    bbox -- bbox filter 
+    bbox -- bbox filter
     """
     serializer_class = VolunteerActivitySerializer
     permission_classes = (VolunteerActivitiesPermission,)
@@ -333,9 +333,9 @@ class VolunteerActivityUsersView(generics.ListCreateAPIView):
 
 
 class VolunteerActivityUserView(generics.RetrieveUpdateDestroyAPIView):
-    """View to update status of user volunteer activities as well 
+    """View to update status of user volunteer activities as well
     as delete them.
-    Only users with write perms on organization who owns the activity 
+    Only users with write perms on organization who owns the activity
     can change status.
     Only volunteer user can delete.
     """
