@@ -102,11 +102,16 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         )
         return (source in sources)
 
+    def is_questions_exist(self, question_ids):
+        return Question.objects.filter(id__in=question_ids).count() == len(question_ids)
+
     def create(self, request, *args, **kwargs):
         question_ids = request.DATA.get('question_ids', None)
 
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
+            if not self.is_questions_exist(question_ids):
+                raise APIException("Please select valid question ids")
         else:
             raise APIException("Please select one or more questions")
 
