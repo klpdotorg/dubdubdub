@@ -110,11 +110,13 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         else:
             raise APIException("Please select one or more questions")
 
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer = self.get_serializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            raise APIException(serializer.errors)
     #     survey_id = kwargs.get('survey_pk')
     #     source_id = request.DATA.get('source_id', None)
 
