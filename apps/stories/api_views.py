@@ -94,15 +94,6 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         else:
             return False
 
-    def is_source_exists(self, survey_id, source):
-        sources = Questiongroup.objects.filter(
-            survey=survey_id
-        ).values_list(
-            'source__id',
-            flat=True
-        )
-        return (source in sources)
-
     def is_questions_exist(self, question_ids):
         return Question.objects.filter(id__in=question_ids).count() == len(question_ids)
 
@@ -142,23 +133,6 @@ class QuestiongroupsViewSet(KLPModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
             raise APIException(serializer.errors)
-
-
-    #     source_id = request.DATA.get('source_id', None)
-
-    #     if source_id:
-    #         self.is_source_exists(survey_id, source_id)
-    #     else:
-    #         raise APIException("Please specify the source_id field")
-
-    #     serializer = self.get_serializer(data=request.DATA)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         headers = self.get_success_headers(serializer.data)
-    #     else:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class QuestionsViewSet(KLPModelViewSet):
