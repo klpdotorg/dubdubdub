@@ -114,9 +114,16 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         if serializer.is_valid():
             serializer.save()
             headers = self.get_success_headers(serializer.data)
+            questiongroup_id = serializer.data['id']
+            self.create_questiongroup_question_relation(questiongroup_id, question_ids)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
             raise APIException(serializer.errors)
+
+    def create_questiongroup_question_relation(self, questiongroup_id, question_ids):
+        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+        print questiongroup.version
+        print question_ids
     #     survey_id = kwargs.get('survey_pk')
     #     source_id = request.DATA.get('source_id', None)
 
