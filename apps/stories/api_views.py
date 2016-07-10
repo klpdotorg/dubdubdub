@@ -103,27 +103,26 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         return (source in sources)
 
     def create(self, request, *args, **kwargs):
+        question_ids = request.DATA.get('question_ids', None)
+
+        if question_ids:
+            question_ids = ast.literal_eval(question_ids)
+        else:
+            raise APIException("Please select one or more questions")
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     #     survey_id = kwargs.get('survey_pk')
-
     #     source_id = request.DATA.get('source_id', None)
-    #     question_ids = request.DATA.get('question_ids', None)
 
     #     if source_id:
     #         self.is_source_exists(survey_id, source_id)
     #     else:
     #         raise APIException("Please specify the source_id field")
-
-    #     if question_ids:
-    #         question_ids = ast.literal_eval(question_ids)
-    #         self.is_questiongroup_exists(survey_id, question_ids)
-    #     else:
-    #         raise APIException("Please select one or more questions")
-
+    #     self.is_questiongroup_exists(survey_id, question_ids)
     #     serializer = self.get_serializer(data=request.DATA)
     #     if serializer.is_valid():
     #         serializer.save()
