@@ -92,6 +92,8 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                     " and Version: " + \
                     str(version)
                 raise APIException(message)
+        else:
+            return False
 
     def is_source_exists(self, survey_id, source):
         sources = Questiongroup.objects.filter(
@@ -116,10 +118,12 @@ class QuestiongroupsViewSet(KLPModelViewSet):
             )
 
     def create(self, request, *args, **kwargs):
+        survey_id = kwargs.get('survey_pk')
         question_ids = request.DATA.get('question_ids', None)
 
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
+            self.is_questiongroup_exists(survey_id, question_ids)
             if not self.is_questions_exist(question_ids):
                 raise APIException("Please select valid question ids")
         else:
@@ -135,14 +139,14 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         else:
             raise APIException(serializer.errors)
 
-    #     survey_id = kwargs.get('survey_pk')
+
     #     source_id = request.DATA.get('source_id', None)
 
     #     if source_id:
     #         self.is_source_exists(survey_id, source_id)
     #     else:
     #         raise APIException("Please specify the source_id field")
-    #     self.is_questiongroup_exists(survey_id, question_ids)
+
     #     serializer = self.get_serializer(data=request.DATA)
     #     if serializer.is_valid():
     #         serializer.save()
