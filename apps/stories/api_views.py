@@ -38,7 +38,7 @@ from common.views import (
 from .models import (
     Question, Story, StoryImage,
     Answer, Questiongroup, UserType,
-    Source, Survey
+    Source, Survey, QuestiongroupQuestions
 )
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
@@ -105,6 +105,16 @@ class QuestiongroupsViewSet(KLPModelViewSet):
     def is_questions_exist(self, question_ids):
         return Question.objects.filter(id__in=question_ids).count() == len(question_ids)
 
+    def create_questiongroup_question_relation(self, questiongroup_id, question_ids):
+        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+        questions = Question.objects.filter(id__in=question_ids)
+        for count, question in enumerate(questions):
+            QuestiongroupQuestions.objects.get_or_create(
+                questiongroup=questiongroup,
+                question=question,
+                sequence=count+1
+            )
+
     def create(self, request, *args, **kwargs):
         question_ids = request.DATA.get('question_ids', None)
 
@@ -125,10 +135,6 @@ class QuestiongroupsViewSet(KLPModelViewSet):
         else:
             raise APIException(serializer.errors)
 
-    def create_questiongroup_question_relation(self, questiongroup_id, question_ids):
-        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
-        print questiongroup.version
-        print question_ids
     #     survey_id = kwargs.get('survey_pk')
     #     source_id = request.DATA.get('source_id', None)
 
