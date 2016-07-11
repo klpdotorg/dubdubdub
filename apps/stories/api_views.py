@@ -123,8 +123,11 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         serializer = self.get_serializer(data=request.DATA)
         if serializer.is_valid():
-            latest_questiongroup = survey.questiongroup_set.latest('version')
-            new_version = latest_questiongroup.version + 1
+            if survey.questiongroup_set.exists():
+                latest_questiongroup = survey.questiongroup_set.latest('version')
+                new_version = latest_questiongroup.version + 1
+            else:
+                new_version = 1
             serializer.object.version = new_version
             serializer.save()
             headers = self.get_success_headers(serializer.data)
