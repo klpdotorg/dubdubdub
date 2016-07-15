@@ -98,32 +98,32 @@
             var maintenance_grant = 0;
             if( type["id"] == 1)
             {
-                devgrant = type["sum_schools"] * 5000;
-                maintenance_grant += type["classrooms"]["leq_3"] * 5000;
-                maintenance_grant += type["classrooms"]["eq_4"] * 7500;
-                maintenance_grant += type["classrooms"]["eq_5"] * 10000;
-                maintenance_grant += type["classrooms"]["mid_67"] * 10000;
-                maintenance_grant += type["classrooms"]["geq_8"] * 10000;
+                devgrant = type["sum_schools"]["total"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
                 expectedGrant += devgrant + maintenance_grant;
             }
             if( type["id"] == 2)
             {
-                devgrant = type["sum_schools"] * 12000;
-                maintenance_grant += type["classrooms"]["leq_3"] * 5000;
-                maintenance_grant += type["classrooms"]["eq_4"] * 7500;
-                maintenance_grant += type["classrooms"]["eq_5"] * 10000;
-                maintenance_grant += type["classrooms"]["mid_67"] * 15000;
-                maintenance_grant += type["classrooms"]["geq_8"] * 20000;
+                devgrant = type["sum_schools"]["total"] * 12000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 15000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 20000;
                 expectedGrant += devgrant + maintenance_grant;
             }
             if( type["id"] == 4)
             {
-                devgrant = type["sum_schools"] * 7000;
-                maintenance_grant += type["classrooms"]["leq_3"] * 5000;
-                maintenance_grant += type["classrooms"]["eq_4"] * 7500;
-                maintenance_grant += type["classrooms"]["eq_5"] * 10000;
-                maintenance_grant += type["classrooms"]["mid_67"] * 10000;
-                maintenance_grant += type["classrooms"]["geq_8"] * 10000;
+                devgrant = type["sum_schools"]["total"] * 7000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
                 expectedGrant += devgrant + maintenance_grant;
             }
         }
@@ -149,11 +149,11 @@
                     "categories": [
                         { "name": "Lower and Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 5000,
                           "students" : 0},
                         { "name": "Primary with Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 5000,
                           "students" : 0}
                     ]
                 },
@@ -162,11 +162,11 @@
                     "categories": [
                         { "name": "Lower and Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 7500,
                           "students" : 0},
                         { "name": "Primary with Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 7500,
                           "students" : 0}
                     ]
                 },
@@ -175,11 +175,11 @@
                     "categories": [
                         { "name": "Lower and Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 10000,
                           "students" : 0},
                         { "name": "Primary with Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 10000,
                           "students" : 0}
                     ]
                 },
@@ -187,11 +187,11 @@
                     "categories" : [
                         { "name": "Lower and Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 10000,
                           "students" : 0},
                         { "name": "Primary with Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 15000,
                           "students" : 0}
                     ]
                 },
@@ -199,11 +199,11 @@
                     "categories" : [
                         { "name": "Lower and Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 10000,
                           "students" : 0},
                         { "name": "Primary with Upper Primary",
                           "schools" : 0,
-                          "grant_amount" : 0,
+                          "grant_amount" : 20000,
                           "students" : 0}
                     ]
                 }
@@ -214,73 +214,74 @@
             var type = diseData["school_categories"][index];
             var devgrant = 0;
             var total_students = 0;
-            var maintenance_grant = 0;
             if( type["id"] == 1)
             {
-                devgrant = type["sum_schools"] * 5000;
+                var maintenance_grant = 0;
+                devgrant = type["sum_schools"]["total"] * 5000;
                 total_students = type["sum_boys"] + type["sum_girls"];
 
-                expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][0]["categories"][0]["grant_amount"] += type["classrooms"]["leq_3"] * 5000;
+                expectedGrant["classrooms"][0]["categories"][0]["schools"] = type["sum_schools"]["classrooms_leq_3"];
+                //expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
+                maintenance_grant = type["sum_schools"]["classrooms_leq_3"] * 5000;
 
-                expectedGrant["classrooms"][1]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][1]["categories"][0]["grant_amount"] += type["classrooms"]["eq_4"] * 7500;
+                expectedGrant["classrooms"][1]["categories"][0]["schools"] = type["sum_schools"]["classrooms_eq_4"];
+                //expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
 
-                expectedGrant["classrooms"][2]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][2]["categories"][0]["grant_amount"] += type["classrooms"]["eq_5"] * 10000;
+                expectedGrant["classrooms"][2]["categories"][0]["schools"] = type["sum_schools"]["classrooms_eq_5"];
+                //expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
 
-                expectedGrant["classrooms"][3]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][3]["categories"][0]["grant_amount"] += type["classrooms"]["mid_67"] * 10000;
+                expectedGrant["classrooms"][3]["categories"][0]["schools"] = type["sum_schools"]["classrooms_mid_67"];
+                //expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
 
-                expectedGrant["classrooms"][4]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][4]["categories"][0]["grant_amount"] += type["classrooms"]["geq_8"] * 10000;
+                expectedGrant["classrooms"][4]["categories"][0]["schools"] = type["sum_schools"]["classrooms_geq_8"];
+                //expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
                 
-                expectedGrant["categories"]["lprimary_grant"]["school_count"] = type["sum_schools"];
+                expectedGrant["categories"]["lprimary_grant"]["school_count"] = type["sum_schools"]["total"];
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["per_school"] = 5000;
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["per_student"] = Math.round(devgrant/total_students*100)/100;
                 expectedGrant["categories"]["lprimary_grant"]["maintenance_grant"]["grant"] = maintenance_grant;
-                expectedGrant["categories"]["lprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]*100)/100;
+                expectedGrant["categories"]["lprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]["total"]*100)/100;
                 expectedGrant["categories"]["lprimary_grant"]["maintenance_grant"]["per_student"] = Math.round(maintenance_grant/total_students*100)/100;
                 expectedGrant["categories"]["lprimary_grant"]["grand_total"] = devgrant + maintenance_grant;
                 expectedGrant["categories"]["lprimary_grant"]["school_grant"]["grant_perc"] = Math.round(devgrant*100/expectedGrant["categories"]["lprimary_grant"]["grand_total"]*100)/100;
             }
             if( type["id"] == 2)
             {
-                devgrant = type["sum_schools"] * 12000;
+                var maintenance_grant = 0;
+                devgrant = type["sum_schools"]["total"] * 12000;
                 total_students = type["sum_boys"] + type["sum_girls"];
 
-                expectedGrant["classrooms"][0]["categories"][1]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][0]["categories"][1]["students"] += total_students;
-                expectedGrant["classrooms"][0]["categories"][1]["grant_amount"] += type["classrooms"]["leq_3"] * 5000;
+                expectedGrant["classrooms"][0]["categories"][1]["schools"] = type["sum_schools"]["classrooms_leq_3"];
+                //expectedGrant["classrooms"][0]["categories"][1]["students"] += total_students;
+                maintenance_grant = type["sum_schools"]["classrooms_leq_3"] * 5000;
 
-                expectedGrant["classrooms"][1]["categories"][1]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][1]["categories"][1]["students"] += total_students;
-                expectedGrant["classrooms"][1]["categories"][1]["grant_amount"] += type["classrooms"]["eq_4"] * 7500;
+                expectedGrant["classrooms"][1]["categories"][1]["schools"] = type["sum_schools"]["classrooms_eq_4"];
+                //expectedGrant["classrooms"][1]["categories"][1]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
 
-                expectedGrant["classrooms"][2]["categories"][1]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][2]["categories"][1]["students"] += total_students;
-                expectedGrant["classrooms"][2]["categories"][1]["grant_amount"] += type["classrooms"]["eq_5"] * 10000;
+                expectedGrant["classrooms"][2]["categories"][1]["schools"] = type["sum_schools"]["classrooms_eq_5"];
+                //expectedGrant["classrooms"][2]["categories"][1]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
 
-                expectedGrant["classrooms"][3]["categories"][1]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][3]["categories"][1]["students"] += total_students;
-                expectedGrant["classrooms"][3]["categories"][1]["grant_amount"] += type["classrooms"]["mid_67"] * 15000;
+                expectedGrant["classrooms"][3]["categories"][1]["schools"] = type["sum_schools"]["classrooms_mid_67"];
+                //expectedGrant["classrooms"][3]["categories"][1]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 15000;
 
-                expectedGrant["classrooms"][4]["categories"][1]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][4]["categories"][1]["students"] += total_students;
-                expectedGrant["classrooms"][4]["categories"][1]["grant_amount"] += type["classrooms"]["geq_8"] * 20000;
-                
-                expectedGrant["categories"]["l_uprimary_grant"]["school_count"] = type["sum_schools"];
+                expectedGrant["classrooms"][4]["categories"][1]["schools"] = type["sum_schools"]["classrooms_geq_8"];
+                //expectedGrant["classrooms"][4]["categories"][1]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 20000;
+
+                expectedGrant["categories"]["l_uprimary_grant"]["school_count"] = type["sum_schools"]["total"];
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["per_school"] = 12000;
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["per_student"] = Math.round(devgrant/total_students*100)/100;
                 expectedGrant["categories"]["l_uprimary_grant"]["maintenance_grant"]["grant"] = maintenance_grant;
-                expectedGrant["categories"]["l_uprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]*100)/100;
+                expectedGrant["categories"]["l_uprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]["total"]*100)/100;
                 expectedGrant["categories"]["l_uprimary_grant"]["maintenance_grant"]["per_student"] = Math.round(maintenance_grant/total_students*100)/100;
                 expectedGrant["categories"]["l_uprimary_grant"]["grand_total"] = devgrant + maintenance_grant;
                 expectedGrant["categories"]["l_uprimary_grant"]["school_grant"]["grant_perc"] = Math.round(devgrant*100/expectedGrant["categories"]["l_uprimary_grant"]["grand_total"]*100)/100;
@@ -288,34 +289,35 @@
             }
             if( type["id"] == 4)
             {
-                devgrant = type["sum_schools"] * 7000;
+                var maintenance_grant = 0;
+                devgrant = type["sum_schools"]["total"] * 7000;
                 total_students = type["sum_boys"] + type["sum_girls"];
-                expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][0]["categories"][0]["grant_amount"] += type["classrooms"]["leq_3"] * 5000;
+                expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"]["classrooms_leq_3"];
+                //expectedGrant["classrooms"][0]["categories"][0]["students"] += total_students;
+                maintenance_grant = type["sum_schools"]["classrooms_leq_3"] * 5000;
 
-                expectedGrant["classrooms"][1]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][1]["categories"][0]["grant_amount"] += type["classrooms"]["eq_4"] * 7500;
+                expectedGrant["classrooms"][1]["categories"][0]["schools"] += type["sum_schools"]["classrooms_eq_4"];
+                //expectedGrant["classrooms"][1]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
 
-                expectedGrant["classrooms"][2]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][2]["categories"][0]["grant_amount"] += type["classrooms"]["eq_5"] * 10000;
+                expectedGrant["classrooms"][2]["categories"][0]["schools"] += type["sum_schools"]["classrooms_eq_5"];
+                //expectedGrant["classrooms"][2]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
 
-                expectedGrant["classrooms"][3]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][3]["categories"][0]["grant_amount"] += type["classrooms"]["mid_67"] * 10000;
+                expectedGrant["classrooms"][3]["categories"][0]["schools"] += type["sum_schools"]["classrooms_mid_67"];
+                //expectedGrant["classrooms"][3]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
 
-                expectedGrant["classrooms"][4]["categories"][0]["schools"] += type["sum_schools"];
-                expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
-                expectedGrant["classrooms"][4]["categories"][0]["grant_amount"] += type["classrooms"]["geq_8"] * 10000;
+                expectedGrant["classrooms"][4]["categories"][0]["schools"] += type["sum_schools"]["classrooms_geq_8"];
+                //expectedGrant["classrooms"][4]["categories"][0]["students"] += total_students;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
                 
-                expectedGrant["categories"]["uprimary_grant"]["school_count"] = type["sum_schools"];
+                expectedGrant["categories"]["uprimary_grant"]["school_count"] = type["sum_schools"]["total"];
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["grant"] = devgrant;
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["per_school"] = 7000;
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["per_student"] = Math.round(devgrant/total_students*100)/100;
                 expectedGrant["categories"]["uprimary_grant"]["maintenance_grant"]["grant"] = maintenance_grant;
-                expectedGrant["categories"]["uprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]*100)/100;
+                expectedGrant["categories"]["uprimary_grant"]["maintenance_grant"]["per_school"] = Math.round(maintenance_grant/type["sum_schools"]["total"]*100)/100;
                 expectedGrant["categories"]["uprimary_grant"]["maintenance_grant"]["per_student"] = Math.round(maintenance_grant/total_students*100)/100;
                 expectedGrant["categories"]["uprimary_grant"]["grand_total"] = devgrant + maintenance_grant;
                 expectedGrant["categories"]["uprimary_grant"]["school_grant"]["grant_perc"] = Math.round(devgrant*100/expectedGrant["categories"]["uprimary_grant"]["grand_total"]*100)/100;

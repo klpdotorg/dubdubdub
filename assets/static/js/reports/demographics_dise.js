@@ -106,20 +106,20 @@
 			if(type["id"] == 1){
 				categories["lprimary"] = {"name": "Lower Primary",
 												"student_count": type["sum_girls"] + type["sum_boys"],
-												"school_count": type["sum_schools"]
+												"school_count": type["sum_schools"]["total"]
 										};
 				categories["lprimary"]["enrolled"] = Math.round(categories["lprimary"]["student_count"]/categories["lprimary"]["school_count"]*100)/100;
 			}
 			if(type["id"] == 2){
 				categories["l_uprimary"] = {"name": "Lower and Upper Primary",
 											"student_count": type["sum_girls"] + type["sum_boys"],
-											"school_count": type["sum_schools"]};
+											"school_count": type["sum_schools"]["total"]};
 				categories["l_uprimary"]["enrolled"] = Math.round(categories["l_uprimary"]["student_count"]/categories["l_uprimary"]["school_count"]*100)/100;
 			}
 			if(type["id"] == 4){
 				categories["uprimary"] = {"name": "Upper Primary",
 											"student_count": type["sum_girls"] + type["sum_boys"],
-											"school_count": type["sum_schools"]};
+											"school_count": type["sum_schools"]["total"]};
 				categories["uprimary"]["enrolled"] = Math.round(categories["uprimary"]["student_count"]/categories["uprimary"]["school_count"]*100)/100;
 			}
 		}

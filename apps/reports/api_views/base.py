@@ -74,9 +74,9 @@ class BaseBoundaryReport(object):
                          "Class 5-8": {"text": "Class 5 to 8",
                                        "student_count": 0}}
         for data in enrolment:
-            if 0 < data["schoolclasstotalyear__clas"] <= 4:
+            if 0 < int(data["schoolclasstotalyear__clas"]) <= 4:
                 enrolmentdata["Class 1-4"]["student_count"] += data["num"]
-            elif data["schoolclasstotalyear__clas"] <= 8:
+            elif int(data["schoolclasstotalyear__clas"]) <= 8:
                 enrolmentdata["Class 5-8"]["student_count"] += data["num"]
 
         return enrolmentdata

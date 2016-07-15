@@ -140,7 +140,6 @@
                           <th>Expected Grant</th>
                           <th>Schools</th>
                           <th>/School</th>
-                          <th>/Student</th>
                         </tr>
                       </thead>
                     </table>
@@ -162,14 +161,12 @@
                 <div class="sect-half">
                   <div class="sect-parent font-smaller">
                     {% set total_grant = cat.schools * cat.grant_amount %}
-                    {% set per_student = total_grant/ cat.students|round %}
                     <table class="table-base table-base-comparison">
                       <tbody>
                         <tr>
                           <td>{{total_grant|inrformat}}</td>
                           <td>{{cat.schools}}</td>
                           <td>{{cat.grant_amount|inrformat}}</td>
-                          <td>{{per_student|inrformat}}</td>
                         </tr>
                       </tbody>
                     </table>
