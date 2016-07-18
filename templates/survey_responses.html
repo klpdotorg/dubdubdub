@@ -17,14 +17,12 @@
 
 
 {% block content %}
-<div class="chart-parent container">
-	<div class="chart-half-item">
-		<div id="count_respnse"></div>
-	</div>
-	<div class="chart-half-item">
-	</div> <!-- /chart-half-item -->
+<div class="base-spacing-mid"></div>
+<div class="heading-secondary heading-border brand-red">Surveys from KLP Konnect</div>
+<div class="container">
+	<div id="count_response"></div>
 </div>
-<div id="response_summary"></div>
+<div id="response_summary" class="container"></div>
 		
 {% include 'frontend_templates/survey_responses.html' %} 
 {% endblock %}

@@ -1,33 +1,35 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-countSummary">
-    <h2 class="heading-border grey-steel">Number of Survey Respnses</h2> 
-    <div>{{data.count}}</div>
+    <div class="center-text base-spacing-mid">
+    <div class="heading-tiny-uppercase">Number of Survey Responses: 
+    <span class="brand-turquoise heading-secondary">{{data.count}}</span>
+    </div>
+    </div>
   </script>
   
 
-  <!-- There's probably a cleaner way of doing the below template without this many for loops-->
   <script type="text/html" id="tpl-responseTable">
-    <table class="table-base">
+    <table class="table-base base-spacing-mid">
       <thead class="table-base-heading">
-        <tr>
-        <th>Story ID</th>
-        <th>Surveyed By</th>    
-        <th>Date of Visit</th>
-        <th>Survey Created At</th>
+        <tr class="header-strip">
+        <th>ID</th>
+        <th>Survey By</th>    
+        <th>Visit on</th>
+        <th>Created At</th>
         <th>School Name</th>
-        <th>KLP School ID</th> 
+        <th>KLP ID</th> 
         </tr>
 
       </thead>
       <tbody>
   
         {% for each in data.features %}
-          <tr>
+          <tr class="font-smallest">
           <td>{{ each.id }}</td>
           <td>{{ each.name }}</td>
-          <td>{{ each.date_of_visit }}</td>
-          <td>{{ each.created_at }}</td>
+          <td>{{ each.date_of_visit | date('m/d/Y   h:i A')}}</td>
+          <td>{{ each.created_at | date('m/d/Y   h:i A') }}</td>
           <td>{{ each.school_name }}</td>
           <td><a href="{{each.school_url}}" target="_blank">{{ each.school }}</a></td>
           </tr>
@@ -35,7 +37,6 @@
       </tbody>
     </table>
   </script>
-
 
 {% endverbatim %}
 

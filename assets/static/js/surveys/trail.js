@@ -10,7 +10,7 @@
 
     function loadData() {
         var params = {};
-        var dataURL = "/stories/?source=mobile";
+        var dataURL = "stories?source=mobile";
         var $dataXHR = klp.api.do(dataURL, params);
         $dataXHR.done(function(data) {
             renderSummary(data);
@@ -22,12 +22,13 @@
     }
     
     function renderSummary(data) {
+        console.log(data);
         var tplCountSummary = swig.compile($('#tpl-countSummary').html());
         var tplResponseTable = swig.compile($('#tpl-responseTable').html());
-        var countHTML = tplCountSummary(data);
-        var tableHTML = tplResponseTable(data);
+        var countHTML = tplCountSummary({'data':data});
+        var tableHTML = tplResponseTable({'data':data});
         $('#count_response').html(countHTML);
-        $('#response_dummary').html(tableHTML);
+        $('#response_summary').html(tableHTML);
     }   
 
 })();
