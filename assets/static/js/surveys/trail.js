@@ -23,9 +23,9 @@
     
     function renderSummary(data) {
         var tplCountSummary = swig.compile($('#tpl-countSummary').html());
-        var tplresponseTable = swig.compile($('#tpl-responseTable').html());
-        var countHTML = tplTopSummary(data);
-        var tableHTML = tplIvrsSummary(data);
+        var tplResponseTable = swig.compile($('#tpl-responseTable').html());
+        var countHTML = tplCountSummary(data);
+        var tableHTML = tplResponseTable(data);
         $('#count_response').html(countHTML);
         $('#response_dummary').html(tableHTML);
     }   
