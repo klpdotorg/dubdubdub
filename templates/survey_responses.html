@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Mobile Response Summary{% endblock %}
+
+{% block css_extra %}
+
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}  
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/surveys/trail.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+<div class="chart-parent container">
+	<div class="chart-half-item">
+		<div id="count_respnse"></div>
+	</div>
+	<div class="chart-half-item">
+	</div> <!-- /chart-half-item -->
+</div>
+<div id="response_summary"></div>
+		
+{% include 'frontend_templates/survey_responses.html' %} 
+{% endblock %}
