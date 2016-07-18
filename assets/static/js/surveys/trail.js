@@ -9,16 +9,16 @@
     }
 
     function loadData() {
-        // var params = {};
-        // var dataURL = "/stories/?source=mobile";
-        // var $dataXHR = klp.api.do(dataURL, params);
-        // $dataXHR.done(function(data) {
-        //     renderSummary(data);
-        // });
-        $.get( "http://dev.klp.org.in/api/v1/stories/?source=mobile", function( data ) {
+        var params = {};
+        var dataURL = "/stories/?source=mobile";
+        var $dataXHR = klp.api.do(dataURL, params);
+        $dataXHR.done(function(data) {
             renderSummary(data);
-            alert( "Load was performed." );
         });
+        // $.get( "http://dev.klp.org.in/api/v1/stories/?source=mobile", function( data ) {
+        //     renderSummary(data);
+        //     alert( "Load was performed." );
+        // });
     }
     
     function renderSummary(data) {
