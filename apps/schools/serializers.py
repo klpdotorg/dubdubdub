@@ -782,18 +782,3 @@ class CategoriesSerializer(KLPSerializer):
         model = School
         fields = ('categories', 'school_count', 'student_count')
 
-
-class DemographicsReportSerializer(KLPSerializer):
-    boundary_info = BoundaryInfoSerializer()
-    gender = GenderSerializer()
-    categories = CategoriesSerializer(source='categories', many=True)
-
-    class Meta:
-        model = Boundary
-        fields = ('boundary_info', 'gender', 'categories')
-
-
-class FinanceReportSerializer(KLPSerializer):
-    class Meta:
-        model = ElectedrepMaster
-        fields = ('name', 'id')

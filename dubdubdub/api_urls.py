@@ -317,6 +317,4 @@ urlpatterns = patterns(
 
     # Reports urls
     url(r'^reports/', include('reports.api_urls'))
-    #url(r'^reports/(?P<boundary>["admin_1", "admin_2", "admin_3", "assembly", "partliament"]+)/(?P<id>[0-9]+)/(?P<report_type>["finance", "demographics"]+)/(?P<language>["kannada", "english"]+)/$',
-        #ReportsDetail.as_view(), name='api_reports_detail'),
 )

@@ -24,8 +24,7 @@
             summaryData = data;
             var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");
-        })
-
+        });
         getDetailsData(bid, lang, repType);
         getComparisonData(bid, lang, repType);
     }
@@ -38,7 +37,6 @@
             "teacher_count" : data["teacher_count"],
             "gender" : data["gender"]
         };
-
         return summaryJSON;
     }
 
@@ -130,38 +128,38 @@
             }
         }
 
-        new_lang["OTHERS"] = {"name":"OTHERS", "school_count": 0, "student_count":0, "moi_perc":0,"mt_perc":0};
-        for (var each in languages["moi"]) {
-            if (!_.contains(lang_lookup,each))
+        new_lang["Others"] = {"name":"Others", "school_count": 0, "student_count":0, "moi_perc":0,"mt_perc":0};
+        for (var eachlang in languages["moi"]) {
+            if (!_.contains(lang_lookup,eachlang))
             {
-                new_lang["OTHERS"]["school_count"] += languages["moi"][each]["school_count"];
-                delete languages["moi"][each];
+                new_lang["Others"]["school_count"] += languages["moi"][eachlang]["school_count"];
+                delete languages["moi"][eachlang];
             } else {
-                new_lang[each]= {"name" : each};
-                new_lang[each]["school_count"] = languages["moi"][each]["school_count"];
-                new_lang[each]["moi_perc"] = Math.round(languages["moi"][each]["school_count"]*100/moi_school_total);
+                new_lang[eachlang]= {"name" : eachlang};
+                new_lang[eachlang]["school_count"] = languages["moi"][eachlang]["school_count"];
+                new_lang[eachlang]["moi_perc"] = Math.round(languages["moi"][eachlang]["school_count"]*100/moi_school_total);
             }
         }
         
-        for (var each in languages["mt"]) {
-            if (!_.contains(lang_lookup,each))
+        for (var eachmt in languages["mt"]) {
+            if (!_.contains(lang_lookup,eachmt))
             {
-                new_lang["OTHERS"]["student_count"] += languages["mt"][each]["student_count"];
-                delete languages["mt"][each];
+                new_lang["Others"]["student_count"] += languages["mt"][eachmt]["student_count"];
+                delete languages["mt"][eachmt];
             } else {
-                if (!(each in new_lang))
+                if (!(eachmt in new_lang))
                 {
-                    new_lang[each]={"name": each};
-                    new_lang[each]["school_count"] = 0;
-                    new_lang[each]["moi_perc"] = 0;
+                    new_lang[eachmt] = {"name": eachmt};
+                    new_lang[eachmt]["school_count"] = 0;
+                    new_lang[eachmt]["moi_perc"] = 0;
                 }
-                new_lang[each]["student_count"] = languages["mt"][each]["student_count"];
-                new_lang[each]["mt_perc"] = Math.round(languages["mt"][each]["student_count"]*100/mt_student_total);
+                new_lang[eachmt]["student_count"] = languages["mt"][eachmt]["student_count"];
+                new_lang[eachmt]["mt_perc"] = Math.round(languages["mt"][eachmt]["student_count"]*100/mt_student_total);
             }
         }
 
-        new_lang["OTHERS"]["moi_perc"] = Math.round(new_lang["OTHERS"]["school_count"]*100/moi_school_total);
-        new_lang["OTHERS"]["mt_perc"] = Math.round(new_lang["OTHERS"]["student_count"]*100/mt_student_total);
+        new_lang["Others"]["moi_perc"] = Math.round(new_lang["Others"]["school_count"]*100/moi_school_total);
+        new_lang["Others"]["mt_perc"] = Math.round(new_lang["Others"]["student_count"]*100/mt_student_total);
         var tplLanguage = swig.compile($('#tpl-Language').html());
         var languageHTML = tplLanguage({"lang":new_lang});
         $('#language-profile').html(languageHTML);
@@ -175,8 +173,6 @@
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":data["neighbours"]});
         $('#comparison-neighbour').html(compareHTML);
-    
     }
 
 })();
-

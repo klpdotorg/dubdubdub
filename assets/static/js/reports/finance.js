@@ -38,24 +38,17 @@
     function fetchDiseData(data)
     {
         var acadYear = data["academic_year"].replace(/20/g, '');
-        klp.dise_api.queryBoundaryName(data["boundary_info"]["name"], data["boundary_info"]["type"],acadYear).done(function(diseData) {
-            if( diseData.length != 0 )
-            {
-                var boundary = diseData[0].children[0];
-                klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
-                    console.log('diseData', diseData);
-                    loadFinanceData(diseData["properties"]);
-                })
-                .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-                });
-            }
+
+        var boundary = {"type": data["boundary_info"]["type"], "id": data["boundary_info"]["dise"] };
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
+            console.log('diseData', diseData);
+            loadFinanceData(diseData["properties"]);
         })
         .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
         });
-        
-        getNeighbourData(data, acadYear);   
+            
+        getNeighbourData(data, acadYear);
     }
 
     function getNeighbourData(data, acadYear)
@@ -68,23 +61,18 @@
                 renderNeighbours(diseData["results"]["features"]);
             })
             .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
             });
         }
         else
         {
-            klp.dise_api.queryBoundaryName(data["boundary_info"]["parent"]["name"], data["boundary_info"]["parent"]["type"],acadYear).done(function(diseData) {
-                var boundary = diseData[0].children[0];
-                klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
-                    console.log('neighbours diseData', diseData);
-                    renderNeighbours(diseData["results"]["features"]);
-                })
-                .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-                });
+            var boundary = {"type": data["boundary_info"]["parent"]["type"], "id":data["boundary_info"]["parent"]["dise"]};
+            klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
+                console.log('neighbours diseData', diseData);
+                renderNeighbours(diseData["results"]["features"]);
             })
             .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
             });
         }
     }
@@ -214,9 +202,9 @@
             var type = diseData["school_categories"][index];
             var devgrant = 0;
             var total_students = 0;
+            var maintenance_grant = 0;
             if( type["id"] == 1)
             {
-                var maintenance_grant = 0;
                 devgrant = type["sum_schools"]["total"] * 5000;
                 total_students = type["sum_boys"] + type["sum_girls"];
 
@@ -252,7 +240,6 @@
             }
             if( type["id"] == 2)
             {
-                var maintenance_grant = 0;
                 devgrant = type["sum_schools"]["total"] * 12000;
                 total_students = type["sum_boys"] + type["sum_girls"];
 
@@ -289,7 +276,6 @@
             }
             if( type["id"] == 4)
             {
-                var maintenance_grant = 0;
                 devgrant = type["sum_schools"]["total"] * 7000;
                 total_students = type["sum_boys"] + type["sum_girls"];
                 expectedGrant["classrooms"][0]["categories"][0]["schools"] += type["sum_schools"]["classrooms_leq_3"];
@@ -326,7 +312,6 @@
         }
         expectedGrant["grand_total"] = expectedGrant["categories"]["lprimary_grant"]["grand_total"] + expectedGrant["categories"]["uprimary_grant"]["grand_total"] + expectedGrant["categories"]["l_uprimary_grant"]["grand_total"];
 
-
         return expectedGrant;
     }
 
@@ -341,64 +326,57 @@
         grantdata["received"]["per_stu"] = Math.round(grantdata["received"]["grand_total"]/sum_students*100)/100;
         grantdata["expenditure"] = {"grand_total": diseData["sum_school_dev_grant_expnd"] + diseData["sum_tlm_grant_expnd"]};
         grantdata["expenditure"]["per_stu"] = Math.round(grantdata["expenditure"]["grand_total"]/sum_students*100)/100;
-        
-        
+           
         renderGrants(grantdata);
         renderAllocation(grantdata["expected"]["categories"], "School Grant Allocation", '#sg-alloc');
         renderMntncAllocation(grantdata["expected"]["classrooms"], "School Maintenance Grant Allocation", "#smg-alloc");
     }
-
     
-
-
     function renderSummary(data, schoolType) {
-        var tplTopSummary = swig.compile($('#tpl-topSummary').html()); 
-        var tplReportDate = swig.compile($('#tpl-reportDate').html()); 
+        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
+        var tplReportDate = swig.compile($('#tpl-reportDate').html());
         
         var now = new Date();
         var today = {'date' : moment(now).format("MMMM D, YYYY")};
         var dateHTML = tplReportDate({"today":today});
         $('#report-date').html(dateHTML);
 
-        data['student_total'] = data["gender"]["boys"] + data["gender"]["girls"]; 
+        data['student_total'] = data["gender"]["boys"] + data["gender"]["girls"];
         data['ptr'] = Math.round(data["student_total"]/data["teacher_count"]*100)/100;
         data['girl_perc'] = Math.round(( data["gender"]["girls"]/data["student_total"] )* 100*100)/100;
         data['boy_perc'] = 100-data['girl_perc'];
         
         var topSummaryHTML = tplTopSummary({"data":data});
         $('#top-summary').html(topSummaryHTML);
-
     }
 
     function renderGrants(data){
         var tpl = swig.compile($('#tpl-grantSummary').html());
         var html = tpl({"data":data["expected"]});
-        $('#expected').html(html); 
+        $('#expected').html(html);
         
         data["received"]["total_perc"] = Math.round(data.received.grand_total*100/data.expected.grand_total *100)/100;
         data["received"]["perc_label"] = "expected";
         html = tpl({"data":data["received"]});
-        $('#received').html(html); 
+        $('#received').html(html);
 
         data["expenditure"]["total_perc"] = Math.round(data.expenditure.grand_total*100/data.received.grand_total * 100)/100;
         data["expenditure"]["perc_label"] = "received";
-        var html = tpl({"data":data["expenditure"]});
+        html = tpl({"data":data["expenditure"]});
         $('#expenditure').html(html);
-        
-        
     }
 
     function renderAllocation(data, heading, element_id) {
         var tplalloc = swig.compile($('#tpl-allocSummary').html());
         var html = tplalloc({"data":data,"heading":heading});
-        $(element_id).html(html);     
+        $(element_id).html(html);
     }
 
 
     function renderMntncAllocation(data, heading, element_id) {
         var tplalloc = swig.compile($('#tpl-allocMntncSummary').html());
         var html = tplalloc({"data":data,"heading":heading});
-        $(element_id).html(html);     
+        $(element_id).html(html);
     }
 
 
@@ -407,7 +385,7 @@
         var total_schools = 0;
         for (var each in data) {
             comparisonData[data[each]["id"]] = {
-                "name": data[each]["id"],
+                "name": data[each]["properties"]["popup_content"],
                 "expected": getTotalExpectedGrant(data[each]["properties"]),
                 "received": data[each]["properties"]["sum_school_dev_grant_recd"] + data[each]["properties"]["sum_tlm_grant_recd"],
                 "expenditure": data[each]["properties"]["sum_school_dev_grant_expnd"] + data[each]["properties"]["sum_tlm_grant_expnd"],
@@ -419,7 +397,7 @@
             comparisonData[iter]["total_perc"] = Math.round(comparisonData[iter]["total"]*100/total_schools*100)/100;
         }
         console.log('comparisonData', comparisonData);
-        var tplComparison = swig.compile($('#tpl-neighComparison').html()); 
+        var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":comparisonData});
         $('#comparison-neighbour').html(compareHTML);
     

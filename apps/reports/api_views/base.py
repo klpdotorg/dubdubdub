@@ -91,4 +91,5 @@ class BaseBoundaryReport(object):
         reportData["boundary_info"]["dise"] = boundary.dise_slug
         if boundary.get_admin_level() != 1:
             reportData["boundary_info"]["parent"] = {
-                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name}
+                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name,
+                "dise": boundary.parent.dise_slug}

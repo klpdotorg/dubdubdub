@@ -7,9 +7,6 @@ from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,
     ProgrammePercentile, PartnerList
 )
-from .reports import (
-    ReportDetails
-)
 from .aggregations import *
 from .boundary import (
     Admin1s, Admin2sInsideAdmin1, Admin3sInsideAdmin1,

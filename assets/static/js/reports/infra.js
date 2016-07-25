@@ -79,28 +79,20 @@
     function fetchSchoolData(data)
     {
         var acadYear = data["academic_year"].replace(/20/g, '');
-        klp.dise_api.queryBoundaryName(data["boundary_info"]["name"], data["boundary_info"]["type"],acadYear).done(function(diseData) {
-            if( diseData.length != 0 )
-            {
-                var boundary = diseData[0].children[0];
-                klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
-                    console.log('summary diseData', diseData);
-                })
-                .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-                });
-            }
+        var boundary = {"id": data["boundary_info"]["dise"], "type": data["boundary_info"]["type"]};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
+            console.log('summary diseData', diseData);
         })
         .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
         });
         getNeighbourData(data, acadYear);
-        var yearData = []; 
+        var yearData = [];
         yearData[acadYear] = data["academic_year"];
         var years = acadYear.split("-").map(Number);
         yearData[(years[0]-1).toString()+"-"+(years[1]-1).toString()] = "20"+(years[0]-1).toString()+"-"+"20"+(years[1]-1).toString();
-        yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();        
-        var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"]};
+        yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();
+        var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"],"dise": data["boundary_info"]["dise"]};
         getMultipleData(yearData, passYearData, getLoopData, renderComparison,"acadYear");
         
     }
@@ -115,23 +107,18 @@
                 renderNeighbours(diseData["results"]["features"]);
             })
             .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
             });
         }
         else
         {
-            klp.dise_api.queryBoundaryName(data["boundary_info"]["parent"]["name"], data["boundary_info"]["parent"]["type"],acadYear).done(function(diseData) {
-                var boundary = diseData[0].children[0];
-                klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
-                    console.log('neighbours diseData', diseData);
-                    renderNeighbours(diseData["results"]["features"]);
-                })
-                .fail(function(err) {
-                    klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
-                });
+            var boundary = {"type": data["boundary_info"]["parent"]["type"], "id": data["boundary_info"]["parent"]["dise"]};
+            klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
+                console.log('neighbours diseData', diseData);
+                renderNeighbours(diseData["results"]["features"]);
             })
             .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch programmes data", "error");
+                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
             });
         }
     }
@@ -180,24 +167,14 @@
     function getLoopData(loop)
     {
         var data = loop.iteration();
-        klp.dise_api.queryBoundaryName(data["name"], data["type"], data["acadYear"]).done(function(diseNameData) {
-            if( diseNameData.length == 0)
-            {
-                loop.next();
-                return;
-            }
-            var boundary = diseNameData[0].children[0];
-            klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
-                console.log('diseData', diseData);
-                loop.addData(diseData);
-                loop.next();
-            })
-            .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch programmes data", "for neighbour"+neighbour);
-            });
+        var boundary = {"type": data["type"], "id": data["dise"]};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
+            console.log('diseData', diseData);
+            loop.addData(diseData);
+            loop.next();
         })
         .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch name data", "error");
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "for neighbour"+neighbour);
         });
     }
 
@@ -211,7 +188,6 @@
             "gender" : data["summary_data"]["gender"],
             "student_total": data["summary_data"]["num_students"]
         };
-
         return summaryJSON;
     }
 
@@ -260,7 +236,7 @@
                     if (!percData["keys"][key])
                         percData["keys"][key] = {"icon":iconTag,"name":hash[key]['display']};
                     if(!percData[data[each]["id"]])
-                        percData[data[each]["id"]] = {"name": data[each]["id"]};
+                        percData[data[each]["id"]] = {"name": data[each]["properties"]["popup_content"]};
                     percData[data[each]["id"]][hash[key]['display']]= {"perc": (data[each]["properties"][key]/data[each]["properties"]["sum_schools"]) * 100};
                 }
             }
@@ -323,8 +299,5 @@
         transpose["year"].sort();
         return transpose;
     }
-
-
-
+    
 })();
-
