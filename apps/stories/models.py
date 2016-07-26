@@ -67,9 +67,9 @@ class Questiongroup(TimestampedBaseModel):
         default=DRAFT_STATUS
     )
 
-    version = models.IntegerField()
     source = models.ForeignKey('Source')
     end_date = models.DateField(blank=True, null=True)
+    version = models.IntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     survey = models.ForeignKey('Survey', blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)

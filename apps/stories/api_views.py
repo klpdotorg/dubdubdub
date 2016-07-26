@@ -38,7 +38,7 @@ from common.views import (
 from .models import (
     Question, Story, StoryImage,
     Answer, Questiongroup, UserType,
-    Source, Survey
+    Source, Survey, QuestiongroupQuestions
 )
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
@@ -76,8 +76,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         return queryset
 
-    def is_questiongroup_exists(self, survey_id, question_ids):
-        survey = Survey.objects.get(id=survey_id)
+    def is_questiongroup_exists(self, survey, question_ids):
         questiongroups = survey.questiongroup_set.all()
         for questiongroup in questiongroups:
             questiongroup_question_ids = questiongroup.questions.all().values_list(
@@ -92,41 +91,51 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                     " and Version: " + \
                     str(version)
                 raise APIException(message)
+        else:
+            return False
 
-    def is_source_exists(self, survey_id, source):
-        sources = Questiongroup.objects.filter(
-            survey=survey_id
-        ).values_list(
-            'source__id',
-            flat=True
-        )
-        return (source in sources)
+    def is_questions_exist(self, question_ids):
+        return Question.objects.filter(id__in=question_ids).count() == len(question_ids)
 
-    # def create(self, request, *args, **kwargs):
-    #     survey_id = kwargs.get('survey_pk')
+    def create_questiongroup_question_relation(self, questiongroup_id, question_ids):
+        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+        questions = Question.objects.filter(id__in=question_ids)
+        for count, question in enumerate(questions):
+            QuestiongroupQuestions.objects.get_or_create(
+                questiongroup=questiongroup,
+                question=question,
+                sequence=count+1
+            )
 
-    #     source_id = request.DATA.get('source_id', None)
-    #     question_ids = request.DATA.get('question_ids', None)
+    def create(self, request, *args, **kwargs):
+        survey_id = kwargs.get('survey_pk')
+        question_ids = request.DATA.get('question_ids', None)
 
-    #     if source_id:
-    #         self.is_source_exists(survey_id, source_id)
-    #     else:
-    #         raise APIException("Please specify the source_id field")
+        survey = Survey.objects.get(id=survey_id)
 
-    #     if question_ids:
-    #         question_ids = ast.literal_eval(question_ids)
-    #         self.is_questiongroup_exists(survey_id, question_ids)
-    #     else:
-    #         raise APIException("Please select one or more questions")
+        if question_ids:
+            question_ids = ast.literal_eval(question_ids)
+            if not self.is_questions_exist(question_ids):
+                raise APIException("Please select valid question ids")
+            self.is_questiongroup_exists(survey, question_ids)
+        else:
+            raise APIException("Please select one or more questions")
 
-    #     serializer = self.get_serializer(data=request.DATA)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         headers = self.get_success_headers(serializer.data)
-    #     else:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer = self.get_serializer(data=request.DATA)
+        if serializer.is_valid():
+            if survey.questiongroup_set.exists():
+                latest_questiongroup = survey.questiongroup_set.latest('version')
+                new_version = latest_questiongroup.version + 1
+            else:
+                new_version = 1
+            serializer.object.version = new_version
+            serializer.save()
+            headers = self.get_success_headers(serializer.data)
+            questiongroup_id = serializer.data['id']
+            self.create_questiongroup_question_relation(questiongroup_id, question_ids)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            raise APIException(serializer.errors)
 
 
 class QuestionsViewSet(KLPModelViewSet):

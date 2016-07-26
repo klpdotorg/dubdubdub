@@ -53,7 +53,6 @@ class QuestiongroupSerializer(KLPSerializer):
         source='source.name'
     )
     source_id = serializers.PrimaryKeyRelatedField(
-        write_only=True,
         source='source'
     )
 

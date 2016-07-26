@@ -9,6 +9,16 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.0.0: d3fcfc1cf8964124238e19478b380b1a7fd4606c	- 2016-07-12
+  - Implements the GKA SMS.
+  - Implements the Mobile app sync endpoints.
+  - PhantomJS trial code.
+  - Boundary pages.
+  - Advanced search enhancements.
+  - KLP DISE matching script.
+  - Implements basic version of translations.
+
 Release 0.5.3: 90b86785af0339678ed1f7d7bd0fd5f40cfe426a - 2016-03-15
   - Added GKA Boundary filters and last call/story timestamp on the stories dashboard
 

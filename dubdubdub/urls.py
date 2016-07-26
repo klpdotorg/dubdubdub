@@ -31,6 +31,11 @@ urlpatterns = patterns(
     url(r'^status/$', StaticPageView.as_view(
         template_name='comingsoon.html'
     ), name='status'),
+    
+    # mobile responses
+    url(r'^mobile/$', StaticPageView.as_view(
+        template_name='survey_responses.html'
+    ), name='mobile'),
 
     # story dashboard
     url(r'^stories/$', StaticPageView.as_view(
