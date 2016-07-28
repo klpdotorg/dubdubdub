@@ -19,214 +19,73 @@ from rest_framework.exceptions import (
     AuthenticationFailed
 )
 from django.db.models import Q, Count
-
-
-
-# class StoryMetaView(KLPAPIView, CacheMixin):
-#     """Returns total number of stories and schools with stories
-#     along with respondent types.
-
-#     source -- Source of data [web/ivrs].
-#     version -- Questiongroup versions. eg: ?version=2&version=3
-#     admin1 -- ID of the District.
-#     admin2 -- ID of the Block/Project.
-#     admin3 -- ID of the Cluster/Circle.
-#     school_id -- ID of the school.
-#     mp_id -- ID of the MP constituency.
-#     mla_id -- ID of the MLA constituency.
-#     from -- YYYY-MM-DD from when the data should be filtered.
-#     to -- YYYY-MM-DD till when the data should be filtered.
-#     school_type -- Type of School [Primary School/PreSchool].
-#     """
-
-#     def get(self, request):
-#         source = self.request.QUERY_PARAMS.get('source', None)
-#         versions = self.request.QUERY_PARAMS.getlist('version', None)
-#         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
-#         admin2_id = self.request.QUERY_PARAMS.get('admin2', None)
-#         admin3_id = self.request.QUERY_PARAMS.get('admin3', None)
-#         school_id = self.request.QUERY_PARAMS.get('school_id', None)
-#         mp_id = self.request.QUERY_PARAMS.get('mp_id', None)
-#         mla_id = self.request.QUERY_PARAMS.get('mla_id', None)
-#         start_date = self.request.QUERY_PARAMS.get('from', None)
-#         end_date = self.request.QUERY_PARAMS.get('to', None)
-#         school_type = self.request.QUERY_PARAMS.get(
-#             'school_type', 'Primary School')
-#         date = Date()
-#         if start_date:
-#             sane = date.check_date_sanity(start_date)
-#             if not sane:
-#                 raise APIException("Please enter `from` in the format YYYY-MM-DD")
-#             else:
-#                 start_date = date.get_datetime(start_date)
-
-#         if end_date:
-#             sane = date.check_date_sanity(end_date)
-#             if not sane:
-#                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
-#             else:
-#                 end_date = date.get_datetime(end_date)
-
-#         school_qset = School.objects.filter(
-#             admin3__type__name=school_type, status=2)
-#         stories_qset = Story.objects.filter(
-#             school__admin3__type__name=school_type)
-
-#         if admin1_id:
-#             school_qset = school_qset.filter(
-#                 schooldetails__admin1__id=admin1_id)
-#             stories_qset = stories_qset.filter(
-#                 school__schooldetails__admin1__id=admin1_id)
-
-#         if admin2_id:
-#             school_qset = school_qset.filter(
-#                 schooldetails__admin2__id=admin2_id)
-#             stories_qset = stories_qset.filter(
-#                 school__schooldetails__admin2__id=admin2_id)
-
-#         if admin3_id:
-#             school_qset = school_qset.filter(
-#                 schooldetails__admin3__id=admin3_id)
-#             stories_qset = stories_qset.filter(
-#                 school__schooldetails__admin3__id=admin3_id)
-
-#         if school_id:
-#             school_qset = school_qset.filter(id=school_id)
-#             stories_qset = stories_qset.filter(
-#                 school=school_id)
-
-#         if mp_id:
-#             school_qset = school_qset.filter(
-#                 electedrep__mp_const__id=mp_id)
-#             stories_qset = stories_qset.filter(
-#                 school__electedrep__mp_const__id=mp_id)
-
-#         if mla_id:
-#             school_qset = school_qset.filter(
-#                 electedrep__mla_const__id=mla_id)
-#             stories_qset = stories_qset.filter(
-#                 school__electedrep__mla_const__id=mla_id)
-
-#         # We need the stories qset with all filters except
-#         # the date filter applied on it to calculate the
-#         # last story date for each source.
-#         last_date_stories_qset = stories_qset
-
-#         if start_date:
-#             #school_qset = school_qset.filter(
-#             #    story__date_of_visit__gte=start_date)
-#             stories_qset = stories_qset.filter(
-#                 date_of_visit__gte=start_date)
-
-#         if end_date:
-#             # school_qset = school_qset.filter(
-#             #     story__date_of_visit__lte=end_date)
-#             stories_qset = stories_qset.filter(
-#                 date_of_visit__lte=end_date)
-
-#         response_json = {}
-
-#         response_json['total'] = {}
-#         response_json['total']['schools'] = school_qset.count()
-#         response_json['total']['stories'] = stories_qset.count()
-#         response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
-
-#         if source:
-#             stories_qset = self.source_filter(
-#                 source,
-#                 stories_qset
-#             )
-
-#             last_date_stories_qset = self.source_filter(
-#                 source,
-#                 last_date_stories_qset,
-#             )
-
-#             if versions:
-#                 versions = map(int, versions)
-#                 stories_qset = stories_qset.filter(
-#                     group__version__in=versions
-#                 )
-#                 last_date_stories_qset = last_date_stories_qset.filter(
-#                     group__version__in=versions
-#                 )
-
-#             response_json[source] = self.get_json(
-#                 source,
-#                 stories_qset,
-#                 last_date_stories_qset,
-#             )
-#         else:
-#             sources = Source.objects.all().values_list('name', flat=True)
-#             for source in sources:
-#                 stories = self.source_filter(
-#                     source,
-#                     stories_qset
-#                 )
-#                 last_date_stories = self.source_filter(
-#                     source,
-#                     last_date_stories_qset,
-#                 )
-#                 response_json[source] = self.get_json(
-#                     source,
-#                     stories,
-#                     last_date_stories,
-#                 )
-
-#         response_json['respondents'] = self.get_respondents(stories_qset)
-
-#         return Response(response_json)
-
-#     def get_respondents(self, stories_qset):
-#         usertypes = {
-#             'PR' : 'PARENTS',
-#             'TR' : 'TEACHERS',
-#             'VR' : 'VOLUNTEER',
-#             'CM' : 'CBO_MEMBER',
-#             'HM' : 'HEADMASTER',
-#             'SM' : 'SDMC_MEMBER',
-#             'LL' : 'LOCAL_LEADER',
-#             'AS' : 'AKSHARA_STAFF',
-#             'EY' : 'EDUCATED_YOUTH',
-#             'EO' : 'EDUCATION_OFFICIAL',
-#             'ER' : 'ELECTED_REPRESENTATIVE',
-#         }
-#         user_counts = UserType.objects.filter(
-#             story__in=stories_qset
-#         ).annotate(
-#             story_count=Count('story')
-#         )
-#         return {usertypes[user.name]: user.story_count for user in user_counts}
-
-#     def source_filter(self, source, stories_qset):
-#         stories_qset = stories_qset.filter(
-#             group__source__name=source)
-
-#         return stories_qset
-
-#     def get_json(self, source, stories_qset, last_date_qset):
-#         json = {}
-#         json['stories'] = stories_qset.count()
-#         json['schools'] = stories_qset.distinct('school').count()
-#         if last_date_qset:
-#             json['last_story'] = last_date_qset.latest('date_of_visit').date_of_visit
-#         else:
-#             json['last_story'] = None
-#         if source == "web":
-#             json['verified_stories'] = stories_qset.filter(
-#                 is_verified=True,
-#             ).count()
-
-#         return json
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter, inch
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 class Command(BaseCommand):
     help = 'Generates a report on SMS data'
+
+    def make_pdf(self, data):
+        doc = SimpleDocTemplate("simple_table_grid.pdf", pagesize=letter)
+        # container for the 'Flowable' objects
+        elements = []
+         
+        data= [['00', '01', '02', '03', '04'],
+               ['10', '11', '12', '13', '14'],
+               ['20', '21', '22', '23', '24'],
+               ['30', '31', '32', '33', '34']]
+        t=Table(data,5*[0.4*inch], 4*[0.4*inch])
+        t.setStyle(TableStyle([('ALIGN',(1,1),(-2,-2),'RIGHT'),
+                               ('TEXTCOLOR',(1,1),(-2,-2),colors.red),
+                               ('VALIGN',(0,0),(0,-1),'TOP'),
+                               ('TEXTCOLOR',(0,0),(0,-1),colors.blue),
+                               ('ALIGN',(0,-1),(-1,-1),'CENTER'),
+                               ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
+                               ('TEXTCOLOR',(0,-1),(-1,-1),colors.green),
+                               ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                               ]))
+         
+        elements.append(t)
+        # write the document to disk
+        doc.build(elements)
+
     def get_json(self, source, stories_qset):
         json = {}
         json['stories'] = stories_qset.count()
         json['schools'] = stories_qset.distinct('school').count()
         return json
 
+    def transform_data(self, district):
+        blocks =[]
+        questions = {}
+        for block in district["blocks"]:
+            data = [["Details", "Block:"+block["name"], "District:"+district["name"]]]
+            data.append(["Schools", block["sms"]["schools"], district["sms"]["schools"]])
+            data.append(["Stories", block["sms"]["stories"], district["sms"]["stories"]])
+            data.append(["Schools with Stories", block["sms"]["schools_with_stories"], district["sms"]["schools_with_stories"]])
+
+            for each in block["details"]:
+                questions[each["question"]["display_text"]]= {"block": self.get_response_str(each["answers"])}
+            for each in district["details"]:
+                questions[each["question"]["display_text"]]["district"] = self.get_response_str(each["answers"])
+            for question in questions:
+                data.append([question, questions[question]["block"],questions[question]["district"]])
+            blocks.append(data)     
+        print blocks      
+
+    def get_response_str(self, answers):
+        yes = 0
+        no = 0
+        if answers["options"]:
+            if "Yes" in answers["options"]:
+                yes = answers["options"]["Yes"]
+            if "No" in answers["options"]:
+                no = answers["options"]["No"]
+            return str((yes*100)/(yes+no))+'% ('+str(yes)+'/'+str(yes+no) + ')'
+        else:
+            return "No Responses"
 
     def source_filter(self, source, stories_qset):
         stories_qset = stories_qset.filter(
@@ -356,13 +215,12 @@ class Command(BaseCommand):
 
         if end_date:
             stories = stories.filter(date_of_visit__lte=end_date)
-        response_json = {}
-        response_json[source] = self.get_que_and_ans(stories, source, school_type)
+        response_json = self.get_que_and_ans(stories, source, school_type)
         return response_json
 
 
     def handle(self, *args, **options):
-        gka_district_ids = [424, 417, 416, 419, 418, 445]
+        #gka_district_ids = [424, 417, 416, 419, 418, 445]
         gka_district_ids = [ 418]
         
         #bellary, bidar, gulbarga, koppal, raichur, yadgiri
@@ -403,7 +261,10 @@ class Command(BaseCommand):
                 admin2_json['details'] = self.get_story_details(block.id,'block', start_date, end_date)    
                 admin1_json['blocks'].append(admin2_json)
             districts.append(admin1_json)
-        print districts
+
+        #self.make_pdf(districts)
+        self.transform_data(districts[0])
+        #print districts
 
 
         # self.check_data_files()
