@@ -19,37 +19,62 @@ from rest_framework.exceptions import (
     AuthenticationFailed
 )
 from django.db.models import Q, Count
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4, cm
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter, inch
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib.utils import ImageReader
+
 
 class Command(BaseCommand):
     help = 'Generates a report on SMS data'
 
-    def make_pdf(self, data):
-        doc = SimpleDocTemplate("simple_table_grid.pdf", pagesize=letter)
-        # container for the 'Flowable' objects
-        elements = []
-         
-        data= [['00', '01', '02', '03', '04'],
-               ['10', '11', '12', '13', '14'],
-               ['20', '21', '22', '23', '24'],
-               ['30', '31', '32', '33', '34']]
-        t=Table(data,5*[0.4*inch], 4*[0.4*inch])
-        t.setStyle(TableStyle([('ALIGN',(1,1),(-2,-2),'RIGHT'),
-                               ('TEXTCOLOR',(1,1),(-2,-2),colors.red),
-                               ('VALIGN',(0,0),(0,-1),'TOP'),
-                               ('TEXTCOLOR',(0,0),(0,-1),colors.blue),
-                               ('ALIGN',(0,-1),(-1,-1),'CENTER'),
-                               ('VALIGN',(0,-1),(-1,-1),'MIDDLE'),
-                               ('TEXTCOLOR',(0,-1),(-1,-1),colors.green),
-                               ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-                               ]))
-         
-        elements.append(t)
-        # write the document to disk
-        doc.build(elements)
+    def make_pdf(self, data, filename):
+
+        width, height = A4
+        styles = getSampleStyleSheet()
+        styleN = styles["BodyText"]
+        styleN.alignment = TA_LEFT
+        styleBH = styles["Heading3"]
+        styleBH.alignment = TA_CENTER
+        styleBH.fontName = 'Helvetica'
+        styleBH.textColor = colors.purple
+
+        def coord(x, y, unit=1):
+            x, y = x * unit, height -  y * unit
+            return x, y
+
+        # Headers
+        #hdescrpcion = Paragraph('''<b>descrpcion</b>''', styleBH)
+        
+        # Texts
+        #descrpcion = Paragraph('long paragraph', styleN)
+        def style_row(row_array, style):
+            styled_array = []
+            for each in row_array:
+                styled_array.extend([Paragraph(str(each),style)])
+            return styled_array
+       
+        styled_data = [style_row(data[0],styleBH)]
+        for i in range(1,len(data)):
+            styled_data.append(style_row(data[i],styleN))
+        for each in styled_data:
+            print each, '\n\n\n'
+        
+        table = Table(styled_data, colWidths=[7 * cm,
+                                       5* cm, 5 * cm])
+        table.setStyle(TableStyle([
+                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.grey),
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                       ]))
+        # logo = ImageReader('http://akshara.org.in/wp-content/themes/akshara/images/logo_en.png')
+        c = canvas.Canvas(os.path.join(settings.PDF_REPORTS_DIR, 'gka_sms/')+filename+".pdf", pagesize=A4)
+        # c.drawImage(logo, 5,5, 200, 100, mask='auto')
+        table.wrapOn(c, width, height)
+        table.drawOn(c, *coord(1.8, 9.6, cm))
+        c.save()
 
     def get_json(self, source, stories_qset):
         json = {}
@@ -61,10 +86,10 @@ class Command(BaseCommand):
         blocks =[]
         questions = {}
         for block in district["blocks"]:
-            data = [["Details", "Block:"+block["name"], "District:"+district["name"]]]
+            data = [["Details", "Block-"+block["name"].capitalize(), "District-"+district["name"].capitalize()]]
             data.append(["Schools", block["sms"]["schools"], district["sms"]["schools"]])
-            data.append(["Stories", block["sms"]["stories"], district["sms"]["stories"]])
-            data.append(["Schools with Stories", block["sms"]["schools_with_stories"], district["sms"]["schools_with_stories"]])
+            data.append(["SMS Messages", block["sms"]["stories"], district["sms"]["stories"]])
+            data.append(["Schools with SMS Messages", block["sms"]["schools_with_stories"], district["sms"]["schools_with_stories"]])
 
             for each in block["details"]:
                 questions[each["question"]["display_text"]]= {"block": self.get_response_str(each["answers"])}
@@ -73,7 +98,7 @@ class Command(BaseCommand):
             for question in questions:
                 data.append([question, questions[question]["block"],questions[question]["district"]])
             blocks.append(data)     
-        print blocks      
+        return blocks      
 
     def get_response_str(self, answers):
         yes = 0
@@ -83,7 +108,7 @@ class Command(BaseCommand):
                 yes = answers["options"]["Yes"]
             if "No" in answers["options"]:
                 no = answers["options"]["No"]
-            return str((yes*100)/(yes+no))+'% ('+str(yes)+'/'+str(yes+no) + ')'
+            return  'Yes: '+str(yes)+'('+str((yes*100)/(yes+no))+'%)\n No: '+str(no)+'('+str((no*100)/(yes+no))+'%)'
         else:
             return "No Responses"
 
@@ -220,8 +245,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        #gka_district_ids = [424, 417, 416, 419, 418, 445]
-        gka_district_ids = [ 418]
+        gka_district_ids = [424, 417, 416, 419, 418, 445]
+        #gka_district_ids = [ 418]
         
         #bellary, bidar, gulbarga, koppal, raichur, yadgiri
         
@@ -262,9 +287,10 @@ class Command(BaseCommand):
                 admin1_json['blocks'].append(admin2_json)
             districts.append(admin1_json)
 
-        #self.make_pdf(districts)
-        self.transform_data(districts[0])
-        #print districts
+        for each in districts:
+            blks = self.transform_data(each)
+            for blk in blks: 
+                self.make_pdf(blk,blk[0][1])
 
 
         # self.check_data_files()
