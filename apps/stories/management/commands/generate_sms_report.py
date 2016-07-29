@@ -19,28 +19,68 @@ from rest_framework.exceptions import (
     AuthenticationFailed
 )
 from django.db.models import Q, Count
+
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, cm
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.platypus import Paragraph, Table, TableStyle, Image
+from reportlab.platypus.flowables import HRFlowable
+
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
 from reportlab.lib import colors
-from reportlab.lib.utils import ImageReader
+# from reportlab.platypus.doctemplate import SimpleDocTemplate
+# from reportlab.platypus import Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+# from reportlab.lib.pagesizes import A4, cm
+# from reportlab.platypus import Table, TableStyle
+# from reportlab.lib import colors
 
 
 class Command(BaseCommand):
     help = 'Generates a report on SMS data'
 
-    def make_pdf(self, data, filename):
+    # def make_pdf(self, data, start_date, end_date, filename):
+    #     doc = SimpleDocTemplate("products.pdf", pagesize=A4)
+    #     styles = getSampleStyleSheet()
+    #     header = Paragraph("GKA SMS Summary", styles['Heading1'])
+    #     sms_report = []
+    #     sms_report.append(header)
+    #     date_header = Paragraph("From" + str(start_date) +"to"+str(end_date), styles['Heading3'])
+    #     style = styles['Normal']
+    #     headings = data[0]
+    #     paramters = data[1:len(data)]
+    #     t = Table(headings + paramters, colWidths=[7 * cm, 5* cm, 5 * cm])
+    #     t.setStyle(TableStyle(
+    #                     [('GRID', (0,0), (1,-1), 2, colors.black),
+    #                      ('LINEBELOW', (0,0), (-1,0), 2, colors.red),
+    #                      ('BACKGROUND', (0, 0), (-1, 0), colors.pink)]))
+    #     sms_report.append(t) 
+    #     doc.build(sms_report)    
+    
+    def make_pdf(self, data, start_date, end_date, filename):
 
         width, height = A4
         styles = getSampleStyleSheet()
         styleN = styles["BodyText"]
         styleN.alignment = TA_LEFT
+        styleN.fontName = 'Helvetica'
         styleBH = styles["Heading3"]
         styleBH.alignment = TA_CENTER
         styleBH.fontName = 'Helvetica'
         styleBH.textColor = colors.purple
+        styleTH = styles["Heading1"]
+        styleTH.alignment = TA_CENTER
+        styleTH.fontName = 'Helvetica'
+        styleTH.textColor = colors.green
+        styleGH = styles["Heading2"]
+        styleGH.alignment = TA_CENTER
+        styleGH.fontName = 'Helvetica'
+        styleGH.textColor = colors.black
+        #styleGH.backColor = colors.lightgrey
+
+        styleNC = styles["BodyText"]
+        #styleNC.alignment = TA_CENTER
+        styleNC.fontName = 'Helvetica'
+   
 
         def coord(x, y, unit=1):
             x, y = x * unit, height -  y * unit
@@ -57,7 +97,7 @@ class Command(BaseCommand):
                 styled_array.extend([Paragraph(str(each),style)])
             return styled_array
        
-        styled_data = [style_row(data[0],styleBH)]
+        styled_data = [style_row(data[0],styleGH)]
         for i in range(1,len(data)):
             styled_data.append(style_row(data[i],styleN))
         for each in styled_data:
@@ -66,14 +106,26 @@ class Command(BaseCommand):
         table = Table(styled_data, colWidths=[7 * cm,
                                        5* cm, 5 * cm])
         table.setStyle(TableStyle([
-                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.grey),
-                       ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-                       ]))
-        # logo = ImageReader('http://akshara.org.in/wp-content/themes/akshara/images/logo_en.png')
+                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.lightgrey),
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.lightgrey),
+                       ('LINEBELOW', (0,0), (2, 0), 1.0, colors.green),
+                       
+                    ]))
         c = canvas.Canvas(os.path.join(settings.PDF_REPORTS_DIR, 'gka_sms/')+filename+".pdf", pagesize=A4)
         # c.drawImage(logo, 5,5, 200, 100, mask='auto')
         table.wrapOn(c, width, height)
-        table.drawOn(c, *coord(1.8, 9.6, cm))
+        table.drawOn(c, *coord(1.8, 13.5, cm))
+        header = Paragraph('GKA SMS Summary<br/><hr/>', styleTH)
+        header.wrapOn(c, width, height)
+        header.drawOn(c, *coord(0, 4, cm))
+        date_range = Paragraph("From " + start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"), styleBH)
+        date_range.wrapOn(c, width, height)
+        date_range.drawOn(c, *coord(0, 4.5, cm))
+        hr = HRFlowable(width="80%", thickness=1, lineCap='round', color=colors.lightgrey, spaceBefore=1, spaceAfter=1, hAlign='CENTER', vAlign='BOTTOM', dash=None)
+        hr.wrapOn(c, width, height)
+        hr.drawOn(c, *coord(1.8, 3.2, cm))
+        logo_image = Image("%s/images/akshara_logo.jpg" % settings.STATICFILES_DIRS) 
+        logo_image.drawOn(c, *coord(14, 3, cm))
         c.save()
 
     def get_json(self, source, stories_qset):
@@ -245,8 +297,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        gka_district_ids = [424, 417, 416, 419, 418, 445]
-        #gka_district_ids = [ 418]
+        #gka_district_ids = [424, 417, 416, 419, 418, 445]
+        gka_district_ids = [ 418]
         
         #bellary, bidar, gulbarga, koppal, raichur, yadgiri
         
@@ -290,8 +342,8 @@ class Command(BaseCommand):
         for each in districts:
             blks = self.transform_data(each)
             for blk in blks: 
-                self.make_pdf(blk,blk[0][1])
-
+                self.make_pdf(blk,start_date,end_date,blk[0][1])
+                
 
         # self.check_data_files()
 
