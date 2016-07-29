@@ -1,0 +1,39 @@
+#: Story questions
+msgid "Have you visited your child's school in the last month?"
+msgstr "ಕಳೆದ ತಿಂಗಳಲ್ಲಿ ನಿಮ್ಮ ಮಗುವಿನ ಶಾಲೆಗೆ ಭೇಟಿ ನೀಡಿದ್ದೀರಾ?"
+
+#: Story questions
+msgid "Does the school have a separate functional toilet for girls?"
+msgstr "ಶಾಲೆಯಲ್ಲಿ ಬಳಸಲು ಯೋಗ್ಯ ಪ್ರತ್ಯೇಕ ಹುಡುಗಿಯರ ಶೌಚಾಲಯವಿದೆಯೇ?"
+
+#: Story questions
+msgid "Are you satisfied with the Mid Day Meal served in your child's school?"
+msgstr "ಶಾಲೆಯಲ್ಲಿ ಮಧ್ಯಾಹ್ನದ ಊಟದ ಬಗ್ಗೆ ನಿಮಗೆ ತೃಪ್ತಿ ಇದೆಯೇ?"
+
+#: Story questions
+msgid "Is there a teacher shortage in the school?"
+msgstr "ಶಾಲೆಯಲ್ಲಿ ಶಿಕ್ಷಕರ ಕೊರತೆ ಇದೆಯೇ?"
+
+#: Story questions
+msgid "Does the SDMC meet every month?"
+msgstr "ಎಸ್. ಡಿ. ಎಮ್. ಸಿ ಪ್ರತಿ ತಿಂಗಳು ಸಭೆ ಸೇರುತ್ತದೆಯೇ?"
+
+#: Story questions
+msgid "Do you think your child can read Kannada?"
+msgstr "ನಿಮ್ಮ ಮಗು ಕನ್ನಡ ಓದುತ್ತಾಳೆ/ನೆ ಅನ್ನಿಸುತ್ತದೆಯೇ?"
+
+#: Story questions
+msgid "Do you think your child can read English?"
+msgstr "ನಿಮ್ಮ ಮಗು ಇಂಗ್ಲೀಶ್ ಓದುತ್ತಾಳೆ/ನೆ ಅನ್ನಿಸುತ್ತದೆಯೇ?"
+
+#: Story questions
+msgid "Do you think your child can do addition?"
+msgstr "ನಿಮ್ಮ ಮಗು ಕೂಡುವ ಲೆಕ್ಕ ಮಾಡುತ್ತಾಳೆ/ನೆ ಅನ್ನಿಸುತ್ತದೆಯೇ?"
+
+#: Story questions
+msgid "Do you think your child can do subtraction?"
+msgstr "ನಿಮ್ಮ ಮಗು ಕಳೆಯುವ ಲೆಕ್ಕ ಮಾಡುತ್ತಾಳೆ/ನೆ ಅನ್ನಿಸುತ್ತದೆಯೇ?"
+
+#: Story questions
+msgid "Did you participate in 'Sammudaya Datta Shaale' last time?"
+msgstr "ಕಳೆದ ಬಾರಿಯ ಸಮುದಾಯದತ್ತ ಶಾಲಾ ಕಾರ್ಯಕ್ರಮದಲ್ಲಿ ನೀವು ಭಾಗವಹಿಸಿದ್ದೀರಾ?"

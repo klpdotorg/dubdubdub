@@ -55,6 +55,10 @@ USE_I18N = True
 # calendars according to the current locale.
 USE_L10N = True
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'locale'),
+)
+
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = False
 
@@ -186,9 +190,8 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 AUTH_USER_MODEL = 'users.User'
-# AUTHENTICATION_BACKENDS = ('account.backends.ModelEmailBackend', )
-# LOGIN_URL = '/login/'
-# LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 
+from django.utils.translation import ugettext as _, activate as activate_language
 from common.serializers import KLPSerializer, KLPSimpleGeoSerializer
 from rest_framework import serializers
 from schools.models import (School, Boundary, DiseInfo, ElectedrepMaster,
@@ -52,7 +53,6 @@ class QuestiongroupSerializer(KLPSerializer):
         source='source.name'
     )
     source_id = serializers.PrimaryKeyRelatedField(
-        write_only=True,
         source='source'
     )
 
@@ -129,6 +129,7 @@ class QuestionSerializer(KLPSerializer):
 
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
+    text_kn = serializers.SerializerMethodField('get_text_kn')
     school_type = BoundaryTypeSerializer()
     questiongroup_set = QuestiongroupQuestionsSerializer(
         source='questiongroupquestions_set',
@@ -139,13 +140,17 @@ class QuestionSerializer(KLPSerializer):
     class Meta:
         model = Question
         fields = (
-            'id', 'question_type', 'text', 'qid',
+            'id', 'question_type', 'text', 'text_kn', 'qid',
             'options', 'display_text', 'key', 'school_type',
             'questiongroup_set',
         )
 
     def get_options(self, obj):
         return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
+
+    def get_text_kn(self, obj):
+        activate_language("kn")
+        return _(obj.text)
 
 
 class SourceSerializer(KLPSerializer):

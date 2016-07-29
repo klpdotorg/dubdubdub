@@ -31,20 +31,6 @@ class KLPListAPIView(generics.ListAPIView):
         if hasattr(self, 'bbox_filter_field') and self.bbox_filter_field and KLPInBBOXFilter not in self.filter_backends:
             self.filter_backends += (KLPInBBOXFilter,)
 
-    def finalize_response(self, *args, **kwargs):
-        '''
-            For CSV requests, this sets the Content-Disposition header
-        '''
-        response = super(KLPListAPIView, self).finalize_response(*args,
-                                                                 **kwargs)
-        if self.request.accepted_renderer.format == 'csv':
-
-            #FIXME, better way to get filename?
-            filename = self.request.path.split("/")[-1] + ".csv"
-            response['Content-Disposition'] = \
-                'attachment; filename="%s"' % filename
-        return response
-
     def get_paginate_by(self, *args, **kwargs):
         '''
             If per_page = 0, don't paginate.

@@ -2,6 +2,7 @@ import ast
 import random
 import calendar
 import datetime
+import json
 
 from PIL import Image
 from base64 import b64decode
@@ -22,7 +23,6 @@ from rest_framework.exceptions import (
 from django.conf import settings
 from django.db.models import Q, Count
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import resolve, Resolver404
 
 from users.models import User
 
@@ -38,7 +38,7 @@ from common.views import (
 from .models import (
     Question, Story, StoryImage,
     Answer, Questiongroup, UserType,
-    Source, Survey
+    Source, Survey, QuestiongroupQuestions
 )
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
@@ -76,8 +76,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
         return queryset
 
-    def is_questiongroup_exists(self, survey_id, question_ids):
-        survey = Survey.objects.get(id=survey_id)
+    def is_questiongroup_exists(self, survey, question_ids):
         questiongroups = survey.questiongroup_set.all()
         for questiongroup in questiongroups:
             questiongroup_question_ids = questiongroup.questions.all().values_list(
@@ -92,41 +91,51 @@ class QuestiongroupsViewSet(KLPModelViewSet):
                     " and Version: " + \
                     str(version)
                 raise APIException(message)
+        else:
+            return False
 
-    def is_source_exists(self, survey_id, source):
-        sources = Questiongroup.objects.filter(
-            survey=survey_id
-        ).values_list(
-            'source__name',
-            flat=True
-        )
-        return (source in sources)
+    def is_questions_exist(self, question_ids):
+        return Question.objects.filter(id__in=question_ids).count() == len(question_ids)
+
+    def create_questiongroup_question_relation(self, questiongroup_id, question_ids):
+        questiongroup = Questiongroup.objects.get(id=questiongroup_id)
+        questions = Question.objects.filter(id__in=question_ids)
+        for count, question in enumerate(questions):
+            QuestiongroupQuestions.objects.get_or_create(
+                questiongroup=questiongroup,
+                question=question,
+                sequence=count+1
+            )
 
     def create(self, request, *args, **kwargs):
         survey_id = kwargs.get('survey_pk')
-
-        source = request.DATA.get('source', None)
         question_ids = request.DATA.get('question_ids', None)
 
-        if source:
-            self.is_source_exists(survey_id, source)
-        else:
-            raise APIException("Please specify the source field")
+        survey = Survey.objects.get(id=survey_id)
 
         if question_ids:
             question_ids = ast.literal_eval(question_ids)
-            self.is_questiongroup_exists(survey_id, question_ids)
+            if not self.is_questions_exist(question_ids):
+                raise APIException("Please select valid question ids")
+            self.is_questiongroup_exists(survey, question_ids)
         else:
             raise APIException("Please select one or more questions")
 
         serializer = self.get_serializer(data=request.DATA)
         if serializer.is_valid():
+            if survey.questiongroup_set.exists():
+                latest_questiongroup = survey.questiongroup_set.latest('version')
+                new_version = latest_questiongroup.version + 1
+            else:
+                new_version = 1
+            serializer.object.version = new_version
             serializer.save()
             headers = self.get_success_headers(serializer.data)
+            questiongroup_id = serializer.data['id']
+            self.create_questiongroup_question_relation(questiongroup_id, question_ids)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            raise APIException(serializer.errors)
 
 
 class QuestionsViewSet(KLPModelViewSet):
@@ -153,6 +162,70 @@ class SourceListView(KLPListAPIView):
     queryset = Source.objects.all()
     serializer_class = SourceSerializer
 
+
+class StoriesSyncView(KLPAPIView):
+    """
+    Expects a POST request with JSON body
+    in the format - https://gist.github.com/iambibhas/fe26fbaa252d0a4f317542d650d4979f
+    """
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        response = {
+            'success': [],
+            'failed': [],
+            'error': None
+        }
+        try:
+            stories = json.loads(request.body)
+            print stories
+        except ValueError as e:
+            print e
+            response['error'] = 'Invalid JSON data'
+
+        if response['error'] is None:
+            for story in stories.get('stories', []):
+                timestamp = int(story.get('created_at'))/1000
+                sysid = None
+
+                try:
+                    sysid = int(story.get('sysid'))
+                except ValueError:
+                    sysid = None
+
+                try:
+                    if story.get('respondent_type') not in dict(UserType.USER_TYPE_CHOICES).keys():
+                        raise Exception("Invalid respondent type")
+                    user_type = UserType.objects.get(name__iexact=story.get('respondent_type'))
+                    new_story, created = Story.objects.get_or_create(
+                        user=request.user,
+                        school=School.objects.get(pk=story.get('school_id')),
+                        group=Questiongroup.objects.get(pk=story.get('group_id')),
+                        user_type=user_type,
+                        date_of_visit=datetime.datetime.fromtimestamp(timestamp),
+                        sysid=sysid
+                    )
+
+                    if created:
+                        new_story.is_verified = True
+                        new_story.telephone = request.user.mobile_no
+                        new_story.name = request.user.get_full_name()
+                        new_story.email = request.user.email
+                        new_story.save()
+
+                    for answer in story.get('answers', []):
+                        new_answer, created = Answer.objects.get_or_create(
+                            text=answer.get('text'),
+                            story=new_story,
+                            question=Question.objects.get(pk=answer.get('question_id'))
+                        )
+                    response['success'].append(story.get('_id'))
+                except Exception as e:
+                    print "Error saving stories and answers:", e
+                    response['failed'].append(story.get('_id'))
+        return Response(response)
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -429,11 +502,11 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(school__id=school_id)
 
         if mp_id:
-            stories_qset = stories_qset.filter(
+            stories = stories.filter(
                 school__electedrep__mp_const__id=mp_id)
 
         if mla_id:
-            stories_qset = stories_qset.filter(
+            stories = stories.filter(
                 school__electedrep__mla_const__id=mla_id)
 
         if start_date:
