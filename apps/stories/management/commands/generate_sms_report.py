@@ -18,21 +18,18 @@ from rest_framework.exceptions import (
     ParseError, MethodNotAllowed,
     AuthenticationFailed
 )
+from collections import OrderedDict
+
 from django.db.models import Q, Count
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, cm
 from reportlab.platypus import Paragraph, Table, TableStyle, Image
 from reportlab.platypus.flowables import HRFlowable
-
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
 from reportlab.lib import colors
-# from reportlab.platypus.doctemplate import SimpleDocTemplate
-# from reportlab.platypus import Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-# from reportlab.lib.pagesizes import A4, cm
-# from reportlab.platypus import Table, TableStyle
-# from reportlab.lib import colors
+from common.utils import send_attachment
 
 
 class Command(BaseCommand):
@@ -68,11 +65,6 @@ class Command(BaseCommand):
             x, y = x * unit, height -  y * unit
             return x, y
 
-        # Headers
-        #hdescrpcion = Paragraph('''<b>descrpcion</b>''', styleBH)
-        
-        # Texts
-        #descrpcion = Paragraph('long paragraph', styleN)
         def style_row(row_array, style):
             styled_array = []
             for each in row_array:
@@ -111,7 +103,7 @@ class Command(BaseCommand):
                        
                     ]))
         table.wrapOn(c, width, height)
-        table.drawOn(c, *coord(1.8, 15, cm))
+        table.drawOn(c, *coord(1.8, 17.5, cm))
         header = Paragraph('GKA SMS Summary<br/><hr/>', styleTH)
         header.wrapOn(c, width, height)
         header.drawOn(c, *coord(0, 4, cm))
@@ -124,7 +116,18 @@ class Command(BaseCommand):
         logo_image = Image("%s/images/akshara_logo.jpg" % settings.STATICFILES_DIRS) 
         logo_image.drawOn(c, *coord(14, 3, cm))
         c.save()
+        self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename)
 
+    def send_email(self,date_range, block):
+        send_attachment(
+            from_email=settings.EMAIL_DEFAULT_FROM,
+            to_emails=['megha@klp.org.in'],
+            subject='GKA SMS Report for '+ date_range + ' for '+ block,
+            folder='gka_sms',
+            filename=block
+        )
+
+    
     def get_json(self, source, stories_qset):
         json = {}
         json['stories'] = stories_qset.count()
@@ -134,23 +137,45 @@ class Command(BaseCommand):
     def transform_data(self, district):
         blocks =[]
         questions = {}
+        gka_question_seq = ['How many responses indicate that Math classes were happening in class 4 and 5 during the visit?',
+                'How many responses indicate that class 4 and 5 math teachers are trained in GKA methodology in the schools visited?',
+                'How many responses indicate evidence of Ganitha Kalika Andolana TLM being used in class 4 or 5 during the visit?',
+                'How many responses indicate that representational stage was being practiced during Math classes in class 4 and 5 during the visit?',
+                'How many responses indicate that group work was happening in the schools visited?']
         for block in district["blocks"]:
             data = [["Details", "Block-"+block["name"].capitalize(), "District-"+district["name"].capitalize()]]
             data.append(["Schools", block["sms"]["schools"], district["sms"]["schools"]])
             data.append(["SMS Messages", block["sms"]["stories"], district["sms"]["stories"]])
             data.append(["Schools with SMS Messages", block["sms"]["schools_with_stories"], district["sms"]["schools_with_stories"]])
 
-            for each in block["details"]:
+            for each in block["details"]:    
                 questions[each["question"]["display_text"]]= {"block": self.get_response_str(each["answers"])}
             for each in district["details"]:
                 questions[each["question"]["display_text"]]["district"] = self.get_response_str(each["answers"])
-            for question in questions:
+            custom_sort = self.make_custom_sort([ gka_question_seq ])
+            result = custom_sort(questions)
+            for question in result:
                 row = [question]
                 row.extend(questions[question]["block"])
                 row.extend(questions[question]["district"])
                 data.append(row)
             blocks.append(data)
         return blocks      
+    
+    def make_custom_sort(self,orders):
+        orders = [{k: -i for (i, k) in enumerate(reversed(order), 1)} for order in orders]
+        def process(stuff):
+            if isinstance(stuff, dict):
+                l = [(k, process(v)) for (k, v) in stuff.items()]
+                keys = set(stuff)
+                for order in orders:
+                    if keys.issuperset(order):
+                        return OrderedDict(sorted(l, key=lambda x: order.get(x[0], 0)))
+                return OrderedDict(sorted(l))
+            if isinstance(stuff, list):
+                return [process(x) for x in stuff]
+            return stuff
+        return process
 
     def get_response_str(self, answers):
         yes = 0
@@ -299,7 +324,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #gka_district_ids = [424, 417, 416, 419, 418, 445]
         gka_district_ids = [ 418]
-        
         #bellary, bidar, gulbarga, koppal, raichur, yadgiri
         
         start_date = args[0]
@@ -344,23 +368,3 @@ class Command(BaseCommand):
             for blk in blks: 
                 self.make_pdf(blk,start_date,end_date,blk[0][1])
                 
-
-        # self.check_data_files()
-
-        # count = 0
-        # with open(self.file_path, 'r') as statusidfile:
-        #     reader = DictReader(statusidfile)
-        #     for ems_school in reader:
-        #         try:
-        #             school = School.objects.get(id=ems_school['id'])
-
-        #             if school.status == int(ems_school['active']):
-        #                 continue
-
-        #             log('Found school with different status: ' + str(school.id))
-        #             school.status = ems_school['active']
-        #             school.save()
-        #             count += 1
-        #         except Exception, e:
-        #             log('Could not find school: ' + str(school.id))
-
