@@ -38,24 +38,6 @@ from reportlab.lib.styles import getSampleStyleSheet
 class Command(BaseCommand):
     help = 'Generates a report on SMS data'
 
-    # def make_pdf(self, data, start_date, end_date, filename):
-    #     doc = SimpleDocTemplate("products.pdf", pagesize=A4)
-    #     styles = getSampleStyleSheet()
-    #     header = Paragraph("GKA SMS Summary", styles['Heading1'])
-    #     sms_report = []
-    #     sms_report.append(header)
-    #     date_header = Paragraph("From" + str(start_date) +"to"+str(end_date), styles['Heading3'])
-    #     style = styles['Normal']
-    #     headings = data[0]
-    #     paramters = data[1:len(data)]
-    #     t = Table(headings + paramters, colWidths=[7 * cm, 5* cm, 5 * cm])
-    #     t.setStyle(TableStyle(
-    #                     [('GRID', (0,0), (1,-1), 2, colors.black),
-    #                      ('LINEBELOW', (0,0), (-1,0), 2, colors.red),
-    #                      ('BACKGROUND', (0, 0), (-1, 0), colors.pink)]))
-    #     sms_report.append(t) 
-    #     doc.build(sms_report)    
-    
     def make_pdf(self, data, start_date, end_date, filename):
 
         width, height = A4
@@ -97,24 +79,39 @@ class Command(BaseCommand):
                 styled_array.extend([Paragraph(str(each),style)])
             return styled_array
        
+            
+        c = canvas.Canvas(os.path.join(settings.PDF_REPORTS_DIR, 'gka_sms/')+filename+".pdf", pagesize=A4)
         styled_data = [style_row(data[0],styleGH)]
-        for i in range(1,len(data)):
-            styled_data.append(style_row(data[i],styleN))
-        for each in styled_data:
-            print each, '\n\n\n'
-        
-        table = Table(styled_data, colWidths=[7 * cm,
+        for row in data[1:4]:
+            styled_data.append(style_row(row,styleN))
+
+        table_header = Table(styled_data, colWidths=[7 * cm,
                                        5* cm, 5 * cm])
-        table.setStyle(TableStyle([
+        table_header.setStyle(TableStyle([
                        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.lightgrey),
                        ('BOX', (0,0), (-1,-1), 0.25, colors.lightgrey),
                        ('LINEBELOW', (0,0), (2, 0), 1.0, colors.green),
+                       ('LINEBELOW', (0,3), (2, 3), 1.0, colors.green),
                        
                     ]))
-        c = canvas.Canvas(os.path.join(settings.PDF_REPORTS_DIR, 'gka_sms/')+filename+".pdf", pagesize=A4)
-        # c.drawImage(logo, 5,5, 200, 100, mask='auto')
+        table_header.wrapOn(c, width, height)
+        table_header.drawOn(c, *coord(1.8, 9, cm))
+        
+        styled_data =[style_row(['Questions','Yes','No','Yes','No'],styleBH)] 
+        for row in data[4:len(data)]:
+            styled_data.append(style_row(row,styleN))
+        
+        table = Table(styled_data, colWidths=[7 * cm,
+                                       2.5 * cm, 2.5 * cm,
+                                       2.5 * cm, 2.5 * cm])
+        table.setStyle(TableStyle([
+                       ('INNERGRID', (0,0), (-1,-1), 0.25, colors.lightgrey),
+                       ('BOX', (0,0), (-1,-1), 0.25, colors.lightgrey),
+                       #('LINEBELOW', (0,0), (2, 0), 1.0, colors.green),
+                       
+                    ]))
         table.wrapOn(c, width, height)
-        table.drawOn(c, *coord(1.8, 13.5, cm))
+        table.drawOn(c, *coord(1.8, 15, cm))
         header = Paragraph('GKA SMS Summary<br/><hr/>', styleTH)
         header.wrapOn(c, width, height)
         header.drawOn(c, *coord(0, 4, cm))
@@ -148,8 +145,11 @@ class Command(BaseCommand):
             for each in district["details"]:
                 questions[each["question"]["display_text"]]["district"] = self.get_response_str(each["answers"])
             for question in questions:
-                data.append([question, questions[question]["block"],questions[question]["district"]])
-            blocks.append(data)     
+                row = [question]
+                row.extend(questions[question]["block"])
+                row.extend(questions[question]["district"])
+                data.append(row)
+            blocks.append(data)
         return blocks      
 
     def get_response_str(self, answers):
@@ -160,7 +160,7 @@ class Command(BaseCommand):
                 yes = answers["options"]["Yes"]
             if "No" in answers["options"]:
                 no = answers["options"]["No"]
-            return  'Yes: '+str(yes)+'('+str((yes*100)/(yes+no))+'%)\n No: '+str(no)+'('+str((no*100)/(yes+no))+'%)'
+            return  [str(yes)+'('+str((yes*100)/(yes+no))+'%)',str(no)+'('+str((no*100)/(yes+no))+'%)']
         else:
             return "No Responses"
 
