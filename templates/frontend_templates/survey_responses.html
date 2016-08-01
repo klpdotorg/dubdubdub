@@ -10,6 +10,12 @@
   
 
   <script type="text/html" id="tpl-responseTable">
+  {% if data.prev %}
+    <a href="{{data.prev}}" class="button-hollow align-left">Prev</a>
+  {% endif %}
+  {% if data.next %}
+    <a href="{{data.next}}" class="button-hollow align-right">Next</a>
+  {% endif %}
   <div class="table-responsive-wrap"> 
     <table class="table-base base-spacing-mid">
       <thead class="table-base-heading">
