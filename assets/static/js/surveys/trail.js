@@ -9,12 +9,12 @@
         loadData(dataURL);
     }
 
-    $(document).on('click',"#next",function () {        
+    $(document).on('click',".next",function () {        
         var rest_url = $(this).find('div').attr('id');
         loadData(rest_url);
     });
 
-    $(document).on('click',"#prev",function () {        
+    $(document).on('click',".prev",function () {        
         var rest_url = $(this).find('div').attr('id');
         loadData(rest_url);
     });
