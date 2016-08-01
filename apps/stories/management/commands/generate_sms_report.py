@@ -314,10 +314,6 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        #gka_district_ids = [424, 417, 416, 419, 418, 445]
-        gka_district_ids = [ 418]
-        #bellary, bidar, gulbarga, koppal, raichur, yadgiri
-
         try:
             start_date = args[0]
             end_date = args[1]
@@ -346,6 +342,16 @@ class Command(BaseCommand):
                 end_date = date.get_datetime(end_date)
 
         districts = []
+
+        gka_district_ids = set(
+            Story.objects.filter(
+                group__source__name="sms"
+            ).values_list(
+                'school__admin3__parent__parent__id',
+                flat=True
+            )
+        )
+
         for district_id in gka_district_ids:
             
             district = Boundary.objects.get(id=district_id)
