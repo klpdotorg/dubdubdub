@@ -10,12 +10,13 @@
    <div class="chart-parent">
       <div class="chart-half-item">
         {% if data.previous != null %}
-          <button id="{{data.previous}}"  class="prev button-hollow float-left">Prev</button>
+          <button data-id="{{data.previous}}"  class="prev button-hollow float-left">Prev</button>
+          <!--div data-id="http://dev.klp.org.in/api/v1/stories/?source=mobile&amp;page=2"  class="prev button-hollow float-left">Prev</div-->
         {% endif %}
       </div>
       <div class="chart-half-item">
         {% if data.next != null %}
-          <button id="{{data.next}}" class="next button-hollow float-right">Next</button>
+          <div data-id="{{data.next}}" class="next button-hollow float-right">Next</div>
         {% endif %}
       </div>
     </div>

@@ -10,12 +10,16 @@
     }
 
     $(document).on('click',".next",function () {        
-        var rest_url = $(this).find('div').attr('id');
+        var url = $(this).data('id');
+        var rest_url = url.split('api/v1/')[1];
+        console.log(rest_url);
         loadData(rest_url);
     });
 
     $(document).on('click',".prev",function () {        
-        var rest_url = $(this).find('div').attr('id');
+        var url = $(this).data('id');
+        var rest_url = url.split('api/v1/')[1];
+        console.log(rest_url);
         loadData(rest_url);
     });
 
