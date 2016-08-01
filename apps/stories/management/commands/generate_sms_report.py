@@ -243,10 +243,7 @@ class Command(BaseCommand):
     
     def get_que_and_ans(self, stories, source, school_type):
         response_list = []
-        questions = Question.objects.filter(
-            is_featured=True).select_related(
-                'question_type', 'school_type'
-            )
+        questions = Question.objects.all().select_related('question_type')
 
         if source:
             questions = questions.filter(
