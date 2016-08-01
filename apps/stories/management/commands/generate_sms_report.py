@@ -13,11 +13,6 @@ from stories.models import (
     QuestiongroupQuestions, Source, UserType,
     Story, Answer)
 
-from rest_framework.exceptions import (
-    APIException, PermissionDenied,
-    ParseError, MethodNotAllowed,
-    AuthenticationFailed
-)
 from collections import OrderedDict
 
 from django.db.models import Q, Count
@@ -332,14 +327,14 @@ class Command(BaseCommand):
         if start_date:
             sane = date.check_date_sanity(start_date)
             if not sane:
-                raise APIException("Please enter `from` in the format YYYY-MM-DD")
+                
             else:
                 start_date = date.get_datetime(start_date)
 
         if end_date:
             sane = date.check_date_sanity(end_date)
             if not sane:
-                raise APIException("Please enter `to` in the format YYYY-MM-DD")
+                
             else:
                 end_date = date.get_datetime(end_date)
         districts = []
