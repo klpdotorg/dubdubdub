@@ -6,16 +6,25 @@
     <span class="brand-turquoise heading-secondary">{{data.count}}</span>
     </div>
     </div>
+
+   <div class="chart-parent">
+      <div class="chart-half-item">
+        {% if data.previous != null %}
+          <button id="{{data.previous}}"  class="button-hollow float-left">Prev</button>
+        {% endif %}
+      </div>
+      <div class="chart-half-item">
+        {% if data.next != null %}
+          <button id="{{data.next}}" class="button-hollow float-right">Next</button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="base-spacing-mid"></div>
   </script>
   
 
   <script type="text/html" id="tpl-responseTable">
-  {% if data.prev %}
-    <a href="{{data.prev}}" class="button-hollow align-left">Prev</a>
-  {% endif %}
-  {% if data.next %}
-    <a href="{{data.next}}" class="button-hollow align-right">Next</a>
-  {% endif %}
+  
   <div class="table-responsive-wrap"> 
     <table class="table-base base-spacing-mid">
       <thead class="table-base-heading">

@@ -5,12 +5,22 @@
         klp.router = new KLPRouter();
         klp.router.init();
         klp.router.start();
-        loadData();
+        var dataURL = "stories?source=mobile";
+        loadData(dataURL);
     }
 
-    function loadData() {
+    $(document).on('click',"#next",function () {        
+        var rest_url = $(this).find('div').attr('id');
+        loadData(rest_url);
+    });
+
+    $(document).on('click',"#prev",function () {        
+        var rest_url = $(this).find('div').attr('id');
+        loadData(rest_url);
+    });
+
+    function loadData(dataURL) {
         var params = {};
-        var dataURL = "stories?source=mobile";
         var $dataXHR = klp.api.do(dataURL, params);
         $dataXHR.done(function(data) {
             renderSummary(data);
