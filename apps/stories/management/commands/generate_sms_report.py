@@ -37,18 +37,19 @@ class Command(BaseCommand):
         styleN = styles["BodyText"]
         styleN.alignment = TA_LEFT
         styleN.fontName = 'Helvetica'
+        styleN.textColor = colors.black
         styleBH = styles["Heading3"]
         styleBH.alignment = TA_CENTER
         styleBH.fontName = 'Helvetica'
-        styleBH.textColor = colors.purple
+        styleBH.textColor = colors.darkslategray
         styleTH = styles["Heading1"]
         styleTH.alignment = TA_CENTER
         styleTH.fontName = 'Helvetica'
-        styleTH.textColor = colors.green
+        styleTH.textColor = colors.darkslateblue
         styleGH = styles["Heading2"]
         styleGH.alignment = TA_CENTER
         styleGH.fontName = 'Helvetica'
-        styleGH.textColor = colors.black
+        styleGH.textColor = colors.darkslategray
         #styleGH.backColor = colors.lightgrey
 
         styleNC = styles["BodyText"]
@@ -77,8 +78,8 @@ class Command(BaseCommand):
         table_header.setStyle(TableStyle([
                        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.lightgrey),
                        ('BOX', (0,0), (-1,-1), 0.25, colors.lightgrey),
-                       ('LINEBELOW', (0,0), (2, 0), 1.0, colors.green),
-                       ('LINEBELOW', (0,3), (2, 3), 1.0, colors.green),
+                       ('LINEBELOW', (0,0), (2, 0), 1.0, colors.darkgrey),
+                       ('LINEBELOW', (0,3), (2, 3), 1.0, colors.darkgrey),
                        
                     ]))
         table_header.wrapOn(c, width, height)
@@ -116,7 +117,7 @@ class Command(BaseCommand):
     def send_email(self,date_range, block):
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
-            to_emails=['megha@klp.org.in'],
+            to_emails=['haris@klp.org.in','megha@klp.org.in'],
             subject='GKA SMS Report for '+ date_range + ' for '+ block,
             folder='gka_sms',
             filename=block
@@ -182,7 +183,7 @@ class Command(BaseCommand):
                 no = answers["options"]["No"]
             return  [str(yes)+'('+str((yes*100)/(yes+no))+'%)',str(no)+'('+str((no*100)/(yes+no))+'%)']
         else:
-            return "No Responses"
+            return ["No Responses","-"]
 
     def source_filter(self, source, stories_qset):
         stories_qset = stories_qset.filter(
