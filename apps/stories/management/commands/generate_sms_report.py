@@ -320,9 +320,17 @@ class Command(BaseCommand):
         #gka_district_ids = [424, 417, 416, 419, 418, 445]
         gka_district_ids = [ 418]
         #bellary, bidar, gulbarga, koppal, raichur, yadgiri
-        
-        start_date = args[0]
-        end_date = args[1]
+
+        try:
+            start_date = args[0]
+            end_date = args[1]
+        except:
+            print """
+            Usage: python manage.py generate_sms_report YYYY-MM-DD YYYY-MM-DD
+            The dates are 'from' and 'to' respectively.
+            """
+            return
+
         date = Date()
         if start_date:
             sane = date.check_date_sanity(start_date)
