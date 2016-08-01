@@ -327,16 +327,19 @@ class Command(BaseCommand):
         if start_date:
             sane = date.check_date_sanity(start_date)
             if not sane:
-                
+                print "Wrong start_date format. Expected YYYY-MM-DD"
+                return
             else:
                 start_date = date.get_datetime(start_date)
 
         if end_date:
             sane = date.check_date_sanity(end_date)
             if not sane:
-                
+                print "Wrong end_date format. Expected YYYY-MM-DD"
+                return
             else:
                 end_date = date.get_datetime(end_date)
+
         districts = []
         for district_id in gka_district_ids:
             
