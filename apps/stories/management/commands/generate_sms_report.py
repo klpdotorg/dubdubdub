@@ -127,9 +127,9 @@ class Command(BaseCommand):
         klp_text.drawOn(c, *coord(1.8, 27.5, cm))
         
         c.save()
-        self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename)
+        self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename, emails)
 
-    def send_email(self,date_range, block):
+    def send_email(self,date_range, block, emails):
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=emails,
@@ -362,7 +362,7 @@ class Command(BaseCommand):
         if ',' in args[2]:
             emails = args[2].split(',')
         else:
-            emails = args[2]
+            emails = [args[2]]
 
         districts = []
 
