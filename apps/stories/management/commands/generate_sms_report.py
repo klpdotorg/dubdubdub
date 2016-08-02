@@ -30,7 +30,7 @@ from common.utils import send_attachment
 class Command(BaseCommand):
     help = 'Generates a report on SMS data'
 
-    def make_pdf(self, data, start_date, end_date, filename):
+    def make_pdf(self, data, start_date, end_date, filename, emails):
 
         width, height = A4
         styles = getSampleStyleSheet()
@@ -132,7 +132,7 @@ class Command(BaseCommand):
     def send_email(self,date_range, block):
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
-            to_emails=['haris@klp.org.in','megha@klp.org.in'],
+            to_emails=emails,
             subject='GKA SMS Report for '+ date_range + ' for '+ block,
             folder='gka_sms',
             filename=block
@@ -333,9 +333,10 @@ class Command(BaseCommand):
         try:
             start_date = args[0]
             end_date = args[1]
+            email_ids = args[2]
         except:
             print """
-            Usage: python manage.py generate_sms_report YYYY-MM-DD YYYY-MM-DD
+            Usage: python manage.py generate_sms_report YYYY-MM-DD YYYY-MM-DD <list of comma separated email-ids>
             The dates are 'from' and 'to' respectively.
             """
             return
@@ -356,6 +357,12 @@ class Command(BaseCommand):
                 return
             else:
                 end_date = date.get_datetime(end_date)
+
+        emails = []
+        if ',' in args[2]:
+            emails = args[2].split(',')
+        else:
+            emails = args[2]
 
         districts = []
 
@@ -391,5 +398,5 @@ class Command(BaseCommand):
         for each in districts:
             blks = self.transform_data(each)
             for blk in blks: 
-                self.make_pdf(blk,start_date,end_date,blk[0][1])
+                self.make_pdf(blk,start_date,end_date,blk[0][1],emails)
                 
