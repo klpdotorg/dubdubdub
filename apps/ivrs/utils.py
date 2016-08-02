@@ -61,11 +61,7 @@ def check_data_validity(original_data, data):
     valid = True
     message = None
 
-    if not all(response.strip().isdigit() for response in data):
-        valid = False
-        message = get_message(valid=valid, data=original_data)
-
-    elif len(data) == 3:
+    if len(data) == 3:
         if data[2] != '2':
             valid = False
             message = get_message(valid=valid, data=original_data)
@@ -96,6 +92,12 @@ def check_data_validity(original_data, data):
     elif len(data) != 6:
         valid = False
         message = get_message(valid=valid, data=original_data)
+
+    # Making sure that each input is a valid digit and no alphabets get in.
+    if not all(response.strip().isdigit() for response in data):
+        valid = False
+        message = get_message(valid=valid, data=original_data)
+
 
     return (data, valid, message)
 
