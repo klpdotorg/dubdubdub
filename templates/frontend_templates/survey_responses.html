@@ -7,19 +7,15 @@
     </div>
     </div>
 
-   <div class="chart-parent">
-      <div class="chart-half-item">
-        {% if data.previous != null %}
-          <button data-id="{{data.previous}}"  class="prev button-hollow float-right">Prev</button>
-          <!--div data-id="http://dev.klp.org.in/api/v1/stories/?source=mobile&amp;page=2"  class="prev button-hollow float-left">Prev</div-->
-        {% endif %}
-      </div>
-      <div class="chart-half-item">
-        {% if data.next != null %}
-          <div data-id="{{data.next}}" class="next button-hollow float-left">Next</div>
-        {% endif %}
-      </div>
+   <div class="container center-text">
+      {% if data.previous != null %}
+          <button data-id="{{data.previous}}" class="prev button-hollow">Prev</button>
+      {% endif %}
+      {% if data.next != null %}
+          <button data-id="{{data.next}}" class="next button-hollow">Next</button>
+      {% endif %}
     </div>
+
     <div class="base-spacing-mid"></div>
   </script>
   
