@@ -38,7 +38,7 @@ class SchoolsList(KLPListAPIView, CacheMixin):
         elif stype == 'primaryschools':
             qset = qset.filter(schooldetails__type=1)
         qset = qset.select_related(
-            'schooldetails__type', 'address', 
+            'schooldetails__type', 'address',
             'admin3', 'admin3__hierarchy__name'
         )
 

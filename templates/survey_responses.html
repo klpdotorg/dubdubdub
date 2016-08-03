@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}Mobile Response Summary{% endblock %}
+
+{% block css_extra %}
+
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}  
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/surveys/trail.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+<div class="base-spacing-mid"></div>
+<div class="heading-secondary heading-border brand-red">Surveys from KLP Konnect</div>
+<div class="container">
+	<div id="count_response"></div>
+</div>
+<div id="response_summary" class="container"></div>
+		
+{% include 'frontend_templates/survey_responses.html' %} 
+{% endblock %}

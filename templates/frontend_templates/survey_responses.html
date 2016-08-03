@@ -1,0 +1,56 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-countSummary">
+    <div class="center-text base-spacing-mid">
+    <div class="heading-tiny-uppercase">Number of Survey Responses: 
+    <span class="brand-turquoise heading-secondary">{{data.count}}</span>
+    </div>
+    </div>
+
+   <div class="container center-text">
+      {% if data.previous != null %}
+          <button data-id="{{data.previous}}" class="prev button-hollow">Prev</button>
+      {% endif %}
+      {% if data.next != null %}
+          <button data-id="{{data.next}}" class="next button-hollow">Next</button>
+      {% endif %}
+    </div>
+
+    <div class="base-spacing-mid"></div>
+  </script>
+  
+
+  <script type="text/html" id="tpl-responseTable">
+  
+  <div class="table-responsive-wrap"> 
+    <table class="table-base base-spacing-mid">
+      <thead class="table-base-heading">
+        <tr class="header-strip">
+        <th>ID</th>
+        <th>Survey By</th>    
+        <th>Visit on</th>
+        <th>Created At</th>
+        <th>School Name</th>
+        <th>KLP ID</th> 
+        </tr>
+
+      </thead>
+      <tbody>
+  
+        {% for each in data.features %}
+          <tr class="font-smallest">
+          <td>{{ each.id }}</td>
+          <td>{{ each.name }}</td>
+          <td>{{ each.date_of_visit | date('m/d/Y   h:i A')}}</td>
+          <td>{{ each.created_at | date('m/d/Y   h:i A') }}</td>
+          <td>{{ each.school_name }}</td>
+          <td><a href="{{each.school_url}}" target="_blank">{{ each.school }}</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  </script>
+
+{% endverbatim %}
+

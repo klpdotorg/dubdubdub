@@ -55,6 +55,9 @@ nosetests.xml
 # newrelic
 newrelic.ini
 
+# pdfs
+*.pdf
+
 collected-static
 media
 

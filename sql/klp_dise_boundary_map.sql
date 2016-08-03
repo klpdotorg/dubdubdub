@@ -3,6 +3,7 @@
 --
 
 CREATE EXTENSION pg_trgm;
+CREATE EXTENSION pg_similarity;
 
 -- DISTRICT ----------------------------
 -- update primary district slugs - hid=9
@@ -18,25 +19,25 @@ FROM dblink('host=localhost dbname=klpdise_olap user=klp'::text, 'select distinc
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 FROM mvw_dise_districts t1
-WHERE status=2 AND hid=9 AND dise_slug is null 
+WHERE status=2 AND hid=9 AND dise_slug is null
 AND jarowinkler(name, t1.district) = 1;
 
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 FROM mvw_dise_districts t1
-WHERE status=2 AND hid=9 AND dise_slug is null 
+WHERE status=2 AND hid=9 AND dise_slug is null
 AND jarowinkler(name, t1.district) >= 0.95;
 
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 FROM mvw_dise_districts t1
-WHERE status=2 AND hid=9 AND dise_slug is null 
+WHERE status=2 AND hid=9 AND dise_slug is null
 AND jarowinkler(name, t1.district) >= 9;
 
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 FROM mvw_dise_districts t1
-WHERE status=2 AND hid=9 AND dise_slug is null 
+WHERE status=2 AND hid=9 AND dise_slug is null
 AND jarowinkler(name, t1.district) >= 0.85;
 
 -- update boundaries that didnt match by name
@@ -60,37 +61,37 @@ FROM dblink('host=localhost dbname=klpdise_olap user=klp'::text, 'select block_n
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
-WHERE 
+WHERE
     tb_boundary.dise_slug is null AND
-    tb_boundary.status=2 AND 
-    tb_boundary.hid=10 AND 
-    parent_bdry.id=tb_boundary.parent AND 
-    t2.district=t1.district AND 
-    t2.slug=parent_bdry.dise_slug AND 
+    tb_boundary.status=2 AND
+    tb_boundary.hid=10 AND
+    parent_bdry.id=tb_boundary.parent AND
+    t2.district=t1.district AND
+    t2.slug=parent_bdry.dise_slug AND
     jarowinkler(tb_boundary.name, t1.block_name) = 1;
 -- select bdry.name, parent_bdry.name, t1.block_name, t1.district, t1.slug
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
-WHERE 
+WHERE
     tb_boundary.dise_slug is null AND
-    tb_boundary.status=2 AND 
-    tb_boundary.hid=10 AND 
-    parent_bdry.id=tb_boundary.parent AND 
-    t2.district=t1.district AND 
-    t2.slug=parent_bdry.dise_slug AND 
+    tb_boundary.status=2 AND
+    tb_boundary.hid=10 AND
+    parent_bdry.id=tb_boundary.parent AND
+    t2.district=t1.district AND
+    t2.slug=parent_bdry.dise_slug AND
     jarowinkler(tb_boundary.name, t1.block_name) >= 0.95;
 -- select bdry.name, parent_bdry.name, t1.block_name, t1.district, t1.slug
 UPDATE tb_boundary
 SET dise_slug=t1.slug
 from tb_boundary parent_bdry, mvw_dise_blocks t1, mvw_dise_districts t2
-WHERE 
+WHERE
     tb_boundary.dise_slug is null AND
-    tb_boundary.status=2 AND 
-    tb_boundary.hid=10 AND 
-    parent_bdry.id=tb_boundary.parent AND 
-    t2.district=t1.district AND 
-    t2.slug=parent_bdry.dise_slug AND 
+    tb_boundary.status=2 AND
+    tb_boundary.hid=10 AND
+    parent_bdry.id=tb_boundary.parent AND
+    t2.district=t1.district AND
+    t2.slug=parent_bdry.dise_slug AND
     jarowinkler(tb_boundary.name, t1.block_name) >= 0.9;
 
 UPDATE tb_boundary SET dise_slug='uttara-kannada-sirsi-mundagod' WHERE hid=10 and name='mundagod';
@@ -114,7 +115,6 @@ UPDATE tb_boundary SET dise_slug='bangalore-u-south-south4' WHERE hid=10 and nam
 -- CLUSTER -----------------------------
 -- update primary cluster slugs - hid=11
 ----------------------------------------
-CREATE EXTENSION pg_similarity;
 
 CREATE MATERIALIZED VIEW mvw_dise_clusters AS
 SELECT t1.cluster_name, t1.block_name, t1.district, t1.slug
@@ -174,6 +174,6 @@ where
 ----------------------------------------
 ------------- CLEAN UP -----------------
 ----------------------------------------
--- DROP MATERIALIZED VIEW mvw_dise_districts;
--- DROP MATERIALIZED VIEW mvw_dise_blocks;
--- DROP MATERIALIZED VIEW mvw_dise_clusters;
+DROP MATERIALIZED VIEW mvw_dise_districts;
+DROP MATERIALIZED VIEW mvw_dise_blocks;
+DROP MATERIALIZED VIEW mvw_dise_clusters;
