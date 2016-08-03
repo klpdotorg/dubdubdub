@@ -130,6 +130,7 @@ class Command(BaseCommand):
         self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename, emails)
 
     def send_email(self,date_range, block, emails):
+        print 'Sending email for', block
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=emails,
