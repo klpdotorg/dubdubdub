@@ -5,23 +5,24 @@
 
     <div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
-            {{ searchEntity.type}}
+            <span class="brand-blue">{{ searchEntity.type}}</span>
           </div>
           <h2 class="heading-secondary black align-left">
             {{ searchEntity.name }}
           </h2>
     </div>
+    <hr/>
   </script>
   
-  <script type="text/html" id="tpl-ivrsSummary">
+  <script type="text/html" id="tpl-smsSummary">
     <div class="heading-tiny-uppercase align-left" >Calls</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.stories }}</h2>
+    <h2 class="heading-secondary black align-left">{{ sms.stories }}</h2>
     <div class="heading-tiny-uppercase align-left" >Schools</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2>
+    <h2 class="heading-secondary black align-left">{{ sms.schools }}</h2>
     <div class="heading-tiny-uppercase align-left" >Schools with Calls</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2> 
+    <h2 class="heading-secondary black align-left">{{ sms.schools }}</h2> 
     <div class="heading-tiny-uppercase align-left" >Last Call</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.last_story }}</h2> 
+    <h2 class="heading-secondary black align-left">{{ sms.last_story }}</h2> 
   </script>
 
   <script type="text/html" id="tpl-tlmTable">
@@ -68,29 +69,6 @@
   <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
   <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
 </div>
-<!--div class="chart-parent center-text">
-  <div class="chart-parent chart-half-item">
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-blue"></span>&nbsp;Class 2
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-orange"></span>&nbsp;Class 3
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
-    </div>
-  </div>
-  <div class="chart-parent chart-half-item">
-    <div class="chart-athird-item">
-      <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle pink-salmon"></span>&nbsp;Class 6
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-red"></span>&nbsp;Class 7
-    </div>
-  </div-->
 </div>
   </script>
 
@@ -112,6 +90,46 @@
     {% endif %}
   </script>
 
+  <script type="text/html" id="tpl-responseTable">
+    <div class="table-responsive-wrap">        
+    <table class="table-base">
+      <thead>
+        <tr class="table-base-heading">
+          <td class="brand-blue">Question</td>
+          <td class="brand-blue">Percentage</td>
+          <td class="brand-blue">Yes</td>
+          <td class="brand-blue">No</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for each in questions%}
+        <tr class="font-smaller">
+          <td width='50%'>
+            {{each.question}}
+          </td>
+          <td>
+            <div class="bar-graph-wrap">
+              {% if each.total != 0 %}
+              <div class="bar-graph">
+                <div class="bar-percent green-leaf">{{ each.percent }}%</div>
+                <div class="bar-custom tooltip" aria-label="{{ each.score }}/{{ each.total }}">
+                  <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+                    <div class="bar-value bar-value-{{ each.percent }} green-leaf-bg" style="width:{{ each.percent }}%;"></div>
+                  </div>
+                </div>
+              </div> <!-- /bar-graph -->
+              {% else %}
+              <div class="no-data">
+                No respondents
+              </div> 
+              {% endif %}
+            </div> <!-- /bar-graph-wrap -->     
+          </td>
+          <td>{{each.score}}</td>
+          <td>{{each.total-each.score|int}}</td>
+        </tr>
+      </tbody>
+  </script>
 
   <script type="text/html" id="tpl-percentGraph">
     <div class="bar-graph-wrap">
@@ -204,7 +222,7 @@
     {% endfor %}
   </script>
 
-  <script type="text/html" id="tpl-ivrsVolume">           
+  <script type="text/html" id="tpl-smsVolume">           
     <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
   </script>
 

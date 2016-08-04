@@ -227,7 +227,7 @@
     function loadData(schoolType, params) {
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
-        var metaURL = "stories/meta/?source=ivrs&version=2&version=4&version=5";
+        var metaURL = "stories/meta/?source=sms";
         var entityDeferred = fetchEntityDetails(params);
         params['school_type'] = schoolType;
         startSummaryLoading(schoolType);
@@ -244,7 +244,7 @@
             });
         });
       
-        var detailURL = "stories/details/?source=ivrs&version=2&version=4&version=5";
+        var detailURL = "stories/details/?source=sms";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
@@ -253,19 +253,11 @@
         });
 
         startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/?source=ivrs&version=2&version=4&version=5";
+        var volumeURL = "stories/volume/?source=sms";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             stopVolumeLoading(schoolType);
             renderIVRSVolumeChart(data, schoolType);
-        });
-
-        startTlmLoading(schoolType);
-        var tlmURL = "stories/volume/?source=ivrs&version=2&version=4&version=5&response_type=gka-class";
-        var $tlmXHR = klp.api.do(tlmURL, params);
-        $tlmXHR.done(function(data) {
-            stopTlmLoading(schoolType);
-            renderTlmTable(data, schoolType);
         });
     }
 
@@ -337,9 +329,9 @@
         var latest = Math.max.apply(Math,years);
         var earliest = Math.min.apply(Math,years);
         var months = _.keys(data.volumes[latest]);
-        var tplIvrsYear = swig.compile($('#tpl-ivrsVolume').html());
-        var ivrsVolTitle = tplIvrsYear({"acad_year":earliest + "-" + latest});
-        $('#ivrsyears').html(ivrsVolTitle);
+        var tplIvrsYear = swig.compile($('#tpl-smsVolume').html());
+        var smsVolTitle = tplIvrsYear({"acad_year":earliest + "-" + latest});
+        $('#smsyears').html(smsVolTitle);
         var meta_values = [];
         for (var i in months)
         {
@@ -350,7 +342,7 @@
             }
             meta_values.push({'meta':months[i],'value':month_volume})
         }
-        var data_ivrs = {
+        var data_sms = {
             labels: months, //labels,
             series: [
                 { 
@@ -363,7 +355,7 @@
         if (schoolType == preschoolString) {
             suffix = '_ang';
         }
-        renderBarChart('#chart_ivrs' + suffix, data_ivrs);
+        renderBarChart('#chart_sms' + suffix, data_sms);
     }
 
 
@@ -423,7 +415,7 @@
 
     function renderSummary(data, schoolType) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplIvrsSummary = swig.compile($('#tpl-ivrsSummary').html());
+        var tplIvrsSummary = swig.compile($('#tpl-smsSummary').html());
         var suffix = '';
         var summaryLabel = "Schools";
 
@@ -438,12 +430,12 @@
         }
 
         var summaryData = data;
-        summaryData["ivrs"]["last_story"] = formatLastStory(summaryData["ivrs"]["last_story"]);
+        summaryData["sms"]["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
         summaryData['school_type'] = summaryLabel;
         var topSummaryHTML = tplTopSummary(summaryData);
-        var ivrsSummaryHTML = tplIvrsSummary(summaryData);
+        var smsSummaryHTML = tplIvrsSummary(summaryData);
         $('#topSummary').html(topSummaryHTML);
-        $('#ivrsSummary').html(ivrsSummaryHTML);
+        $('#smsSummary').html(smsSummaryHTML);
 
         if (isSchool) {
             //hide summary boxes for 'total schools' and 'total schools with stories'
@@ -459,101 +451,32 @@
 
     function renderIVRS(data, schoolType) {
 
-        var tplPercentGraph = swig.compile($('#tpl-percentGraph').html());
+        var tplResponses = swig.compile($('#tpl-responseTable').html());
         //define your data
         
         var IVRSQuestionKeys = [];
         IVRSQuestionKeys = [
-            'ivrss-school-open',
-            "ivrss-math-class-happening",
             "ivrss-gka-trained",
+            "ivrss-math-class-happening",
             "ivrss-gka-tlm-in-use",
-            "ivrss-multi-tlm",
             "ivrss-gka-rep-stage",
-            "ivrss-children-use-square-line",
-            "ivrss-group-work",
-            'ivrss-toilets-condition',
-            'ivrss-functional-toilets-girls'
+            "ivrss-group-work"
         ];
         
         var questionObjects = _.map(IVRSQuestionKeys, function(key) {
-            return getQuestion(data, 'ivrs', key);
+            return getQuestion(data, 'sms', key);
         });
 
         var questions = getQuestionsArray(questionObjects);
-
-        var html = '<div class="chart-half-item">'
-        for (var pos in questions) {
-            if (pos > (questions.length/2)-1)
-                html = html + "</div><div class='chart-half-item'>";
-            html = html + tplPercentGraph(questions[pos]);
-        }
-        html = html + "</div>"
-        $('#ivrsquestions').html(html);
-    }
-
-    function renderTlmTable(data, schoolType) {
-        var transform = {
-            "Jan": {},
-            "Feb": {}, 
-            "Mar": {}, 
-            "Apr": {}, 
-            "May": {}, 
-            "Jun": {}, 
-            "Jul": {}, 
-            "Aug": {}, 
-            "Sep": {}, 
-            "Oct": {}, 
-            "Nov": {}, 
-            "Dec": {}
-        }
-        var tlmNames = {
-            "TLM 1": "Square counters",
-            "TLM 2": "Number line and clothes clips",
-            "TLM 3": "Abacus",
-            "TLM 4": "Base Ten Blocks",
-            "TLM 5": "Place Value mat",
-            "TLM 6": "Place Value strips",
-            "TLM 7": "Fraction shapes",
-            "TLM 8": "Fraction strips",
-            "TLM 9": "Decimal set",
-            "TLM 10": "Decimal Place value strips",
-            "TLM 11": "Dice",
-            "TLM 12": "Geo-Board",
-            "TLM 13": "Protractor and angle measure",
-            "TLM 14": "Clock",
-            "TLM 15": "Weighing Balance",
-            "TLM 16": "Geo-solids with nets",
-            "TLM 17": "Play money Coins",
-            "TLM 18": "Coins",
-            "TLM 19": "Tangram",
-            "TLM 20": "Measuring Tape",
-            "TLM 21": "Maths Concept Cards"
-        }
-        var gradeNames = {
-            "1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven"
-        }
-        for (var year in data["volumes"]){
-            for (var month in data["volumes"][year]) {
-                if(_.keys(data["volumes"][year][month]).length > 0){
-                    for (var grade in data["volumes"][year][month]) {
-                        if (transform[month][gradeNames[grade]] == undefined)
-                            transform[month][gradeNames[grade]] = []
-                        for (var tlm in data["volumes"][year][month][grade]){
-                            if(data["volumes"][year][month][grade][tlm] in transform[month][gradeNames[grade]])
-                            {}
-                            else {    
-                                transform[month][gradeNames[grade]].push(data["volumes"][year][month][grade][tlm]);
-                            }
-                        }
-                        
-                    }
-                }
-            }
-        }
-        var tplTlmTable = swig.compile($('#tpl-tlmTable').html());
-        var html = tplTlmTable({"months":transform,"tlm":tlmNames});
-        $('#ivrstlmsummary').html(html);
+        var html = tplResponses({"questions":questions})
+        // var html = '<div class="chart-half-item">'
+        // for (var pos in questions) {
+        //     if (pos > (questions.length/2)-1)
+        //         html = html + "</div><div class='chart-half-item'>";
+        //     html = html + tplPercentGraph(questions[pos]);
+        // }
+        // html = html + "</div>"
+        $('#smsquestions').html(html);
     }
 
     
