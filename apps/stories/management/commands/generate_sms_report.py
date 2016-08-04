@@ -127,14 +127,14 @@ class Command(BaseCommand):
         klp_text.drawOn(c, *coord(1.8, 27.5, cm))
         
         c.save()
-        self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename, emails)
+        self.send_email(start_date.strftime("%d/%m/%Y") + " to " + end_date.strftime("%d/%m/%Y"),filename, emails)
 
     def send_email(self,date_range, block, emails):
         print 'Sending email for', block
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=emails,
-            subject='GKA SMS Report for '+ date_range + ' for '+ block,
+            subject= block + ': GKA SMS Report for '+ date_range,
             folder='gka_sms',
             filename=block
         )
