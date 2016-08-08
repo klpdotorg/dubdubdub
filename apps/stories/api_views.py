@@ -574,7 +574,7 @@ def get_que_and_ans(stories, source, school_type, versions):
     return response_list
 
 
-class StoryMetaView(KLPAPIView):
+class StoryMetaView(KLPAPIView, CacheMixin):
     """Returns total number of stories and schools with stories
     along with respondent types.
 
