@@ -768,6 +768,26 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             json['verified_stories'] = stories_qset.filter(
                 is_verified=True,
             ).count()
+        if source == "sms":
+            gka_districts_queryset = Story.objects.filter(
+                group__source__name="sms"
+            ).order_by(
+            ).distinct(
+                'school__admin3__parent__parent'
+            ).values(
+                'school__admin3__parent__parent__id',
+                'school__admin3__parent__parent__name'
+            )
+            old_id_key = 'school__admin3__parent__parent__id'
+            old_name_key = 'school__admin3__parent__parent__name'
+
+            json['gka_districts'] = [
+                {
+                    'id': item[old_id_key],
+                    'name': item[old_name_key]
+                }
+                for item in gka_districts_queryset
+            ]
 
         return json
 
