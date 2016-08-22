@@ -225,6 +225,7 @@
     }
 
     function loadData(schoolType, params) {
+        console.log(params);
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
         var metaURL = "stories/meta/?source=sms";

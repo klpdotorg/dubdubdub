@@ -96,7 +96,9 @@
       <thead>
         <tr class="table-base-heading">
           <td class="brand-blue">Question</td>
-          <td class="brand-blue">Percentage</td>
+          <!--td class="brand-blue">Percentage</td-->
+          <td class="brand-blue">Yes</td>
+          <td class="brand-blue">No</td>
           <td class="brand-blue">Yes</td>
           <td class="brand-blue">No</td>
         </tr>
@@ -107,7 +109,7 @@
           <td width='50%'>
             {{each.question}}
           </td>
-          <td>
+          <!--td>
             <div class="bar-graph-wrap">
               {% if each.total != 0 %}
               <div class="bar-graph">
@@ -117,14 +119,16 @@
                     <div class="bar-value bar-value-{{ each.percent }} green-leaf-bg" style="width:{{ each.percent }}%;"></div>
                   </div>
                 </div>
-              </div> <!-- /bar-graph -->
+              </div>
               {% else %}
               <div class="no-data">
                 No respondents
               </div> 
               {% endif %}
-            </div> <!-- /bar-graph-wrap -->     
-          </td>
+            </div>     
+          </td-->
+          <td>{{each.score}}</td>
+          <td>{{each.total-each.score|int}}</td>
           <td>{{each.score}}</td>
           <td>{{each.total-each.score|int}}</td>
         </tr>

@@ -197,7 +197,8 @@ class Command(BaseCommand):
                 yes = answers["options"]["Yes"]
             if "No" in answers["options"]:
                 no = answers["options"]["No"]
-            return  [str(yes)+'('+str((yes*100)/(yes+no))+'%)',str(no)+'('+str((no*100)/(yes+no))+'%)']
+            #return  [str(yes)+'('+str((yes*100)/(yes+no))+'%)',str(no)+'('+str((no*100)/(yes+no))+'%)']
+            return  [str(yes),str(no)]
         else:
             return ["No Responses","-"]
 
