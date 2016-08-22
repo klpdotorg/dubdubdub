@@ -107,14 +107,9 @@ Usage:
             print self.help
             return
 
-        emails = []
-        if ',' in args[2]:
-            emails = args[2].split(',')
-        else:
-            emails = [args[2]]
+        emails = emails.split(",")
 
         districts = []
-
         gka_district_ids = set(
             Story.objects.filter(
                 group__source__name="sms"
