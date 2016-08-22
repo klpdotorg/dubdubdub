@@ -29,16 +29,19 @@ from common.utils import send_attachment
 
 
 class Command(BaseCommand):
-    help = """Generates a report on SMS data. Accepts
-    either a --from and --to date pair or a --days
-    parameter. Days will be calculated backwards from
-    today. Also accepts --emails as a list of email
-    IDs for the generated report to be sent to.
+    help = """
+Description:
+Generates a report on SMS data. Accepts
+either a --from and --to date pair or a --days
+parameter. Days will be calculated backwards from
+today. Also accepts --emails as a list of email
+IDs for the generated report to be sent to.
 
-    ./manage.py generate_sms_report [--from=start_date] [--to=end_date] \
-    [--days=number_of_days] --emails=comma_seperated_email_ids
+Usage:
+./manage.py generate_sms_report [--from=start_date] [--to=end_date] \
+[--days=number_of_days] --emails=comma_seperated_email_ids
 
-    """
+"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
@@ -52,10 +55,18 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        # If we specify only the email IDs:
-        print args
-        print options
-        return
+        start_date = options.get('from')
+        end_date = options.get('to')
+        days = options.get('days')
+        emails = options.get('emails')
+
+        if not emails:
+            print """
+            Error:
+            --emails parameter not specificed.
+            """
+            print self.help
+            return
 
         if len(args) == 1:
             pass
@@ -129,8 +140,6 @@ class Command(BaseCommand):
             blks = self.transform_data(each)
             for blk in blks:
                 self.make_pdf(blk,start_date,end_date,blk[0][1],emails)
-
-
 
     def make_pdf(self, data, start_date, end_date, filename, emails):
 
