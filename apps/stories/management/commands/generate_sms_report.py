@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import connection
 from collections import defaultdict
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from common.utils import Date
 from schools.models import (
@@ -38,8 +38,8 @@ today. Also accepts --emails as a list of email
 IDs for the generated report to be sent to.
 
 Usage:
-./manage.py generate_sms_report [--from=start_date] [--to=end_date] \
-[--days=number_of_days] --emails=comma_seperated_email_ids
+./manage.py generate_sms_report [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] \
+[--days=number_of_days] --emails=a@b.com,c@d.com
 
 """
 
@@ -67,37 +67,45 @@ Usage:
             """
             print self.help
             return
-
-        if len(args) == 1:
-            pass
-        else:
-            try:
-                start_date = args[0]
-                end_date = args[1]
-                email_ids = args[2]
-            except:
+        elif days:
+            start_date = datetime.today()
+            end_date = start_date - timedelta(days=int(days))
+        elif start_date or end_date:
+            if not (start_date and end_date):
                 print """
-                Usage: python manage.py generate_sms_report YYYY-MM-DD YYYY-MM-DD <list of comma separated email-ids>
-                The dates are 'from' and 'to' respectively.
+                Error:
+                Please specify both --from and --to parameters.
                 """
+                print self.help
                 return
 
             date = Date()
             if start_date:
                 sane = date.check_date_sanity(start_date)
                 if not sane:
-                    print "Wrong start_date format. Expected YYYY-MM-DD"
-                    return
+                      print """
+                      Error:
+                      Wrong --from format. Expected YYYY-MM-DD
+                      """
+                      print self.help
+                      return
                 else:
                     start_date = date.get_datetime(start_date)
 
             if end_date:
                 sane = date.check_date_sanity(end_date)
                 if not sane:
-                    print "Wrong end_date format. Expected YYYY-MM-DD"
+                    print """
+                    Error:
+                    Wrong --to format. Expected YYYY-MM-DD
+                    """
+                    print self.help
                     return
                 else:
                     end_date = date.get_datetime(end_date)
+        else:
+            print self.help
+            return
 
         emails = []
         if ',' in args[2]:
