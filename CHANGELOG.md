@@ -9,11 +9,15 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.2: 4d9c24013eda0718a1e05c06db808ac0bc23ee5a - 2016-08-22
+  - GKA SMS report generation script modifications
+  - Returns the gka districts in the /meta endpoint while source=sms
+
 Release 1.0.1: bf1c2b80d66c156ad236690260ca260e85a4642f - 2016-08-03
   - GKA SMS fixes
   - Admin-Panel API Call fixes and enhancements
   - GKA SMS pdf generation command with report lab
-  
+
 Release 1.0.0: d3fcfc1cf8964124238e19478b380b1a7fd4606c	- 2016-07-12
   - Implements the GKA SMS.
   - Implements the Mobile app sync endpoints.
