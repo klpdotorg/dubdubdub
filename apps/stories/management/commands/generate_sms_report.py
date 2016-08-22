@@ -47,11 +47,11 @@ Usage:
         make_option('--from',
                     help='Start date'),
         make_option('--to',
-                    help='Start date'),
+                    help='End date'),
         make_option('--days',
-                    help='Start date'),
+                    help='Number of days'),
         make_option('--emails',
-                    help='Start date'),
+                    help='Comma separated list of email ids'),
     )
 
     def handle(self, *args, **options):
