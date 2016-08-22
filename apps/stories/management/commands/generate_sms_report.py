@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import connection
 from collections import defaultdict
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from common.utils import Date
 from schools.models import (
@@ -13,6 +13,7 @@ from stories.models import (
     QuestiongroupQuestions, Source, UserType,
     Story, Answer)
 
+from optparse import make_option
 from collections import OrderedDict
 
 from django.db.models import Q, Count
@@ -28,7 +29,120 @@ from common.utils import send_attachment
 
 
 class Command(BaseCommand):
-    help = 'Generates a report on SMS data'
+    help = """
+Description:
+Generates a report on SMS data. Accepts
+either a --from and --to date pair or a --days
+parameter. Days will be calculated backwards from
+today. Also accepts --emails as a list of email
+IDs for the generated report to be sent to.
+
+Usage:
+./manage.py generate_sms_report [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] \
+[--days=number_of_days] --emails=a@b.com,c@d.com
+
+"""
+
+    option_list = BaseCommand.option_list + (
+        make_option('--from',
+                    help='Start date'),
+        make_option('--to',
+                    help='End date'),
+        make_option('--days',
+                    help='Number of days'),
+        make_option('--emails',
+                    help='Comma separated list of email ids'),
+    )
+
+    def handle(self, *args, **options):
+        start_date = options.get('from')
+        end_date = options.get('to')
+        days = options.get('days')
+        emails = options.get('emails')
+
+        if not emails:
+            print """
+            Error:
+            --emails parameter not specificed.
+            """
+            print self.help
+            return
+        elif days:
+            start_date = datetime.today()
+            end_date = start_date - timedelta(days=int(days))
+        elif start_date or end_date:
+            if not (start_date and end_date):
+                print """
+                Error:
+                Please specify both --from and --to parameters.
+                """
+                print self.help
+                return
+
+            date = Date()
+            if start_date:
+                sane = date.check_date_sanity(start_date)
+                if not sane:
+                      print """
+                      Error:
+                      Wrong --from format. Expected YYYY-MM-DD
+                      """
+                      print self.help
+                      return
+                else:
+                    start_date = date.get_datetime(start_date)
+
+            if end_date:
+                sane = date.check_date_sanity(end_date)
+                if not sane:
+                    print """
+                    Error:
+                    Wrong --to format. Expected YYYY-MM-DD
+                    """
+                    print self.help
+                    return
+                else:
+                    end_date = date.get_datetime(end_date)
+        else:
+            print self.help
+            return
+
+        emails = emails.split(",")
+
+        districts = []
+        gka_district_ids = set(
+            Story.objects.filter(
+                group__source__name="sms"
+            ).values_list(
+                'school__admin3__parent__parent__id',
+                flat=True
+            )
+        )
+
+        for district_id in gka_district_ids:
+
+            district = Boundary.objects.get(id=district_id)
+            admin1_json = { 'name': district.name, 'id': district.id}
+            admin1_json['sms'] = self.get_story_meta(district.id,'district',start_date, end_date)
+            admin1_json['details'] = self.get_story_details(district.id,'district',start_date, end_date)
+            admin1_json['blocks'] = []
+            #print admin1_json
+            blocks = (Boundary.objects.all_active().filter(
+                parent_id=district_id,
+                type=district.type
+            ).select_related('boundarycoord__coord', 'type__name',
+                            'hierarchy__name'))
+            for block in blocks:
+                admin2_json = { 'name': block.name, 'id': block.id}
+                admin2_json['sms'] = self.get_story_meta(block.id,'block', start_date, end_date)
+                admin2_json['details'] = self.get_story_details(block.id,'block', start_date, end_date)
+                admin1_json['blocks'].append(admin2_json)
+            districts.append(admin1_json)
+
+        for each in districts:
+            blks = self.transform_data(each)
+            for blk in blks:
+                self.make_pdf(blk,start_date,end_date,blk[0][1],emails)
 
     def make_pdf(self, data, start_date, end_date, filename, emails):
 
@@ -127,13 +241,14 @@ class Command(BaseCommand):
         klp_text.drawOn(c, *coord(1.8, 27.5, cm))
         
         c.save()
-        self.send_email(start_date.strftime("%d %b, %Y") + " to " + end_date.strftime("%d %b, %Y"),filename, emails)
+        self.send_email(start_date.strftime("%d/%m/%Y") + " to " + end_date.strftime("%d/%m/%Y"),filename, emails)
 
     def send_email(self,date_range, block, emails):
+        print 'Sending email for', block
         send_attachment(
             from_email=settings.EMAIL_DEFAULT_FROM,
             to_emails=emails,
-            subject='GKA SMS Report for '+ date_range + ' for '+ block,
+            subject= block + ': GKA SMS Report for '+ date_range,
             folder='gka_sms',
             filename=block
         )
@@ -327,76 +442,3 @@ class Command(BaseCommand):
             stories = stories.filter(date_of_visit__lte=end_date)
         response_json = self.get_que_and_ans(stories, source, school_type)
         return response_json
-
-
-    def handle(self, *args, **options):
-        try:
-            start_date = args[0]
-            end_date = args[1]
-            email_ids = args[2]
-        except:
-            print """
-            Usage: python manage.py generate_sms_report YYYY-MM-DD YYYY-MM-DD <list of comma separated email-ids>
-            The dates are 'from' and 'to' respectively.
-            """
-            return
-
-        date = Date()
-        if start_date:
-            sane = date.check_date_sanity(start_date)
-            if not sane:
-                print "Wrong start_date format. Expected YYYY-MM-DD"
-                return
-            else:
-                start_date = date.get_datetime(start_date)
-
-        if end_date:
-            sane = date.check_date_sanity(end_date)
-            if not sane:
-                print "Wrong end_date format. Expected YYYY-MM-DD"
-                return
-            else:
-                end_date = date.get_datetime(end_date)
-
-        emails = []
-        if ',' in args[2]:
-            emails = args[2].split(',')
-        else:
-            emails = [args[2]]
-
-        districts = []
-
-        gka_district_ids = set(
-            Story.objects.filter(
-                group__source__name="sms"
-            ).values_list(
-                'school__admin3__parent__parent__id',
-                flat=True
-            )
-        )
-
-        for district_id in gka_district_ids:
-            
-            district = Boundary.objects.get(id=district_id)
-            admin1_json = { 'name': district.name, 'id': district.id}
-            admin1_json['sms'] = self.get_story_meta(district.id,'district',start_date, end_date)
-            admin1_json['details'] = self.get_story_details(district.id,'district',start_date, end_date)
-            admin1_json['blocks'] = []
-            #print admin1_json   
-            blocks = (Boundary.objects.all_active().filter(
-                parent_id=district_id, 
-                type=district.type
-            ).select_related('boundarycoord__coord', 'type__name',
-                            'hierarchy__name'))
-            for block in blocks:
-                admin2_json = { 'name': block.name, 'id': block.id}
-                admin2_json['sms'] = self.get_story_meta(block.id,'block', start_date, end_date)
-                admin2_json['details'] = self.get_story_details(block.id,'block', start_date, end_date)    
-                admin1_json['blocks'].append(admin2_json)
-            districts.append(admin1_json)
-
-        for each in districts:
-            blks = self.transform_data(each)
-            for blk in blks: 
-                self.make_pdf(blk,start_date,end_date,blk[0][1],emails)
-                
