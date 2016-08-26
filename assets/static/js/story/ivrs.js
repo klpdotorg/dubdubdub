@@ -1,10 +1,11 @@
 /* vi:si:et:sw=4:sts=4:ts=4 */
-
 'use strict';
 (function() {
     var preschoolString = 'PreSchool';
     var schoolString = 'Primary School';
     var premodalQueryParams = {};
+    var districts = {"meta":[],'details':[]};
+    var entity = {"meta":[],'details':[]};
 
     klp.init = function() {
         klp.accordion.init();
@@ -225,7 +226,6 @@
     }
 
     function loadData(schoolType, params) {
-        console.log(params);
         var DEFAULT_START_YEAR = 2010;
         var DEFAULT_END_YEAR = (new Date()).getFullYear();
         var metaURL = "stories/meta/?source=sms";
@@ -241,25 +241,45 @@
                 data.searchEntity = entityDetails;
                 data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
                 data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
-                renderSummary(data, schoolType);
+                entity["meta"] = data;          
+                if (!("districts" in params)) {
+                    renderSummary();
+                } else {
+                    var districtMetaURL = "stories/meta/?source=sms&admin1="+params["district"]
+                    var $districtMetaXHR = klp.api.do(districtMetaURL);
+                    $districtMetaXHR.done(function(meta){
+                        districts["meta"]=meta;
+                        renderSummary();
+                    });
+                }
             });
         });
-      
+            
         var detailURL = "stories/details/?source=sms";
         var $detailXHR = klp.api.do(detailURL, params);
         startDetailLoading(schoolType);
         $detailXHR.done(function(data) {
             stopDetailLoading(schoolType);
-            renderIVRS(data, schoolType);
+            entity["details"] = data;
+            if (!("districts" in params)) {
+                renderIVRS();
+            } else {
+                var districtURL = "stories/details/?source=sms&admin1="+params["district"]
+                var $districtXHR = klp.api.do(districtURL);
+                $districtXHR.done(function(details){
+                    districts["details"]=details
+                    renderIVRS();
+                });
+            }
         });
 
-        startVolumeLoading(schoolType);
-        var volumeURL = "stories/volume/?source=sms";
-        var $volumeXHR = klp.api.do(volumeURL, params);
-        $volumeXHR.done(function(data) {
-            stopVolumeLoading(schoolType);
-            renderIVRSVolumeChart(data, schoolType);
-        });
+        // startVolumeLoading(schoolType);
+        // var volumeURL = "stories/volume/?source=sms";
+        // var $volumeXHR = klp.api.do(volumeURL, params);
+        // $volumeXHR.done(function(data) {
+        //     stopVolumeLoading(schoolType);
+        //     renderIVRSVolumeChart(data, schoolType);
+        // });
     }
 
     function startSummaryLoading(schoolType) {
@@ -414,14 +434,13 @@
         return date + time;        
     }
 
-    function renderSummary(data, schoolType) {
+    function renderSummary() {
+        console.log(entity);
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplIvrsSummary = swig.compile($('#tpl-smsSummary').html());
         var suffix = '';
         var summaryLabel = "Schools";
-
-        
-        var searchEntityType = data.searchEntity.type;
+        var searchEntityType = entity['meta'].searchEntity.type;
         var isSchool = [schoolString, preschoolString].indexOf(searchEntityType) !== -1 ? true : false; 
 
         //if search is for a school, do some specific things:
@@ -429,8 +448,7 @@
             //make summary label singular
             summaryLabel = summaryLabel.substring(0, summaryLabel.length - 1);            
         }
-
-        var summaryData = data;
+        var summaryData = entity["meta"];
         summaryData["sms"]["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
         summaryData['school_type'] = summaryLabel;
         var topSummaryHTML = tplTopSummary(summaryData);
@@ -450,7 +468,7 @@
 
     
 
-    function renderIVRS(data, schoolType) {
+    function renderIVRS() {
 
         var tplResponses = swig.compile($('#tpl-responseTable').html());
         //define your data
@@ -465,18 +483,23 @@
         ];
         
         var questionObjects = _.map(IVRSQuestionKeys, function(key) {
-            return getQuestion(data, 'sms', key);
+            return getQuestion(entity['details'], 'sms', key);
         });
-
         var questions = getQuestionsArray(questionObjects);
+        var districtQuestions = null;
+        if (districts['details']['sms']) {
+            var districtQuestionsObjects = _.map(IVRSQuestionKeys, function(key) {
+                return getQuestion(districts['details'], 'sms', key);
+            });
+            districtQuestions = getQuestionsArray(districtQuestionsObjects);
+            for(var i in questions) {
+                for(var j in districtQuestions) {
+                    if(districtQuestions[j].question == questions[i].question)
+                        question[i]['district'] = districtQuestions[j]
+                }
+            }
+        }
         var html = tplResponses({"questions":questions})
-        // var html = '<div class="chart-half-item">'
-        // for (var pos in questions) {
-        //     if (pos > (questions.length/2)-1)
-        //         html = html + "</div><div class='chart-half-item'>";
-        //     html = html + tplPercentGraph(questions[pos]);
-        // }
-        // html = html + "</div>"
         $('#smsquestions').html(html);
     }
 

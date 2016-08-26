@@ -97,10 +97,8 @@
         <tr class="table-base-heading">
           <td class="brand-blue">Question</td>
           <!--td class="brand-blue">Percentage</td-->
-          <td class="brand-blue">Yes</td>
-          <td class="brand-blue">No</td>
-          <td class="brand-blue">Yes</td>
-          <td class="brand-blue">No</td>
+          <td colspan='2' class="brand-blue">Yes</td>
+          <td colspan='2' class="brand-blue">No</td>
         </tr>
       </thead>
       <tbody>
@@ -129,8 +127,10 @@
           </td-->
           <td>{{each.score}}</td>
           <td>{{each.total-each.score|int}}</td>
-          <td>{{each.score}}</td>
-          <td>{{each.total-each.score|int}}</td>
+          {% if each.district %}
+            <td>{{each.district.score}}</td>
+            <td>{{each.district.total-each.district.score|int}}</td>
+          {% endif %}
         </tr>
       </tbody>
   </script>
