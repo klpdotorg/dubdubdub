@@ -136,7 +136,7 @@ Usage:
                 admin2_json = { 'name': block.name, 'id': block.id}
                 admin2_json['sms'] = self.get_story_meta(block.id,'block', start_date, end_date)
                 admin2_json['details'] = self.get_story_details(block.id,'block', start_date, end_date)
-                #if(admin2_json['sms']['stories'] > 0):
+                #if(int(admin2_json['sms']['stories']) > 0):
                 admin1_json['blocks'].append(admin2_json)
             districts.append(admin1_json)
 
