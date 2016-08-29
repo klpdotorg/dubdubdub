@@ -22,9 +22,11 @@
               <td width=50% class="brand-blue">Details</td>
               <!--td class="brand-blue">Percentage</td-->
               <td width=25% colspan=2 class="brand-blue">{{sms.entity_type}}</td>
-              {% if district %}
-                <td width=25% colspan=2 class="brand-blue">{{district.entity_type}}</td>
-              {% endif %}
+              <td width=25% colspan=2 class="brand-blue">
+                {% if district %}
+                {{district.entity_type}}
+                {% endif %}
+              </td>
             </tr>
           </thead>
           <tbody>
