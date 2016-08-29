@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load compress %}
-{% block page_title %}GKA IVRS Dashboard{% endblock %}
+{% block page_title %}GKA SMS Dashboard{% endblock %}
 
 {% block css_extra %}
 
@@ -76,6 +76,7 @@
 	<div id="primarySchoolContainer">
 		<section class="container" id="school_summary">
 			<div id="topSummary" class="js-detail-container"></div>
+			<div id="smsSummary" class="js-detail-container"></div>
 			<!--div id="disclaimer" class="heading-tiny center-text grey-steel">We are transitioning to a new version of the IVRS for the GKA program. Meanwhile this dashboard reflects current data combined with data from the previous versions.</div-->
 			<!--div class="chart-parent container">
 				<div class="chart-half-item">
@@ -90,7 +91,6 @@
 			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
 
 		<section class="container">
-		<hr/>
 			<!--ul id='improved' class="js-accordion-container">
 			  <hr/>
 				<li><a href='#' class='head js-accordion-header brand-turquoise align-right'>VIEW DETAILS  <span class="fa fa-angle-down"></span></a-->
