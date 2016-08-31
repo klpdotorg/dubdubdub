@@ -63,8 +63,8 @@ class Command(BaseCommand):
             accepted_answers = {'1':'Yes', '0':'No', '99':'Unknown', '88':'Unknown'}
 
             user_type = parents
-            parents_name = row[10]
-            day, month, year = row[24], row[25], row[26]
+            parents_name = row[10].strip()
+            day, month, year = row[24].strip(), row[25].strip(), row[26].strip()
             previous_date = date_of_visit = self.parse_date(
                 previous_date, day, month, year
             )
@@ -134,18 +134,10 @@ class Command(BaseCommand):
         return previous_date
             
     def check_date_sanity(self, date):
-        months = {
-            'june': '6',
-            'july': '7',
-        }
 
         day = date.split("/")[0]
         month = date.split("/")[1]
         year = date.split("/")[2]
-
-        if month.strip().lower() in months:
-            month = months[month.strip().lower()]
-            date = day + "/" + month + "/" + year
 
         if not self.is_day_correct(day):
             return (date, False)
