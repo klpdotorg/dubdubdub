@@ -53,14 +53,14 @@
             // _.each(_.keys(currentQueryParams), function(key) {
             //     currentQueryParams[key] = null;
             // });
-            var startDate = $('#startDate').yearMonthSelect("getDate");
-            var endDate = $('#endDate').yearMonthSelect("getDate");
+            var startDate = $('#startDate').yearMonthSelect("getFirstDay");
+            var endDate = $('#endDate').yearMonthSelect("getLastDay");
             if (moment(startDate) > moment(endDate)) {
                 klp.utils.alertMessage("End date must be after start date", "error");
                 return false;
             }
-            currentQueryParams['from'] = $('#startDate').yearMonthSelect("getDate");
-            currentQueryParams['to'] = $('#endDate').yearMonthSelect("getDate");
+            currentQueryParams['from'] = $('#startDate').yearMonthSelect("getFirstDay");
+            currentQueryParams['to'] = $('#endDate').yearMonthSelect("getLastDay");
             //console.log("currentQueryParams", currentQueryParams);
             klp.router.setHash(null, currentQueryParams);
             //hashChanged({'queryParams':currentQueryParams});
