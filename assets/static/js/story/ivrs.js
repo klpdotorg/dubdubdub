@@ -41,16 +41,6 @@
             klp.gka_filters_modal.open();
         });
 
-        //get JS query params from URL
-        $('#resetButton').click(function(e) {
-            e.preventDefault();
-            var currentQueryParams = klp.router.getHash().queryParams;
-            _.each(_.keys(currentQueryParams), function(key) {
-                currentQueryParams[key] = null;
-            });
-            klp.router.setHash('', currentQueryParams);
-        });
-
         $('#dateSummary').click(function(e) {
             e.preventDefault();
             var currentQueryParams = premodalQueryParams;
@@ -67,7 +57,6 @@
 
         $('a[href=#datemodal]').click(function(e) {
             premodalQueryParams = klp.router.getHash().queryParams;
-            return true;
         });
 
         $('a[href=#close]').click(function(e) {
@@ -76,18 +65,25 @@
 
         $('a[href=#searchmodal]').click(function(e) {
             premodalQueryParams = klp.router.getHash().queryParams;
-            return true;
         });
     }
     // Not sure if this function is needed anymore.
     function hashChanged(params) {
-        //FIXME: clear all the things, do a loading state.
         var queryParams = params.queryParams;
-        if (!queryParams.school_type) {
-            loadData(schoolString, queryParams);
-        } else {
-            queryParams.school_type = window.decodeURIComponent(queryParams.school_type);
-            loadData(queryParams.school_type, queryParams);
+        if(!window.location.hash)
+        {
+            loadData(schoolString, {});
+        }
+        else
+        {
+            if(window.location.hash == '#resetButton') {
+                window.location.href = '/gka';
+            }
+            else if(window.location.hash != '#datemodal' && window.location.hash !='#close' && window.location.hash != '#searchmodal')
+            {
+                loadData(schoolString, queryParams)
+            } 
+            else {}
         }
         $('#primarySchoolContainer').show();
     }
@@ -241,7 +237,7 @@
                 data.searchEntity = entityDetails;
                 data.year_from = params.hasOwnProperty('from') ? getYear(params.from) : DEFAULT_START_YEAR;
                 data.year_to = params.hasOwnProperty('to') ? getYear(params.to) : DEFAULT_END_YEAR;
-                entity["meta"] = data;          
+                entity["meta"] = data;
                 if (!("district" in params)) {
                     renderSummary();
                 } else {
@@ -254,7 +250,7 @@
                             if(gka_districts[i].id == parseInt(params["district"]))
                                 districts["meta"]["sms"]["name"] = gka_districts[i].name;        
                         }
-                        console.log(districts);
+                        //console.log(districts);
                         renderSummary();
                     });
                 }
@@ -458,6 +454,7 @@
             summaryData["sms"]["entity_type"] = summaryData.searchEntity.name + ' (' + summaryData.searchEntity.type + ')';
         else
             summaryData["sms"]["entity_type"] = "All";
+        //console.log(summaryData["sms"]["last_story"]);
         summaryData["sms"]["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
         summaryData['school_type'] = summaryLabel;
         if(districts["meta"]["sms"]) {
