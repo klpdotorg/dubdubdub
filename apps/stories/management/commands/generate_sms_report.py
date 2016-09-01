@@ -68,8 +68,8 @@ Usage:
             print self.help
             return
         elif days:
-            start_date = datetime.today()
-            end_date = start_date - timedelta(days=int(days))
+            end_date = datetime.today()
+            start_date = end_date - timedelta(days=int(days))
         elif start_date or end_date:
             if not (start_date and end_date):
                 print """
