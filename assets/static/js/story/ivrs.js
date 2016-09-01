@@ -24,7 +24,6 @@
         //this is a bit of a hack to save query state when
         //triggering a modal, since modals over-ride the url
         premodalQueryParams = klp.router.getHash().queryParams;
-
         if (premodalQueryParams.hasOwnProperty("from")) {
             var mDate = moment(premodalQueryParams.from);
             $('#startDate').yearMonthSelect("setDate", mDate);
@@ -242,7 +241,7 @@
                     renderSummary();
                 } else {
                     var districtMetaURL = "stories/meta/?source=sms&admin1="+params["district"]
-                    var $districtMetaXHR = klp.api.do(districtMetaURL);
+                    var $districtMetaXHR = klp.api.do(districtMetaURL, params);
                     $districtMetaXHR.done(function(meta){
                         districts["meta"] = meta;
                         var gka_districts = districts["meta"]["sms"]["gka_districts"];
@@ -250,7 +249,6 @@
                             if(gka_districts[i].id == parseInt(params["district"]))
                                 districts["meta"]["sms"]["name"] = gka_districts[i].name;        
                         }
-                        //console.log(districts);
                         renderSummary();
                     });
                 }
@@ -267,7 +265,7 @@
                 renderIVRS();
             } else {
                 var districtURL = "stories/details/?source=sms&admin1="+params["district"]
-                var $districtXHR = klp.api.do(districtURL);
+                var $districtXHR = klp.api.do(districtURL, params);
                 $districtXHR.done(function(details){
                     districts["details"]=details
                     renderIVRS();
@@ -454,8 +452,7 @@
             summaryData["sms"]["entity_type"] = summaryData.searchEntity.name + ' (' + summaryData.searchEntity.type + ')';
         else
             summaryData["sms"]["entity_type"] = "All";
-        //console.log(summaryData["sms"]["last_story"]);
-        summaryData["sms"]["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
+        summaryData["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
         summaryData['school_type'] = summaryLabel;
         if(districts["meta"]["sms"]) {
             summaryData['district'] = districts["meta"]["sms"];
