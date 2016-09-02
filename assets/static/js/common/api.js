@@ -53,38 +53,6 @@
         },
 
         /*
-            Make syncronous call
-         */
-        syncDo: function(endpoint, data, method) {
-            if (typeof(method) === 'undefined') {
-                method = 'GET';
-            }
-            if (typeof(data) === 'undefined') {
-                data = {};
-            }
-            var $deferred = $.Deferred();
-            $deferred.abort = function() {
-                if ($xhr && $xhr.state() === 'pending') {
-                    $xhr.abort();
-                }
-            };
-            var $xhr = $.ajax({
-                url: base + endpoint,
-                data: data,
-                async: false,
-                type: method,
-                dataType: 'json'
-            });
-           $xhr.done(function(data) {
-                $deferred.resolve(data);
-            });
-            $xhr.fail(function(err) {
-                $deferred.reject(err);
-            });
-            return $deferred;
-        },
-
-        /*
             Make authenticated request. Called the same as 'do'.
             Will use token if present, else raise an error
             Code should ensure user is signed in before calling this.
