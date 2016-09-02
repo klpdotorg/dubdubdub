@@ -80,7 +80,7 @@
 
         $select_block.on("change", function(selected) {
             var clusterXHR = klp.api.do('boundary/admin2/'+selected.val+'/admin3', {'geometry': 'no', 'per_page': 0});
-            $search_button.attr('href', '/gka/#searchmodal?admin2='+selected.val+'&district='+$select_district.val());
+            $search_button.attr('href', '/gka/#searchmodal?admin2='+selected.val);
             clusterXHR.done(function (data) {
                 populateSelect($select_cluster, data);
             });
@@ -88,7 +88,7 @@
 
         $select_cluster.on("change", function(selected) {
             var schoolXHR = klp.api.do('schools/info', {'admin3':selected.val, 'geometry': 'yes', 'per_page': 0});
-            $search_button.attr('href', '/gka/#searchmodal?admin3='+selected.val+'&district='+$select_district.val());
+            $search_button.attr('href', '/gka/#searchmodal?admin3='+selected.val);
             schoolXHR.done(function (data) {
                 // console.log('schools', data);
                 var tx_data = {"features":[]}
@@ -103,7 +103,7 @@
         $select_school.on("change", function(selected) {
             // FIXME: make this a close function. This is Sanjay's fault.
             $('.btn-modal-close').click();
-            $search_button.attr('href', '/gka/#searchmodal?school_id=' + selected.val + '&school_type=Primary School'+'&district='+$select_district.val());
+            $search_button.attr('href', '/gka/#searchmodal?school_id=' + selected.val + '&school_type=Primary School');
             var schoolType = selected.added.type.name.toLowerCase().replace(' ', '');
             // console.log(schoolType);
             klp.router.setHash(null, {marker: schoolType+'-'+selected.val}, {trigger:true});

@@ -13,6 +13,7 @@
     </div>
     <hr/>
   </script>
+
   
   <script type="text/html" id="tpl-smsSummary">
     <div class="table-responsive-wrap">        
@@ -21,7 +22,11 @@
             <tr class="table-base-heading">
               <td width=50% class="brand-blue">Details</td>
               <!--td class="brand-blue">Percentage</td-->
-              <td width=25% colspan=2 class="brand-blue">{{sms.entity_type}}</td>
+              <td width=25% colspan=2 class="brand-blue">
+              {% if searchEntity.name %}
+                {{searchEntity.name}} ({{searchEntity.type}})
+              {% endif %}
+              </td>
               <td width=25% colspan=2 class="brand-blue">
                 {% if district %}
                 {{district.entity_type}}
@@ -48,71 +53,6 @@
           </tbody>
         </table>
     </div>
-  </script>
-
-  <script type="text/html" id="tpl-tlmTable">
-   <div class="table-responsive-wrap">        
-    <table class="table-base">
-      <tbody>
-        <tr class="table-base-heading">
-        <td>TLM </td>
-        <td>JAN</td>
-        <td>FEB</td>
-        <td>MAR</td>
-        <td>APR</td>
-        <td>MAY</td>
-        <td>JUN</td>
-        <td>JUL</td>
-        <td>AUG</td>
-        <td>SEP</td>
-        <td>OCT</td>
-        <td>NOV</td>
-        <td>DEC</td>
-      </tr>
-      {% set range=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] %}
-      {% for i in range %}
-        <tr>
-          <td class="fixwidth heading-tiny-uppercase">{{tlm['TLM '+i]}}</td>
-          {% for month in months %}
-            <td class="fixwidth">
-            {% if month.four && month.four.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle grey-steel"></span>
-            {% endif %}
-            {% if month.five && month.five.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle green-leaf"></span>
-            {% else %}
-              &nbsp;
-            {% endif %}
-            </td>
-          {% endfor %}
-        </tr> 
-      {% endfor %}             
-    </tbody>
-  </table>
-</div>
-<div class="center-text">
-  <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
-  <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
-</div>
-</div>
-  </script>
-
-  <script type="text/html" id="tpl-classGraph">
-    {% if total != 0 %}
-    <div class="bar-graph-wrap">
-      <div class="bar-label {{ color }}">{{ value }} Grade</div>
-      <div class="bar-graph">
-        <div class="bar-percent {{ color }}">{{ percent }}%</div>
-        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
-          <div class="bar-value bar-value-{{ score }} {{ color }}-bg" style="width:{{percent }}%;"></div>
-        </div>
-      </div> <!-- /bar-graph -->
-    </div> <!-- /bar-graph-wrap -->
-    {% else %}
-    <div class="no-data">
-      No respondents
-    </div>
-    {% endif %}
   </script>
 
   <script type="text/html" id="tpl-responseTable">
