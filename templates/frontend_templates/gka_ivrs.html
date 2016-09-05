@@ -5,10 +5,10 @@
 
     <div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
-            <span class="brand-blue">{{ searchEntity.type}}</span>
+            <span class="brand-blue">{{type}}</span>
           </div>
           <h2 class="heading-secondary black align-left">
-            {{ searchEntity.name }}
+            {{name}}
           </h2>
     </div>
     <hr/>
@@ -23,8 +23,8 @@
               <td width=50% class="brand-blue">Details</td>
               <!--td class="brand-blue">Percentage</td-->
               <td width=25% colspan=2 class="brand-blue">
-              {% if searchEntity.name %}
-                {{searchEntity.name}} ({{searchEntity.type}})
+              {% if name %}
+                {{name}} ({{type}})
               {% endif %}
               </td>
               <td width=25% colspan=2 class="brand-blue">
@@ -47,8 +47,8 @@
             </tr>
             <tr class="font-smaller">
               <td>Last SMS</td>
-              <td colspan="2">{{ last_story }}</td>
-              <td class="brand-green" colspan="2">{{ district.last_story}}</td>
+              <td colspan="2">{{ format_lastsms }}</td>
+              <td class="brand-green" colspan="2">{{ district.format_lastsms}}</td>
             </tr>
           </tbody>
         </table>

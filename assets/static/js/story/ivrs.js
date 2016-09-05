@@ -1,12 +1,13 @@
 /* vi:si:et:sw=4:sts=4:ts=4 */
 'use strict';
+var districts = {"meta":[],'details':[]};
+var entity = {"meta":[],'details':[]};
+var entityDetails = {};
 (function() {
     var preschoolString = 'PreSchool';
     var schoolString = 'Primary School';
     var premodalQueryParams = {};
-    var districts = {"meta":[],'details':[]};
-    var entity = {"meta":[],'details':[]};
-    var entityDetails = {};
+    
 
     klp.init = function() {
         klp.gka_filters_modal.init();
@@ -73,7 +74,7 @@
         //No Query Params
         if(!window.location.hash)
         {
-            loadData(schoolString, {});
+            loadEntityDetails(schoolString,{});
         }
         else
         {
@@ -87,13 +88,72 @@
             //and not for just localhost:8001/gka#datemodal
             else if(window.location.hash != '#datemodal' && window.location.hash !='#close' && window.location.hash != '#searchmodal')
             {
-                loadData(schoolString, queryParams)
+                loadEntityDetails(schoolString, queryParams)
             } 
             //This is the do nothing case switch for localhost:8001/gka#datemodal
             else {//do nothing;
             }
         }
         $('#primarySchoolContainer').show();
+    }
+
+    function loadEntityDetails(schoolType, params) {
+        
+        function getBlock(blk_data) {
+            entityDetails['district'] = blk_data.parent;
+
+        }
+
+        function getDistrict(entityInfo,isSchool){
+            entityDetails['entity'] = entityInfo;
+            entityDetails['entity_type'] = entityInfo.type;
+            if(isSchool) {
+                entityDetails['entity_type'] = 'Primary School';
+                entityDetails['district'] = entityInfo.admin1;
+            } else {
+                if(entityInfo.parent!=null) {
+                    if(entityInfo.parent.type == 'block') {
+                        var $blockXHR = klp.api.do('boundary/admin/'+entityInfo.parent.id);
+                        $blockXHR.done(function(blk) {
+                            getBlock(blk);
+                        });
+                    }
+                    else {
+                        entityDetails['district'] = entityInfo.parent;
+                    }
+                }
+                else{
+                    entityDetails['district'] = null;
+                }            
+            }
+            //CASE 7-10
+            loadData(schoolType, params);
+        }
+
+
+        var entityType = 'All'
+        if(_.keys(params).length > 0){
+            if(params.hasOwnProperty('admin1'))
+                entityType = 'admin1';
+            if(params.hasOwnProperty('admin2'))
+                entityType = 'admin2';
+            if(params.hasOwnProperty('admin3'))
+                entityType = 'admin3';
+            if(params.hasOwnProperty('school_id')){
+                var $schoolXHR = klp.api.do('schools/school/'+params['school_id']);
+                $schoolXHR.done(function(data){getDistrict(data,true)});
+            }
+            if(entityType != 'All') {
+                var $adminXHR = klp.api.do('boundary/admin/'+ params[entityType]);
+                $adminXHR.done(function(data){getDistrict(data,false)});
+            } else {
+                //CASE 1,2,5
+                loadData(schoolType, params);
+            }
+        } else {
+            //CASE 1,2,
+            loadData(schoolType, params);
+        }
     }
 
     function loadData(schoolType, params) {
@@ -104,13 +164,13 @@
         CASE 4:X    /gka#datemodal (This function is not called)
         CASE 5:     /gka#datemodal&from=12/06/2016&to=12/08/2016
         CASE 6:X    /gka#searchmodal (This function is not called)
-        CASE 8:     /gka#searchmodal&admin3
+        CASE 7:     /gka#searchmodal&admin3
+        CASE 8:     /gka#searchmodal&admin2
         CASE 9:     /gka#searchmodal&admin1
         CASE 10:    /gka#searchmodal&admin3&from&to
         CASE 11:    /gka#searchmodal&admin1&from&to
         */
         // FOR CASE 8,9,10,11 - Getting Entity Details
-        getEntityDetails(params);
         // FOR CASE 10 & 11, initializing only date parameters
         var date_params = {}
         if(params.hasOwnProperty('from'))
@@ -118,20 +178,19 @@
         if(params.hasOwnProperty('to'))
             date_params['to'] = params['to'];
     
-
         function fillDistrictMeta(meta){
-            districts["meta"] = meta;
+            districts = {"meta" : meta};
             districts["meta"]["sms"]["name"] = entityDetails["district"]["name"];        
             renderSummary();
         }
 
         //GETTING SMS META
         var metaURL = "stories/meta/?source=sms";
-        startSummaryLoading(schoolType);
+        startSummaryLoading();
         var $metaXHR = klp.api.do(metaURL, params);
-        $metaXHR.done(function(data) {
-            stopSummaryLoading(schoolType);
-            data.searchEntity = entityDetails;
+        $metaXHR.done(function(data) 
+        {
+            stopSummaryLoading(schoolString);
             entity["meta"] = data;
             if(entityDetails['district'] != null) {
                 var districtMetaURL = "stories/meta/?source=sms&admin1="+entityDetails["district"]["id"]
@@ -152,9 +211,9 @@
         //GETTING SMS DETAILS
         var detailURL = "stories/details/?source=sms";
         var $detailXHR = klp.api.do(detailURL, params);
-        startDetailLoading(schoolType);
+        startDetailLoading(schoolString);
         $detailXHR.done(function(data) {
-            stopDetailLoading(schoolType);
+            stopDetailLoading(schoolString);
             entity["details"] = data;
             if(entityDetails['district'] != null) {
                 var districtURL = "stories/details/?source=sms&admin1="+entityDetails["district"]["id"]
@@ -169,72 +228,20 @@
         });
     }
 
-    
-
-    function getEntityDetails(params) {
-        
-        function getBlock(blk_data) {
-            entityDetails['district'] = blk_data.parent;
-        }
-
-        function getDistrict(entityInfo,isSchool){
-            entityDetails['entity'] = entityInfo;
-            entityDetails['entity_type'] = entityInfo.type;
-            if(isSchool) {
-               entityDetails['entity_type'] = 'Primary School';
-               entityDetails['district'] = entityInfo.admin1;
-            } else {
-                if(entityInfo.parent!=null) {
-                    if(entityInfo.parent.type == 'block') {
-                        var $blockXHR = klp.api.do('boundary/admin/'+entityInfo.parent.id);
-                        $blockXHR.done(function(blk) {
-                            getBlock(blk);
-                        });
-                    }
-                    else {
-                        entityDetails['district'] = entityInfo.parent;
-                    }
-                }
-                else{
-                    entityDetails['district'] = null;
-                }            
-            }
-        }
-
-
-        var entityType = 'All'
-        if(_.keys(params).length > 0){
-            if(params.hasOwnProperty('admin1'))
-                entityType = 'admin1';
-            if(params.hasOwnProperty('admin2'))
-                entityType = 'admin2';
-            if(params.hasOwnProperty('admin3'))
-                entityType = 'admin3';
-            if(entityType != 'All') {
-                var $adminXHR = klp.api.do('boundary/admin/'+ params[entityType]);
-                $adminXHR.done(function(data){getDistrict(data,false)});
-            }
-            if(params.hasOwnProperty('school_id')){
-                var $schoolXHR = klp.api.do('schools/school/'+params['school_id']);
-                $schoolXHR.done(function(data){getDistrict(data,true)});
-            }
-        }
-    }
-
     function renderSummary() {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplIvrsSummary = swig.compile($('#tpl-smsSummary').html());
-        var searchEntityType = entity['meta'].searchEntity.entity_type;
+        var searchEntityType = entityDetails.entity_type;
         var isSchool = [schoolString, preschoolString].indexOf(searchEntityType) !== -1 ? true : false; 
         var summaryData = entity["meta"];
-        summaryData['searchEntity']["type"] = summaryData.searchEntity.entity_type;
-        if('entity' in _.keys(summaryData.searchEntity))
-            summaryData['searchEntity']['name'] = summaryData.searchEntity.entity.name;
-        summaryData["last_story"] = formatLastStory(summaryData["sms"]["last_story"]);
+        summaryData["type"] = entityDetails.entity_type;
+        if(entityDetails.hasOwnProperty('entity'))
+            summaryData['name'] = entityDetails.entity.name;
+        summaryData["format_lastsms"] = formatLastStory(summaryData["sms"]["last_story"]);
         if(_.keys(districts).length >0) {
             summaryData['district'] = districts["meta"]["sms"];
             summaryData['district']["entity_type"] = districts["meta"]["sms"].name + ' (District)';
-            summaryData["district"]["last_story"] = formatLastStory(districts["meta"]["sms"]["last_story"]);
+            summaryData["district"]["format_lastsms"] = formatLastStory(districts["meta"]["sms"]["last_story"]);
         }
         var topSummaryHTML = tplTopSummary(summaryData);
         var smsSummaryHTML = tplIvrsSummary(summaryData);

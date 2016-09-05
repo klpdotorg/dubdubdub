@@ -17,7 +17,7 @@
     };
 
     var onOpen = function() {
-        console.log("onOpen rbox");
+        //console.log("onOpen rbox");
         // $('.js-filters-dropdown').select2();
         var $select_district = $("#select-district");
         var $select_block = $("#select-block");
@@ -70,7 +70,7 @@
         }
 
         $select_district.on("change", function(selected) {
-            console.log(selected.val);
+            //console.log(selected.val);
             var blockXHR = klp.api.do('boundary/admin1/'+selected.val+'/admin2', {'geometry': 'no', 'per_page': 0});
             $search_button.attr('href', '/gka/#searchmodal?admin1='+selected.val);
             blockXHR.done(function (data) {
