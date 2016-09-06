@@ -9,6 +9,11 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.3: 52f024d2c36c15f0374a1896a30843a9b61f40ea - 2016-09-06
+  - Revamps the GKA SMS dashboard.
+  - Fixes date range for the GKA SMS reports.
+  - Implements the parser script for the pen and paper data.
+
 Release 1.0.2: 4d9c24013eda0718a1e05c06db808ac0bc23ee5a - 2016-08-22
   - GKA SMS report generation script modifications
   - Returns the gka districts in the /meta endpoint while source=sms
