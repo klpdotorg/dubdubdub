@@ -7,6 +7,7 @@ from optparse import make_option
 
 from django.utils import timezone
 from django.db import transaction
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
 from schools.models import (
@@ -16,6 +17,43 @@ from stories.models import (
     QuestiongroupQuestions, Source, UserType,
     Story, Answer)
 
+FIELD_COORDINATORS = {
+    "LINGASUGUR": "kumargaded@gmail.com",
+    "HAGARIBOMMANAHALLI": "natab146@gmail.com",
+    "BHALKI": "sidram@akshara.org.in",
+    "CHITTAPUR": "sanjeevkumark321@gmail.com",
+    "SHORAPUR": "praneshdv@gmail.com",
+    "AURAD": "santhoshkumar.machkure@gmail.com",
+    "AFZALPUR": "shankarnagmardi@gmail.com",
+    "BELLARY WEST": "gajendravallar@gmail.com",
+    "DEVADURGA": "svhonnalli794@gmail.com",
+    "HOSAKOTE": "srinivasapy@gmail.com",
+    "BELLARY EAST": "gajendravallar@gmail.com",
+    "BASAVAKALYAN": "vbpatil2684@gmail.com",
+    "KUSTAGI": "umesh@akshara.org.in",
+    "SINDHANUR": "adiveshappa@gmail.com",
+    "MANVI": "shivu9972488787@gmail.com",
+    "MUNDARAGI": "devendrada@akshara.org.in",
+    "YELBURGA": "g.s.vandali@gmail.com",
+    "HUMNABAD": "sharanuprabhu@gmail.com",
+    "HADAGALI": "natab146@gmail.com",
+    "GULBARGA NORTH": "shiremath8005.sh@gmail.com",
+    "HOSPET": "pandithkhm9009@gmail.com",
+    "YADGIR": "venky8715@gmail.com",
+    "RAICHUR": "ranganath@akshara.org.in",
+    "BIDAR": "mbiradar777@gmail.com",
+    "GANGAVATHI": "manjunathmeti40@gmail.com",
+    "GULBARGA SOUTH": "jyothi@akshara.org.in",
+    "KOPPAL": "g.s.vandali@gmail.com",
+    "JEWARGI": "shiremath8005.sh@gmail.com",
+    "SIRUGUPPA": "pandithkhm9009@gmail.com",
+    "ALAND": "ajbelam@gmail.com",
+    "CHINCHOLI": "sudhakarpatil108@gmail.com",
+    "KUDLAGI": "mayurappab@gmai.com",
+    "SANDUR": "hanumantharaya@akshara.org.in",
+    "SHAHAPUR": "ayyannapalled@gmail.com",
+    "SEDAM": "shankarnagmardi@gmail.com"
+}
 
 class Command(BaseCommand):
     args = "<path to file>"
@@ -59,10 +97,22 @@ class Command(BaseCommand):
                 count += 1
                 continue
 
+            block = row[2].strip()
+            email = FIELD_COORDINATORS.get(block, None)
             school_id = row[4].strip()
             accepted_answers = {'1':'Yes', '0':'No', '99':'Unknown', '88':'Unknown'}
-
             user_type = parents
+
+            try:
+                User = get_user_model()
+                field_coordinator = User.objects.get(
+                    email=email.strip()
+                )
+            except Exception as ex:
+                print ex
+                print "Account not found for User: " + str(email)
+                field_coordinator = None
+
             parents_name = row[10].strip()
             day, month, year = row[24].strip(), row[25].strip(), row[26].strip()
             previous_date = date_of_visit = self.parse_date(
@@ -87,6 +137,7 @@ class Command(BaseCommand):
 
             if at_least_one_answer:
                 story, created = Story.objects.get_or_create(
+                    user=field_coordinator,
                     school=school,
                     name=parents_name,
                     is_verified=True,
