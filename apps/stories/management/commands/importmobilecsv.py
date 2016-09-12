@@ -109,8 +109,11 @@ class Command(BaseCommand):
                     email=email.strip()
                 )
             except Exception as ex:
-                print ex
-                print "Account not found for User: " + str(email)
+                if email is None:
+                    print "Escaping None entry"
+                else:
+                    print ex
+                    print "Account not found for User: " + str(email)
                 field_coordinator = None
 
             parents_name = row[10].strip()
@@ -136,17 +139,20 @@ class Command(BaseCommand):
                 at_least_one_answer = False
 
             if at_least_one_answer:
-                story, created = Story.objects.get_or_create(
-                    user=field_coordinator,
-                    school=school,
-                    name=parents_name,
-                    is_verified=True,
-                    group=question_group,
-                    date_of_visit=timezone.make_aware(
-                        date_of_visit, timezone.get_current_timezone()
-                    ),
-                    user_type=user_type,
-                )
+                created = False
+                while created==False:
+                    story, created = Story.objects.get_or_create(
+                        user=field_coordinator,
+                        school=school,
+                        name=parents_name,
+                        is_verified=True,
+                        group=question_group,
+                        date_of_visit=timezone.make_aware(
+                            date_of_visit, timezone.get_current_timezone()
+                        ),
+                        user_type=user_type,
+                    )
+                    date_of_visit = date_of_visit + datetime.timedelta(minutes=1)
 
                 print "The Story is: " + str(story) + " and has it been created? " + str(created)
 
