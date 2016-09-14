@@ -87,14 +87,15 @@ class Command(BaseCommand):
         missing_ids = {}
         missing_ids['schools'] = []
 
-        count = 0 # Just to skip the first two rows.
+        # To keep track of rows and to skip the first two rows.
+        count = 0
 
         previous_date = ""
 
         for row in csv_f:
+            count += 1
             # Skip first few rows
-            if count in [0, 1]:
-                count += 1
+            if count in [1, 2]:
                 continue
 
             block = row[2].strip().lower()
@@ -111,17 +112,21 @@ class Command(BaseCommand):
 
             try:
                 User = get_user_model()
+                if email:
+                    email = email.strip()
                 field_coordinator = User.objects.get(
-                    email=email.strip()
+                    email=email
                 )
             except Exception as ex:
-                if email is None:
-                    print "Block: " + str(block) + "has no matching email. Exiting script."
-                    sys.exit()
-                else:
-                    print ex
-                    print "Account not found for User: " + str(email)
-                field_coordinator = None
+                print "Block '" + \
+                    str(block) + \
+                    "' has no matching email (" + \
+                    str(email) + \
+                    ") account. Check row " + \
+                    str(count) + \
+                    ". Exiting script."
+
+                sys.exit()
 
             parents_name = row[10].strip()
             day, month, year = row[22].strip(), row[23].strip(), row[24].strip()
