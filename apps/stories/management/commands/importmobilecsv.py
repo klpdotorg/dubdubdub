@@ -1,4 +1,5 @@
 import os
+import sys
 import csv
 import json
 import datetime
@@ -18,7 +19,7 @@ from stories.models import (
     Story, Answer)
 
 FIELD_COORDINATORS = {
-    "bellary east": "gajendravallar@gmail.com",
+    "bellary": "gajendravallar@gmail.com",
     "lingasugur": "kumargaded@gmail.com",
     "hagaribommanahalli": "natab146@gmail.com",
     "chincholi": "sudhakarpatil108@gmail.com",
@@ -48,7 +49,6 @@ FIELD_COORDINATORS = {
     "hadagali": "natab146@gmail.com",
     "sandur": "hanumantharaya@akshara.org.in",
     "aurad": "santhoshkumar.machkure@gmail.com",
-    "bellary west": "gajendravallar@gmail.com",
     "shahapur": "ayyannapalled@gmail.com",
     "yelburga": "g.s.vandali@gmail.com",
     "gulbarga south": "jyothi@akshara.org.in",
@@ -97,11 +97,17 @@ class Command(BaseCommand):
                 count += 1
                 continue
 
-            block = row[2].strip()
+            block = row[2].strip().lower()
             email = FIELD_COORDINATORS.get(block, None)
             school_id = row[4].strip()
             accepted_answers = {'1':'Yes', '0':'No', '99':'Unknown', '88':'Unknown'}
             user_type = parents
+
+            try:
+                school = School.objects.get(id=school_id)
+            except Exception as ex:
+                missing_ids['schools'].append(school_id)
+                continue
 
             try:
                 User = get_user_model()
@@ -110,7 +116,8 @@ class Command(BaseCommand):
                 )
             except Exception as ex:
                 if email is None:
-                    print "Escaping None entry"
+                    print "Block: " + str(block) + "has no matching email. Exiting script."
+                    sys.exit()
                 else:
                     print ex
                     print "Account not found for User: " + str(email)
