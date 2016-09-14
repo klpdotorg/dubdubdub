@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.4: 7b63cb411ab5858c2cb3cf2c52600ea477c77a87 - 2016-09-14
+  - Updates Boundary page to  API changes.
+  - Updates the pen and paper data parsing script.
+
 Release 1.0.3: 52f024d2c36c15f0374a1896a30843a9b61f40ea - 2016-09-06
   - Revamps the GKA SMS dashboard.
   - Fixes date range for the GKA SMS reports.
