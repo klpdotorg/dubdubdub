@@ -24,7 +24,7 @@ FIELD_COORDINATORS = {
     "hagaribommanahalli": "natab146@gmail.com",
     "chincholi": "sudhakarpatil108@gmail.com",
     "hospet": "pandithkhm9009@gmail.com",
-    "kudlagi": "mayurappab@gmai.com",
+    "kudligi": "mayurappab@gmai.com",
     "bidar": "mbiradar777@gmail.com",
     "gulbarga north": "shiremath8005.sh@gmail.com",
     "yadgir": "venky8715@gmail.com",
