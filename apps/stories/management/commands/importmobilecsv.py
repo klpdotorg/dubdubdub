@@ -117,7 +117,7 @@ class Command(BaseCommand):
                 field_coordinator = None
 
             parents_name = row[10].strip()
-            day, month, year = row[24].strip(), row[25].strip(), row[26].strip()
+            day, month, year = row[22].strip(), row[23].strip(), row[24].strip()
             previous_date = date_of_visit = self.parse_date(
                 previous_date, day, month, year
             )
@@ -129,7 +129,7 @@ class Command(BaseCommand):
                 continue
 
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            answer_columns = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+            answer_columns = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
             for answer_column in answer_columns:
                 if row[answer_column] in accepted_answers:
