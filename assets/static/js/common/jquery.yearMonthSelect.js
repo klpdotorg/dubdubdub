@@ -12,8 +12,11 @@
     Valid commands are:
         init
             init initializes the selects with the months and valid years
-        getDate
+        getLastDay
             getDate returns a string in YYYY-MM-DD format of last day
+            of month selected
+        getFirstDay
+            getDate returns a string in YYYY-MM-DD format of first day
             of month selected
 
     Example usage:
@@ -44,13 +47,14 @@
         "2013",
         "2014",
         "2015",
-        "2016"
+        "2016",
     ];
 
     $.fn.yearMonthSelect = function(cmd, options) {
         var funcs = {
             'init': init,
-            'getDate': getDate,
+            'getFirstDay': getFirstDay,
+            'getLastDay': getLastDay,
             'setDate': setDate
         };
         return funcs[cmd].call(this, options);
@@ -74,7 +78,7 @@
         return true;
     }
 
-    function getDate(options) {
+    function getLastDay(options) {
         var monthVal = parseInt(this.find("select.month").val());
         var yearVal = parseInt(this.find("select.year").val());
 
@@ -84,6 +88,13 @@
             monthVal = 0;
         }
         var date = new Date(yearVal, monthVal + 1, 0);
+        return moment(date).format("YYYY-MM-DD");
+    }
+
+    function getFirstDay(options) {
+        var monthVal = parseInt(this.find("select.month").val());
+        var yearVal = parseInt(this.find("select.year").val());
+        var date = new Date(yearVal, monthVal, 1);
         return moment(date).format("YYYY-MM-DD");
     }
 

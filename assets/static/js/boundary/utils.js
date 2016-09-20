@@ -140,7 +140,7 @@
     return modified;
   };
 
-  t.getPrimarySchoolCategories = function(klpData, diseData) {
+  t.getPrimarySchoolCategories = function(klpData, diseData) {    
     var klpSchools = klpData.num_schools
     var diseSchools = diseData.sum_schools
     var schoolCategories = {'upper primary': {}, 'lower primary': {}}
@@ -148,9 +148,9 @@
 
     var diseCount = diseData.school_categories.reduce(function(sumSchools, category) {
       if (category.id == 1) {
-        sumSchools.lowerPrimary = category.sum_schools;
+        sumSchools.lowerPrimary = category.sum_schools.total;
       } else if (_.contains(upperPrimaryCategories, category.id)) {
-        sumSchools.upperPrimary += category.sum_schools;
+        sumSchools.upperPrimary += category.sum_schools.total;
       }
       return sumSchools
     }, {
@@ -201,10 +201,10 @@
     var diseEnrollment = diseData.school_categories.reduce(function(results, category) {
       if (category.id == 1) {
         results.lowerPrimary.totalStudents = category.sum_boys + category.sum_girls;
-        results.lowerPrimary.totalSchools = category.sum_schools;
+        results.lowerPrimary.totalSchools = category.sum_schools.total;
       } else if (_.contains(upperPrimaryCategories, category.id)) {
         results.upperPrimary.totalStudents = category.sum_boys + category.sum_girls;
-        results.upperPrimary.totalSchools = category.sum_schools;
+        results.upperPrimary.totalSchools = category.sum_schools.total;
       }
       return results;
     }, {

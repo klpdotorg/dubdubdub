@@ -1,117 +1,109 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-topSummary">
-    <h2 class="heading-border grey-steel">GKA IVRS</h2> 
+    <h2 class="heading-border grey-steel">GKA SMS</h2> 
 
     <div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
-            {{ searchEntity.type}}
+            <span class="brand-blue">{{type}}</span>
           </div>
           <h2 class="heading-secondary black align-left">
-            {{ searchEntity.name }}
+            {{name}}
           </h2>
     </div>
+    <hr/>
   </script>
+
   
-  <script type="text/html" id="tpl-ivrsSummary">
-    <div class="heading-tiny-uppercase align-left" >Calls</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.stories }}</h2>
-    <div class="heading-tiny-uppercase align-left" >Schools</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2>
-    <div class="heading-tiny-uppercase align-left" >Schools with Calls</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.schools }}</h2> 
-    <div class="heading-tiny-uppercase align-left" >Last Call</div>
-    <h2 class="heading-secondary black align-left">{{ ivrs.last_story }}</h2> 
+  <script type="text/html" id="tpl-smsSummary">
+    <div class="table-responsive-wrap">        
+        <table class="table-base">
+          <thead>
+            <tr class="table-base-heading">
+              <td width=50% class="brand-blue">Details</td>
+              <!--td class="brand-blue">Percentage</td-->
+              <td width=25% colspan=2 class="brand-blue">
+              {% if name %}
+                {{name}} ({{type}})
+              {% endif %}
+              </td>
+              <td width=25% colspan=2 class="brand-blue">
+                {% if district %}
+                {{district.entity_type}}
+                {% endif %}
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="font-smaller">
+              <td>SMS Messages</td>
+              <td colspan="2">{{ sms.stories }}</td>
+              <td class="brand-green" colspan="2">{{ district.stories}}</td>
+            </tr>
+            <tr class="font-smaller">
+              <td>Schools with SMS Messages</td>
+              <td colspan="2">{{ sms.schools }}</td>
+              <td class="brand-green" colspan="2">{{ district.schools}}</td>
+            </tr>
+            <tr class="font-smaller">
+              <td>Last SMS</td>
+              <td colspan="2">{{ format_lastsms }}</td>
+              <td class="brand-green" colspan="2">{{ district.format_lastsms}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
   </script>
 
-  <script type="text/html" id="tpl-tlmTable">
-   <div class="table-responsive-wrap">        
+  <script type="text/html" id="tpl-responseTable">
+    <div class="table-responsive-wrap">        
     <table class="table-base">
-      <tbody>
+      <thead>
         <tr class="table-base-heading">
-        <td>TLM </td>
-        <td>JAN</td>
-        <td>FEB</td>
-        <td>MAR</td>
-        <td>APR</td>
-        <td>MAY</td>
-        <td>JUN</td>
-        <td>JUL</td>
-        <td>AUG</td>
-        <td>SEP</td>
-        <td>OCT</td>
-        <td>NOV</td>
-        <td>DEC</td>
-      </tr>
-      {% set range=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] %}
-      {% for i in range %}
-        <tr>
-          <td class="fixwidth heading-tiny-uppercase">{{tlm['TLM '+i]}}</td>
-          {% for month in months %}
-            <td class="fixwidth">
-            {% if month.four && month.four.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle grey-steel"></span>
-            {% endif %}
-            {% if month.five && month.five.indexOf(i) !== -1 %} 
-              <span class="fa fa-circle green-leaf"></span>
-            {% else %}
-              &nbsp;
-            {% endif %}
-            </td>
-          {% endfor %}
-        </tr> 
-      {% endfor %}             
-    </tbody>
-  </table>
-</div>
-<div class="center-text">
-  <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
-  <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
-</div>
-<!--div class="chart-parent center-text">
-  <div class="chart-parent chart-half-item">
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-blue"></span>&nbsp;Class 2
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-orange"></span>&nbsp;Class 3
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle grey-steel"></span>&nbsp;Class 4
-    </div>
-  </div>
-  <div class="chart-parent chart-half-item">
-    <div class="chart-athird-item">
-      <span class="fa fa-circle green-leaf"></span>&nbsp;Class 5
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle pink-salmon"></span>&nbsp;Class 6
-    </div>
-    <div class="chart-athird-item">
-      <span class="fa fa-circle brand-red"></span>&nbsp;Class 7
-    </div>
-  </div-->
-</div>
+          <td class="brand-blue">Question</td>
+          <!--td class="brand-blue">Percentage</td-->
+          <td class="brand-blue">Yes</td>
+          <td class="brand-blue">No</td>
+          {% set check=questions|first %}
+          {% if check.district %}
+            <td class="brand-blue">Yes</td>
+            <td class="brand-blue">No</td>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for each in questions%}
+        <tr class="font-smaller">
+          <td width='50%'>
+            {{each.question}}
+          </td>
+          <!--td>
+            <div class="bar-graph-wrap">
+              {% if each.total != 0 %}
+              <div class="bar-graph">
+                <div class="bar-percent green-leaf">{{ each.percent }}%</div>
+                <div class="bar-custom tooltip" aria-label="{{ each.score }}/{{ each.total }}">
+                  <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+                    <div class="bar-value bar-value-{{ each.percent }} green-leaf-bg" style="width:{{ each.percent }}%;"></div>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <div class="no-data">
+                No respondents
+              </div> 
+              {% endif %}
+            </div>     
+          </td-->
+          <td>{{each.score}}</td>
+          <td>{{each.total-each.score|int}}</td>
+          {% if each.district %}
+            <td class="brand-green" >{{each.district.score}}</td>
+            <td class="brand-green" >{{each.district.total-each.district.score|int}}</td>
+          {% endif %}
+        </tr>
+      </tbody>
   </script>
-
-  <script type="text/html" id="tpl-classGraph">
-    {% if total != 0 %}
-    <div class="bar-graph-wrap">
-      <div class="bar-label {{ color }}">{{ value }} Grade</div>
-      <div class="bar-graph">
-        <div class="bar-percent {{ color }}">{{ percent }}%</div>
-        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
-          <div class="bar-value bar-value-{{ score }} {{ color }}-bg" style="width:{{percent }}%;"></div>
-        </div>
-      </div> <!-- /bar-graph -->
-    </div> <!-- /bar-graph-wrap -->
-    {% else %}
-    <div class="no-data">
-      No respondents
-    </div>
-    {% endif %}
-  </script>
-
 
   <script type="text/html" id="tpl-percentGraph">
     <div class="bar-graph-wrap">
@@ -204,7 +196,7 @@
     {% endfor %}
   </script>
 
-  <script type="text/html" id="tpl-ivrsVolume">           
+  <script type="text/html" id="tpl-smsVolume">           
     <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
   </script>
 

@@ -207,7 +207,7 @@
     $('#' + prefix + 'klp-gender').html(html);
   }
 
-  function renderCategories(data, schoolType) {
+  function renderCategories(data, schoolType) {    
     var tpl_func = '#tpl-category-summary';
     var prefix = '';
     if (schoolType == "preschool") {

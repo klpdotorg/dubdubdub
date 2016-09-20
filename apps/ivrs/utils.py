@@ -93,6 +93,12 @@ def check_data_validity(original_data, data):
         valid = False
         message = get_message(valid=valid, data=original_data)
 
+    # Making sure that each input is a valid digit and no alphabets get in.
+    if not all(response.strip().isdigit() for response in data):
+        valid = False
+        message = get_message(valid=valid, data=original_data)
+
+
     return (data, valid, message)
 
 

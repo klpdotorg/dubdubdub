@@ -25,6 +25,11 @@ def send_templated_mail(from_email, to_emails, subject, template_name, context=N
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+def send_attachment(from_email, to_emails, subject, folder, filename, context=None):
+    msg = EmailMultiAlternatives(subject, "Please view attachment", from_email, to_emails)
+    msg.attach_alternative("<b>Please View attachement</b>", "text/html")
+    msg.attach_file(os.path.join(settings.PDF_REPORTS_DIR, folder + '/')+filename+".pdf")
+    msg.send()
 
 def render_to_json_response(obj, status=200):
     return HttpResponse(json.dumps(obj), content_type='application/json',
