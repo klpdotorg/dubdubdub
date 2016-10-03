@@ -3,7 +3,6 @@ from django.utils import timezone
 
 from djorm_pgarray.fields import TextArrayField
 
-# Create your models here.
 
 class State(models.Model):
     ivrs_type = models.CharField(max_length=10, default="gka")
@@ -23,6 +22,16 @@ class State(models.Model):
     def __unicode__(self):
         return self.session_id
 
+
+class QuestionGroupType(models.Model):
+    name = models.CharField(max_length=25)
+
+
+class IncomingNumber(models.Model):
+    number = models.CharField(max_length=50)
+    qg_type = models.ForeignKey(QuestionGroupType)
+
+
 class Chapter(models.Model):
     class_number = models.IntegerField()
     chapter_number = models.IntegerField()
@@ -30,6 +39,7 @@ class Chapter(models.Model):
 
     def __unicode__(self):
         return self.title
+
 
 class GKATLM(models.Model):
     number = models.IntegerField()
