@@ -26,10 +26,16 @@ class State(models.Model):
 class QuestionGroupType(models.Model):
     name = models.CharField(max_length=25)
 
+    def __unicode__(self):
+        return self.name
+
 
 class IncomingNumber(models.Model):
     number = models.CharField(max_length=50)
     qg_type = models.ForeignKey(QuestionGroupType)
+
+    def __unicode__(self):
+        return self.qg_type.name + ":" + self.number
 
 
 class Chapter(models.Model):
