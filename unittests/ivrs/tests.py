@@ -61,3 +61,28 @@ class SMSViewTests(TestCase):
                 response.data,
                 'Error. Your response: ' + body + '. Expected response: 3885,1,1,1,2,1 OR 3885,1,2,,, OR 3885,1,2'
             )
+
+    def test_reply_for_invalid_school_id(self):
+        """
+        SMSView should return a certain reply to be sent when it receives
+        an invalid school_id
+        """
+        view = SMSView.as_view()
+        factory = APIRequestFactory()
+        body = '0,1,1,1,2,2'
+        request = factory.get(
+            '/api/v1/sms/',
+            {
+                'SmsSid':'2',
+                'From':'9495111772',
+                'To':'08039514048',
+                'Date':'2016-07-12 15:16:48',
+                'Body':body,
+            },
+            content_type='text/plain',
+        )
+        response = view(request)
+        self.assertEqual(
+            response.data,
+            'School ID ' + body.split(',').pop(0) + ' not found.'
+        )
