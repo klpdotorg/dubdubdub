@@ -11,6 +11,7 @@ class SMSViewTests(TestCase):
         SMSView should return a certain reply to be sent when it receives
         a valid input
         """
+        print "Testing for valid input"
         view = SMSView.as_view()
         factory = APIRequestFactory()
         request = factory.get(
@@ -35,6 +36,7 @@ class SMSViewTests(TestCase):
         SMSView should return a certain reply to be sent when it receives
         an invalid input
         """
+        print "Testing for invalid input"
         view = SMSView.as_view()
         factory = APIRequestFactory()
         bodies = [
@@ -67,6 +69,7 @@ class SMSViewTests(TestCase):
         SMSView should return a certain reply to be sent when it receives
         an invalid school_id
         """
+        print "Testing for invalid school_id"
         view = SMSView.as_view()
         factory = APIRequestFactory()
         body = '0,1,1,1,2,2'
@@ -86,3 +89,37 @@ class SMSViewTests(TestCase):
             response.data,
             'School ID ' + body.split(',').pop(0) + ' not found.'
         )
+
+    def test_reply_for_invalid_answer_to_specific_question_number(self):
+        """
+        SMSView should return a certain reply to be sent when it receives
+        an invalid input
+        """
+        print "Testing for invalid input to specific question number"
+        view = SMSView.as_view()
+        factory = APIRequestFactory()
+        bodies = [
+            '24657,4,3,1,2,2',
+            '24657,1,4,1,2,2',
+            '24657,1,2,4,2,2',
+            '24657,1,2,2,4,2',
+            '24657,1,2,1,2,4',
+        ]
+        for count, body in enumerate(bodies):
+            print "Testing input: " + body
+            request = factory.get(
+                '/api/v1/sms/',
+                {
+                    'SmsSid':'2',
+                    'From':'9495111772',
+                    'To':'08039514048',
+                    'Date':'2016-07-12 15:16:48',
+                    'Body':body,
+                },
+                content_type='text/plain',
+            )
+            response = view(request)
+            self.assertEqual(
+                response.data,
+                'Error at que.no: ' + str(count+1) + '. Your response was ' + body
+            )
