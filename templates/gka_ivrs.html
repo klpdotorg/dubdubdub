@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load compress %}
-{% block page_title %}GKA IVRS Dashboard{% endblock %}
+{% block page_title %}GKA SMS Dashboard{% endblock %}
 
 {% block css_extra %}
 
@@ -14,7 +14,6 @@
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/ivrs.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/jquery.yearMonthSelect.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/story/gka_filters_modal.js' %}"></script>
   
@@ -76,41 +75,37 @@
 	<div id="primarySchoolContainer">
 		<section class="container" id="school_summary">
 			<div id="topSummary" class="js-detail-container"></div>
-			<div id="disclaimer" class="heading-tiny center-text grey-steel">We are transitioning to a new version of the IVRS for the GKA program. Meanwhile this dashboard reflects current data combined with data from the previous versions.</div>
-			<hr/>
-			<div class="chart-parent container">
+			<div id="smsSummary" class="js-detail-container"></div>
+			<!--div id="disclaimer" class="heading-tiny center-text grey-steel">We are transitioning to a new version of the IVRS for the GKA program. Meanwhile this dashboard reflects current data combined with data from the previous versions.</div-->
+			<!--div class="chart-parent container">
 				<div class="chart-half-item">
-					<div id="ivrsSummary" class="js-detail-container"></div>
+					<div id="smsSummary" class="js-detail-container"></div>
 				</div>
 				<div class="chart-half-item">
-					<div id="ivrsyears" class="js-volume-container base-spacing-mid"></div>
-					<div id="chart_ivrs" class="ct-chart ct-major-sixth js-volume-container chartist-container"></div>
-				</div> <!-- /chart-half-item -->
-		    </div>
+					<div id="smsyears" class="js-volume-container base-spacing-mid"></div>
+					<div id="chart_sms" class="ct-chart ct-major-sixth js-volume-container chartist-container"></div>
+				</div>
+		    </div-->
 		</section>
 			<!--div class="accordion-toggle"><img class="img-symbol" src="{% static 'images/triangle_down.png' %}" alt="accordion 1"/></div-->
+
 		<section class="container">
-			<ul id='improved' class="js-accordion-container">
+			<!--ul id='improved' class="js-accordion-container">
 			  <hr/>
-				<li><a href='#' class='head js-accordion-header brand-turquoise align-right'>VIEW DETAILS  <span class="fa fa-angle-down"></span></a>
-					<div class='content' id="ivrs">
+				<li><a href='#' class='head js-accordion-header brand-turquoise align-right'>VIEW DETAILS  <span class="fa fa-angle-down"></span></a-->
+					<!--div class='content' id="sms"-->
+					<div id="sms">
 					  <div class="base-spacing-mid"></div>
 						<!--h2 class="heading-border brand-turquoise">Response Summary</h2-->
-					  <div class="chart-parent">
-					  		<div id="ivrsquestions" class="js-detail-container"></div>	
-					  </div> <!--/chart-parent-->
-					  <hr/>
-					  <div class="page-break"></div>
-					  <h2 class="brand-turquoise heading-border">TLM Usage</h2>
-					  <div class="base-spacing-mid"></div>
-					  <div id="ivrstlmsummary" class="js-tlm-container"></div>
+					  	<div id="smsquestions" class="js-detail-container"></div>	
 					  <div class="base-spacing-mid"></div>
 					</div>
-				</li>
+				<!--/li>
 					
-			</ul>
-
-		</div>
+			</ul-->
+			<div class="center-text font-smaller grey-silver">This report is generated for <a href="http://akshara.org.in" target="_blank">Akshara Foundation</a>  by KLP.</div>
+		</section>
+		<!--/div-->
 	</div>
 	
 </section>

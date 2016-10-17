@@ -6,10 +6,22 @@
     <span class="brand-turquoise heading-secondary">{{data.count}}</span>
     </div>
     </div>
+
+   <div class="container center-text">
+      {% if data.previous != null %}
+          <button data-id="{{data.previous}}" class="prev button-hollow">Prev</button>
+      {% endif %}
+      {% if data.next != null %}
+          <button data-id="{{data.next}}" class="next button-hollow">Next</button>
+      {% endif %}
+    </div>
+
+    <div class="base-spacing-mid"></div>
   </script>
   
 
   <script type="text/html" id="tpl-responseTable">
+  
   <div class="table-responsive-wrap"> 
     <table class="table-base base-spacing-mid">
       <thead class="table-base-heading">
