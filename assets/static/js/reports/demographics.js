@@ -79,15 +79,16 @@
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             data["comparison"]["year-wise"][0] = {
-                            "year": detailsData["report_info"]["year"],
-                             "enrol_upper": detailsData["enrolment"]["Class 5-8"]["student_count"],
-                             "enrol_lower": detailsData["enrolment"]["Class 1-4"]["student_count"],
-                             "student_count": summaryData["student_count"],
-                             "school_count": summaryData["school_count"],
-                             "school_perc": summaryData["school_perc"],
-                             "teacher_count": summaryData["teacher_count"],
-                             "ptr": summaryData["ptr"]
+                "year": detailsData["report_info"]["year"],
+                 "enrol_upper": detailsData["enrolment"]["Class 5-8"]["student_count"],
+                 "enrol_lower": detailsData["enrolment"]["Class 1-4"]["student_count"],
+                 "student_count": summaryData["student_count"],
+                 "school_count": summaryData["school_count"],
+                 "school_perc": summaryData["school_perc"],
+                 "teacher_count": summaryData["teacher_count"],
+                 "ptr": summaryData["ptr"]
             };
+            data['comparison']['boundary_name'] = summaryData["boundary_info"]["name"];
             renderComparison(data["comparison"]);
         });
     }
@@ -160,18 +161,19 @@
 
         new_lang["Others"]["moi_perc"] = Math.round(new_lang["Others"]["school_count"]*100/moi_school_total);
         new_lang["Others"]["mt_perc"] = Math.round(new_lang["Others"]["student_count"]*100/mt_student_total);
+        var sorted_lang = _.sortBy(new_lang, 'school_count').reverse();
         var tplLanguage = swig.compile($('#tpl-Language').html());
-        var languageHTML = tplLanguage({"lang":new_lang});
+        var languageHTML = tplLanguage({"lang":sorted_lang});
         $('#language-profile').html(languageHTML);
         
     }
 
     function renderComparison(data) {
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
-        var yrcompareHTML = tplYearComparison({"years":data["year-wise"]});
+        var yrcompareHTML = tplYearComparison({"years":data["year-wise"],"boundary_name":data["boundary_name"]});
         $('#comparison-year').html(yrcompareHTML);
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":data["neighbours"]});
+        var compareHTML = tplComparison({"neighbours":data["neighbours"],"boundary_name":data["boundary_name"]});
         $('#comparison-neighbour').html(compareHTML);
     }
 
