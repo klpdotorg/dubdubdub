@@ -13,6 +13,8 @@
 .rounded-sect {
 	border-radius: 10px;
 	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
 }
 
 .date-header {
@@ -55,6 +57,7 @@
 .table-base-comparison th,.table-base-comparison td {
     width: 120px;
  }
+
 
 .dot-padding {
 	padding-top:3px;
@@ -127,6 +130,32 @@
 	  	  content: "Responses: ";
 	  	}
 	}
+
+	.hide-mobile {
+		display:none;
+	}
+
+	.label-avg-enrol {
+		&:before {
+	  	  content: "Average enrollment: ";
+	  	}
+	}
+
+	.label-schcount {
+		&:before {
+	  	  content: "Schools ";
+	  	}
+	}
+
+	.table-base-graphs th,.table-base-graphs td {
+		border-bottom: none;
+		padding: none;
+	}
+}
+
+.table-base-graphs th,.table-base-graphs td {
+	border-bottom: none;
+	padding: none;
 }
 
 @include media-med {

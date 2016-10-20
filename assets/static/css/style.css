@@ -4809,7 +4809,9 @@ code {
 
 .rounded-sect {
   border-radius: 10px;
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px; }
 
 .date-header {
   padding-top: 20px;
@@ -4874,7 +4876,24 @@ code {
     content: "Schools: "; }
 
   .td-label-responses:before {
-    content: "Responses: "; } }
+    content: "Responses: "; }
+
+  .hide-mobile {
+    display: none; }
+
+  .label-avg-enrol:before {
+    content: "Average enrollment: "; }
+
+  .label-schcount:before {
+    content: "Schools "; }
+
+  .table-base-graphs th, .table-base-graphs td {
+    border-bottom: none;
+    padding: none; } }
+.table-base-graphs th, .table-base-graphs td {
+  border-bottom: none;
+  padding: none; }
+
 @media only print, only screen and (min-width: 750px) {
   .sect-parent {
     margin-left: -20px;
