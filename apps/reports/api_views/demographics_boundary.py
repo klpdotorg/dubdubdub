@@ -16,16 +16,15 @@ class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBound
             self.reportInfo["categories"][data["cat"]] = {
                 "school_count": data["num_schools"],
                 "student_count": data["num_boys"] + data["num_girls"]}
-            self.reportInfo["languages"] = {"moi": {}, "mt": {}}
+        self.reportInfo["languages"] = {"moi": {}, "mt": {}}
         for data in boundaryData["moi"]:
-                self.reportInfo["languages"]["moi"][data["moi"].upper()] =\
+            self.reportInfo["languages"]["moi"][data["moi"].upper()] =\
                     {"school_count": data["num"]}
         for data in boundaryData["mt"]:
-                self.reportInfo["languages"]["mt"][data["name"].upper()] =\
+            self.reportInfo["languages"]["mt"][data["name"].upper()] =\
                     {"student_count": data["num_students"]}
-
         self.reportInfo["enrolment"] =\
-            self.get_enrolment(active_schools, academic_year)
+            self.get_enrolment(boundaryData["cat"])
 
     def get_report_details(self, boundaryid):
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
@@ -69,10 +68,10 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
     def get_yeardata(self, active_schools, year, year_id):
         yeardata = {"year": year, "enrol_upper": 0, "enrol_lower": 0,
                     "school_count": 0}
-        enrolment = self.get_enrolment(active_schools, year_id)
-        yeardata["enrol_upper"] = enrolment["Class 5-8"]["student_count"]
-        yeardata["enrol_lower"] = enrolment["Class 1-4"]["student_count"]
         boundaryData = self.get_aggregations(active_schools, year_id)
+        enrolment = self.get_enrolment(boundaryData["cat"])
+        yeardata["enrol_upper"] = enrolment["Upper Primary"]["student_count"]
+        yeardata["enrol_lower"] = enrolment["Lower Primary"]["student_count"]
         boundaryData = self.check_values(boundaryData)
         teacher_count = self.get_teachercount(active_schools, year_id)
         student_count = boundaryData["num_boys"] + boundaryData["num_girls"]
@@ -133,11 +132,11 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
                 boundaryData = self.get_aggregations(active_schools,
                                                      academic_year)
                 boundaryData = self.check_values(boundaryData)
-                enrolment = self.get_enrolment(active_schools, academic_year)
+                enrolment = self.get_enrolment(boundaryData["cat"])
                 data["enrol_upper"] =\
-                    enrolment["Class 5-8"]["student_count"]
+                    enrolment["Upper Primary"]["student_count"]
                 data["enrol_lower"] =\
-                    enrolment["Class 1-4"]["student_count"]
+                    enrolment["Lower Primary"]["student_count"]
                 data["school_count"] = active_schools.count()
                 teacher_count = self.get_teachercount(active_schools,
                                                       academic_year)

@@ -1,17 +1,21 @@
-from .base import (
+from .base_boundary import (
     BaseBoundaryReport
 )
-from .summary import (
+from .summary_boundary import (
     ReportBoundarySummary
 )
-from .demographics import(
+from .demographics_boundary import(
     DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
 
 )
-from .finance import(
+from .finance_boundary import(
     FinanceBoundaryDetails
 )
 
-from .dise import(
+from .dise_boundary import(
     DiseBoundaryDetails
+)
+
+from .electedrepdata import(
+       ElectedRepInfo
 )

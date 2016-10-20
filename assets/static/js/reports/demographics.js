@@ -80,8 +80,8 @@
         $xhr.done(function(data) {
             data["comparison"]["year-wise"][0] = {
                             "year": detailsData["report_info"]["year"],
-                             "enrol_upper": detailsData["enrolment"]["Class 5-8"]["student_count"],
-                             "enrol_lower": detailsData["enrolment"]["Class 1-4"]["student_count"],
+                             "enrol_upper": detailsData["enrolment"]["Upper Primary"]["student_count"],
+                             "enrol_lower": detailsData["enrolment"]["Lower Primary"]["student_count"],
                              "student_count": summaryData["student_count"],
                              "school_count": summaryData["school_count"],
                              "school_perc": summaryData["school_perc"],

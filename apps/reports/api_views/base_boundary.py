@@ -64,22 +64,17 @@ class BaseBoundaryReport(object):
                     raise ParseError("Invalid "+params+" passed,pass from the "
                                      + str(mandatoryparams[params]))
 
-    def get_enrolment(self, active_schools, academic_year):
-        active_schools = active_schools.filter(
-            schoolclasstotalyear__academic_year=academic_year)
-        enrolment = active_schools.values('schoolclasstotalyear__clas').\
-            annotate(num=Sum('schoolclasstotalyear__total'))
-        enrolmentdata = {"Class 1-4": {"text": "Class 1 to 4",
+    def get_enrolment(self, categoryData):
+        enrolmentdata = {"Lower Primary": {"text": "Class 1 to 4",
                                        "student_count": 0},
-                         "Class 5-8": {"text": "Class 5 to 8",
+                         "Upper Primary": {"text": "Class 5 to 8",
                                        "student_count": 0}}
-        for data in enrolment:
-            if 0 < int(data["schoolclasstotalyear__clas"]) <= 4:
-                enrolmentdata["Class 1-4"]["student_count"] += data["num"]
-            elif int(data["schoolclasstotalyear__clas"]) <= 8:
-                enrolmentdata["Class 5-8"]["student_count"] += data["num"]
+        for data in categoryData:
+            if data["cat"] in ['Lower Primary','Upper Primary']:
+                enrolmentdata[data['cat']]["student_count"] = (data["num_boys"] + data["num_girls"])/data["num_schools"]
 
         return enrolmentdata
+
 
     def get_boundary_summary_data(self, boundary, reportData):
         reportData["boundary_info"] = {}
