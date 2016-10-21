@@ -52,9 +52,9 @@
                   <div class="heading-tiny-uppercase">Schools</div>
                   <h2 class="heading-secondary black align-left">{{data.school_count}}</h2> 
                   <div class="heading-tiny-uppercase">Teachers</div>
-                  <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
+                  <h2 class="heading-secondary black align-left">{{data.teacher_count| checkzero}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}}  (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr| checkzero}}  (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>
@@ -105,71 +105,67 @@
   <script type="text/html" id="tpl-Category">
 
       <h2 class="heading-border brand-turquoise">School Category Profile</h2>
-      <div class="sect-parent">
-          <div class="sect-three-quarter rounded-sect">
+      <table class="table-base table-list-view table-base-graphs">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Average Enrollment by Category</th>
+            <th>School Distribution by Category</th>
+          </tr>
+          {% for each in cat %}
+          <tr>
+            <td>
+              <div class="sect-parent">
+                <div class="sect-two-third">
+                  <div class="bar-lookup">{{each.name|capitalize}}</div>
+                </div>
+                <div class="sect-third">
+                  <div class="bar-lookup">{{each.enrolled|round}}</div>
+                </div>
+              </div>    
+            </td>
+            <td>
+              <div class="bar-graph-wrap float-left"><!--1-->
+                <div class="bar-num-label font-smaller bold brand-blue">{{each.school_count}}/{{each.school_total}}</div>
+                <div class="bar-custom tooltip" aria-label="{{each.school_count}} Schools"><!--2-->
+                    <div class="bar-value grey-gravel-bg float-left" style="width:{{each.cat_perc}}%;"></div><!--3-->
+                </div><!--2-->
+                <div class="bar-percent grey-gravel">{{each.cat_perc|round}}%</div><!--6-->
+              </div><!--1-->
+            </td>
             
-            <div class="sect-parent">
-              <!--row headings-->
-              <div class="sect-half">
-                <div class="heading-tiny-uppercase">School Distribution by Category</div>
-              </div>
-              <div class="sect-half">
-                <div class="heading-tiny-uppercase">Average Enrollment by Category</div>
-              </div>
-              <!--row data-->
-              {% for each in cat %}
-                <div class="sect-half">
-                    <div class="bar-graph-wrap float-left"><!--1-->
-                        <div class="bar-num-label font-smaller bold brand-blue">{{each.school_count}}/{{each.school_total}}</div>
-                          <div class="bar-custom tooltip" aria-label="{{each.school_count}} Schools"><!--2-->
-                            <div class="bar-value grey-gravel-bg float-left" style="width:{{each.cat_perc}}%;"></div><!--3-->
-                          </div><!--2-->
-                    <div class="bar-percent grey-gravel">{{each.cat_perc}}%</div><!--6-->
-                  </div><!--1-->
-                </div><!--sect-half-->
-                <div class="sect-half">
-                  <div class="sect-parent">
-                    <div class="sect-two-third"><div class="bar-lookup">{{each.name| capitalize}}</div></div>
-                    <div class="sect-third"><div class="bar-lookup">{{each.enrolled}}</div></div>
-                  </div>
-                </div><!--sect-half-->
-              {% endfor %}
-            </div><!-- inner sect-parent-->
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-          </div><!--sect-three-quarter-->
-      </div><!--sect-parent-->
   </script>
+
   <script  type="text/html" id="tpl-Language">
       <h2 class="heading-border brand-turquoise">Language Profile</h2>
-      <div class="sect-parent">
-        <div class="sect-half">
-          <div class="heading-tiny-uppercase float-left">Distribution of</div>
-        </div>
-        <div class="sect-half">
-          <div class="heading-tiny-uppercase float-right">Schools by Medium of Instruction</div>
-        </div>
-      </div><!--parent-->
+      <table class="table-base table-list-view table-base-graphs">
+      <div class="heading-tiny-uppercase">Distribution of Schools by Medium of Instruction</div>
+      <tbody>
       {% for each in lang %}
-         <div class="sect-parent">
-            <div class="sect-half">
-              <div class="">{{each.name}}</div>
-            </div><!--half-->
-            <div class="sect-half">
-              <div class="bar-graph-wrap float-right">
-                <div class="bar-percent">{{each.moi_perc}}%</div>
-                <div class="bar-custom">
-                  <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
-                  <div class="font-smaller center-text"><strong>{{each.school_count}} schools</strong></div>
-                </div><!--bar-custom-->
-              </div><!--bar-graph-wrap-->
-            </div><!--half-->
-          </div><!--end parent-->
+      <tr>
+        <td>{{each.name|capitalize}}</td>
+        <td>
+          <div class="bar-graph-wrap">
+            <div class="bar-custom">
+              <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
+              <div class="font-smaller center-text"><strong>{{each.school_count|round}} schools</strong></div>
+            </div><!--bar-custom-->
+            <div class="bar-percent">{{each.moi_perc|round}}%</div>
+          </div><!--bar-graph-wrap-->  
+        </td>
+      </tr>
       {% endfor %}
+      </tbody>
+      </table>
   </script>
 
   <script type="text/html" id="tpl-YearComparison">
     <h3 class="brand-turquoise  heading-border center-text">
-        3 year comparison of status of Primary school status in this region
+        3 year comparison of status of Primary school status in {{boundary_name|capitalize}}
       </h3>
       <table class="table-base table-list-view table-base-comparison">
       <tbody><tr class="table-base-heading">
@@ -186,13 +182,13 @@
               <div class="bold td-label-year">{{each.year}}</div>
             </td>
             <td>
-              <div class="td-label-enrolu">{{each.enrol_upper|checkzero}}</div>    
+              <div class="td-label-enrolu">{{each.enrol_upper|checkzero|round}}</div>    
             </td>
             <td>
-              <div class="td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
+              <div class="td-label-enroll">{{each.enrol_lower|checkzero|round}}</div>  
             </td>
             <td>
-              <div class="td-label-enroll">{{each.enrol_l_u|checkzero}}</div>  
+              <div class="td-label-enroll">{{each.enrol_l_u|checkzero|round}}</div>  
             </td>
             <td>
               <div class="td-label-ptr">
@@ -216,7 +212,7 @@
 
   <script type="text/html" id="tpl-neighComparison">
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school with neighbours
+          Comparison of status of Primary school for {{boundary_name| capitalize}} with neighbours
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
@@ -229,21 +225,27 @@
         <th>Schools</th>
       </tr>
       {% for each in neighbours %}
+          {% set highlight= "" %}
+          {% set barcolor= "grey-gravel-bg" %}
+          {% if each.name == boundary_name %}
+            {% set highlight= "brand-red" %}
+            {% set barcolor= "brand-red-bg" %}
+          {% endif %}
           <tr>
             <td>
-              <div class="bold td-label-boundary">{{each.name|title}}</div>
+              <div class="{{highlight}} td-label-boundary">{{each.name|title}}</div>
             </td>
             <td>
-              <div class="td-label-enrolu">{{each.enrol_upper|checkzero}}</div>    
+              <div class="{{highlight}} td-label-enrolu">{{each.enrol_upper|checkzero|round}}</div>    
             </td>
             <td>
-              <div class="td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
+              <div class="{{highlight}} td-label-enroll">{{each.enrol_lower|checkzero|round}}</div>  
             </td>
             <td>
-              <div class="td-label-enroll">{{each.enrol_l_u|checkzero}}</div>  
+              <div class="{{highlight}} td-label-enroll">{{each.enrol_l_u|checkzero|round}}</div>  
             </td>
             <td>
-              <div class="td-label-ptr">
+              <div class="{{highlight}} td-label-ptr">
                 {% if each.ptr !== "NA" && each.ptr !== 0 %}
                   {{each.ptr|round}}:1
                 {% else %}
@@ -255,9 +257,9 @@
               <!-- Value is percentage of the nearest 100 to the highest value-->
               <div class="bar-graph-wrap">
                 <div class="bar-custom">
-                  <div class="bar-value grey-gravel-bg" style="width:{{each.school_perc}}%;"></div>
+                  <div class="bar-value {{barcolor}}" style="width:{{each.school_perc}}%;"></div>
                 </div><!--bar-custom-->
-                <div class="bar-percent">{{each.school_count|checkzero}}</div>
+                <div class="bar-percent">{{each.school_count|checkzero}} schools</div>
               </div><!--bar-graph-wrap-->
             </td>
           </tr>

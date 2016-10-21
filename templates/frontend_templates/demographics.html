@@ -118,8 +118,8 @@
           <div class="sect-three-quarter">
             <table class="table-base table-list-view table-base-graphs">
               <tbody><tr class="table-base-heading">
-                <th>Average Enrollment by Category</th>
-                <th>School Distribution by Category</th>
+                <th>Average Enrollment</th>
+                <th>School Distribution</th>
               </tr>
               {% for each in cat %}
               <tr>
@@ -161,7 +161,7 @@
       <tr>
         <td>{{each.name|capitalize}}</td>
         <td>
-          <div class="bar-graph-wrap">
+          <div class="bar-graph-wrap center-text">
             <div class="bar-custom">
               <div class="bar-value green-leaf-bg" style="width:{{each.mt_perc}}%;"></div>
               <div class="clear"></div>
@@ -171,7 +171,7 @@
           </div><!--bar-graph-wrap-->
         </td>
         <td>
-          <div class="bar-graph-wrap">
+          <div class="bar-graph-wrap center-text">
             <div class="bar-custom">
               <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
               <div class="font-smaller center-text"><strong>{{each.school_count}} schools</strong></div>
@@ -193,8 +193,8 @@
       <table class="table-base table-list-view table-base-comparison">
       <tbody><tr class="table-base-heading">
         <th>Year</th>
-        <th>Total Enrollment <br/>in Upper Primary</th>
-        <th>Total Enrollment <br/>in Lower Primary</th>
+        <th>Average Enrollment <br/>in Upper Primary</th>
+        <th>Average Enrollment <br/>in Lower Primary</th>
         <th>PTR</th>
         <th>Schools</th>
       </tr>
@@ -274,7 +274,7 @@
                 <div class="bar-custom">
                   <div class="bar-value {{barcolor}}" style="width:{{each.school_perc}}%;"></div>
                 </div><!--bar-custom-->
-                <div class="bar-percent {{highlight}}">{{each.school_count|checkzero}}</div>
+                <div class="bar-percent {{highlight}}">{{each.school_count|checkzero}} schools</div>
               </div><!--bar-graph-wrap-->
             </td>
           </tr>
