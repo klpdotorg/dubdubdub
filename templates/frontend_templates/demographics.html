@@ -273,8 +273,9 @@
               <div class="bar-graph-wrap">
                 <div class="bar-custom">
                   <div class="bar-value {{barcolor}}" style="width:{{each.school_perc}}%;"></div>
+                  <div class="font-smaller center-text {{highlight}}"><strong>{{each.school_count|checkzero}} schools</strong></div>
                 </div><!--bar-custom-->
-                <div class="bar-percent {{highlight}}">{{each.school_count|checkzero}} schools</div>
+                <div class="bar-percent"></div>
               </div><!--bar-graph-wrap-->
             </td>
           </tr>
