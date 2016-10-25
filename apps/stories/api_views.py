@@ -227,6 +227,7 @@ class StoriesSyncView(KLPAPIView):
                     response['failed'].append(story.get('_id'))
         return Response(response)
 
+
 class StoryInfoView(KLPAPIView):
     def get(self, request):
         return Response({
@@ -791,6 +792,8 @@ class StoriesView(KLPListAPIView):
                 returned, if not mentioned, returns all
     """
     bbox_filter_field = "school__instcoord__coord"
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
 
     def get_serializer_class(self):
         get_answers = self.request.GET.get('answers', 'no')
@@ -835,7 +838,25 @@ class StoriesView(KLPListAPIView):
             qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
 
         admin2_id = self.request.GET.get('admin2', '')
-        if admin2_id:
+        if admin2_id == 'detect':
+            # this is a special case when Konnect user is syncing
+            # and we need to send the user the stories and answers from
+            # the block the user usually operates in and neighboring blocks
+            if not self.request.user.is_anonymous():
+                qset = qset.prefetch_related(
+                    'school', 'school__schooldetails',
+                    'school__schooldetails__admin2'
+                )
+                print 'Not Anonymous!'
+                existing_block_ids = list(set(
+                    qset.filter(
+                        user=self.request.user
+                    ).values_list('school__admin3__parent__id', flat=True)))
+                print "Existing blocks = ", existing_block_ids
+                qset = qset.filter(
+                    school__schooldetails__admin2__id__in=existing_block_ids
+                )
+        else:
             qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
 
         admin3_id = self.request.GET.get('admin3', '')
@@ -847,7 +868,7 @@ class StoriesView(KLPListAPIView):
         # except:
         #     limit = 10
 
-        qset = qset.prefetch_related('storyimage_set')
+        qset = qset.prefetch_related('storyimage_set').select_related('school')
 
         return qset
 
