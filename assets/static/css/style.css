@@ -4857,6 +4857,9 @@ code {
   .td-label-perstu:before {
     content: "Per Student: "; }
 
+  .td-label-persch:before {
+    content: "Per School: "; }
+
   .td-label-tlm:before {
     content: "TLM Grant: "; }
 

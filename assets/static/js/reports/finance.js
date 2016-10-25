@@ -28,7 +28,7 @@
     function getSummaryData(data){
         var summaryJSON = {
             "boundary": data["boundary_info"],
-            "school_count" : data["summary_data"]["school_count"],
+            "school_count" : data["summary_data"]["num_schools"],
             "teacher_count" : data["summary_data"]["teacher_count"],
             "gender" : data["summary_data"]["gender"]
         };
