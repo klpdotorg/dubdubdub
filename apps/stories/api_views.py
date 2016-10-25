@@ -808,6 +808,15 @@ class StoriesView(KLPListAPIView):
         if school_id:
             qset = qset.filter(school__id=school_id)
 
+        if self.request.GET.get('answers', 'no') == 'yes':
+            qset = qset.prefetch_related(
+                'answer_set', 'answer_set__question',
+                'answer_set__question__question_type',
+                'answer_set__question__school_type',
+                'answer_set__question__questiongroupquestions_set',
+                'answer_set__question__questiongroupquestions_set__questiongroup__source',
+            )
+
         verified = self.request.GET.get('verified', None)
         if verified:
             if verified == 'yes':
@@ -819,7 +828,7 @@ class StoriesView(KLPListAPIView):
 
         source = self.request.GET.get('source', '')
         if source:
-            qset = qset.filter(group__source__name=source)
+            qset = qset.filter(group__source__name=source).prefetch_related('group', 'group__source')
 
         admin1_id = self.request.GET.get('admin1', '')
         if admin1_id:
@@ -838,8 +847,7 @@ class StoriesView(KLPListAPIView):
         # except:
         #     limit = 10
 
-        qset = qset.prefetch_related(
-            'storyimage_set').select_related('school')
+        qset = qset.prefetch_related('storyimage_set')
 
         return qset
 

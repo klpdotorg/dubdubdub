@@ -126,7 +126,6 @@ class QuestiongroupQuestionsSerializer(KLPSerializer):
 
 
 class QuestionSerializer(KLPSerializer):
-
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
     text_kn = serializers.SerializerMethodField('get_text_kn')
