@@ -866,8 +866,7 @@ class StoriesView(KLPListAPIView):
         # except:
         #     limit = 10
 
-        qset = qset.prefetch_related('storyimage_set').select_related('school')
-
+        qset = qset.prefetch_related('storyimage_set').select_related('school', 'user_type')
         return qset
 
 
