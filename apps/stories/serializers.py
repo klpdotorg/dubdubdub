@@ -11,7 +11,7 @@ from users.serializers import UserBasicSerializer
 from .models import (
     Question, Questiongroup, QuestionType,
     QuestiongroupQuestions, Story, Answer,
-    StoryImage, Survey, Source
+    StoryImage, Survey, Source, UserType
 )
 
 
@@ -44,6 +44,12 @@ class TimestampField(serializers.DateTimeField):
             raise serializers.ValidationError(
                 'Date format should be: YYYY-MM-DDTHH:MM:SS'
             )
+
+
+class UserTypeSerializer(KLPSerializer):
+    class Meta:
+        model = UserType
+        fields = ('name',)
 
 
 class QuestiongroupSerializer(KLPSerializer):
@@ -125,11 +131,30 @@ class QuestiongroupQuestionsSerializer(KLPSerializer):
         )
 
 
-class QuestionSerializer(KLPSerializer):
+class QuestionBareSerializer(KLPSerializer):
+    # Question Serializer without QuestionGroup stats
     question_type = serializers.CharField(source='question_type.name')
     options = serializers.SerializerMethodField('get_options')
     text_kn = serializers.SerializerMethodField('get_text_kn')
     school_type = BoundaryTypeSerializer()
+
+    class Meta:
+        model = Question
+        fields = (
+            'id', 'question_type', 'text', 'text_kn', 'qid',
+            'options', 'display_text', 'key', 'school_type',
+        )
+
+    def get_options(self, obj):
+        return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
+
+    def get_text_kn(self, obj):
+        activate_language("kn")
+        return _(obj.text)
+
+
+class QuestionFullSerializer(QuestionBareSerializer):
+    # With QuestionGroup Stats
     questiongroup_set = QuestiongroupQuestionsSerializer(
         source='questiongroupquestions_set',
         read_only=True,
@@ -144,13 +169,6 @@ class QuestionSerializer(KLPSerializer):
             'questiongroup_set',
         )
 
-    def get_options(self, obj):
-        return obj.options.replace('{', '').replace('}', '').split(',') if obj.options else None
-
-    def get_text_kn(self, obj):
-        activate_language("kn")
-        return _(obj.text)
-
 
 class SourceSerializer(KLPSerializer):
     class Meta:
@@ -158,7 +176,7 @@ class SourceSerializer(KLPSerializer):
 
 
 class SchoolQuestionsSerializer(KLPSerializer):
-    questions = QuestionSerializer(many=True, source='get_questions')
+    questions = QuestionBareSerializer(many=True, source='get_questions')
 
     class Meta:
         model = School
@@ -166,7 +184,7 @@ class SchoolQuestionsSerializer(KLPSerializer):
 
 
 class AnswerSerializer(KLPSerializer):
-    question = QuestionSerializer(source='question')
+    question = QuestionBareSerializer(source='question')
 
     class Meta:
         model = Answer
@@ -190,7 +208,7 @@ class StorySerializer(KLPSerializer):
     class Meta:
         model = Story
         fields = (
-            'id', 'name', 'date', 'date_of_visit', 'school',
+            'id', 'name', 'group', 'date', 'date_of_visit', 'school',
             'school_name', 'school_url', 'comments', 'is_verified',
             'images', 'created_at')
 
@@ -199,12 +217,14 @@ class StoryWithAnswersSerializer(KLPSerializer):
     date = serializers.CharField(source='date_of_visit')
     images = StoryImageSerializer(many=True, source='storyimage_set')
     answers = AnswerSerializer(many=True, source='answer_set')
+    user_type = UserTypeSerializer()
 
     class Meta:
         model = Story
         fields = (
             'id', 'name', 'date', 'date_of_visit', 'school', 'comments',
-            'is_verified', 'images', 'answers', 'created_at')
+            'group', 'is_verified', 'images', 'answers', 'created_at',
+            'user_type', 'user')
 
     def get_answers(self, obj):
         return obj.answer_set.all()

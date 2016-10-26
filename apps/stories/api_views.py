@@ -43,7 +43,7 @@ from .models import (
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
-    QuestionSerializer, SurveySerializer, SourceSerializer
+    QuestionFullSerializer, SurveySerializer, SourceSerializer
 )
 
 from. filters import (
@@ -139,7 +139,7 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
 
 class QuestionsViewSet(KLPModelViewSet):
-    serializer_class = QuestionSerializer
+    serializer_class = QuestionFullSerializer
     filter_class = QuestionFilter
 
     def get_queryset(self):
@@ -847,16 +847,14 @@ class StoriesView(KLPListAPIView):
                     'school', 'school__schooldetails',
                     'school__schooldetails__admin2'
                 )
-                print 'Not Anonymous!'
                 existing_block_ids = list(set(
                     qset.filter(
                         user=self.request.user
                     ).values_list('school__admin3__parent__id', flat=True)))
-                print "Existing blocks = ", existing_block_ids
                 qset = qset.filter(
                     school__schooldetails__admin2__id__in=existing_block_ids
                 )
-        else:
+        elif admin2_id:
             qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
 
         admin3_id = self.request.GET.get('admin3', '')
