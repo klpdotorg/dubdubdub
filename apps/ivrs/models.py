@@ -35,8 +35,9 @@ class QuestionGroupType(models.Model):
 
 
 class IncomingNumber(models.Model):
+    name = models.CharField(max_length=50)
     number = models.CharField(max_length=50)
-    qg_type = models.ForeignKey(QuestionGroupType)
+    qg_type = models.ForeignKey(QuestionGroupType, blank=True, null=True)
 
     def __unicode__(self):
         return self.qg_type.name + ":" + self.number
