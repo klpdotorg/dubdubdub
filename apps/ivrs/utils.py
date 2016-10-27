@@ -164,7 +164,11 @@ def verify_answer(session_id, question_number, response, ivrs_type, original_dat
         message = None
         status_code = status.HTTP_200_OK
         question_number = int(question_number)
-        question = get_question(question_number, ivrs_type)
+        incoming_number = IncomingNumber.objects.get(number=ivrs_type)
+        question = get_question(
+            question_number,
+            incoming_number.qg_type.questiongroup
+        )
 
         if response:
             response = int(response.strip('"'))
@@ -264,36 +268,14 @@ def save_answer(state, question_number, question, ivrs_type, response):
     return (state, status_code)
 
 
-def get_question(question_number, ivrs_type):
-    if ivrs_type in [GKA_SERVER, GKA_DEV]:
-        question_group = Questiongroup.objects.get(
-            version=5,
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    elif ivrs_type == GKA_SMS:
-        question_group = Questiongroup.objects.get(
-            version=1,
-            source__name='sms'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    elif ivrs_type == PRI:
-        question_group = Questiongroup.objects.get(
-            version=3,
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    else: # ivrs_type == PRE
-        question_group = Questiongroup.objects.get(
-            version=999, # To be implemented.
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="PreSchool")
-
+def get_question(question_number, question_group):
+    # We are directly querying for Primary School because we don't work
+    # with PreSchools anymore. If we do so in the future, please make
+    # sure you implement the logic here while fetching questions.
+    school_type = BoundaryType.objects.get(name="Primary School")
     question = Question.objects.get(
         school_type=school_type,
         questiongroup=question_group,
         questiongroupquestions__sequence=question_number,
     )
-
     return question
