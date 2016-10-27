@@ -4,7 +4,7 @@ from rest_framework import status
 
 from django.utils import timezone
 
-from .models import State, QuestiongroupType, IncomingNumber
+from .models import State, QuestionGroupType, IncomingNumber
 
 from schools.models import School, BoundaryType
 from stories.models import (
@@ -119,6 +119,7 @@ def check_school(state, school_id, ivrs_type):
     if not school_id:
         status_code = status.HTTP_404_NOT_FOUND
         message = get_message(no_school_id=True)
+        return (state, status_code, message)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
@@ -132,6 +133,7 @@ def check_school(state, school_id, ivrs_type):
     else:
         status_code = status.HTTP_404_NOT_FOUND
         message = get_message(invalid_school_id=True, school_id=school_id)
+        return (state, status_code, message)
 
     incoming_number = IncomingNumber.objects.get(
         number=ivrs_type
