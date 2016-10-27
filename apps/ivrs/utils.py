@@ -112,51 +112,35 @@ def get_date(date):
     return date
 
 
-def check_school(state, school_id, ivrs_type):
+def check_school(school_id):
     school_type = None
     message = None
 
     if not school_id:
         status_code = status.HTTP_404_NOT_FOUND
         message = get_message(no_school_id=True)
-        return (state, status_code, message)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
-        state.school_id = school_id
         school_type = School.objects.filter(
             id=school_id
         ).values(
             'admin3__type__name'
         )[0]['admin3__type__name']
 
+        # Validating whether the entered school ID corresponds to the
+        # correct school_type. We only check Primary School because we do
+        # not currently operate in PreSchools. Once we do, implement the
+        # check logic here.
+        if school_type != u'Primary School':
+            status_code = status.HTTP_404_NOT_FOUND
+            message = get_message(not_primary_school=True)
+
     else:
         status_code = status.HTTP_404_NOT_FOUND
         message = get_message(invalid_school_id=True, school_id=school_id)
-        return (state, status_code, message)
 
-    incoming_number = IncomingNumber.objects.get(
-        number=ivrs_type
-    )
-
-    # Validating whether the entered school ID corresponds to the
-    # correct school_type. Assigns the qg_type based on the call
-    # number as well.
-    if school_type == u'Primary School':
-        state.qg_type = incoming_number.qg_type
-        number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
-        # Initializing answer slots 1 to number_of_questions with NA.
-        # answer slot 0 has value IGNORED_INDEX pre populated.
-        for i in range(0, number_of_questions):
-            state.answers.append('NA')
-        state.save()
-    # We only check Primary School because we do not currently operate
-    # in PreSchools. Once we do, implement the check logic here.
-    else:
-        status_code = status.HTTP_404_NOT_FOUND
-        message = get_message(not_primary_school=True)
-
-    return (state, status_code, message)
+    return (status_code, message)
 
 
 def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
