@@ -4,7 +4,7 @@ from rest_framework import status
 
 from django.utils import timezone
 
-from .models import State
+from .models import State, QuestiongroupType, IncomingNumber
 
 from schools.models import School, BoundaryType
 from stories.models import (
@@ -133,48 +133,27 @@ def check_school(state, school_id, ivrs_type):
         status_code = status.HTTP_404_NOT_FOUND
         message = get_message(invalid_school_id=True, school_id=school_id)
 
+    incoming_number = IncomingNumber.objects.get(
+        number=ivrs_type
+    )
+
     # Validating whether the entered school ID corresponds to the
-    # correct school_type. Assigns the ivrs_type based on the call
+    # correct school_type. Assigns the qg_type based on the call
     # number as well.
-    if school_type:
-        if ivrs_type in [GKA_SERVER, GKA_DEV]:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'gka-v3'
-            # Initializing answer slots 1 to 10 with NA
-            for i in range(0, 10):
-                state.answers.append('NA')
+    if school_type == u'Primary School':
+        state.qg_type = incoming_number.qg_type
+        number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+        # Initializing answer slots 1 to number_of_questions with NA.
+        # answer slot 0 has value IGNORED_INDEX pre populated.
+        for i in range(0, number_of_questions):
+            state.answers.append('NA')
+        state.save()
+    # We only check Primary School because we do not currently operate
+    # in PreSchools. Once we do, implement the check logic here.
+    else:
+        status_code = status.HTTP_404_NOT_FOUND
+        message = get_message(not_primary_school=True)
 
-        elif ivrs_type == GKA_SMS:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'gka-sms'
-            # Initializing answer slots 1 to 5 with NA
-            for i in range(0, 5):
-                state.answers.append('NA')
-
-        elif ivrs_type == PRI:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'ivrs-pri'
-            # Initializing answer slots 1 to 6 with NA
-            for i in range(0, 6):
-                state.answers.append('NA')
-
-        # ivrs_type == PRE
-        else:
-            if school_type != u'PreSchool':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_pre_school=True)
-            state.ivrs_type = 'ivrs-pre'
-            # Initializing answer slots 1 to 6 with NA
-            for i in range(0, 6):
-                state.answers.append('NA')
-
-    state.save()
     return (state, status_code, message)
 
 
