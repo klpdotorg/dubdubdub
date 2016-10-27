@@ -12,26 +12,6 @@ GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
-ivrs_type_number_dict = {
-    'gka' : GKA_SERVER,
-    'gka-new' : GKA_SERVER,
-    'gka-v3' : GKA_SERVER,
-    'ivrs-pri' : PRI,
-    'gka-sms' : GKA_SMS,
-    # 'ivrs-pre' : PRE, - Not implemented.
-}
-
-question_group_version_dict = {
-    # Corresponds to version numbers of the Questiongroups
-    # with source names 'ivrs' and 'sms' within stories app.
-    'gka' : 2,
-    'gka-new' : 4,
-    'gka-v3' : 5,
-    'ivrs-pri' : 3,
-    'gka-sms': 1,
-    # 'ivrs-pre' : 999 - Not implemented.
-}
-
 def forwards_func(apps, schema_editor):
     '''We are populating:
 
