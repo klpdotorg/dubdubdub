@@ -8,6 +8,7 @@ from stories.models import Questiongroup
 
 class State(models.Model):
     ivrs_type = models.CharField(max_length=10, default="gka")
+    qg_type = models.ForeignKey('QuestionGroupType', blank=True, null=True)
     session_id = models.CharField(max_length=100, unique=True)
     is_processed = models.BooleanField(default=False)
     is_invalid = models.BooleanField(default=False)
