@@ -3,6 +3,8 @@ from django.utils import timezone
 
 from djorm_pgarray.fields import TextArrayField
 
+from stories.models import Questiongroup
+
 
 class State(models.Model):
     ivrs_type = models.CharField(max_length=10, default="gka")
@@ -25,6 +27,8 @@ class State(models.Model):
 
 class QuestionGroupType(models.Model):
     name = models.CharField(max_length=25)
+    is_active = models.BooleanField(default=True)
+    questiongroup = models.OneToOneField(Questiongroup)
 
     def __unicode__(self):
         return self.name
