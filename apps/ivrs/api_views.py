@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-from .models import State
+from .models import State, IncomingNumber
 from .utils import (
     get_message,
     get_question,
@@ -41,14 +41,21 @@ class SMSView(KLPAPIView):
         telephone = request.QUERY_PARAMS.get('From', None)
         session_id = request.QUERY_PARAMS.get('SmsSid', None)
 
+        incoming_number = IncomingNumber.objects.get(number=ivrs_type)
         state, created = State.objects.get_or_create(
-            session_id=session_id
+            session_id=session_id,
+            qg_type=incoming_number.qg_type
         )
         state.telephone = telephone
         state.date_of_visit = get_date(date.strip("'"))
         state.answers = []
         # Ignoring index 0 since question_numbers start from 1
+        # Initializing answer slots 1 to number_of_questions with NA.
+        # answer slot 0 has value IGNORED_INDEX pre populated.
         state.answers.append('IGNORED_INDEX')
+        number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+        for i in range(0, number_of_questions):
+            state.answers.append('NA')
         state.save()
 
         original_data = data # Used in the reply sms.
@@ -62,14 +69,16 @@ class SMSView(KLPAPIView):
             )
 
         school_id = data.pop(0)
-
-        state, status_code, message = check_school(state, school_id, ivrs_type)
+        status_code, message = check_school(school_id)
         if status_code != status.HTTP_200_OK:
             return Response(
                 message,
                 status=status.HTTP_200_OK,
                 content_type=content_type
             )
+        else:
+            state.school_id = school_id
+            state.save()
 
         # Loop over the entire data array and try to validate and save
         # each answer.
@@ -149,19 +158,29 @@ class CheckSchool(KLPAPIView):
         school_id = request.QUERY_PARAMS.get('digits', None)
         session_id = request.QUERY_PARAMS.get('CallSid', None)
 
+        incoming_number = IncomingNumber.objects.get(number=ivrs_type)
         state, created = State.objects.get_or_create(
-            session_id=session_id
+            session_id=session_id,
+            qg_type=incoming_number.qg_type
         )
         state.telephone = telephone
         state.date_of_visit = get_date(date)
         state.answers = []
         # Ignoring index 0 since question_numbers start from 1
+        # Initializing answer slots 1 to number_of_questions with NA.
+        # answer slot 0 has value IGNORED_INDEX pre populated.
         state.answers.append('IGNORED_INDEX')
+        number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+        for i in range(0, number_of_questions):
+            state.answers.append('NA')
+        state.save()
 
         if school_id:
             school_id = school_id.strip('"')
-
-        state, status_code, message = check_school(state, school_id, ivrs_type)
+        status_code, message = check_school(school_id)
+        if status_code == status.HTTP_200_OK:
+            state.school_id = school_id
+            state.save()
 
         return Response("", status=status_code)
 
