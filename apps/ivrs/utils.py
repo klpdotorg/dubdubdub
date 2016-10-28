@@ -57,9 +57,13 @@ def get_message(**kwargs):
 
     return message
 
-def check_data_validity(original_data, data):
+def check_data_validity(request):
     valid = True
     message = None
+
+    data = request.QUERY_PARAMS.get('Body', None)
+    original_data = data # Used in the reply sms.
+    data = [item.strip() for item in data.split(',')]
 
     if len(data) == 3:
         if data[2] != '2':
@@ -99,8 +103,7 @@ def check_data_validity(original_data, data):
         message = get_message(valid=valid, data=original_data)
 
 
-    return (data, valid, message)
-
+    return (original_data, data, valid, message)
 
 def get_date(date):
     date = datetime.datetime.strptime(
@@ -110,7 +113,6 @@ def get_date(date):
         date, timezone.get_current_timezone()
     )
     return date
-
 
 def check_school(school_id):
     school_type = None
@@ -142,6 +144,40 @@ def check_school(school_id):
 
     return (status_code, message)
 
+def populate_state(parameters, invalid_data=None):
+    date = parameters.get('date', None)
+    ivrs_type = parameters.get('ivrs_type', None)
+    telephone = parameters.get('telephone', None)
+    school_id = parameters.get('school_id', None)
+    session_id = parameters.get('session_id', None)
+
+    incoming_number = IncomingNumber.objects.get(number=ivrs_type)
+    state, created = State.objects.get_or_create(
+        session_id=session_id,
+        qg_type=incoming_number.qg_type
+    )
+    state.telephone = telephone
+    state.date_of_visit = get_date(date.strip("'"))
+    state.answers = []
+    # Ignoring index 0 since question_numbers start from 1
+    # Initializing answer slots 1 to number_of_questions with NA.
+    # answer slot 0 has value IGNORED_INDEX pre populated.
+    state.answers.append('IGNORED_INDEX')
+    number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+    for i in range(0, number_of_questions):
+        state.answers.append('NA')
+    state.save()
+
+    if invalid_data:
+        # No more processing to do. Just dump the invalid data into
+        # the state and return.
+        state.invalid_data = str(invalid_data)
+        state.save()
+        return state
+
+    state.school_id = school_id
+    state.save()
+    return state
 
 def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
     if State.objects.filter(session_id=session_id).exists():
