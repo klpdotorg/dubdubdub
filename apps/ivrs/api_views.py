@@ -20,13 +20,6 @@ from .utils import (
 from schools.models import School
 from common.views import KLPAPIView
 
-# Exotel numbers. Find them at http://my.exotel.in/viamentis/apps#installed-apps
-PRI = "08039236431"
-PRE = "08039510414"
-GKA_DEV = "08039510185"
-GKA_SMS = "08039514048"
-GKA_SERVER = "08039591332"
-
 
 class SMSView(KLPAPIView):
     def get(self, request):
@@ -67,7 +60,7 @@ class SMSView(KLPAPIView):
         state = populate_state(parameters)
 
         # Loop over the entire data array and try to validate and save
-        # each answer.
+        # each answer. FIXME: Move this into a function.
         for question_number, response in enumerate(data):
             # Blank data corresponds to NA and indicates that we should
             # skip the corresponding question.
