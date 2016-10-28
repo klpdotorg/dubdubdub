@@ -8,13 +8,43 @@
     <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
     <div class="base-spacing-mid"></div>
     <div class="sect-parent">
-      <div class="sect-third rounded-sect">
-          <div class="heading-tiny-uppercase">Boundary</div>
+     <div class="sect-third rounded-sect">
+          {% if data.boundary.type == "cluster" || data.boundary.type == "block" || data.boundary.type == "district" || data.boundary.type == "state" %}
+            <div class="heading-tiny-uppercase">Boundary</div>
+          {% elseif  data.boundary.type == "school" %}
+            <div class="heading-tiny-uppercase">School</div>
+          {% else %}
+            <div class="heading-tiny-uppercase">Electoral Region</div>
+          {% endif %}
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
           <div class="heading-tiny-uppercase">Type</div>
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
-          <div class="heading-tiny-uppercase">Elected Representative</div>
-          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+          {% if data.boundary.type in ["mp constituency","mla onstituency","ward"] %}
+            <div class="heading-tiny-uppercase">Elected Representative</div>
+            <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+          {% else %}
+            <ul class="map-location-labels brand-blue">  
+            {% if data.boundary.parent.cluster %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">CLUSTER</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.cluster|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.block %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">BLOCK</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.block|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.district %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">DISTRICT</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.district|upper }}</div>
+                </li>
+            {% endif %}
+            </ul>
+          {% endif %}
+         
       </div><!--sect-third-->
       <div class="sect-two-third grey-mist-bg rounded-sect">
           <div class="sect-parent">
@@ -24,7 +54,7 @@
                   <div class="heading-tiny-uppercase">Teachers</div>
                   <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}} (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr|checkzero|round}} (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>
@@ -55,8 +85,8 @@
                   <div class="bar-graph-wrap "><!--1-->
                       <div class="bar-graph"><!--2-->
                           <div class="clear-fix"><!--3-->
-                              <div class="float-left pink-salmon">{{data.boy_perc}}%</div>
-                              <div class="float-right brand-blue">{{data.girl_perc}}%</div>
+                              <div class="float-left pink-salmon">{{data.boy_perc|round}}%</div>
+                              <div class="float-right brand-blue">{{data.girl_perc|round}}%</div>
                           </div><!--3-->
                           <div class="bar-custom"><!--4-->
                               <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->

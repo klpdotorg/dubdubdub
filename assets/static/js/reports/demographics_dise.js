@@ -148,23 +148,14 @@
 		return languages;
     }
 
-    function getComparisonData(bid, lang, repType)
-    {
-        var url = "reports/demographics/"+repType+"/comparison/?id="+bid+"&language="+lang;
-        var $xhr = klp.api.do(url);
-        $xhr.done(function(data) {
-            renderComparison(data["comparison"]);
-        });
-    }
-
-	function getNeighbourData(data, acadYear)
+    function getNeighbourData(data, acadYear)
     {
         var type = data["boundary_info"]["type"];
         if(type == "district")
         {
             klp.dise_api.getMultipleBoundaryData(null, null, type, acadYear).done(function(diseData) {
                 console.log('neighbours diseData', diseData);
-                renderNeighbours(diseData["results"]["features"]);
+                renderNeighbours(diseData["results"]["features"], data["boundary_info"]["name"]);
             })
             .fail(function(err) {
                 klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
@@ -175,7 +166,7 @@
             var boundary = {"type": data["boundary_info"]["parent"]["type"], "id": data["boundary_info"]["parent"]["dise"]};
             klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
                     console.log('neighbours diseData', diseData);
-                    renderNeighbours(diseData["results"]["features"]);
+                    renderNeighbours(diseData["results"]["features"], data["boundary_info"]["name"]);
             })
             .fail(function(err) {
                 klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
@@ -258,7 +249,7 @@
 
     function renderLanguage(languages) {
         var new_lang = {};
-        var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU","OTHERS"];
+        var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU"];
         var moi_school_total = 0;
         var mt_student_total = 0;
                 
@@ -280,13 +271,15 @@
         }
 
         new_lang["OTHERS"]["moi_perc"] = Math.round(new_lang["OTHERS"]["school_count"]*100/moi_school_total*100)/100;
+        var sorted_lang = _.sortBy(new_lang, 'school_count').reverse();        
         var tplLanguage = swig.compile($('#tpl-Language').html());
-        var languageHTML = tplLanguage({"lang":new_lang});
+        var languageHTML = tplLanguage({"lang":sorted_lang});
         $('#language-profile').html(languageHTML);
         
     }
 
-    function renderNeighbours(data){
+
+    function renderNeighbours(data,boundary_name){
 		var comparisonData = {};
 		var total_school_count = 0;
 		for( var itercount in data)
@@ -326,11 +319,11 @@
 		}
 		console.log('comparisonData', comparisonData);
 		var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":comparisonData});
+        var compareHTML = tplComparison({"neighbours":comparisonData,"boundary_name":boundary_name});
         $('#comparison-neighbour').html(compareHTML);
     }
 
-    function renderComparison(data) {
+    function renderComparison(data, boundary_name) {
 		var comparisonData = {};
 		for( var itercount in data)
 		{
@@ -359,7 +352,7 @@
 			comparisonData[itercount]["ptr"] = Math.round(comparisonData[itercount]["student_count"]/comparisonData[itercount]["teacher_count"]*100)/100;
 		}
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
-        var yrcompareHTML = tplYearComparison({"years":comparisonData});
+        var yrcompareHTML = tplYearComparison({"years":comparisonData,"boundary_name":boundary_name});
         $('#comparison-year').html(yrcompareHTML);
     }
 

@@ -115,7 +115,7 @@
 
     function renderLanguage(languages) {
         var new_lang = {};
-        var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU","OTHERS"];
+        var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU"];
         var moi_school_total = 0;
         var mt_student_total = 0;
         

@@ -54,7 +54,7 @@
                   <div class="heading-tiny-uppercase">Teachers</div>
                   <h2 class="heading-secondary black align-left">{{data.teacher_count| checkzero}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr |checkzero}}  (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr |checkzero|round}}  (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>
@@ -85,8 +85,8 @@
                   <div class="bar-graph-wrap "><!--1-->
                       <div class="bar-graph"><!--2-->
                           <div class="clear-fix"><!--3-->
-                              <div class="float-left pink-salmon">{{data.boy_perc}}%</div>
-                              <div class="float-right brand-blue">{{data.girl_perc}}%</div>
+                              <div class="float-left pink-salmon">{{data.boy_perc|round}}%</div>
+                              <div class="float-right brand-blue">{{data.girl_perc|round}}%</div>
                           </div><!--3-->
                           <div class="bar-custom"><!--4-->
                               <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
@@ -118,8 +118,8 @@
           <div class="sect-three-quarter">
             <table class="table-base table-list-view table-base-graphs">
               <tbody><tr class="table-base-heading">
-                <th>Average Enrollment by Category</th>
-                <th>School Distribution by Category</th>
+                <th>Average Enrollment</th>
+                <th>School Distribution</th>
               </tr>
               {% for each in cat %}
               <tr>
@@ -161,7 +161,7 @@
       <tr>
         <td>{{each.name|capitalize}}</td>
         <td>
-          <div class="bar-graph-wrap">
+          <div class="bar-graph-wrap center-text">
             <div class="bar-custom">
               <div class="bar-value green-leaf-bg" style="width:{{each.mt_perc}}%;"></div>
               <div class="clear"></div>
@@ -171,7 +171,7 @@
           </div><!--bar-graph-wrap-->
         </td>
         <td>
-          <div class="bar-graph-wrap">
+          <div class="bar-graph-wrap center-text">
             <div class="bar-custom">
               <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
               <div class="font-smaller center-text"><strong>{{each.school_count}} schools</strong></div>
@@ -193,8 +193,8 @@
       <table class="table-base table-list-view table-base-comparison">
       <tbody><tr class="table-base-heading">
         <th>Year</th>
-        <th>Total Enrollment <br/>in Upper Primary</th>
-        <th>Total Enrollment <br/>in Lower Primary</th>
+        <th>Average Enrollment <br/>in Upper Primary</th>
+        <th>Average Enrollment <br/>in Lower Primary</th>
         <th>PTR</th>
         <th>Schools</th>
       </tr>
@@ -273,8 +273,9 @@
               <div class="bar-graph-wrap">
                 <div class="bar-custom">
                   <div class="bar-value {{barcolor}}" style="width:{{each.school_perc}}%;"></div>
+                  <div class="font-smaller center-text {{highlight}}"><strong>{{each.school_count|checkzero}} schools</strong></div>
                 </div><!--bar-custom-->
-                <div class="bar-percent {{highlight}}">{{each.school_count|checkzero}}</div>
+                <div class="bar-percent"></div>
               </div><!--bar-graph-wrap-->
             </td>
           </tr>
