@@ -8,6 +8,9 @@ from django.conf import settings
 
 
 class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
+    '''
+    This class returns the demographic report details
+    '''
     reportInfo = {}
 
     def get_details_data(self, boundaryData, active_schools, academic_year):
@@ -19,10 +22,10 @@ class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBound
         self.reportInfo["languages"] = {"moi": {}, "mt": {}}
         for data in boundaryData["moi"]:
             self.reportInfo["languages"]["moi"][data["moi"].upper()] =\
-                    {"school_count": data["num"]}
+                {"school_count": data["num"]}
         for data in boundaryData["mt"]:
             self.reportInfo["languages"]["mt"][data["name"].upper()] =\
-                    {"student_count": data["num_students"]}
+                {"student_count": data["num_students"]}
         self.reportInfo["enrolment"] =\
             self.get_enrolment(boundaryData["cat"])
 
@@ -59,7 +62,7 @@ class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBound
 class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
 
     '''
-        Returns report details
+        Returns report comparison details
     '''
     reportInfo = {"comparison": {"year-wise": {}, "neighbours": {}}}
 

@@ -2,6 +2,7 @@
 (function() {
     var utils;
     var repUtils;
+    var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     klp.init = function() {
         utils = klp.boundaryUtils;
         repUtils = klp.reportUtils;
@@ -69,9 +70,6 @@
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             console.log('data', data);
-            var schooltype = "Schools";
-            var summaryJson = getSummaryData(data);
-            renderSummary(summaryJson, schooltype);
             fetchSchoolData(data);
         });
     }
@@ -82,6 +80,8 @@
         var boundary = {"id": data["boundary_info"]["dise"], "type": data["boundary_info"]["type"]};
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('summary diseData', diseData);
+            var summaryJson = getSummaryData(data, diseData);
+            renderSummary(summaryJson);
         })
         .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
@@ -94,7 +94,6 @@
         yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();
         var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"],"dise": data["boundary_info"]["dise"]};
         getMultipleData(yearData, passYearData, getLoopData, renderComparison,"acadYear");
-        
     }
 
     function getNeighbourData(data, acadYear)
@@ -178,22 +177,38 @@
         });
     }
 
-
-    function getSummaryData(data)
+    function getCategoryCount(data)
     {
+        var categorycount = {"schoolcount": 0,
+                             "gendercount":  {"boys": 0, "girls": 0}
+                            }
+
+        for(var iter in data["school_categories"])
+		{
+			var type = data["school_categories"][iter];
+			if(type["id"] == 1 || _.contains(upperPrimaryCategories, type["id"])){
+				categorycount["schoolcount"] += type["sum_schools"]["total"];
+                categorycount["gendercount"]["boys"] += type["sum_boys"];
+                categorycount["gendercount"]["girls"] += type["sum_girls"];
+			}
+		}
+        return categorycount;
+    }
+
+    function getSummaryData(data, diseData)
+    {
+        var categoryData = getCategoryCount(diseData["properties"]);
         var summaryJSON = {
             "boundary"  : data["boundary_info"],
-            "school_count" : data["summary_data"]["num_schools"],
-            "teacher_count" : data["summary_data"]["teacher_count"],
-            "gender" : data["summary_data"]["gender"],
-            "student_total": data["summary_data"]["num_students"]
+            "school_count" : categoryData["schoolcount"],
+            "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
+            "gender" : categoryData["gendercount"],
+            "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
         };
         return summaryJSON;
     }
 
-
-
-    function renderSummary(data, schoolType) {
+    function renderSummary(data) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplReportDate = swig.compile($('#tpl-reportDate').html());
         
@@ -212,7 +227,6 @@
         
         var topSummaryHTML = tplTopSummary({"data":data});
         $('#top-summary').html(topSummaryHTML);
-
     }
 
     function renderComparison(data) {
@@ -225,7 +239,7 @@
     function renderNeighbours(data) {
         var hash = schoolInfraHash;
         var percData = {"keys":{}};
-        
+
         for (var each in data) {
             for (var key in data[each]["properties"]) {
                 var iconTag = "";

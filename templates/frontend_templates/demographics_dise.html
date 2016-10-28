@@ -176,7 +176,6 @@
         <th>Year</th>
         <th>Average Enrollment <br/>in Upper Primary</th>
         <th>Average Enrollment <br/>in Lower Primary</th>
-        <th>Average Enrollment <br/>in Lower & Upper Primary</th>
         <th>PTR</th>
         <th>Schools</th>
       </tr>
@@ -186,13 +185,10 @@
               <div class="bold td-label-year">{{each.year}}</div>
             </td>
             <td>
-              <div class="td-label-enrolu">{{each.enrol_upper|checkzero}}</div>    
+              <div class="td-label-enroll">{{each.enrol_upper|checkzero}}</div>    
             </td>
             <td>
               <div class="td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
-            </td>
-            <td>
-              <div class="td-label-enroll">{{each.enrol_l_u|checkzero}}</div>  
             </td>
             <td>
               <div class="td-label-ptr">
@@ -224,7 +220,6 @@
         <th>Boundary</th>
         <th>Average Enrollment <br/>in Upper Primary</th>
         <th>Average Enrollment <br/>in Lower Primary</th>
-        <th>Average Enrollment <br/>in Lower & Upper Primary</th>
         <th>PTR</th>
         <th>Schools</th>
       </tr>
@@ -238,9 +233,6 @@
             </td>
             <td>
               <div class="td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
-            </td>
-            <td>
-              <div class="td-label-enroll">{{each.enrol_l_u|checkzero}}</div>  
             </td>
             <td>
               <div class="td-label-ptr">

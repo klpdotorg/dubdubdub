@@ -4,7 +4,7 @@ from django.conf.urls import patterns, url
 
 from api_views import (
     DemographicsBoundaryReportDetails, ReportBoundarySummary, DemographicsBoundaryComparisonDetails,
-    FinanceBoundaryDetails, DiseBoundaryDetails, ElectedRepInfo
+    DiseBoundaryDetails, ElectedRepInfo
 )
 
 urlpatterns = patterns(
@@ -19,7 +19,6 @@ urlpatterns = patterns(
         DemographicsBoundaryComparisonDetails.as_view(), name='api_reports_detail'),
     url(r'dise/boundary/$',
         DiseBoundaryDetails.as_view(), name='api_reports_detail'),
-    url(r'finance/boundary/$', FinanceBoundaryDetails.as_view(), name='api_reports_detail'),
     url(r'electedrep/$', ElectedRepInfo.as_view(), name='api_reports_detail')
 
 )

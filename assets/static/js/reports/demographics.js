@@ -108,7 +108,7 @@
             categories[cat]['cat_perc'] = Math.round(categories[cat]["school_count"]/school_total*100);
             categories[cat]['school_total'] = school_total;
         }
-        var tplCategory = swig.compile($('#tpl-Category').html()); 
+        var tplCategory = swig.compile($('#tpl-Category').html());
         var categoryHTML = tplCategory({"cat":categories,"enrol":data["enrolment"]});
         $('#category-profile').html(categoryHTML);
     }
