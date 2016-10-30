@@ -118,11 +118,11 @@ def check_user(request):
     return User.objects.filter(mobile_no=telephone).exists()
 
 def check_school(school_id):
-    school_type = None
+    valid = True
     message = None
 
     if not school_id:
-        status_code = status.HTTP_404_NOT_FOUND
+        valid = False
         message = get_message(no_school_id=True)
 
     elif School.objects.filter(id=school_id).exists():
@@ -138,14 +138,14 @@ def check_school(school_id):
         # not currently operate in PreSchools. Once we do, implement the
         # check logic here.
         if school_type != u'Primary School':
-            status_code = status.HTTP_404_NOT_FOUND
+            valid = False
             message = get_message(not_primary_school=True)
 
     else:
-        status_code = status.HTTP_404_NOT_FOUND
+        valid = False
         message = get_message(invalid_school_id=True, school_id=school_id)
 
-    return (status_code, message)
+    return (valid, message)
 
 def populate_state(parameters):
     date = parameters.get('date', None)

@@ -68,8 +68,8 @@ class SMSView(KLPAPIView):
                 content_type=content_type
             )
 
-        status_code, message = check_school(school_id)
-        if status_code != status.HTTP_200_OK:
+        is_school_valid, message = check_school(school_id)
+        if not is_school_valid:
             return Response(
                 message,
                 status=status.HTTP_200_OK,
