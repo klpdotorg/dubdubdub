@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from .models import State, QuestionGroupType, IncomingNumber
 
+from users.models import User
 from schools.models import School, BoundaryType
 from stories.models import (
     Question, Questiongroup
@@ -35,6 +36,12 @@ def get_message(**kwargs):
                   ". Expected response: " + expected_response_1 + \
                   " OR " + expected_response_2 + \
                   " OR " + expected_response_3
+
+    elif not kwargs.get('is_registered_user', True):
+        telephone = str(kwargs['telephone'])
+        message = "Your number " + telephone + \
+                  " is not registered. Please visit https://klp.org.in/" + \
+                  " and register yourself."
 
     elif kwargs.get('no_school_id', False):
         message = "School ID not entered."
@@ -113,6 +120,10 @@ def get_date(date):
         date, timezone.get_current_timezone()
     )
     return date
+
+def check_user(request):
+    telephone = request.QUERY_PARAMS.get('From', None)
+    return User.objects.filter(mobile_no=telephone).exists()
 
 def check_school(school_id):
     school_type = None

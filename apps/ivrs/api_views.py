@@ -7,14 +7,15 @@ from django.conf import settings
 
 from .models import State, IncomingNumber
 from .utils import (
+    check_data_validity,
+    check_school,
+    check_user,
+    get_date,
     get_message,
     get_question,
+    populate_state,
     save_answer,
-    check_school,
     verify_answer,
-    get_date,
-    check_data_validity,
-    populate_state
 )
 
 from schools.models import School
@@ -35,7 +36,21 @@ class SMSView(KLPAPIView):
         parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
 
+        is_registered_user = check_user(request)
+
         original_data, data, is_data_valid, message = check_data_validity(request)
+
+        if not is_registered_user:
+            state = populate_state(parameters, invalid_data=original_data)
+            message = get_message(
+                is_registered_user=is_registered_user,
+                telephone=parameters['telephone']
+            )
+            return Response(
+                message,
+                status=status.HTTP_200_OK,
+                content_type=content_type
+            )
 
         if not is_data_valid:
             state = populate_state(parameters, invalid_data=original_data)
