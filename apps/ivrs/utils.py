@@ -147,7 +147,7 @@ def check_school(school_id):
 
     return (status_code, message)
 
-def populate_state(parameters, invalid_data=None):
+def populate_state(parameters, raw_data=None):
     date = parameters.get('date', None)
     ivrs_type = parameters.get('ivrs_type', None)
     telephone = parameters.get('telephone', None)
@@ -169,16 +169,13 @@ def populate_state(parameters, invalid_data=None):
     number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
     for i in range(0, number_of_questions):
         state.answers.append('NA')
-    state.save()
 
-    if invalid_data:
-        # No more processing to do. Just dump the invalid data into
-        # the state and return.
-        state.invalid_data = str(invalid_data)
-        state.save()
-        return state
+    if raw_data:
+        state.raw_data = str(raw_data)
 
-    state.school_id = school_id
+    if school_id:
+        state.school_id = school_id
+
     state.save()
     return state
 
