@@ -66,16 +66,17 @@ def get_message(**kwargs):
 
 def check_data_validity(request):
     valid = True
-    message = None
 
     data = request.QUERY_PARAMS.get('Body', None)
-    original_data = data # Used in the reply sms.
     data = [item.strip() for item in data.split(',')]
 
-    if len(data) == 3:
+    # Making sure that each input is a valid digit and no alphabets get in.
+    if not all(response.strip().isdigit() for response in data):
+        valid = False
+
+    elif len(data) == 3:
         if data[2] != '2':
             valid = False
-            message = get_message(valid=valid, data=original_data)
         else:
             # If the answer to 2nd question is "2" (which means "No"), then
             # We manually populate the rest of the answers as "2". This is
@@ -88,7 +89,6 @@ def check_data_validity(request):
         if all(response == '' for response in data[3:]):
             if data[2] != '2':
                 valid = False
-                message = get_message(valid=valid, data=original_data)
             else:
                 # If the answer to 2nd question is "2" (which means "No"), then
                 # We manually populate the rest of the answers as "2". This is
@@ -98,19 +98,11 @@ def check_data_validity(request):
         elif any(response == '' for response in data):
             # Responses like 3885,1,2,1,,2 are not accepted.
             valid = False
-            message = get_message(valid=valid, data=original_data)
 
     elif len(data) != 6:
         valid = False
-        message = get_message(valid=valid, data=original_data)
 
-    # Making sure that each input is a valid digit and no alphabets get in.
-    if not all(response.strip().isdigit() for response in data):
-        valid = False
-        message = get_message(valid=valid, data=original_data)
-
-
-    return (original_data, data, valid, message)
+    return (data, valid)
 
 def get_date(date):
     date = datetime.datetime.strptime(

@@ -33,15 +33,16 @@ class SMSView(KLPAPIView):
         parameters = {}
         parameters['date'] = request.QUERY_PARAMS.get('Date', None)
         parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
+        parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
         parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
 
         is_registered_user = check_user(request)
 
-        original_data, data, is_data_valid, message = check_data_validity(request)
+        processed_data, is_data_valid = check_data_validity(request)
 
         if not is_registered_user:
-            state = populate_state(parameters, invalid_data=original_data)
+            state = populate_state(parameters, invalid_data=parameters['raw_data'])
             message = get_message(
                 is_registered_user=is_registered_user,
                 telephone=parameters['telephone']
@@ -53,17 +54,21 @@ class SMSView(KLPAPIView):
             )
 
         if not is_data_valid:
-            state = populate_state(parameters, invalid_data=original_data)
+            state = populate_state(parameters, invalid_data=parameters['raw_data'])
+            message = get_message(
+                valid=is_data_valid,
+                data=parameters['raw_data']
+            )
             return Response(
                 message,
                 status=status.HTTP_200_OK,
                 content_type=content_type
             )
 
-        school_id = data.pop(0)
+        school_id = processed_data.pop(0)
         status_code, message = check_school(school_id)
         if status_code != status.HTTP_200_OK:
-            state = populate_state(parameters, invalid_data=original_data)
+            state = populate_state(parameters, invalid_data=parameters['raw_data'])
             return Response(
                 message,
                 status=status.HTTP_200_OK,
@@ -76,7 +81,7 @@ class SMSView(KLPAPIView):
 
         # Loop over the entire data array and try to validate and save
         # each answer. FIXME: Move this into a function.
-        for question_number, response in enumerate(data):
+        for question_number, response in enumerate(processed_data):
             # Blank data corresponds to NA and indicates that we should
             # skip the corresponding question.
             if response == '':
@@ -91,7 +96,7 @@ class SMSView(KLPAPIView):
                     question_number+1,
                     response,
                     parameters['ivrs_type'],
-                    original_data=original_data
+                    original_data=parameters['raw_data']
                 )
                 if status_code != status.HTTP_200_OK:
                     # If we find any of the answers are corrupt, we return
@@ -105,7 +110,7 @@ class SMSView(KLPAPIView):
             message = get_message(
                 valid=True,
                 date=parameters['date'],
-                data=original_data
+                data=parameters['raw_data']
             )
 
         return Response(
