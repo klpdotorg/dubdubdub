@@ -106,11 +106,13 @@ def sane_state(state, qg_type):
             if all(answer == 'NA' for answer in state.answers[3:]):
                 return NOT_SANE
     if qg_type.name == 'gkav4':
+        invalid_answer_set = set(
+            [u'IGNORED_INDEX', u'NA', u'NA', u'NA', u'NA', u'NA']
+        )
         # If there is only 'IGNORED_INDEX' in the answers list. The answers
         # list will remain having only "IGNORED_INDEX" for every erroneous
-        # sms that we receive. The error checking happens on the receipt
-        # of the message itself, even before processing.
-        if len(state.answers) == 1:
+        # sms that we receive.
+        if set(state.answers) == invalid_answer_set:
             return NOT_SANE
         elif len(state.answers) != 6:
             return NOT_SANE
