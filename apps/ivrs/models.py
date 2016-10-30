@@ -23,7 +23,7 @@ class State(models.Model):
     )
 
     def __unicode__(self):
-        return self.session_id
+        return str(self.date_of_visit) + " - " + str(self.qg_type.questiongroup.source.name)
 
 
 class QuestionGroupType(models.Model):
