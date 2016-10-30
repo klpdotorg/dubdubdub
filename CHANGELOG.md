@@ -9,6 +9,11 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.5: 2b76a02b2844c2947014b7a844663943b0de0d63 - 2016-10-30
+  - Implements the script to populate pen and paper community data.
+  - Endpoint fixes for syncing data to mobile.
+  - Rewrites the IVRS/SMS code with proper DB tables and error handling.
+
 Release 1.0.4: 7b63cb411ab5858c2cb3cf2c52600ea477c77a87 - 2016-09-14
   - Updates Boundary page to  API changes.
   - Updates the pen and paper data parsing script.
