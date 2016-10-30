@@ -147,8 +147,9 @@ def check_school(school_id):
 
     return (status_code, message)
 
-def populate_state(parameters, raw_data=None):
+def populate_state(parameters):
     date = parameters.get('date', None)
+    raw_data = parameters.get('raw_data', None)
     ivrs_type = parameters.get('ivrs_type', None)
     telephone = parameters.get('telephone', None)
     school_id = parameters.get('school_id', None)
