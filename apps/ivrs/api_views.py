@@ -41,8 +41,12 @@ class SMSView(KLPAPIView):
 
         processed_data, is_data_valid = check_data_validity(request)
 
+        school_id = processed_data.pop(0)
+        parameters['school_id'] = school_id
+
+        state = populate_state(parameters)
+
         if not is_registered_user:
-            state = populate_state(parameters, invalid_data=parameters['raw_data'])
             message = get_message(
                 is_registered_user=is_registered_user,
                 telephone=parameters['telephone']
@@ -54,7 +58,6 @@ class SMSView(KLPAPIView):
             )
 
         if not is_data_valid:
-            state = populate_state(parameters, invalid_data=parameters['raw_data'])
             message = get_message(
                 valid=is_data_valid,
                 data=parameters['raw_data']
@@ -65,19 +68,13 @@ class SMSView(KLPAPIView):
                 content_type=content_type
             )
 
-        school_id = processed_data.pop(0)
         status_code, message = check_school(school_id)
         if status_code != status.HTTP_200_OK:
-            state = populate_state(parameters, invalid_data=parameters['raw_data'])
             return Response(
                 message,
                 status=status.HTTP_200_OK,
                 content_type=content_type
             )
-        else:
-            parameters['school_id'] = school_id
-
-        state = populate_state(parameters)
 
         # Loop over the entire data array and try to validate and save
         # each answer. FIXME: Move this into a function.
