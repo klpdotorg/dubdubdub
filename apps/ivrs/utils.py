@@ -174,7 +174,7 @@ def populate_state(parameters):
     if raw_data:
         state.raw_data = str(raw_data)
 
-    if school_id:
+    if school_id and (type(school_id) is int):
         state.school_id = school_id
 
     state.save()
