@@ -40,6 +40,7 @@ echo "Done with users unit tests............."
 echo "Running stories related unit tests"
 python manage.py test unittests.stories --settings dubdubdub.test_settings
 echo "Done with stories unit tests"
+echo "Running ivrs related unit tests..."
 python manage.py test unittests.ivrs --settings dubdubdub.test_settings
 echo "Done with ivrs unit tests"
 
