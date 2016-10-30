@@ -117,18 +117,18 @@ def sane_state(state, qg_type):
         elif len(state.answers) != 6:
             return NOT_SANE
         else:
-            if state.answers[2] == '2':
-                if all(answer == '2' for answer in state.answers[3:]):
+            if state.answers[2] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[3:]):
                     return SANE
                 else:
                     return NOT_SANE
-            elif state.answers[3] == '2':
-                if all(answer == '2' for answer in state.answers[4:]):
+            elif state.answers[3] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[4:]):
                     return SANE
                 else:
                     return NOT_SANE
-            elif state.answers[4] == '2':
-                if all(answer == '2' for answer in state.answers[5:]):
+            elif state.answers[4] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[5:]):
                     return SANE
                 else:
                     return NOT_SANE
