@@ -115,6 +115,7 @@ def get_date(date):
 
 def check_user(request):
     telephone = request.QUERY_PARAMS.get('From', None)
+    telephone = telephone[-10:]
     return User.objects.filter(mobile_no=telephone).exists()
 
 def check_school(school_id):
