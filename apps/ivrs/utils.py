@@ -296,9 +296,8 @@ def get_question(question_number, question_group):
     # with PreSchools anymore. If we do so in the future, please make
     # sure you implement the logic here while fetching questions.
     school_type = BoundaryType.objects.get(name="Primary School")
-    question = Question.objects.get(
+    return Question.objects.get(
         school_type=school_type,
         questiongroup=question_group,
         questiongroupquestions__sequence=question_number,
     )
-    return question
