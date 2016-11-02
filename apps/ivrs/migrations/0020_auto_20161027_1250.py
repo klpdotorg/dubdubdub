@@ -3,9 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 
-from ivrs.models import State, QuestionGroupType
+# from ivrs.models import State, QuestionGroupType
 
 def forwards_func(apps, schema_editor):
+    State = apps.get_model("ivrs", "State")
+    QuestionGroupType = apps.get_model("ivrs", "QuestionGroupType")
+
     states = State.objects.all()
     for state in states:
         if state.ivrs_type == 'gka':
@@ -32,6 +35,8 @@ def forwards_func(apps, schema_editor):
             pass
 
 def reverse_func(apps, schema_editor):
+    State = apps.get_model("ivrs", "State")
+
     states = State.objects.all()
     for state in states:
         state.qg_type = None
