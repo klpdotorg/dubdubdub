@@ -62,14 +62,15 @@ class QuestiongroupsViewSet(KLPModelViewSet):
     filter_class = QuestiongroupFilter
 
     def get_queryset(self):
-        queryset = Questiongroup.objects.all()
+        queryset = Questiongroup.objects.all().select_related(
+            'source', 'survey__partner', 'school_type'
+        ).prefetch_related('created_by')
 
         survey_id = self.kwargs.get('survey_pk', None)
         questiongroup_id = self.kwargs.get('pk', None)
 
         if survey_id:
-            survey = Survey.objects.get(id=survey_id)
-            queryset = queryset.filter(survey=survey)
+            queryset = queryset.filter(survey_id=survey_id)
 
         if questiongroup_id:
             queryset = queryset.filter(id=questiongroup_id)
@@ -143,14 +144,19 @@ class QuestionsViewSet(KLPModelViewSet):
     filter_class = QuestionFilter
 
     def get_queryset(self):
-        queryset = Question.objects.all()
+        queryset = Question.objects.all().prefetch_related(
+            'questiongroupquestions_set__questiongroup',
+            'questiongroupquestions_set__questiongroup__source'
+        ).select_related(
+            'question_type',
+            'school_type'
+        )
 
         questiongroup_id = self.kwargs.get('group_pk', None)
         question_id = self.kwargs.get('pk', None)
 
         if questiongroup_id:
-            questiongroup = Questiongroup.objects.get(id=questiongroup_id)
-            queryset = queryset.filter(questiongroup=questiongroup)
+            queryset = queryset.filter(questiongroup_id=questiongroup_id)
 
         if question_id:
             queryset = queryset.filter(id=question_id)
@@ -820,7 +826,7 @@ class StoriesView(KLPListAPIView):
                 'answer_set__question__questiongroupquestions_set__questiongroup__source',
             )
 
-        verified = self.request.GET.get('verified', None)
+        verified = self.request.GET.get('verified', '')
         if verified:
             if verified == 'yes':
                 qset = qset.filter(is_verified=True)
@@ -851,9 +857,19 @@ class StoriesView(KLPListAPIView):
                     qset.filter(
                         user=self.request.user
                     ).values_list('school__admin3__parent__id', flat=True)))
+
+                if not existing_block_ids and source == 'csv':
+                    # special case
+                    # if the client demands `admin2=detect` for `source=csv`
+                    # and there isn't any existing block ids, return empty
+                    return Story.objects.none()
+
                 qset = qset.filter(
                     school__schooldetails__admin2__id__in=existing_block_ids
                 )
+            else:
+                # anon can't request detect
+                raise APIException('Anonymous user cannot request admin2 detection')
         elif admin2_id:
             qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
 
