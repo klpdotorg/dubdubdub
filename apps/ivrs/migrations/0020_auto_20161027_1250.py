@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations
 
-# from ivrs.models import State, QuestionGroupType
 
 def forwards_func(apps, schema_editor):
     State = apps.get_model("ivrs", "State")
@@ -33,6 +32,7 @@ def forwards_func(apps, schema_editor):
             state.save()
         else:
             pass
+
 
 def reverse_func(apps, schema_editor):
     State = apps.get_model("ivrs", "State")
