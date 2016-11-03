@@ -9,6 +9,11 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.6: c20cbbc806e85711354b58a0f580eb0252374dd3 - 2016-11-03
+  - Minor migration and queryset optimizations.
+  - Mobile sync api endpoint fix.
+  - Adds Raw Data field to State csv being downloaded.
+
 Release 1.0.5: 2b76a02b2844c2947014b7a844663943b0de0d63 - 2016-10-30
   - Implements the script to populate pen and paper community data.
   - Endpoint fixes for syncing data to mobile.
