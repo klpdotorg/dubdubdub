@@ -853,8 +853,9 @@ class StoriesView(KLPListAPIView):
                     'school', 'school__schooldetails',
                     'school__schooldetails__admin2'
                 )
+                # Looking for blocks the current user already has stories for
                 existing_block_ids = list(set(
-                    qset.filter(
+                    Story.objects.filter(
                         user=self.request.user
                     ).values_list('school__admin3__parent__id', flat=True)))
 
