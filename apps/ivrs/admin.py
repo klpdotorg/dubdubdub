@@ -28,6 +28,7 @@ class StateAdmin(admin.ModelAdmin):
             "Telephone",
             "Date Of Visit",
             "Invalid",
+            "Raw Data",
         ]
 
         qg_type_name = request.GET.get('qg_type__name', None)
@@ -61,7 +62,8 @@ class StateAdmin(admin.ModelAdmin):
                       str(cluster),
                       str(state.telephone),
                       str(state.date_of_visit.date()),
-                      str(state.is_invalid)
+                      str(state.is_invalid),
+                      str(state.raw_data)
             ]
             writer.writerow(values + [answer for answer in state.answers[1:]])
 
