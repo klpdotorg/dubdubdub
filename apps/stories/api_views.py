@@ -878,11 +878,6 @@ class StoriesView(KLPListAPIView):
         if admin3_id:
             qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
 
-        # try:
-        #     limit = int(self.request.GET.get('limit', 10))
-        # except:
-        #     limit = 10
-
         qset = qset.prefetch_related('storyimage_set').select_related('school', 'user_type')
         return qset
 
