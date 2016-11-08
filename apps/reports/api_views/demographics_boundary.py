@@ -5,6 +5,7 @@ from . import BaseBoundaryReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
+from django.db.models import Q
 
 
 class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
@@ -64,17 +65,17 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
     '''
         Returns report comparison details
     '''
-    reportInfo = {"comparison": {"year-wise": {}, "neighbours": {}}}
+    reportInfo = {"comparison": {"year-wise": {}, "boundaries": {}}}
 
     parentInfo = {}
 
     def get_yeardata(self, active_schools, year, year_id):
-        yeardata = {"year": year, "enrol_upper": 0, "enrol_lower": 0,
+        yeardata = {"year": year, "avg_enrol_upper": 0, "avg_enrol_lower": 0,
                     "school_count": 0}
         boundaryData = self.get_aggregations(active_schools, year_id)
         enrolment = self.get_enrolment(boundaryData["cat"])
-        yeardata["enrol_upper"] = enrolment["Upper Primary"]["student_count"]
-        yeardata["enrol_lower"] = enrolment["Lower Primary"]["student_count"]
+        yeardata["avg_enrol_upper"] = enrolment["Upper Primary"]["average_student_count"]
+        yeardata["avg_enrol_lower"] = enrolment["Lower Primary"]["average_student_count"]
         boundaryData = self.check_values(boundaryData)
         teacher_count = self.get_teachercount(active_schools, year_id)
         student_count = boundaryData["num_boys"] + boundaryData["num_girls"]
@@ -117,29 +118,33 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
 
         return comparisonData
 
-    def get_neighbour_comparison(self, academic_year, boundary):
+    def get_boundary_comparison(self, academic_year, boundary):
         comparisonData = []
         if boundary.get_admin_level() == 1:
-            neighbours = Boundary.objects.filter(hierarchy=boundary.hierarchy).order_by("name")
+            boundaries = Boundary.objects.filter(hierarchy=boundary.hierarchy).order_by("name")
+        elif boundary.get_admin_level() ==2:
+            boundaries = Boundary.objects.filter(id=boundary.parent.id)
         else:
-            neighbours = Boundary.objects.filter(parent=boundary.parent).order_by("name")
-        for neighbour in neighbours:
-            data = {"name": neighbour.name,
-                    "enrol_upper": 0,
-                    "enrol_lower": 0,
+            boundaries = Boundary.objects.filter(Q(id=boundary.parent.id) | Q(id=boundary.parent.parent.id))
+        for comparisonboundary in boundaries:
+            data = {"name": comparisonboundary.name,
+                    "id": comparisonboundary.id,
+                    "type": comparisonboundary.hierarchy.name,
+                    "avg_enrol_upper": 0,
+                    "avg_enrol_lower": 0,
                     "ptr": 0,
                     "school_count": 0,
                     "school_perc": 0}
-            active_schools = neighbour.schools()
+            active_schools = comparisonboundary.schools()
             if active_schools.exists():
                 boundaryData = self.get_aggregations(active_schools,
                                                      academic_year)
                 boundaryData = self.check_values(boundaryData)
                 enrolment = self.get_enrolment(boundaryData["cat"])
-                data["enrol_upper"] =\
-                    enrolment["Upper Primary"]["student_count"]
-                data["enrol_lower"] =\
-                    enrolment["Lower Primary"]["student_count"]
+                data["avg_enrol_upper"] =\
+                    enrolment["Upper Primary"]["average_student_count"]
+                data["avg_enrol_lower"] =\
+                    enrolment["Lower Primary"]["average_student_count"]
                 data["school_count"] = active_schools.count()
                 teacher_count = self.get_teachercount(active_schools,
                                                       academic_year)
@@ -168,8 +173,8 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
         self.reportInfo["comparison"]["year-wise"] =\
             self.get_year_comparison(active_schools, academic_year, year,
                                      boundary)
-        self.reportInfo["comparison"]["neighbours"] =\
-            self.get_neighbour_comparison(academic_year, boundary)
+        self.reportInfo["comparison"]["boundaries"] =\
+            self.get_boundary_comparison(academic_year, boundary)
 
     def get_report_comparison(self, boundaryid):
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)

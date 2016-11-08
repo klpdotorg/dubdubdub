@@ -85,15 +85,71 @@
         }
         else
         {
-            var boundary = {"type": data["boundary_info"]["parent"]["type"], "id":data["boundary_info"]["parent"]["dise"]};
-            klp.dise_api.getMultipleBoundaryData(boundary.id, boundary.type, type, acadYear).done(function(diseData) {
-                console.log('neighbours diseData', diseData);
-                renderNeighbours(diseData["results"]["features"]);
-            })
-            .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
-            });
+            var passBoundaryData = {"acadYear": acadYear};
+            getMultipleData(data["boundary_info"]["parent"], passBoundaryData, getMultipleNeighbour, renderNeighbours,"parent");
         }
+    }
+
+    /*
+     * This function is used to call multiple apis before processing a function (exitFunction).
+     * The inputData is used for looping through and has the data that needs to be passed.
+     * The passedData is used for passing the data to the function (getData) which is used for making 
+     * the relevant api calls.
+     * Once the loop is over the exitFunction is called.
+     */
+    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName)
+    {
+        var numberOfIterations = Object.keys(inputData).length;
+        var outputData= {};
+        var index = 0,
+            done = false,
+            shouldExit = false;
+        var loop = {
+            next:function(){
+                if(done){
+                    if(shouldExit && exitFunction){
+                        return exitFunction(outputData); // Exit if we're done
+                    }
+                }
+                if(index <  numberOfIterations){
+                    index++; // Increment our index
+                    getData(loop); // Run our process, pass in the loop
+                }
+                else {
+                    done = true; // Make sure we say we're done
+                    if(exitFunction)
+                        exitFunction(outputData); // Call the callback on exit
+                }
+            },
+            iteration:function(){
+                passedData[iteratorName] = Object.keys(inputData)[index-1];
+                passedData["value"] = inputData[passedData[iteratorName]];
+                return passedData; // Return the loop number we're on
+            },
+            addData:function(diseData){
+                outputData[Object.keys(inputData)[index-1]] = diseData;
+            },
+            break:function(end){
+                done = true; // End the loop
+                shouldExit = end; // Passing end as true means we still call the exit callback
+            }
+        };
+        loop.next();
+        return loop;
+    }
+
+    function getMultipleNeighbour(loop)
+    {
+        var data = loop.iteration();
+        var boundary = {"id": data["value"]["dise"], "type": data["value"]["type"]};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
+            console.log('diseData', diseData);
+            loop.addData(diseData);
+            loop.next();
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not dise data", "for "+data["dise"]);
+        });
     }
 
     function getTotalExpectedGrant(diseData){

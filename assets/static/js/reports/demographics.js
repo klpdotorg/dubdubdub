@@ -24,9 +24,9 @@
             summaryData = data;
             var summaryJSON= getSummaryData(data);
             renderSummary(summaryJSON,"Schools");
+            getDetailsData(bid, lang, repType);
+            getComparisonData(bid, lang, repType);
         });
-        getDetailsData(bid, lang, repType);
-        getComparisonData(bid, lang, repType);
     }
 
     function getSummaryData(data)
@@ -80,8 +80,8 @@
         $xhr.done(function(data) {
             data["comparison"]["year-wise"][0] = {
                             "year": detailsData["report_info"]["year"],
-                             "enrol_upper": detailsData["enrolment"]["Upper Primary"]["student_count"],
-                             "enrol_lower": detailsData["enrolment"]["Lower Primary"]["student_count"],
+                             "avg_enrol_upper": detailsData["enrolment"]["Upper Primary"]["average_student_count"],
+                             "avg_enrol_lower": detailsData["enrolment"]["Lower Primary"]["average_student_count"],
                              "student_count": summaryData["student_count"],
                              "school_count": summaryData["school_count"],
                              "school_perc": summaryData["school_perc"],
@@ -173,7 +173,7 @@
         var yrcompareHTML = tplYearComparison({"years":data["year-wise"],"boundary_name":data["boundary_name"]});
         $('#comparison-year').html(yrcompareHTML);
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":data["neighbours"],"boundary_name":data["boundary_name"]});
+        var compareHTML = tplComparison({"neighbours":data["boundaries"],"boundary_name":data["boundary_name"]});
         $('#comparison-neighbour').html(compareHTML);
     }
 

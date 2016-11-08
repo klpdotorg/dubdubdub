@@ -111,7 +111,7 @@
             <div class="base-spacing-sm"></div>
             {% for each in enrol %}
               <div class="font-small">{{each.text}}: <br/>
-              <span class="brand-blue font-largest"> {{each.student_count}}</span> </div>
+              <span class="brand-blue font-largest"> {{each.average_student_count}}</span> </div>
               <div class="base-spacing-mid"></div>
             {% endfor %}           
           </div><!--sect-quarter-->
@@ -204,10 +204,10 @@
               <div class="bold td-label-year">{{each.year}}</div>
             </td>
             <td>
-              <div class="td-label-enrolu">{{each.enrol_upper|checkzero}}</div>    
+              <div class="td-label-enrolu">{{each.avg_enrol_upper|checkzero}}</div>    
             </td>
             <td>
-              <div class="td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
+              <div class="td-label-enroll">{{each.avg_enrol_lower|checkzero}}</div>  
             </td>
             <td>
               <div class="td-label-ptr">
@@ -223,8 +223,6 @@
             </td>
           </tr>
       {% endfor %}
-
-
     </tbody>
     </table>
   </script>
@@ -254,10 +252,10 @@
               <div class="{{highlight}} td-label-boundary ">{{each.name|title}}</div>
             </td>
             <td>
-              <div class="{{highlight}} td-label-enrolu">{{each.enrol_upper|checkzero}}</div>    
+              <div class="{{highlight}} td-label-enrolu">{{each.avg_enrol_upper|checkzero}}</div>    
             </td>
             <td>
-              <div class="{{highlight}} td-label-enroll">{{each.enrol_lower|checkzero}}</div>  
+              <div class="{{highlight}} td-label-enroll">{{each.avg_enrol_lower|checkzero}}</div>  
             </td>
             <td>
               <div class="{{highlight}} td-label-ptr">

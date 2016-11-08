@@ -69,12 +69,12 @@ class BaseBoundaryReport(object):
     #Returns the category wise average enrolment data
     def get_enrolment(self, categoryData):
         enrolmentdata = {"Lower Primary": {"text": "Class 1 to 4",
-                                           "student_count": 0},
+                                           "average_student_count": 0},
                          "Upper Primary": {"text": "Class 5 to 8",
-                                           "student_count": 0}}
+                                           "average_student_count": 0}}
         for data in categoryData:
             if data["cat"] in ['Lower Primary', 'Upper Primary']:
-                enrolmentdata[data['cat']]["student_count"] = (data["num_boys"] + data["num_girls"])/data["num_schools"]
+                enrolmentdata[data['cat']]["average_student_count"] = (data["num_boys"] + data["num_girls"])/data["num_schools"]
 
         return enrolmentdata
 
@@ -84,10 +84,17 @@ class BaseBoundaryReport(object):
         reportData["boundary_info"]["name"] = boundary.name
         reportData["boundary_info"]["type"] = boundary.hierarchy.name
         reportData["boundary_info"]["id"] = boundary.id
-        reportData["boundary_info"]["parent"] = {}
+        reportData["boundary_info"]["parent"] = []
         reportData["boundary_info"]["btype"] = boundary.type.id
         reportData["boundary_info"]["dise"] = boundary.dise_slug
-        if boundary.get_admin_level() != 1:
-            reportData["boundary_info"]["parent"] = {
+        if boundary.get_admin_level() == 2:
+            reportData["boundary_info"]["parent"] = [{
                 "type": boundary.parent.hierarchy.name, "name": boundary.parent.name,
-                "dise": boundary.parent.dise_slug}
+                "dise": boundary.parent.dise_slug}]
+        elif boundary.get_admin_level() == 3:
+            reportData["boundary_info"]["parent"] = [
+                    { "type": boundary.parent.parent.hierarchy.name, "name": boundary.parent.parent.name,
+                      "dise": boundary.parent.parent.dise_slug},
+                    { "type": boundary.parent.hierarchy.name, "name": boundary.parent.name,
+                      "dise": boundary.parent.dise_slug}
+                    ]
