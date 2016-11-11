@@ -813,7 +813,8 @@
         t.map = map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
-            attribution: 'OpenStreetMap, OSM-Bright'
+            //attribution: 'OpenStreetMap, OSM-Bright'
+            attribution:'<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a> <a href="https://openstreetmap.org/about/" target="_blank">© OpenStreetMap</a> <a class="mapbox-improve-map" href="https://www.mapbox.com/map-feedback/#mapbox.streets/-74.500/40.000/9" target="_blank">Improve this map</a>'
         }).addTo(map);
 
         // Try to find users location.
