@@ -39,24 +39,22 @@ class Command(BaseCommand):
                 continue
 
             count += 1
-            name = row[4].strip()
 
+            name = row[4].strip()
             if ' ' in name:
                 first_name, last_name = name.split(" ", 1)
             else:
                 first_name, last_name = (name, '')
 
             email = name.lower().replace(" ","") + "@klp.org.in"
-            if email in emails:
-                email = name.lower().replace(" ","") + str(count) + "@klp.org.in"
-            else:
-                emails.append(email)
-
             mobile_number = row[5].strip()
-            if mobile_number in mobile_numbers:
-                continue
-            else:
-                mobile_numbers.append(mobile_number)
+
+            if User.objects.filter(email=email).exists():
+                user = User.objects.get(email=email)
+                if user.mobile_no == mobile_number:
+                    continue
+                else:
+                    email = name.lower().replace(" ","") + str(count) + "@klp.org.in"
 
             user, created = User.objects.get_or_create(
                 email=email,
