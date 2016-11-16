@@ -1,5 +1,6 @@
 echo "RUNNING MARKS PERCENTILE"
 export dbname="dubdubdub"
+#fix this to read from command line ^
 psql -U klp -d $dbname -f ./sql/assessment-aggregation/deletequestions.sql
 echo "Finished delete questions"
 psql -U klp -d $dbname -f ./sql/assessment-aggregation/assessment-aggregates.sql
