@@ -101,3 +101,11 @@ The DB to use should be updated in the test_settings file.
 
 7. Create the materialized views.
  - `psql -h localhost -U klp -d dubdubdub -f sql/materialized_views.sql`
+
+
+#### Database refresh of dubdubub
+
+1. The exported ems csv is put inside `data/ems/` directory
+2. run `./imports/importdatatodb.sh -d <dbname>`
+3. run `./imports/importdatafromdb.sh -d <dbname>`
+4. run `./imports/post-import.sh -d <dbname>`
