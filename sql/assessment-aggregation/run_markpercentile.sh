@@ -1,22 +1,22 @@
-psql -U klp -d testdub -f deletequestions.sql
+psql -U klp -d dubdubdub -f deletequestions.sql
 echo "Finished delete questions"
-psql -U klp -d testdub -f assessment-aggregates.sql
+psql -U klp -d dubdubdub -f assessment-aggregates.sql
 echo "Finished assessment-aggregates"
-psql -U klp -d testdub -f fillassessmentaggregates.sql
+psql -U klp -d dubdubdub -f fillassessmentaggregates.sql
 echo "Finished fillassessmentaggregates"
-psql -U klp -d testdub -f fillboundaryassessments.sql
+psql -U klp -d dubdubdub -f fillboundaryassessments.sql
 echo "Finished fillboundaryassessments"
-#psql -U klp -d testdub -f gradeassessment-aggregates.sql
+#psql -U klp -d dubdubdub -f gradeassessment-aggregates.sql
 #echo "Finished grade assessment aggregates"
-#psql -U klp -d testdub -f fillgradeassessment-aggregates.sql
+#psql -U klp -d dubdubdub -f fillgradeassessment-aggregates.sql
 #echo "Finished fill grade assessments"
-psql -U klp -d testdub -f assessmentcorrections.sql
+psql -U klp -d dubdubdub -f assessmentcorrections.sql
 echo "Finished assessment corrections"
-psql -U klp -d testdub -f fillassessments2014-2015.sql
+psql -U klp -d dubdubdub -f fillassessments2014-2015.sql
 echo "Finished 2014-2015"
-psql -U klp -d testdub -f percentile.sql
+psql -U klp -d dubdubdub -f percentile.sql
 echo "Finished percentile.sql"
-psql -U klp -d testdub -f fillmarkpercentile.sql
+psql -U klp -d dubdubdub -f fillmarkpercentile.sql
 echo "Finished mark percentile"
-psql -U klp -d testdub -f fillassessments_pid60-63.sql
+psql -U klp -d dubdubdub -f fillassessments_pid60-63.sql
 echo "Finished running aggregates for pid 60-63"
