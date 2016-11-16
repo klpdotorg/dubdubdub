@@ -118,52 +118,57 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
 
         return comparisonData
 
+    def fillComparisonData(self, boundary, academic_year):
+        data = {"name": boundary.name,
+                "id": boundary.id,
+                "type": boundary.hierarchy.name,
+                "avg_enrol_upper": 0,
+                "avg_enrol_lower": 0,
+                "ptr": 0,
+                "school_count": 0,
+                "school_perc": 0}
+        active_schools = boundary.schools()
+        if active_schools.exists():
+            boundaryData = self.get_aggregations(active_schools,
+                                                     academic_year)
+            boundaryData = self.check_values(boundaryData)
+            enrolment = self.get_enrolment(boundaryData["cat"])
+            data["avg_enrol_upper"] =\
+                    enrolment["Upper Primary"]["average_student_count"]
+            data["avg_enrol_lower"] =\
+                    enrolment["Lower Primary"]["average_student_count"]
+            data["school_count"] = active_schools.count()
+            teacher_count = self.get_teachercount(active_schools,
+                                                      academic_year)
+            student_count = boundaryData["num_boys"] +\
+                    boundaryData["num_girls"]
+            data["student_count"] = student_count
+            data["teacher_count"] = teacher_count
+            if self.parentInfo["schoolcount"] == 0:
+                data["school_perc"] = 100
+            else:
+                data["school_perc"] = round(
+                        boundaryData["num_schools"] * 100 /
+                        float(self.parentInfo["schoolcount"]), 2)
+            if teacher_count == 0:
+                data["ptr"] = "NA"
+            else:
+                data["ptr"] = round(
+                        student_count / float(teacher_count), 2)
+        return data
+
+
     def get_boundary_comparison(self, academic_year, boundary):
         comparisonData = []
         if boundary.get_admin_level() == 1:
-            boundaries = Boundary.objects.filter(hierarchy=boundary.hierarchy).order_by("name")
+            boundaries = self.getDistrictNeighbours(boundary)
         elif boundary.get_admin_level() ==2:
             boundaries = Boundary.objects.filter(id=boundary.parent.id)
         else:
             boundaries = Boundary.objects.filter(Q(id=boundary.parent.id) | Q(id=boundary.parent.parent.id))
         for comparisonboundary in boundaries:
-            data = {"name": comparisonboundary.name,
-                    "id": comparisonboundary.id,
-                    "type": comparisonboundary.hierarchy.name,
-                    "avg_enrol_upper": 0,
-                    "avg_enrol_lower": 0,
-                    "ptr": 0,
-                    "school_count": 0,
-                    "school_perc": 0}
-            active_schools = comparisonboundary.schools()
-            if active_schools.exists():
-                boundaryData = self.get_aggregations(active_schools,
-                                                     academic_year)
-                boundaryData = self.check_values(boundaryData)
-                enrolment = self.get_enrolment(boundaryData["cat"])
-                data["avg_enrol_upper"] =\
-                    enrolment["Upper Primary"]["average_student_count"]
-                data["avg_enrol_lower"] =\
-                    enrolment["Lower Primary"]["average_student_count"]
-                data["school_count"] = active_schools.count()
-                teacher_count = self.get_teachercount(active_schools,
-                                                      academic_year)
-                student_count = boundaryData["num_boys"] +\
-                    boundaryData["num_girls"]
-                data["student_count"] = student_count
-                data["teacher_count"] = teacher_count
-                if self.parentInfo["schoolcount"] == 0:
-                    data["school_perc"] = 100
-                else:
-                    data["school_perc"] = round(
-                        boundaryData["num_schools"] * 100 /
-                        float(self.parentInfo["schoolcount"]), 2)
-                if teacher_count == 0:
-                    data["ptr"] = "NA"
-                else:
-                    data["ptr"] = round(
-                        student_count / float(teacher_count), 2)
-            comparisonData.append(data)
+            comparisonData.append(self.fillComparisonData(comparisonboundary, academic_year))
+        comparisonData.append(self.fillComparisonData(boundary, academic_year))
         return comparisonData
 
     def get_comparison_data(self, boundary, active_schools, academic_year, year):

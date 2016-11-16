@@ -1,6 +1,9 @@
 'use strict';
 (function() {
     var utils;
+    var summaryData;
+    var categoryData;
+    var grantData = {};
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     var lowerUpperPrimary = [2, 3, 6];
     var onlyUpperPrimary = [4, 5, 7];
@@ -12,6 +15,9 @@
         klp.router.start();
     };
 
+    /*
+        Fetch basic dise slug and academic year details from backend
+    */
     function fetchReportDetails()
     {
         var repType,bid,lang;
@@ -25,12 +31,33 @@
         });
     }
 
+    /*
+        Fetch dise data for the specified boundary
+    */
+    function fetchDiseData(data)
+    {
+        var acadYear = data["academic_year"].replace(/20/g, '');
+        var boundary = {"type": data["boundary_info"]["type"], "id": data["boundary_info"]["dise"] };
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
+            console.log('diseData', diseData);
+            getSummaryData(data,diseData);
+            renderSummary(summaryData);
+            loadFinanceData(diseData["properties"]);
+            getNeighbourData(data, acadYear);
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
+        });
+    }
+
+    /*
+        Gets school count and gender count for schools that are of type lower primary or upper primary only.
+    */
     function getCategoryCount(data)
     {
         var categorycount = {"schoolcount": 0,
                              "gendercount":  {"boys": 0, "girls": 0}
-                            }
-
+                            };
         for(var iter in data["school_categories"])
 		{
 			var type = data["school_categories"][iter];
@@ -43,156 +70,65 @@
         return categorycount;
     }
 
+    /*
+        Fill the summaryData structure
+    */
     function getSummaryData(data, diseData){
-        var categoryData = getCategoryCount(diseData["properties"]);
-        var summaryJSON = {
+        categoryData = getCategoryCount(diseData["properties"]);
+        summaryData = {
             "boundary"  : data["boundary_info"],
             "school_count" : categoryData["schoolcount"],
             "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
             "gender" : categoryData["gendercount"],
+            "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
         };
-        return summaryJSON;
-    }
-
-    function fetchDiseData(data)
-    {
-        var acadYear = data["academic_year"].replace(/20/g, '');
-        var boundary = {"type": data["boundary_info"]["type"], "id": data["boundary_info"]["dise"] };
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
-            console.log('diseData', diseData);
-            var summaryJSON = getSummaryData(data,diseData);
-            renderSummary(summaryJSON,"Schools");
-            loadFinanceData(diseData["properties"]);
-        })
-        .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
-        });
-        getNeighbourData(data, acadYear);
-    }
-
-    function getNeighbourData(data, acadYear)
-    {
-        var type = data["boundary_info"]["type"];
-        if(type == "district")
-        {
-            klp.dise_api.getMultipleBoundaryData(null, null, type, acadYear).done(function(diseData) {
-                console.log('neighbours diseData', diseData);
-                renderNeighbours(diseData["results"]["features"]);
-            })
-            .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
-            });
-        }
+        if( summaryData["teacher_count"] == 0 )
+            summaryData['ptr'] = "NA";
         else
-        {
-            var passBoundaryData = {"acadYear": acadYear};
-            getMultipleData(data["boundary_info"]["parent"], passBoundaryData, getMultipleNeighbour, renderNeighbours,"parent");
-        }
+            summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]*100)/100;
+        summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100 *100)/100;
+        summaryData['boy_perc'] = 100-summaryData['girl_perc'];
     }
 
     /*
-     * This function is used to call multiple apis before processing a function (exitFunction).
-     * The inputData is used for looping through and has the data that needs to be passed.
-     * The passedData is used for passing the data to the function (getData) which is used for making 
-     * the relevant api calls.
-     * Once the loop is over the exitFunction is called.
-     */
-    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName)
-    {
-        var numberOfIterations = Object.keys(inputData).length;
-        var outputData= {};
-        var index = 0,
-            done = false,
-            shouldExit = false;
-        var loop = {
-            next:function(){
-                if(done){
-                    if(shouldExit && exitFunction){
-                        return exitFunction(outputData); // Exit if we're done
-                    }
-                }
-                if(index <  numberOfIterations){
-                    index++; // Increment our index
-                    getData(loop); // Run our process, pass in the loop
-                }
-                else {
-                    done = true; // Make sure we say we're done
-                    if(exitFunction)
-                        exitFunction(outputData); // Call the callback on exit
-                }
-            },
-            iteration:function(){
-                passedData[iteratorName] = Object.keys(inputData)[index-1];
-                passedData["value"] = inputData[passedData[iteratorName]];
-                return passedData; // Return the loop number we're on
-            },
-            addData:function(diseData){
-                outputData[Object.keys(inputData)[index-1]] = diseData;
-            },
-            break:function(end){
-                done = true; // End the loop
-                shouldExit = end; // Passing end as true means we still call the exit callback
-            }
-        };
-        loop.next();
-        return loop;
+        Render the summary
+    */
+    function renderSummary(data) {
+        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
+        var tplReportDate = swig.compile($('#tpl-reportDate').html());
+        var now = new Date();
+        var today = {'date' : moment(now).format("MMMM D, YYYY")};
+        var dateHTML = tplReportDate({"today":today});
+        $('#report-date').html(dateHTML);
+        var topSummaryHTML = tplTopSummary({"data":data});
+        $('#top-summary').html(topSummaryHTML);
     }
 
-    function getMultipleNeighbour(loop)
-    {
-        var data = loop.iteration();
-        var boundary = {"id": data["value"]["dise"], "type": data["value"]["type"]};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
-            console.log('diseData', diseData);
-            loop.addData(diseData);
-            loop.next();
-        })
-        .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not dise data", "for "+data["dise"]);
-        });
+    /*
+        Fill the data structure with Expected, Received and Spent grants.
+    */
+    function loadFinanceData(diseData) {
+        //Using category student count for expected calculation
+        var sum_students = categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"];
+        //Using total student count for received and spent
+        var total_students = diseData["sum_girls"] + diseData["sum_boys"];
+        grantData["expected"] = getExpectedGrant(diseData);
+        grantData["expected"]["total_girl"] = categoryData["gendercount"]["girls"];
+        grantData["expected"]["total_boy"] = categoryData["gendercount"]["boys"];
+        grantData["expected"]["per_stu"] = Math.round(grantData["expected"]["grand_total"]/sum_students*100)/100;
+        grantData["received"] = {"grand_total": diseData["sum_school_dev_grant_recd"] + diseData["sum_tlm_grant_recd"]};
+        grantData["received"]["per_stu"] = Math.round(grantData["received"]["grand_total"]/total_students*100)/100;
+        grantData["expenditure"] = {"grand_total": diseData["sum_school_dev_grant_expnd"] + diseData["sum_tlm_grant_expnd"]};
+        grantData["expenditure"]["per_stu"] = Math.round(grantData["expenditure"]["grand_total"]/total_students*100)/100;
+           
+        renderGrants(grantData);
+        renderAllocation(grantData["expected"]["categories"], "School Grant Allocation", '#sg-alloc');
+        renderMntncAllocation(grantData["expected"]["classrooms"], "School Maintenance Grant Allocation", "#smg-alloc");
     }
 
-    function getTotalExpectedGrant(diseData){
-        var expectedGrant = 0;
-        for( var index in diseData["school_categories"])
-        {
-            var type = diseData["school_categories"][index];
-            var devgrant = 0;
-            var maintenance_grant = 0;
-            if( type["id"] == 1)
-            {
-                devgrant = type["sum_schools"]["total"] * 5000;
-                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
-                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
-                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
-                expectedGrant += devgrant + maintenance_grant;
-            }
-            if(_.contains(lowerUpperPrimary, type["id"]))
-            {
-                devgrant = type["sum_schools"]["total"] * 12000;
-                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
-                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 15000;
-                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 20000;
-                expectedGrant += devgrant + maintenance_grant;
-            }
-            if(_.contains(onlyUpperPrimary, type["id"]))
-            {
-                devgrant = type["sum_schools"]["total"] * 7000;
-                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
-                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
-                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
-                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
-                expectedGrant += devgrant + maintenance_grant;
-            }
-        }
-        return expectedGrant;
-    }
-
+    /*
+        Calculates and returns expected grant based on categories
+    */
     function getExpectedGrant(diseData){
         var expectedGrant = {};
         expectedGrant["categories"] = {
@@ -435,42 +371,9 @@
         return expectedGrant;
     }
 
-    function loadFinanceData(diseData) {
-        var grantdata = {};
-        var categoryData = getCategoryCount(diseData);
-        var sum_students = categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"];
-        var total_students = diseData["sum_girls"] + diseData["sum_boys"];
-        grantdata["expected"] = getExpectedGrant(diseData);
-        grantdata["expected"]["total_girl"] = categoryData["gendercount"]["girls"];
-        grantdata["expected"]["total_boy"] = categoryData["gendercount"]["boys"];
-        grantdata["expected"]["per_stu"] = Math.round(grantdata["expected"]["grand_total"]/sum_students*100)/100;
-        grantdata["received"] = {"grand_total": diseData["sum_school_dev_grant_recd"] + diseData["sum_tlm_grant_recd"]};
-        grantdata["received"]["per_stu"] = Math.round(grantdata["received"]["grand_total"]/total_students*100)/100;
-        grantdata["expenditure"] = {"grand_total": diseData["sum_school_dev_grant_expnd"] + diseData["sum_tlm_grant_expnd"]};
-        grantdata["expenditure"]["per_stu"] = Math.round(grantdata["expenditure"]["grand_total"]/total_students*100)/100;
-           
-        renderGrants(grantdata);
-        renderAllocation(grantdata["expected"]["categories"], "School Grant Allocation", '#sg-alloc');
-        renderMntncAllocation(grantdata["expected"]["classrooms"], "School Maintenance Grant Allocation", "#smg-alloc");
-    }
-    
-    function renderSummary(data, schoolType) {
-        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplReportDate = swig.compile($('#tpl-reportDate').html());
-        var now = new Date();
-        var today = {'date' : moment(now).format("MMMM D, YYYY")};
-        var dateHTML = tplReportDate({"today":today});
-        $('#report-date').html(dateHTML);
-
-        data['student_total'] = data["gender"]["boys"] + data["gender"]["girls"];
-        data['ptr'] = Math.round(data["student_total"]/data["teacher_count"]*100)/100;
-        data['girl_perc'] = Math.round(( data["gender"]["girls"]/data["student_total"] )* 100*100)/100;
-        data['boy_perc'] = 100-data['girl_perc'];
-        
-        var topSummaryHTML = tplTopSummary({"data":data});
-        $('#top-summary').html(topSummaryHTML);
-    }
-
+    /*
+        Renders the Grant Summary
+    */
     function renderGrants(data){
         var tpl = swig.compile($('#tpl-grantSummary').html());
         var html = tpl({"data":data["expected"]});
@@ -487,18 +390,151 @@
         $('#expenditure').html(html);
     }
 
+    /*
+        Renders the Allocation Summary
+    */
     function renderAllocation(data, heading, element_id) {
         var tplalloc = swig.compile($('#tpl-allocSummary').html());
         var html = tplalloc({"data":data,"heading":heading});
         $(element_id).html(html);
     }
 
+    /*
+        Renders the Maintainance Summary
+    */
     function renderMntncAllocation(data, heading, element_id) {
         var tplalloc = swig.compile($('#tpl-allocMntncSummary').html());
         var html = tplalloc({"data":data,"heading":heading});
         $(element_id).html(html);
     }
 
+    /*
+        Get the Neighouur information for comparison
+    */
+    function getNeighbourData(data, acadYear)
+    {
+        var type = data["boundary_info"]["type"];
+        var passboundarydata = {"acadYear": acadYear};
+        var passeddata;
+        if(type == "district")
+            passeddata = data["neighbours"];
+        else
+            passeddata = data["boundary_info"]["parent"];
+        getMultipleData(passeddata, passboundarydata, getMultipleNeighbour, renderNeighbours);
+    }
+
+    /*
+     * This function is used to call multiple apis before processing a function (exitFunction).
+     * The inputData is used for looping through and has the data that needs to be passed.
+     * The passedData is used for passing the data to the function (getData) which is used for making 
+     * the relevant api calls.
+     * Once the loop is over the exitFunction is called.
+     */
+    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName="iter")
+    {
+        var numberOfIterations = Object.keys(inputData).length;
+        var outputData= [];
+        var index = 0,
+            done = false,
+            shouldExit = false;
+        var loop = {
+            next:function(){
+                if(done){
+                    if(shouldExit && exitFunction){
+                        return exitFunction(outputData); // Exit if we're done
+                    }
+                }
+                if(index <  numberOfIterations){
+                    index++; // Increment our index
+                    getData(loop); // Run our process, pass in the loop
+                }
+                else {
+                    done = true; // Make sure we say we're done
+                    if(exitFunction)
+                        exitFunction(outputData); // Call the callback on exit
+                }
+            },
+            iteration:function(){
+                passedData[iteratorName] = Object.keys(inputData)[index-1];
+                passedData["value"] = inputData[passedData[iteratorName]];
+                return passedData; // Return the loop number we're on
+            },
+            addData:function(diseData){
+                outputData[Object.keys(inputData)[index-1]] = diseData;
+            },
+            break:function(end){
+                done = true; // End the loop
+                shouldExit = end; // Passing end as true means we still call the exit callback
+            }
+        };
+        loop.next();
+        return loop;
+    }
+
+    /*
+        Call DISE API with information of neighbours
+    */
+    function getMultipleNeighbour(loop)
+    {
+        var data = loop.iteration();
+        var boundary = {"id": data["value"]["dise"], "type": data["value"]["type"]};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
+            console.log('diseData', diseData);
+            loop.addData(diseData);
+            loop.next();
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not dise data", "for "+data["dise"]);
+        });
+    }
+
+    /*
+        Get the total grant that is expected
+    */
+    function getTotalExpectedGrant(diseData){
+        var expectedGrant = 0;
+        for( var index in diseData["school_categories"])
+        {
+            var type = diseData["school_categories"][index];
+            var devgrant = 0;
+            var maintenance_grant = 0;
+            if( type["id"] == 1)
+            {
+                devgrant = type["sum_schools"]["total"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
+                expectedGrant += devgrant + maintenance_grant;
+            }
+            if(_.contains(lowerUpperPrimary, type["id"]))
+            {
+                devgrant = type["sum_schools"]["total"] * 12000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 15000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 20000;
+                expectedGrant += devgrant + maintenance_grant;
+            }
+            if(_.contains(onlyUpperPrimary, type["id"]))
+            {
+                devgrant = type["sum_schools"]["total"] * 7000;
+                maintenance_grant += type["sum_schools"]["classrooms_leq_3"] * 5000;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_4"] * 7500;
+                maintenance_grant += type["sum_schools"]["classrooms_eq_5"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_mid_67"] * 10000;
+                maintenance_grant += type["sum_schools"]["classrooms_geq_8"] * 10000;
+                expectedGrant += devgrant + maintenance_grant;
+            }
+        }
+        return expectedGrant;
+    }
+    
+    /*
+        Render Neighbours
+    */
     function renderNeighbours(data) {
         var comparisonData = {};
         var total_schools = 0;
@@ -511,8 +547,15 @@
                 "expenditure": data[each]["properties"]["sum_school_dev_grant_expnd"] + data[each]["properties"]["sum_tlm_grant_expnd"],
                 "total": categoryData["schoolcount"]
             };
-            total_schools += categoryData["schoolcount"]
+            total_schools += categoryData["schoolcount"];
         }
+        comparisonData[summaryData.boundary.dise] = {"name": summaryData.boundary.name,
+                                                        "expected": grantData.expected.grand_total,
+                                                        "received": grantData.received.grand_total,
+                                                        "expenditure": grantData.expenditure.grand_total,
+                                                        "total": summaryData.school_count
+                                                       };
+        total_schools += summaryData.school_count;
         for( var iter in comparisonData){
             comparisonData[iter]["total_perc"] = Math.round(comparisonData[iter]["total"]*100/total_schools*100)/100;
         }

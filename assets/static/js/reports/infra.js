@@ -2,6 +2,8 @@
 (function() {
     var utils;
     var repUtils;
+    var acadYear;
+    var boundaryData;
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     klp.init = function() {
         utils = klp.boundaryUtils;
@@ -59,6 +61,9 @@
         }
     };
 
+    /*
+        Fetch basic details (dise slug and academic year details) from backend
+    */
     function fetchReportDetails()
     {
         var repType,bid,lang;
@@ -70,50 +75,112 @@
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             console.log('data', data);
-            fetchSchoolData(data);
+            fetchDiseData(data);
         });
     }
 
-    function fetchSchoolData(data)
+    /*
+        Fetch dise data for the specified boundary
+    */
+    function fetchDiseData(data)
     {
-        var acadYear = data["academic_year"].replace(/20/g, '');
+        acadYear = data["academic_year"].replace(/20/g, '');
         var boundary = {"id": data["boundary_info"]["dise"], "type": data["boundary_info"]["type"]};
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('summary diseData', diseData);
+            boundaryData = diseData;
             var summaryJson = getSummaryData(data, diseData);
             renderSummary(summaryJson);
+            getNeighbourData(data);
+            getYearData(data);
         })
         .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
         });
-        getNeighbourData(data, acadYear);
+    }
+
+    /*
+        Fill the summary data structure
+    */
+    function getSummaryData(data, diseData)
+    {
+        var categoryData = getCategoryCount(diseData["properties"]);
+        var summaryJSON = {
+            "boundary"  : data["boundary_info"],
+            "school_count" : categoryData["schoolcount"],
+            "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
+            "gender" : categoryData["gendercount"],
+            "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
+        };
+        if (summaryJSON["teacher_count"] == 0)
+            summaryJSON['ptr'] = "NA";
+        else
+            summaryJSON['ptr'] = Math.round(summaryJSON["student_total"]/summaryJSON["teacher_count"]);
+        summaryJSON['girl_perc'] = Math.round(( summaryJSON["gender"]["girls"]/summaryJSON["student_total"] )* 100);
+        summaryJSON['boy_perc'] = 100-summaryJSON['girl_perc'];
+        return summaryJSON;
+    }
+
+    /*
+        Gets school count and gender count for schools that are of type lower primary or upper primary only.
+    */
+    function getCategoryCount(data)
+    {
+        var categorycount = {"schoolcount": 0,
+                             "gendercount":  {"boys": 0, "girls": 0}
+                            };
+        for(var iter in data["school_categories"])
+        {
+            var type = data["school_categories"][iter];
+            if(type["id"] == 1 || _.contains(upperPrimaryCategories, type["id"])){
+                categorycount["schoolcount"] += type["sum_schools"]["total"];
+                categorycount["gendercount"]["boys"] += type["sum_boys"];
+                categorycount["gendercount"]["girls"] += type["sum_girls"];
+            }
+        }
+        return categorycount;
+    }
+
+    /*
+        Render summary data
+    */
+    function renderSummary(data) {
+        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
+        var tplReportDate = swig.compile($('#tpl-reportDate').html());
+        var now = new Date();
+        var today = {'date' : moment(now).format("MMMM D, YYYY")};
+        var dateHTML = tplReportDate({"today":today});
+        $('#report-date').html(dateHTML);
+        var topSummaryHTML = tplTopSummary({"data":data});
+        $('#top-summary').html(topSummaryHTML);
+    }
+
+    /*
+        Get the Neighouur information for comparison
+    */
+    function getNeighbourData(data)
+    {
+        var type = data["boundary_info"]["type"];
+        var passboundarydata = {"acadYear": acadYear};
+        var passeddata;
+        if(type == "district")
+            passeddata = data["neighbours"];
+        else
+            passeddata = data["boundary_info"]["parent"];
+        getMultipleData(passeddata, passboundarydata, getMultipleNeighbour, renderNeighbours);
+    }
+
+    /*
+        Get previous year data for comparison
+    */
+    function getYearData(data)
+    {
         var yearData = [];
-        yearData[acadYear] = data["academic_year"];
         var years = acadYear.split("-").map(Number);
         yearData[(years[0]-1).toString()+"-"+(years[1]-1).toString()] = "20"+(years[0]-1).toString()+"-"+"20"+(years[1]-1).toString();
         yearData[(years[0]-2).toString()+"-"+(years[1]-2).toString()] = "20"+(years[0]-2).toString()+"-"+"20"+(years[1]-2).toString();
         var passYearData = {"name": data["boundary_info"]["name"], "type": data["boundary_info"]["type"],"dise": data["boundary_info"]["dise"]};
-        getMultipleData(yearData, passYearData, getLoopData, renderComparison,"acadYear");
-    }
-
-    function getNeighbourData(data, acadYear)
-    {
-        var type = data["boundary_info"]["type"];
-        if(type == "district")
-        {
-            klp.dise_api.getMultipleBoundaryData(null, null, type, acadYear).done(function(diseData) {
-                console.log('neighbours diseData', diseData);
-                renderNeighbours(diseData["results"]["features"]);
-            })
-            .fail(function(err) {
-                klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
-            });
-        }
-        else
-        {
-            var passBoundaryData = {"acadYear": acadYear};
-            getMultipleData(data["boundary_info"]["parent"], passBoundaryData, getMultipleNeighbour, renderNeighbours,"parent");
-        }
+        getMultipleData(yearData, passYearData, getMultipleYear, renderYearComparison,"acadYear");
     }
 
     /*
@@ -123,10 +190,10 @@
      * the relevant api calls.
      * Once the loop is over the exitFunction is called.
      */
-    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName)
+    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName="iter")
     {
         var numberOfIterations = Object.keys(inputData).length;
-        var outputData= {};
+        var outputData= [];
         var index = 0,
             done = false,
             shouldExit = false;
@@ -164,6 +231,9 @@
         return loop;
     }
 
+    /*
+        Call DISE API with information of neighbours.
+    */
     function getMultipleNeighbour(loop)
     {
         var data = loop.iteration();
@@ -178,7 +248,10 @@
         });
     }
 
-    function getLoopData(loop)
+    /*
+        Call DISE API for same boundary for different years.
+    */
+    function getMultipleYear(loop)
     {
         var data = loop.iteration();
         var boundary = {"type": data["type"], "id": data["dise"]};
@@ -192,68 +265,24 @@
         });
     }
 
-    function getCategoryCount(data)
-    {
-        var categorycount = {"schoolcount": 0,
-                             "gendercount":  {"boys": 0, "girls": 0}
-                            }
-
-        for(var iter in data["school_categories"])
-		{
-			var type = data["school_categories"][iter];
-			if(type["id"] == 1 || _.contains(upperPrimaryCategories, type["id"])){
-				categorycount["schoolcount"] += type["sum_schools"]["total"];
-                categorycount["gendercount"]["boys"] += type["sum_boys"];
-                categorycount["gendercount"]["girls"] += type["sum_girls"];
-			}
-		}
-        return categorycount;
-    }
-
-    function getSummaryData(data, diseData)
-    {
-        var categoryData = getCategoryCount(diseData["properties"]);
-        var summaryJSON = {
-            "boundary"  : data["boundary_info"],
-            "school_count" : categoryData["schoolcount"],
-            "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
-            "gender" : categoryData["gendercount"],
-            "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
-        };
-        return summaryJSON;
-    }
-
-    function renderSummary(data) {
-        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplReportDate = swig.compile($('#tpl-reportDate').html());
-        
-        var now = new Date();
-        var today = {'date' : moment(now).format("MMMM D, YYYY")};
-        var dateHTML = tplReportDate({"today":today});
-        $('#report-date').html(dateHTML);
-
-        data['student_total'] = data["gender"]["boys"] + data["gender"]["girls"];
-        if (data["teacher_count"] == 0)
-            data['ptr'] = "NA";
-        else
-            data['ptr'] = Math.round(data["student_total"]/data["teacher_count"]);
-        data['girl_perc'] = Math.round(( data["gender"]["girls"]/data["student_total"] )* 100);
-        data['boy_perc'] = 100-data['girl_perc'];
-        
-        var topSummaryHTML = tplTopSummary({"data":data});
-        $('#top-summary').html(topSummaryHTML);
-    }
-
-    function renderComparison(data) {
+    /*
+        Render the year data.
+    */
+    function renderYearComparison(data) {
+        data[acadYear] = boundaryData;
         var transpose = transposeData(data);
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
         var yrcompareHTML = tplYearComparison({"transpose":transpose});
         $('#comparison-year').html(yrcompareHTML);
     }
 
+    /*
+        Render Neighbour data.
+    */
     function renderNeighbours(data) {
         var hash = schoolInfraHash;
         var percData = {"keys":{}};
+        data[data.length] = boundaryData;
 
         for (var each in data) {
             for (var key in data[each]["properties"]) {
@@ -275,6 +304,9 @@
         $('#comparison-neighbour').html(compareHTML);
     }
 
+    /*
+        Function for showing data vertical for years
+    */
     function transposeData(data) {
         var hash = schoolInfraHash;
         var transpose = {

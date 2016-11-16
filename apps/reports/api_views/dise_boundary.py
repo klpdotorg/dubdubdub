@@ -24,6 +24,12 @@ class DiseBoundaryDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
         except Exception:
             raise APIError('Boundary not found', 404)
         self.get_boundary_summary_data(boundary, self.reportInfo)
+        if boundary.get_admin_level() == 1:
+            self.reportInfo["neighbours"] = []
+            boundaries = self.getDistrictNeighbours(boundary)
+            for comparisonboundary in boundaries:
+                self.reportInfo["neighbours"].append({"dise": comparisonboundary.dise_slug, "type": "district"})
+
 
     def get(self, request):
         mandatoryparams = {'id': [], 'language': ["english", "kannada"]}

@@ -11,6 +11,9 @@
         klp.router.start();
     };
 
+    /*
+        Get the basic summary data from the klp to show on the page
+    */
     function fetchReportDetails()
     {
         var repType,bid,lang;
@@ -21,26 +24,36 @@
         var url = "reports/summary/?id="+bid;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
-            summaryData = data;
-            var summaryJSON= getSummaryData(data);
-            renderSummary(summaryJSON,"Schools");
+            getSummaryData(data);
+            renderSummary(summaryData);
             getDetailsData(bid, lang, repType);
             getComparisonData(bid, lang, repType);
         });
     }
 
+    /*
+        Creates the data structure for summary data and returns it.
+    */
     function getSummaryData(data)
     {
-        var summaryJSON = {
+        summaryData = {
             "boundary"  : data["boundary_info"],
             "school_count" : data["school_count"],
             "teacher_count" : data["teacher_count"],
-            "gender" : data["gender"]
+            "gender" : data["gender"],
+            "student_total": data["student_count"],
+            "ptr" : data["ptr"],
+            "school_perc" : data["school_perc"]
         };
-        return summaryJSON;
+
+        summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100);
+        summaryData['boy_perc'] = 100 - summaryData['girl_perc'];
     }
 
-    function renderSummary(data, schoolType) {
+    /*
+        Renders summary data
+    */
+    function renderSummary(data) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplReportDate = swig.compile($('#tpl-reportDate').html());
         
@@ -48,36 +61,34 @@
         var today = {'date' : moment(now).format("MMMM D, YYYY")};
         var dateHTML = tplReportDate({"today":today});
         $('#report-date').html(dateHTML);
-
-        data['student_total'] = data["gender"]["boys"] + data["gender"]["girls"];
-        if( data["teacher_count"] == 0 )
-            data['ptr'] = "NA";
-        else
-            data['ptr'] = Math.round(data["student_total"]/data["teacher_count"]);
-        data['girl_perc'] = Math.round(( data["gender"]["girls"]/data["student_total"] )* 100);
-        data['boy_perc'] = 100-data['girl_perc'];
         
         var topSummaryHTML = tplTopSummary({"data":data});
         $('#top-summary').html(topSummaryHTML);
     }
 
+    /*
+        Get the Category and Language details from the backend.
+    */
     function getDetailsData(bid, lang, repType)
     {
         var url = "reports/demographics/"+repType+"/details/?id="+bid+"&language="+lang;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
             detailsData = data;
-            getComparisonData(bid, lang, repType);
             renderCategories(data);
             renderLanguage(data["languages"]);
         });
     }
 
+    /*
+        Gets Comparison data. Comparison across boundaries and years.
+    */
     function getComparisonData(bid, lang, repType)
     {
         var url = "reports/demographics/"+repType+"/comparison/?id="+bid+"&language="+lang;
         var $xhr = klp.api.do(url);
         $xhr.done(function(data) {
+            //Adding data for current year to the 
             data["comparison"]["year-wise"][0] = {
                             "year": detailsData["report_info"]["year"],
                              "avg_enrol_upper": detailsData["enrolment"]["Upper Primary"]["average_student_count"],
@@ -88,11 +99,14 @@
                              "teacher_count": summaryData["teacher_count"],
                              "ptr": summaryData["ptr"]
             };
-            data['comparison']['boundary_name'] = summaryData["boundary_info"]["name"];
+            data['comparison']['boundary_name'] = summaryData["boundary"]["name"];
             renderComparison(data["comparison"]);
         });
     }
 
+    /*
+        Renders the categories. Shows average number of students per school and category percentage 
+    */
     function renderCategories(data) {
         var categories = data["categories"];
         var school_total = 0;
@@ -113,6 +127,11 @@
         $('#category-profile').html(categoryHTML);
     }
 
+    /*
+        Renders Mother Tongue and Medium of Instruction. 
+        First calculates the total number of schools and then total students
+        Then it calculates average number of school per language and average number of children per mother tongue.
+    */
     function renderLanguage(languages) {
         var new_lang = {};
         var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU"];
@@ -168,10 +187,15 @@
         
     }
 
+    /*
+        Renders year wise and neighbour wise comparison.
+    */
     function renderComparison(data) {
+        //render year comparison
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
         var yrcompareHTML = tplYearComparison({"years":data["year-wise"],"boundary_name":data["boundary_name"]});
         $('#comparison-year').html(yrcompareHTML);
+
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":data["boundaries"],"boundary_name":data["boundary_name"]});
         $('#comparison-neighbour').html(compareHTML);

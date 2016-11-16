@@ -1,12 +1,47 @@
 from schools.models import Boundary
 from django.db.models import Count, Sum
 from rest_framework.exceptions import ParseError
+import sys
 
 
 class BaseBoundaryReport(object):
     '''
         Has basic function for getting and checking data
     '''
+    neighbourIds = {413: [414,415,420,421,422],
+                    414: [413,415,418,419,420],
+                    415: [413,414,416,418,445],
+                    416: [415,417,445],
+                    417: [416],
+                    418: [414,415,419,424,445],
+                    419: [414.418,420,424],
+                    420: [414,419,421,423,424],
+                    421: [413,420,422,423],
+                    422: [413,421,423,427,428],
+                    423: [420,421,422,424,426,427],
+                    424: [418,419,420,423,426,425],
+                    425: [424,426,429,430],
+                    426: [423,424,425,427,429],
+                    427: [422,423,426,428,429],
+                    428: [422,427,429,436],
+                    429: [425,426,427,428,430,435,436],
+                    430: [425,429,433,434,435,441,444],
+                    431: [433,441,9540,9541],
+                    433: [430,431,444,9540,9541],
+                    434: [430,435,439,444,8878],
+                    435: [429,430,434,436,437,8878],
+                    436: [428,429,435,437],
+                    437: [435,436,8878],
+                    439: [434,444,8878],
+                    441: [430,431,433],
+                    442: [414,415,420,421,422],
+                    443: [425,429,433,434,435,441,444],
+                    444: [430,433,434,439,9540,9541],
+                    445: [415,416,418],
+                    8878: [434,435,437,439],
+                    9540: [431,433,444,9541],
+                    9541: [431,433,444,9540]}
+
 
     #Get dise information for the boundary
     def get_dise_school_info(self, active_schools, academic_year):
@@ -43,6 +78,10 @@ class BaseBoundaryReport(object):
                 count = neighbour.schools().count()
                 parent["schoolcount"] += count
         return parent
+
+    def getDistrictNeighbours(self, boundary):
+        neighbours = self.neighbourIds[boundary.id]
+        return Boundary.objects.filter(id__in = neighbours)
 
     #Returns 0 where data is None
     def check_values(self, boundaryData):
