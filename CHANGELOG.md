@@ -9,6 +9,14 @@ Use required commands
 
 Changelog
 ---
+Release 1.0.8: 02c199a6d52712a7785c45b85590af0fe697ed68 - 2016-11-15
+  - Moves to mapbox base layer.
+  - Fixes to user account creation script.
+
+Release 1.0.7: 02c199a6d52712a7785c45b85590af0fe697ed68 - 2016-11-09
+  - Fixes block search for particular user.
+  - Implements the script to create user accounts from a csv.
+
 Release 1.0.6: c20cbbc806e85711354b58a0f580eb0252374dd3 - 2016-11-03
   - Minor migration and queryset optimizations.
   - Mobile sync api endpoint fix.
