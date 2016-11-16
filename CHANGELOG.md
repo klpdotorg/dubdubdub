@@ -8,7 +8,12 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
----
+	---
+Release 1.0.9: 9018fac49538bb79c5a217b2d2cda92ffa0731c5 - 2016-11-16
+  - Added post_import.sh to run scripts after database is created
+  - Corrected database reference in run_markpercentile.sh and run_gradepercentile.sh```
+  - Updated readme on DB refresh from EMS to dubdubdub
+
 Release 1.0.8: 02c199a6d52712a7785c45b85590af0fe697ed68 - 2016-11-15
   - Moves to mapbox base layer.
   - Fixes to user account creation script.
