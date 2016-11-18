@@ -129,8 +129,8 @@
                                 </div>
                                 <div class="bar-graph">
                                   <div class="bar-percent">{{ gender.score |int}}%</div>
-                                  <div class="bar-custom tooltip" aria-label="{{ gender.score }}">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.percentile|int }}" style="width:{{ gender.percentile}}%;">
+                                  <div class="bar-custom tooltip" aria-label="{{ gender.score|int }}">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ gender.score|int }}" style="width:{{ gender.score}}%;">
                                       </div>
                                   </div>
                                 </div> 
@@ -148,8 +148,8 @@
                                 </div>
                                 <div class="bar-graph">
                                   <div class="bar-percent">{{ mt.score | int}}%</div>
-                                  <div class="bar-custom tooltip" aria-label="{{ mt.percentile}}%">
-                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.percentile|int }}" style="width:{{ mt.percentile}}%;">
+                                  <div class="bar-custom tooltip" aria-label="{{ mt.score|int }}%">
+                                      <div class="bar-value grey-gravel-bg bar-value-{{ mt.score|int }}" style="width:{{ mt.score}}%;">
                                       </div>
                                   </div>
                                 </div> 

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from common.models import BaseModel
-from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES, SEX_CHOICES
+from .choices import MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
 
@@ -27,10 +27,10 @@ class InstitutionAssessmentCohorts(BaseModel):
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
-    cohortsnum= models.IntegerField()
+    cohortsnum = models.IntegerField()
 
     def __unicode__(self):
-        return "%s: %s: %s: %s" % (self.school,self.assessment, self.sex, self.mt,)
+        return "%s: %s: %s: %s" % (self.school, self.assessment, self.sex, self.mt,)
 
     class Meta:
 
@@ -46,9 +46,9 @@ class InstitutionAssessmentSinglescore(BaseModel):
     studentgroup = models.CharField(max_length=50, blank=True)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
 
@@ -65,8 +65,8 @@ class InstitutionAssessmentSinglescore(BaseModel):
 class InstitutionAssessmentPercentile(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
-                                      blank=True, null=True)
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+                                     blank=True, null=True)
 
     def __unicode__(self):
 
@@ -80,18 +80,16 @@ class InstitutionAssessmentPercentile(BaseModel):
         db_table = 'tb_institution_assessment_percentile'
 
 
-
-
 class InstitutionAssessmentSinglescoreGender(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+    percentil e= models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
 
@@ -127,7 +125,7 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
         db_table = 'tb_institution_assessment_singlescore_mt'
 
 class BoundaryAssessmentSinglescore(BaseModel):
-    boundary= models.ForeignKey('Boundary', db_column='bid', primary_key=True)
+    boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
@@ -164,22 +162,20 @@ class BoundaryAssessmentPercentile(BaseModel):
         db_table = 'tb_boundary_assessment_percentile'
 
 
-
-
 class BoundaryAssessmentSinglescoreGender(BaseModel):
     boundary = models.ForeignKey('Boundary', db_column='bid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid')
     studentgroup = models.CharField(max_length=50, blank=True)
-    sex= models.CharField(max_length=128, choices=SEX_CHOICES)
+    sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
     percentile= models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
 
-        return "%s: %s" %(self.boundary, self.assessment,self.gender,)
+        return "%s: %s" %(self.boundary, self.assessment, self.gender,)
 
     class Meta:
 
@@ -196,9 +192,9 @@ class BoundaryAssessmentSinglescoreMt(BaseModel):
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
         return "%s: %s: %s" %(self.boundary, self.assessment, self.mt,)
