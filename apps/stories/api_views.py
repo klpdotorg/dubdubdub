@@ -836,7 +836,7 @@ class StoriesView(KLPListAPIView):
                 raise ParseError("verified param must be either 'yes' or 'no' if provided.")
 
         sources = self.request.GET.getlist('source', [])
-        if source:
+        if sources:
             qset = qset.filter(group__source__name__in=sources).prefetch_related('group', 'group__source')
 
         since_id = self.request.GET.get('since_id', 0)
