@@ -207,14 +207,14 @@ class StoriesSyncView(KLPAPIView):
                     user_type = UserType.objects.get(name__iexact=story.get('respondent_type'))
                     new_story, created = Story.objects.get_or_create(
                         user=request.user,
-                        school=School.objects.get(pk=story.get('school_id')),
-                        group=Questiongroup.objects.get(pk=story.get('group_id')),
+                        school_id=story.get('school_id'),
+                        group_id=story.get('group_id'),
                         user_type=user_type,
-                        date_of_visit=datetime.datetime.fromtimestamp(timestamp),
-                        sysid=sysid
+                        date_of_visit=datetime.datetime.fromtimestamp(timestamp)
                     )
 
                     if created:
+                        new_story.sysid = sysid
                         new_story.is_verified = True
                         new_story.telephone = request.user.mobile_no
                         new_story.name = request.user.get_full_name()
@@ -231,6 +231,8 @@ class StoriesSyncView(KLPAPIView):
                 except Exception as e:
                     print "Error saving stories and answers:", e
                     response['failed'].append(story.get('_id'))
+                    # price traceback
+                    import traceback; traceback.print_exc();
         return Response(response)
 
 
