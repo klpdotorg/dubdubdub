@@ -21,21 +21,28 @@ class Command(BaseCommand):
         if not self.directory:
             print "Please specify full path to directory with the --dir argument"
             return
+        self.runArchiveUpdate()
         walk(self.directory, self.processDir, None)
+
+    def runArchiveUpdate(self):
+        mr_list = MeetingReport.objects.all()
+        for each in mr_list:
+            path_split = each.pdf.name.split('/')
+            if 'archives' not in path_split:
+                each.pdf.name = path_split[0] + '/archives/' + path_split[1]
+                each.save()
 
     def processDir(self, arg, dirname, fnames):
         for fname in fnames:
             #print fname
             #file_path = join(self.directory, dirname, fname)
             file_path = join(dirname, fname)
-            if file_path.endswith('.pdf'):
+            if file_path.find('archives') ==-1 and file_path.endswith('.pdf'):
                 self.importPDF(file_path, fname)
 
 
     def importPDF(self, file_path, filename):
-        filepath_split = file_path.split('/')
-        print filepath_split
-        
+        filepath_split = file_path.split('/')        
         filename_split = filename.rstrip('.pdf').split("_")
         school_id = filename_split[1]
         language = filepath_split[4] #6
@@ -48,7 +55,7 @@ class Command(BaseCommand):
         #fil = open(file_path)
         #django_file = File(fil)
         #mr.pdf.save(file_path, django_file, save=True)
-        mr.pdf = file_path. lstrip('media/')
+        mr.pdf.name = file_path.split('/', 1)[1]
         mr.save()
 
 
