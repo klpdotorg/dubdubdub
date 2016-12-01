@@ -86,14 +86,11 @@ class SchoolListSerializer(KLPSerializer):
 
 
 class SchoolSerializer(KLPSerializer):
-    admin3 = BoundarySerializer(source='schooldetails.admin3')
-    admin2 = BoundarySerializer(source='schooldetails.admin2')
-    admin1 = BoundarySerializer(source='schooldetails.admin1')
 
     class Meta:
         model = School
         fields = (
-            'id', 'name', 'admin3', 'admin2', 'admin1'
+            'id', 'name', 'admin3'
         )
 
 
