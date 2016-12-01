@@ -15,7 +15,7 @@ from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
     SchoolLibrarySerializer, SchoolNutritionSerializer, PrechoolInfraSerializer
 
 
-class MeetingReportViewSet(KLPModelViewSet):
+class MeetingReportViewSet(KLPModelViewSet, CacheMixin):
     queryset = MeetingReport.objects.all()
     serializer_class = MeetingReportSerializer
 
