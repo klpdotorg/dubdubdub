@@ -16,11 +16,10 @@ from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
 
 
 class MeetingReportViewSet(KLPModelViewSet, CacheMixin):
-    queryset = MeetingReport.objects.all()
     serializer_class = MeetingReportSerializer
 
     def get_queryset(self):
-        queryset = MeetingReport.objects.all()
+        queryset = MeetingReport.objects.select_related('school').all()
         school_id = self.request.GET.get('school_id', None)
         if school_id:
             queryset = queryset.filter(school=school_id)
