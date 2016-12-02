@@ -30,10 +30,10 @@ function searchLoop(col_num, filter) {
         if (td) {
             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
-                console.log("display");
+                // console.log("display");
             } else {
                 tr[i].style.display = "none";
-                console.log("don't display");
+                // console.log("don't display");
             }
         } 
     }

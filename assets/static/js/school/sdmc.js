@@ -44,7 +44,7 @@
 
     function renderSummary(data) {
         var transformed = transformData(data['features'])
-        console.log(transformed);
+        // console.log(transformed);
         var tplResponseTable = swig.compile($('#tpl-responseTable').html());
         var tableHTML = tplResponseTable({'data':transformed});
         $('#response_summary').html(tableHTML);
