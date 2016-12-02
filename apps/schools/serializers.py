@@ -85,7 +85,17 @@ class SchoolListSerializer(KLPSerializer):
         fields = ('id', 'name', 'boundary', 'address_full', 'dise_info', 'type',)
 
 
+class SchoolSerializer(KLPSerializer):
+
+    class Meta:
+        model = School
+        fields = (
+            'id', 'name', 'admin3'
+        )
+
+
 class MeetingReportSerializer(serializers.ModelSerializer):
+    school = SchoolSerializer()
 
     class Meta:
         model = MeetingReport

@@ -514,6 +514,7 @@ class MeetingReport(BaseModel):
     school = models.ForeignKey('School')
     pdf = models.FileField(upload_to='meeting_reports')
     language = models.CharField(max_length=128)
+    generated_at = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return "%d: %s" % (self.school.id, self.language,)

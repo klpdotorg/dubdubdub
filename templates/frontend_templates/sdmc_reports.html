@@ -1,0 +1,66 @@
+{% verbatim %}
+
+  
+
+  <script type="text/html" id="tpl-responseTable">
+
+  <div class="base-spacing-mid"></div>
+  <form class="form-base">
+    <div class="form-field-wrap">
+        <input type="text" class="input-text full-width" id="search-name" onkeyup="searchTable()" placeholder="Search by school name">
+    </div>
+  </form>
+
+  <div class="base-spacing-mid"></div>
+  <table id="sdmc-table" class="table-base table-list-view table-base-volunteer">
+  <thead>
+    <tr class="table-base-heading">
+      <th>KLP ID
+        <!-- <form class="form-base">
+        <div class="form-field-wrap">
+            <input type="text" class="input-text" id="search-id" onkeyup="searchTable()" placeholder="Search by KLP id">
+        </div>
+        </form> -->
+      </th>
+
+      <th>School Name
+        
+      </th>
+
+      <th>List of Reports
+        <!-- <form class="form-base">
+        <div class="form-field-wrap">
+            <input type="text" class="input-text" id="search-year" onkeyup="searchTable()" placeholder="Search by year">
+        </div>
+        </form> -->
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for school in data %}
+      <tr>
+        <td>
+          <div><a href="/school/{{school.id}}" target="_blank">{{school.id}}</div>
+        </td>
+        <td>
+          <div class="brand-green td-label-school"><strong>{{school.name}}</strong></div>  
+          <div class="font-smaller">Count of reports: {{Object.keys(school.pdfs).length}}</dir> 
+        </td>
+        <td>
+          <ul class="ul-base">
+          {% for each in school.pdfs %}
+            {% if each.is_archived %}
+              <li><a href="/media/{{each.path}}" target="_blank">Archived Report - {{each.lang|capitalize}}</a></li>
+            {% else %}
+              <li><a href="/media/{{each.path}}" target="_blank">{{each.month}} {{each.year}} - {{each.lang|capitalize}}</a></li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>          
+{% endverbatim %}
+

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}SDMC Report Summary{% endblock %}
+
+{% block css_extra %}
+
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}  
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/school/utils.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/school/sdmc.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+<div class="base-spacing-mid"></div>
+<div class="heading-secondary heading-border brand-red">SDMC Meeting Reports</div>
+<div class="container">
+	<div class="base-spacing-mid"></div>
+	<div class="font-smaller container">
+		Note: The following SDMC Reports are in PDF format. Some of them have been scanned in landscape mode. Please download and use a PDF Reader to rotate and view in the right orientation and format.
+	</div>
+	<div class="base-spacing-mid"></div>
+	<div id="response_summary" class="container"></div>	
+</div>
+
+		
+{% include 'frontend_templates/sdmc_reports.html' %} 
+{% endblock %}

@@ -2,12 +2,29 @@ from django.conf import settings
 from django.db.models import Count
 from schools.models import School, DiseInfo, MdmAgg, MeetingReport
 from schools.filters import SchoolFilter
-from common.views import KLPListAPIView, KLPDetailAPIView, KLPAPIView
+from common.views import (
+    KLPListAPIView,
+    KLPDetailAPIView,
+    KLPAPIView,
+    KLPModelViewSet
+)
 from common.mixins import CacheMixin
 from schools.serializers import SchoolListSerializer, SchoolInfoSerializer,\
-    SchoolDiseSerializer, SchoolDemographicsSerializer,\
+    SchoolDiseSerializer, SchoolDemographicsSerializer, MeetingReportSerializer, \
     SchoolProgrammesSerializer, SchoolFinanceSerializer, SchoolInfraSerializer,\
     SchoolLibrarySerializer, SchoolNutritionSerializer, PrechoolInfraSerializer
+
+
+class MeetingReportViewSet(KLPModelViewSet, CacheMixin):
+    serializer_class = MeetingReportSerializer
+
+    def get_queryset(self):
+        queryset = MeetingReport.objects.select_related('school').all()
+        school_id = self.request.GET.get('school_id', None)
+        if school_id:
+            queryset = queryset.filter(school=school_id)
+
+        return queryset
 
 
 class SchoolsList(KLPListAPIView, CacheMixin):

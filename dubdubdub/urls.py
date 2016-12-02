@@ -187,6 +187,10 @@ urlpatterns = patterns(
     url(r'^boundary/(?P<pk>[0-9]+)/$', BoundaryPageView.as_view(), name='boundary_page'),
     url(r'^(?P<boundary_type>preschool-district|primary-district|circle|cluster|project|block)/(?P<pk>[0-9]+)/$', NewBoundaryPageView.as_view(), name='boundary_page_new'),
 
+    # sdmc reports
+    url(r'^sdmc/$', StaticPageView.as_view(
+        template_name='sdmc_reports.html'
+    ), name='sdmc'),
 
     url(r'^users/verify_email',
         EmailVerificationView.as_view(), name='user_email_verify'),
