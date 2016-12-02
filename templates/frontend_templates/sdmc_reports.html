@@ -1,6 +1,18 @@
 {% verbatim %}
 
   
+  <script type="text/html" id="tpl-countSummary">
+    <div class="chart-parent">
+      <div class="chart-half-item">
+      Total count of SDMC/BVS Reports available<br/>
+      <span class="heading-secondary brand-blue">{{report_count}}</span>
+      </div>
+      <div class="chart-half-item">
+      Total count of schools/preschools that have Reports<br/>
+      <span class="heading-secondary brand-blue">{{school_count}}</span>
+       </div>
+    </div>
+  </script>
 
   <script type="text/html" id="tpl-responseTable">
 
@@ -61,6 +73,8 @@
       </tr>
     {% endfor %}
   </tbody>
-  </table>          
+  </table>   
+</script>
+
 {% endverbatim %}
 

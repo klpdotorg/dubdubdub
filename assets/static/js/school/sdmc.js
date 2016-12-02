@@ -45,6 +45,10 @@
     function renderSummary(data) {
         var transformed = transformData(data['features'])
         // console.log(transformed);
+        var tplCountSummary = swig.compile($('#tpl-countSummary').html());
+        var countHTML =  tplCountSummary({'school_count':_.keys(transformed).length,
+                                          'report_count':data['features'].length});
+        $('#count_summary').html(countHTML)
         var tplResponseTable = swig.compile($('#tpl-responseTable').html());
         var tableHTML = tplResponseTable({'data':transformed});
         $('#response_summary').html(tableHTML);
