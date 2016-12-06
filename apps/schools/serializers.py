@@ -95,10 +95,10 @@ class SchoolSerializer(KLPSerializer):
 
 
 class MeetingReportSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer()
 
     class Meta:
         model = MeetingReport
+        fields = ('pdf', 'language', 'generated_at')
 
 
 class SchoolInfoSerializer(KLPSerializer):
