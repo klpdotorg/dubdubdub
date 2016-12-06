@@ -1,4 +1,4 @@
-from schools.models import Boundary, Assembly, Parliament, Postal
+from schools.models import Boundary, Assembly, Parliament, Postal, MeetingReport
 from common.views import KLPListAPIView, KLPDetailAPIView
 from common.mixins import CacheMixin
 from schools.serializers import (
@@ -117,6 +117,7 @@ class Admin1s(KLPListAPIView, CacheMixin):
 
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
+        meetingreport = self.request.GET.get('meetingreport', None)
         qset = Boundary.objects.all_active()\
             .select_related('boundarycoord__coord', 'hierarchy__name')\
             .prefetch_related('hierarchy')
@@ -127,6 +128,17 @@ class Admin1s(KLPListAPIView, CacheMixin):
             qset = qset.filter(hierarchy_id=9)
         else:
             qset = qset.filter(hierarchy__name='district')
+
+        if meetingreport:
+            admin1_ids = MeetingReport.objects.all(
+            ).order_by(
+            ).values_list(
+                'school__schooldetails__admin1',
+                flat=True
+            ).distinct(
+                'school__schooldetails__admin1'
+            )
+            qset = qset.filter(id__in=admin1_ids)
 
         return qset
 
