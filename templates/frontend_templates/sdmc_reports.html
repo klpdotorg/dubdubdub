@@ -2,50 +2,44 @@
 
   
   <script type="text/html" id="tpl-countSummary">
-    <div class="chart-parent">
+    <div class="chart-parent font-smaller">
       <div class="chart-half-item">
-      Total count of SDMC/BVS Reports available<br/>
-      <span class="heading-secondary brand-blue">{{report_count}}</span>
+      Total count of SDMC/BVS Reports available: 
+      <span class="brand-blue bold">{{report_count}}</span>
       </div>
       <div class="chart-half-item">
-      Total count of schools/preschools that have Reports<br/>
-      <span class="heading-secondary brand-blue">{{school_count}}</span>
+      Total count of schools/preschools that have Reports: 
+      <span class="brand-blue bold">{{school_count}}</span>
        </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-buttons">
+    <div class="container center-text">
+      {% if previous != null %}
+          <button data-id="{{previous}}" class="prev button">Prev</button>
+      {% endif %}
+      {% if next != null %}
+          <button data-id="{{next}}" class="next button">Next</button>
+      {% endif %}
     </div>
   </script>
 
   <script type="text/html" id="tpl-responseTable">
 
-  <div class="base-spacing-mid"></div>
-  <form class="form-base">
+  <!-- <form class="form-base">
     <div class="form-field-wrap">
         <input type="text" class="input-text full-width" id="search-name" onkeyup="searchTable()" placeholder="Search by school name">
     </div>
-  </form>
+  </form> -->
 
-  <div class="base-spacing-mid"></div>
   <table id="sdmc-table" class="table-base table-list-view table-base-volunteer">
   <thead>
     <tr class="table-base-heading">
-      <th>KLP ID
-        <!-- <form class="form-base">
-        <div class="form-field-wrap">
-            <input type="text" class="input-text" id="search-id" onkeyup="searchTable()" placeholder="Search by KLP id">
-        </div>
-        </form> -->
-      </th>
-
-      <th>School Name
-        
-      </th>
-
-      <th>List of Reports
-        <!-- <form class="form-base">
-        <div class="form-field-wrap">
-            <input type="text" class="input-text" id="search-year" onkeyup="searchTable()" placeholder="Search by year">
-        </div>
-        </form> -->
-      </th>
+      <th>KLP ID</th>
+      <th>Cluster/Circle</th>
+      <th>School/Preschool Name</th>
+      <th>List of Reports</th>
 
     </tr>
   </thead>
@@ -56,8 +50,19 @@
           <div><a href="/school/{{school.id}}" target="_blank">{{school.id}}</div>
         </td>
         <td>
+          <div>{{school.admin3|capitalize}}</div>  
+          <div class="font-smaller">
+            <strong>District: </strong>{{school.admin1|capitalize}}
+            {% if school.school_type == "PreSchool" %}
+              <strong>Project: </strong>{{school.admin2|capitalize}}
+            {% else %}
+              <strong>Block: </strong>{{school.admin2|capitalize}}
+            {% endif %}
+          </div> 
+        </td>
+        <td>
           <div class="brand-green td-label-school"><strong>{{school.name}}</strong></div>  
-          <div class="font-smaller">Count of reports: {{Object.keys(school.pdfs).length}}</dir> 
+          <div class="font-smaller">Count of reports: {{Object.keys(school.pdfs).length}}</div> 
         </td>
         <td>
           <ul class="ul-base">
