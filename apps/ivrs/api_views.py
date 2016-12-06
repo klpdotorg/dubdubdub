@@ -49,7 +49,8 @@ class SMSView(KLPAPIView):
         if not is_registered_user:
             message = get_message(
                 is_registered_user=is_registered_user,
-                telephone=parameters['telephone']
+                telephone=parameters['telephone'],
+                state=state
             )
             return Response(
                 message,
@@ -60,7 +61,8 @@ class SMSView(KLPAPIView):
         if not is_data_valid:
             message = get_message(
                 valid=is_data_valid,
-                data=parameters['raw_data']
+                data=parameters['raw_data'],
+                state=state
             )
             return Response(
                 message,
@@ -68,7 +70,7 @@ class SMSView(KLPAPIView):
                 content_type=content_type
             )
 
-        is_school_valid, message = check_school(school_id)
+        is_school_valid, message = check_school(state, school_id)
         if not is_school_valid:
             return Response(
                 message,
@@ -107,7 +109,8 @@ class SMSView(KLPAPIView):
             message = get_message(
                 valid=True,
                 date=parameters['date'],
-                data=parameters['raw_data']
+                data=parameters['raw_data'],
+                state=state
             )
 
         return Response(

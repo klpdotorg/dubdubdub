@@ -20,6 +20,8 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
+    state = kwargs.get('state', None)
+
     if kwargs.get('valid', False):
         date = str(kwargs['date'])
         data = str(kwargs['data'])
@@ -61,6 +63,9 @@ def get_message(**kwargs):
         question_number = str(kwargs['error_question_number'])
         message = "Error at que.no: " + question_number + "." + \
                   " Your response was " + data
+
+    state.comments = message
+    state.save()
 
     return message
 
@@ -118,13 +123,13 @@ def check_user(request):
     telephone = telephone[-10:]
     return User.objects.filter(mobile_no=telephone).exists()
 
-def check_school(school_id):
+def check_school(state, school_id):
     valid = True
     message = None
 
     if not school_id:
         valid = False
-        message = get_message(no_school_id=True)
+        message = get_message(no_school_id=True, state=state)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
@@ -140,11 +145,11 @@ def check_school(school_id):
         # check logic here.
         if school_type != u'Primary School':
             valid = False
-            message = get_message(not_primary_school=True)
+            message = get_message(not_primary_school=True, state=state)
 
     else:
         valid = False
-        message = get_message(invalid_school_id=True, school_id=school_id)
+        message = get_message(invalid_school_id=True, school_id=school_id, state=state)
 
     return (valid, message)
 
@@ -223,7 +228,8 @@ def verify_answer(session_id, question_number, response, ivrs_type, original_dat
     if status_code == status.HTTP_404_NOT_FOUND:
         message = get_message(
             error_question_number=question_number,
-            original_data=original_data
+            original_data=original_data,
+            state=state
         )
 
     return (state, status_code, message)
