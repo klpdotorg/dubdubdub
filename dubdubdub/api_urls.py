@@ -15,7 +15,7 @@ from schools.api_views import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
-    MeetingReportViewSet,
+    MeetingReportListView,
 )
 
 from users.api_views import (
@@ -66,7 +66,7 @@ urlpatterns = patterns(
     url(r'^schools/info/$', SchoolsInfo.as_view(), name='api_schools_info'),
     url(
         r'^schools/meeting-reports/$',
-        MeetingReportViewSet.as_view({'get':'list'}),
+        MeetingReportListView.as_view(),
         name='api_schools_meeting_reports'
     ),
     url(r'^schools/dise/(?P<year>[0-9\-]*)$', SchoolsDiseInfo.as_view(),
