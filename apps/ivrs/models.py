@@ -10,6 +10,7 @@ class State(models.Model):
     is_invalid = models.BooleanField(default=False)
     is_processed = models.BooleanField(default=False)
     raw_data = models.TextField(null=True, blank=True)
+    comments = models.TextField(null=True, blank=True)
     school_id = models.IntegerField(null=True, blank=True)
     telephone = models.CharField(max_length=50, blank=True)
     date_of_visit = models.DateTimeField(default=timezone.now)
