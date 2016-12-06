@@ -75,21 +75,28 @@ class PincodeSerializer(KLPSimpleGeoSerializer):
         fields = ('id', 'pincode')
 
 
-class SchoolListSerializer(KLPSerializer):
-    type = BoundaryTypeSerializer(source='schooldetails.type')
-    address_full = serializers.CharField(source='full_address')
-    boundary = BoundarySerializer(source='admin3')
-
-    class Meta:
-        model = School
-        fields = ('id', 'name', 'boundary', 'address_full', 'dise_info', 'type',)
-
-
 class MeetingReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MeetingReport
         fields = ('pdf', 'language', 'generated_at')
+
+
+class SchoolListSerializer(KLPSerializer):
+    type = BoundaryTypeSerializer(source='schooldetails.type')
+    address_full = serializers.CharField(source='full_address')
+    boundary = BoundarySerializer(source='admin3')
+    admin1 = serializers.CharField(source='schooldetails.admin1.name')
+    admin2 = serializers.CharField(source='schooldetails.admin2.name')
+    admin3 = serializers.CharField(source='schooldetails.admin3.name')
+    meeting_reports = MeetingReportSerializer(source='meetingreport_set')
+
+    class Meta:
+        model = School
+        fields = (
+            'id', 'name', 'boundary', 'admin1', 'admin2', 'admin3',
+            'address_full', 'dise_info', 'type', 'meeting_reports',
+        )
 
 
 class SchoolInfoSerializer(KLPSerializer):

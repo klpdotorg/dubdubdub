@@ -38,15 +38,10 @@ class SchoolsList(KLPListAPIView, CacheMixin):
     bbox -- Bounding box to search within e.g. 77.349415,12.822471,77.904224,14.130930
     """
 
+    serializer_class = SchoolListSerializer
     bbox_filter_field = "instcoord__coord"
     filter_class = SchoolFilter
     search_fields = ('name', 'id', 'dise_info__dise_code',)
-
-    def get_serializer_class(self):
-        if self.request.GET.get('meetingreport', None):
-            return SchoolInfoSerializer
-        else:
-            return SchoolListSerializer
 
     def get_queryset(self):
         qset = School.objects.filter(status=2).distinct('id')
