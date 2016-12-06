@@ -250,6 +250,7 @@ class Admin3s(KLPListAPIView, CacheMixin):
 
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
+        meetingreport = self.request.GET.get('meetingreport', None)
         qset = Boundary.objects.all_active()\
             .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
@@ -260,5 +261,17 @@ class Admin3s(KLPListAPIView, CacheMixin):
             qset = qset.filter(hierarchy__name='cluster')
         else:
             qset = qset.filter(hierarchy__name__in=['cluster', 'circle'])
+
+        if meetingreport:
+            admin3_ids = MeetingReport.objects.all(
+            ).order_by(
+            ).values_list(
+                'school__schooldetails__admin3',
+                flat=True
+            ).distinct(
+                'school__schooldetails__admin3'
+            )
+            qset = qset.filter(id__in=admin3_ids)
+
 
         return qset
