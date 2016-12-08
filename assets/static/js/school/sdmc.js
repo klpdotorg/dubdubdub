@@ -83,7 +83,7 @@ var boundaries = {"districts" : {}, "pre_districts": {},
     }   
 
     function makeLookupArrays(){
-        var districtXHR = klp.api.do('boundary/admin1s?meetingreport=yes',{});
+        var districtXHR = klp.api.do('boundary/admin1s?meetingreport=yes&per_page=0',{});
         districtXHR.done(function (data) {
             for(var i in data["features"]) {
                 var boundary = data["features"][i];
@@ -92,7 +92,7 @@ var boundaries = {"districts" : {}, "pre_districts": {},
                 else
                     boundaries ["districts"][boundary.id.toString()] = boundary;
             }
-            var blockXHR = klp.api.do('boundary/admin2s?meetingreport=yes',{});
+            var blockXHR = klp.api.do('boundary/admin2s?meetingreport=yes&per_page=0',{});
             blockXHR.done(function (data) {
                 for(var i in data["features"]) {
                     var boundary = data["features"][i];
@@ -101,7 +101,7 @@ var boundaries = {"districts" : {}, "pre_districts": {},
                     else
                         boundaries ["blocks"][boundary.id.toString()] = boundary;
                 }
-                var clusterXHR = klp.api.do('boundary/admin3s?meetingreport=yes',{});
+                var clusterXHR = klp.api.do('boundary/admin3s?meetingreport=yes&per_page=0',{});
                 clusterXHR.done(function (data) {
                     for(var i in data["features"]) {
                         var boundary = data["features"][i];
@@ -160,6 +160,7 @@ var boundaries = {"districts" : {}, "pre_districts": {},
 
     function initEduSearch(school_type) {
         makeLookupArrays();
+        console.log(boundaries);
         var $select_type = $("#select-type");
         var $select_district = $("#select-district");
         var $select_block = $("#select-block");
