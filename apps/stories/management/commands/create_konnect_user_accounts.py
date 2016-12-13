@@ -39,7 +39,7 @@ class Command(BaseCommand):
             userreader = csv.DictReader(csvfile)
             for row in userreader:
                 email = row['EMAIL']
-                password = row['MOBILE'][-5:]
+                password = row['PASSWORD']
                 try:
                     user, created = User.objects.get_or_create(
                         email=email,
