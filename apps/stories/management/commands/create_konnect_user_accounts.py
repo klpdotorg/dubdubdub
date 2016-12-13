@@ -40,26 +40,22 @@ class Command(BaseCommand):
             for row in userreader:
                 email = row['EMAIL']
                 password = row['PASSWORD']
-                try:
-                    user, created = User.objects.get_or_create(
-                        email=email,
-                        mobile_no=row['MOBILE']
-                    )
-                except IntegrityError:
-                    user, created = User.objects.get_or_create(
-                        email=email
-                    )
-                    log('User {0} had a different mobile no in the db: {1}. We replaced it with {2}'.format(email, user.mobile_no, row['MOBILE']))
-                    user.mobile_no = row['MOBILE']
-                user.first_name = row['FIRST NAME']
-                user.last_name = row['LAST NAME']
+
+                if User.objects.filter(email__iexact=email).count() > 0:
+                    # user account exists already. Ignore
+                    log("User {} already exists".format(email))
+                    continue
+
+                # user account doesn't exist already
+                user = User.objects.create(
+                    email=email,
+                    mobile_no=row['MOBILE'],
+                    first_name=row['FIRST NAME'],
+                    last_name=row['LAST NAME']
+                )
                 user.set_password(password)
                 user.save()
 
                 log("username: {0}, Password: {1}".format(email, password))
 
                 assert authenticate(username=email, password=password)
-                if created:
-                    log('User {0} successfully created.'.format(email))
-                else:
-                    log('Reset password for existing User {0}.'.format(email))
