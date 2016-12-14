@@ -51,7 +51,8 @@ class Command(BaseCommand):
                     email=email,
                     mobile_no=row['MOBILE'],
                     first_name=row['FIRST NAME'],
-                    last_name=row['LAST NAME']
+                    last_name=row['LAST NAME'],
+                    is_email_verified=True
                 )
                 user.set_password(password)
                 user.save()
