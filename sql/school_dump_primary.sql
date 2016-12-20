@@ -1,14 +1,11 @@
 COPY (
     SELECT
-
         tb_school.id, tb_school.name, mgmt, moi, cat, sex,
 
         vtb_cluster.name AS cluster_name,
         vtb_block.name AS block_name,
         vtb_district.name AS district_name,
-        CASE WHEN mvw_school_details.stype=1 THEN 'primary'
-            WHEN mvw_school_details.stype=2 THEN 'pre'
-            END,
+        'primary' as school_type,
         mvw_assembly.ac_name AS assembly_name,
         mvw_parliament.pc_name AS parliament_name,
         mvw_postal.pincode,
@@ -29,4 +26,6 @@ COPY (
     LEFT OUTER JOIN mvw_parliament ON (mvw_parliament.id=mvw_school_details.parliament_id)
     LEFT OUTER JOIN mvw_postal ON (mvw_postal.pin_id=mvw_school_details.pin_id)
     LEFT OUTER JOIN mvw_inst_coord ON (mvw_inst_coord.instid=tb_school.id)
+
+    WHERE mvw_school_details.stype=1
 ) TO STDOUT WITH ( FORMAT CSV, HEADER true, FORCE_QUOTE * );
