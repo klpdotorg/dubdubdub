@@ -4,6 +4,7 @@ DROP MATERIALIZED VIEW IF EXISTS mvw_electedrep_master CASCADE;
 CREATE MATERIALIZED VIEW mvw_electedrep_master AS
 SELECT t7.id,
     t7.parent,
+    t7.dise_slug,
     t7.elec_comm_code,
     t7.const_ward_name,
     t7.const_ward_type,
@@ -12,10 +13,11 @@ SELECT t7.id,
     t7.current_elected_party,
     t7.status
    FROM dblink(
-        'host=localhost dbname=electrep_new user=klp'::text, 'select id, parent, elec_comm_code, const_ward_name, const_ward_type, neighbours, current_elected_rep, current_elected_party, status from tb_electedrep_master'::text
+        'host=localhost dbname=electrep_new user=klp'::text, 'select id, parent, dise_slug, elec_comm_code, const_ward_name, const_ward_type, neighbours, current_elected_rep, current_elected_party, status from tb_electedrep_master'::text
     ) t7(
         id integer,
         parent integer,
+        dise_slug text,
         elec_comm_code integer,
         const_ward_name character varying(300),
         const_ward_type admin_heirarchy,
@@ -25,6 +27,7 @@ SELECT t7.id,
         status character varying(20)
     );
 CREATE INDEX ON mvw_electedrep_master (elec_comm_code);
+CREATE INDEX ON mvw_electedrep_master (dise_slug);
 ANALYZE mvw_electedrep_master;
 
 DROP MATERIALIZED VIEW IF EXISTS mvw_school_electedrep CASCADE;
