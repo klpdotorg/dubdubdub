@@ -55,8 +55,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
-    #Better field type to use?
-    mobile_no = models.CharField(max_length=32, blank=True)
+    mobile_no = models.CharField(max_length=32, unique=True)
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64, blank=True)
     email_verification_code = models.CharField(max_length=128)
@@ -172,7 +171,7 @@ class Organization(models.Model):
     blog_url = models.URLField(blank=True)
     #website = models.URLField(blank=True)
     photos_url = models.URLField(blank=True)
-    youtube_url = models.URLField(blank=True)    
+    youtube_url = models.URLField(blank=True)
 
     def generate_slug(self, regenerate=False):
         if not self.slug or regenerate:

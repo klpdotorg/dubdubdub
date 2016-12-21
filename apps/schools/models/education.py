@@ -15,7 +15,7 @@ import json
 class StatusManager(models.Manager):
     def all_active(self):
         return self.filter(status=2)
-    
+
     def all_inactive(self):
         return self.filter(status=1)
 

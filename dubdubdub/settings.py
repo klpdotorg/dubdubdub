@@ -190,6 +190,7 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = ['users.backends.EmailMobileUsernameBackend']
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
