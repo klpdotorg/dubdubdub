@@ -8,14 +8,12 @@ User = get_user_model()
 
 class EmailMobileUsernameBackend(object):
     def authenticate(self, username=None, password=None):
-        qset = User.objects.filter(Q(email__iexact=username) | Q(mobile_no__iexact=username))
-        if qset.count() == 1:
-            user = qset.first()
-
+        try:
+            user = User.objects.get(Q(email__iexact=username) | Q(mobile_no__iexact=username))
             if check_password(password, user.password):
                 return user
-        else:
-            raise AuthenticationFailed('More than one user exists with username: {}'.format(username))
+        except User.DoesNotExist:
+            raise AuthenticationFailed('Invalid Email or Mobile number: {}'.format(username))
 
         return None
 
