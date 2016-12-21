@@ -65,3 +65,5 @@ class Command(BaseCommand):
                     # none of the user accounts have any stories tied to them
                     # delete either one
                     uniquify_user(users, users[0])
+
+        User.objects.filter(email='dev@klp.org.in').update(mobile_no='1234567890')
