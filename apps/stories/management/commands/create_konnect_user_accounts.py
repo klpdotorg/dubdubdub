@@ -7,6 +7,7 @@ from datetime import datetime
 from optparse import make_option
 
 from django.db import transaction
+from django.db.models import Q
 from django.core.management.base import BaseCommand
 
 User = get_user_model()
@@ -40,8 +41,9 @@ class Command(BaseCommand):
             for row in userreader:
                 email = row['EMAIL']
                 password = row['PASSWORD']
+                mobile = row['MOBILE']
 
-                if User.objects.filter(email__iexact=email).count() > 0:
+                if User.objects.filter(Q(email__iexact=email) | Q(mobile_no=mobile)).count() > 0:
                     # user account exists already. Ignore
                     log("User {} already exists".format(email))
                     continue
