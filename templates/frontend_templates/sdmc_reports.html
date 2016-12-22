@@ -1,0 +1,85 @@
+{% verbatim %}
+
+  
+  <script type="text/html" id="tpl-countSummary">
+    <div class="chart-parent font-smaller">
+      <div class="chart-half-item">
+      Total count of SDMC/BVS meeting minutes available: 
+      <span class="brand-blue bold">{{report_count}}</span>
+      </div>
+      <div class="chart-half-item">
+      Count of schools/preschools with minutes in this selection: 
+      <span class="brand-blue bold">{{school_count}}</span>
+       </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-buttons">
+    <div class="container center-text">
+      {% if previous != null %}
+          <button data-id="{{previous}}" class="prev button">Prev</button>
+      {% endif %}
+      {% if next != null %}
+          <button data-id="{{next}}" class="next button">Next</button>
+      {% endif %}
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-responseTable">
+
+  <!-- <form class="form-base">
+    <div class="form-field-wrap">
+        <input type="text" class="input-text full-width" id="search-name" onkeyup="searchTable()" placeholder="Search by school name">
+    </div>
+  </form> -->
+
+  <table id="sdmc-table" class="table-base table-list-view table-base-volunteer">
+  <thead>
+    <tr class="table-base-heading">
+      <th>KLP ID</th>
+      <th>Cluster/Circle</th>
+      <th>School/Preschool Name</th>
+      <th>List of Reports</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for school in data %}
+      <tr>
+        <td>
+          <div><a href="/school/{{school.id}}" target="_blank">{{school.id}}</div>
+        </td>
+        <td>
+          <div>{{school.admin3|capitalize}}</div>  
+          <div class="font-smaller">
+            <strong>District: </strong>{{school.admin1|capitalize}}
+            {% if school.school_type == "PreSchool" %}
+              <strong>Project: </strong>{{school.admin2|capitalize}}
+            {% else %}
+              <strong>Block: </strong>{{school.admin2|capitalize}}
+            {% endif %}
+          </div> 
+        </td>
+        <td>
+          <div class="brand-green td-label-school"><strong>{{school.name}}</strong></div>  
+          <div class="font-smaller">Count of reports: {{Object.keys(school.pdfs).length}}</div> 
+        </td>
+        <td>
+          <ul class="ul-base">
+          {% for each in school.pdfs %}
+            {% if each.is_archived %}
+              <li><a href="/media/{{each.path}}" target="_blank">Archived Report - {{each.lang|capitalize}}</a></li>
+            {% else %}
+              <li><a href="/media/{{each.path}}" target="_blank">{{each.month}} {{each.year}} - {{each.lang|capitalize}}</a></li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  </table>   
+</script>
+
+{% endverbatim %}
+
