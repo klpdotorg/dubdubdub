@@ -865,9 +865,9 @@ class StoriesView(KLPListAPIView):
                         user=self.request.user
                     ).values_list('school__admin3__parent__id', flat=True)))
 
-                if not existing_block_ids and source == 'csv':
+                if not existing_block_ids:
                     # special case
-                    # if the client demands `admin2=detect` for `source=csv`
+                    # if the client demands `admin2=detect`
                     # and there isn't any existing block ids, return empty
                     return Story.objects.none()
 
