@@ -35,9 +35,10 @@ class SMSView(KLPAPIView):
         parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
         parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
         parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
+        parameters['telephone'] = parameters['telephone'][1:] # Strip 0
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
 
-        is_registered_user = check_user(request)
+        is_registered_user = check_user(parameters)
 
         processed_data, is_data_valid = check_data_validity(request)
 

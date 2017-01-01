@@ -126,10 +126,8 @@ def get_date(date):
     )
     return date
 
-def check_user(request):
-    telephone = request.QUERY_PARAMS.get('From', None)
-    telephone = telephone[-10:]
-    return User.objects.filter(mobile_no=telephone).exists()
+def check_user(parameters):
+    return User.objects.filter(mobile_no=parameters['telephone']).exists()
 
 def check_school(state, school_id):
     valid = True
