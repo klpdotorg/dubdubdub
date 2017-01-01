@@ -15,6 +15,7 @@ class State(models.Model):
     telephone = models.CharField(max_length=50, blank=True)
     date_of_visit = models.DateTimeField(default=timezone.now)
     session_id = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey('users.User', blank=True, null=True)
     qg_type = models.ForeignKey('QuestionGroupType', blank=True, null=True)
     answers = TextArrayField(
         dimension=1,
