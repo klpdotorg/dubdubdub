@@ -10,14 +10,16 @@ def forwards_func(apps, schema_editor):
 
     states = State.objects.all()
     for state in states:
+        # Trimming the starting 0. Have checked to make sure
+        # all telephones on the State table have 11 digits
+        # including the 0 at the beginning.
+        telephone = state.telephone[1:]
         try:
-            # Trimming the starting 0. Have checked to make sure
-            # all telephones on the State table have 11 digits
-            # including the 0 at the beginning.
-            user = User.objects.get(mobile_no=state.telephone[1:])
+            user = User.objects.get(mobile_no=telephone)
+            state.user = user
         except:
-            continue
-        state.user = user
+            pass
+        state.telephone = telephone
         state.save()
 
 def reverse_func(apps, schema_editor):
@@ -25,6 +27,8 @@ def reverse_func(apps, schema_editor):
 
     states = State.objects.all()
     for state in states:
+        telephone = "0" + state.telephone
+        state.telephone = telephone
         state.user = None
         state.save()
 
