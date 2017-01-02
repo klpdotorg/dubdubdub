@@ -27,5 +27,6 @@ COPY (
     LEFT OUTER JOIN mvw_postal ON (mvw_postal.pin_id=mvw_school_details.pin_id)
     LEFT OUTER JOIN mvw_inst_coord ON (mvw_inst_coord.instid=tb_school.id)
 
-    WHERE mvw_school_details.stype=2
+    WHERE mvw_school_details.stype=2 AND
+        tb_school.status=2
 ) TO STDOUT WITH ( FORMAT CSV, HEADER true, FORCE_QUOTE * );
