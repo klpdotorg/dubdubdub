@@ -40,11 +40,11 @@ echo "Done with users unit tests............."
 echo "Running stories related unit tests"
 python manage.py test unittests.stories --settings dubdubdub.test_settings
 echo "Done with stories unit tests"
-
+echo "Running ivrs related unit tests..."
+python manage.py test unittests.ivrs --settings dubdubdub.test_settings
+echo "Done with ivrs unit tests"
 
 # Now, clean up the test database (if it was created at all in the first place)
 if [ "$CREATE_DB" == "true" ]; then
     source unittests/deleteTestDb.sh $testDB
 fi
-
-

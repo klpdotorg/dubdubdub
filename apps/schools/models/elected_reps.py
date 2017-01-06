@@ -15,6 +15,8 @@ class ElectedrepMaster(BaseModel):
         'ElectedrepMaster', db_column='parent',
         blank=True, null=True, on_delete=models.SET_NULL
     )
+    # dise_slug = models.SlugField(max_length=300)
+
     elec_comm_code = models.IntegerField(blank=True, null=True)
     const_ward_name = models.CharField(max_length=300, blank=True)
 

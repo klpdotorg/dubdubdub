@@ -4,8 +4,9 @@ from rest_framework import status
 
 from django.utils import timezone
 
-from .models import State
+from .models import State, QuestionGroupType, IncomingNumber
 
+from users.models import User
 from schools.models import School, BoundaryType
 from stories.models import (
     Question, Questiongroup
@@ -36,6 +37,12 @@ def get_message(**kwargs):
                   " OR " + expected_response_2 + \
                   " OR " + expected_response_3
 
+    elif not kwargs.get('is_registered_user', True):
+        telephone = str(kwargs['telephone'])
+        message = "Your number " + telephone + \
+                  " is not registered. Please visit https://klp.org.in/" + \
+                  " and register yourself."
+
     elif kwargs.get('no_school_id', False):
         message = "School ID not entered."
 
@@ -57,14 +64,19 @@ def get_message(**kwargs):
 
     return message
 
-def check_data_validity(original_data, data):
+def check_data_validity(request):
     valid = True
-    message = None
 
-    if len(data) == 3:
+    data = request.QUERY_PARAMS.get('Body', None)
+    data = [item.strip() for item in data.split(',')]
+
+    # Making sure that each input is a valid digit and no alphabets get in.
+    if not all(response.strip().isdigit() for response in data):
+        valid = False
+
+    elif len(data) == 3:
         if data[2] != '2':
             valid = False
-            message = get_message(valid=valid, data=original_data)
         else:
             # If the answer to 2nd question is "2" (which means "No"), then
             # We manually populate the rest of the answers as "2". This is
@@ -77,7 +89,6 @@ def check_data_validity(original_data, data):
         if all(response == '' for response in data[3:]):
             if data[2] != '2':
                 valid = False
-                message = get_message(valid=valid, data=original_data)
             else:
                 # If the answer to 2nd question is "2" (which means "No"), then
                 # We manually populate the rest of the answers as "2". This is
@@ -87,20 +98,11 @@ def check_data_validity(original_data, data):
         elif any(response == '' for response in data):
             # Responses like 3885,1,2,1,,2 are not accepted.
             valid = False
-            message = get_message(valid=valid, data=original_data)
 
     elif len(data) != 6:
         valid = False
-        message = get_message(valid=valid, data=original_data)
 
-    # Making sure that each input is a valid digit and no alphabets get in.
-    if not all(response.strip().isdigit() for response in data):
-        valid = False
-        message = get_message(valid=valid, data=original_data)
-
-
-    return (data, valid, message)
-
+    return (data, valid)
 
 def get_date(date):
     date = datetime.datetime.strptime(
@@ -111,72 +113,73 @@ def get_date(date):
     )
     return date
 
+def check_user(request):
+    telephone = request.QUERY_PARAMS.get('From', None)
+    telephone = telephone[-10:]
+    return User.objects.filter(mobile_no=telephone).exists()
 
-def check_school(state, school_id, ivrs_type):
-    school_type = None
+def check_school(school_id):
+    valid = True
     message = None
 
     if not school_id:
-        status_code = status.HTTP_404_NOT_FOUND
+        valid = False
         message = get_message(no_school_id=True)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
-        state.school_id = school_id
         school_type = School.objects.filter(
             id=school_id
         ).values(
             'admin3__type__name'
         )[0]['admin3__type__name']
 
+        # Validating whether the entered school ID corresponds to the
+        # correct school_type. We only check Primary School because we do
+        # not currently operate in PreSchools. Once we do, implement the
+        # check logic here.
+        if school_type != u'Primary School':
+            valid = False
+            message = get_message(not_primary_school=True)
+
     else:
-        status_code = status.HTTP_404_NOT_FOUND
+        valid = False
         message = get_message(invalid_school_id=True, school_id=school_id)
 
-    # Validating whether the entered school ID corresponds to the
-    # correct school_type. Assigns the ivrs_type based on the call
-    # number as well.
-    if school_type:
-        if ivrs_type in [GKA_SERVER, GKA_DEV]:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'gka-v3'
-            # Initializing answer slots 1 to 10 with NA
-            for i in range(0, 10):
-                state.answers.append('NA')
+    return (valid, message)
 
-        elif ivrs_type == GKA_SMS:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'gka-sms'
-            # Initializing answer slots 1 to 5 with NA
-            for i in range(0, 5):
-                state.answers.append('NA')
+def populate_state(parameters):
+    date = parameters.get('date', None)
+    raw_data = parameters.get('raw_data', None)
+    ivrs_type = parameters.get('ivrs_type', None)
+    telephone = parameters.get('telephone', None)
+    school_id = parameters.get('school_id', None)
+    session_id = parameters.get('session_id', None)
 
-        elif ivrs_type == PRI:
-            if school_type != u'Primary School':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_primary_school=True)
-            state.ivrs_type = 'ivrs-pri'
-            # Initializing answer slots 1 to 6 with NA
-            for i in range(0, 6):
-                state.answers.append('NA')
+    incoming_number = IncomingNumber.objects.get(number=ivrs_type)
+    state, created = State.objects.get_or_create(
+        session_id=session_id,
+        qg_type=incoming_number.qg_type
+    )
+    state.telephone = telephone
+    state.date_of_visit = get_date(date.strip("'"))
+    state.answers = []
+    # Ignoring index 0 since question_numbers start from 1
+    # Initializing answer slots 1 to number_of_questions with NA.
+    # answer slot 0 has value IGNORED_INDEX pre populated.
+    state.answers.append('IGNORED_INDEX')
+    number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+    for i in range(0, number_of_questions):
+        state.answers.append('NA')
 
-        # ivrs_type == PRE
-        else:
-            if school_type != u'PreSchool':
-                status_code = status.HTTP_404_NOT_FOUND
-                message = get_message(not_pre_school=True)
-            state.ivrs_type = 'ivrs-pre'
-            # Initializing answer slots 1 to 6 with NA
-            for i in range(0, 6):
-                state.answers.append('NA')
+    if raw_data:
+        state.raw_data = str(raw_data)
+
+    if school_id and school_id.isdigit():
+        state.school_id = school_id
 
     state.save()
-    return (state, status_code, message)
-
+    return state
 
 def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
     if State.objects.filter(session_id=session_id).exists():
@@ -185,7 +188,11 @@ def verify_answer(session_id, question_number, response, ivrs_type, original_dat
         message = None
         status_code = status.HTTP_200_OK
         question_number = int(question_number)
-        question = get_question(question_number, ivrs_type)
+        incoming_number = IncomingNumber.objects.get(number=ivrs_type)
+        question = get_question(
+            question_number,
+            incoming_number.qg_type.questiongroup
+        )
 
         if response:
             response = int(response.strip('"'))
@@ -285,36 +292,13 @@ def save_answer(state, question_number, question, ivrs_type, response):
     return (state, status_code)
 
 
-def get_question(question_number, ivrs_type):
-    if ivrs_type in [GKA_SERVER, GKA_DEV]:
-        question_group = Questiongroup.objects.get(
-            version=5,
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    elif ivrs_type == GKA_SMS:
-        question_group = Questiongroup.objects.get(
-            version=1,
-            source__name='sms'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    elif ivrs_type == PRI:
-        question_group = Questiongroup.objects.get(
-            version=3,
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="Primary School")
-    else: # ivrs_type == PRE
-        question_group = Questiongroup.objects.get(
-            version=999, # To be implemented.
-            source__name='ivrs'
-        )
-        school_type = BoundaryType.objects.get(name="PreSchool")
-
-    question = Question.objects.get(
+def get_question(question_number, question_group):
+    # We are directly querying for Primary School because we don't work
+    # with PreSchools anymore. If we do so in the future, please make
+    # sure you implement the logic here while fetching questions.
+    school_type = BoundaryType.objects.get(name="Primary School")
+    return Question.objects.get(
         school_type=school_type,
         questiongroup=question_group,
         questiongroupquestions__sequence=question_number,
     )
-
-    return question

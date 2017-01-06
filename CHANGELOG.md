@@ -8,7 +8,30 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
----
+	---
+Release 1.0.9: 9018fac49538bb79c5a217b2d2cda92ffa0731c5 - 2016-11-16
+  - Added post_import.sh to run scripts after database is created
+  - Corrected database reference in run_markpercentile.sh and run_gradepercentile.sh```
+  - Updated readme on DB refresh from EMS to dubdubdub
+
+Release 1.0.8: 02c199a6d52712a7785c45b85590af0fe697ed68 - 2016-11-15
+  - Moves to mapbox base layer.
+  - Fixes to user account creation script.
+
+Release 1.0.7: 02c199a6d52712a7785c45b85590af0fe697ed68 - 2016-11-09
+  - Fixes block search for particular user.
+  - Implements the script to create user accounts from a csv.
+
+Release 1.0.6: c20cbbc806e85711354b58a0f580eb0252374dd3 - 2016-11-03
+  - Minor migration and queryset optimizations.
+  - Mobile sync api endpoint fix.
+  - Adds Raw Data field to State csv being downloaded.
+
+Release 1.0.5: 2b76a02b2844c2947014b7a844663943b0de0d63 - 2016-10-30
+  - Implements the script to populate pen and paper community data.
+  - Endpoint fixes for syncing data to mobile.
+  - Rewrites the IVRS/SMS code with proper DB tables and error handling.
+
 Release 1.0.4: 7b63cb411ab5858c2cb3cf2c52600ea477c77a87 - 2016-09-14
   - Updates Boundary page to  API changes.
   - Updates the pen and paper data parsing script.

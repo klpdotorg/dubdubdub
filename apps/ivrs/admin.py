@@ -4,18 +4,17 @@ import StringIO
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import State
+from .models import State, QuestionGroupType
+
 from schools.models import School
 from stories.models import Questiongroup, Source
 
 
 class StateAdmin(admin.ModelAdmin):
     actions = ['download_csv']
-    list_filter = ['date_of_visit', 'ivrs_type']
+    list_filter = ['date_of_visit', 'qg_type__name']
 
     def download_csv(self, request, queryset):
-        source_ivrs = Source.objects.get(name='ivrs')
-        source_sms = Source.objects.get(name='sms')
 
         f = StringIO.StringIO()
         writer = csv.writer(f)
@@ -29,40 +28,12 @@ class StateAdmin(admin.ModelAdmin):
             "Telephone",
             "Date Of Visit",
             "Invalid",
+            "Raw Data",
         ]
 
-        ivrs_type = request.GET.get('ivrs_type', None)
-
-        if ivrs_type == 'gka':
-            question_group = Questiongroup.objects.get(
-                version=2,
-                source=source_ivrs
-            )
-        elif ivrs_type == 'ivrs-pri':
-            question_group = Questiongroup.objects.get(
-                version=3,
-                source=source_ivrs
-            )
-        elif ivrs_type == 'gka-new':
-            question_group = Questiongroup.objects.get(
-                version=4,
-                source=source_ivrs
-            )
-        elif ivrs_type == 'gka-v3':
-            question_group = Questiongroup.objects.get(
-                version=5,
-                source=source_ivrs
-            )
-        elif ivrs_type == 'gka-sms':
-            question_group = Questiongroup.objects.get(
-                version=1,
-                source=source_sms
-            )
-        else: # ivrs_type == 'ivrs-pre'
-            question_group = Questiongroup.objects.get(
-                version=999, # Not implemented
-                source=source_ivrs
-            )
+        qg_type_name = request.GET.get('qg_type__name', None)
+        qg_type = QuestionGroupType.objects.get(name=qg_type_name)
+        question_group = qg_type.questiongroup
 
         questions = question_group.questions.all().values_list(
             'text',
@@ -91,7 +62,8 @@ class StateAdmin(admin.ModelAdmin):
                       str(cluster),
                       str(state.telephone),
                       str(state.date_of_visit.date()),
-                      str(state.is_invalid)
+                      str(state.is_invalid),
+                      str(state.raw_data)
             ]
             writer.writerow(values + [answer for answer in state.answers[1:]])
 
@@ -104,6 +76,5 @@ class StateAdmin(admin.ModelAdmin):
         actions = super(StateAdmin, self).get_actions(request)
         del actions['delete_selected']
         return actions
-
 
 admin.site.register(State, StateAdmin)
