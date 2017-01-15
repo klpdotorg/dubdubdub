@@ -295,6 +295,84 @@ class Command(BaseCommand):
             values = ",".join(values)
             lines.extend([values])
 
+        if duration == 'weekly':
+
+            # Weekly BFC error report
+            columns = ("Name,"
+                       "Telephone,"
+                       "District,"
+                       "Block,"
+                       "Cluster,"
+                       "SMSes sent,"
+                       "Number of Invalid SMS,"
+                       "Number of schools with SMS,"
+                       "No. of unique schools with SMS"
+            )
+            lines.extend([columns])
+
+            # school_ids = State.objects.all().values_list('school_id', flat=True)
+            # block_ids = School.objects.filter(
+            #     id__in=school_ids
+            # ).values_list(
+            #     'admin3__parent', flat=True
+            # ).order_by(
+            # ).distinct(
+            #     'admin3__parent'
+            # )
+            # blocks = Boundary.objects.filter(id__in=block_ids)
+
+            for user in bfc_users:
+                name = user.get_full_name()
+                telephone = user.mobile_no
+                school_ids = user.state_set.filter(id__in=valid_states).values_list('school_id',flat=True)
+                clusters = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__name'
+                )
+                blocks = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__parent__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__parent__name'
+                )
+                districts = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__parent__parent__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__parent__parent__name'
+                )
+                smses_sent = user.state_set.filter(id__in=valid_states).count()
+                invalid_smses_count = user.state_set.filter(id__in=states, is_invalid=True).count()
+                # user  = User.objects.filter(
+                #     state__in=valid_states
+                # ).annotate(sms_count=Count('state')).order_by('-sms_count')[:5]
+                
+                values = [
+                    str(block.name),
+                    str(block.parent.name),
+                    str(smses_received),
+                    str(smses_from_bfc),
+                    str(smses_from_crp),
+                    str(invalid_smses),
+                    str(invalid_smses_from_bfc),
+                    str(invalid_smses_from_crp),
+                    str(schools_with_invalid_smses),
+                ]
+            
+                values = ",".join(values)
+                lines.extend([values])
+
+            lines.extend(["\n"])
+
+
 
         for line in lines:
             csv.write(line+"\n")
