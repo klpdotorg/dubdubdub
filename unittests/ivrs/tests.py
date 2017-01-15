@@ -61,7 +61,7 @@ class SMSViewTests(TestCase):
             response = view(request)
             self.assertEqual(
                 response.data,
-                'Error. Your response: ' + body + '. Expected response: 3885,1,1,1,2,1 OR 3885,1,2,,, OR 3885,1,2'
+                'Error. Your response: ' + body + '. Expected response: 3885,1,1,1,2,2. Check for logical errors.'
             )
 
     def test_reply_for_invalid_school_id(self):

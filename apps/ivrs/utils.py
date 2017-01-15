@@ -20,6 +20,8 @@ GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
 def get_message(**kwargs):
+    state = kwargs.get('state', None)
+
     if kwargs.get('valid', False):
         date = str(kwargs['date'])
         data = str(kwargs['data'])
@@ -28,14 +30,13 @@ def get_message(**kwargs):
 
     elif not kwargs.get('valid', True):
         data = str(kwargs['data'])
-        expected_response_1 = "3885,1,1,1,2,1"
-        expected_response_2 = "3885,1,2,,,"
-        expected_response_3 = "3885,1,2"
+        expected_response_1 = "3885,1,1,1,2,2"
+        # expected_response_2 = "3885,1,2,,,"
+        # expected_response_3 = "3885,1,2"
 
         message = "Error. Your response: " + data + \
                   ". Expected response: " + expected_response_1 + \
-                  " OR " + expected_response_2 + \
-                  " OR " + expected_response_3
+                  ". Check for logical errors."
 
     elif not kwargs.get('is_registered_user', True):
         telephone = str(kwargs['telephone'])
@@ -61,6 +62,9 @@ def get_message(**kwargs):
         question_number = str(kwargs['error_question_number'])
         message = "Error at que.no: " + question_number + "." + \
                   " Your response was " + data
+
+    state.comments = message
+    state.save()
 
     return message
 
@@ -98,6 +102,15 @@ def check_data_validity(request):
         elif any(response == '' for response in data):
             # Responses like 3885,1,2,1,,2 are not accepted.
             valid = False
+        elif data[2] in ('2', '3'):
+            if not all(answer in ('2', '3') for answer in data[3:]):
+                valid = False
+        elif data[3] in ('2', '3'):
+            if not all(answer in ('2', '3') for answer in data[4:]):
+                valid = False
+        elif data[4] in ('2', '3'):
+            if not all(answer in ('2', '3') for answer in data[5:]):
+                valid = False
 
     elif len(data) != 6:
         valid = False
@@ -113,18 +126,16 @@ def get_date(date):
     )
     return date
 
-def check_user(request):
-    telephone = request.QUERY_PARAMS.get('From', None)
-    telephone = telephone[-10:]
-    return User.objects.filter(mobile_no=telephone).exists()
+def check_user(parameters):
+    return User.objects.filter(mobile_no=parameters['telephone']).exists()
 
-def check_school(school_id):
+def check_school(state, school_id):
     valid = True
     message = None
 
     if not school_id:
         valid = False
-        message = get_message(no_school_id=True)
+        message = get_message(no_school_id=True, state=state)
 
     elif School.objects.filter(id=school_id).exists():
         status_code = status.HTTP_200_OK
@@ -140,11 +151,11 @@ def check_school(school_id):
         # check logic here.
         if school_type != u'Primary School':
             valid = False
-            message = get_message(not_primary_school=True)
+            message = get_message(not_primary_school=True, state=state)
 
     else:
         valid = False
-        message = get_message(invalid_school_id=True, school_id=school_id)
+        message = get_message(invalid_school_id=True, school_id=school_id, state=state)
 
     return (valid, message)
 
@@ -156,11 +167,13 @@ def populate_state(parameters):
     school_id = parameters.get('school_id', None)
     session_id = parameters.get('session_id', None)
 
+    user = User.objects.get(mobile_no=telephone)
     incoming_number = IncomingNumber.objects.get(number=ivrs_type)
     state, created = State.objects.get_or_create(
         session_id=session_id,
         qg_type=incoming_number.qg_type
     )
+    state.user = user
     state.telephone = telephone
     state.date_of_visit = get_date(date.strip("'"))
     state.answers = []
@@ -223,7 +236,8 @@ def verify_answer(session_id, question_number, response, ivrs_type, original_dat
     if status_code == status.HTTP_404_NOT_FOUND:
         message = get_message(
             error_question_number=question_number,
-            original_data=original_data
+            original_data=original_data,
+            state=state
         )
 
     return (state, status_code, message)
