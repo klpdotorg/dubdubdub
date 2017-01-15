@@ -8,7 +8,12 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
-	---
+---
+Release 1.1.0: 7d36bbbf09b9412512a069a55dedf4cdd7bfcf9a - 2017-01-16
+  - Implements the BFC and CRP SMS user classification.
+  - Implements the script to generate weekly and monthlt GKA SMS reports.
+  - Comments and User field on the IVRS State model.
+
 Release 1.0.9: 9018fac49538bb79c5a217b2d2cda92ffa0731c5 - 2016-11-16
   - Added post_import.sh to run scripts after database is created
   - Corrected database reference in run_markpercentile.sh and run_gradepercentile.sh```
