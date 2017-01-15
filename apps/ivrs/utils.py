@@ -167,11 +167,13 @@ def populate_state(parameters):
     school_id = parameters.get('school_id', None)
     session_id = parameters.get('session_id', None)
 
+    user = User.objects.get(mobile_no=telephone)
     incoming_number = IncomingNumber.objects.get(number=ivrs_type)
     state, created = State.objects.get_or_create(
         session_id=session_id,
         qg_type=incoming_number.qg_type
     )
+    state.user = user
     state.telephone = telephone
     state.date_of_visit = get_date(date.strip("'"))
     state.answers = []
