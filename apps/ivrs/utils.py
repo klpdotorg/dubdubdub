@@ -106,12 +106,6 @@ def check_data_validity(request):
         elif data[2] in ('2', '3'):
             if not all(answer in ('2', '3') for answer in data[3:]):
                 valid = False
-        elif data[3] in ('2', '3'):
-            if not all(answer in ('2', '3') for answer in data[4:]):
-                valid = False
-        elif data[4] in ('2', '3'):
-            if not all(answer in ('2', '3') for answer in data[5:]):
-                valid = False
 
     elif len(data) != 6:
         valid = False
