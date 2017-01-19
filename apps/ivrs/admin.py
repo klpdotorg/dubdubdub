@@ -26,8 +26,10 @@ class StateAdmin(admin.ModelAdmin):
             "Block",
             "Cluster",
             "Telephone",
+            "Group",
             "Date Of Visit",
             "Invalid",
+            "Comments",
             "Raw Data",
         ]
 
@@ -54,6 +56,12 @@ class StateAdmin(admin.ModelAdmin):
             except:
                 school_name = district = block = cluster = None
 
+            try:
+                user = state.user
+                group = user.groups.get().name
+            except:
+                group = None
+
             values = [str(number + 1),
                       str(state.school_id),
                       str(school_name),
@@ -61,8 +69,10 @@ class StateAdmin(admin.ModelAdmin):
                       str(block),
                       str(cluster),
                       str(state.telephone),
+                      str(group),
                       str(state.date_of_visit.date()),
                       str(state.is_invalid),
+                      str(state.comments),
                       str(state.raw_data)
             ]
             writer.writerow(values + [answer for answer in state.answers[1:]])
