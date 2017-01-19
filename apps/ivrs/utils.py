@@ -167,7 +167,11 @@ def populate_state(parameters):
     school_id = parameters.get('school_id', None)
     session_id = parameters.get('session_id', None)
 
-    user = User.objects.get(mobile_no=telephone)
+    try:
+        user = User.objects.get(mobile_no=telephone)
+    except:
+        user = None
+
     incoming_number = IncomingNumber.objects.get(number=ivrs_type)
     state, created = State.objects.get_or_create(
         session_id=session_id,
