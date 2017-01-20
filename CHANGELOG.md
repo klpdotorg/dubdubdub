@@ -9,6 +9,12 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.1: a41255d2d3ada87445cf10da0e96a806716d3e67 - 2017-01-19
+  - Implements the BFC and CRP weekly report generation script.
+  - Fixes the gka sms parsing bugs.
+  - Fixes the logic of checking logical errors.
+  - Adds DISE data dump SQL.
+
 Release 1.1.0: 7d36bbbf09b9412512a069a55dedf4cdd7bfcf9a - 2017-01-16
   - Implements the BFC and CRP SMS user classification.
   - Implements the script to generate weekly and monthlt GKA SMS reports.

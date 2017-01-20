@@ -295,36 +295,31 @@ class Command(BaseCommand):
             values = ",".join(values)
             lines.extend([values])
 
+        lines.extend(["\n"])
+
         if duration == 'weekly':
 
             # Weekly BFC error report
-            columns = ("Name,"
+            columns = ("Group,"
+                       "Name,"
                        "Telephone,"
                        "District,"
                        "Block,"
                        "Cluster,"
                        "SMSes sent,"
                        "Number of Invalid SMS,"
+                       "Top 3 error classification with counts,"
                        "Number of schools with SMS,"
                        "No. of unique schools with SMS"
             )
             lines.extend([columns])
 
-            # school_ids = State.objects.all().values_list('school_id', flat=True)
-            # block_ids = School.objects.filter(
-            #     id__in=school_ids
-            # ).values_list(
-            #     'admin3__parent', flat=True
-            # ).order_by(
-            # ).distinct(
-            #     'admin3__parent'
-            # )
-            # blocks = Boundary.objects.filter(id__in=block_ids)
-
             for user in bfc_users:
+                group = "BFC"
+                user_smses = user.state_set.filter(id__in=states)
                 name = user.get_full_name()
                 telephone = user.mobile_no
-                school_ids = user.state_set.filter(id__in=valid_states).values_list('school_id',flat=True)
+                school_ids = user_smses.values_list('school_id',flat=True)
                 clusters = School.objects.filter(
                     id__in=school_ids
                 ).values_list(
@@ -349,22 +344,31 @@ class Command(BaseCommand):
                 ).distinct(
                     'admin3__parent__parent__name'
                 )
-                smses_sent = user.state_set.filter(id__in=valid_states).count()
-                invalid_smses_count = user.state_set.filter(id__in=states, is_invalid=True).count()
-                # user  = User.objects.filter(
-                #     state__in=valid_states
-                # ).annotate(sms_count=Count('state')).order_by('-sms_count')[:5]
-                
+                smses_sent = user_smses.count()
+                invalid_smses_count = user_smses.filter(is_invalid=True).count()
+                errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
+                errors_dict = {}
+                for error in errors:
+                    if error in errors_dict:
+                        errors_dict[error] += 1
+                    else:
+                        errors_dict[error] = 1
+                errors_dict = sorted(errors_dict.items(), key=operator.itemgetter(1))
+                top_3_errors = list((reversed(errors_dict)))[:3]
+                schools_with_sms = user_smses.values_list('school_id',flat=True).count()
+                unique_schools_with_sms = user_smses.values_list('school_id',flat=True).order_by().distinct('school_id').count()
                 values = [
-                    str(block.name),
-                    str(block.parent.name),
-                    str(smses_received),
-                    str(smses_from_bfc),
-                    str(smses_from_crp),
-                    str(invalid_smses),
-                    str(invalid_smses_from_bfc),
-                    str(invalid_smses_from_crp),
-                    str(schools_with_invalid_smses),
+                    str(group),
+                    str(name),
+                    str(telephone),
+                    str("-".join(districts)),
+                    str("-".join(blocks)),
+                    str("-".join(clusters)),
+                    str(smses_sent),
+                    str(invalid_smses_count),
+                    str(top_3_errors).replace(',', '-'),
+                    str(schools_with_sms),
+                    str(unique_schools_with_sms)
                 ]
             
                 values = ",".join(values)
@@ -372,7 +376,82 @@ class Command(BaseCommand):
 
             lines.extend(["\n"])
 
+            # Weekly CRP error report
+            columns = ("Group,"
+                       "Name,"
+                       "Telephone,"
+                       "District,"
+                       "Block,"
+                       "Cluster,"
+                       "SMSes sent,"
+                       "Number of Invalid SMS,"
+                       "Top 3 error classification with counts,"
+                       "Number of schools with SMS,"
+                       "No. of unique schools with SMS"
+            )
+            lines.extend([columns])
 
+            for user in crp_users:
+                group = "CRP"
+                user_smses = user.state_set.filter(id__in=states)
+                name = user.get_full_name()
+                telephone = user.mobile_no
+                school_ids = user_smses.values_list('school_id',flat=True)
+                clusters = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__name'
+                )
+                blocks = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__parent__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__parent__name'
+                )
+                districts = School.objects.filter(
+                    id__in=school_ids
+                ).values_list(
+                    'admin3__parent__parent__name', flat=True
+                ).order_by(
+                ).distinct(
+                    'admin3__parent__parent__name'
+                )
+                smses_sent = user_smses.count()
+                invalid_smses_count = user_smses.filter(is_invalid=True).count()
+                errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
+                errors_dict = {}
+                for error in errors:
+                    if error in errors_dict:
+                        errors_dict[error] += 1
+                    else:
+                        errors_dict[error] = 1
+                errors_dict = sorted(errors_dict.items(), key=operator.itemgetter(1))
+                top_3_errors = list((reversed(errors_dict)))[:3]
+                schools_with_sms = user_smses.values_list('school_id',flat=True).count()
+                unique_schools_with_sms = user_smses.values_list('school_id',flat=True).order_by().distinct('school_id').count()
+                values = [
+                    str(group),
+                    str(name),
+                    str(telephone),
+                    str("-".join(districts)),
+                    str("-".join(blocks)),
+                    str("-".join(clusters)),
+                    str(smses_sent),
+                    str(invalid_smses_count),
+                    str(top_3_errors).replace(',', '-'),
+                    str(schools_with_sms),
+                    str(unique_schools_with_sms)
+                ]
+            
+                values = ",".join(values)
+                lines.extend([values])
+
+            lines.extend(["\n"])
 
         for line in lines:
             csv.write(line+"\n")

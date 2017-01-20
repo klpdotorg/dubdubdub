@@ -63,8 +63,9 @@ def get_message(**kwargs):
         message = "Error at que.no: " + question_number + "." + \
                   " Your response was " + data
 
-    state.comments = message
-    state.save()
+    if state:
+        state.comments = message
+        state.save()
 
     return message
 
@@ -104,12 +105,6 @@ def check_data_validity(request):
             valid = False
         elif data[2] in ('2', '3'):
             if not all(answer in ('2', '3') for answer in data[3:]):
-                valid = False
-        elif data[3] in ('2', '3'):
-            if not all(answer in ('2', '3') for answer in data[4:]):
-                valid = False
-        elif data[4] in ('2', '3'):
-            if not all(answer in ('2', '3') for answer in data[5:]):
                 valid = False
 
     elif len(data) != 6:
@@ -167,7 +162,11 @@ def populate_state(parameters):
     school_id = parameters.get('school_id', None)
     session_id = parameters.get('session_id', None)
 
-    user = User.objects.get(mobile_no=telephone)
+    try:
+        user = User.objects.get(mobile_no=telephone)
+    except:
+        user = None
+
     incoming_number = IncomingNumber.objects.get(number=ivrs_type)
     state, created = State.objects.get_or_create(
         session_id=session_id,
@@ -231,6 +230,7 @@ def verify_answer(session_id, question_number, response, ivrs_type, original_dat
         else:
             status_code = status.HTTP_404_NOT_FOUND
     else:
+        state = None
         status_code = status.HTTP_404_NOT_FOUND
 
     if status_code == status.HTTP_404_NOT_FOUND:
