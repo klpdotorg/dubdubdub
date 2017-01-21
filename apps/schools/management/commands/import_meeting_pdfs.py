@@ -21,7 +21,8 @@ class Command(BaseCommand):
         if not self.directory:
             print "Please specify full path to directory with the --dir argument"
             return
-        self.runArchiveUpdate()
+        #Run once only when the directory structure was changed.
+        #self.runArchiveUpdate()
         walk(self.directory, self.processDir, None)
 
     def runArchiveUpdate(self):
