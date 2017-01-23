@@ -9,6 +9,11 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.2: 884dec7e051633feef75f9fbb9f9a28e4fbc5190 - 2017-01-23
+  - Implements the email functionality into the report generation script.
+  - Elected_reps script modification.
+  - Meeting report pdfs archival removal.
+
 Release 1.1.1: a41255d2d3ada87445cf10da0e96a806716d3e67 - 2017-01-19
   - Implements the BFC and CRP weekly report generation script.
   - Fixes the gka sms parsing bugs.
