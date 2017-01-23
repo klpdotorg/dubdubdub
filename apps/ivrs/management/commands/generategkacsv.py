@@ -7,10 +7,12 @@ from django.conf import settings
 from django.db import transaction
 from django.db.models import Count
 from django.contrib.auth.models import Group
+from django.core.mail import EmailMultiAlternatives
 from django.core.management.base import BaseCommand
 
 from ivrs.models import State
 from users.models import User
+from common.utils import send_attachment
 from schools.models import School, Boundary
 from stories.models import Story, UserType, Questiongroup, Answer
 
@@ -19,11 +21,13 @@ class Command(BaseCommand):
     args = ""
     help = """Creates csv files for calls happened each day
 
-    ./manage.py generategkacsv --duration=[monthly/weekly]"""
+    ./manage.py generategkacsv --duration=[monthly/weekly] --emails=a@b.com,c@d.com"""
 
     option_list = BaseCommand.option_list + (
         make_option('--duration',
                     help='To specify whether it is a monthly or weekly csv'),
+        make_option('--emails',
+                    help='Comma separated list of email ids'),
     )
 
     @transaction.atomic
@@ -33,6 +37,13 @@ class Command(BaseCommand):
             raise Exception(
                 "Please specify --duration as 'monthly' or 'weekly'"
             )
+
+        emails = options.get('emails', None)
+        if not emails:
+            raise Exception(
+                "Please specify --emails as a list of comma separated emails"
+            )
+        emails = emails.split(",")
 
         if duration == 'weekly':
             days = 7
@@ -54,7 +65,8 @@ class Command(BaseCommand):
         valid_states = states.filter(is_invalid=False)
 
         date = datetime.now().date().strftime("%d_%b_%Y")
-        csv = open(report_dir+date+".csv", "w")
+        csv_file = report_dir + date + '.csv'
+        csv = open(csv_file, "w")
 
         lines = []
 
@@ -241,7 +253,11 @@ class Command(BaseCommand):
                 'admin3__parent__parent__name'
             )
 
-            group = user.groups.get().name
+            try:
+                group = user.groups.get().name
+            except:
+                group = ''
+
             smses = states.filter(user=user, is_invalid=False).count()
 
             values = [
@@ -455,5 +471,14 @@ class Command(BaseCommand):
 
         for line in lines:
             csv.write(line+"\n")
+
+        date_range = start_date.strftime("%d/%m/%Y") + " to " + today.strftime("%d/%m/%Y")
+        subject = 'GKA SMS Report for '+ date_range
+        from_email = settings.EMAIL_DEFAULT_FROM
+        to_emails = emails
+        msg = EmailMultiAlternatives(subject, "Please view attachment", from_email, to_emails)
+        msg.attach_alternative("<b>Please View attachement</b>", "text/html")
+        msg.attach_file(csv_file)
+        msg.send()
 
                             
