@@ -107,13 +107,15 @@ class Command(BaseCommand):
             # in utils.py for all possible messages.
             if error:
                 if 'Expected' in error:
-                    error = 'Formatting / Logic error'
+                    error = 'Formatting error'
                 if 'registered' in error:
                     error = 'Not registered'
                 if 'que.no' in error:
                     error = 'Entry error for a specific question'
                 if 'School' in error:
                     error = 'School ID error'
+                if 'Logical' in error:
+                    error = 'Logical error'
                 if 'accepted' in error:
                     # We have to do this because all State are by default
                     # invalid when created. Since we only process SMSes at
@@ -435,6 +437,23 @@ class Command(BaseCommand):
                 errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
                 errors_dict = {}
                 for error in errors:
+                    if error:
+                        if 'Expected' in error:
+                            error = 'Formatting error'
+                        if 'registered' in error:
+                            error = 'Not registered'
+                        if 'que.no' in error:
+                            error = 'Entry error for a specific question'
+                        if 'School' in error:
+                            error = 'School ID error'
+                        if 'Logical' in error:
+                            error = 'Logical error'
+                        if 'accepted' in error:
+                            # We have to do this because all State are by default
+                            # invalid when created. Since we only process SMSes at
+                            # 8.30PM in the night, the SMSes that came in that day
+                            # morning will show as invalid.
+                            continue
                     if error in errors_dict:
                         errors_dict[error] += 1
                     else:
@@ -522,6 +541,24 @@ class Command(BaseCommand):
                 errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
                 errors_dict = {}
                 for error in errors:
+                    if error:
+                        if 'Expected' in error:
+                            error = 'Formatting error'
+                        if 'registered' in error:
+                            error = 'Not registered'
+                        if 'que.no' in error:
+                            error = 'Entry error for a specific question'
+                        if 'School' in error:
+                            error = 'School ID error'
+                        if 'Logical' in error:
+                            error = 'Logical error'
+                        if 'accepted' in error:
+                            # We have to do this because all State are by default
+                            # invalid when created. Since we only process SMSes at
+                            # 8.30PM in the night, the SMSes that came in that day
+                            # morning will show as invalid.
+                            continue
+
                     if error in errors_dict:
                         errors_dict[error] += 1
                     else:
