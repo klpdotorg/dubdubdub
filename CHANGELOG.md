@@ -9,10 +9,12 @@ Use required commands
 
 Changelog
 ---
-Release 1.1.3: c9292dca8143483043aef177e642634c30230792 - 2017-01-24
+Release 1.1.3: 51844eab408d25590d7b760ba3e6129dc4eb1d37 - 2017-01-24
   - Fetches only the error messages instead of all messages.
   - Sorts all categories in the script.
   - Adds appropriate headings in the generated CSV.
+  - Separates the logical and formatting errors.
+  - Makes all error messages concise while generating the report.
 
 Release 1.1.2: 884dec7e051633feef75f9fbb9f9a28e4fbc5190 - 2017-01-23
   - Implements the email functionality into the report generation script.
