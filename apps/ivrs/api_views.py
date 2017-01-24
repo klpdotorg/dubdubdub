@@ -40,7 +40,7 @@ class SMSView(KLPAPIView):
 
         is_registered_user = check_user(parameters)
 
-        processed_data, is_data_valid = check_data_validity(request)
+        processed_data, is_data_valid, is_logically_correct = check_data_validity(request)
 
         school_id = processed_data.pop(0)
         parameters['school_id'] = school_id
@@ -62,6 +62,7 @@ class SMSView(KLPAPIView):
         if not is_data_valid:
             message = get_message(
                 valid=is_data_valid,
+                is_logically_correct=is_logically_correct,
                 data=parameters['raw_data'],
                 state=state
             )

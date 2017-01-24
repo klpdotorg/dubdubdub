@@ -28,6 +28,9 @@ def get_message(**kwargs):
         message = "Response accepted. Your message was: " + data + \
                   " received at: " + date
 
+    elif not kwargs.get('is_logically_correct', True):
+        message = "Logical error."
+
     elif not kwargs.get('valid', True):
         data = str(kwargs['data'])
         expected_response_1 = "3885,1,1,1,2,2"
@@ -71,6 +74,7 @@ def get_message(**kwargs):
 
 def check_data_validity(request):
     valid = True
+    is_logically_correct = True
 
     data = request.QUERY_PARAMS.get('Body', None)
     data = [item.strip() for item in data.split(',')]
@@ -103,14 +107,17 @@ def check_data_validity(request):
         elif any(response == '' for response in data):
             # Responses like 3885,1,2,1,,2 are not accepted.
             valid = False
+
+        # Logical error
         elif data[2] in ('2', '3'):
             if not all(answer in ('2', '3') for answer in data[3:]):
                 valid = False
+                is_logically_correct = False
 
     elif len(data) != 6:
         valid = False
 
-    return (data, valid)
+    return (data, valid, is_logically_correct)
 
 def get_date(date):
     date = datetime.datetime.strptime(
