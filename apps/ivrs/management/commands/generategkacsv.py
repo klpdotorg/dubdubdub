@@ -94,9 +94,9 @@ class Command(BaseCommand):
         columns = "Error type, Count"
         lines.extend([columns])
 
-        errors = states.filter(is_invalid=True).values_list('comments', flat=True).order_by().distinct('comments')
+        errors = states.filter(is_invalid=True).values_list('comments', flat=True)
+        errors_dict = {}
         for error in errors:
-            number_of_errors = states.filter(comments=error).count()
             # Let's make certain errors more concise. Refer to 'get_message'
             # in utils.py for all possible messages.
             if error:
@@ -106,9 +106,23 @@ class Command(BaseCommand):
                     error = 'Not registered'
                 if 'que.no' in error:
                     error = 'Entry error for a specific question'
+                if 'School' in error:
+                    error = 'School ID error'
+                if 'accepted' in error:
+                    # We have to do this because all State are by default
+                    # invalid when created. Since we only process SMSes at
+                    # 8.30PM in the night, the SMSes that came in that day
+                    # morning will show as invalid.
+                    continue
+            if error in errors_dict:
+                errors_dict[error] += 1
+            else:
+                errors_dict[error] = 1
+
+        for error, count in errors_dict.iteritems():
             values = [
                 str(error),
-                str(number_of_errors)
+                str(count)
             ]
             values = ",".join(values)
             lines.extend([values])
