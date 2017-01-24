@@ -94,9 +94,18 @@ class Command(BaseCommand):
         columns = "Error type, Count"
         lines.extend([columns])
 
-        errors = states.values_list('comments', flat=True).order_by().distinct('comments')
+        errors = states.filter(is_invalid=True).values_list('comments', flat=True).order_by().distinct('comments')
         for error in errors:
             number_of_errors = states.filter(comments=error).count()
+            # Let's make certain errors more concise. Refer to 'get_message'
+            # in utils.py for all possible messages.
+            if error:
+                if 'Expected' in error:
+                    error = 'Formatting / Logic error'
+                if 'registered' in error:
+                    error = 'Not registered'
+                if 'que.no' in error:
+                    error = 'Entry error for a specific question'
             values = [
                 str(error),
                 str(number_of_errors)
