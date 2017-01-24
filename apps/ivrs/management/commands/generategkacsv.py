@@ -71,6 +71,9 @@ class Command(BaseCommand):
         lines = []
 
         # Overall count
+        heading = "OVERALL COUNT"
+        lines.extend([heading, "\n"])
+
         columns = "Total SMS received, No. of invalid SMS, % of invalid SMS, No. of schools with unique valid SMS"
         lines.extend([columns])
 
@@ -91,6 +94,9 @@ class Command(BaseCommand):
         lines.extend([values, "\n"])
 
         # Invalid SMS error classification
+        heading = "INVALID SMS ERROR CLASSIFICATION"
+        lines.extend([heading, "\n"])
+
         columns = "Error type, Count"
         lines.extend([columns])
 
@@ -130,6 +136,9 @@ class Command(BaseCommand):
 
 
         # District Level performance
+        heading = "DISTRICT LEVEL PERFORMANCE"
+        lines.extend([heading, "\n"])
+
         columns = ("District,"
                    "Total SMS received,"
                    "No. SMS from BFC,"
@@ -152,7 +161,16 @@ class Command(BaseCommand):
         )
         districts = Boundary.objects.filter(id__in=district_ids)
 
+        district_dict = {}
         for district in districts:
+            school_ids = district.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            district_dict[district.id] = smses_received
+        district_dict_list = sorted(district_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+        for district_id, smses_count in district_dict_list:
+            district = Boundary.objects.get(id=district_id)
             school_ids = district.schools().values_list('id', flat=True)
             smses = states.filter(school_id__in=school_ids)
             smses_received = smses.count()
@@ -180,6 +198,9 @@ class Command(BaseCommand):
 
         lines.extend(["\n"])
         # Block Level performance
+        heading = "BLOCK LEVEL PERFORMANCE"
+        lines.extend([heading, "\n"])
+
         columns = ("Block,"
                    "District,"
                    "Total SMS received,"
@@ -203,7 +224,16 @@ class Command(BaseCommand):
         )
         blocks = Boundary.objects.filter(id__in=block_ids)
 
+        block_dict = {}
         for block in blocks:
+            school_ids = block.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            block_dict[block.id] = smses_received
+        block_dict_list = sorted(block_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+        for block_id, smses_count in block_dict_list:
+            block = Boundary.objects.get(id=block_id)
             school_ids = block.schools().values_list('id', flat=True)
             smses = states.filter(school_id__in=school_ids)
             smses_received = smses.count()
@@ -231,15 +261,18 @@ class Command(BaseCommand):
 
         lines.extend(["\n"])
 
-
         # Top 5 valid SMS contributors:
+        heading = "TOP 5 VALID SMS CONTRIBUTORS"
+        lines.extend([heading, "\n"])
+
         columns = ("Name,"
                    "Mobile number,"
                    "Districts,"
                    "Blocks,"
                    "Clusters,"
                    "Group,"
-                   "SMS count,"
+                   "Valid SMS count,"
+                   "SMS count"
         )
         lines.extend([columns])
 
@@ -281,7 +314,8 @@ class Command(BaseCommand):
             except:
                 group = ''
 
-            smses = states.filter(user=user, is_invalid=False).count()
+            valid_smses = states.filter(user=user, is_invalid=False).count()
+            total_smses = states.filter(user=user).count()
 
             values = [
                 str(name),
@@ -290,7 +324,8 @@ class Command(BaseCommand):
                 str("-".join(blocks)),
                 str("-".join(clusters)),
                 str(group),
-                str(smses),
+                str(valid_smses),
+                str(total_smses)
             ]
 
             values = ",".join(values)
@@ -298,8 +333,10 @@ class Command(BaseCommand):
 
         lines.extend(["\n"])
 
-
         # Top 5 blocks with valid SMS
+        heading = "TOP 5 BLOCKS WITH VALID SMS"
+        lines.extend([heading, "\n"])
+
         columns = ("Block Name,"
                    "District Name,"
                    "Number of Valid SMS,"
@@ -339,6 +376,9 @@ class Command(BaseCommand):
         if duration == 'weekly':
 
             # Weekly BFC error report
+            heading = "BFC ERROR REPORT"
+            lines.extend([heading, "\n"])
+
             columns = ("Group,"
                        "Name,"
                        "Telephone,"
@@ -353,8 +393,15 @@ class Command(BaseCommand):
             )
             lines.extend([columns])
 
+            user_dict = {}
             for user in bfc_users:
+                user_smses_count = user.state_set.filter(id__in=states).count()
+                user_dict[user.id] = user_smses_count
+            user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+            for user_id, user_smses_count in user_dict_list:
                 group = "BFC"
+                user = User.objects.get(id=user_id)
                 user_smses = user.state_set.filter(id__in=states)
                 name = user.get_full_name()
                 telephone = user.mobile_no
@@ -416,6 +463,9 @@ class Command(BaseCommand):
             lines.extend(["\n"])
 
             # Weekly CRP error report
+            heading = "CRP ERROR REPORT"
+            lines.extend([heading, "\n"])
+
             columns = ("Group,"
                        "Name,"
                        "Telephone,"
@@ -430,8 +480,15 @@ class Command(BaseCommand):
             )
             lines.extend([columns])
 
+            user_dict = {}
             for user in crp_users:
+                user_smses_count = user.state_set.filter(id__in=states).count()
+                user_dict[user.id] = user_smses_count
+            user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+            for user_id, user_smses_count in user_dict_list:
                 group = "CRP"
+                user = User.objects.get(id=user_id)
                 user_smses = user.state_set.filter(id__in=states)
                 name = user.get_full_name()
                 telephone = user.mobile_no
