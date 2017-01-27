@@ -35,11 +35,12 @@ class SMSView(KLPAPIView):
         parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
         parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
         parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
+        parameters['telephone'] = parameters['telephone'][1:] # Strip 0
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
 
-        is_registered_user = check_user(request)
+        is_registered_user = check_user(parameters)
 
-        processed_data, is_data_valid = check_data_validity(request)
+        processed_data, is_data_valid, is_logically_correct = check_data_validity(request)
 
         school_id = processed_data.pop(0)
         parameters['school_id'] = school_id
@@ -49,7 +50,8 @@ class SMSView(KLPAPIView):
         if not is_registered_user:
             message = get_message(
                 is_registered_user=is_registered_user,
-                telephone=parameters['telephone']
+                telephone=parameters['telephone'],
+                state=state
             )
             return Response(
                 message,
@@ -60,7 +62,9 @@ class SMSView(KLPAPIView):
         if not is_data_valid:
             message = get_message(
                 valid=is_data_valid,
-                data=parameters['raw_data']
+                is_logically_correct=is_logically_correct,
+                data=parameters['raw_data'],
+                state=state
             )
             return Response(
                 message,
@@ -68,7 +72,7 @@ class SMSView(KLPAPIView):
                 content_type=content_type
             )
 
-        is_school_valid, message = check_school(school_id)
+        is_school_valid, message = check_school(state, school_id)
         if not is_school_valid:
             return Response(
                 message,
@@ -107,7 +111,8 @@ class SMSView(KLPAPIView):
             message = get_message(
                 valid=True,
                 date=parameters['date'],
-                data=parameters['raw_data']
+                data=parameters['raw_data'],
+                state=state
             )
 
         return Response(

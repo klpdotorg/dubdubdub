@@ -8,7 +8,30 @@ Use required commands
     fab dev deploy:pip_install=True,migrate=True
 
 Changelog
-	---
+---
+Release 1.1.3: 51844eab408d25590d7b760ba3e6129dc4eb1d37 - 2017-01-24
+  - Fetches only the error messages instead of all messages.
+  - Sorts all categories in the script.
+  - Adds appropriate headings in the generated CSV.
+  - Separates the logical and formatting errors.
+  - Makes all error messages concise while generating the report.
+
+Release 1.1.2: 884dec7e051633feef75f9fbb9f9a28e4fbc5190 - 2017-01-23
+  - Implements the email functionality into the report generation script.
+  - Elected_reps script modification.
+  - Meeting report pdfs archival removal.
+
+Release 1.1.1: a41255d2d3ada87445cf10da0e96a806716d3e67 - 2017-01-19
+  - Implements the BFC and CRP weekly report generation script.
+  - Fixes the gka sms parsing bugs.
+  - Fixes the logic of checking logical errors.
+  - Adds DISE data dump SQL.
+
+Release 1.1.0: 7d36bbbf09b9412512a069a55dedf4cdd7bfcf9a - 2017-01-16
+  - Implements the BFC and CRP SMS user classification.
+  - Implements the script to generate weekly and monthlt GKA SMS reports.
+  - Comments and User field on the IVRS State model.
+
 Release 1.0.9: 9018fac49538bb79c5a217b2d2cda92ffa0731c5 - 2016-11-16
   - Added post_import.sh to run scripts after database is created
   - Corrected database reference in run_markpercentile.sh and run_gradepercentile.sh```
