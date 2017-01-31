@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.4: ca7619fd63895ae50926a5d91aa565fdda137c03 - 2017-01-31
+  - Updates the gka sms report script.
+
 Release 1.1.3: 51844eab408d25590d7b760ba3e6129dc4eb1d37 - 2017-01-24
   - Fetches only the error messages instead of all messages.
   - Sorts all categories in the script.
