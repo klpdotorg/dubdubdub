@@ -12,55 +12,137 @@ from django.core.management.base import BaseCommand
 
 from ivrs.models import State
 from users.models import User
-from common.utils import send_attachment
 from schools.models import School, Boundary
+from common.utils import send_attachment, Date
 from stories.models import Story, UserType, Questiongroup, Answer
 
+EXCLUDED_DISTRICTS = [
+    'bangalore',
+    'bangalore u south',
+    'koppal',
+    'mysore',
+    'kolar',
+    'chamrajnagar',
+    'belgaum',
+    'bangalore u north',
+    'ramnagara',
+    'dharwad',
+]
+
+EXCLUDED_DISTRICT_IDS = [431, 8877, 8878, 444, 413, 421, 419, 439, 9540, 9541]
+
+EXCLUDED_BLOCKS = [
+    'hunagund',
+    'magadi',
+    'ramanagara',
+    'kanakapura',
+    'kudligi',
+    'kollegal',
+    'south-1',
+    'south-3',
+    'north-1',
+    'north-2',
+    'north-4',
+    'north-3',
+    'mysore south',
+    'koppal',
+    'bangarapete',
+    'bangalore south(banashankari)',
+    'sumangali seva ashrama',
+    'bangalore north (yelahanka)',
+    'belgaum city',
+    'badami',
+    'bagalkot',
+    'bilagi',
+    'jamakhandi',
+    'mudhol',
+    'yelandur',
+    'dharwad',
+    'kundagol'
+]
+
+EXCLUDED_BLOCK_IDS = [8882, 8886, 573, 464, 502, 465, 466, 493, 530, 505, 650, 467, 8889, 651, 626, 5999, 653, 462, 457, 463, 625, 8883, 8884, 8879, 8881, 8776, 8774, 8779]
 
 class Command(BaseCommand):
     args = ""
     help = """Creates csv files for calls happened each day
 
-    ./manage.py generategkacsv --duration=[monthly/weekly] --emails=a@b.com,c@d.com"""
+    ./manage.py generategkacsv [--duration=monthly/weekly] [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] [--fc_report=True/False] --emails=a@b.com,c@d.com"""
 
     option_list = BaseCommand.option_list + (
+        make_option('--from',
+                    help='Start date'),
+        make_option('--to',
+                    help='End date'),
         make_option('--duration',
                     help='To specify whether it is a monthly or weekly csv'),
         make_option('--emails',
                     help='Comma separated list of email ids'),
+        make_option('--fc_report',
+                    help='Whether to generate BFC and CRP reports'),
     )
 
     @transaction.atomic
     def handle(self, *args, **options):
         duration = options.get('duration', None)
-        if not duration:
+        start_date = options.get('from', None)
+        end_date = options.get('to', None)
+        emails = options.get('emails', None)
+        fc_report = options.get('fc_report', None)
+
+        today = datetime.now().date()
+        if duration:
+            if duration == 'weekly':
+                days = 7
+            elif duration == 'monthly':
+                days = 30
+            start_date = today - timedelta(days=int(days))
+            end_date = today
+
+        elif (start_date and end_date):
+            date = Date()
+            sane = date.check_date_sanity(start_date)
+            if not sane:
+                print """
+                Error:
+                Wrong --from format. Expected YYYY-MM-DD
+                """
+                print self.help
+                return
+            else:
+                start_date = date.get_datetime(start_date)
+
+            sane = date.check_date_sanity(end_date)
+            if not sane:
+                print """
+                Error:
+                Wrong --to format. Expected YYYY-MM-DD
+                """
+                print self.help
+                return
+            else:
+                end_date = date.get_datetime(end_date)
+        else:
             raise Exception(
-                "Please specify --duration as 'monthly' or 'weekly'"
+                "Please specify --duration as 'monthly' or 'weekly' OR --from and --to"
             )
 
-        emails = options.get('emails', None)
         if not emails:
             raise Exception(
                 "Please specify --emails as a list of comma separated emails"
             )
         emails = emails.split(",")
-
-        if duration == 'weekly':
-            days = 7
-        elif duration == 'monthly':
-            days = 30
-
+        
         report_dir = settings.PROJECT_ROOT + "/gka-reports/"
 
         bfc = Group.objects.get(name="BFC")
         crp = Group.objects.get(name="CRP")
         bfc_users = bfc.user_set.all()
         crp_users = crp.user_set.all()
-
-        today = datetime.now().date()
-        start_date = today - timedelta(days=int(days))
+        
         states = State.objects.filter(
             date_of_visit__gte=start_date,
+            date_of_visit__lte=end_date
         )
         valid_states = states.filter(is_invalid=False)
 
@@ -74,12 +156,14 @@ class Command(BaseCommand):
         heading = "OVERALL COUNT"
         lines.extend([heading, "\n"])
 
-        columns = "Total SMS received, No. of invalid SMS, % of invalid SMS, No. of schools with unique valid SMS"
+        columns = "Total SMS received, No. of invalid SMS, % of invalid SMS, No. valid SMS received from BFC, No. valid SMS received from CRP, No. of schools with unique valid SMS"
         lines.extend([columns])
 
         total_sms_received = states.count()
         number_of_invalid_sms = states.filter(is_invalid=True).count()
         percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
+        number_of_valid_smses_from_bfc = valid_states.filter(user__in=bfc_users).count()
+        number_of_valid_smses_from_crp = valid_states.filter(user__in=crp_users).count()
         number_of_schools_with_unique_valid_sms = states.filter(
             is_invalid=False).order_by().distinct('school_id').count()
 
@@ -87,6 +171,8 @@ class Command(BaseCommand):
             str(total_sms_received),
             str(number_of_invalid_sms),
             str(percentage_of_invalid_sms),
+            str(number_of_valid_smses_from_bfc),
+            str(number_of_valid_smses_from_crp),
             str(number_of_schools_with_unique_valid_sms)
         ]
 
@@ -161,7 +247,7 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent__parent'
         )
-        districts = Boundary.objects.filter(id__in=district_ids)
+        districts = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
 
         district_dict = {}
         for district in districts:
@@ -224,7 +310,7 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent'
         )
-        blocks = Boundary.objects.filter(id__in=block_ids)
+        blocks = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
 
         block_dict = {}
         for block in blocks:
@@ -375,7 +461,7 @@ class Command(BaseCommand):
 
         lines.extend(["\n"])
 
-        if duration == 'weekly':
+        if fc_report == 'True':
 
             # Weekly BFC error report
             heading = "BFC ERROR REPORT"
