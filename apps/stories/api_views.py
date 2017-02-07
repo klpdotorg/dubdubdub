@@ -180,7 +180,7 @@ class StoriesSyncView(KLPAPIView):
 
     def post(self, request, format=None):
         response = {
-            'success': [],
+            'success': dict(),
             'failed': [],
             'error': None
         }
@@ -227,7 +227,7 @@ class StoriesSyncView(KLPAPIView):
                             story=new_story,
                             question=Question.objects.get(pk=answer.get('question_id'))
                         )
-                    response['success'].append(story.get('_id'))
+                    response['success'][story.get('_id')] = new_story.id
                 except Exception as e:
                     print "Error saving stories and answers:", e
                     response['failed'].append(story.get('_id'))
