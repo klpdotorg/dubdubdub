@@ -439,7 +439,8 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
 
     class Meta:
         model = BoundaryAssessmentSinglescore
-        fields = ('boundaryname', 'assessmentname', 'studentgroup', 'academicyear_name', 'singlescore', 'percentile', 'gradesinglescore', 'cohortsdetails', 'singlescoredetails')
+        fields = ('boundaryname', 'assessmentname', 'studentgroup', 'academicyear_name', 'singlescore',
+                  'percentile', 'gradesinglescore', 'cohortsdetails', 'singlescoredetails')
 
     def get_cohorts_details(self, obj):
         data = {}

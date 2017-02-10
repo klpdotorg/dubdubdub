@@ -15,7 +15,7 @@ from schools.api_views import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
-    MeetingReportListView,
+    MeetingReportListView
 )
 
 from users.api_views import (

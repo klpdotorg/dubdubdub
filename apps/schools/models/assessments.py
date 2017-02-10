@@ -177,11 +177,9 @@ class BoundaryAssessmentSinglescoreGender(BaseModel):
     gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
 
     def __unicode__(self):
-
-        return "%s: %s" % (self.boundary, self.assessment, self.gender,)
+        return "%s: %s" %(self.boundary, self.assessment, self.gender,)
 
     class Meta:
-
         # workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'BoundaryAssSingleScoreGender'
         managed = False
