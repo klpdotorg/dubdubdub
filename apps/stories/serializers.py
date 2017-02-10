@@ -237,11 +237,17 @@ class StoryWithAnswersSerializer(KLPSerializer):
 
 
 class StorySyncSerializer(KLPSerializer):
-    answers = AnswerSyncSerializer(many=True, source='answer_set')
+    answers = serializers.SerializerMethodField('get_answers')
     user_type = serializers.CharField(source='user_type.name')
 
     class Meta:
         model = Story
         fields = (
-            'id', 'date_of_visit', 'school', 'group', 'is_verified',
+            'id', 'date_of_visit', 'school', 'group',
             'answers', 'user_type', 'user')
+
+    def get_answers(self, obj):
+        answers = dict()
+        for a in obj.answer_set.all():
+            answers[a.question_id] = a.text
+        return answers
