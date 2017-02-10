@@ -43,7 +43,7 @@ from .models import (
 from .serializers import (
     SchoolQuestionsSerializer, StorySerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
-    QuestionSerializer, SurveySerializer, SourceSerializer
+    QuestionFullSerializer, SurveySerializer, SourceSerializer
 )
 
 from. filters import (
@@ -62,14 +62,15 @@ class QuestiongroupsViewSet(KLPModelViewSet):
     filter_class = QuestiongroupFilter
 
     def get_queryset(self):
-        queryset = Questiongroup.objects.all()
+        queryset = Questiongroup.objects.all().select_related(
+            'source', 'survey__partner', 'school_type'
+        ).prefetch_related('created_by')
 
         survey_id = self.kwargs.get('survey_pk', None)
         questiongroup_id = self.kwargs.get('pk', None)
 
         if survey_id:
-            survey = Survey.objects.get(id=survey_id)
-            queryset = queryset.filter(survey=survey)
+            queryset = queryset.filter(survey_id=survey_id)
 
         if questiongroup_id:
             queryset = queryset.filter(id=questiongroup_id)
@@ -139,18 +140,23 @@ class QuestiongroupsViewSet(KLPModelViewSet):
 
 
 class QuestionsViewSet(KLPModelViewSet):
-    serializer_class = QuestionSerializer
+    serializer_class = QuestionFullSerializer
     filter_class = QuestionFilter
 
     def get_queryset(self):
-        queryset = Question.objects.all()
+        queryset = Question.objects.all().prefetch_related(
+            'questiongroupquestions_set__questiongroup',
+            'questiongroupquestions_set__questiongroup__source'
+        ).select_related(
+            'question_type',
+            'school_type'
+        )
 
         questiongroup_id = self.kwargs.get('group_pk', None)
         question_id = self.kwargs.get('pk', None)
 
         if questiongroup_id:
-            questiongroup = Questiongroup.objects.get(id=questiongroup_id)
-            queryset = queryset.filter(questiongroup=questiongroup)
+            queryset = queryset.filter(questiongroup_id=questiongroup_id)
 
         if question_id:
             queryset = queryset.filter(id=question_id)
@@ -201,14 +207,14 @@ class StoriesSyncView(KLPAPIView):
                     user_type = UserType.objects.get(name__iexact=story.get('respondent_type'))
                     new_story, created = Story.objects.get_or_create(
                         user=request.user,
-                        school=School.objects.get(pk=story.get('school_id')),
-                        group=Questiongroup.objects.get(pk=story.get('group_id')),
+                        school_id=story.get('school_id'),
+                        group_id=story.get('group_id'),
                         user_type=user_type,
-                        date_of_visit=datetime.datetime.fromtimestamp(timestamp),
-                        sysid=sysid
+                        date_of_visit=datetime.datetime.fromtimestamp(timestamp)
                     )
 
                     if created:
+                        new_story.sysid = sysid
                         new_story.is_verified = True
                         new_story.telephone = request.user.mobile_no
                         new_story.name = request.user.get_full_name()
@@ -225,7 +231,10 @@ class StoriesSyncView(KLPAPIView):
                 except Exception as e:
                     print "Error saving stories and answers:", e
                     response['failed'].append(story.get('_id'))
+                    # price traceback
+                    import traceback; traceback.print_exc();
         return Response(response)
+
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
@@ -791,6 +800,8 @@ class StoriesView(KLPListAPIView):
                 returned, if not mentioned, returns all
     """
     bbox_filter_field = "school__instcoord__coord"
+    authentication_classes = (authentication.TokenAuthentication,
+                              authentication.SessionAuthentication,)
 
     def get_serializer_class(self):
         get_answers = self.request.GET.get('answers', 'no')
@@ -808,7 +819,16 @@ class StoriesView(KLPListAPIView):
         if school_id:
             qset = qset.filter(school__id=school_id)
 
-        verified = self.request.GET.get('verified', None)
+        if self.request.GET.get('answers', 'no') == 'yes':
+            qset = qset.prefetch_related(
+                'answer_set', 'answer_set__question',
+                'answer_set__question__question_type',
+                'answer_set__question__school_type',
+                'answer_set__question__questiongroupquestions_set',
+                'answer_set__question__questiongroupquestions_set__questiongroup__source',
+            )
+
+        verified = self.request.GET.get('verified', '')
         if verified:
             if verified == 'yes':
                 qset = qset.filter(is_verified=True)
@@ -817,30 +837,54 @@ class StoriesView(KLPListAPIView):
             else:
                 raise ParseError("verified param must be either 'yes' or 'no' if provided.")
 
-        source = self.request.GET.get('source', '')
-        if source:
-            qset = qset.filter(group__source__name=source)
+        sources = self.request.GET.getlist('source', [])
+        if sources:
+            qset = qset.filter(group__source__name__in=sources).prefetch_related('group', 'group__source')
+
+        since_id = self.request.GET.get('since_id', 0)
+        if since_id > 0:
+            qset = qset.filter(id__gt=since_id)
 
         admin1_id = self.request.GET.get('admin1', '')
         if admin1_id:
             qset = qset.filter(school__schooldetails__admin1__id=admin1_id)
 
         admin2_id = self.request.GET.get('admin2', '')
-        if admin2_id:
+        if admin2_id == 'detect':
+            # this is a special case when Konnect user is syncing
+            # and we need to send the user the stories and answers from
+            # the block the user usually operates in and neighboring blocks
+            if not self.request.user.is_anonymous():
+                qset = qset.prefetch_related(
+                    'school', 'school__schooldetails',
+                    'school__schooldetails__admin2'
+                )
+                # Looking for blocks the current user already has stories for
+                existing_block_ids = list(set(
+                    Story.objects.filter(
+                        user=self.request.user
+                    ).values_list('school__admin3__parent__id', flat=True)))
+
+                if not existing_block_ids:
+                    # special case
+                    # if the client demands `admin2=detect`
+                    # and there isn't any existing block ids, return empty
+                    return Story.objects.none()
+
+                qset = qset.filter(
+                    school__schooldetails__admin2__id__in=existing_block_ids
+                )
+            else:
+                # anon can't request detect
+                raise APIException('Anonymous user cannot request admin2 detection')
+        elif admin2_id:
             qset = qset.filter(school__schooldetails__admin2__id=admin2_id)
 
         admin3_id = self.request.GET.get('admin3', '')
         if admin3_id:
             qset = qset.filter(school__schooldetails__admin3__id=admin3_id)
 
-        # try:
-        #     limit = int(self.request.GET.get('limit', 10))
-        # except:
-        #     limit = 10
-
-        qset = qset.prefetch_related(
-            'storyimage_set').select_related('school')
-
+        qset = qset.prefetch_related('storyimage_set').select_related('school', 'user_type')
         return qset
 
 

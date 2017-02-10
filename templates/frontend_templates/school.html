@@ -115,7 +115,12 @@
           <ul>
             {% for m in meeting_reports %}
             <li class="circle-bullet white">
-              <a href="/media/{{ m.pdf }}" target="_blank">{{ m.language }}</a>
+            {% set year_label = "Archived" %}
+            {% if m.generated_at %}
+              {% set year_label = m.generated_at|date('F Y') %}
+            {% endif %}
+              <a href="/media/{{ m.pdf }}" target="_blank">{{ year_label }} - {{ m.language|capitalize }}</a>
+              
             </li>
             {% endfor %}
           </ul>

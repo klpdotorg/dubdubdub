@@ -3,66 +3,35 @@ from datetime import datetime, timedelta
 from django.db import transaction
 from django.core.management.base import BaseCommand
 
-from ivrs.models import State
 from schools.models import School
 from ivrs.utils import get_question
 from common.utils import post_to_slack
+from ivrs.models import State, QuestionGroupType
 from stories.models import Story, UserType, Questiongroup, Answer
-
-PRI = "08039236431"
-GKA_SMS = "08039514048"
-GKA_SERVER = "08039591332"
-# PRE = "08039510414" - Not implemented.
 
 class Command(BaseCommand):
     args = ""
-    help = """Analyzes the GKA IVRS/SMS states and saves stories.
+    help = """Analyzes the IVRS/SMS states and saves stories.
 
     ./manage.py fetchgkaivrs"""
 
     @transaction.atomic
     def handle(self, *args, **options):
-        question_group_version_dict = {
-            # Corresponds to version numbers of the Questiongroups
-            # with source names 'ivrs' and 'sms' within stories app.
-            'gka' : 2,
-            'gka-new' : 4,
-            'gka-v3' : 5,
-            'ivrs-pri' : 3,
-            'gka-sms': 1,
-            # 'ivrs-pre' : 999 - Not implemented.
-        }
+        qg_types = QuestionGroupType.objects.filter(is_active=True)
+        for qg_type in qg_types:
+            self.process_state(qg_type)
 
-        for ivrs_type, version in question_group_version_dict.items():
-            self.process_state(ivrs_type, version)
-
-    def process_state(self, ivrs_type, version):
+    def process_state(self, qg_type):
         valid_count = 0 # For posting daily notifications to slack.
         invalid_count = 0
-        # fifteen_minutes = datetime.now() - timedelta(minutes=15)
-
-        if ivrs_type == 'gka-sms':
-            source_name = 'sms'
-        else:
-            source_name = 'ivrs'
-
-        ivrs_type_number_dict = {
-            'gka' : GKA_SERVER,
-            'gka-new' : GKA_SERVER,
-            'gka-v3' : GKA_SERVER,
-            'ivrs-pri' : PRI,
-            'gka-sms' : GKA_SMS,
-            # 'ivrs-pre' : PRE, - Not implemented.
-        }
 
         states = State.objects.filter(
-            ivrs_type=ivrs_type,
+            qg_type=qg_type,
             is_processed=False,
-            # date_of_visit__lte=fifteen_minutes
         )
 
         for state in states:
-            if not sane_state(state, ivrs_type):
+            if not sane_state(state, qg_type):
                 state.is_invalid = True
                 invalid_count += 1
             else:
@@ -72,10 +41,7 @@ class Command(BaseCommand):
                 akshara_staff = UserType.objects.get_or_create(
                     name=UserType.AKSHARA_STAFF
                 )[0]
-                question_group = Questiongroup.objects.get(
-                    version=version,
-                    source__name=source_name
-                )
+                question_group = qg_type.questiongroup
                 story = Story.objects.create(
                     school=school,
                     is_verified=True,
@@ -88,7 +54,7 @@ class Command(BaseCommand):
                     if answer != 'NA':
                         question = get_question(
                             question_number+1,
-                            ivrs_type_number_dict[ivrs_type]
+                            qg_type.questiongroup
                         )
                         answer = Answer.objects.get_or_create(
                             story=story,
@@ -100,13 +66,13 @@ class Command(BaseCommand):
             state.is_processed = True
             state.save()
 
-        if ivrs_type == 'gka-v3':
+        if qg_type.name == 'gkav3':
             author = 'GKA IVRS'
             emoji = ':calling:'
-        elif ivrs_type == 'gka-sms':
+        elif qg_type.name == 'gkav4':
             author = 'GKA SMS'
             emoji = ':memo:'
-        elif ivrs_type == 'ivrs-pri':
+        elif qg_type.name == 'prischoolv1':
             author = 'Primary School IVRS'
             emoji = ':calling:'
         else:
@@ -123,7 +89,7 @@ class Command(BaseCommand):
             except:
                 pass
 
-def sane_state(state, ivrs_type):
+def sane_state(state, qg_type):
     # A State is not sane if it has:
     # 1. No answers for any questions. (For GKA and MAHITI)
     # 2. An answer to the 2nd question, 'class visited',
@@ -135,19 +101,37 @@ def sane_state(state, ivrs_type):
     if all(answer == 'NA' for answer in state.answers[1:]):
         return NOT_SANE
     # Checking condition 2.
-    if ivrs_type in ['gka', 'gka-new', 'gka-v3']:
+    if qg_type.name in ['gkav1', 'gkav2', 'gkav3']:
         if state.answers[2] != 'NA':
             if all(answer == 'NA' for answer in state.answers[3:]):
                 return NOT_SANE
-    if ivrs_type == 'gka-sms':
+    if qg_type.name == 'gkav4':
+        invalid_answer_set = set(
+            [u'IGNORED_INDEX', u'NA', u'NA', u'NA', u'NA', u'NA']
+        )
         # If there is only 'IGNORED_INDEX' in the answers list. The answers
         # list will remain having only "IGNORED_INDEX" for every erroneous
-        # sms that we receive. The error checking happens on the receipt
-        # of the message itself, even before processing.
-        if len(state.answers) == 1:
+        # sms that we receive.
+        if set(state.answers) == invalid_answer_set:
             return NOT_SANE
         elif len(state.answers) != 6:
             return NOT_SANE
+        else:
+            if state.answers[2] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[3:]):
+                    return SANE
+                else:
+                    return NOT_SANE
+            elif state.answers[3] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[4:]):
+                    return SANE
+                else:
+                    return NOT_SANE
+            elif state.answers[4] in ('No', 'Unknown'):
+                if all(answer in ('No', 'Unknown') for answer in state.answers[5:]):
+                    return SANE
+                else:
+                    return NOT_SANE
 
     # If not both, then sane.
     return SANE

@@ -1,7 +1,7 @@
 from .school import (
     SchoolsList, SchoolsInfo, SchoolInfo, SchoolsDiseInfo,
     SchoolDemographics, SchoolProgrammes, SchoolFinance, SchoolInfra,
-    SchoolLibrary, SchoolNutrition
+    SchoolLibrary, SchoolNutrition, MeetingReportListView
 )
 from .assessment import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo,

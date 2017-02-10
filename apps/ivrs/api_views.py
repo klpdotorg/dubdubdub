@@ -5,26 +5,21 @@ from rest_framework.response import Response
 
 from django.conf import settings
 
-from .models import State
+from .models import State, IncomingNumber
 from .utils import (
+    check_data_validity,
+    check_school,
+    check_user,
+    get_date,
     get_message,
     get_question,
+    populate_state,
     save_answer,
-    check_school,
     verify_answer,
-    get_date,
-    check_data_validity
 )
 
 from schools.models import School
 from common.views import KLPAPIView
-
-# Exotel numbers. Find them at http://my.exotel.in/viamentis/apps#installed-apps
-PRI = "08039236431"
-PRE = "08039510414"
-GKA_DEV = "08039510185"
-GKA_SMS = "08039514048"
-GKA_SERVER = "08039591332"
 
 
 class SMSView(KLPAPIView):
@@ -35,36 +30,50 @@ class SMSView(KLPAPIView):
         # status.HTTP_200_OK has been hardcoded in the response.
         content_type = "text/plain"
 
-        date = request.QUERY_PARAMS.get('Date', None)
-        data = request.QUERY_PARAMS.get('Body', None)
-        ivrs_type = request.QUERY_PARAMS.get('To', None)
-        telephone = request.QUERY_PARAMS.get('From', None)
-        session_id = request.QUERY_PARAMS.get('SmsSid', None)
+        parameters = {}
+        parameters['date'] = request.QUERY_PARAMS.get('Date', None)
+        parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
+        parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
+        parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
+        parameters['telephone'] = parameters['telephone'][1:] # Strip 0
+        parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
 
-        state, created = State.objects.get_or_create(
-            session_id=session_id
-        )
-        state.telephone = telephone
-        state.date_of_visit = get_date(date.strip("'"))
-        state.answers = []
-        # Ignoring index 0 since question_numbers start from 1
-        state.answers.append('IGNORED_INDEX')
-        state.save()
+        is_registered_user = check_user(parameters)
 
-        original_data = data # Used in the reply sms.
-        data = [item.strip() for item in data.split(',')]
-        data, valid, message = check_data_validity(original_data, data)
-        if not valid:
+        processed_data, is_data_valid, is_logically_correct = check_data_validity(request)
+
+        school_id = processed_data.pop(0)
+        parameters['school_id'] = school_id
+
+        state = populate_state(parameters)
+
+        if not is_registered_user:
+            message = get_message(
+                is_registered_user=is_registered_user,
+                telephone=parameters['telephone'],
+                state=state
+            )
             return Response(
                 message,
                 status=status.HTTP_200_OK,
                 content_type=content_type
             )
 
-        school_id = data.pop(0)
+        if not is_data_valid:
+            message = get_message(
+                valid=is_data_valid,
+                is_logically_correct=is_logically_correct,
+                data=parameters['raw_data'],
+                state=state
+            )
+            return Response(
+                message,
+                status=status.HTTP_200_OK,
+                content_type=content_type
+            )
 
-        state, status_code, message = check_school(state, school_id, ivrs_type)
-        if status_code != status.HTTP_200_OK:
+        is_school_valid, message = check_school(state, school_id)
+        if not is_school_valid:
             return Response(
                 message,
                 status=status.HTTP_200_OK,
@@ -72,8 +81,8 @@ class SMSView(KLPAPIView):
             )
 
         # Loop over the entire data array and try to validate and save
-        # each answer.
-        for question_number, response in enumerate(data):
+        # each answer. FIXME: Move this into a function.
+        for question_number, response in enumerate(processed_data):
             # Blank data corresponds to NA and indicates that we should
             # skip the corresponding question.
             if response == '':
@@ -84,11 +93,11 @@ class SMSView(KLPAPIView):
                 # question_number corresponds to questiongroupquestions__sequence
                 # while querying for the corresponding Question.
                 state, status_code, message = verify_answer(
-                    session_id,
+                    parameters['session_id'],
                     question_number+1,
                     response,
-                    ivrs_type,
-                    original_data=original_data
+                    parameters['ivrs_type'],
+                    original_data=parameters['raw_data']
                 )
                 if status_code != status.HTTP_200_OK:
                     # If we find any of the answers are corrupt, we return
@@ -101,8 +110,9 @@ class SMSView(KLPAPIView):
         else:
             message = get_message(
                 valid=True,
-                date=date,
-                data=original_data
+                date=parameters['date'],
+                data=parameters['raw_data'],
+                state=state
             )
 
         return Response(
@@ -142,27 +152,17 @@ class DynamicResponse(KLPAPIView):
 class CheckSchool(KLPAPIView):
     def get(self, request):
         status_code = status.HTTP_200_OK
+        parameters = {}
+        parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
+        parameters['date'] = request.QUERY_PARAMS.get('StartTime', None)
+        parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
+        parameters['school_id'] = request.QUERY_PARAMS.get('digits', None)
+        parameters['session_id'] = request.QUERY_PARAMS.get('CallSid', None)
 
-        ivrs_type = request.QUERY_PARAMS.get('To', None)
-        telephone = request.QUERY_PARAMS.get('From', None)
-        date = request.QUERY_PARAMS.get('StartTime', None)
-        school_id = request.QUERY_PARAMS.get('digits', None)
-        session_id = request.QUERY_PARAMS.get('CallSid', None)
+        if parameters['school_id']:
+            parameters['school_id'] = parameters['school_id'].strip('"')
 
-        state, created = State.objects.get_or_create(
-            session_id=session_id
-        )
-        state.telephone = telephone
-        state.date_of_visit = get_date(date)
-        state.answers = []
-        # Ignoring index 0 since question_numbers start from 1
-        state.answers.append('IGNORED_INDEX')
-
-        if school_id:
-            school_id = school_id.strip('"')
-
-        state, status_code, message = check_school(state, school_id, ivrs_type)
-
+        populate_state(parameters)
         return Response("", status=status_code)
 
 

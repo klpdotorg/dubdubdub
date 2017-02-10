@@ -27,6 +27,18 @@ select fill_agg_singlescore_admin3(123,'Anganwadi Class',263,ARRAY[263]);
 select fill_agg_singlescore_admin3_mt(123,'Anganwadi Class',263,ARRAY[263]);
 select fill_agg_singlescore_admin3_gender(123,'Anganwadi Class',263,ARRAY[263]);
 
+select fill_assessment_mean(123,263,ARRAY[263]);
+select fill_student_percentile(123,'Anganwadi Class',263,ARRAY[263]);
+select fill_institution_percentile(263);
+select fill_studentgroup_percentile(263);
+select fill_boundary_percentile(263);
+select fill_boundary_studentgroup_percentile(263);
+select fill_studentgroup_percentile_gender(263);
+select fill_studentgroup_percentile_mt(263);
+select fill_boundary_studentgroup_percentile_gender(263);
+select fill_boundary_studentgroup_percentile_mt(263);
+
+
 
 select fill_assessment_mean(123,260,ARRAY[260]);
 select fill_student_percentile(123,'Anganwadi Class',260,ARRAY[260]);

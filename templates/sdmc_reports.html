@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}SDMC Report Summary{% endblock %}
+
+{% block css_extra %}
+
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}  
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/school/sdmc.js' %}"></script>
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+<div class="base-spacing-mid"></div>
+<div class="heading-secondary brand-red">Meeting Minutes for Bal Vikas Samiti(BVS)</div>
+<div class="heading-secondary heading-border brand-red">and School Development and Monitoring Committee (SDMC) </div>
+<div class="container">
+	<div class="base-spacing-mid"></div>
+	<div class="font-smaller container">
+		<strong>Note:</strong> The following SDMC/BVS Meeting Minutes are in PDF format. The data is available for selected schools and not consistently month-wise. Some of them have been scanned in landscape mode. For such files, please download the pdf and use a PDF Reader to rotate and view in the right orientation and format.
+	</div>
+	<div class="base-spacing-small"></div>
+
+	<div id="count_summary" class="container"></div>
+	<hr/>
+	<div class="base-spacing-small"></div>
+
+	<div class="box chart-parent container">
+		<form class="form-base">
+			<div class="chart-quarter-item center-text"> 
+			 	<label class="label ">TYPE: </label>
+			 	<input type="text" class="js-example-basic-single input-text full-width" id="select-type">
+			</div>
+
+			<div class="chart-quarter-item center-text"> 
+			 	<label class="label ">DISTRICT : </label>
+			 	<input type="text" class="js-example-basic-single input-text full-width" id="select-district">
+			</div>
+			<div class="chart-quarter-item center-text">
+				<label class="label">BLOCK/PROJECT : </label>
+			 	<input type="text" class="js-example-basic-single input-text full-width" id="select-block">
+			</div>
+			<div class="chart-quarter-item center-text">
+				<label class="label">CLUSTER/CIRCLE : </label>
+			 	<input type="text" class="js-example-basic-single input-text full-width" id="select-cluster">
+			</div>
+		</form>	
+	</div>
+	<div class="base-spacing-small"></div>
+	<div id="buttons" class="container"></div>
+	<div class="base-spacing-small"></div>
+	<div id="response_summary" class="container"></div>	
+</div>
+
+		
+{% include 'frontend_templates/sdmc_reports.html' %} 
+{% endblock %}
