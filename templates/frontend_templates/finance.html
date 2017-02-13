@@ -56,10 +56,17 @@
             <h2 class="heading-secondary black align-left">{{data.teacher_count|checkzero}}</h2> 
             <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
             <div class="align-left"> 
-              <span class="heading-secondary black"> {{data.ptr|checkzero|round}}:1 > 
-                <span class="brand-green"> 35:1 </span> 
-              </span>
-              <span class="heading-tiny brand-green">(Recommended)</span>
+              <span class="heading-secondary black"> 
+              {% if data.ptr !== "NA" && data.ptr !== 0 %}
+                {{data.ptr|round}}:1
+                {% if data.ptr > 35 %} < {% else %} > {% endif %} 
+              {% else %}
+                No data
+              {% endif %} (
+              <span class="brand-green"> 35:1 </span>
+              </span>  
+              <span class="heading-tiny brand-green">Recommended</span>
+              <span class="heading-secondary black">)</span>
             </div>
           </div><!--sect-half-->
           <div class="sect-half">
@@ -161,7 +168,7 @@
             <div class="sect-three-quarter">
               <div class="sect-parent">
               {% for cat in anyone.categories %}
-                <div class="sect-half ">
+                <div class="sect-third">
                   <div class="sect-parent">
                     <div class="brand-blue bold font-small center-text">{{cat.name}}</div>
                     <table class="table-base table-base-comparison">
@@ -188,7 +195,7 @@
             <div class="sect-three-quarter">
               <div class="sect-parent">
               {% for cat in each.categories %}
-                <div class="sect-half">
+                <div class="sect-third">
                   <div class="sect-parent font-smaller">
                     {% set total_grant = cat.schools * cat.grant_amount %}
                     <table class="table-base table-base-comparison">
@@ -226,13 +233,17 @@
                 {{each.name|capitalize}}
               </td>
               <td>
+                {% if each.school_grant.grant %}
                 <div class="bar-graph-wrap"><!--1-->
                   <div class="bar-num-label brand-blue">{{each.school_grant.grant|round|inrformat}}</div>
-                  <div class="bar-custom tooltip" aria-label="{{each.school_grant.grant_perc}}%"><!--2-->
+                  <div class="bar-custom tooltip" aria-label="{{each.school_grant.grant_perc|checkzero}}%"><!--2-->
                     <div class="bar-value grey-gravel-bg" style="width:{{each.school_grant.grant_perc}}%;"></div><!--3-->
                   </div><!--2-->
-                  <div class="bar-percent grey-gravel">{{each.school_grant.grant_perc|round}}%</div><!--6-->
+                  <div class="bar-percent grey-gravel">{{each.school_grant.grant_perc}}%</div><!--6-->
                 </div><!--1-->
+                {% else %}
+                <div class="per-lookup">No Data</div>
+                {% endif %}
               </td>
               <td class="font-small">
                 across {{each.school_count}} schools
@@ -265,24 +276,30 @@
             <th>Schools</th>
           </tr>
           {% for each in neighbours %}
+            {% set highlight= "" %}
+            {% set barcolor= "grey-gravel-bg" %}
+            {% if each.name == boundary_name %}
+              {% set highlight= "brand-red" %}
+              {% set barcolor= "brand-red-bg" %}
+            {% endif %}
             <tr class="font-smaller">
               <td>
-                <div class="bold td-label-boundary">{{each.name|capitalize}}</div>
+                <div class="{{highlight}} bold td-label-boundary">{{each.name|capitalize}}</div>
               </td>
               <td>
-                <div class="td-label-perstu">{{each.expected|round|inrformat}}</div>    
+                <div class="{{highlight}} td-label-perstu">{{each.expected|round|inrformat}}</div>    
               </td>
               <td>
-                <div class="td-label-tlm">{{each.received|round|inrformat}}</div>  
+                <div class="{{highlight}} td-label-tlm">{{each.received|round|inrformat}}</div>  
               </td>
               <td>
-                <div class="td-label-sg">{{each.expenditure|round|inrformat}}</div>
+                <div class="{{highlight}} td-label-sg">{{each.expenditure|round|inrformat}}</div>
               </td>
               <td>
                 <!-- Value is percentage of the nearest 100 to the highest value-->
                 <div class="bar-graph-wrap">
                   <div class="bar-custom">
-                    <div class="bar-value grey-gravel-bg" style="width:{{each.total_perc}}%;"></div>
+                    <div class="bar-value {{barcolor}}" style="width:{{each.total_perc}}%;"></div>
                   </div><!--bar-custom-->
                   <div class="bar-percent center-text font-smallest">{{each.total|round}}</div>
                 </div><!--bar-graph-wrap-->

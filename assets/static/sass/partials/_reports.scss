@@ -32,6 +32,15 @@
 	margin-top:3px;
 }
 
+.rotate {
+  /* Something you can count on */
+  transform: 
+    /* Magic Numbers */
+    translate(25px, 51px)
+    /* 45 is really 360 - 45 */
+    rotate(270deg);
+}
+
 @include media-med-maxwidth {
 
 }

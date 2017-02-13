@@ -3,6 +3,7 @@
     var utils;
     var summaryData;
     var categoryData;
+    var boundary_name;
     var grantData = {};
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     var lowerUpperPrimary = [2, 3, 6];
@@ -88,6 +89,7 @@
             summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]*100)/100;
         summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100 *100)/100;
         summaryData['boy_perc'] = 100-summaryData['girl_perc'];
+        boundary_name = data["boundary_info"]["name"];
     }
 
     /*
@@ -561,7 +563,7 @@
         }
         console.log('comparisonData', comparisonData);
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":comparisonData});
+        var compareHTML = tplComparison({"neighbours":comparisonData,"boundary_name":boundary_name});
         $('#comparison-neighbour').html(compareHTML);
     }
 })();

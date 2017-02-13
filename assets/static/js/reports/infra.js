@@ -4,6 +4,7 @@
     var repUtils;
     var acadYear;
     var boundaryData;
+    var boundary_name;
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     klp.init = function() {
         utils = klp.boundaryUtils;
@@ -112,6 +113,7 @@
             "gender" : categoryData["gendercount"],
             "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
         };
+        boundary_name = data["boundary_info"]["name"];
         if (summaryJSON["teacher_count"] == 0)
             summaryJSON['ptr'] = "NA";
         else
@@ -300,7 +302,7 @@
             }
         }
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":percData});
+        var compareHTML = tplComparison({"neighbours":percData,"boundary_name":boundary_name});
         $('#comparison-neighbour').html(compareHTML);
     }
 

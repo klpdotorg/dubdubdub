@@ -54,7 +54,20 @@
                   <div class="heading-tiny-uppercase">Teachers</div>
                   <h2 class="heading-secondary black align-left">{{data.teacher_count| checkzero}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr| checkzero|round}}  (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
+                  <div class="align-left"> 
+
+                    <span class="heading-secondary black"> 
+                    {% if data.ptr !== "NA" && data.ptr !== 0 %}
+                      {{data.ptr|round}}:1
+                      {% if data.ptr > 35 %} < {% else %} > {% endif %} 
+                    {% else %}
+                      No data
+                    {% endif %} (
+                    <span class="brand-green"> 35:1 </span>
+                    </span>  
+                    <span class="heading-tiny brand-green">Recommended</span>
+                    <span class="heading-secondary black">)</span>
+                  </div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>

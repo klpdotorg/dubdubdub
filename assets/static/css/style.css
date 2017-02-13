@@ -4824,6 +4824,10 @@ code {
   text-align: right;
   margin-top: 3px; }
 
+.rotate {
+  /* Something you can count on */
+  transform: translate(25px, 51px) rotate(270deg); }
+
 .bar-lookup {
   margin-bottom: 15px;
   margin-top: 3px; }
@@ -5064,7 +5068,7 @@ span.tab {
     page-break-before: always; }
 
   body {
-    transform: scale(0.9); }
+    transform: scale(0.8); }
 
   table {
     page-break-inside: avoid; } }
