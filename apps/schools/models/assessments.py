@@ -88,9 +88,9 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile = models.DecimalField(max_digits=6, decimal_places=2,
+    percentile= models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
+    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
 
     def __unicode__(self):
 
@@ -174,7 +174,7 @@ class BoundaryAssessmentSinglescoreGender(BaseModel):
                                       blank=True, null=True)
     percentile= models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
+    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
 
     def __unicode__(self):
         return "%s: %s" %(self.boundary, self.assessment, self.gender,)

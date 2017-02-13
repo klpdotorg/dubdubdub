@@ -14,7 +14,7 @@ from schools.api_views import (
     PincodeDetails, SchoolNutrition, MergeEndpoints, PartnerList,
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
-    AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView, 
+    AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
     MeetingReportListView
 )
 

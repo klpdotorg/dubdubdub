@@ -365,12 +365,14 @@ class AssessmentInfoSerializer(KLPSerializer):
         singlescore = {}
         genderdata = InstitutionAssessmentSinglescoreGender.objects.filter(
             school=obj.school, studentgroup=obj.studentgroup,
-            assessment=obj.assessment).values('sex', 'singlescore', 'percentile', 'gradesinglescore')
+            assessment=obj.assessment).values('sex', 'singlescore',
+                                              'percentile', 'gradesinglescore')
         singlescore['gender'] = genderdata
 
         mtdata = InstitutionAssessmentSinglescoreMt.objects.filter(
             school=obj.school, studentgroup=obj.studentgroup,
-            assessment=obj.assessment).values('mt', 'singlescore', 'percentile', 'gradesinglescore')
+            assessment=obj.assessment).values('mt', 'singlescore', 'percentile',
+                                              'gradesinglescore')
         singlescore['mt'] = mtdata
 
         singlescore["boundary"] = []
@@ -450,8 +452,8 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
                 school__schooldetails__admin3=obj.boundary, studentgroup=obj.studentgroup,
                 assessment=obj.assessment).values('sex').annotate(total=Sum('cohortsnum'))
             cohortsmt = InstitutionAssessmentCohorts.objects.filter(
-                school__schooldetails__admin3=obj.boundary, studentgroup=obj.studentgroup,
-                assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
+                school__schooldetails__admin3=obj.boundary,
+                studentgroup=obj.studentgroup, assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
         elif obj.boundary.hierarchy.id == 10 or obj.boundary.hierarchy.id == 14:
             cohortssum = InstitutionAssessmentCohorts.objects.filter(
                 school__schooldetails__admin2=obj.boundary, studentgroup=obj.studentgroup,
@@ -648,6 +650,7 @@ class ProgrammeInfoSerializer(KLPSerializer):
         mtdata = BoundaryAssessmentSinglescoreMt.objects.filter(
             boundary=obj.school.schooldetails.admin3, studentgroup=obj.studentgroup,
             assessment=obj.assessment).values('mt', 'singlescore', 'percentile', 'gradesinglescore')
+
         singlescore["boundary"][2]["mt"] = mtdata
         singlescore["boundary"][2]["btype"] = "admin_3"
 

@@ -6,6 +6,7 @@ from common.views import KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
 from django.db.models import Q
+import sys
 
 
 class DemographicsBoundaryReportDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
@@ -144,12 +145,17 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView, BaseB
                     boundaryData["num_girls"]
             data["student_count"] = student_count
             data["teacher_count"] = teacher_count
-            if self.parentInfo["schoolcount"] == 0:
+            if boundary.get_admin_level() == 1:
                 data["school_perc"] = 100
             else:
+                parentInfo =  self.get_parent_info(boundary)
+                print>>sys.stderr, "---------------------"
+                print>>sys.stderr,boundary.name
+                print >>sys.stderr, parentInfo
+                print>>sys.stderr, boundaryData["num_schools"]
                 data["school_perc"] = round(
                         boundaryData["num_schools"] * 100 /
-                        float(self.parentInfo["schoolcount"]), 2)
+                        float(parentInfo["schoolcount"]), 2)
             if teacher_count == 0:
                 data["ptr"] = "NA"
             else:
