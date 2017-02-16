@@ -6,6 +6,7 @@
     var categoriesData;
     var boundary_name;
     var acadYear;
+    var repType;
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     klp.init = function() {
         klp.router = new KLPRouter();
@@ -20,28 +21,65 @@
     */
     function fetchReportDetails()
     {
-        var repType,bid,lang;
+        var id,lang;
         repType = utils.getSlashParameterByName("report_type");
-        bid = utils.getSlashParameterByName("id");
+        id = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
-		var url = "reports/dise/"+repType+"/?language="+lang+"&id="+bid;
-        var $xhr = klp.api.do(url);
-        $xhr.done(function(data) {
-            getDetailsData(data);
-        });
+        if( repType == 'boundary' )
+        {
+		    var url = "reports/dise/"+repType+"/?language="+lang+"&id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                getDiseData();
+            });
+        }
+        else
+        {
+    		var url = "reports/electedrep/?language="+lang+"&id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                getElectedRepData();
+            });
+        }
     }
 
     /*
-        Get detail data from DISE application.
+        Get Elected rep data from DISE application and render the Summary, Categories, Language and Comparison data.
     */
-    function getDetailsData(data)
+    function getElectedRepData()
     {
-        klpData = data;
-        acadYear = data["academic_year"].replace(/20/g, '');
-        var boundary = {"id": data["boundary_info"]["dise"], "type": data["boundary_info"]["type"]};
+        var electedrep = {"id": klpData["electedrep_info"]["dise"], "type": repType}
+        klp.dise_api.getElectedRepData(electedrep.id, electedrep.type, acadYear).done(function(diseData) {
+            console.log('diseData', diseData);
+            getSummaryData(diseData, klpData["electedrep_info"]);
+            renderSummary(summaryData);
+            getCategoriesData(diseData["properties"]);
+            renderCategories(categoriesData);
+            var languageData = getLanguageData(diseData["properties"]);
+            renderLanguage(languageData);
+            //Get Comparison Data
+            getNeighbourData();
+            getYearData();
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
+        });
+    }
+ 
+    /*
+        Get detail data from DISE application and render the summary, categories, languages and comparison (year and neighbours) data.
+    */
+    function getDiseData()
+    {
+        var boundary = {"id": klpData["boundary_info"]["dise"], "type": klpData["boundary_info"]["type"]};
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('diseData', diseData);
-            getSummaryData(diseData);
+            boundary_name = klpData["boundary_info"]["name"];
+            getSummaryData(diseData, klpData["boundary_info"]);
             renderSummary(summaryData);
             getCategoriesData(diseData["properties"]);
             renderCategories(categoriesData);
@@ -59,11 +97,11 @@
     /*
         Fill the summaryData structure.
     */
-    function getSummaryData(diseData)
+    function getSummaryData(diseData, baseData)
     {
         var categoryData = getCategoryCount(diseData["properties"]);
         summaryData = {
-            "boundary"  : klpData["boundary_info"],
+            "boundary"  : baseData,
             "school_count" : categoryData["schoolcount"],
             "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
             "gender" : categoryData["gendercount"],
@@ -75,7 +113,20 @@
             summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]*100)/100;
         summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100 *100)/100;
         summaryData['boy_perc'] = 100-summaryData['girl_perc'];
-        boundary_name = klpData["boundary_info"]["name"];
+    }
+ 
+    /*
+        Renders Summary Data
+    */
+    function renderSummary(data) {
+        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
+        var tplReportDate = swig.compile($('#tpl-reportDate').html());
+        var now = new Date();
+        var today = {'date' : moment(now).format("MMMM D, YYYY")};
+        var dateHTML = tplReportDate({"today":today});
+        $('#report-date').html(dateHTML);
+        var topSummaryHTML = tplTopSummary({"data":data});
+        $('#top-summary').html(topSummaryHTML);
     }
 
     /*
@@ -97,20 +148,7 @@
         }
         return categorycount;
     }
-    
-    /*
-        Renders Summary Data
-    */
-    function renderSummary(data) {
-        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplReportDate = swig.compile($('#tpl-reportDate').html());
-        var now = new Date();
-        var today = {'date' : moment(now).format("MMMM D, YYYY")};
-        var dateHTML = tplReportDate({"today":today});
-        $('#report-date').html(dateHTML);
-        var topSummaryHTML = tplTopSummary({"data":data});
-        $('#top-summary').html(topSummaryHTML);
-    }
+   
 
     /*
         Fills the categoriesData strucuture for rendering Categories
@@ -215,14 +253,21 @@
     */
     function getNeighbourData()
     {
-        var type = klpData["boundary_info"]["type"];
+        var loopData;
         var passBoundaryData = {"acadYear": acadYear};
-        var passedData;
-        if(type == "district")
-            passedData = klpData["neighbours"];
+        if( repType == "boundary" )
+        {
+            var type = klpData["boundary_info"]["type"];
+            if(type == "district")
+                loopData = klpData["neighbours"];
+            else
+                loopData = klpData["boundary_info"]["parent"];
+        }
         else
-            passedData = klpData["boundary_info"]["parent"];
-        getMultipleData(passedData, passBoundaryData, getMultipleNeighbour, renderNeighbours)
+        {
+            loopData = klpData["neighbour_info"];
+        }
+        getMultipleData(loopData, passBoundaryData, getMultipleNeighbour, renderNeighbours)
     }
 
     /*
@@ -230,24 +275,32 @@
     */
     function getYearData()
     {
+        var passYearData;
         var yearData = [];
         var years = acadYear.split("-").map(Number);
         var startyear = years[0];
         var endyear = years[1];
         yearData[(startyear-1).toString()+"-"+(endyear-1).toString()] = "20"+(startyear-1).toString()+"-"+"20"+(endyear-1).toString();
         yearData[(startyear-2).toString()+"-"+(endyear-2).toString()] = "20"+(startyear-2).toString()+"-"+"20"+(endyear-2).toString();
-        var passYearData = {"name": klpData["boundary_info"]["name"], "dise": klpData["boundary_info"]["dise"], "type": klpData["boundary_info"]["type"]};
+        if( repType == "boundary" )
+        {
+            passYearData = {"name": klpData["boundary_info"]["name"], "dise": klpData["boundary_info"]["dise"], "type": klpData["boundary_info"]["type"]};
+        }
+        else
+        {
+            passYearData = {"name": klpData["electedrep_info"]["name"], "dise": klpData["electedrep_info"]["dise"], "type": klpData["electedrep_info"]["type"]};
+        }
         getMultipleData(yearData, passYearData, getMultipleYear, renderYearComparison,"acadYear");
     }
 
     /*
      * This function is used to call multiple apis before processing a function (exitFunction).
      * The inputData is used for looping through and has the data that needs to be passed.
-     * The passedData is used for passing the data to the function (getData) which is used for making 
+     * The passData is used for passing the data to the function (getData) which is used for making 
      * the relevant api calls.
      * Once the loop is over the exitFunction is called.
      */
-    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName="iter")
+    function getMultipleData(inputData, passData, getData, exitFunction, iteratorName="iter")
     {
         var numberOfIterations = Object.keys(inputData).length;
         var outputData= [];
@@ -272,9 +325,9 @@
                 }
             },
             iteration:function(){
-                passedData[iteratorName] = Object.keys(inputData)[index-1];
-                passedData["value"] = inputData[passedData[iteratorName]];
-                return passedData; // Return the loop number we're on
+                passData[iteratorName] = Object.keys(inputData)[index-1];
+                passData["value"] = inputData[passData[iteratorName]];
+                return passData; // Return the loop number we're on
             },
             addData:function(diseData){
                 outputData[Object.keys(inputData)[index-1]] = diseData;
@@ -294,8 +347,13 @@
     function getMultipleNeighbour(loop)
     {
         var data = loop.iteration();
-        var boundary = {"id": data["value"]["dise"], "type": data["value"]["type"]};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
+        var type;
+        if( repType == "boundary" ) //for district/block/cluster
+            type = data["value"]["type"];
+        else //for electedrep
+            type = repType;
+        var boundary = {"id": data["value"]["dise"], "type": type};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('diseData', diseData);
             loop.addData(diseData);
             loop.next();
@@ -311,7 +369,12 @@
     function getMultipleYear(loop)
     {
         var data = loop.iteration();
-        var boundary = {"id": data["dise"], "type": data["type"]};
+        var type;
+        if( repType == "boundary" ) //for district/block/cluster
+            type = data["value"]["type"];
+        else //for electedrep
+            type = repType;
+        var boundary = {"id": data["dise"], "type": type};
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
             console.log('diseData', diseData);
             loop.addData(diseData);
