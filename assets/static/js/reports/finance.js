@@ -1,8 +1,11 @@
 'use strict';
 (function() {
     var utils;
+    var klpData;
+    var acadYear;
     var summaryData;
     var categoryData;
+    var repType;
     var grantData = {};
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
     var lowerUpperPrimary = [2, 3, 6];
@@ -20,30 +23,65 @@
     */
     function fetchReportDetails()
     {
-        var repType,bid,lang;
+        var id, lang;
         repType = utils.getSlashParameterByName("report_type");
-        bid = utils.getSlashParameterByName("id");
+        id = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
-        var url = "reports/dise/"+repType+"/?language="+lang+"&id="+bid;
-        var $xhr = klp.api.do(url);
-        $xhr.done(function(data) {
-            fetchDiseData(data);
+        if( repType == 'boundary' )
+        {
+		    var url = "reports/dise/"+repType+"/?language="+lang+"&id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                getDiseData();
+            });
+        }
+        else
+        {
+    		var url = "reports/electedrep/?language="+lang+"&id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                getElectedRepData();
+            });
+        }
+    }
+
+
+     /*
+        Get Elected rep data from DISE application and render the Summary, Finance  and Comparison data.
+    */
+    function getElectedRepData()
+    {
+        var electedrep = {"id": klpData["electedrep_info"]["dise"], "type": repType}
+        klp.dise_api.getElectedRepData(electedrep.id, electedrep.type, acadYear).done(function(diseData) {
+            console.log('diseData', diseData);
+            getSummaryData(diseData, klpData["electedrep_info"]);
+            renderSummary(summaryData);
+            loadFinanceData(diseData["properties"]);
+            //Get Comparison Data
+            getNeighbourData();
+        })
+        .fail(function(err) {
+            klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
         });
     }
+ 
 
     /*
         Fetch dise data for the specified boundary
     */
-    function fetchDiseData(data)
+    function getDiseData()
     {
-        var acadYear = data["academic_year"].replace(/20/g, '');
-        var boundary = {"type": data["boundary_info"]["type"], "id": data["boundary_info"]["dise"] };
+        var boundary = {"type": klpData["boundary_info"]["type"], "id": klpData["boundary_info"]["dise"] };
         klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('diseData', diseData);
-            getSummaryData(data,diseData);
+            getSummaryData(diseData, klpData["boundary_info"]);
             renderSummary(summaryData);
             loadFinanceData(diseData["properties"]);
-            getNeighbourData(data, acadYear);
+            getNeighbourData();
         })
         .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
@@ -71,12 +109,13 @@
     }
 
     /*
-        Fill the summaryData structure
+        Fill the summaryData structure.
     */
-    function getSummaryData(data, diseData){
+    function getSummaryData(diseData, baseData)
+    {
         categoryData = getCategoryCount(diseData["properties"]);
         summaryData = {
-            "boundary"  : data["boundary_info"],
+            "boundary"  : baseData,
             "school_count" : categoryData["schoolcount"],
             "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
             "gender" : categoryData["gendercount"],
@@ -85,8 +124,8 @@
         if( summaryData["teacher_count"] == 0 )
             summaryData['ptr'] = "NA";
         else
-            summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]*100)/100;
-        summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100 *100)/100;
+            summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]);
+        summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] ));
         summaryData['boy_perc'] = 100-summaryData['girl_perc'];
     }
 
@@ -408,29 +447,37 @@
         $(element_id).html(html);
     }
 
+
     /*
-        Get the Neighouur information for comparison
+        Get Neighbour Data by calling dise api multiple times by passing different boundary
     */
-    function getNeighbourData(data, acadYear)
+    function getNeighbourData()
     {
-        var type = data["boundary_info"]["type"];
-        var passboundarydata = {"acadYear": acadYear};
-        var passeddata;
-        if(type == "district")
-            passeddata = data["neighbours"];
+        var loopData;
+        var passBoundaryData = {"acadYear": acadYear};
+        if( repType == "boundary" )
+        {
+            var type = klpData["boundary_info"]["type"];
+            if(type == "district")
+                loopData = klpData["neighbours"];
+            else
+                loopData = klpData["boundary_info"]["parent"];
+        }
         else
-            passeddata = data["boundary_info"]["parent"];
-        getMultipleData(passeddata, passboundarydata, getMultipleNeighbour, renderNeighbours);
+        {
+            loopData = klpData["neighbour_info"];
+        }
+        getMultipleData(loopData, passBoundaryData, getMultipleNeighbour, renderNeighbours)
     }
 
     /*
      * This function is used to call multiple apis before processing a function (exitFunction).
      * The inputData is used for looping through and has the data that needs to be passed.
-     * The passedData is used for passing the data to the function (getData) which is used for making 
+     * The passData is used for passing the data to the function (getData) which is used for making 
      * the relevant api calls.
      * Once the loop is over the exitFunction is called.
      */
-    function getMultipleData(inputData, passedData, getData, exitFunction, iteratorName="iter")
+    function getMultipleData(inputData, passData, getData, exitFunction, iteratorName="iter")
     {
         var numberOfIterations = Object.keys(inputData).length;
         var outputData= [];
@@ -455,9 +502,9 @@
                 }
             },
             iteration:function(){
-                passedData[iteratorName] = Object.keys(inputData)[index-1];
-                passedData["value"] = inputData[passedData[iteratorName]];
-                return passedData; // Return the loop number we're on
+                passData[iteratorName] = Object.keys(inputData)[index-1];
+                passData["value"] = inputData[passData[iteratorName]];
+                return passData; // Return the loop number we're on
             },
             addData:function(diseData){
                 outputData[Object.keys(inputData)[index-1]] = diseData;
@@ -477,8 +524,13 @@
     function getMultipleNeighbour(loop)
     {
         var data = loop.iteration();
-        var boundary = {"id": data["value"]["dise"], "type": data["value"]["type"]};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
+        var type;
+        if( repType == "boundary" ) //for district/block/cluster
+            type = data["value"]["type"];
+        else //for electedrep
+            type = repType;
+        var boundary = {"id": data["value"]["dise"], "type": type};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
             console.log('diseData', diseData);
             loop.addData(diseData);
             loop.next();
