@@ -41,7 +41,7 @@ from .models import (
     Source, Survey, QuestiongroupQuestions
 )
 from .serializers import (
-    SchoolQuestionsSerializer, StorySerializer,
+    SchoolQuestionsSerializer, StorySerializer, StorySyncSerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
     QuestionFullSerializer, SurveySerializer, SourceSerializer
 )
@@ -804,6 +804,10 @@ class StoriesView(KLPListAPIView):
                               authentication.SessionAuthentication,)
 
     def get_serializer_class(self):
+        is_sync = self.request.GET.get('is_sync', 'no')
+        if is_sync == 'yes':
+            return StorySyncSerializer
+
         get_answers = self.request.GET.get('answers', 'no')
 
         if get_answers == 'yes':
