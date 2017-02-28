@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.5: b4c978bc52fb86ee32b1cdc5fb084ad9e91538f0 - 2017-02-28
+  - Refactors and fixes the SMS parsing API views plus utility functions.
+
 Release 1.1.4: ca7619fd63895ae50926a5d91aa565fdda137c03 - 2017-01-31
   - Updates the gka sms report script.
 
