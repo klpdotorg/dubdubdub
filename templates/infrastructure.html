@@ -13,6 +13,7 @@
       <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js'%}"></script>
       <script type="text/javascript" src="{% static 'js/reports/infra.js' %}"></script> 
       <script type="text/javascript" src="{% static 'js/reports/utils.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/common.js' %}"></script> 
   {% endcompress %}
 {% endblock %}
 {% block content %}
@@ -41,7 +42,7 @@
       <div class="base-spacing-sm"></div>
       <div id="comparison-year"></div>
       <div class="base-spacing-sm"></div>
-      <div id="comparison-neighbour"></div>
+      <div class="container" id="comparison-neighbour"></div>
     </div><!-- comparison -->
     <div id="disclaimer" class="container">
       <div class="base-spacing-sm"></div>

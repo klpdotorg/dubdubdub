@@ -28,8 +28,8 @@ class DiseBoundaryDetails(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
             self.reportInfo["neighbours"] = []
             boundaries = self.getDistrictNeighbours(boundary)
             for comparisonboundary in boundaries:
-                self.reportInfo["neighbours"].append({"dise": comparisonboundary.dise_slug, "type": "district"})
-
+                self.reportInfo["neighbours"].append({
+                    "dise": comparisonboundary.dise_slug, "type": "district"})
 
     def get(self, request):
         mandatoryparams = {'id': [], 'language': ["english", "kannada"]}

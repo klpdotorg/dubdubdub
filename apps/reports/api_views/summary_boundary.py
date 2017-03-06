@@ -15,7 +15,7 @@ class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
     reportInfo = {"boundary_info": {}}
     parentInfo = {}
 
-    #filling the counts in the data structure to be returned
+    # filling the counts in the data structure to be returned
     def get_counts(self, boundaryData, active_schools, academic_year):
         self.reportInfo["gender"] = {"boys": boundaryData["num_boys"],
                                      "girls": boundaryData["num_girls"]}
@@ -41,35 +41,36 @@ class ReportBoundarySummary(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
 
     def get_boundary_data(self, boundaryid):
 
-        #Get the academic year
+        # Get the academic year
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
         try:
             academic_year = AcademicYear.objects.get(name=year)
         except AcademicYear.DoesNotExist:
             raise APIError('Academic year is not valid.\
                     It should be in the form of 2011-2012.', 404)
-        self.reportInfo["boundary_info"]["academic_year"] = year
+        self.reportInfo["academic_year"] = year
 
-        #Check if boundary id is valid
+        # Check if boundary id is valid
         try:
             boundary = Boundary.objects.get(pk=boundaryid)
         except Exception:
             raise APIError('Boundary not found', 404)
 
-        #Get list of schools associated with that boundary
+        # Get list of schools associated with that boundary
         active_schools = boundary.schools()
 
-        #Get aggregate data for schools in that boundary for the current academic year
+        # Get aggregate data for schools in that boundary for the current
+        # academic year
         boundaryData = self.get_aggregations(active_schools, academic_year)
         boundaryData = self.check_values(boundaryData)
 
-        #get information about the parent
+        # get information about the parent
         self.parentInfo = self.get_parent_info(boundary)
 
-        #get the summary data
+        # get the summary data
         self.get_boundary_summary_data(boundary, self.reportInfo)
 
-        #get the counts of students/gender/teacher/school
+        # get the counts of students/gender/teacher/school
         self.get_counts(boundaryData, active_schools, academic_year)
 
     def get(self, request):

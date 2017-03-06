@@ -10,12 +10,12 @@
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
+  };
 
   t.getSlashParameterByName  = function (name, url) {
-  		if (!url) url = window.location.href;
+		if (!url) url = window.location.href;
 		//get rid of the trailing / before doing a simple split on /
-		var url_parts = url.replace(/\/\s*$/,'').split('/'); 
+		var url_parts = url.replace(/\/\s*$/,'').split('/');
 		//since we do not need example.com
 		var temp = url_parts.slice(Math.max(url_parts.length - 3, 1));
 		var params = {

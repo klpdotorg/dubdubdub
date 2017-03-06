@@ -54,7 +54,19 @@
                   <div class="heading-tiny-uppercase">Teachers</div>
                   <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
                   <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
-                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr|checkzero|round}} (<span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">Recommended</span><span class="heading-secondary black">)</span></div>
+                  <div class="align-left"> 
+                    <span class="heading-secondary black"> 
+                    {% if data.ptr !== "NA" && data.ptr !== 0 %}
+                      {{data.ptr|round}}:1
+                      {% if data.ptr > 35 %} < {% else %} > {% endif %} 
+                    {% else %}
+                      No data
+                    {% endif %} (
+                    <span class="brand-green"> 35:1 </span>
+                    </span>  
+                    <span class="heading-tiny brand-green">Recommended</span>
+                    <span class="heading-secondary black">)</span>
+                  </div>
               </div><!--sect-half-->
               <div class="sect-half">
                   <div class="heading-tiny-uppercase">Students</div>
@@ -197,7 +209,7 @@
   <script type="text/html" id="tpl-neighComparison">
     
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school with neighbours
+          Comparison of status of Primary schools in {{boundary_name|upper}} with neighbours
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
@@ -205,13 +217,18 @@
           <tr class="table-base-heading">
             <th colspan="2"></th>
             {% for key in neighbours["keys"] %}
-              <td align="center">{{key.name}}</br>{% autoescape false %}{{key.icon}}{% endautoescape %}</td>
+              <!--td class="rotate" align="center">{{key.name}}{% autoescape false %}{{key.icon}}{% endautoescape %}</td-->
+              <td align="center">{% autoescape false %}{{key.icon}}{% endautoescape %}</td>
             {% endfor %}
           </tr>
           {% for each in neighbours %}
+          {% set highlight= "" %}
+            {% if each.name|upper == boundary_name|upper %}
+              {% set highlight= "brand-red" %}
+            {% endif %}
             <tr class="font-smaller">
               {% if "name" in each %}
-                <td>{{each.name}}</td><td></td>
+                <td class="{{highlight}}">{{each.name|capitalize}}</td><td></td>
                 {% for key in neighbours["keys"] %}
                   {% if key.name in each %}
                     <td align="center" class="bold {% if each[key.name].perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[key.name].perc | round}}%</td>

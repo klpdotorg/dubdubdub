@@ -1,57 +1,58 @@
 from schools.models import Boundary
 from django.db.models import Count, Sum
 from rest_framework.exceptions import ParseError
-import sys
 
 
 class BaseBoundaryReport(object):
     '''
         Has basic function for getting and checking data
     '''
-    neighbourIds = {413: [414,415,420,421,422],
-                    414: [413,415,418,419,420],
-                    415: [413,414,416,418,445],
-                    416: [415,417,445],
+    neighbourIds = {413: [414,  415,  420, 421, 422],
+                    414: [413, 415, 418, 419, 420],
+                    415: [413, 414, 416, 418, 445],
+                    416: [415, 417, 445],
                     417: [416],
-                    418: [414,415,419,424,445],
-                    419: [414.418,420,424],
-                    420: [414,419,421,423,424],
-                    421: [413,420,422,423],
-                    422: [413,421,423,427,428],
-                    423: [420,421,422,424,426,427],
-                    424: [418,419,420,423,426,425],
-                    425: [424,426,429,430],
-                    426: [423,424,425,427,429],
-                    427: [422,423,426,428,429],
-                    428: [422,427,429,436],
-                    429: [425,426,427,428,430,435,436],
-                    430: [425,429,433,434,435,441,444],
-                    431: [433,441,9540,9541],
-                    433: [430,431,444,9540,9541],
-                    434: [430,435,439,444,8878],
-                    435: [429,430,434,436,437,8878],
-                    436: [428,429,435,437],
-                    437: [435,436,8878],
-                    439: [434,444,8878],
-                    441: [430,431,433],
-                    442: [414,415,420,421,422],
-                    443: [425,429,433,434,435,441,444],
-                    444: [430,433,434,439,9540,9541],
-                    445: [415,416,418],
-                    8878: [434,435,437,439],
-                    9540: [431,433,444,9541],
-                    9541: [431,433,444,9540]}
-
+                    418: [414, 415, 419, 424, 445],
+                    419: [414.418, 420, 424],
+                    420: [414, 419, 421, 423, 424],
+                    421: [413, 420, 422, 423],
+                    422: [413, 421, 423, 427, 428],
+                    423: [420, 421, 422, 424, 426, 427],
+                    424: [418, 419, 420, 423, 426, 425],
+                    425: [424, 426, 429, 430],
+                    426: [423, 424, 425, 427, 429],
+                    427: [422, 423, 426, 428, 429],
+                    428: [422, 427, 429, 436],
+                    429: [425, 426, 427, 428, 430, 435, 436],
+                    430: [425, 429, 433, 434, 435, 441, 444],
+                    431: [433, 441, 9540, 9541],
+                    433: [430, 431, 444, 9540, 9541],
+                    434: [430, 435, 439, 444, 8878],
+                    435: [429, 430, 434, 436, 437, 8878],
+                    436: [428, 429, 435, 437],
+                    437: [435, 436, 8878],
+                    439: [434, 444, 8878],
+                    441: [430, 431, 433],
+                    442: [414, 415, 420, 421, 422],
+                    443: [425, 429, 433, 434, 435, 441, 444],
+                    444: [430, 433, 434, 439, 9540, 9541],
+                    445: [415, 416, 418],
+                    8878: [434, 435, 437, 439],
+                    9540: [431, 433, 444, 9541],
+                    9541: [431, 433, 444, 9540]}
 
     #Get dise information for the boundary
     def get_dise_school_info(self, active_schools, academic_year):
-        dise_schools = active_schools  #TODO.filter(acyear=academic_year)
+        dise_schools = active_schools  # TODO.filter(acyear=academic_year)
         agg = {
             'num_schools': dise_schools.count(),
-            'gender': {'boys': dise_schools.aggregate(num_boys=Sum('boys_count'))['num_boys'],
-                       'girls': dise_schools.aggregate(num_girls=Sum('girls_count'))['num_girls']
+            'gender': {'boys': dise_schools.aggregate(num_boys=
+                                                      Sum('boys_count'))['num_boys'],
+                       'girls': dise_schools.aggregate(num_girls=
+                                                       Sum('girls_count'))['num_girls']
                        },
-            'teacher_count': dise_schools.aggregate(num_teachers=Sum('teacher_count'))['num_teachers']
+            'teacher_count': dise_schools.aggregate(num_teachers=
+                                                    Sum('teacher_count'))['num_teachers']
         }
         agg['num_students'] = agg['gender']['boys'] + agg['gender']['girls']
         return agg
@@ -65,7 +66,8 @@ class BaseBoundaryReport(object):
         numteachers = teachers["count"]
         return numteachers
 
-    #Returns the count of schools in the parent boundary, if the passed boundary is district then returns the count of schools in all the districts
+    #Returns the count of schools in the parent boundary, if the passed boundary
+    #is district then returns the count of schools in all the districts
     def get_parent_info(self, boundary):
         parent = {"schoolcount": 0}
         if boundary.get_admin_level() != 1:
@@ -81,7 +83,7 @@ class BaseBoundaryReport(object):
 
     def getDistrictNeighbours(self, boundary):
         neighbours = self.neighbourIds[boundary.id]
-        return Boundary.objects.filter(id__in = neighbours)
+        return Boundary.objects.filter(id__in=neighbours)
 
     #Returns 0 where data is None
     def check_values(self, boundaryData):
@@ -113,7 +115,8 @@ class BaseBoundaryReport(object):
                                            "average_student_count": 0}}
         for data in categoryData:
             if data["cat"] in ['Lower Primary', 'Upper Primary']:
-                enrolmentdata[data['cat']]["average_student_count"] = (data["num_boys"] + data["num_girls"])/data["num_schools"]
+                enrolmentdata[data['cat']]["average_student_count"] =\
+                    (data["num_boys"] + data["num_girls"])/data["num_schools"]
 
         return enrolmentdata
 
@@ -128,12 +131,15 @@ class BaseBoundaryReport(object):
         reportData["boundary_info"]["dise"] = boundary.dise_slug
         if boundary.get_admin_level() == 2:
             reportData["boundary_info"]["parent"] = [{
-                "type": boundary.parent.hierarchy.name, "name": boundary.parent.name,
+                "type": boundary.parent.hierarchy.name,
+                "name": boundary.parent.name,
                 "dise": boundary.parent.dise_slug}]
         elif boundary.get_admin_level() == 3:
-            reportData["boundary_info"]["parent"] = [
-                    { "type": boundary.parent.parent.hierarchy.name, "name": boundary.parent.parent.name,
-                      "dise": boundary.parent.parent.dise_slug},
-                    { "type": boundary.parent.hierarchy.name, "name": boundary.parent.name,
-                      "dise": boundary.parent.dise_slug}
-                    ]
+            reportData["boundary_info"]["parent"] = [{
+                "type": boundary.parent.parent.hierarchy.name,
+                "name": boundary.parent.parent.name,
+                "dise": boundary.parent.parent.dise_slug}, {
+                "type": boundary.parent.hierarchy.name,
+                "name": boundary.parent.name,
+                "dise": boundary.parent.dise_slug}
+                ]

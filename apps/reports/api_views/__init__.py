@@ -7,6 +7,9 @@ from .summary_boundary import (
 from .demographics_boundary import(
     DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
 )
+from .demographics_electedrep import(
+    DemographicsElectedRepReportDetails, DemographicsElectedRepComparisonDetails
+)
 from .dise_boundary import(
     DiseBoundaryDetails
 )

@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from common.models import BaseModel
 from django.contrib.gis.db import models
+from django.db.models import Q
+from .education import School
 
 
 class ElectedrepMaster(BaseModel):
@@ -29,6 +31,12 @@ class ElectedrepMaster(BaseModel):
     def __unicode__(self):
         return "%d: %s" % (self.elec_comm_code, self.const_ward_name,)
 
+    def schools(self):
+        return School.objects.filter(
+            Q(electedrep__assembly=self) | Q(electedrep__parliament=self) |
+            Q(electedrep__ward=self)
+        )
+
     class Meta:
         managed = False
         db_table = 'mvw_electedrep_master'
@@ -45,7 +53,8 @@ class SchoolElectedrep(BaseModel):
     school = models.OneToOneField('School', primary_key=True, db_column='sid',
                                   related_name="electedrep")
     ward = models.ForeignKey('ElectedrepMaster', related_name='school_ward',
-                             db_column='ward_id', blank=True, null=True, on_delete=models.SET_NULL)
+                             db_column='ward_id', blank=True, null=True,
+                             on_delete=models.SET_NULL)
     assembly = models.ForeignKey('Assembly',
                                  db_column='mla_const_id',
                                  blank=True, null=True, on_delete=models.SET_NULL)

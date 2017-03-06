@@ -1,12 +1,18 @@
 'use strict';
 (function() {
     var utils;
+    var common;
     var summaryData;
     var detailsData;
+    var acadYear;
+    var klpData;
+    var repType;
+    var boundary_name;
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
         utils  = klp.reportUtils;
+        common = klp.reportCommon;
         fetchReportDetails();
         klp.router.start();
     };
@@ -16,44 +22,61 @@
     */
     function fetchReportDetails()
     {
-        var repType,bid,lang;
+        var id, lang, url;
         repType = utils.getSlashParameterByName("report_type");
-        bid = utils.getSlashParameterByName("id");
+        id = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
 
-        var url = "reports/summary/?id="+bid;
-        var $xhr = klp.api.do(url);
-        $xhr.done(function(data) {
-            getSummaryData(data);
-            renderSummary(summaryData);
-            getDetailsData(bid, lang, repType);
-            getComparisonData(bid, lang, repType);
-        });
+        if( repType == 'boundary')
+        {
+            url = "reports/summary/?id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                createSummaryData(klpData["boundary_info"]);
+                getDetailsData(id, lang, repType);
+                getComparisonData(id, lang, repType);
+            });
+        }
+        else
+        {
+            url = "reports/electedrep/?language="+lang+"&id="+id;
+            var $xhr = klp.api.do(url);
+            $xhr.done(function(data) {
+                klpData = data;
+                acadYear = data["academic_year"].replace(/20/g, '');
+                createSummaryData(klpData["electedrep_info"]);
+                getDetailsData(id, lang, repType);
+                getComparisonData(id, lang, repType);
+            });
+        }
     }
 
     /*
         Creates the data structure for summary data and returns it.
     */
-    function getSummaryData(data)
+    function createSummaryData(info)
     {
         summaryData = {
-            "boundary"  : data["boundary_info"],
-            "school_count" : data["school_count"],
-            "teacher_count" : data["teacher_count"],
-            "gender" : data["gender"],
-            "student_total": data["student_count"],
-            "ptr" : data["ptr"],
-            "school_perc" : data["school_perc"]
+            "boundary"  : info,
+            "school_count" : klpData["school_count"],
+            "teacher_count" : klpData["teacher_count"],
+            "gender" : klpData["gender"],
+            "student_total": klpData["student_count"],
+            "ptr" : klpData["ptr"],
+            "school_perc" : klpData["school_perc"]
         };
 
         summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100);
         summaryData['boy_perc'] = 100 - summaryData['girl_perc'];
+        renderSummary();
     }
 
     /*
         Renders summary data
     */
-    function renderSummary(data) {
+    function renderSummary() {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var tplReportDate = swig.compile($('#tpl-reportDate').html());
         
@@ -62,7 +85,7 @@
         var dateHTML = tplReportDate({"today":today});
         $('#report-date').html(dateHTML);
         
-        var topSummaryHTML = tplTopSummary({"data":data});
+        var topSummaryHTML = tplTopSummary({"data":summaryData});
         $('#top-summary').html(topSummaryHTML);
     }
 
@@ -112,14 +135,16 @@
         var school_total = 0;
         for (var cat in categories) {
             categories[cat]["name"] = cat;
-            categories[cat]['enrolled'] = Math.round(categories[cat]["student_count"]/categories[cat]["school_count"]);
+            categories[cat]['enrolled'] = Math.round(
+                categories[cat]["student_count"]/categories[cat]["school_count"]);
             school_total += categories[cat]["school_count"];
         }
         console.log("school_total:"+school_total);
         for(cat in categories) {
             console.log(cat);
             console.log(categories[cat]["school_count"]/school_total);
-            categories[cat]['cat_perc'] = Math.round(categories[cat]["school_count"]/school_total*100);
+            categories[cat]['cat_perc'] = Math.round(
+                categories[cat]["school_count"]/school_total*100);
             categories[cat]['school_total'] = school_total;
         }
         var tplCategory = swig.compile($('#tpl-Category').html());
@@ -148,23 +173,28 @@
             }
         }
 
-        new_lang["Others"] = {"name":"Others", "school_count": 0, "student_count":0, "moi_perc":0,"mt_perc":0};
+        new_lang["Others"] = {"name":"Others", "school_count": 0,
+                              "student_count":0, "moi_perc":0,"mt_perc":0};
         for (var eachlang in languages["moi"]) {
             if (!_.contains(lang_lookup,eachlang))
             {
-                new_lang["Others"]["school_count"] += languages["moi"][eachlang]["school_count"];
+                new_lang["Others"]["school_count"] +=
+                                    languages["moi"][eachlang]["school_count"];
                 delete languages["moi"][eachlang];
             } else {
                 new_lang[eachlang]= {"name" : eachlang};
-                new_lang[eachlang]["school_count"] = languages["moi"][eachlang]["school_count"];
-                new_lang[eachlang]["moi_perc"] = Math.round(languages["moi"][eachlang]["school_count"]*100/moi_school_total);
+                new_lang[eachlang]["school_count"] =
+                                    languages["moi"][eachlang]["school_count"];
+                new_lang[eachlang]["moi_perc"] = Math.round(
+                    languages["moi"][eachlang]["school_count"]*100/moi_school_total);
             }
         }
         
         for (var eachmt in languages["mt"]) {
             if (!_.contains(lang_lookup,eachmt))
             {
-                new_lang["Others"]["student_count"] += languages["mt"][eachmt]["student_count"];
+                new_lang["Others"]["student_count"] +=
+                                        languages["mt"][eachmt]["student_count"];
                 delete languages["mt"][eachmt];
             } else {
                 if (!(eachmt in new_lang))
@@ -173,13 +203,17 @@
                     new_lang[eachmt]["school_count"] = 0;
                     new_lang[eachmt]["moi_perc"] = 0;
                 }
-                new_lang[eachmt]["student_count"] = languages["mt"][eachmt]["student_count"];
-                new_lang[eachmt]["mt_perc"] = Math.round(languages["mt"][eachmt]["student_count"]*100/mt_student_total);
+                new_lang[eachmt]["student_count"] =
+                                        languages["mt"][eachmt]["student_count"];
+                new_lang[eachmt]["mt_perc"] = Math.round(
+                    languages["mt"][eachmt]["student_count"]*100/mt_student_total);
             }
         }
 
-        new_lang["Others"]["moi_perc"] = Math.round(new_lang["Others"]["school_count"]*100/moi_school_total);
-        new_lang["Others"]["mt_perc"] = Math.round(new_lang["Others"]["student_count"]*100/mt_student_total);
+        new_lang["Others"]["moi_perc"] = Math.round(
+            new_lang["Others"]["school_count"]*100/moi_school_total);
+        new_lang["Others"]["mt_perc"] = Math.round(
+            new_lang["Others"]["student_count"]*100/mt_student_total);
         var sorted_lang = _.sortBy(new_lang, 'school_count').reverse();
         var tplLanguage = swig.compile($('#tpl-Language').html());
         var languageHTML = tplLanguage({"lang":sorted_lang});
@@ -193,11 +227,13 @@
     function renderComparison(data) {
         //render year comparison
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
-        var yrcompareHTML = tplYearComparison({"years":data["year-wise"],"boundary_name":data["boundary_name"]});
+        var yrcompareHTML = tplYearComparison({"years":data["year-wise"],
+                                        "boundary_name":data["boundary_name"]});
         $('#comparison-year').html(yrcompareHTML);
 
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":data["boundaries"],"boundary_name":data["boundary_name"]});
+        var compareHTML = tplComparison({"neighbours":data["boundaries"],
+                                        "boundary_name":data["boundary_name"]});
         $('#comparison-neighbour').html(compareHTML);
     }
 

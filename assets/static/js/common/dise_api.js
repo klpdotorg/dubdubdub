@@ -40,13 +40,21 @@
 
         'getMultipleBoundaryData': function(parentBoundaryName, parentBoundaryType, boundaryType, academicYear){
             var url;
-            if (parentBoundaryName == null) 
+            if (parentBoundaryName == null)
                 url = base + academicYear + '/' + boundaryType;
             else
                 url = base + academicYear + '/' + parentBoundaryType + '/' +parentBoundaryName + '/' +boundaryType+'s/?basic=no';
             var $xhr = $.get(url);
             return $xhr;
+        },
+
+        'getElectedRepData': function(electedrepID, electedrepType, academicYear) {
+            var url = base + academicYear + '/' + electedrepType + '/' + electedrepID + '/';
+            var $xhr = $.get(url);
+            return $xhr;
         }
+
+
     };
 
 })();

@@ -1,6 +1,7 @@
 'use strict';
 (function() {
     var utils;
+    var common;
     var klpData;
     var summaryData;
     var categoriesData;
@@ -12,6 +13,7 @@
         klp.router = new KLPRouter();
         klp.router.init();
         utils  = klp.reportUtils;
+        common = klp.reportCommon;
         fetchReportDetails();
         klp.router.start();
     };
@@ -27,7 +29,7 @@
         lang = utils.getSlashParameterByName("language");
         if( repType == 'boundary' )
         {
-		    var url = "reports/dise/"+repType+"/?language="+lang+"&id="+id;
+            var url = "reports/dise/"+repType+"/?language="+lang+"&id="+id;
             var $xhr = klp.api.do(url);
             $xhr.done(function(data) {
                 klpData = data;
@@ -37,7 +39,7 @@
         }
         else
         {
-    		var url = "reports/electedrep/?language="+lang+"&id="+id;
+            var url = "reports/electedrep/?language="+lang+"&id="+id;
             var $xhr = klp.api.do(url);
             $xhr.done(function(data) {
                 klpData = data;
@@ -48,22 +50,30 @@
     }
 
     /*
-        Get Elected rep data from DISE application and render the Summary, Categories, Language and Comparison data.
+        Get Elected rep data from DISE application and render the Summary, 
+        Categories, Language and Comparison data.
     */
     function getElectedRepData()
     {
-        var electedrep = {"id": klpData["electedrep_info"]["dise"], "type": repType}
-        klp.dise_api.getElectedRepData(electedrep.id, electedrep.type, acadYear).done(function(diseData) {
-            console.log('diseData', diseData);
-            getSummaryData(diseData, klpData["electedrep_info"]);
-            renderSummary(summaryData);
+        var electedrep = {"id": klpData["electedrep_info"]["dise"],
+                          "type": repType}
+        klp.dise_api.getElectedRepData(electedrep.id, electedrep.type,
+                                       acadYear).done(function(diseData) {
+            var categoryCount = common.getCategoryCount(diseData.properties);
+            summaryData = common.getSummaryData(diseData, 
+                                                klpData["electedrep_info"],
+                                                categoryCount, 
+                                                repType, 
+                                                acadYear);
+            common.renderSummary(summaryData);
             getCategoriesData(diseData["properties"]);
             renderCategories(categoriesData);
             var languageData = getLanguageData(diseData["properties"]);
             renderLanguage(languageData);
             //Get Comparison Data
-            getNeighbourData();
-            getYearData();
+            if (klpData.neighbour_info.length != 0)
+                common.getNeighbourData(klpData, renderNeighbours);
+            common.getYearData(klpData, renderYearComparison);
         })
         .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
@@ -71,84 +81,36 @@
     }
  
     /*
-        Get detail data from DISE application and render the summary, categories, languages and comparison (year and neighbours) data.
+        Get detail data from DISE application and render the summary, categories, 
+        languages and comparison (year and neighbours) data.
     */
     function getDiseData()
     {
-        var boundary = {"id": klpData["boundary_info"]["dise"], "type": klpData["boundary_info"]["type"]};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
-            console.log('diseData', diseData);
+        var boundary = {"id": klpData["boundary_info"]["dise"],
+                        "type": klpData["boundary_info"]["type"]};
+        klp.dise_api.getBoundaryData(boundary.id, boundary.type,
+                                     acadYear).done(function(diseData) {
             boundary_name = klpData["boundary_info"]["name"];
-            getSummaryData(diseData, klpData["boundary_info"]);
-            renderSummary(summaryData);
+            var categoryCount = common.getCategoryCount(diseData.properties);
+            summaryData = common.getSummaryData(diseData,
+                                                klpData["boundary_info"],
+                                                categoryCount,
+                                                repType,
+                                                acadYear);
+            common.renderSummary(summaryData);
             getCategoriesData(diseData["properties"]);
             renderCategories(categoriesData);
             var languageData = getLanguageData(diseData["properties"]);
             renderLanguage(languageData);
             //Get Comparison Data
-            getNeighbourData();
-            getYearData();
+            common.getNeighbourData(klpData, renderNeighbours);
+            common.getYearData(klpData, renderYearComparison);
         })
         .fail(function(err) {
             klp.utils.alertMessage("Sorry, could not fetch dise data", "error");
         });
     }
 
-    /*
-        Fill the summaryData structure.
-    */
-    function getSummaryData(diseData, baseData)
-    {
-        var categoryData = getCategoryCount(diseData["properties"]);
-        summaryData = {
-            "boundary"  : baseData,
-            "school_count" : categoryData["schoolcount"],
-            "teacher_count" : diseData["properties"]["sum_male_tch"] + diseData["properties"]["sum_female_tch"],
-            "gender" : categoryData["gendercount"],
-            "student_total": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"]
-        };
-        if( summaryData["teacher_count"] == 0 )
-            summaryData['ptr'] = "NA";
-        else
-            summaryData['ptr'] = Math.round(summaryData["student_total"]/summaryData["teacher_count"]*100)/100;
-        summaryData['girl_perc'] = Math.round(( summaryData["gender"]["girls"]/summaryData["student_total"] )* 100 *100)/100;
-        summaryData['boy_perc'] = 100-summaryData['girl_perc'];
-    }
- 
-    /*
-        Renders Summary Data
-    */
-    function renderSummary(data) {
-        var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var tplReportDate = swig.compile($('#tpl-reportDate').html());
-        var now = new Date();
-        var today = {'date' : moment(now).format("MMMM D, YYYY")};
-        var dateHTML = tplReportDate({"today":today});
-        $('#report-date').html(dateHTML);
-        var topSummaryHTML = tplTopSummary({"data":data});
-        $('#top-summary').html(topSummaryHTML);
-    }
-
-    /*
-        Gets school count and gender count for schools that are of type lower primary or upper primary only.
-    */
-    function getCategoryCount(data)
-    {
-        var categorycount = {"schoolcount": 0,
-                             "gendercount":  {"boys": 0, "girls": 0}
-                            };
-        for(var iter in data["school_categories"])
-        {
-            var type = data["school_categories"][iter];
-            if(type["id"] == 1 || _.contains(upperPrimaryCategories, type["id"])){
-                categorycount["schoolcount"] += type["sum_schools"]["total"];
-                categorycount["gendercount"]["boys"] += type["sum_boys"];
-                categorycount["gendercount"]["girls"] += type["sum_girls"];
-            }
-        }
-        return categorycount;
-    }
-   
 
     /*
         Fills the categoriesData strucuture for rendering Categories
@@ -172,16 +134,24 @@
 		{
 			var type = data["school_categories"][iter];
 			if(type["id"] == 1){
-				categoriesData["lprimary"]["student_count"] = type["sum_girls"] + type["sum_boys"],
-				categoriesData["lprimary"]["school_count"] = type["sum_schools"]["total"]
-				categoriesData["lprimary"]["enrolled"] = Math.round(categoriesData["lprimary"]["student_count"]/categoriesData["lprimary"]["school_count"]*100)/100;
+				categoriesData["lprimary"]["student_count"] =
+                                        type["sum_girls"] + type["sum_boys"];
+				categoriesData["lprimary"]["school_count"] =
+                                                type["sum_schools"]["total"];
+				categoriesData["lprimary"]["enrolled"] = Math.round(
+                    categoriesData["lprimary"]["student_count"]/
+                    categoriesData["lprimary"]["school_count"]*100)/100;
 			}
 			if(_.contains(upperPrimaryCategories,type["id"])){
-				categoriesData["uprimary"]["student_count"] += type["sum_girls"] + type["sum_boys"],
-				categoriesData["uprimary"]["school_count"] += type["sum_schools"]["total"]
+				categoriesData["uprimary"]["student_count"] +=
+                                        type["sum_girls"] + type["sum_boys"];
+				categoriesData["uprimary"]["school_count"] +=
+                                                type["sum_schools"]["total"];
 			}
 		}
-        categoriesData["uprimary"]["enrolled"] = Math.round(categoriesData["uprimary"]["student_count"]/categoriesData["uprimary"]["school_count"]*100)/100;
+        categoriesData["uprimary"]["enrolled"] = Math.round(
+                            categoriesData["uprimary"]["student_count"]/
+                            categoriesData["uprimary"]["school_count"]*100)/100;
     }
 
     /*
@@ -193,11 +163,9 @@
             
             school_total += categories[cat]["school_count"];
         }
-        console.log("school_total:"+school_total);
         for(cat in categories) {
-            console.log(cat);
-            console.log(categories[cat]["school_count"]/school_total);
-            categories[cat]['cat_perc'] = Math.round(categories[cat]["school_count"]/school_total*100);
+            categories[cat]['cat_perc'] = Math.round(
+                            categories[cat]["school_count"]/school_total*100);
             categories[cat]['school_total'] = school_total;
         }
         var tplCategory = swig.compile($('#tpl-Category').html());
@@ -212,7 +180,8 @@
     {
         var lang_lookup = ["KANNADA","TAMIL","TELUGU","URDU","ENGLISH"];
 		var languages = {};
-        languages["OTHERS"] = {"name":"OTHERS", "school_count": 0, "student_count":0, "moi_perc":0,"mt_perc":0};
+        languages["OTHERS"] = {"name":"OTHERS", "school_count": 0,
+                               "student_count":0, "moi_perc":0,"mt_perc":0};
         var school_total = 0;
 		for( var iter in data["medium_of_instructions"])
 		{
@@ -220,18 +189,21 @@
             if (!_.contains(lang_lookup,type["name"].toUpperCase()))
             {
                 languages["OTHERS"]["school_count"] += type["sum_schools"];
-                languages["OTHERS"]["student_count"] += type["sum_boys"] + type["sum_girls"];
+                languages["OTHERS"]["student_count"] += type["sum_boys"] +
+                                                            type["sum_girls"];
             } else {
                 languages[type["name"]]= {"name" : type["name"]};
                 languages[type["name"]]["school_count"] = type["sum_schools"];
-                languages[type["name"]]["student_count"] = type["sum_boys"] + type["sum_girls"];
+                languages[type["name"]]["student_count"] = type["sum_boys"] +
+                                                            type["sum_girls"];
             }
             school_total += type["sum_schools"];
 		}
 
         for (var lang in languages)
         {
-            languages[lang]["moi_perc"] = Math.round(languages[lang]["school_count"]*100/school_total*100)/100;
+            languages[lang]["moi_perc"] = Math.round(
+                    languages[lang]["school_count"]*100/school_total*100)/100;
         }
         
 		return languages;
@@ -249,154 +221,23 @@
     }
 
     /*
-        Get Neighbour Data by calling dise api multiple times by passing different boundary
-    */
-    function getNeighbourData()
-    {
-        var loopData;
-        var passBoundaryData = {"acadYear": acadYear};
-        if( repType == "boundary" )
-        {
-            var type = klpData["boundary_info"]["type"];
-            if(type == "district")
-                loopData = klpData["neighbours"];
-            else
-                loopData = klpData["boundary_info"]["parent"];
-        }
-        else
-        {
-            loopData = klpData["neighbour_info"];
-        }
-        getMultipleData(loopData, passBoundaryData, getMultipleNeighbour, renderNeighbours)
-    }
-
-    /*
-        Get year data by passing different year to the DISE api.
-    */
-    function getYearData()
-    {
-        var passYearData;
-        var yearData = [];
-        var years = acadYear.split("-").map(Number);
-        var startyear = years[0];
-        var endyear = years[1];
-        yearData[(startyear-1).toString()+"-"+(endyear-1).toString()] = "20"+(startyear-1).toString()+"-"+"20"+(endyear-1).toString();
-        yearData[(startyear-2).toString()+"-"+(endyear-2).toString()] = "20"+(startyear-2).toString()+"-"+"20"+(endyear-2).toString();
-        if( repType == "boundary" )
-        {
-            passYearData = {"name": klpData["boundary_info"]["name"], "dise": klpData["boundary_info"]["dise"], "type": klpData["boundary_info"]["type"]};
-        }
-        else
-        {
-            passYearData = {"name": klpData["electedrep_info"]["name"], "dise": klpData["electedrep_info"]["dise"], "type": klpData["electedrep_info"]["type"]};
-        }
-        getMultipleData(yearData, passYearData, getMultipleYear, renderYearComparison,"acadYear");
-    }
-
-    /*
-     * This function is used to call multiple apis before processing a function (exitFunction).
-     * The inputData is used for looping through and has the data that needs to be passed.
-     * The passData is used for passing the data to the function (getData) which is used for making 
-     * the relevant api calls.
-     * Once the loop is over the exitFunction is called.
+     * Renders Neighbours
      */
-    function getMultipleData(inputData, passData, getData, exitFunction, iteratorName="iter")
-    {
-        var numberOfIterations = Object.keys(inputData).length;
-        var outputData= [];
-        var index = 0,
-            done = false,
-            shouldExit = false;
-        var loop = {
-            next:function(){
-                if(done){
-                    if(shouldExit && exitFunction){
-                        return exitFunction(outputData); // Exit if we're done
-                    }
-                }
-                if(index <  numberOfIterations){
-                    index++; // Increment our index
-                    getData(loop); // Run our process, pass in the loop
-                }
-                else {
-                    done = true; // Make sure we say we're done
-                    if(exitFunction)
-                        exitFunction(outputData); // Call the callback on exit
-                }
-            },
-            iteration:function(){
-                passData[iteratorName] = Object.keys(inputData)[index-1];
-                passData["value"] = inputData[passData[iteratorName]];
-                return passData; // Return the loop number we're on
-            },
-            addData:function(diseData){
-                outputData[Object.keys(inputData)[index-1]] = diseData;
-            },
-            break:function(end){
-                done = true; // End the loop
-                shouldExit = end; // Passing end as true means we still call the exit callback
-            }
-        };
-        loop.next();
-        return loop;
-    }
-
-    /*
-        Fill the data structure and pass to the DISE api call
-    */
-    function getMultipleNeighbour(loop)
-    {
-        var data = loop.iteration();
-        var type;
-        if( repType == "boundary" ) //for district/block/cluster
-            type = data["value"]["type"];
-        else //for electedrep
-            type = repType;
-        var boundary = {"id": data["value"]["dise"], "type": type};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, acadYear).done(function(diseData) {
-            console.log('diseData', diseData);
-            loop.addData(diseData);
-            loop.next();
-        })
-        .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not dise data", "for "+data["dise"]);
-        });
-    }
-
-    /*
-        Fill the data structure and pass to DISE api call
-    */
-    function getMultipleYear(loop)
-    {
-        var data = loop.iteration();
-        var type;
-        if( repType == "boundary" ) //for district/block/cluster
-            type = data["value"]["type"];
-        else //for electedrep
-            type = repType;
-        var boundary = {"id": data["dise"], "type": type};
-        klp.dise_api.getBoundaryData(boundary.id, boundary.type, data["acadYear"]).done(function(diseData) {
-            console.log('diseData', diseData);
-            loop.addData(diseData);
-            loop.next();
-        })
-        .fail(function(err) {
-            klp.utils.alertMessage("Sorry, could not dise data", "for "+data["dise"]);
-        });
-    }
-
     function renderNeighbours(data){
 		var comparisonData = {};
 		var total_school_count = 0;
 		for( var itercount in data)
 		{
 			var iter = data[itercount];
-            var categoryData = getCategoryCount(iter["properties"]);
+            var categoryData = common.getCategoryCount(iter["properties"]);
 			comparisonData[iter["id"]] = {
-				"name": iter["properties"]["popup_content"],
-				"student_count": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"],
+                "name": iter["properties"]["popup_content"] + " (" +
+                                        iter["properties"]["entity_type"] + ")",
+				"student_count": categoryData["gendercount"]["boys"] +
+                                        categoryData["gendercount"]["girls"],
 				"school_perc": 0,
-                "teacher_count": iter["properties"]["sum_female_tch"] + iter["properties"]["sum_male_tch"],
+                "teacher_count": iter["properties"]["sum_female_tch"] +
+                                        iter["properties"]["sum_male_tch"],
                 "school_count": categoryData["schoolcount"]
 			};
 
@@ -407,7 +248,9 @@
 			for(var cat in iter["properties"]["school_categories"]){
 				var type = iter["properties"]["school_categories"][cat];
 				if(type["id"] == 1){
-					comparisonData[iter["id"]]["enrol_lower"] = Math.round((type["sum_boys"] + type["sum_girls"])/type["sum_schools"]["total"]*100)/100;
+					comparisonData[iter["id"]]["enrol_lower"] = Math.round(
+                                (type["sum_boys"] + type["sum_girls"])/
+                                    type["sum_schools"]["total"]*100)/100;
                     total_school_count += type["sum_schools"]["total"];
                 }
 				else if(_.contains(upperPrimaryCategories,type["id"])){
@@ -416,10 +259,13 @@
                     total_school_count += type["sum_schools"]["total"];
                 }
 			}
-            comparisonData[iter["id"]]["enrol_upper"] = Math.round(upperstudentcount/upperschoolcount*100)/100;
-            comparisonData[iter["id"]] ["ptr"] = Math.round(comparisonData[iter["id"]]["student_count"]/comparisonData[iter["id"]]["teacher_count"]*100)/100;
+            comparisonData[iter["id"]]["enrol_upper"] = Math.round(
+                                    upperstudentcount/upperschoolcount*100)/100;
+            comparisonData[iter["id"]] ["ptr"] = Math.round(
+                        comparisonData[iter["id"]]["student_count"]/
+                        comparisonData[iter["id"]]["teacher_count"]*100)/100;
 		}
-        comparisonData[summaryData.boundary.dise] = {"name": summaryData.boundary.name,
+        comparisonData[summaryData.boundary.dise] = {
 				"student_count": summaryData.student_total,
 				"school_perc": 0,
                 "teacher_count": summaryData.teacher_count,
@@ -428,27 +274,40 @@
                 "enrol_upper": categoriesData["uprimary"]["enrolled"],
                 "ptr": summaryData["ptr"]
 		};
+        if( repType == 'boundary' )
+            comparisonData[summaryData.boundary.dise]["name"] =
+                summaryData.boundary.name + " (" + summaryData.boundary.type +")";
+        else
+            comparisonData[summaryData.boundary.dise]["name"] =
+                summaryData.boundary.name + " (" + repType +")";
         total_school_count += summaryData.school_count;
 		for(var neighbour in comparisonData)
 		{
-			comparisonData[neighbour]["school_perc"] = Math.round(comparisonData[neighbour]["school_count"]/total_school_count * 100)* 100/100;
+			comparisonData[neighbour]["school_perc"] = Math.round(
+                            comparisonData[neighbour]["school_count"]/
+                                total_school_count * 100)* 100/100;
 		}
-		console.log('comparisonData', comparisonData);
 		var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":comparisonData,"boundary_name":boundary_name});
+        var compareHTML = tplComparison({"neighbours":comparisonData,
+                                         "boundary_name":boundary_name});
         $('#comparison-neighbour').html(compareHTML);
     }
 
+    /*
+     * Renders Year Comparison
+     */
     function renderYearComparison(data) {
 		var comparisonData = {};
 		for( var itercount in data)
 		{
 			var iter = data[itercount];
-            var categoryData = getCategoryCount(iter["properties"]);
+            var categoryData = common.getCategoryCount(iter["properties"]);
 			comparisonData[itercount] = {
 				"year": "20"+itercount.toString().replace("-","-20"),
-				"student_count": categoryData["gendercount"]["boys"] + categoryData["gendercount"]["girls"],
-                "teacher_count": iter["properties"]["sum_female_tch"] + iter["properties"]["sum_male_tch"],
+				"student_count": categoryData["gendercount"]["boys"] +
+                                        categoryData["gendercount"]["girls"],
+                "teacher_count": iter["properties"]["sum_female_tch"] +
+                                        iter["properties"]["sum_male_tch"],
                 "school_count": categoryData["schoolcount"]
 			};
 			comparisonData[itercount]["enrol_lower"] = 0;
@@ -458,14 +317,19 @@
 			for(var cat in iter["properties"]["school_categories"]){
 				var type = iter["properties"]["school_categories"][cat];
 				if(type["id"] == 1)
-					comparisonData[itercount]["enrol_lower"] = Math.round((type["sum_boys"] + type["sum_girls"])/type["sum_schools"]["total"]*100)/100;
+					comparisonData[itercount]["enrol_lower"] = Math.round(
+                            (type["sum_boys"] + type["sum_girls"])/
+                        type["sum_schools"]["total"]*100)/100;
 				else if(_.contains(upperPrimaryCategories,type["id"])){
                     upperstudentcount += type["sum_boys"] + type["sum_girls"];
                     upperschoolcount += type["sum_schools"]["total"];
                 }
 			}
-            comparisonData[itercount]["enrol_upper"] = Math.round(upperstudentcount/upperschoolcount*100)/100;
-			comparisonData[itercount]["ptr"] = Math.round(comparisonData[itercount]["student_count"]/comparisonData[itercount]["teacher_count"]*100)/100;
+            comparisonData[itercount]["enrol_upper"] = Math.round(
+                upperstudentcount/upperschoolcount*100)/100;
+			comparisonData[itercount]["ptr"] = Math.round(
+                comparisonData[itercount]["student_count"]/
+                    comparisonData[itercount]["teacher_count"]*100)/100;
 		}
         comparisonData[acadYear]={
             "year": klpData["academic_year"],
@@ -479,7 +343,8 @@
         
         var sorted_year = _.sortBy(comparisonData,"year").reverse();
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
-        var yrcompareHTML = tplYearComparison({"years":sorted_year,"boundary_name":boundary_name});
+        var yrcompareHTML = tplYearComparison({"years":sorted_year,
+                                               "boundary_name":boundary_name});
         $('#comparison-year').html(yrcompareHTML);
     }
 
