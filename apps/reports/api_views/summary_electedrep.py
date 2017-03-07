@@ -1,27 +1,27 @@
 from rest_framework.response import Response
-from schools.models import Boundary, AcademicYear
+from schools.models import ElectedrepMaster, AcademicYear
 from schools.api_views.aggregations import BaseSchoolAggView
-from . import BaseBoundaryReport
+from . import BaseElectedRepReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from rest_framework.exceptions import ParseError
 from django.conf import settings
 
 
-class BoundarySummaryReport(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
+class ElectedRepSummaryReport(KLPAPIView, BaseSchoolAggView, BaseElectedRepReport):
     '''
         Returns report summary
     '''
-    reportInfo = {"report_info": {}}
+    reportInfo = {}
     parentInfo = {}
 
     # filling the counts in the data structure to be returned
-    def get_counts(self, boundaryData, active_schools, academic_year):
-        self.reportInfo["gender"] = {"boys": boundaryData["num_boys"],
-                                     "girls": boundaryData["num_girls"]}
-        self.reportInfo["school_count"] = boundaryData["num_schools"]
-        self.reportInfo["student_count"] = boundaryData["num_boys"] +\
-            boundaryData["num_girls"]
+    def get_counts(self, electedrepData, active_schools, academic_year):
+        self.reportInfo["gender"] = {"boys": electedrepData["num_boys"],
+                                     "girls": electedrepData["num_girls"]}
+        self.reportInfo["school_count"] = electedrepData["num_schools"]
+        self.reportInfo["student_count"] = electedrepData["num_boys"] +\
+            electedrepData["num_girls"]
         self.reportInfo["teacher_count"] =\
             self.get_teachercount(active_schools, academic_year)
 
@@ -39,7 +39,14 @@ class BoundarySummaryReport(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
                 self.reportInfo["school_count"] *
                 100 / float(self.parentInfo["schoolcount"]), 2)
 
-    def get_boundary_data(self, boundaryid):
+    def get_parent_info(self, electedrepid):
+        parent = {"schoolcount": 0}
+        parentObject = ElectedrepMaster.objects.get(id=electedrepid.parent.id)
+        schools = parentObject.schools()
+        parent["schoolcount"] = schools.count()
+        return parent
+
+    def get_report_data(self, electedrepid):
 
         # Get the academic year
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)
@@ -50,33 +57,31 @@ class BoundarySummaryReport(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
                     It should be in the form of 2011-2012.', 404)
         self.reportInfo["academic_year"] = year
 
-        # Check if boundary id is valid
+        # Check if electedrep id is valid
         try:
-            boundary = Boundary.objects.get(pk=boundaryid)
+            electedrep = ElectedrepMaster.objects.get(pk=electedrepid)
         except Exception:
-            raise APIError('Boundary not found', 404)
+            raise APIError('Electedrep id '+electedrepid+'  not found', 404)
 
-        # Get list of schools associated with that boundary
-        active_schools = boundary.schools()
+        self.getSummaryData(electedrep, self.reportInfo)
+        # Get list of schools associated with that electedrep
+        active_schools = electedrep.schools()
 
-        # Get aggregate data for schools in that boundary for the current
+        # Get aggregate data for schools with that electedrep for the current
         # academic year
-        boundaryData = self.get_aggregations(active_schools, academic_year)
-        boundaryData = self.check_values(boundaryData)
+        electedrepData = self.get_aggregations(active_schools, academic_year)
+        electedrepData = self.check_values(electedrepData)
 
         # get information about the parent
-        self.parentInfo = self.get_parent_info(boundary)
-
-        # get the summary data
-        self.get_boundary_summary_data(boundary, self.reportInfo)
+        self.parentInfo = self.get_parent_info(electedrep)
 
         # get the counts of students/gender/teacher/school
-        self.get_counts(boundaryData, active_schools, academic_year)
+        self.get_counts(electedrepData, active_schools, academic_year)
 
     def get(self, request):
         if not self.request.GET.get('id'):
             raise ParseError("Mandatory parameter id not passed")
 
         id = self.request.GET.get("id")
-        self.get_boundary_data(id)
+        self.get_report_data(id)
         return Response(self.reportInfo)

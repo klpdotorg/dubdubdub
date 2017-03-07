@@ -1,11 +1,20 @@
+from .base_report import (
+    BaseReport
+)
 from .base_boundary import (
     BaseBoundaryReport
 )
 from .summary_boundary import (
-    ReportBoundarySummary
+    BoundarySummaryReport
 )
 from .demographics_boundary import(
     DemographicsBoundaryReportDetails, DemographicsBoundaryComparisonDetails
+)
+from .base_electedrep import (
+    BaseElectedRepReport
+)
+from .summary_electedrep import (
+    ElectedRepSummaryReport
 )
 from .demographics_electedrep import(
     DemographicsElectedRepReportDetails, DemographicsElectedRepComparisonDetails

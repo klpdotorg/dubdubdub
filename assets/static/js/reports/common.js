@@ -1,14 +1,24 @@
 'use strict';
 (function() {
-  var t = klp.reportCommon = {};
-  var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
-  var repType;
-  var acadYear;
+    var t = klp.reportCommon = {};
+    var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
+    var repType;
+    var acadYear;
+    var diseType = {
+        "mp constituency": "parliament",
+        "ward": "ward",
+        "mla constituency": "assembly",
+    };
+
+
+    t.getElectedRepType = function(type){
+        return diseType[type];
+    };
 
     /*
         Fill the summaryData structure.
     */
- t.getSummaryData = function (diseData, baseData, categoryData, type, year) {
+    t.getSummaryData = function (diseData, baseData, categoryData, type, year) {
         repType = type;
         acadYear = year;
         var summaryData = {
@@ -36,7 +46,7 @@
         Gets school count and gender count for schools that are of type lower 
         primary or upper primary only.
     */
-  t.getCategoryCount= function (data){
+    t.getCategoryCount= function (data){
         var categorycount = {"schoolcount": 0,
                              "gendercount":  {"boys": 0, "girls": 0}
                             };
@@ -77,11 +87,11 @@
         var passBoundaryData = {"acadYear": acadYear};
         if( repType == "boundary" )
         {
-            var type = klpData["boundary_info"]["type"];
+            var type = klpData["report_info"]["type"];
             if(type == "district")
                 loopData = klpData["neighbours"];
             else
-                loopData = klpData["boundary_info"]["parent"];
+                loopData = klpData["report_info"]["parent"];
         }
         else
         {
@@ -181,18 +191,9 @@
                     "20"+(startyear-1).toString()+"-"+"20"+(endyear-1).toString();
         yearData[(startyear-2).toString()+"-"+(endyear-2).toString()] =
                     "20"+(startyear-2).toString()+"-"+"20"+(endyear-2).toString();
-        if( repType == "boundary" )
-        {
-            passYearData = {"name": klpData["boundary_info"]["name"],
-                            "dise": klpData["boundary_info"]["dise"],
-                            "type": klpData["boundary_info"]["type"]};
-        }
-        else
-        {
-            passYearData = {"name": klpData["electedrep_info"]["name"],
-                            "dise": klpData["electedrep_info"]["dise"],
-                            "type": klpData["electedrep_info"]["type"]};
-        }
+        passYearData = {"name": klpData["report_info"]["name"],
+                        "dise": klpData["report_info"]["dise"],
+                        "type": klpData["report_info"]["type"]};
         t.getMultipleData(yearData, passYearData, t.getMultipleYear,
                           renderYearComparison, "acadYear");
     };

@@ -7,7 +7,6 @@
     var acadYear;
     var klpData;
     var repType;
-    var boundary_name;
     klp.init = function() {
         klp.router = new KLPRouter();
         klp.router.init();
@@ -27,39 +26,24 @@
         id = utils.getSlashParameterByName("id");
         lang = utils.getSlashParameterByName("language");
 
-        if( repType == 'boundary')
-        {
-            url = "reports/summary/?id="+id;
-            var $xhr = klp.api.do(url);
-            $xhr.done(function(data) {
-                klpData = data;
-                acadYear = data["academic_year"].replace(/20/g, '');
-                createSummaryData(klpData["boundary_info"]);
-                getDetailsData(id, lang, repType);
-                getComparisonData(id, lang, repType);
-            });
-        }
-        else
-        {
-            url = "reports/electedrep/?language="+lang+"&id="+id;
-            var $xhr = klp.api.do(url);
-            $xhr.done(function(data) {
-                klpData = data;
-                acadYear = data["academic_year"].replace(/20/g, '');
-                createSummaryData(klpData["electedrep_info"]);
-                getDetailsData(id, lang, repType);
-                getComparisonData(id, lang, repType);
-            });
-        }
+        url = "reports/summary/"+repType+"/?id="+id;
+        var $xhr = klp.api.do(url);
+        $xhr.done(function(data) {
+            klpData = data;
+            acadYear = data["academic_year"].replace(/20/g, '');
+            createSummaryData();
+            getDetailsData(id, lang);
+            getComparisonData(id, lang);
+        });
     }
 
     /*
         Creates the data structure for summary data and returns it.
     */
-    function createSummaryData(info)
+    function createSummaryData()
     {
         summaryData = {
-            "boundary"  : info,
+            "info"  : klpData["report_info"],
             "school_count" : klpData["school_count"],
             "teacher_count" : klpData["teacher_count"],
             "gender" : klpData["gender"],
@@ -92,7 +76,7 @@
     /*
         Get the Category and Language details from the backend.
     */
-    function getDetailsData(bid, lang, repType)
+    function getDetailsData(bid, lang)
     {
         var url = "reports/demographics/"+repType+"/details/?id="+bid+"&language="+lang;
         var $xhr = klp.api.do(url);
@@ -106,7 +90,7 @@
     /*
         Gets Comparison data. Comparison across boundaries and years.
     */
-    function getComparisonData(bid, lang, repType)
+    function getComparisonData(bid, lang)
     {
         var url = "reports/demographics/"+repType+"/comparison/?id="+bid+"&language="+lang;
         var $xhr = klp.api.do(url);
@@ -122,7 +106,7 @@
                              "teacher_count": summaryData["teacher_count"],
                              "ptr": summaryData["ptr"]
             };
-            data['comparison']['boundary_name'] = summaryData["boundary"]["name"];
+            data['comparison']['name'] = summaryData["info"]["name"];
             renderComparison(data["comparison"]);
         });
     }
@@ -228,12 +212,12 @@
         //render year comparison
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
         var yrcompareHTML = tplYearComparison({"years":data["year-wise"],
-                                        "boundary_name":data["boundary_name"]});
+                                        "name":data["name"]});
         $('#comparison-year').html(yrcompareHTML);
 
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":data["boundaries"],
-                                        "boundary_name":data["boundary_name"]});
+        var compareHTML = tplComparison({"neighbours":data["neighbours"],
+                                        "name":data["name"]});
         $('#comparison-neighbour').html(compareHTML);
     }
 

@@ -5,7 +5,6 @@ from . import BaseBoundaryReport
 from common.views import KLPAPIView
 from common.exceptions import APIError
 from django.conf import settings
-import sys
 
 
 class DemographicsElectedRepReportDetails(KLPAPIView, BaseSchoolAggView,
@@ -47,14 +46,11 @@ class DemographicsElectedRepReportDetails(KLPAPIView, BaseSchoolAggView,
             raise APIError('ElectedRep id '+electedrepid+'  not found', 404)
 
         active_schools = electedrep.schools()
-        print >> sys.stderr, "-----------------"
-        print >> sys.stderr, active_schools
         electedrepData = self.get_aggregations(active_schools, academic_year)
         electedrepData = self.check_values(electedrepData)
         self.get_details_data(electedrepData, active_schools, academic_year)
 
     def get(self, request):
-        print >>sys.stderr, self.request.GET
         mandatoryparams = {'id': [], 'language': ['english', 'kannada']}
         self.check_mandatory_params(mandatoryparams)
         id = self.request.GET.get("id")
@@ -72,8 +68,7 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
         Returns report comparison details
     '''
     reportInfo = {"comparison": {"year-wise": {}, "electedrep": {}}}
-
-    parentInfo = {}
+    totalschools = 0
 
     def fillComparison(self, electedrep, academic_year):
         data = {
@@ -92,6 +87,7 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
             }
         active_schools = electedrep.schools()
         if active_schools.exists():
+            self.totalschools += active_schools.count()
             electedrepData = self.get_aggregations(active_schools,
                                                    academic_year)
             electedrepData = self.check_values(electedrepData)
@@ -107,12 +103,6 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
                 electedrepData["num_girls"]
             data["student_count"] = student_count
             data["teacher_count"] = teacher_count
-            if self.parentInfo["schoolcount"] == 0:
-                data["school_perc"] = 100
-            else:
-                data["school_perc"] = round(
-                    electedrepData["num_schools"] * 100 /
-                    float(self.parentInfo["schoolcount"]), 2)
             if teacher_count == 0:
                 data["ptr"] = "NA"
             else:
@@ -134,15 +124,10 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
                                    'not found', 404)
                 for rep in reps:
                     comparisonData.append(self.fillComparison(rep, academic_year))
+        for data in comparisonData:
+            data["school_perc"] = round(data["school_count"] * 100 /
+                                        float(self.totalschools), 2)
         return comparisonData
-
-    # Returns the count of schools in the parent
-    def get_parent_info(self, electedrepid):
-        parent = {"schoolcount": 0}
-        parentObject = ElectedrepMaster.objects.get(id=electedrepid.parent.id)
-        schools = parentObject.schools()
-        parent["schoolcount"] = schools.count()
-        return parent
 
     def get_yeardata(self, active_schools, year, year_id):
         yeardata = {"year": year, "avg_enrol_upper": 0, "avg_enrol_lower": 0,
@@ -160,12 +145,6 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
         yeardata["teacher_count"] = teacher_count
         yeardata["school_count"] = electedrepData["num_schools"]
 
-        if self.parentInfo["schoolcount"] == 0:
-            yeardata["school_perc"] = 100
-        else:
-            yeardata["school_perc"] = round(
-                electedrepData["num_schools"]*100
-                / float(self.parentInfo["schoolcount"]), 2)
         if teacher_count == 0:
             yeardata["ptr"] = "NA"
         else:
@@ -197,13 +176,11 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
 
     def get_comparison_data(self, electedrep, active_schools, academic_year,
                             year):
-        self.parentInfo = self.get_parent_info(electedrep)
-        self.reportInfo["parent"] = self.parentInfo
         self.reportInfo["comparison"] = {}
-        self.reportInfo["comparison"]["year-wise"] =\
-            self.get_year_comparison(active_schools, academic_year, year)
         self.reportInfo["comparison"]["neighbours"] =\
             self.get_neighbour_comparison(academic_year, electedrep)
+        self.reportInfo["comparison"]["year-wise"] =\
+            self.get_year_comparison(active_schools, academic_year, year)
 
     def get_report_comparison(self, electedrepid):
         year = self.request.GET.get('year', settings.DEFAULT_ACADEMIC_YEAR)

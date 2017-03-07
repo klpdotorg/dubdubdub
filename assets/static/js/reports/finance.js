@@ -45,6 +45,7 @@
             var $xhr = klp.api.do(url);
             $xhr.done(function(data) {
                 klpData = data;
+                repType = common.getElectedRepType(data.report_info.type);
                 acadYear = data["academic_year"].replace(/20/g, '');
                 getElectedRepData();
             });
@@ -58,13 +59,13 @@
     */
     function getElectedRepData()
     {
-        var electedrep = {"id": klpData["electedrep_info"]["dise"],
+        var electedrep = {"id": klpData["report_info"]["dise"],
                           "type": repType};
         klp.dise_api.getElectedRepData(electedrep.id, electedrep.type,
                                        acadYear).done(function(diseData) {
             categoryData = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
-                                                klpData["electedrep_info"],
+                                                klpData["report_info"],
                                                 categoryData,
                                                 repType,
                                                 acadYear);
@@ -85,14 +86,14 @@
     */
     function getDiseData()
     {
-        var boundary = {"type": klpData["boundary_info"]["type"],
-                        "id": klpData["boundary_info"]["dise"] };
+        var boundary = {"type": klpData["report_info"]["type"],
+                        "id": klpData["report_info"]["dise"] };
         klp.dise_api.getBoundaryData(boundary.id, boundary.type,
                                      acadYear).done(function(diseData) {
-            boundary_name = klpData["boundary_info"]["name"];
+            boundary_name = klpData["report_info"]["name"];
             categoryData = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
-                                                klpData["boundary_info"],
+                                                klpData["report_info"],
                                                 categoryData,
                                                 repType,
                                                 acadYear);

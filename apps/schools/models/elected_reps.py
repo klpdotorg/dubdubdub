@@ -34,7 +34,7 @@ class ElectedrepMaster(BaseModel):
     def schools(self):
         return School.objects.filter(
             Q(electedrep__assembly=self) | Q(electedrep__parliament=self) |
-            Q(electedrep__ward=self)
+            Q(electedrep__ward=self), Q(admin3__type=1)
         )
 
     class Meta:

@@ -44,6 +44,7 @@
             $xhr.done(function(data) {
                 klpData = data;
                 acadYear = data["academic_year"].replace(/20/g, '');
+                repType = common.getElectedRepType(data.report_info.type);
                 getElectedRepData();
             });
         }
@@ -55,13 +56,13 @@
     */
     function getElectedRepData()
     {
-        var electedrep = {"id": klpData["electedrep_info"]["dise"],
+        var electedrep = {"id": klpData["report_info"]["dise"],
                           "type": repType}
         klp.dise_api.getElectedRepData(electedrep.id, electedrep.type,
                                        acadYear).done(function(diseData) {
             var categoryCount = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData, 
-                                                klpData["electedrep_info"],
+                                                klpData["report_info"],
                                                 categoryCount, 
                                                 repType, 
                                                 acadYear);
@@ -86,14 +87,14 @@
     */
     function getDiseData()
     {
-        var boundary = {"id": klpData["boundary_info"]["dise"],
-                        "type": klpData["boundary_info"]["type"]};
+        var boundary = {"id": klpData["report_info"]["dise"],
+                        "type": klpData["report_info"]["type"]};
         klp.dise_api.getBoundaryData(boundary.id, boundary.type,
                                      acadYear).done(function(diseData) {
-            boundary_name = klpData["boundary_info"]["name"];
+            boundary_name = klpData["report_info"]["name"];
             var categoryCount = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
-                                                klpData["boundary_info"],
+                                                klpData["report_info"],
                                                 categoryCount,
                                                 repType,
                                                 acadYear);

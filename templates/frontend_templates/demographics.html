@@ -5,41 +5,41 @@
 
   <script type="text/html" id="tpl-topSummary">
 
-    <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
+    <div class="heading-secondary heading-border">{{data.info.name|capitalize}}</div>
     <div class="base-spacing-mid"></div>
     <div class="sect-parent">
       <div class="sect-third rounded-sect">
-          {% if data.boundary.type == "cluster" || data.boundary.type == "block" || data.boundary.type == "district" || data.boundary.type == "state" %}
+          {% if data.info.type == "cluster" || data.info.type == "block" || data.info.type == "district" || data.info.type == "state" %}
             <div class="heading-tiny-uppercase">Boundary</div>
-          {% elseif  data.boundary.type == "school" %}
+          {% elseif  data.info.type == "school" %}
             <div class="heading-tiny-uppercase">School</div>
           {% else %}
             <div class="heading-tiny-uppercase">Electoral Region</div>
           {% endif %}
-          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
+          <h2 class="heading-secondary brand-blue align-left">{{data.info.name|capitalize}}</h2> 
           <div class="heading-tiny-uppercase">Type</div>
-          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
-          {% if data.boundary.type in ["mp constituency","mla onstituency","ward"] %}
+          <h2 class="heading-secondary brand-blue align-left">{{data.info.type}}</h2>
+          {% if data.info.type in ["mp constituency","mla onstituency","ward"] %}
             <div class="heading-tiny-uppercase">Elected Representative</div>
-            <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+            <h2 class="heading-secondary brand-blue align-left">{{data.info.elected_rep |capitalize}} ({{data.info.elected_party}})</h2>
           {% else %}
             <ul class="map-location-labels brand-blue">  
-            {% if data.boundary.parent.cluster %}
+            {% if data.info.parent.cluster %}
                 <li class="map-label-each">
                   <div class="map-label-title heading-tiny-uppercase">CLUSTER</div>
-                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.cluster|upper }}</div>
+                  <div class="map-label-name font-large font-light">{{ data.info.parent.cluster|upper }}</div>
                 </li>
             {% endif %}
-            {% if data.boundary.parent.block %}
+            {% if data.info.parent.block %}
                 <li class="map-label-each">
                   <div class="map-label-title heading-tiny-uppercase">BLOCK</div>
-                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.block|upper }}</div>
+                  <div class="map-label-name font-large font-light">{{ data.info.parent.block|upper }}</div>
                 </li>
             {% endif %}
-            {% if data.boundary.parent.district %}
+            {% if data.info.parent.district %}
                 <li class="map-label-each">
                   <div class="map-label-title heading-tiny-uppercase">DISTRICT</div>
-                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.district|upper }}</div>
+                  <div class="map-label-name font-large font-light">{{ data.info.parent.district|upper }}</div>
                 </li>
             {% endif %}
             </ul>
@@ -200,7 +200,7 @@
 
   <script type="text/html" id="tpl-YearComparison">
     <h3 class="brand-turquoise  heading-border center-text">
-        3 year comparison of status of Primary school status in {{boundary_name|capitalize}}
+        3 year comparison of status of Primary school status in {{name|capitalize}}
       </h3>
       <table class="table-base table-list-view table-base-comparison">
       <tbody><tr class="table-base-heading">
@@ -241,7 +241,7 @@
 
   <script type="text/html" id="tpl-neighComparison">
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school for {{boundary_name| capitalize}} with neighbours
+          Comparison of status of Primary school for {{name| capitalize}} with neighbours
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
@@ -256,7 +256,7 @@
           <tr>
             {% set highlight= "" %}
             {% set barcolor= "grey-gravel-bg" %}
-            {% if each.name == boundary_name %}
+            {% if each.name == name %}
               {% set highlight= "brand-red" %}
               {% set barcolor= "brand-red-bg" %}
             {% endif %}
