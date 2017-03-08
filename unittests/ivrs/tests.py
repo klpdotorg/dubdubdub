@@ -71,7 +71,7 @@ class SMSViewTests(TestCase):
             response = view(request)
             self.assertEqual(
                 response.data,
-                'Error. Your response: ' + body + '. Expected response: 3885,1,1,1,2,2. Check for logical errors.'
+                'Error. Your response: ' + body + '. Expected response: 3885,1,1,1,2,2'
             )
 
     def test_reply_for_invalid_school_id(self):
@@ -141,7 +141,7 @@ class SMSViewTests(TestCase):
         print "Testing for logical error in input"
         view = SMSView.as_view()
         factory = APIRequestFactory()
-        body = '24657,1,2,1,2,2'
+        body = '24657,1,3,1,2,1'
         print "Testing input: " + body
         request = factory.get(
             '/api/v1/sms/',

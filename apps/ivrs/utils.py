@@ -19,105 +19,117 @@ GKA_DEV = "08039510185"
 GKA_SMS = "08039514048"
 GKA_SERVER = "08039591332"
 
-def get_message(**kwargs):
-    state = kwargs.get('state', None)
-
-    if kwargs.get('valid', False):
-        date = str(kwargs['date'])
-        data = str(kwargs['data'])
+def get_message(parameters, **kwargs):
+    if kwargs.get('is_data_valid', False):
+        date = str(parameters['date'])
+        data = str(parameters['raw_data'])
         message = "Response accepted. Your message was: " + data + \
                   " received at: " + date
 
     elif not kwargs.get('is_logically_correct', True):
         message = "Logical error."
 
-    elif not kwargs.get('valid', True):
-        data = str(kwargs['data'])
-        expected_response_1 = "3885,1,1,1,2,2"
-        # expected_response_2 = "3885,1,2,,,"
-        # expected_response_3 = "3885,1,2"
+    elif not kwargs.get('is_data_valid', True):
+        data = str(parameters['raw_data'])
+        expected_response = "3885,1,1,1,2,2"
 
         message = "Error. Your response: " + data + \
-                  ". Expected response: " + expected_response_1 + \
-                  ". Check for logical errors."
+                  ". Expected response: " + expected_response
 
     elif not kwargs.get('is_registered_user', True):
-        telephone = str(kwargs['telephone'])
+        telephone = str(parameters['telephone'])
         message = "Your number " + telephone + \
                   " is not registered. Please visit https://klp.org.in/" + \
                   " and register yourself."
 
-    elif kwargs.get('no_school_id', False):
-        message = "School ID not entered."
-
-    elif kwargs.get('invalid_school_id', False):
-        school_id = str(kwargs['school_id'])
+    elif not kwargs.get('is_school_id_valid', True):
+        school_id = str(parameters['school_id'])
         message = "School ID " + school_id + " not found."
 
-    elif kwargs.get('not_primary_school', False):
+    elif not kwargs.get('is_school_primary', True):
         message = "Please enter Primary School ID."
 
-    elif kwargs.get('not_pre_school', False):
-        message = "Please enter PreSchool ID."
-
     elif kwargs.get('error_question_number', False):
-        data = str(kwargs['original_data'])
+        data = str(parameters['raw_data'])
         question_number = str(kwargs['error_question_number'])
         message = "Error at que.no: " + question_number + "." + \
                   " Your response was " + data
 
-    if state:
-        state.comments = message
-        state.save()
-
     return message
 
-def check_data_validity(request):
-    valid = True
-    is_logically_correct = True
-
-    data = request.QUERY_PARAMS.get('Body', None)
-    data = [item.strip() for item in data.split(',')]
+def is_data_valid(data):
+    is_valid = True
 
     # Making sure that each input is a valid digit and no alphabets get in.
     if not all(response.strip().isdigit() for response in data):
-        valid = False
+        is_valid = False
+    elif len(data) == 5:
+        if any(response == '' for response in data):
+            # Responses like 1,2,1,,2 are not accepted.
+            is_valid = False
+    else:
+        is_valid = False
 
-    elif len(data) == 3:
-        if data[2] != '2':
-            valid = False
-        else:
-            # If the answer to 2nd question is "2" (which means "No"), then
-            # We manually populate the rest of the answers as "2". This is
-            # to maintain the consistency of the length of the data list to
-            # always remain 6 for every valid sms.
-            for i in range(0, 3):
-                data.append('2')
+    return is_valid
 
-    elif len(data) == 6:
-        if all(response == '' for response in data[3:]):
-            if data[2] != '2':
-                valid = False
-            else:
-                # If the answer to 2nd question is "2" (which means "No"), then
-                # We manually populate the rest of the answers as "2". This is
-                # to maintain the consistency of the responses for all valid sms
-                # that we receive.
-                data = ['2' if response == '' else response for response in data]
-        elif any(response == '' for response in data):
-            # Responses like 3885,1,2,1,,2 are not accepted.
-            valid = False
+def is_user_registered(telephone):
+    return User.objects.filter(mobile_no=telephone).exists()
 
-        # Logical error
-        elif data[2] in ('2', '3'):
-            if not all(answer in ('2', '3') for answer in data[3:]):
-                valid = False
-                is_logically_correct = False
+def is_logically_correct(data):
+    is_logically_correct = True
+    
+    # Logical error for gkav4. 5 entries in total. List index starts from 0.
+    if data[1] in ('2', '3'):
+        if not all(answer in ('2', '3') for answer in data[2:]):
+            is_logically_correct = False
 
-    elif len(data) != 6:
-        valid = False
+    return is_logically_correct
 
-    return (data, valid, is_logically_correct)
+def is_school_exists(school_id):
+    return School.objects.filter(id=school_id).exists()
+
+def is_school_primary(school_id):
+    school_type = School.objects.filter(
+        id=school_id
+    ).values(
+        'admin3__type__name'
+    )[0]['admin3__type__name']
+    return (school_type == u'Primary School')
+
+def is_answer_accepted(question, answer):
+    is_answer_accepted = True
+    if question.question_type.name in ['checkbox', 'radio']:
+        checkbox_accepted_answers = {'1': 'Yes', '2': 'No', '3': 'Unknown'}
+        if answer not in checkbox_accepted_answers:
+            is_answer_accepted = False
+        elif checkbox_accepted_answers[answer] not in eval(question.options):
+            is_answer_accepted = False
+    else:
+        if answer not in eval(question.options):
+            is_answer_accepted = False
+
+    return is_answer_accepted
+
+def cast_answer(question, answer):
+    if question.question_type.name in ['checkbox', 'radio']:
+        checkbox_accepted_answers = {'1': 'Yes', '2': 'No', '3': 'Unknown'}
+        return checkbox_accepted_answers[answer]
+    else:
+        return answer
+        
+def process_data(data):
+    return [item.strip() for item in data.split(',')]
+
+def populate_answers_list(incoming_number):
+    answers = []
+    # Ignoring index 0 since question_numbers start from 1
+    # Initializing answer slots 1 to number_of_questions with NA.
+    # answer slot 0 has value IGNORED_INDEX pre populated.
+    answers.append('IGNORED_INDEX')
+    number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
+    for i in range(0, number_of_questions):
+        answers.append('NA')
+    return answers
 
 def get_date(date):
     date = datetime.datetime.strptime(
@@ -128,40 +140,7 @@ def get_date(date):
     )
     return date
 
-def check_user(parameters):
-    return User.objects.filter(mobile_no=parameters['telephone']).exists()
-
-def check_school(state, school_id):
-    valid = True
-    message = None
-
-    if not school_id:
-        valid = False
-        message = get_message(no_school_id=True, state=state)
-
-    elif School.objects.filter(id=school_id).exists():
-        status_code = status.HTTP_200_OK
-        school_type = School.objects.filter(
-            id=school_id
-        ).values(
-            'admin3__type__name'
-        )[0]['admin3__type__name']
-
-        # Validating whether the entered school ID corresponds to the
-        # correct school_type. We only check Primary School because we do
-        # not currently operate in PreSchools. Once we do, implement the
-        # check logic here.
-        if school_type != u'Primary School':
-            valid = False
-            message = get_message(not_primary_school=True, state=state)
-
-    else:
-        valid = False
-        message = get_message(invalid_school_id=True, school_id=school_id, state=state)
-
-    return (valid, message)
-
-def populate_state(parameters):
+def populate_state(parameters, message, answers, is_invalid=False):
     date = parameters.get('date', None)
     raw_data = parameters.get('raw_data', None)
     ivrs_type = parameters.get('ivrs_type', None)
@@ -182,14 +161,7 @@ def populate_state(parameters):
     state.user = user
     state.telephone = telephone
     state.date_of_visit = get_date(date.strip("'"))
-    state.answers = []
-    # Ignoring index 0 since question_numbers start from 1
-    # Initializing answer slots 1 to number_of_questions with NA.
-    # answer slot 0 has value IGNORED_INDEX pre populated.
-    state.answers.append('IGNORED_INDEX')
-    number_of_questions = incoming_number.qg_type.questiongroup.questions.all().count()
-    for i in range(0, number_of_questions):
-        state.answers.append('NA')
+    state.answers = answers
 
     if raw_data:
         state.raw_data = str(raw_data)
@@ -197,121 +169,11 @@ def populate_state(parameters):
     if school_id and school_id.isdigit():
         state.school_id = school_id
 
+    state.comments = message
+    state.is_invalid = is_invalid
+
     state.save()
     return state
-
-def verify_answer(session_id, question_number, response, ivrs_type, original_data=None):
-    if State.objects.filter(session_id=session_id).exists():
-        state = State.objects.get(session_id=session_id)
-
-        message = None
-        status_code = status.HTTP_200_OK
-        question_number = int(question_number)
-        incoming_number = IncomingNumber.objects.get(number=ivrs_type)
-        question = get_question(
-            question_number,
-            incoming_number.qg_type.questiongroup
-        )
-
-        if response:
-            response = int(response.strip('"'))
-
-            # Mapping integers to Yes/No.
-            accepted_answers = {1: 'Yes', 2: 'No', 3: 'Unknown'}
-            if question.question_type.name == 'checkbox' and response in accepted_answers:
-                if question_number == 1 and (ivrs_type in [GKA_SERVER, GKA_DEV]):
-                    # This special case is there for question 1 which clubs "Was the school
-                    # open?" and "Class visited". Since "Class visited" accepts answers from
-                    # 1 to 8, we can't cast "1" and "2" to "yes" and "no". The answer to
-                    # whether the school was open or not is handled in the save_answer
-                    # function within utils.py
-                    response = response
-                else:
-                    response = accepted_answers[response]
-
-            # Save the answer.
-            state, status_code = save_answer(
-                state, question_number, question, ivrs_type, response
-            )
-
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
-    else:
-        state = None
-        status_code = status.HTTP_404_NOT_FOUND
-
-    if status_code == status.HTTP_404_NOT_FOUND:
-        message = get_message(
-            error_question_number=question_number,
-            original_data=original_data,
-            state=state
-        )
-
-    return (state, status_code, message)
-
-
-# GKA v3 questions are at https://github.com/klpdotorg/dubdubdub/issues/549#issuecomment-170913566
-# We special case question Q1 and question Q5. Q1 should be split into Q1 and Q2. Q5 should
-# be split into Q5, Q6 and Q7.
-# DISCLAIMER: There is no neat way of doing this. Beware of the mess below!
-def save_answer(state, question_number, question, ivrs_type, response):
-    # Perform sanity check for GKA & PRI. PRE (old ivrs) only
-    # has checkbox and numeric as answers types. Answers other
-    # than 1 or 2 are already moderated on the exotel end. The
-    # numeric answers cannot be moderated for the old ivrs.
-    status_code = status.HTTP_200_OK
-    if ivrs_type in [GKA_SERVER, GKA_DEV]:
-        if question_number == 1: # Question 1 & 2 based on responses.
-            if response == 0:
-                # Q1. School is closed.
-                state.answers[question_number] = 'No'
-            elif response in range(1, 9):
-                # Q1. School is open.
-                state.answers[question_number] = 'Yes'
-                # Q2. Class visited.
-                state.answers[question_number + 1] = response
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-
-        elif question_number == 5: # Question 5, 6 & 7 based on responses.
-            if response == 99:
-                # Q5. TLM is not being used.
-                state.answers[question_number] = 'No'
-                # Q7. Multiple TLMs are not being used.
-                state.answers[question_number + 2] = 'No'
-            elif response in range(1, 22):
-                # Q5. TLM is being used.
-                state.answers[question_number] = 'Yes'
-                # Q6. TLM code
-                state.answers[question_number + 1] = response
-                # Q7. Multiple TLMs are not being used.
-                state.answers[question_number + 2] = 'No'
-            elif response == 55:
-                # Q5. TLM is being used.
-                state.answers[question_number] = 'Yes'
-                # Q7. Multiple TLMs are being used.
-                state.answers[question_number + 2] = 'Yes'
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-
-        else:
-            if response in eval(question.options):
-                state.answers[question_number] = response
-            else:
-                status_code = status.HTTP_404_NOT_FOUND
-
-    elif ivrs_type in [PRI, GKA_SMS]:
-        if response in eval(question.options):
-            state.answers[question_number] = response
-        else:
-            status_code = status.HTTP_404_NOT_FOUND
-    else:
-        state.answers[question_number] = response
-
-    state.save()
-
-    return (state, status_code)
-
 
 def get_question(question_number, question_group):
     # We are directly querying for Primary School because we don't work

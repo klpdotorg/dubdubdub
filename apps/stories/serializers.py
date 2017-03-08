@@ -191,6 +191,12 @@ class AnswerSerializer(KLPSerializer):
         field = ('question', 'text')
 
 
+class AnswerSyncSerializer(KLPSerializer):
+    class Meta:
+        model = Answer
+        field = ('question', 'text')
+
+
 class StoryImageSerializer(KLPSerializer):
     image_url = serializers.CharField(source='image.url')
 
@@ -228,3 +234,20 @@ class StoryWithAnswersSerializer(KLPSerializer):
 
     def get_answers(self, obj):
         return obj.answer_set.all()
+
+
+class StorySyncSerializer(KLPSerializer):
+    answers = serializers.SerializerMethodField('get_answers')
+    user_type = serializers.CharField(source='user_type.name')
+
+    class Meta:
+        model = Story
+        fields = (
+            'id', 'date_of_visit', 'school', 'group',
+            'answers', 'user_type', 'user')
+
+    def get_answers(self, obj):
+        answers = dict()
+        for a in obj.answer_set.all():
+            answers[a.question_id] = a.text
+        return answers

@@ -41,7 +41,7 @@ from .models import (
     Source, Survey, QuestiongroupQuestions
 )
 from .serializers import (
-    SchoolQuestionsSerializer, StorySerializer,
+    SchoolQuestionsSerializer, StorySerializer, StorySyncSerializer,
     StoryWithAnswersSerializer, QuestiongroupSerializer,
     QuestionFullSerializer, SurveySerializer, SourceSerializer
 )
@@ -180,7 +180,7 @@ class StoriesSyncView(KLPAPIView):
 
     def post(self, request, format=None):
         response = {
-            'success': [],
+            'success': dict(),
             'failed': [],
             'error': None
         }
@@ -227,7 +227,7 @@ class StoriesSyncView(KLPAPIView):
                             story=new_story,
                             question=Question.objects.get(pk=answer.get('question_id'))
                         )
-                    response['success'].append(story.get('_id'))
+                    response['success'][story.get('_id')] = new_story.id
                 except Exception as e:
                     print "Error saving stories and answers:", e
                     response['failed'].append(story.get('_id'))
@@ -804,6 +804,10 @@ class StoriesView(KLPListAPIView):
                               authentication.SessionAuthentication,)
 
     def get_serializer_class(self):
+        is_sync = self.request.GET.get('is_sync', 'no')
+        if is_sync == 'yes':
+            return StorySyncSerializer
+
         get_answers = self.request.GET.get('answers', 'no')
 
         if get_answers == 'yes':
