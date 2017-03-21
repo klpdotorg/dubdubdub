@@ -36,7 +36,7 @@ def get_message(parameters, **kwargs):
         message = "Error. Your response: " + data + \
                   ". Expected response: " + expected_response
 
-    elif not kwargs.get('is_registered_user', True):
+    elif not kwargs.get('is_user_registered', True):
         telephone = str(parameters['telephone'])
         message = "Your number " + telephone + \
                   " is not registered. Please visit https://klp.org.in/" + \
