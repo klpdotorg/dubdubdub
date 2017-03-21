@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.6: 08b66e9778f1c9edfa673a21a847cd93e9af6af1 - 2017-03-21
+  - Fixes a bug in the SMS parsing view.
+
 Release 1.1.5: b4c978bc52fb86ee32b1cdc5fb084ad9e91538f0 - 2017-02-28
   - Refactors and fixes the SMS parsing API views plus utility functions.
 
