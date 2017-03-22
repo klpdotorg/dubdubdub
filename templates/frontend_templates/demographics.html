@@ -200,7 +200,7 @@
 
   <script type="text/html" id="tpl-YearComparison">
     <h3 class="brand-turquoise  heading-border center-text">
-        3 year comparison of status of Primary school status in {{name|capitalize}}
+        3 year comparison of status of Primary school status in {{name|title}}
       </h3>
       <table class="table-base table-list-view table-base-comparison">
       <tbody><tr class="table-base-heading">
@@ -241,7 +241,12 @@
 
   <script type="text/html" id="tpl-neighComparison">
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school for {{name| capitalize}} with neighbours
+          Comparison of status of Primary school for {{name|title}} 
+          {% if type != "cluster" && type !="block" %}
+            with neighbours
+          {% else %}
+            within its adminstration
+          {% endif %}
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
@@ -261,7 +266,10 @@
               {% set barcolor= "brand-red-bg" %}
             {% endif %}
             <td>
-                <div class="{{highlight}} td-label-boundary ">{{each.name|title}} ({{each.type}})</div>
+                <div class="{{highlight}} td-label-boundary ">{{each.name|title}}</div>
+                {% if type == "cluster" || type =="block" %}
+                  <div class="{{highlight}} td-label-boundary font-smallest">{{each.type|title}}</div>
+                {% endif %}
             </td>
             <td>
               <div class="{{highlight}} td-label-enrolu">{{each.avg_enrol_upper|checkzero}}</div>    

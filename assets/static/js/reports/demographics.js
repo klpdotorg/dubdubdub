@@ -107,6 +107,7 @@
                              "ptr": summaryData["ptr"]
             };
             data['comparison']['name'] = summaryData["info"]["name"];
+            data['comparison']['type'] = summaryData["info"]["type"];
             renderComparison(data["comparison"]);
         });
     }
@@ -217,7 +218,7 @@
 
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":data["neighbours"],
-                                        "name":data["name"]});
+                                        "name":data["name"], "type":data["type"]});
         $('#comparison-neighbour').html(compareHTML);
     }
 
