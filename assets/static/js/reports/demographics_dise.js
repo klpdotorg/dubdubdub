@@ -6,6 +6,7 @@
     var summaryData;
     var categoriesData;
     var boundary_name;
+    var boundary_type;
     var acadYear;
     var repType;
     var upperPrimaryCategories = [2, 3, 4, 5, 6, 7];
@@ -92,6 +93,8 @@
         klp.dise_api.getBoundaryData(boundary.id, boundary.type,
                                      acadYear).done(function(diseData) {
             boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
+            
             var categoryCount = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
                                                 klpData["report_info"],
@@ -225,15 +228,15 @@
      * Renders Neighbours
      */
     function renderNeighbours(data){
-		var comparisonData = {};
+        var comparisonData = {};
 		var total_school_count = 0;
 		for( var itercount in data)
 		{
 			var iter = data[itercount];
             var categoryData = common.getCategoryCount(iter["properties"]);
 			comparisonData[iter["id"]] = {
-                "name": iter["properties"]["popup_content"] + " (" +
-                                        iter["properties"]["entity_type"] + ")",
+                "name": iter["properties"]["popup_content"],
+                "type": iter["properties"]["entity_type"],
 				"student_count": categoryData["gendercount"]["boys"] +
                                         categoryData["gendercount"]["girls"],
 				"school_perc": 0,
@@ -276,11 +279,16 @@
                 "ptr": summaryData["ptr"]
 		};
         if( repType == 'boundary' )
+        {
             comparisonData[summaryData.boundary.dise]["name"] =
-                summaryData.boundary.name + " (" + summaryData.boundary.type +")";
-        else
+                summaryData.boundary.name;
+            comparisonData[summaryData.boundary.dise]["type"] =
+                summaryData.boundary.type;
+        } else {
             comparisonData[summaryData.boundary.dise]["name"] =
-                summaryData.boundary.name + " (" + repType +")";
+                summaryData.boundary.name;
+            comparisonData[summaryData.boundary.dise]["type"] = repType;
+        }
         total_school_count += summaryData.school_count;
 		for(var neighbour in comparisonData)
 		{
@@ -290,7 +298,8 @@
 		}
 		var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":comparisonData,
-                                         "boundary_name":boundary_name});
+                                         "boundary_name":boundary_name,
+                                         "boundary_type":boundary_type});
         $('#comparison-neighbour').html(compareHTML);
     }
 
