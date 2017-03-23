@@ -6,20 +6,22 @@
         klp.router.start();
         initSelect2();
         $(".box").hide();
-        $("#report-list").hide();
         $(document).ready(function(){
             $('input[type="radio"]').click(function(){
                 if($(this).attr("value")=="pre"){
+                    $("#report-list").hide();
                     $(".box").not(".educational").hide();
                     $(".educational").show();
                     initEduSearch("preschool");
                 }
                 if($(this).attr("value")=="primary"){
+                    $("#report-list").hide();
                     $(".box").not(".educational").hide();
                     $(".educational").show();
                     initEduSearch("primaryschool");
                 }
                 if($(this).attr("value")=="elec"){
+                    $("#report-list").hide();
                     $(".box").not(".electoral").hide();
                     $(".electoral").show();
                     initElectSearch();
@@ -68,10 +70,44 @@
         });
     }
 
-    function showReport(selected) {
+    function showReport(selected,report_type) {
+
         var tplReportLinks= swig.compile($('#tpl-reportLinks').html());
-        $('#report-list').html(tplReportLinks({"boundary":selected.val}));
+        $('#report-list').html(tplReportLinks({"boundary":selected.val,
+            "rep_type":report_type,"src_type":$( "#src-type option:selected" ).val()}));
         $("#report-list").show();
+    }
+
+    function refreshReport() {
+        $(".box").hide();
+        $("#report-list").hide();
+        
+        var rep_type = $('input[name="radios"]:checked').val();
+        if(rep_type=="pre"||rep_type=="primary"){
+            $(".box").not(".educational").hide();
+            $(".educational").show();
+            $("#select-district").select2("val","");
+            $("#select-block").select2("val","");
+            $("#select-cluster").select2("val","");
+        }
+        if(rep_type=="elec"){
+            $(".box").not(".electoral").hide();
+            $(".electoral").show();
+            $("#select-mp").select2("val","");
+            $("#select-mla").select2("val","");
+            $("#select-ward").select2("val","");
+        }
+    }
+
+    $("#src-type").on("change", function() {
+        refreshReport();
+    });
+
+    function clearSelection()
+    {
+        
+        
+        $("#report-list").hide();
     }
 
     function initEduSearch(school_type) {
@@ -88,7 +124,7 @@
         });
 
         $select_district.on("change", function(selected) {
-            showReport(selected);
+            showReport(selected,"boundary");
             var blockXHR = klp.api.do('boundary/admin1/'+selected.val+'/admin2', {'geometry': 'yes', 'per_page': 0});
             blockXHR.done(function (data) {
                 populateSelect($select_block, data);
@@ -96,7 +132,7 @@
         });
 
         $select_block.on("change", function(selected) {
-            showReport(selected);
+            showReport(selected,"boundary");
             var clusterXHR = klp.api.do('boundary/admin2/'+selected.val+'/admin3', {'geometry': 'yes', 'per_page': 0});
             clusterXHR.done(function (data) {
                 populateSelect($select_cluster, data);
@@ -104,10 +140,11 @@
         });
 
         $select_cluster.on("change", function(selected) {
-            showReport(selected);
+            showReport(selected,"boundary");
         });
     }
-    
+
+
     function initElectSearch() {
         var $select_mp = $("#select-mp");
         var $select_mla = $("#select-mla");
@@ -124,7 +161,7 @@
         });
 
         $select_mp.on("change", function(selected) {
-            showReport(selected);
+            showReport(selected,"electedrep");
         });
 
         //$select_mp.on("change", function(selected) {
@@ -134,7 +171,7 @@
             populateSelect($select_mla, data);
         });
         $select_mla.on("change", function(selected) {
-            showReport(selected);
+            showReport(selected,"electedrep");
         });
         //});
 

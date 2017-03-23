@@ -8,6 +8,7 @@
     var categoryData;
     var repType;
     var boundary_name;
+    var boundary_type;
     var grantData = {};
     var lowerUpperPrimary = [2, 3, 6];
     var onlyUpperPrimary = [4, 5, 7];
@@ -91,6 +92,7 @@
         klp.dise_api.getBoundaryData(boundary.id, boundary.type,
                                      acadYear).done(function(diseData) {
             boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
             categoryData = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
                                                 klpData["report_info"],
@@ -591,8 +593,8 @@
         for (var each in data) {
             var categoryData = common.getCategoryCount(data[each].properties);
             comparisonData[data[each]["id"]] = {
-                "name": data[each].properties.popup_content +
-                        " (" + data[each].properties.entity_type + ")",
+                "name": data[each].properties.popup_content,
+                "type": data[each].properties.entity_type,
                 "expected": getTotalExpectedGrant(data[each]["properties"]),
                 "received": data[each].properties.sum_school_dev_grant_recd +
                                 data[each].properties.sum_tlm_grant_recd,
@@ -609,12 +611,16 @@
                                 "total": summaryData.school_count
                                 };
         if( repType == 'boundary' )
+        {
             comparisonData[summaryData.boundary.dise]["name"] =
-                    summaryData.boundary.name +
-                    " (" + summaryData.boundary.type +")";
-        else
+                summaryData.boundary.name;
+            comparisonData[summaryData.boundary.dise]["type"] =
+                summaryData.boundary.type;
+        } else {
             comparisonData[summaryData.boundary.dise]["name"] =
-                    summaryData.boundary.name + " (" + repType +")";
+                summaryData.boundary.name;
+            comparisonData[summaryData.boundary.dise]["type"] = repType;
+        }
         total_schools += summaryData.school_count;
         for( var iter in comparisonData){
             comparisonData[iter]["total_perc"] = Math.round(
@@ -622,7 +628,8 @@
         }
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
         var compareHTML = tplComparison({"neighbours":comparisonData,
-                                            "boundary_name":boundary_name});
+                                            "boundary_name":boundary_name,
+                                            "boundary_type":boundary_type});
         $('#comparison-neighbour').html(compareHTML);
     }
 })();

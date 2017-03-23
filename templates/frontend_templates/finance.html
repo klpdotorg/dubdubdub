@@ -263,7 +263,12 @@
   <script type="text/html" id="tpl-neighComparison">
     
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school with neighbours
+          Comparison of status of Primary school for {{boundary_name|title}} 
+          {% if boundary_type != "cluster" && boundary_type !="block" %}
+            with neighbours
+          {% else %}
+            within its adminstration
+          {% endif %}
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
@@ -275,6 +280,7 @@
             <th>Expenditure</th>
             <th>Schools</th>
           </tr>
+          {{boundary_name}}
           {% for each in neighbours %}
             {% set highlight= "" %}
             {% set barcolor= "grey-gravel-bg" %}
@@ -284,7 +290,10 @@
             {% endif %}
             <tr class="font-smaller">
               <td>
-                <div class="{{highlight}} bold td-label-boundary">{{each.name|capitalize}}</div>
+                <div class="{{highlight}} bold td-label-boundary">{{each.name|title}}</div>
+                {% if boundary_type == "cluster" || boundary_type =="block" %}
+                  <div class="{{highlight}} td-label-boundary font-smallest">{{each.type|title}}</div>
+                {% endif %}
               </td>
               <td>
                 <div class="{{highlight}} td-label-perstu">{{each.expected|round|inrformat}}</div>    
@@ -300,8 +309,9 @@
                 <div class="bar-graph-wrap">
                   <div class="bar-custom">
                     <div class="bar-value {{barcolor}}" style="width:{{each.total_perc}}%;"></div>
+                    <div class="font-smaller center-text {{highlight}}"><strong>{{each.total|round}} schools</strong></div>
                   </div><!--bar-custom-->
-                  <div class="bar-percent center-text font-smallest">{{each.total|round}}</div>
+                  <div class="bar-percent"></div>
                 </div><!--bar-graph-wrap-->
               </td>
             </tr>
