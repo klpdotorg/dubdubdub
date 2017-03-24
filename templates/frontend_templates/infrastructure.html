@@ -172,7 +172,10 @@
             <td> </td>
             {% for year in transpose["year"] %}
                 {% if year in transpose["school_count"] %}
-                  <td>{{transpose["school_count"][year]}}
+                  <td>
+                    <span class="hide-fs">{{year}}:</span>
+                    <span class="">{{transpose["school_count"][year]}}</span>
+                  </td>
                 {% endif %}
             {% endfor %}
           </tr>
@@ -191,7 +194,10 @@
                     <td>{{each.name}}</td>
                     {% for year in transpose["year"] %}
                       {% if year in each %}
-                        <td class="bold {% if each[year] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[year] | round}}%</td>
+                        <td>
+                          <span class="hide-fs">{{year}}:</span>
+                          <span class="bold {% if each[year] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[year] | round}}%</span>
+                        </td>
                       {% else %}
                         <td>"NA"</td>
                       {% endif %}
@@ -209,26 +215,36 @@
   <script type="text/html" id="tpl-neighComparison">
     
       <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary schools in {{boundary_name|upper}} with neighbours
+          Comparison of status of Primary school for {{boundary_name|title}} 
+          {% if boundary_type != "cluster" && boundary_type !="block" %}
+            with neighbours
+          {% else %}
+            within its adminstration
+          {% endif %}
       </h3>
     
       <table class="table-base table-list-view table-base-comparison">
         <tbody>
           <tr class="table-base-heading">
-            <th colspan="2"></th>
+            <th></th>
             {% for key in neighbours["keys"] %}
               <!--td class="rotate" align="center">{{key.name}}{% autoescape false %}{{key.icon}}{% endautoescape %}</td-->
-              <td align="center">{% autoescape false %}{{key.icon}}{% endautoescape %}</td>
+              <!--td align="center">{% autoescape false %}{{key.icon}}{% endautoescape %}</td-->
+              <td><span class="rotate">{{key.name}}</span></td>
             {% endfor %}
           </tr>
           {% for each in neighbours %}
-          {% set highlight= "" %}
-            {% if each.name|upper == boundary_name|upper %}
-              {% set highlight= "brand-red" %}
+            {% set highlight= "" %}
+            {% if each.name|lower == boundary_name %}
+              {% set highlight= "brand-red bold" %}
             {% endif %}
             <tr class="font-smaller">
               {% if "name" in each %}
-                <td class="{{highlight}}">{{each.name|capitalize}}</td><td></td>
+                <td class="{{highlight}}">{{each.name|title}}
+                {% if boundary_type == "cluster" || boundary_type =="block" %}
+                  <div class="{{highlight}} td-label-boundary font-smallest">{{each.type|title}}</div>
+                {% endif %}
+                </td>
                 {% for key in neighbours["keys"] %}
                   {% if key.name in each %}
                     <td align="center" class="bold {% if each[key.name].perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[key.name].perc | round}}%</td>

@@ -65,6 +65,10 @@
 	padding-right:3px;
 }
 
+.hide-fs {
+	display:none;
+}
+
 @include media-med-maxwidth {	
 	
 	.bar-num-label {
@@ -165,6 +169,10 @@
 
 	.hide-mobile {
 		display:none;
+	}
+
+	.hide-fs {
+		display:block;
 	}
 
 	.label-avg-enrol {

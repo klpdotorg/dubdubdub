@@ -4843,6 +4843,9 @@ code {
   padding-top: 3px;
   padding-right: 3px; }
 
+.hide-fs {
+  display: none; }
+
 @media only screen and (max-width: 749px) {
   .bar-num-label {
     display: block;
@@ -4896,6 +4899,9 @@ code {
 
   .hide-mobile {
     display: none; }
+
+  .hide-fs {
+    display: block; }
 
   .label-avg-enrol:before {
     content: "Average enrollment: "; }

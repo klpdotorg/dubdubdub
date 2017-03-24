@@ -6,6 +6,7 @@
     var acadYear;
     var summaryData;
     var boundary_name;
+    var boundary_type;
     var klpData;
     var diseData;
     var repType;
@@ -110,6 +111,7 @@
                                      acadYear).done(function(data) {
             diseData = data;
             boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
             var categoryCount = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
                 klpData["report_info"], categoryCount, repType, acadYear);
@@ -135,6 +137,8 @@
             var categoryCount = common.getCategoryCount(diseData.properties);
             summaryData = common.getSummaryData(diseData,
                 klpData["report_info"], categoryCount, repType, acadYear);
+            boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
             common.renderSummary(summaryData);
             //Get Comparison Data
             if (klpData.neighbour_info.length != 0)
@@ -179,9 +183,8 @@
                                                  "name":hash[key]['display']};
                     if(!percData[data[each]["id"]])
                         percData[data[each]["id"]] = {
-                            "name": data[each]["properties"]["popup_content"] +
-                                    " (" +
-                                    data[each]["properties"]["entity_type"] + ")"};
+                            "name": data[each]["properties"]["popup_content"],
+                            "type": data[each]["properties"]["entity_type"]};
                     percData[data[each]["id"]][hash[key]['display']] = {
                         "perc": (data[each]["properties"][key]/
                             data[each]["properties"]["sum_schools"]) * 100};
@@ -189,7 +192,7 @@
             }
         }
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":percData,"boundary_name":boundary_name});
+        var compareHTML = tplComparison({"neighbours":percData,"boundary_name":boundary_name, "boundary_type":boundary_type});
         $('#comparison-neighbour').html(compareHTML);
     }
 
