@@ -41,10 +41,6 @@
     rotate(270deg);
 }
 
-@include media-med-maxwidth {
-
-}
-
 .bar-lookup {
 	margin-bottom: 15px;
 	margin-top:3px;
@@ -122,6 +118,24 @@
 	.td-label-smg {
 	    &:before {
 	  	  content: "School Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-lps {
+		&:before {
+	  	  content: "Lower Primary Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-ups {
+		&:before {
+	  	  content: "Upper Primary (1-8) Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-hps {
+		&:before {
+	  	  content: "Upper Primary (6-8) Maintenance Grant: ";
 	  	}
 	}
 
@@ -206,4 +220,5 @@
 span.tab{
     padding-right:20px; /* Or desired space*/
 }
+
 
