@@ -161,11 +161,11 @@
       {% for each in lang %}
       <tr>
         <td>{{each.name|capitalize}}</td>
+        <td>{{each.school_count|round}} schools</td>
         <td>
           <div class="bar-graph-wrap">
             <div class="bar-custom">
               <div class="bar-value grey-gravel-bg" style="width:{{each.moi_perc}}%;"></div>
-              <div class="font-smaller center-text"><strong>{{each.school_count|round}} schools</strong></div>
             </div><!--bar-custom-->
             <div class="bar-percent">{{each.moi_perc|round}}%</div>
           </div><!--bar-graph-wrap-->  

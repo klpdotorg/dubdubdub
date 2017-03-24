@@ -70,6 +70,8 @@
                                                 categoryData,
                                                 repType,
                                                 acadYear);
+            boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
             common.renderSummary(summaryData);
             loadFinanceData(diseData["properties"]);
             //Get Comparison Data

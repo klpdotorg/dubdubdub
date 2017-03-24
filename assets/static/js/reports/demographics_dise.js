@@ -67,6 +67,8 @@
                                                 categoryCount, 
                                                 repType, 
                                                 acadYear);
+            boundary_name = klpData["report_info"]["name"];
+            boundary_type = klpData["report_info"]["type"];
             common.renderSummary(summaryData);
             getCategoriesData(diseData["properties"]);
             renderCategories(categoriesData);
