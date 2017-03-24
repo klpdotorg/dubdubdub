@@ -118,39 +118,51 @@
   <script type="text/html" id="tpl-Category">
 
       <h2 class="heading-border brand-turquoise">School Category Profile</h2>
-      <table class="table-base table-list-view table-base-graphs">
-        <tbody>
-          <tr class="table-base-heading">
-            <th>Average Enrollment by Category</th>
-            <th>School Distribution by Category</th>
-          </tr>
-          {% for each in cat %}
-          <tr>
-            <td>
-              <div class="sect-parent">
-                <div class="sect-two-third">
-                  <div class="bar-lookup">{{each.name|capitalize}}</div>
-                </div>
-                <div class="sect-third">
-                  <div class="bar-lookup">{{each.enrolled|round}}</div>
-                </div>
-              </div>    
-            </td>
-            <td>
-              <div class="bar-graph-wrap float-left"><!--1-->
-                <div class="bar-num-label font-smaller bold brand-blue">{{each.school_count}}/{{each.school_total}}</div>
-                <div class="bar-custom tooltip" aria-label="{{each.school_count}} Schools"><!--2-->
-                    <div class="bar-value grey-gravel-bg float-left" style="width:{{each.cat_perc}}%;"></div><!--3-->
-                </div><!--2-->
-                <div class="bar-percent grey-gravel">{{each.cat_perc|round}}%</div><!--6-->
-              </div><!--1-->
-            </td>
-            
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-
+      <div class="sect-parent">
+          <div class="sect-quarter grey-mist-bg rounded-sect">
+            <div class="heading-tiny-uppercase">Total Enrollment</div>
+            <div class="base-spacing-sm"></div>
+            {% for each in enrol %}
+              <div class="font-small">{{each.text}}: <br/>
+              <span class="brand-blue font-largest"> {{each.average_student_count}}</span> </div>
+              <div class="base-spacing-mid"></div>
+            {% endfor %}           
+          </div><!--sect-quarter-->
+          <div class="sect-three-quarter">
+            <table class="table-base table-list-view table-base-graphs">
+              <tbody>
+                <tr class="table-base-heading">
+                  <th>Average Enrollment by Category</th>
+                  <th>School Distribution by Category</th>
+                </tr>
+                {% for each in cat %}
+                <tr>
+                  <td>
+                    <div class="sect-parent">
+                      <div class="sect-two-third">
+                        <div class="bar-lookup">{{each.name|capitalize}}</div>
+                      </div>
+                      <div class="sect-third">
+                        <div class="bar-lookup">{{each.enrolled|round}}</div>
+                      </div>
+                    </div>    
+                  </td>
+                  <td>
+                    <div class="bar-graph-wrap float-left"><!--1-->
+                      <div class="bar-num-label font-smaller bold brand-blue">{{each.school_count}}/{{each.school_total}}</div>
+                      <div class="bar-custom tooltip" aria-label="{{each.school_count}} Schools"><!--2-->
+                          <div class="bar-value grey-gravel-bg float-left" style="width:{{each.cat_perc}}%;"></div><!--3-->
+                      </div><!--2-->
+                      <div class="bar-percent grey-gravel">{{each.cat_perc|round}}%</div><!--6-->
+                    </div><!--1-->
+                  </td>
+                  
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div><!--sect-three-quarter-->
+      </div><!--sect-parent-->
   </script>
 
   <script  type="text/html" id="tpl-Language">
