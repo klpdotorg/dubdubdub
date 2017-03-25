@@ -19,7 +19,7 @@
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
           <div class="heading-tiny-uppercase">Type</div>
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
-          {% if data.boundary.type in ["mp constituency","mla onstituency","ward"] %}
+          {% if data.boundary.type in ["mp constituency","mla constituency","ward"] %}
             <div class="heading-tiny-uppercase">Elected Representative</div>
             <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
           {% else %}
@@ -212,50 +212,85 @@
       </table>
   </script>
 
-  <script type="text/html" id="tpl-neighComparison">
-    
-      <h3 class="brand-turquoise heading-border center-text">
-          Comparison of status of Primary school for {{boundary_name|title}} 
+<script type="text/html" id="tpl-neighComparison">
+      <h3 class="brand-turquoise  heading-border center-text">
+        Comparison of status of Primary school for {{boundary_name|title}} 
           {% if boundary_type != "cluster" && boundary_type !="block" %}
             with neighbours
           {% else %}
             within its adminstration
           {% endif %}
       </h3>
-    
-      <table class="table-base table-list-view table-base-comparison">
+      <table class="table-base table-list-view">
         <tbody>
           <tr class="table-base-heading">
-            <th></th>
-            {% for key in neighbours["keys"] %}
-              <!--td class="rotate" align="center">{{key.name}}{% autoescape false %}{{key.icon}}{% endautoescape %}</td-->
-              <!--td align="center">{% autoescape false %}{{key.icon}}{% endautoescape %}</td-->
-              <td><span class="rotate">{{key.name}}</span></td>
+            <th>Boundary</th>
+            <th colspan="2"></th>
+            {% for boundary in transpose["boundary"]%}
+              {% set highlight= "" %}
+              {% if boundary|lower == boundary_name %}
+                {% set highlight= "brand-red bold" %}
+              {% endif %}
+                    <th>
+                      <span class="{{highlight}}">
+                        {{boundary}}
+                        {% if boundary_type == "cluster" || boundary_type =="block" %}
+                          {{transpose["type"][boundary]}}
+                        {% endif %}
+                    </span></th>
             {% endfor %}
           </tr>
-          {% for each in neighbours %}
-            {% set highlight= "" %}
-            {% if each.name|lower == boundary_name %}
-              {% set highlight= "brand-red bold" %}
-            {% endif %}
-            <tr class="font-smaller">
-              {% if "name" in each %}
-                <td class="{{highlight}}">{{each.name|title}}
-                {% if boundary_type == "cluster" || boundary_type =="block" %}
-                  <div class="{{highlight}} td-label-boundary font-smallest">{{each.type|title}}</div>
+          <tr class="font-smaller">
+            <td>Total Schools</td>  
+            <td> </td>
+            <td> </td>
+            {% for boundary in transpose["boundary"] %}
+                {% if boundary in transpose["school_count"] %}
+                  <td>
+                    <span class="hide-fs">{{boundary}}
+                      {% if boundary_type == "cluster" || boundary_type =="block" %}
+                          {{transpose["type"][boundary]}}
+                      {% endif %}: 
+                    </span>
+                    <span class="">{{transpose["school_count"][boundary]}}</span>
+                  </td>
                 {% endif %}
-                </td>
-                {% for key in neighbours["keys"] %}
-                  {% if key.name in each %}
-                    <td align="center" class="bold {% if each[key.name].perc > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[key.name].perc | round}}%</td>
-                  {% else %}
-                    <td>"NA"</td> 
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-            </tr>
+            {% endfor %}
+          </tr>
+          {% for key in transpose %}
+            {% if "name" in key %}
+              {% set counter=1%}
+              {%for each in key%}
+                {% if counter > 1 %}
+                  <tr class="font-smaller">
+                    {% if counter == 2 %}
+                      <td>{{key.name}}</td>
+                    {% else %}
+                      <td></td>
+                    {% endif %} 
+                    <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
+                    <td>{{each.name}}</td>
+                    {% for boundary in transpose["boundary"] %}
+                      {% if boundary in each %}
+                        <td>
+                          <span class="hide-fs">{{boundary}}
+                            {% if boundary_type == "cluster" || boundary_type =="block" %}
+                                {{transpose["type"][boundary]}}
+                            {% endif %}: 
+                          </span>
+                          <span class="bold {% if each[boundary] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[boundary] | round}}%</span>
+                        </td>
+                      {% else %}
+                        <td>"NA"</td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+                {% set counter = counter|increment %}
+              {% endfor %}
+            {% endif %}
           {% endfor %}
         </tbody>
-    </table>
+      </table>
   </script>
-{% endverbatim %}
+  {% endverbatim %}

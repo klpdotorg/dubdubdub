@@ -156,7 +156,8 @@
     */
     function renderYearComparison(data) {
         data[acadYear] = diseData;
-        var transpose = transposeData(data);
+        var transpose = transposeYears(data);
+        console.log(transpose);
         var tplYearComparison = swig.compile($('#tpl-YearComparison').html());
         var yrcompareHTML = tplYearComparison({"transpose":transpose});
         $('#comparison-year').html(yrcompareHTML);
@@ -169,37 +170,91 @@
         var hash = schoolInfraHash;
         var percData = {"keys":{}};
         data[data.length] = diseData;
-
-        for (var each in data) {
-            for (var key in data[each]["properties"]) {
-                var iconTag = "";
-                if(key != "name" && key != "school_count" && key in hash) {
-                    for(var i in hash[key]['icon']){
-                        iconTag += "<span class='" + hash[key]['icon'][i] +
-                                                                "'></span>   ";
-                    }
-                    if (!percData["keys"][key])
-                        percData["keys"][key] = {"icon":iconTag,
-                                                 "name":hash[key]['display']};
-                    if(!percData[data[each]["id"]])
-                        percData[data[each]["id"]] = {
-                            "name": data[each]["properties"]["popup_content"],
-                            "type": data[each]["properties"]["entity_type"]};
-                    percData[data[each]["id"]][hash[key]['display']] = {
-                        "perc": (data[each]["properties"][key]/
-                            data[each]["properties"]["sum_schools"]) * 100};
-                }
-            }
-        }
         var tplComparison = swig.compile($('#tpl-neighComparison').html());
-        var compareHTML = tplComparison({"neighbours":percData,"boundary_name":boundary_name, "boundary_type":boundary_type});
+        var compareHTML = tplComparison({"transpose":transposeNeighbors(data),"boundary_name":boundary_name, "boundary_type":boundary_type});
         $('#comparison-neighbour').html(compareHTML);
     }
+
 
     /*
         Function for showing data vertical for years
     */
-    function transposeData(data) {
+    function transposeNeighbors(data) {
+        var hash = schoolInfraHash;
+        var transpose = {
+            "boundary": [],
+            "type": {},
+            "school_count" : {},
+            "Basic Infrastructure" : { "name":"Basic Infrastructure"},
+            "Learning Environment" : { "name":"Learning Environment"},
+            "Nutrition and Hygiene" : { "name":"Nutrition and Hygiene"},
+            "Toilets" : { "name":"Toilets"}
+        };
+
+        var basic_infra = ["sum_has_boundary_wall",
+                           "sum_has_playground",
+                           "sum_has_electricity",
+                           "sum_has_classrooms_in_good_condition"];
+        var learning_env = ["sum_has_blackboard","sum_has_computer",
+                            "sum_has_library"];
+        var nut_hyg = ["sum_has_mdm","sum_has_drinking_water"];
+        var toilets = ["sum_has_toilet","sum_has_toilet_girls"];
+
+        for (var each in data) {
+            transpose["boundary"].push(data[each]["properties"]["popup_content"]);
+            transpose["school_count"][data[each]["properties"]["popup_content"]] =
+                                data[each]["properties"]["sum_schools"];
+            transpose["type"][data[each]["properties"]["popup_content"]] =
+                                data[each]["properties"]["entity_type"];
+            var infraData = data[each]["properties"];
+            for (var key in infraData) {
+                var iconTag = "";
+                if(key != "boundary" && key != "school_count" && key in hash)
+                {
+                    for(var i in hash[key]['icon']){
+                        iconTag += "<span class='" + hash[key]['icon'][i] +
+                                                                "'></span>   ";
+                    }
+                }
+                if ($.inArray(key,basic_infra) != -1 ) {
+                    if(!transpose["Basic Infrastructure"][key])
+                        transpose["Basic Infrastructure"][key] = {
+                                                "name":hash[key]['display'],
+                                                "icon":iconTag};
+                    transpose["Basic Infrastructure"][key][data[each]["properties"]["popup_content"]] = (
+                                infraData[key]/infraData["sum_schools"]*100);
+                } else if ($.inArray(key,learning_env) != -1) {
+                    if(!transpose["Learning Environment"][key])
+                        transpose["Learning Environment"][key] = {
+                                                "name":hash[key]['display'],
+                                                "icon":iconTag};
+                    transpose["Learning Environment"][key][data[each]["properties"]["popup_content"]] = (
+                                infraData[key]/infraData["sum_schools"]*100);
+                } else if ($.inArray(key,nut_hyg) != -1) {
+                    if(!transpose["Nutrition and Hygiene"][key])
+                        transpose["Nutrition and Hygiene"][key] = {
+                                                    "name":hash[key]['display'],
+                                                    "icon":iconTag};
+                    transpose["Nutrition and Hygiene"][key][data[each]["properties"]["popup_content"]] = (
+                                infraData[key]/infraData["sum_schools"]*100);
+                } else if ($.inArray(key,toilets) != -1) {
+                    if(!transpose["Toilets"][key])
+                        transpose["Toilets"][key] = {
+                                                    "name":hash[key]['display'],
+                                                    "icon":iconTag};
+                    transpose["Toilets"][key][data[each]["properties"]["popup_content"]] = (
+                                infraData[key]/infraData["sum_schools"]*100);
+                }
+            }
+        }
+        transpose["boundary"].sort();
+        return transpose;
+    }
+    
+    /*
+        Function for showing data vertical for years
+    */
+    function transposeYears(data) {
         var hash = schoolInfraHash;
         var transpose = {
             "year": [],
