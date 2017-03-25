@@ -93,9 +93,9 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
             electedrepData = self.check_values(electedrepData)
             enrolment = self.get_enrolment(electedrepData["cat"])
             data["avg_enrol_upper"] =\
-                enrolment["Upper Primary"]["average_student_count"]
+                enrolment["Upper Primary"]["student_count"]
             data["avg_enrol_lower"] =\
-                enrolment["Lower Primary"]["average_student_count"]
+                enrolment["Lower Primary"]["student_count"]
             data["school_count"] = active_schools.count()
             teacher_count = self.get_teachercount(active_schools,
                                                   academic_year)
@@ -124,6 +124,7 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
                                    'not found', 404)
                 for rep in reps:
                     comparisonData.append(self.fillComparison(rep, academic_year))
+        comparisonData.append(self.fillComparison(electedrep, academic_year))
         for data in comparisonData:
             data["school_perc"] = round(data["school_count"] * 100 /
                                         float(self.totalschools), 2)
@@ -135,9 +136,9 @@ class DemographicsElectedRepComparisonDetails(KLPAPIView, BaseSchoolAggView,
         electedrepData = self.get_aggregations(active_schools, year_id)
         enrolment = self.get_enrolment(electedrepData["cat"])
         yeardata["avg_enrol_upper"] = \
-            enrolment["Upper Primary"]["average_student_count"]
+            enrolment["Upper Primary"]["student_count"]
         yeardata["avg_enrol_lower"] = \
-            enrolment["Lower Primary"]["average_student_count"]
+            enrolment["Lower Primary"]["student_count"]
         electedrepData = self.check_values(electedrepData)
         teacher_count = self.get_teachercount(active_schools, year_id)
         student_count = electedrepData["num_boys"] + electedrepData["num_girls"]

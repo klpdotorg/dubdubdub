@@ -127,11 +127,13 @@
 		categoriesData = {
             "lprimary": {
                 "name": "Lower Primary",
+                "text": "Class 1 to 4",
                 "student_count": 0,
                 "school_count": 0
             },
             "uprimary": {
                 "name": "Upper Primary",
+                "text": "Class 5 to 8",
                 "student_count": 0,
                 "school_count": 0
             }
@@ -175,7 +177,7 @@
             categories[cat]['school_total'] = school_total;
         }
         var tplCategory = swig.compile($('#tpl-Category').html());
-        var categoryHTML = tplCategory({"cat":categories});
+        var categoryHTML = tplCategory({"cat":categories,"enrol":categories});
         $('#category-profile').html(categoryHTML);
     }
 

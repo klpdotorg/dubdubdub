@@ -102,13 +102,13 @@ class BaseBoundaryReport(BaseReport):
     # Returns the category wise average enrolment data
     def get_enrolment(self, categoryData):
         enrolmentdata = {"Lower Primary": {"text": "Class 1 to 4",
-                                           "average_student_count": 0},
+                                           "student_count": 0},
                          "Upper Primary": {"text": "Class 5 to 8",
-                                           "average_student_count": 0}}
+                                           "student_count": 0}}
         for data in categoryData:
             if data["cat"] in ['Lower Primary', 'Upper Primary']:
-                enrolmentdata[data['cat']]["average_student_count"] =\
-                    (data["num_boys"] + data["num_girls"])/data["num_schools"]
+                enrolmentdata[data['cat']]["student_count"] =\
+                    data["num_boys"] + data["num_girls"]
 
         return enrolmentdata
 

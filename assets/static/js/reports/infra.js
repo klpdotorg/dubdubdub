@@ -164,6 +164,7 @@
     function renderNeighbours(data) {
         var hash = schoolInfraHash;
         var percData = {"keys":{}};
+        diseData["properties"]["popup_content"] = boundary_name;
         data[data.length] = diseData;
 
         for (var each in data) {
