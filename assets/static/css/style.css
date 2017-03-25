@@ -4843,6 +4843,9 @@ code {
   padding-top: 3px;
   padding-right: 3px; }
 
+.hide-fs {
+  display: none; }
+
 @media only screen and (max-width: 749px) {
   .bar-num-label {
     display: block;
@@ -4873,6 +4876,15 @@ code {
   .td-label-smg:before {
     content: "School Maintenance Grant: "; }
 
+  .td-label-lps:before {
+    content: "Lower Primary Maintenance Grant: "; }
+
+  .td-label-ups:before {
+    content: "Upper Primary (1-8) Maintenance Grant: "; }
+
+  .td-label-hps:before {
+    content: "Upper Primary (6-8) Maintenance Grant: "; }
+
   .td-label-year:before {
     content: "Year: "; }
 
@@ -4887,6 +4899,9 @@ code {
 
   .hide-mobile {
     display: none; }
+
+  .hide-fs {
+    display: block; }
 
   .label-avg-enrol:before {
     content: "Average enrollment: "; }

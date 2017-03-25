@@ -41,10 +41,6 @@
     rotate(270deg);
 }
 
-@include media-med-maxwidth {
-
-}
-
 .bar-lookup {
 	margin-bottom: 15px;
 	margin-top:3px;
@@ -67,6 +63,10 @@
 .dot-padding {
 	padding-top:3px;
 	padding-right:3px;
+}
+
+.hide-fs {
+	display:none;
 }
 
 @include media-med-maxwidth {	
@@ -125,6 +125,24 @@
 	  	}
 	}
 
+	.td-label-lps {
+		&:before {
+	  	  content: "Lower Primary Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-ups {
+		&:before {
+	  	  content: "Upper Primary (1-8) Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-hps {
+		&:before {
+	  	  content: "Upper Primary (6-8) Maintenance Grant: ";
+	  	}
+	}
+
 	.td-label-year {
 	    &:before {
 	  	  content: "Year: ";
@@ -151,6 +169,10 @@
 
 	.hide-mobile {
 		display:none;
+	}
+
+	.hide-fs {
+		display:block;
 	}
 
 	.label-avg-enrol {
@@ -206,4 +228,5 @@
 span.tab{
     padding-right:20px; /* Or desired space*/
 }
+
 
