@@ -79,9 +79,9 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView,
         boundaryData = self.get_aggregations(active_schools, year_id)
         enrolment = self.get_enrolment(boundaryData["cat"])
         yeardata["avg_enrol_upper"] = \
-            enrolment["Upper Primary"]["average_student_count"]
+            enrolment["Upper Primary"]["student_count"]
         yeardata["avg_enrol_lower"] = \
-            enrolment["Lower Primary"]["average_student_count"]
+            enrolment["Lower Primary"]["student_count"]
         boundaryData = self.check_values(boundaryData)
         teacher_count = self.get_teachercount(active_schools, year_id)
         student_count = boundaryData["num_boys"] + boundaryData["num_girls"]
@@ -134,9 +134,9 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView,
             boundaryData = self.check_values(boundaryData)
             enrolment = self.get_enrolment(boundaryData["cat"])
             data["avg_enrol_upper"] =\
-                enrolment["Upper Primary"]["average_student_count"]
+                enrolment["Upper Primary"]["student_count"]
             data["avg_enrol_lower"] =\
-                enrolment["Lower Primary"]["average_student_count"]
+                enrolment["Lower Primary"]["student_count"]
             data["school_count"] = active_schools.count()
             teacher_count = self.get_teachercount(active_schools,
                                                   academic_year)
