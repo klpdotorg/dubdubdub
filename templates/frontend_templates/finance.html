@@ -20,9 +20,9 @@
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
           <div class="heading-tiny-uppercase">Type</div>
           <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
-          {% if data.boundary.type == "mp constituency" || data.boundary.type == "mla onstituency" || data.boundary.type == "ward" %}
+          {% if data.boundary.type == "mp constituency" || data.boundary.type == "mla constituency" || data.boundary.type == "ward" %}
             <div class="heading-tiny-uppercase">Elected Representative</div>
-            <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+            <div class="brand-blue font-light align-left">{{data.boundary.elected_rep |upper}}<br/>({{data.boundary.elected_party|title}})</div>
           {% else %}
             <ul class="map-location-labels brand-blue">  
             {% if data.boundary.parent.cluster %}
