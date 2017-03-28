@@ -73,8 +73,10 @@
     function showReport(selected,report_type) {
 
         var tplReportLinks= swig.compile($('#tpl-reportLinks').html());
-        $('#report-list').html(tplReportLinks({"boundary":selected.val,
-            "rep_type":report_type,"src_type":$( "#src-type option:selected" ).val()}));
+        $('#report-list').html(tplReportLinks({"boundary":selected.val, 
+            "name": "properties" in selected.added?selected.added.properties.name:selected.added.name,
+            "rep_type":report_type,
+            "src_type":$( "#src-type option:selected" ).val()}));
         $("#report-list").show();
     }
 
