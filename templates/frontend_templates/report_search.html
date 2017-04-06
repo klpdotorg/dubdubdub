@@ -14,27 +14,31 @@
 		  <tbody>
 		  {% if src_type == "klp" %}
 		    <tr>
-		      <td colspan="3">Demographics</td>
+		      <td colspan="2">Demographics</td>
 		      <!--td><span class="fa fa-file-pdf-o"></span>  Download</td-->
+		      <td>{{name|title}}
 		      <td><a href="/reports/demographics/{{rep_type}}/english/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  English </a></td>
 		      <!--td><a href="/reports/demographics/{{rep_type}}/kannada/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  Kannada </a></td-->
 		    </tr>
 		  {% else %}
 		  	<tr>
-		      <td colspan="3">Demographics</td>
+		      <td colspan="2">Demographics</td>
 		      <!--td><span class="fa fa-file-pdf-o"></span>  Download</td-->
+		      <td>{{name|title}}
 		      <td><a href="/reports/demographics_dise/{{rep_type}}/english/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  English </a></td>
 		      <!--td><a href="/reports/demographics_dise/{{rep_type}}/kannada/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  Kannada </a></td-->
 		    </tr>
 		    <tr>
-		      <td colspan="3">Finance</td>
+		      <td colspan="2">Finance</td>
 		      <!--td><span class="fa fa-file-pdf-o"></span>  Download</td-->
+		      <td>{{name|title}}
 		      <td><a href="/reports/finance/{{rep_type}}/english/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  English </a></td>
 		      <!--td><a href="/reports/finance/{{rep_type}}/kannada/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  Kannada </a></td-->
 		    </tr>
 		    <tr>
-		      <td colspan="3">Infrastructure</td>
+		      <td colspan="2">Infrastructure</td>
 		      <!--td><span class="fa fa-file-pdf-o"></span>  Download</td-->
+		      <td>{{name|title}}
 		      <td><a href="/reports/infrastructure/{{rep_type}}/english/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  English</a></td>
 		      <!--td><a href="/reports/infrastructure/{{rep_type}}/kannada/{{boundary}}" target="_blank"><span class="fa fa-external-link"></span>  Kannada</a></td-->
 		    </tr>
