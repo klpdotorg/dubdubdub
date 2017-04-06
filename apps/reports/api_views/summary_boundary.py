@@ -17,11 +17,15 @@ class BoundarySummaryReport(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
 
     # filling the counts in the data structure to be returned
     def get_counts(self, boundaryData, active_schools, academic_year):
-        self.reportInfo["gender"] = {"boys": boundaryData["num_boys"],
-                                     "girls": boundaryData["num_girls"]}
+        self.reportInfo["gender"] = {"boys": 0,
+                                     "girls": 0}
+        self.reportInfo["student_count"] = 0
         self.reportInfo["school_count"] = boundaryData["num_schools"]
-        self.reportInfo["student_count"] = boundaryData["num_boys"] +\
-            boundaryData["num_girls"]
+        for data in boundaryData["cat"]:
+            if data["cat"] in ['Lower Primary', 'Upper Primary']:
+                self.reportInfo["gender"]["boys"] += data["num_boys"]
+                self.reportInfo["gender"]["girls"] += data["num_girls"]
+                self.reportInfo["student_count"] += data["num_boys"] + data["num_girls"]
         self.reportInfo["teacher_count"] =\
             self.get_teachercount(active_schools, academic_year)
 

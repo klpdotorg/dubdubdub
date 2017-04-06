@@ -137,7 +137,7 @@ class DemographicsBoundaryComparisonDetails(KLPAPIView, BaseSchoolAggView,
                 enrolment["Upper Primary"]["student_count"]
             data["avg_enrol_lower"] =\
                 enrolment["Lower Primary"]["student_count"]
-            data["school_count"] = active_schools.count()
+            data["school_count"] = boundaryData["num_schools"]
             teacher_count = self.get_teachercount(active_schools,
                                                   academic_year)
             student_count = boundaryData["num_boys"] +\
