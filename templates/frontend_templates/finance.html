@@ -144,8 +144,10 @@
               <div class="bar-value bar-value-{{ girl_perc|round }} pink-salmon-bg" style="width:{{ girl_perc|round }}%;"></div>
             </div>
             <div class="clear-fix">
-              <div class="float-left pink-salmon font-smallest">{{ data.total_girl|inrformat }}</div>
-              <div class="float-right brand-blue font-smallest">{{ data.total_boy|inrformat }}</div>
+              {% set girl_part = girl_perc*data.grand_total/100 %}
+              {% set boy_part = boy_perc*data.grand_total/100 %}
+              <div class="float-left pink-salmon font-smallest">{{ girl_part|round|inrformat }}</div>
+              <div class="float-right brand-blue font-smallest">{{ boy_part|round|inrformat }}</div>
             </div><!--clear-fix-->
         </div> <!-- /bar-graph-wrap -->
         <div class="base-spacing-mid"></div>
