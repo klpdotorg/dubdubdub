@@ -103,7 +103,7 @@ class BaseBoundaryReport(BaseReport):
     def get_enrolment(self, categoryData):
         enrolmentdata = {"Lower Primary": {"text": "Class 1 to 4",
                                            "student_count": 0},
-                         "Upper Primary": {"text": "Class 5 to 8",
+                         "Upper Primary": {"text": "Class 1 to 8",
                                            "student_count": 0}}
         for data in categoryData:
             if data["cat"] in ['Lower Primary', 'Upper Primary']:
