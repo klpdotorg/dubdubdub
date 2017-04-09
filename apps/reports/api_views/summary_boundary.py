@@ -22,7 +22,7 @@ class BoundarySummaryReport(KLPAPIView, BaseSchoolAggView, BaseBoundaryReport):
         self.reportInfo["student_count"] = 0
         self.reportInfo["school_count"] = boundaryData["num_schools"]
         for data in boundaryData["cat"]:
-            if data["cat"] in ['Lower Primary', 'Upper Primary']:
+            if data["cat"] in ['Lower Primary', 'Upper Primary', 'Model Primary']:
                 self.reportInfo["gender"]["boys"] += data["num_boys"]
                 self.reportInfo["gender"]["girls"] += data["num_girls"]
                 self.reportInfo["student_count"] += data["num_boys"] + data["num_girls"]

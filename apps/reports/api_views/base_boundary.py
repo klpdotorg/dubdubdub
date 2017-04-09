@@ -109,6 +109,9 @@ class BaseBoundaryReport(BaseReport):
             if data["cat"] in ['Lower Primary', 'Upper Primary']:
                 enrolmentdata[data['cat']]["student_count"] =\
                     data["num_boys"] + data["num_girls"]
+            if data["cat"] == 'Model Primary':
+                enrolmentdata['Upper Primary']["student_count"] +=\
+                    data["num_boys"] + data["num_girls"]
 
         return enrolmentdata
 
