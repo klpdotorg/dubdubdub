@@ -1,7 +1,7 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-reportDate">
-    <div class="heading-tiny date-header"> Primary School Report | {{today.date}}</div>
+    <div class="heading-tiny date-header"> Primary School Report | {{today.date}} | Source: DISE</div>
   </script>
 
   <script type="text/html" id="tpl-topSummary">
@@ -58,14 +58,18 @@
             <div class="align-left"> 
               <span class="heading-secondary black"> 
               {% if data.ptr !== "NA" && data.ptr !== 0 %}
-                {{data.ptr|round}}:1
+                {% set indicator = "brand-green" %}
+                {% if data.ptr > 35 %} 
+                  {% set indicator = "brand-red" %}    
+                {% endif %} 
+                <span class="{{indicator}}">{{data.ptr|round}}:1</span>
                 {% if data.ptr > 35 %} < {% else %} > {% endif %} 
               {% else %}
                 No data
               {% endif %} (
-              <span class="brand-green"> 35:1 </span>
+              <span class="brand-blue"> 35:1 </span>
               </span>  
-              <span class="heading-tiny brand-green">Recommended</span>
+              <span class="heading-tiny brand-blue">Recommended</span>
               <span class="heading-secondary black">)</span>
             </div>
           </div><!--sect-half-->
@@ -140,8 +144,10 @@
               <div class="bar-value bar-value-{{ girl_perc|round }} pink-salmon-bg" style="width:{{ girl_perc|round }}%;"></div>
             </div>
             <div class="clear-fix">
-              <div class="float-left pink-salmon font-smallest">{{ data.total_girl|inrformat }}</div>
-              <div class="float-right brand-blue font-smallest">{{ data.total_boy|inrformat }}</div>
+              {% set girl_part = girl_perc*data.grand_total/100 %}
+              {% set boy_part = boy_perc*data.grand_total/100 %}
+              <div class="float-left pink-salmon font-smallest">{{ girl_part|round|inrformat }}</div>
+              <div class="float-right brand-blue font-smallest">{{ boy_part|round|inrformat }}</div>
             </div><!--clear-fix-->
         </div> <!-- /bar-graph-wrap -->
         <div class="base-spacing-mid"></div>

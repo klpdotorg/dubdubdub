@@ -159,3 +159,31 @@ class SMSViewTests(TestCase):
             response.data,
             'Logical error.'
         )
+
+    def test_reply_for_unregistered_number(self):
+        """
+        SMSView should return a certain reply to be sent when it receives
+        data from a number that is not registered.
+        """
+        print "Testing for unregistered number"
+        view = SMSView.as_view()
+        factory = APIRequestFactory()
+        body = '24657,1,3,1,2,1'
+        print "Testing input: " + body
+        request = factory.get(
+            '/api/v1/sms/',
+            {
+                'SmsSid':'2',
+                'From':'01234567',
+                'To':'08039514048',
+                'Date':'2016-07-12 15:16:48',
+                'Body':body,
+            },
+            content_type='text/plain',
+        )
+        response = view(request)
+        self.assertEqual(
+            response.data,
+            "Your number 1234567 is not registered. Please visit https://klp.org.in/ and register yourself."
+        )
+

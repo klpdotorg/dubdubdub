@@ -133,7 +133,7 @@
             },
             "uprimary": {
                 "name": "Upper Primary",
-                "text": "Class 5 to 8",
+                "text": "Class 1 to 8",
                 "student_count": 0,
                 "school_count": 0
             }
