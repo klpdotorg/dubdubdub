@@ -845,9 +845,10 @@ class StoriesView(KLPListAPIView):
         if sources:
             qset = qset.filter(group__source__name__in=sources).prefetch_related('group', 'group__source')
 
-        since_id = self.request.GET.get('since_id', 0)
-        if since_id > 0:
-            qset = qset.filter(id__gt=since_id)
+        # removing it for now. need better implementation
+        # since_id = self.request.GET.get('since_id', 0)
+        # if since_id > 0:
+        #     qset = qset.filter(id__gt=since_id)
 
         admin1_id = self.request.GET.get('admin1', '')
         if admin1_id:
