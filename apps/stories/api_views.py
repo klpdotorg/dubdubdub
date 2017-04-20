@@ -156,7 +156,7 @@ class QuestionsViewSet(KLPModelViewSet):
         question_id = self.kwargs.get('pk', None)
 
         if questiongroup_id:
-            queryset = queryset.filter(questiongroup_id=questiongroup_id)
+            queryset = queryset.filter(questiongroup__id=questiongroup_id)
 
         if question_id:
             queryset = queryset.filter(id=question_id)

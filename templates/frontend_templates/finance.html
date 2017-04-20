@@ -1,0 +1,314 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-reportDate">
+    <div class="heading-tiny date-header"> Primary School Report | {{today.date}} | Source: DISE</div>
+  </script>
+
+  <script type="text/html" id="tpl-topSummary">
+
+    <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
+    <div class="base-spacing-mid"></div>
+    <div class="sect-parent">
+      <div class="sect-third rounded-sect">
+          {% if data.boundary.type == "cluster" || data.boundary.type == "block" || data.boundary.type == "district" || data.boundary.type == "state" %}
+            <div class="heading-tiny-uppercase">Boundary</div>
+          {% elseif  data.boundary.type == "school" %}
+            <div class="heading-tiny-uppercase">School</div>
+          {% else %}
+            <div class="heading-tiny-uppercase">Electoral Region</div>
+          {% endif %}
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
+          <div class="heading-tiny-uppercase">Type</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
+          {% if data.boundary.type == "mp constituency" || data.boundary.type == "mla constituency" || data.boundary.type == "ward" %}
+            <div class="heading-tiny-uppercase">Elected Representative</div>
+            <div class="brand-blue font-light align-left">{{data.boundary.elected_rep |upper}}<br/>({{data.boundary.elected_party|title}})</div>
+          {% else %}
+            <ul class="map-location-labels brand-blue">  
+            {% if data.boundary.parent.cluster %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">CLUSTER</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.cluster|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.block %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">BLOCK</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.block|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.district %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">DISTRICT</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.district|upper }}</div>
+                </li>
+            {% endif %}
+            </ul>
+          {% endif %}
+         
+      </div><!--sect-third-->
+      <div class="sect-two-third grey-mist-bg rounded-sect">
+        <div class="sect-parent">
+          <div class="sect-half">
+            <div class="heading-tiny-uppercase">Schools</div>
+            <h2 class="heading-secondary black align-left">{{data.school_count}}</h2> 
+            <div class="heading-tiny-uppercase">Teachers</div>
+            <h2 class="heading-secondary black align-left">{{data.teacher_count|checkzero}}</h2> 
+            <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
+            <div class="align-left"> 
+              <span class="heading-secondary black"> 
+              {% if data.ptr !== "NA" && data.ptr !== 0 %}
+                {% set indicator = "brand-green" %}
+                {% if data.ptr > 35 %} 
+                  {% set indicator = "brand-red" %}    
+                {% endif %} 
+                <span class="{{indicator}}">{{data.ptr|round}}:1</span>
+                {% if data.ptr > 35 %} < {% else %} > {% endif %} 
+              {% else %}
+                No data
+              {% endif %} (
+              <span class="brand-blue"> 35:1 </span>
+              </span>  
+              <span class="heading-tiny brand-blue">Recommended</span>
+              <span class="heading-secondary black">)</span>
+            </div>
+          </div><!--sect-half-->
+          <div class="sect-half">
+            <div class="heading-tiny-uppercase">Students</div>
+            <div class="module-stats-icon module-stats-boygirl"><!--1-->
+                <span class="icon-boy-girl"></span>
+                <div class="module-stats-info"><!--2-->
+                    <div class="uppercase">Total</div>
+                    <p class="module-stats-label">{{data.student_total}}</p>
+                </div><!--2-->
+            </div><!--1-->
+            <div class="heading-tiny-uppercase">Gender Profile</div>
+            <div class="module-stats-icon module-stats-girl"><!--2-->
+                <span class="icon-girl"></span>
+                <div class="module-stats-info"><!--3-->
+                    <div class="uppercase">Girls</div>
+                    <p class="module-stats-label">{{data.gender.girls}}</p>
+                </div><!--3-->          
+            </div><!--2-->    
+            <div class="module-stats-icon"><!--4-->
+                <span class="icon-boy"></span>
+                <div class="module-stats-info"><!--5-->
+                    <div class="uppercase">Boys</div>
+                    <p class="module-stats-label">{{data.gender.boys}}</p>
+                </div><!--5-->
+            </div><!--4-->   
+                  
+            <div class="bar-graph-wrap "><!--1-->
+                <div class="bar-graph"><!--2-->
+                    <div class="clear-fix"><!--3-->
+                        <div class="float-left pink-salmon">{{data.boy_perc|round}}%</div>
+                        <div class="float-right brand-blue">{{data.girl_perc|round}}%</div>
+                    </div><!--3-->
+                    <div class="bar-custom"><!--4-->
+                        <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
+                            <div class="bar-value bar-value-{{data.girl_perc}} pink-salmon-bg" style="width:{{data.girl_perc}}%;"></div>
+                        </div><!--5-->
+                    </div><!--4-->     
+                </div> <!-- /bar-graph --><!--2-->
+            </div> <!-- /bar-graph-wrap --><!--1-->          
+
+          </div><!--sect-half-->
+        </div><!-- inner sect-parent-->
+      </div><!--sect-two-third-->
+    </div><!--sect-parent-->
+  </script>
+
+  <script type="text/html" id="tpl-grantSummary">
+    <div class="base-spacing-mid"></div>
+    <div class="brand-turquoise heading-secondary center-text">
+      {{data.grand_total|inrformat}}
+    </div>
+    <div class="base-spacing-mid"></div>
+      {% if (data.total_perc) %}
+            
+        <div class="center-text bar-graph-wrap">
+          <div class="bar-custom">
+            <div class="bar-value green-leaf-bg" style="width:{{data.total_perc}}%;"></div>
+          </div><!--bar-custom-->
+          <div class="center-text font-smallest">is {{data.total_perc}}% of {{data.perc_label|title}} Grant 
+          </div>
+        </div><!--bar-graph-wrap-->
+
+      {% endif %}
+      {% if (data.total_girl) %}
+        {% set girl_perc = data.total_girl * 100 / (data.total_girl + data.total_boy) %}
+        {% set boy_perc = data.total_boy * 100 / (data.total_girl + data.total_boy) %}
+        <div class="bar-graph-wrap center-text"> 
+            <div class="bar-custom">
+              <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;">
+              <div class="bar-value bar-value-{{ girl_perc|round }} pink-salmon-bg" style="width:{{ girl_perc|round }}%;"></div>
+            </div>
+            <div class="clear-fix">
+              {% set girl_part = girl_perc*data.grand_total/100 %}
+              {% set boy_part = boy_perc*data.grand_total/100 %}
+              <div class="float-left pink-salmon font-smallest">{{ girl_part|round|inrformat }}</div>
+              <div class="float-right brand-blue font-smallest">{{ boy_part|round|inrformat }}</div>
+            </div><!--clear-fix-->
+        </div> <!-- /bar-graph-wrap -->
+        <div class="base-spacing-mid"></div>
+      {% endif %}
+      <div class="module-stats-icon center-text"><!--4-->
+          <span class="icon-boy-girl"></span>
+          <div class="module-stats-info"><!--5-->
+              <div class="uppercase align-left">Per Student</div>
+              <p class="module-stats-label align-left"> &#8377; {{data.per_stu}}</p>
+          </div><!--5-->
+      </div><!--4-->  
+  </script>
+
+  <script type="text/html" id="tpl-allocMntncSummary">
+      <div class="heading-tiny-uppercase"> {{heading}}</div>
+      <div class="base-spacing-mid"></div>
+        <table class="table-base table-list-view table-base-graphs">
+          <thead>
+            <tr class="table-base-heading">
+              <th><span class="bar-lookup brand-blue">Classrooms</span></th>
+              {% set anyone = data|first %}
+              {% for cat in anyone.categories %}
+                <th colspan="3"><span class="bar-lookup brand-blue">{{cat.name}}</span></th>
+              {% endfor %}
+            </tr>
+            <tr class="table-base-heading bar-lookup">
+              <th></th>
+              <th>Grant</th>
+              <th>Schools</th>
+              <th>/School</th>
+              <th>Grant</th>
+              <th>Schools</th>
+              <th>/School</th>
+              <th>Grant</th>
+              <th>Schools</th>
+              <th>/School</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for each in data %}
+            <tr class="font-smaller">  
+              <td><strong>{{each.type}}</strong></td>
+              {% for cat in each.categories %}
+                {% set catlabel= "td-label-hps" %}
+                {% if cat.name|upper == "LOWER PRIMARY" %}
+                  {% set catlabel = "td-label-lps" %}
+                {% elseif cat.name|upper == "UPPER PRIMARY (CLASS 1-8)" %}
+                  {% set catlabel = "td-label-ups" %}
+                {% endif %}
+                {% set total_grant = cat.schools * cat.grant_amount %}      
+                <td class="{{catlabel}}">{{total_grant|inrformat}}</td>
+                <td class="td-label-schools">{{cat.schools}}</td>
+                <td class="td-label-persch">{{cat.grant_amount|inrformat}}</td>          
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  </script>
+ 
+  <script type="text/html" id="tpl-allocSummary">
+    
+      <table class="table-base table-list-view table-base-graphs">
+        <thead>
+          <tr class="table-base-heading">
+            <th colspan="3">{{heading}}</th>
+            <th>/School</th>
+            <th>/Student</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for each in data %}
+            <tr>
+              <td class="font-small">
+                {{each.name|capitalize}}
+              </td>
+              <td>
+                {% if each.school_grant.grant %}
+                <div class="bar-graph-wrap"><!--1-->
+                  <div class="bar-num-label brand-blue">{{each.school_grant.grant|round|inrformat}}</div>
+                  <div class="bar-custom tooltip" aria-label="{{each.school_grant.grant_perc|checkzero}}%"><!--2-->
+                    <div class="bar-value grey-gravel-bg" style="width:{{each.school_grant.grant_perc}}%;"></div><!--3-->
+                  </div><!--2-->
+                  <div class="bar-percent grey-gravel">{{each.school_grant.grant_perc}}%</div><!--6-->
+                </div><!--1-->
+                {% else %}
+                <div class="per-lookup">No Data</div>
+                {% endif %}
+              </td>
+              <td class="font-small">
+                across {{each.school_count}} schools
+              </td>
+              <td class="td-label-persch">
+                <div class="per-lookup">{{each.school_grant.per_school|round|inrformat}}</div>
+              </td>
+              <td class="td-label-perstu">
+                <div class="per-lookup">{{each.school_grant.per_student|round|inrformat}}</div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </script>
+
+  <script type="text/html" id="tpl-neighComparison">
+    
+      <h3 class="brand-turquoise heading-border center-text">
+          Comparison of status of Primary school for {{boundary_name|title}} 
+          {% if boundary_type != "cluster" && boundary_type !="block" %}
+            with neighbours
+          {% else %}
+            within its adminstration
+          {% endif %}
+      </h3>
+    
+      <table class="table-base table-list-view table-base-comparison">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Boundary</th>
+            <th>Expected Grant</th>
+            <th>Received Grant</th>
+            <th>Expenditure</th>
+            <th>Schools</th>
+          </tr>
+          {% for each in neighbours %}
+            {% set highlight= "" %}
+            {% set barcolor= "grey-gravel-bg" %}
+            {% if each.name == boundary_name %}
+              {% set highlight= "brand-red" %}
+              {% set barcolor= "brand-red-bg" %}
+            {% endif %}
+            <tr class="font-smaller">
+              <td>
+                <div class="{{highlight}} bold td-label-boundary">{{each.name|title}}</div>
+                {% if boundary_type == "cluster" || boundary_type =="block" %}
+                  <div class="{{highlight}} td-label-boundary font-smallest">{{each.type|title}}</div>
+                {% endif %}
+              </td>
+              <td>
+                <div class="{{highlight}} td-label-perstu">{{each.expected|round|inrformat}}</div>    
+              </td>
+              <td>
+                <div class="{{highlight}} td-label-tlm">{{each.received|round|inrformat}}</div>  
+              </td>
+              <td>
+                <div class="{{highlight}} td-label-sg">{{each.expenditure|round|inrformat}}</div>
+              </td>
+              <td>
+                <!-- Value is percentage of the nearest 100 to the highest value-->
+                <div class="bar-graph-wrap">
+                  <div class="bar-custom">
+                    <div class="bar-value {{barcolor}}" style="width:{{each.total_perc}}%;"></div>
+                    <div class="font-smaller center-text {{highlight}}"><strong>{{each.total|round}} schools</strong></div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent"></div>
+                </div><!--bar-graph-wrap-->
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </script>
+
+{% endverbatim %}

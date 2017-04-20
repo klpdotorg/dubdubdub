@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from common.models import BaseModel, GeoBaseModel
 from common.utils import cached_property
+from .partners import DiseInfo
 from stories.models import StoryImage, Question
 from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
     SEX_CHOICES, ALLOWED_GENDER_CHOICES, STATUS_CHOICES
@@ -127,6 +128,11 @@ class Boundary(BaseModel):
         return School.objects.filter(
             Q(status=2),
             Q(schooldetails__admin1=self) | Q(schooldetails__admin2=self) | Q(schooldetails__admin3=self)
+        )
+
+    def dise_schools(self):
+        return DiseInfo.objects.filter(
+            Q(school__schooldetails__admin1=self) | Q(school__schooldetails__admin2=self) | Q(school__schooldetails__admin3=self)
         )
 
     class Meta:
@@ -518,3 +524,20 @@ class MeetingReport(BaseModel):
 
     def __unicode__(self):
         return "%d: %s" % (self.school.id, self.language,)
+
+
+
+class SchoolAggregation(BaseModel):
+    school = models.ForeignKey('School')
+    academic_year = models.ForeignKey('AcademicYear')
+    boundary= models.ForeignKey("Boundary", db_column="boundary_id")
+    gender= models.CharField(max_length=128, choices=ALLOWED_GENDER_CHOICES)
+    mt = models.CharField(max_length=128, choices=MT_CHOICES)
+    num= models.IntegerField(blank=True, null=True, db_column='num')
+
+    class Meta:
+        managed = False
+        db_table = 'mvw_institution_aggregations'
+
+
+

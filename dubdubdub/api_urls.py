@@ -15,7 +15,7 @@ from schools.api_views import (
     AssessmentsList, AssessmentInfo, ProgrammesList, ProgrammeInfo, ProgrammePercentile,
     BoundaryLibLevelAggView, BoundaryLibLangAggView, BoundarySchoolAggView,
     AssemblySchoolAggView, ParliamentSchoolAggView, PincodeSchoolAggView,
-    MeetingReportListView,
+    MeetingReportListView
 )
 
 from users.api_views import (
@@ -318,5 +318,9 @@ urlpatterns = patterns(
         ProgrammeInfo.as_view(), name='api_programme_info'),
     url(r'^programme/percentile/(?P<programme_id>[0-9]+)/$',
         ProgrammePercentile.as_view(), name='api_programme_percentile'),
+
     url(r'^ivrs/', include('ivrs.api_urls')),
+
+    # Reports urls
+    url(r'^reports/', include('reports.api_urls'))
 )

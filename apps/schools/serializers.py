@@ -150,7 +150,7 @@ class SchoolDemographicsSerializer(KLPSerializer):
 class SchoolProgrammesSerializer(KLPSerializer):
     class Meta:
         model = School
-        fields = ('id', 'name',)
+        fields = ('id', 'name', )
 
 
 class SchoolNutritionSerializer(KLPSerializer):
@@ -320,7 +320,8 @@ class AssessmentListSerializer(KLPSerializer):
     assid = serializers.IntegerField(source='assessment.id')
     studentgroup = serializers.CharField(source='studentgroup')
     assessmentname = serializers.CharField(source='assessment.name')
-    academicyear_name = serializers.CharField(source='assessment.programme.academic_year.name')
+    academicyear_name = serializers.CharField(source='assessment.programme.\
+                        academic_year.name')
 
     class Meta:
         model = InstitutionAssessmentCohorts
@@ -364,12 +365,14 @@ class AssessmentInfoSerializer(KLPSerializer):
         singlescore = {}
         genderdata = InstitutionAssessmentSinglescoreGender.objects.filter(
             school=obj.school, studentgroup=obj.studentgroup,
-            assessment=obj.assessment).values('sex', 'singlescore', 'percentile', 'gradesinglescore')
+            assessment=obj.assessment).values('sex', 'singlescore',
+                                              'percentile', 'gradesinglescore')
         singlescore['gender'] = genderdata
 
         mtdata = InstitutionAssessmentSinglescoreMt.objects.filter(
             school=obj.school, studentgroup=obj.studentgroup,
-            assessment=obj.assessment).values('mt', 'singlescore', 'percentile', 'gradesinglescore')
+            assessment=obj.assessment).values('mt', 'singlescore', 'percentile',
+                                              'gradesinglescore')
         singlescore['mt'] = mtdata
 
         singlescore["boundary"] = []
@@ -449,8 +452,8 @@ class BoundaryAssessmentInfoSerializer(KLPSerializer):
                 school__schooldetails__admin3=obj.boundary, studentgroup=obj.studentgroup,
                 assessment=obj.assessment).values('sex').annotate(total=Sum('cohortsnum'))
             cohortsmt = InstitutionAssessmentCohorts.objects.filter(
-                school__schooldetails__admin3=obj.boundary, studentgroup=obj.studentgroup,
-                assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
+                school__schooldetails__admin3=obj.boundary,
+                studentgroup=obj.studentgroup, assessment=obj.assessment).values('mt').annotate(total=Sum('cohortsnum'))
         elif obj.boundary.hierarchy.id == 10 or obj.boundary.hierarchy.id == 14:
             cohortssum = InstitutionAssessmentCohorts.objects.filter(
                 school__schooldetails__admin2=obj.boundary, studentgroup=obj.studentgroup,
@@ -556,6 +559,7 @@ class ProgrammeListSerializer(KLPSerializer):
     class Meta:
         model = Programme
         fields = ('id', 'name', 'academicyear_name', 'partner',)
+
 
 
 class ProgrammeInfoSerializer(KLPSerializer):
@@ -719,7 +723,6 @@ class BoundaryProgrammeInfoSerializer(KLPSerializer):
 
         singlescore["boundary"] = []
         if obj.boundary.hierarchy.id == 11 or obj.boundary.hierarchy.id == 15:
-
             admin1data = BoundaryAssessmentSinglescore.objects.filter(
                 boundary=obj.boundary.parent.parent, studentgroup=obj.studentgroup,
                 assessment=obj.assessment).values('singlescore', 'percentile', 'gradesinglescore', 'boundary__name', 'boundary')[0]
@@ -815,7 +818,6 @@ class BoundaryProgrammePercentileSerializer(KLPSerializer):
     def getboundarypercentiles(self, obj):
         data = []
         if obj.boundary.hierarchy.id == 11 or obj.boundary.hierarchy.id == 15:
-
             admin1data = BoundaryAssessmentPercentile.objects.filter(
                 boundary=obj.boundary.parent.parent,
                 assessment=obj.assessment).values('percentile', 'boundary__name', 'boundary')[0]
@@ -836,3 +838,33 @@ class BoundaryProgrammePercentileSerializer(KLPSerializer):
             data.append(admin1data)
 
         return data
+
+
+class BoundaryInfoSerializer(KLPSerializer):
+    name = serializers.CharField(source='name')
+    type = serializers.CharField(source='type')
+    id = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Boundary
+        fields = ('name', 'type', 'id')
+
+
+class GenderSerializer(KLPSerializer):
+    boys = serializers.IntegerField(source='boys')
+    girls = serializers.IntegerField(source='girls')
+
+    class Meta:
+        model = School
+        fields = ('boys', 'girls')
+
+
+class CategoriesSerializer(KLPSerializer):
+    categories = serializers.CharField(source='cat')
+    school_count = serializers.IntegerField(source='school_count')
+    student_count = serializers.IntegerField(source='student_count')
+
+    class Meta:
+        model = School
+        fields = ('categories', 'school_count', 'student_count')
+

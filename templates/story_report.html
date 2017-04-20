@@ -1,0 +1,70 @@
+{% extends "base_static.html" %}
+
+{% load static %}
+{% load compress %}
+{% block css_extra %}
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+      <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js'%}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/reports/stories.js' %}"></script>  
+  {% endcompress %}
+{% endblock %}
+{% block content %}
+  <div class="container"><!--outer-->
+    <!-- Summary section -->
+    <div id="summary" class="container">
+
+      <div class="top-band brand-orange"></div>
+      <div class="flap-right brand-orange-bg white center-text">SURVEYS</div>
+      <a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+      <div id="report-date"></div>
+      <hr/>
+      <div id="top-summary"></div>
+    </div><!--summary container -->
+
+    <div id="grant" class="container">
+        <div class="base-spacing-sm"></div>
+        <hr/>
+        <h2 class="heading-border brand-turquoise">Survey Summary</h2>
+        <div id="story-summary"></div>
+    </div><!-- grant container-->
+
+
+    <div class="container">
+      <hr/>
+       <h2 class="heading-border brand-turquoise">Response Summary</h2>
+      <div class="sect-parent">
+        <div class="sect-half">
+          <div class="heading-secondary grey-gravel"> IVRS Call Volumes</div>
+          <div id="chart-ivrs" class="ct-chart  ct-major-sixth chartist-container"></div>
+          
+        </div>
+        <div class="sect-half">
+          <div class="heading-secondary grey-gravel"> Respondent Types </div>
+          <div id="chart-respondent" class="ct-chart  ct-minor-seventh chartist-container"></div>
+        </div>
+      </div>
+      <div class="base-spacing-mid"></div>
+      <div class="heading-secondary grey-gravel"> RESPONSES</div>
+      <div class="base-spacing-mid"></div>
+      <div id="response-summary"></div>
+    </div>
+
+    <div id="comparison" class="container">
+      <div class="base-spacing-sm"></div>
+      <hr/>
+      <div class="heading-secondary heading-border"> Comparison </div>
+      <div class="base-spacing-sm"></div>
+      <div id="comparison-year"></div>
+      <div id="comparison-neighbour"></div>
+
+
+    </div><!-- comparison -->
+  </div> <!-- outer container -->
+
+{% include 'frontend_templates/story_report.html' %} 
+{% endblock %}

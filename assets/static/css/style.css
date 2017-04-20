@@ -116,7 +116,7 @@ a {
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .alert, .module-stats-label, .bar-label, .enrolment, .bar-percent, .tab-heading, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results li.select2-result-with-children > .select2-result-label, .picker__month,
 .picker__year, .picker__button--today,
 .picker__button--clear,
-.picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label {
+.picker__button--close, .nav > li, .nav-footer-menu-links, .home-current-subheading, .volunteer-story-link, .compare-button-block a, .label-compare, .compare-section-heading, .map-location-labels, .gender-icons-title, .facility-icons-title, .gender-item-count, .leaflet-control-layers label, .bar-num-label, .bar-lookup, .per-lookup {
   font-weight: 700; }
 
 .font-light, .heading-secondary, .module-img-each, .picker__day, .about-map {
@@ -128,7 +128,7 @@ a {
 .font-base-size, body {
   font-size: 16px; }
 
-.font-small, .heading-section-ul-alt, .bar-label, .enrolment, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code {
+.font-small, .heading-section-ul-alt, .bar-label, .enrolment, .bar-percent, .form-edit-heading, .nav-footer .k-icon, .partners-list-block ul, .compare-infrastructure .compare-each-block, .icon-button-compare .k-icon, .compare-section-heading, .table-volunteer-oppor, .map-pin-details .icon-number, .map-location-labels, .gender-icons-title, .facility-icons-title, code, .bar-num-label, .bar-lookup, .per-lookup {
   font-size: 90%; }
 
 .font-smaller, .heading-tiny, .no-data, .profile-volunteer-date, .heading-section-block, .dropdown-base, .icon-number, .error-message, .form-edit-profile label, .form-volunteer-oppor-edit label, .form-add-donation label, .select2-results, .profile-options, .options-list, .breadcrumb a, .stories-list-each, .home-blog-list, .heading-volunteer-box, .volunteer-story-link, .compare-button-block a, .compare-section-source, .table-base-volunteer, .table-base-donation, .table-base-donation-items {
@@ -383,7 +383,7 @@ ol {
 .pink-salmon-bg, .brand-preschool-circle-bg {
   background-color: #f87c84; }
 
-.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .adv-search-btn:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .adv-search-btn:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
+.white, .link-external:after, .header-strip, .header-strip .heading-tiny-uppercase, .verified:before, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .button, .button-grey, .button-filter-volunteer, .button-orange, .adv-search-btn, .square, .button:hover, .button:focus, .button-grey:hover, .button-filter-volunteer:hover, .button-orange:hover, .adv-search-btn:hover, .square:hover, .button-grey:focus, .button-filter-volunteer:focus, .button-orange:focus, .adv-search-btn:focus, .square:focus, a.button, .tooltip:after, .banner-full-caption, .input-checkbox:checked + .input-checkbox-label:before, .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted, .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected, .main-footer, .main-footer a, .home-help-block, .compare-button-block a, .compare-button-block a:hover, .label-compare-compare, .icon-button-compare, .leaflet-container a.button--sm {
@@ -508,7 +508,7 @@ ol {
 .stepy-navigator input[type="submit"], .stepy-navigator input[type="file"], .tooltip:after, .box-info, .form-base .input-text, .form-base textarea, .form-base select, .input-checkbox + .input-checkbox-label:before, .form-file-preview, .form-edit-password, .select2-container .select2-choice, .select2-search input, .select2-container-multi .select2-choices .select2-search-choice, .rbox_inline, .rbox_html, .options-list, .filter-school-block {
   border-radius: 3px; }
 
-.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .icon-boy, .icon-girl, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
+.border-radius-circle, .link-external:after, .icon-button-round, .icon-button-round-sm, .icon-button-round-lg, .stepy-header li div, .stepy-header li.stepy-active div, .icon-number, .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl, .module-img, .input-radio + .input-radio-label:before, .about-map-image, .profile-meta-img {
   border-radius: 50%; }
 
 /*-------------------------------------*/
@@ -553,7 +553,7 @@ img, video {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .stepy-header li div .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .stepy-header li div .k-icon, .icon-boy:before, .icon-girl:before, .module-img img, .compare-section-heading {
+.dead-center, .icon-button-round .fa, .icon-button-round-sm .fa, .icon-button-round-lg .fa, .stepy-header li div .fa, .icon-button-round .k-icon, .icon-button-round-sm .k-icon, .icon-button-round-lg .k-icon, .stepy-header li div .k-icon, .icon-boy:before, .icon-girl:before, .icon-teacher:before, .module-img img, .compare-section-heading {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -680,7 +680,7 @@ img, video {
       width: 30%; } }
 
 /*-------------------------------------*/
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .table-base.table-list-view {
     display: block; }
     .table-base.table-list-view .table-base-heading {
@@ -717,7 +717,7 @@ hr {
 
 /*-------------------------------------*/
 /* ICONS */
-.font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
+.font-icon, .link-external:after, .heading-section-block li:before, .dropdown-base ul .has_ul:after, .table-infra-key-color:after, .verified:before, .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-teacher:before, .icon-teacher:after, .icon-boy-girl:before, .icon-boy-girl:after, .alert:after, .circle-bullet:before, .tab-each .tab-heading:after, .input-checkbox:checked + .input-checkbox-label:before, .picker__nav--prev:before,
 .picker__nav--next:before, .profile-options:before, .breadcrumb a:after, .label-compare-clear:before, .facility-items .k-icon, .demo-do:before, .demo-dont:before {
   font-family: "FontAwesome"; }
 
@@ -762,14 +762,14 @@ hr {
     font-size: 12px;
     margin-right: 5px; }
 
-.icon-boy, .icon-girl, .icon-boy-girl {
+.icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl {
   width: 45px;
   height: 45px;
   padding: 10px;
   line-height: 1;
   display: inline-block;
   position: relative; }
-  .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-boy-girl:before, .icon-boy-girl:after {
+  .icon-boy:before, .icon-boy:after, .icon-girl:before, .icon-girl:after, .icon-teacher:before, .icon-teacher:after, .icon-boy-girl:before, .icon-boy-girl:after {
     font-size: 22px; }
 
 .icon-boy:before {
@@ -779,6 +779,11 @@ hr {
   background-color: #f87c84; }
   .icon-girl:before {
     content: "\f182"; }
+
+.icon-teacher {
+  background-color: #44c28c; }
+  .icon-teacher:before {
+    content: "\f19d"; }
 
 .icon-boy-girl {
   background-color: #2c3e50; }
@@ -832,7 +837,7 @@ hr {
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .alert {
       left: 20%;
       right: 20%;
@@ -908,7 +913,7 @@ hr {
   .banner-full .heading-primary {
     font-size: 140%;
     margin: 25px 0; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .banner-full {
       padding-bottom: 50px; }
       .banner-full .heading-primary {
@@ -1031,7 +1036,7 @@ hr {
   overflow: hidden; }
   .module-img img {
     max-width: 85%; }
-    @media only print, only screen and (min-width: 600px) {
+    @media only screen and (min-width: 600px) {
       .module-img img {
         max-width: none; } }
 
@@ -1049,6 +1054,9 @@ hr {
 
 .module-stats-girl .module-stats-label {
   color: #f87c84; }
+
+.module-stats-teacher .module-stats-label {
+  color: #44c28c; }
 
 .module-stats-boygirl .module-stats-label {
   color: #2c3e50; }
@@ -2445,7 +2453,7 @@ body {
 
 .nav-footer {
   margin-bottom: 10px; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .nav-footer {
       float: left;
       margin-bottom: 0;
@@ -2464,7 +2472,7 @@ body {
 .nav-footer-menu-links {
   text-transform: uppercase; }
 
-@media only print, only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   .footer-copyright {
     float: right; }
     .footer-copyright img {
@@ -2573,7 +2581,7 @@ body {
   left: 300px;
   top: 98px; }
 
-@media only screen and (min-width: 990px) {
+@media only print, only screen and (min-width: 990px) {
   .map-advanced-canvas-full {
     display: block;
     left: 300px;
@@ -2586,15 +2594,15 @@ body {
 /*-------------------------------------*/
 .banner-home {
   background-image: url("/static/images/bg_blackboard_big.jpg"); }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .banner-home .banner-caption-klp, .banner-home .banner-full-caption {
       max-width: 340px; } }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .banner-home {
       padding-bottom: 0; } }
   .banner-home .banner-full-caption {
     margin-left: 0; }
-    @media only print, only screen and (min-width: 600px) {
+    @media only screen and (min-width: 600px) {
       .banner-home .banner-full-caption {
         padding-bottom: 100px;
         font-size: 110%;
@@ -2617,7 +2625,7 @@ body {
   right: 0;
   max-width: 200px;
   display: none; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .banner-home-student {
       display: block; } }
   @media only print, only screen and (min-width: 990px) {
@@ -2686,7 +2694,7 @@ body {
   border: 1px solid #cb0012;
   margin-right: 15px;
   max-width: 100px; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .about-map-image {
       max-width: none;
       display: inline-block;
@@ -2694,7 +2702,7 @@ body {
 
 .about-map-url {
   display: block; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .about-map-url {
       display: inline-block; } }
 
@@ -2702,7 +2710,7 @@ body {
 .logo-wrapper > img {
   padding: 20px;
   max-width: 130px; }
-  @media only print, only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) {
     .logo-wrapper > img {
       padding: 25px;
       max-width: none; } }
@@ -2799,7 +2807,7 @@ body {
 .volunteer-works-locate h3:first-of-type {
   color: #e17e5b; }
 
-@media only print, only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   .volunteer-story-block {
     margin-left: -20px;
     margin-right: -20px; }
@@ -2807,7 +2815,7 @@ body {
       content: "";
       display: table;
       clear: both; } }
-@media only print, only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   .volunteer-story-each {
     padding-left: 20px;
     padding-right: 20px;
@@ -2888,7 +2896,7 @@ body {
 
 .sidebar-advanced-map {
   display: none; }
-  @media only screen and (min-width: 990px) {
+  @media only print, only screen and (min-width: 990px) {
     .sidebar-advanced-map {
       width: 300px;
       position: fixed;
@@ -3223,7 +3231,7 @@ body {
 
   .form-edit-profile-tab {
     max-width: 50%; } }
-@media only print, only screen and (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   .org-tab-date-block:after {
     content: "";
     display: table;
@@ -3593,7 +3601,7 @@ body {
 
   .padded-text {
     padding-top: 30px; } }
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .legend {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -4379,7 +4387,7 @@ code {
 .bar-label, .enrolment {
   width: 100%; }
 
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .ct-label.ct-horizontal {
     -ms-transform-origin: 50% 50%;
     -ms-transform: translateX(0px) translateY(20px) rotate(-45deg);
@@ -4493,7 +4501,7 @@ code {
 @media only print, only screen and (min-width: 750px) {
   .side-button-bar {
     top: 10%; } }
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .side-button-bar {
     top: 30%; } }
 .modalDialog {
@@ -4510,7 +4518,7 @@ code {
   transition: opacity 400ms ease-in;
   pointer-events: none; }
 
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .modalDialog {
     margin-top: 10%; } }
 .modalDialog:target {
@@ -4606,7 +4614,7 @@ code {
     float: left;
     padding-left: 20px;
     padding-right: 20px; } }
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .table-base-sys tr th, .table-base-sys tr td {
     padding: 0 0; }
 
@@ -4673,7 +4681,7 @@ code {
 .stepy-header li.stepy-active span {
   color: #ec6608; }
 
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .stepy-header li div {
     display: none; }
 
@@ -4789,6 +4797,167 @@ code {
   bottom: 2px;
   right: 2px; }
 
+.top-band {
+  border-top: 5px solid; }
+
+.flap-right {
+  float: right;
+  border-radius: 0 0 5px 5px;
+  width: 200px;
+  height: 35px;
+  padding-top: 5px; }
+
+.rounded-sect {
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px; }
+
+.date-header {
+  padding-top: 20px;
+  padding-left: 100px; }
+
+.bar-num-label {
+  display: inline;
+  float: right;
+  padding: 0 5px;
+  text-align: right;
+  margin-top: 3px; }
+
+.rotate {
+  /* Something you can count on */
+  transform: translate(25px, 51px) rotate(270deg); }
+
+.bar-lookup {
+  margin-bottom: 15px;
+  margin-top: 3px; }
+
+.per-lookup {
+  margin-bottom: 18px;
+  margin-top: 3px; }
+
+.table-base-comparison th, .table-base-comparison td {
+  width: 120px; }
+
+.dot-padding {
+  padding-top: 3px;
+  padding-right: 3px; }
+
+.hide-fs {
+  display: none; }
+
+@media only screen and (max-width: 749px) {
+  .bar-num-label {
+    display: block;
+    float: right;
+    text-align: left; }
+
+  .td-label-enrolu:before {
+    content: "Average Enrollment - Upper Primary: "; }
+
+  .td-label-enroll:before {
+    content: "Average Enrollment - Lower Primary: "; }
+
+  .td-label-ptr:before {
+    content: "PTR: "; }
+
+  .td-label-perstu:before {
+    content: "Per Student: "; }
+
+  .td-label-persch:before {
+    content: "Per School: "; }
+
+  .td-label-tlm:before {
+    content: "TLM Grant: "; }
+
+  .td-label-sg:before {
+    content: "School Grant: "; }
+
+  .td-label-smg:before {
+    content: "School Maintenance Grant: "; }
+
+  .td-label-lps:before {
+    content: "Lower Primary Maintenance Grant: "; }
+
+  .td-label-ups:before {
+    content: "Upper Primary (1-8) Maintenance Grant: "; }
+
+  .td-label-hps:before {
+    content: "Upper Primary (6-8) Maintenance Grant: "; }
+
+  .td-label-year:before {
+    content: "Year: "; }
+
+  .td-label-boundary:before {
+    content: "Boundary: "; }
+
+  .td-label-schools:before {
+    content: "Schools: "; }
+
+  .td-label-responses:before {
+    content: "Responses: "; }
+
+  .hide-mobile {
+    display: none; }
+
+  .hide-fs {
+    display: block; }
+
+  .label-avg-enrol:before {
+    content: "Average enrollment: "; }
+
+  .label-schcount:before {
+    content: "Schools "; }
+
+  .table-base-graphs th, .table-base-graphs td {
+    border: none;
+    padding: none; } }
+.table-base-graphs th, .table-base-graphs td {
+  border-bottom: none;
+  padding: none; }
+
+@media only print, only screen and (min-width: 750px) {
+  .sect-parent {
+    margin-left: -20px;
+    margin-right: -20px; }
+    .sect-parent:after {
+      content: "";
+      display: table;
+      clear: both; }
+
+  .sect-half {
+    width: 50%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-third {
+    width: 33%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-two-third {
+    width: 66.66%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-quarter {
+    width: 25%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  .sect-three-quarter {
+    width: 75%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px; } }
+span.tab {
+  padding-right: 20px;
+  /* Or desired space*/ }
+
 /*http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/*/
 .modalDialog {
   position: fixed;
@@ -4805,7 +4974,7 @@ code {
   transition: opacity 400ms ease-in;
   pointer-events: none; }
 
-@media only print, only screen and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
   .modalDialog {
     margin-top: 10%; } }
 .modalDialog:target {
@@ -4911,6 +5080,12 @@ code {
 
   .page-break {
     display: block;
-    page-break-before: always; } }
+    page-break-before: always; }
+
+  body {
+    transform: scale(0.8); }
+
+  table {
+    page-break-inside: avoid; } }
 
 /*# sourceMappingURL=style.css.map */

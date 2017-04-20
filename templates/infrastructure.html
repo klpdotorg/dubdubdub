@@ -1,0 +1,54 @@
+{% extends "base_static.html" %}
+
+{% load static %}
+{% load compress %}
+{% block css_extra %}
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+      <script type="text/javascript" src="{% static 'js/common/dise_api.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/boundary/utils.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js'%}"></script>
+      <script type="text/javascript" src="{% static 'js/reports/infra.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/utils.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/common.js' %}"></script> 
+  {% endcompress %}
+{% endblock %}
+{% block content %}
+  <div class="container"><!--outer-->
+    <!-- Summary section -->
+    <div id="summary" class="container">
+
+      <div class="top-band brand-purple"></div>
+      <div class="flap-right brand-purple-bg white center-text">INFRASTRUCTURE</div>
+      <a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+      <div id="report-date"></div>
+      <hr/>
+      <div id="top-summary"></div>
+    </div><!--summary container -->
+
+    <div id="grant" class="container">
+        <div class="base-spacing-sm"></div>
+        <hr/>
+        <div id="grant-summary"></div>
+    </div><!-- grant container-->
+
+    <div id="comparison" class="container">
+      <div class="base-spacing-sm"></div>
+
+      <div class="heading-secondary heading-border"> Comparison </div>
+      <div class="base-spacing-sm"></div>
+      <div id="comparison-year"></div>
+      <div class="base-spacing-sm"></div>
+      <div id="comparison-neighbour"></div>
+    </div><!-- comparison -->
+    <div id="disclaimer" class="container">
+      <div class="base-spacing-sm"></div>
+      <div class="center-text grey-steel font-smaller">Data Sources: District Information System for Education (<a href="http://www.dise.in" target="_blank">www.dise.in</a>). <br/>Please read our data disclaimer at <a href="https://klp.org.in/disclaimer/" target="_blank">klp.org.in/disclaimer/.</a> </div>
+    </div>
+  </div> <!-- outer container -->
+
+{% include 'frontend_templates/infrastructure.html' %} 
+{% endblock %}

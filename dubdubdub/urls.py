@@ -139,6 +139,42 @@ urlpatterns = patterns(
             'hide_footer': True,
         }), name='map'),
 
+
+    # report pages
+    url(r'^reports/search$', StaticPageView.as_view(
+        template_name='report_search.html'
+        ), name='report_search'),
+
+    url(r'^reports/demographics/(?P<report_type>electedrep|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+        template_name='demographics.html'
+        ), name='demographics'),
+
+    url(r'^reports/demographics_dise/(?P<report_type>electedrep|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+        template_name='demographics_dise.html'
+        ), name='demographics_dise'),
+
+    url(r'^reports/finance/(?P<report_type>electedrep|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+        template_name='finance.html'
+        ), name='finance'),
+
+    url(r'^reports/infrastructure/(?P<report_type>electedrep|boundary)/(?P<language>english|kannada)/(?P<id>[0-9]+)/$', StaticPageView.as_view(
+        template_name='infrastructure.html'
+        ), name='infrastructure'),
+
+    url(r'^reports/surveys$', StaticPageView.as_view(
+        template_name='story_report.html'
+        ), name='stories'),
+
+
+
+    # url(r'^volunteer-map$', StaticPageView.as_view(
+    #     template_name='volunteer-map.html',
+    #     extra_context={
+    #         'header_full_width': True,
+    #         'header_fixed': True,
+    #         'hide_footer': True
+    #     }), name='volunteer_map'),
+
     url(r'^advanced-map/$', AdvancedMapView.as_view(), name='advanced_map'),
 
     url(r'^volunteer-map$', VolunteerMapPageView.as_view(

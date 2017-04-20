@@ -25,7 +25,7 @@ DATA_IMPORT_DIR = os.path.join(PROJECT_ROOT, 'data')
 PDF_REPORTS_DIR = os.path.join(PROJECT_ROOT, 'pdfs')
 IVRS_VOICE_FILES_DIR = os.environ.get('IVRS_VOICE_FILES_DIR', None)
 
-DEFAULT_ACADEMIC_YEAR = '2013-2014'
+DEFAULT_ACADEMIC_YEAR = '2014-2015'
 
 EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
 

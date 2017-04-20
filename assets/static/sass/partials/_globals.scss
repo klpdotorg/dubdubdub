@@ -64,14 +64,14 @@
 
 // small: max-width: 749px
 @mixin media-med-maxwidth {
-  @media only print, only screen and (max-width: #{$mq-med - 1}) {
+  @media only screen and (max-width: #{$mq-med - 1}) {
     @content;
   }
 }
 
 // small: 600px
 @mixin media-sm {
-  @media only print, only screen and  (min-width: #{$mq-sm}) {
+  @media only screen and  (min-width: #{$mq-sm}) {
     @content;
   }
 }
@@ -823,7 +823,7 @@ hr {
 }
 
 // icons: boy, girl, both
-  .icon-boy, .icon-girl, .icon-boy-girl {
+  .icon-boy, .icon-girl, .icon-teacher, .icon-boy-girl {
     width: 45px;
     height: 45px;
     @extend %white;
@@ -851,6 +851,14 @@ hr {
     background-color: $pink-salmon;        
     &:before {
       content: "\f182";
+      @extend %dead-center;
+    }
+  }
+
+  .icon-teacher {
+    background-color: $green-leaf;        
+    &:before {
+      content: "\f19d";
       @extend %dead-center;
     }
   }
@@ -1324,6 +1332,12 @@ a.button {
 .module-stats-girl {
   .module-stats-label {
     color: $pink-salmon;
+  }
+}
+
+.module-stats-teacher {
+  .module-stats-label {
+    color: $green-leaf;
   }
 }
 

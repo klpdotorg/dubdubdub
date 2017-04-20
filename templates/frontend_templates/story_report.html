@@ -1,0 +1,243 @@
+{% verbatim %}
+  <script type="text/html" id="tpl-reportDate">
+    <div class="heading-tiny date-header"> Primary School Report | {{today.date}}</div>
+  </script>
+
+  <script type="text/html" id="tpl-topSummary">
+
+    <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
+    <div class="base-spacing-mid"></div>
+    <div class="sect-parent">
+      <div class="sect-third rounded-sect">
+          <div class="heading-tiny-uppercase">Boundary</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
+          <div class="heading-tiny-uppercase">Type</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
+          <div class="heading-tiny-uppercase">Elected Representative</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.elected_rep |capitalize}} ({{data.boundary.elected_party}})</h2>
+      </div><!--sect-third-->
+      <div class="sect-two-third grey-mist-bg rounded-sect">
+          <div class="sect-parent">
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Schools</div>
+                  <h2 class="heading-secondary black align-left">{{data.school_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Teachers</div>
+                  <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
+                  <div class="align-left"> <span class="heading-secondary black"> {{data.ptr}}:1 > <span class="brand-green"> 35:1 </span></span>  <span class="heading-tiny brand-green">(Recommended)</span></div>
+              </div><!--sect-half-->
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Students</div>
+                  <div class="module-stats-icon module-stats-boygirl"><!--1-->
+                      <span class="icon-boy-girl"></span>
+                      <div class="module-stats-info"><!--2-->
+                          <div class="uppercase">Total</div>
+                          <p class="module-stats-label">{{data.student_total}}</p>
+                      </div><!--2-->
+                  </div><!--1-->
+
+                  <div class="heading-tiny-uppercase">Gender Profile</div>
+                  <div class="module-stats-icon module-stats-girl"><!--2-->
+                      <span class="icon-girl"></span>
+                      <div class="module-stats-info"><!--3-->
+                          <div class="uppercase">Girls</div>
+                          <p class="module-stats-label">{{data.gender.girls}}</p>
+                      </div><!--3-->          
+                  </div><!--2-->    
+                  <div class="module-stats-icon"><!--4-->
+                      <span class="icon-boy"></span>
+                      <div class="module-stats-info"><!--5-->
+                          <div class="uppercase">Boys</div>
+                          <p class="module-stats-label">{{data.gender.boys}}</p>
+                      </div><!--5-->
+                  </div><!--4-->   
+                  
+                  <div class="bar-graph-wrap "><!--1-->
+                      <div class="bar-graph"><!--2-->
+                          <div class="clear-fix"><!--3-->
+                              <div class="float-left pink-salmon">{{data.boy_perc}}%</div>
+                              <div class="float-right brand-blue">{{data.girl_perc}}%</div>
+                          </div><!--3-->
+                          <div class="bar-custom"><!--4-->
+                              <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
+                                  <div class="bar-value bar-value-{{data.girl_perc}} pink-salmon-bg" style="width:{{data.girl_perc}}%;"></div>
+                              </div><!--5-->
+                          </div><!--4-->     
+                      </div> <!-- /bar-graph --><!--2-->
+                  </div> <!-- /bar-graph-wrap --><!--1-->          
+
+              </div><!--sect-half-->
+          </div><!-- inner sect-parent-->
+        </div><!--sect-two-third-->
+      </div><!--sect-parent-->
+  </script>
+
+  <script type="text/html" id="tpl-storySummary">
+      <div class="sect-parent">
+        <div class="sect-third">
+          <div class="heading-tiny-uppercase align-left" >Total Surveys</div>
+          <h2 class="heading-secondary black align-left">{{ total.stories }}</h2>
+          <div class="base-spacing-sm"></div>
+          <div class="heading-tiny-uppercase align-left" >Schools with Surveys</div>
+          <h2 class="heading-secondary black align-left">{{ total.schools_with_stories }}</h2> 
+        </div>     
+        <div class="sect-two-third">
+          <div class="sect-parent center-text">
+            <div class="sect-half">
+              <img class="img-symbol" src="/static/images/story/ivrs.png" alt="IVRS">
+              <div class="heading-tiny-uppercase black">{{ ivrs.stories }} calls</div>
+              <div class="heading-tiny black">Across {{ ivrs.schools }} schools</div> 
+            </div>
+            <div class="sect-half">
+              <img class="img-symbol" src="/static/images/story/community.png" alt="Feedback">
+              <div class="heading-tiny-uppercase black">{{ community.stories }} surveys</div> 
+              <div class="heading-tiny black">Across {{ community.schools }} schools</div> 
+            </div>
+          </div>
+       </div>
+      </div>
+  </script>
+  
+  <script type="text/html" id="tpl-percentGraph">
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ question }}</div>
+      {% if total != 0 %}
+      <div class="bar-graph">
+        <div class="bar-percent green-leaf">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }} responses">
+          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+      {% else %}
+      <div class="no-data">
+        No respondents
+      </div> 
+      {% endif %}
+    </div> <!-- /bar-graph-wrap -->
+  </script>
+
+  <script type="text/html" id="tpl-YearComparison">
+      <h3 class="brand-turquoise  heading-border center-text">
+        3 year comparison of status of Primary school status in this region
+      </h3>
+      <table class="table-base table-list-view">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Year</th>
+            <th>Schools</th>
+            <th>Responses</th>
+            <th><span class="fa fa-tint"></span> Drinking Water</th>
+            <th><span class="fa fa-male"></span><span class="fa fa-female"></span> Separate Toilets</th>
+            <th><span class="fa fa-graduation-cap"></span> Enough Teachers</th>
+          </tr>
+          {% for each in years %}
+            <tr class="font-smaller">
+              <td>
+                <div class="bold td-label-year">{{each.year}}</div>
+              </td>
+              <td>
+                <div class="td-label-schools">{{each.schools}}</div>
+              </td>
+              <td>
+                <div class="td-label-responses">{{each.ivrs_calls + each.surveys}}</div>  
+              </td>           
+              <td>
+                <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.water}}% schools">
+                    <div class="bar-value green-leaf-bg" style="width:{{each.water}}%;">
+                  </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.water}}% schools </div>
+                </div><!--bar-graph-wrap-->    
+              </td>
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.toilets}}% schools">
+                    <div class="bar-value grey-gravel-bg" style="width:{{each.toilets}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.toilets}}% schools </div>
+                </div><!--bar-graph-wrap-->    
+              </td>
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.teachers}}% schools">
+                    <div class="bar-value brand-purple-bg" style="width:{{each.teachers}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.teachers}}% schools </div>
+                </div><!--bar-graph-wrap--> 
+
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </script>
+
+  <script type="text/html" id="tpl-neighComparison">
+    
+      <h3 class="brand-turquoise heading-border center-text">
+          Comparison of status of Primary school with neighbours
+      </h3>
+    
+      <table class="table-base table-list-view table-base-comparison">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Boundary</th>
+            <th>Schools</th>
+            <th>Responses</th>
+            <th><span class="fa fa-tint"></span> Drinking Water</th>
+            <th><span class="fa fa-male"></span><span class="fa fa-female"></span> Separate Toilets</th>
+            <th><span class="fa fa-graduation-cap"></span> Enough Teachers</th>
+          </tr>
+          {% for each in neighbours %}
+            <tr class="font-smaller">
+              <td>
+                <div class="bold td-label-year">{{each.name}}</div>
+              </td>
+              <td>
+                <div class="td-label-schools">{{each.schools}}</div>
+              </td>
+              <td>
+                <div class="td-label-responses">{{each.ivrs_calls + each.surveys}}</div>  
+              </td>
+              <td>
+                <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.water}}% schools">
+                    <div class="bar-value green-leaf-bg" style="width:{{each.water}}%;">
+                  </div>
+                  <div class="bar-percent center-text font-smallest"> {{each.water}}% schools </div>
+                </div><!--bar-graph-wrap-->    
+              </td>
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.toilets}}% schools">
+                    <div class="bar-value grey-gravel-bg" style="width:{{each.toilets}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.toilets}}% schools </div>
+                </div><!--bar-graph-wrap-->    
+              </td>
+              
+              <td>
+               <div class="bar-graph-wrap td-label-graph">
+                  <div class="bar-custom tooltip" aria-label="{{each.teachers}}% schools">
+                    <div class="bar-value brand-purple-bg" style="width:{{each.teachers}}%;">
+                    </div>
+                  </div><!--bar-custom-->
+                  <div class="bar-percent center-text font-smallest"> {{each.teachers}}% schools </div>
+                </div><!--bar-graph-wrap--> 
+
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </script>
+
+{% endverbatim %}

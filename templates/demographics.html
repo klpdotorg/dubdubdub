@@ -1,0 +1,55 @@
+{% extends "base_static.html" %}
+
+{% load static %}
+{% load compress %}
+{% block css_extra %}
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}
+      <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/reports/demographics.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/utils.js' %}"></script> 
+      <script type="text/javascript" src="{% static 'js/reports/common.js' %}"></script> 
+  {% endcompress %}
+{% endblock %}
+{% block content %}
+  <div class="container"><!--outer-->
+    <!-- Summary section -->
+    <div id="summary" class="container">
+
+      <div class="top-band brand-green"></div>
+      <div class="flap-right brand-green-bg white center-text">DEMOGRAPHICS</div>
+      <a href="/" class="logo"><img src="/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+      <div id="report-date"></div>
+      <hr/>
+      <div id="top-summary"></div>
+      
+    </div><!--summary container -->
+    <div id="category" class="container">
+        <div class="base-spacing-sm"></div>
+        <hr/>
+        <div id="category-profile"></div>
+    </div><!-- category container-->
+    <div id="language" class="container">
+      <div class="base-spacing-sm"></div>
+      <hr/>
+      <div id="language-profile"></div>
+    </div><!-- language container-->
+    <div class="page-break"></div>    
+    
+    <div id="comparison" class="container">
+      <div class="base-spacing-sm"></div>
+      <hr/>
+      <div class="heading-secondary heading-border"> Comparison </div>
+      <div class="base-spacing-sm"></div>
+      <div id="comparison-year"></div>
+      <div id="comparison-neighbour"></div>
+    </div><!-- comparison -->
+    <div id="disclaimer" class="container">
+      <div class="base-spacing-sm"></div>
+      <div class="center-text grey-steel font-smaller">Data Sources: Karnataka Learning Partnership (<a href="http://www.klp.org.in" target="_blank">www.klp.org.in</a>). <br/>Please read our data disclaimer at <a href="https://klp.org.in/disclaimer/" target="_blank">klp.org.in/disclaimer/.</a> </div>
+    </div>
+  </div> <!-- outer container -->
+{% include 'frontend_templates/demographics.html' %} 
+{% endblock %}

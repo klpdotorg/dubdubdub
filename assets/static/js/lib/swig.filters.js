@@ -47,7 +47,7 @@ swig.setFilter('checkempty', function (input) {
 //check zero values
 swig.setFilter('checkzero', function (input) {
 	var checked;
-	(input != undefined && input!= 0)?checked=input:checked="No data";
+	(input != undefined && input!= 0 && input!= NaN && input!="NA")?checked=input:checked="No data";
 	return checked; 
 });
 

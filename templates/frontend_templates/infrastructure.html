@@ -1,0 +1,300 @@
+{% verbatim %}
+  <script type="text/html" id="tpl-reportDate">
+    <div class="heading-tiny date-header"> Primary School Report | {{today.date}} | Source: DISE</div>
+  </script>
+
+  <script type="text/html" id="tpl-topSummary">
+
+    <div class="heading-secondary heading-border">{{data.boundary.name|capitalize}}</div>
+    <div class="base-spacing-mid"></div>
+    <div class="sect-parent">
+     <div class="sect-third rounded-sect">
+          {% if data.boundary.type == "cluster" || data.boundary.type == "block" || data.boundary.type == "district" || data.boundary.type == "state" %}
+            <div class="heading-tiny-uppercase">Boundary</div>
+          {% elseif  data.boundary.type == "school" %}
+            <div class="heading-tiny-uppercase">School</div>
+          {% else %}
+            <div class="heading-tiny-uppercase">Electoral Region</div>
+          {% endif %}
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.name|capitalize}}</h2> 
+          <div class="heading-tiny-uppercase">Type</div>
+          <h2 class="heading-secondary brand-blue align-left">{{data.boundary.type}}</h2>
+          {% if data.boundary.type == "mp constituency" || data.boundary.type == "mla constituency" || data.boundary.type == "ward" %}
+            <div class="heading-tiny-uppercase">Elected Representative</div>
+            <div class="brand-blue font-light align-left">{{data.boundary.elected_rep |upper}}<br/>({{data.boundary.elected_party|title}})</div>
+          {% else %}
+            <ul class="map-location-labels brand-blue">  
+            {% if data.boundary.parent.cluster %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">CLUSTER</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.cluster|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.block %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">BLOCK</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.block|upper }}</div>
+                </li>
+            {% endif %}
+            {% if data.boundary.parent.district %}
+                <li class="map-label-each">
+                  <div class="map-label-title heading-tiny-uppercase">DISTRICT</div>
+                  <div class="map-label-name font-large font-light">{{ data.boundary.parent.district|upper }}</div>
+                </li>
+            {% endif %}
+            </ul>
+          {% endif %}
+         
+      </div><!--sect-third-->
+      <div class="sect-two-third grey-mist-bg rounded-sect">
+          <div class="sect-parent">
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Schools</div>
+                  <h2 class="heading-secondary black align-left">{{data.school_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Teachers</div>
+                  <h2 class="heading-secondary black align-left">{{data.teacher_count}}</h2> 
+                  <div class="heading-tiny-uppercase">Pupil-to-Teacher Ratio</div>
+                  <div class="align-left"> 
+                    <span class="heading-secondary black"> 
+                    {% if data.ptr !== "NA" && data.ptr !== 0 %}
+                      {% set indicator = "brand-green" %}
+                      {% if data.ptr > 35 %} 
+                        {% set indicator = "brand-red" %}    
+                      {% endif %} 
+                      <span class="{{indicator}}">{{data.ptr|round}}:1</span>
+                      {% if data.ptr > 35 %} < {% else %} > {% endif %} 
+                    {% else %}
+                      No data
+                    {% endif %} (
+                    <span class="brand-blue"> 35:1 </span>
+                    </span>  
+                    <span class="heading-tiny brand-blue">Recommended</span>
+                    <span class="heading-secondary black">)</span>
+                  </div>
+              </div><!--sect-half-->
+              <div class="sect-half">
+                  <div class="heading-tiny-uppercase">Students</div>
+                  <div class="module-stats-icon module-stats-boygirl"><!--1-->
+                      <span class="icon-boy-girl"></span>
+                      <div class="module-stats-info"><!--2-->
+                          <div class="uppercase">Total</div>
+                          <p class="module-stats-label">{{data.student_total}}</p>
+                      </div><!--2-->
+                  </div><!--1-->
+
+                  <div class="heading-tiny-uppercase">Gender Profile</div>
+                  <div class="module-stats-icon module-stats-girl"><!--2-->
+                      <span class="icon-girl"></span>
+                      <div class="module-stats-info"><!--3-->
+                          <div class="uppercase">Girls</div>
+                          <p class="module-stats-label">{{data.gender.girls}}</p>
+                      </div><!--3-->          
+                  </div><!--2-->    
+                  <div class="module-stats-icon"><!--4-->
+                      <span class="icon-boy"></span>
+                      <div class="module-stats-info"><!--5-->
+                          <div class="uppercase">Boys</div>
+                          <p class="module-stats-label">{{data.gender.boys}}</p>
+                      </div><!--5-->
+                  </div><!--4-->   
+                  
+                  <div class="bar-graph-wrap "><!--1-->
+                      <div class="bar-graph"><!--2-->
+                          <div class="clear-fix"><!--3-->
+                              <div class="float-left pink-salmon">{{data.boy_perc|round}}%</div>
+                              <div class="float-right brand-blue">{{data.girl_perc|round}}%</div>
+                          </div><!--3-->
+                          <div class="bar-custom"><!--4-->
+                              <div class="bar-value bar-value-100 brand-blue-bg" style="width:100%;"><!--5-->
+                                  <div class="bar-value bar-value-{{data.girl_perc}} pink-salmon-bg" style="width:{{data.girl_perc}}%;"></div>
+                              </div><!--5-->
+                          </div><!--4-->     
+                      </div> <!-- /bar-graph --><!--2-->
+                  </div> <!-- /bar-graph-wrap --><!--1-->          
+
+              </div><!--sect-half-->
+          </div><!-- inner sect-parent-->
+        </div><!--sect-two-third-->
+      </div><!--sect-parent-->
+  </script>
+
+
+  <script type="text/html" id="tpl-grantSummary">
+    
+      <h3 class="brand-turquoise heading-border center-text">
+         Annual Financial Grant Received
+      </h3>
+      <table class="table-base table-list-view table-base-comparison">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>School Development Grant</th>
+            <th>TLM Grant</th>
+            <th>Total Grant</th>
+            <th>Per Child</th>
+            <th>Per Teacher</th>
+          </tr>
+
+          <tr class="font-smaller">
+            <td>
+              <div>&#8377; {{received.sdg}}</div>
+            </td>
+            <td>
+              <div>&#8377; {{received.tlm}}</div>  
+            </td>
+            <td>
+              <div>&#8377; {{received.total}}</div>
+            </td>
+             <td>
+              <div>&#8377; {{received.per_student | round}}</div>
+            </td>
+            <td>
+              <div>&#8377; {{received.per_teacher | round}}</div>
+            </td>
+          </tr>
+          
+        </tbody>
+    </table>
+  </script>
+
+
+  <script type="text/html" id="tpl-YearComparison">
+      <h3 class="brand-turquoise  heading-border center-text">
+        3 year comparison of infrastructure of Primary schools within this region
+      </h3>
+      <table class="table-base table-list-view">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Category</th>
+            <th colspan="2"></th>
+            {% for year in transpose["year"]%}
+                    <th>{{year}}</th>
+            {% endfor %}
+          </tr>
+          <tr class="font-smaller">
+            <td>Total Schools</td>  
+            <td> </td>
+            <td> </td>
+            {% for year in transpose["year"] %}
+                {% if year in transpose["school_count"] %}
+                  <td>
+                    <span class="hide-fs">{{year}}:</span>
+                    <span class="">{{transpose["school_count"][year]}}</span>
+                  </td>
+                {% endif %}
+            {% endfor %}
+          </tr>
+          {% for key in transpose %}
+            {% if "name" in key %}
+              {% set counter=1%}
+              {%for each in key%}
+                {% if counter > 1 %}
+                  <tr class="font-smaller">
+                    {% if counter == 2 %}
+                      <td>{{key.name}}</td>
+                    {% else %}
+                      <td></td>
+                    {% endif %} 
+                    <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
+                    <td>{{each.name}}</td>
+                    {% for year in transpose["year"] %}
+                      {% if year in each %}
+                        <td>
+                          <span class="hide-fs">{{year}}:</span>
+                          <span class="bold {% if each[year] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[year] | round}}%</span>
+                        </td>
+                      {% else %}
+                        <td>"NA"</td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+                {% set counter = counter|increment %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+  </script>
+
+<script type="text/html" id="tpl-neighComparison">
+      <h3 class="brand-turquoise  heading-border center-text">
+        Comparison of status of Primary school for {{boundary_name|title}} 
+          {% if boundary_type != "cluster" && boundary_type !="block" %}
+            with neighbours
+          {% else %}
+            within its adminstration
+          {% endif %}
+      </h3>
+      <table class="table-base table-list-view">
+        <tbody>
+          <tr class="table-base-heading">
+            <th>Boundary</th>
+            <th colspan="2"></th>
+            {% for boundary in transpose["boundary"]%}
+              {% set highlight= "" %}
+              {% if boundary|lower == boundary_name %}
+                {% set highlight= "brand-red bold" %}
+              {% endif %}
+                    <th>
+                      <span class="{{highlight}}">
+                        {{boundary}}
+                        {% if boundary_type == "cluster" || boundary_type =="block" %}
+                          {{transpose["type"][boundary]}}
+                        {% endif %}
+                    </span></th>
+            {% endfor %}
+          </tr>
+          <tr class="font-smaller">
+            <td>Total Schools</td>  
+            <td> </td>
+            <td> </td>
+            {% for boundary in transpose["boundary"] %}
+                {% if boundary in transpose["school_count"] %}
+                  <td>
+                    <span class="hide-fs">{{boundary}}
+                      {% if boundary_type == "cluster" || boundary_type =="block" %}
+                          {{transpose["type"][boundary]}}
+                      {% endif %}: 
+                    </span>
+                    <span class="">{{transpose["school_count"][boundary]}}</span>
+                  </td>
+                {% endif %}
+            {% endfor %}
+          </tr>
+          {% for key in transpose %}
+            {% if "name" in key %}
+              {% set counter=1%}
+              {%for each in key%}
+                {% if counter > 1 %}
+                  <tr class="font-smaller">
+                    {% if counter == 2 %}
+                      <td>{{key.name}}</td>
+                    {% else %}
+                      <td></td>
+                    {% endif %} 
+                    <td>{% autoescape false %}{{each.icon}}{% endautoescape %}</td> 
+                    <td>{{each.name}}</td>
+                    {% for boundary in transpose["boundary"] %}
+                      {% if boundary in each %}
+                        <td>
+                          <span class="hide-fs">{{boundary}}
+                            {% if boundary_type == "cluster" || boundary_type =="block" %}
+                                {{transpose["type"][boundary]}}
+                            {% endif %}: 
+                          </span>
+                          <span class="bold {% if each[boundary] > 50 %} brand-green {% else %} brand-orange {% endif %}">{{each[boundary] | round}}%</span>
+                        </td>
+                      {% else %}
+                        <td>"NA"</td>
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+                {% set counter = counter|increment %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+  </script>
+  {% endverbatim %}

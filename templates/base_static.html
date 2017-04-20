@@ -1,0 +1,84 @@
+{% load staticfiles %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>{% block head %}
+  	<!-- META -->
+  	<title>{% block page_title %}Home{% endblock %} - Karnataka Learning Partnership</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/static/images/favicon.png
+    ">
+  	<meta name="description" content="">
+    {% compress css %}
+      <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all">
+      <link type="text/css" rel="stylesheet" href="{% static 'css/font-awesome.css' %}" media="all">
+    {% endcompress %}
+    {% block css_extra %}{% endblock %}
+    <script>
+        window.klp = {};
+    </script>
+    {% compress js %}
+      <script type="text/javascript" src="{% static 'js/lib/jquery-1.11.3.min.js' %}"></script>
+  	  <script type="text/javascript" src="{% static 'js/lib/underscore-min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/select2-3.5.1/select2.min.js' %}"></script>
+      <script src="{% static 'js/lib/picker.min.js' %}"></script>
+      <script src="{% static 'js/lib/pickadate.min.js' %}"></script>
+      <script src="{% static 'js/lib/jquery-rbox.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/jquery.fitvids.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/jquery.imagepreview.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/Autolinker.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/swig.filters.js' %}"></script>
+  	  <script type="text/javascript" src="{% static 'js/lib/underscore.string.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/lib/klprouter.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/klp.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/settings.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/utils.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/api.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/auth.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/common/login_modal.js' %}"></script>
+    {% endcompress %}
+    
+    {% if not settings.DEBUG %}
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-3982320-11', 'auto');
+        ga('send', 'pageview');
+
+      </script>
+    {% endif %}
+
+  	<!--[if lt IE 9]>
+  	<script src="{% static 'js/lib/html5shiv.js' %}"></script>
+  	<![endif]-->
+
+  	{% endblock %}
+
+    {% block endhead %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <noscript>
+      <span class="alert error">
+        Sorry, you need Javascript for this site to work. Please enable Javascript in your browser settings or turn off any plugins that maybe blocking Javascript and reload this page. Thank you.
+      </span>
+    </noscript>
+   
+    {% block content %} 
+    {% endblock %}
+    {% block endbody %}
+    {% endblock %}
+
+  </body>
+
+
+</html>

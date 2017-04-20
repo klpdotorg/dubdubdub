@@ -1,0 +1,232 @@
+.top-band {
+	border-top: 5px solid;
+}
+
+.flap-right {
+	float: right;
+	border-radius: 0 0 5px 5px;
+	width: 200px;
+	height: 35px;
+	padding-top: 5px;
+}
+
+.rounded-sect {
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+
+.date-header {
+	padding-top: 20px;
+	padding-left: 100px;
+}
+
+.bar-num-label{
+	display: inline;
+	float: right;
+	padding: 0 $base-spacing-sm;
+	text-align: right;
+	@extend %font-small;
+	@extend %bold;
+	margin-top:3px;
+}
+
+.rotate {
+  /* Something you can count on */
+  transform: 
+    /* Magic Numbers */
+    translate(25px, 51px)
+    /* 45 is really 360 - 45 */
+    rotate(270deg);
+}
+
+.bar-lookup {
+	margin-bottom: 15px;
+	margin-top:3px;
+	@extend %font-small;
+	@extend %bold;
+}
+
+.per-lookup {
+	margin-bottom: 18px;
+	margin-top:3px;
+	@extend %font-small;
+	@extend %bold;
+}
+
+.table-base-comparison th,.table-base-comparison td {
+    width: 120px;
+ }
+
+
+.dot-padding {
+	padding-top:3px;
+	padding-right:3px;
+}
+
+.hide-fs {
+	display:none;
+}
+
+@include media-med-maxwidth {	
+	
+	.bar-num-label {
+		display:block;
+		float:right;
+		text-align:left;
+	}
+
+	.td-label-enrolu {
+	    &:before {
+	  	  content: "Average Enrollment - Upper Primary: ";
+	  	}
+	}
+
+	.td-label-enroll {
+	    &:before {
+	  	  content: "Average Enrollment - Lower Primary: ";
+	  	}
+	}
+
+	.td-label-ptr {
+	    &:before {
+	  	  content: "PTR: ";
+	  	}
+	}
+
+	.td-label-perstu {
+	    &:before {
+	  	  content: "Per Student: ";
+	  	}
+	}
+
+	.td-label-persch {
+	    &:before {
+	  	  content: "Per School: ";
+	  	}
+	}
+
+	.td-label-tlm {
+	    &:before {
+	  	  content: "TLM Grant: ";
+	  	}
+	}
+
+	.td-label-sg {
+	    &:before {
+	  	  content: "School Grant: ";
+	  	}
+	}
+
+	.td-label-smg {
+	    &:before {
+	  	  content: "School Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-lps {
+		&:before {
+	  	  content: "Lower Primary Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-ups {
+		&:before {
+	  	  content: "Upper Primary (1-8) Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-hps {
+		&:before {
+	  	  content: "Upper Primary (6-8) Maintenance Grant: ";
+	  	}
+	}
+
+	.td-label-year {
+	    &:before {
+	  	  content: "Year: ";
+	  	}
+	}
+
+	.td-label-boundary {
+	    &:before {
+	  	  content: "Boundary: ";
+	  	}
+	}
+
+	.td-label-schools {
+	    &:before {
+	  	  content: "Schools: ";
+	  	}
+	}
+
+	.td-label-responses {
+	    &:before {
+	  	  content: "Responses: ";
+	  	}
+	}
+
+	.hide-mobile {
+		display:none;
+	}
+
+	.hide-fs {
+		display:block;
+	}
+
+	.label-avg-enrol {
+		&:before {
+	  	  content: "Average enrollment: ";
+	  	}
+	}
+
+	.label-schcount {
+		&:before {
+	  	  content: "Schools ";
+	  	}
+	}
+
+	.table-base-graphs th,.table-base-graphs td {
+		border: none;
+		padding: none;
+	}
+}
+
+.table-base-graphs th,.table-base-graphs td {
+	border-bottom: none;
+	padding: none;
+}
+
+@include media-med {
+
+	.sect-parent {
+	  	@include grid-parent;
+	}
+
+	.sect-half {
+	  	@include col-50-flt;
+	}
+
+	.sect-third {
+		@include col-33-flt;
+	}
+
+	.sect-two-third {
+		@include col-66-flt;
+	}
+
+	.sect-quarter {
+		@include col-25-flt;
+	}
+
+	.sect-three-quarter {
+		@include col-75-flt;
+	}
+}
+
+span.tab{
+    padding-right:20px; /* Or desired space*/
+}
+
+

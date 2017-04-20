@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+
+{% block page_title %}Search for Reports{% endblock %}
+{% block endbody %}
+    {% compress js %}
+		 	<script type="text/javascript" src="{% static 'js/reports/search.js' %}"></script>
+			<script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block subheader %}
+	<div class="map-subheader-wrapper subheader-wrapper">
+		<div class="form-base subheader-content center-text">
+			<div id="acad-year" class="filter-item">
+				<span class="filter-label">Academic Year</span>	
+				<select>
+			      <!--option>2015-2016</option-->
+			      <option>2014-2015</option>
+			      <!--option>2013-2014</option>
+			      <option>2012-2013</option-->
+			    </select>							
+			</div>
+			<div id="src-type" class="filter-item">
+				<span class="filter-label">Report Type</span>	
+				<select>
+			      <option value="klp">KLP data only</option>
+			      <option value="dise">DISE data only</option>
+			    </select>	
+			</div>
+			
+		</div> <!-- /subheader-content -->
+	</div> <!-- /map-subheader-wrapper -->
+
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="center-text container">
+		<form class="form-base">
+			<div class="base-spacing-mid"></div>
+			<!--div class="form-field-wrap">
+			    <label class="label">Search by Name or Pincode</label>
+			    <input type="text" id="select2search" name="search" placeholder="Start typing to search" class="search-input input-text full-width">
+			</div> 
+			<h2>OR</h2-->
+			<span> Search by  selecting a geography  </span>
+			<div class="base-spacing-mid"></div>
+			
+			<fieldset id="boundary" class="form-field-wrap sect-parent">
+				<!--div class="sect-third">
+					<input type="radio" class="input-radio" value="pre" id="radio2" checked="" name="edu-pre">
+				    <label for="radio2" class="input-radio-label">PreSchool Boundaries</label>
+				</div-->
+				<div class="sect-half">
+					<input type="radio" class="input-radio" value="primary" id="radio3" name="radios">
+				    <label for="radio3" class="input-radio-label">Educational (Primary School) Boundaries</label>
+				</div>
+				<div class="sect-half">
+				    <input type="radio" class="input-radio" value="elec" id="radio4" name="radios">
+				    <label for="radio4" class="input-radio-label">Electoral Boundaries</label>
+				</div>
+			 </fieldset>
+			 <div class="electoral box sect-parent"> 
+				<div class="sect-third"> 
+				 	<label class="label center-text">MP Constituency: </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-mp">
+				</div>
+				<div class="sect-third">
+					<label class="label center-text">OR </label>
+				</div>
+				<div class="sect-third">
+					<label class="label center-text">MLA Constituency : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-mla">
+				</div>
+				<!--div class="sect-third">
+					<label class="label center-text">OR Ward/GP/ZP : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-ward">
+				</div-->
+			</div>
+			<div class="educational box sect-parent">
+				<div class="sect-third"> 
+				 	<label class="label center-text">District : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-district">
+				</div>
+				<div class="sect-third">
+					<label class="label center-text">Block : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-block">
+				</div>
+				<div class="sect-third">
+					<label class="label center-text">Cluster : </label>
+				 	<input type="text" class="js-example-basic-single input-text full-width" id="select-cluster">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="report-list"></div>
+{% include 'frontend_templates/report_search.html' %} 
+{% endblock %}
