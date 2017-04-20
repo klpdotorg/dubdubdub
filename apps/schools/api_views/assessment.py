@@ -27,7 +27,6 @@ class PartnerList(KLPListAPIView, CacheMixin):
 
 
 class AssessmentsList(KLPListAPIView, CacheMixin):
-
     '''
         Returns list of assessment id,name and academic year
     '''
@@ -58,7 +57,6 @@ class AssessmentsList(KLPListAPIView, CacheMixin):
 
 
 class AssessmentInfo(KLPListAPIView):
-
     '''
         Returns the selected assessments details related to the school and student group
     '''
@@ -103,6 +101,7 @@ class AssessmentInfo(KLPListAPIView):
               .select_related('boundary__name', 'studentgroup', 'assessment__name', 'assessment__programme__academic_year__name', 'singlescore', 'percentile', 'gradesinglescore')
         else:
             raise ParseError("Invalid parameter passed.Pass either school,admin_1,admin_2 or admin_3")
+
         return assessmentinfo
 
 
@@ -179,7 +178,6 @@ class ProgrammesList(KLPListAPIView, CacheMixin):
 
 
 class ProgrammeInfo(KLPListAPIView):
-
     '''
         Returns detail information of the programme
     '''

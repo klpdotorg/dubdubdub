@@ -23,8 +23,7 @@ class Assessment(BaseModel):
 class InstitutionAssessmentCohorts(BaseModel):
     school = models.ForeignKey('School', db_column='sid', primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     studentgroup = models.CharField(max_length=50, blank=True)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
@@ -32,7 +31,6 @@ class InstitutionAssessmentCohorts(BaseModel):
 
     def __unicode__(self):
         return "%s: %s: %s: %s" % (self.school, self.assessment, self.sex, self.mt,)
-
 
     class Meta:
 
@@ -88,17 +86,17 @@ class InstitutionAssessmentSinglescoreGender(BaseModel):
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     singlescore = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    percentile= models.DecimalField(max_digits=6, decimal_places=2,
+    percentile = models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
 
-        return "%s: %s" % (self.school, self.assessment,)
+        return "%s: %s" %(self.school, self.assessment,)
 
     class Meta:
 
-        # workaround for https://code.djangoproject.com/ticket/8162
+        #workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssSingleScoreGender'
         managed = False
         db_table = 'tb_institution_assessment_singlescore_gender'
@@ -116,11 +114,11 @@ class InstitutionAssessmentSinglescoreMt(BaseModel):
     gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" % (self.school, self.assessment, self.mt,)
+        return "%s: %s: %s" %(self.school, self.assessment, self.mt,)
 
     class Meta:
 
-        # workaround for https://code.djangoproject.com/ticket/8162
+        #workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'InstAssSingleScoreMt'
         managed = False
         db_table = 'tb_institution_assessment_singlescore_mt'
@@ -137,12 +135,11 @@ class BoundaryAssessmentSinglescore(BaseModel):
     gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
 
     def __unicode__(self):
-        return "%s: %s: %s" % (self.boundary, self.assessment,
-                               self.studentgroup,)
+        return "%s: %s: %s" %(self.boundary, self.assessment, self.studentgroup,)
 
     class Meta:
 
-        # workaround for https://code.djangoproject.com/ticket/8162
+        #workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'BoundaryAssSingleScore'
         managed = False
         db_table = 'tb_boundary_assessment_singlescore'
@@ -174,13 +171,15 @@ class BoundaryAssessmentSinglescoreGender(BaseModel):
                                       blank=True, null=True)
     percentile= models.DecimalField(max_digits=6, decimal_places=2,
                                       blank=True, null=True)
-    gradesinglescore = models.CharField(max_length=30,blank=True,null=True)
+    gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
+
         return "%s: %s" %(self.boundary, self.assessment, self.gender,)
 
     class Meta:
-        # workaround for https://code.djangoproject.com/ticket/8162
+
+        #workaround for https://code.djangoproject.com/ticket/8162
         verbose_name = 'BoundaryAssSingleScoreGender'
         managed = False
         db_table = 'tb_boundary_assessment_singlescore_gender'
@@ -196,7 +195,6 @@ class BoundaryAssessmentSinglescoreMt(BaseModel):
     percentile = models.DecimalField(max_digits=6, decimal_places=2,
                                      blank=True, null=True)
     gradesinglescore = models.CharField(max_length=30, blank=True, null=True)
-
 
     def __unicode__(self):
         return "%s: %s: %s" % (self.boundary, self.assessment, self.mt,)
@@ -230,11 +228,9 @@ class Programme(BaseModel):
     end = models.DateField(blank=True, null=True)
     boundary_type = models.ForeignKey('BoundaryType', db_column='type')
     academic_year = models.ForeignKey('AcademicYear', db_column='ayid',
-                                      blank=True, null=True,
-                                      on_delete=models.SET_NULL)
+                                      blank=True, null=True, on_delete=models.SET_NULL)
     partner = models.ForeignKey('Partner', db_column='partnerid',
-                                blank=True, null=True,
-                                on_delete=models.SET_NULL)
+                                blank=True, null=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return "%s: %s" % (self.academic_year, self.name,)
@@ -247,8 +243,7 @@ class Programme(BaseModel):
 class Question(BaseModel):
     id = models.IntegerField(primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
-                                   blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+                                   blank=True, null=True, on_delete=models.SET_NULL)
     desc = models.CharField(max_length=100)
     qtype = models.IntegerField(blank=True, null=True)
     maxmarks = models.DecimalField(max_digits=65535, decimal_places=65535,
@@ -281,7 +276,6 @@ class StudentEval(BaseModel):
 
 
 class SchoolEval(BaseModel):
-
     '''
     View table
     '''
@@ -290,8 +284,7 @@ class SchoolEval(BaseModel):
                                   max_length=100, blank=True)
     domain = models.CharField(max_length=100, blank=True)
     question = models.ForeignKey('Question', db_column='qid',
-                                 blank=True, null=True,
-                                 on_delete=models.SET_NULL)
+                                 blank=True, null=True, on_delete=models.SET_NULL)
     value = models.CharField(max_length=50, blank=True)
 
     def __unicode__(self):
@@ -303,7 +296,6 @@ class SchoolEval(BaseModel):
 
 
 class AngInfraAgg(BaseModel):
-
     '''
         View table:
         Akshara does a 70 question anganwadi infrastructure
@@ -327,7 +319,6 @@ class AngInfraAgg(BaseModel):
 
 
 class AngDisplayMaster(BaseModel):
-
     '''
         View table:
         This is a table to map the key values of anginfra_agg
@@ -349,8 +340,7 @@ class InstitutionAgg(BaseModel):
     id = models.CharField(max_length=20, primary_key=True)
     academic_year = models.ForeignKey('AcademicYear')
     school = models.ForeignKey('School')
-    boundary = models.ForeignKey(
-        "Boundary", blank=True, null=True, on_delete=models.SET_NULL)
+    boundary = models.ForeignKey("Boundary", blank=True, null=True, on_delete=models.SET_NULL)
     gender = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
@@ -366,8 +356,7 @@ class InstitutionAgg(BaseModel):
 class SchoolAgg(BaseModel):
     school = models.ForeignKey('School', db_column='id', primary_key=True)
     name = models.CharField(max_length=300, blank=True)
-    boundary = models.ForeignKey(
-        'Boundary', blank=True, null=True, on_delete=models.SET_NULL)
+    boundary = models.ForeignKey('Boundary', blank=True, null=True, on_delete=models.SET_NULL)
     sex = models.CharField(max_length=128, choices=SEX_CHOICES)
     mt = models.CharField(max_length=128, choices=MT_CHOICES)
     num = models.IntegerField(blank=True, null=True)
