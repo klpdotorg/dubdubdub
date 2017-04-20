@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.7: a738034e70ce11c8e841c20eafd65ae8e0693f07 - 2017-04-20
+  - Frist cut of Elected Rep Reports in English only for 2014-15 DISE data.
+  - Fixes to the Survey- Question group details end point.
+
 Release 1.1.6: 08b66e9778f1c9edfa673a21a847cd93e9af6af1 - 2017-03-21
   - Fixes a bug in the SMS parsing view.
 
