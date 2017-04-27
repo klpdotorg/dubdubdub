@@ -201,10 +201,12 @@ class Command(BaseCommand):
             school_type=school_type,
             options="{Yes,No}",
         )[0]
+        q21 = Question.objects.get(text="Class visited")
 
         questions = [q1, q2, q3, q4, q5, q6, q7,
                      q8, q9, q10, q11, q12, q13,
-                     q14, q15, q16, q17, q18, q19, q20]
+                     q14, q15, q16, q17, q18, q19,
+                     q20, q21]
 
 
         for count, question in enumerate(questions):
@@ -269,11 +271,13 @@ class Command(BaseCommand):
             options="{Yes,No}",
         )[0]
         q20 = Question.objects.get(text="Shapes and spatial understanding 1")
+        q21 = Question.objects.get(text="Class visited")
 
         questions = [
             q1, q2, q3, q4, q5, q6, q7,
             q8, q9, q10, q11, q12, q13,
-            q14, q15, q16, q17, q18, q19, q20
+            q14, q15, q16, q17, q18, q19,
+            q20, q21
         ]
 
         for count, question in enumerate(questions):
@@ -343,6 +347,14 @@ class Command(BaseCommand):
             options="{Yes,No}",
         )[0]
         q20 = Question.objects.get(text="Addition 3")
+        q21 = Question.objects.get(text="Class visited")
+
+        questions = [
+            q1, q2, q3, q4, q5, q6, q7,
+            q8, q9, q10, q11, q12, q13,
+            q14, q15, q16, q17, q18, q19,
+            q20, q21
+        ]
 
         for count, question in enumerate(questions):
             QuestiongroupQuestions.objects.get_or_create(
@@ -350,12 +362,6 @@ class Command(BaseCommand):
                 question=question,
                 sequence=count+1
             )
-
-        questions = [
-            q1, q2, q3, q4, q5, q6, q7,
-            q8, q9, q10, q11, q12, q13,
-            q14, q15, q16, q17, q18, q19, q20
-        ]
 
         print "GP Contest class 6 questions populated."
 
