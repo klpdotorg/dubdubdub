@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.1.8: f108738de5ae744d4480cbdd5aac48ba2ca9c527 - 2017-04-27
+  - Implements GP contest data parsing script.
+
 Release 1.1.7: a738034e70ce11c8e841c20eafd65ae8e0693f07 - 2017-04-20
   - Frist cut of Elected Rep Reports in English only for 2014-15 DISE data.
   - Fixes to the Survey- Question group details end point.
