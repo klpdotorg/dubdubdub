@@ -14,7 +14,7 @@ from schools.models import (
 from stories.models import (
     Question, Questiongroup, QuestionType, 
     QuestiongroupQuestions, Source, UserType,
-    Story, Answer)
+    Story, Answer, Survey)
 
 class Command(BaseCommand):
     args = "<path to file>"
@@ -60,10 +60,10 @@ class Command(BaseCommand):
             print "Please specify --class=4/5/6"
             return
 
-        user_type = UserType.objects.get(name=UserType.AKSHARA_STAFF)
+        user_type = UserType.objects.get(name=UserType.CHILDREN)
        
         f = open(file_name, 'r')
-        csv_f = csv.reader(f)
+        csv_f = csv.reader(f, delimiter='|')
 
         missing_ids = {}
         missing_ids['schools'] = []
