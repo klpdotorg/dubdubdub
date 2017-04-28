@@ -60,7 +60,7 @@ class Command(BaseCommand):
             print "Please specify --class=4/5/6"
             return
 
-        user_type = UserType.objects.get(name=UserType.CHILDREN)
+        user_type, created = UserType.objects.get_or_create(name=UserType.CHILDREN)
        
         f = open(file_name, 'r')
         csv_f = csv.reader(f, delimiter='|')
