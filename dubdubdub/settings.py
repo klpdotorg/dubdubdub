@@ -179,15 +179,15 @@ INSTALLED_APPS = (
     'ivrs',
 )
 
-import os
-import raven
+# import os
+# import raven
 
-RAVEN_CONFIG = {
-    'dsn': 'https://aed11aec291b4e0299d2e2fd7e970b10:9e4f7773b6c6423eb6320ecf94fe278f@sentry.io/160906',
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
+# RAVEN_CONFIG = {
+#     'dsn': 'https://aed11aec291b4e0299d2e2fd7e970b10:9e4f7773b6c6423eb6320ecf94fe278f@sentry.io/160906',
+#     # If you are using git, you can also automatically configure the
+#     # release based on the git info.
+#     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+# }
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
