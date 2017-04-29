@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block page_title %}GKA Dashboard{% endblock %}
+
+{% block css_extra %}
+
+{% endblock %}
+
+{% block endbody %}
+  {% compress js %}  
+  <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/common/jquery.yearMonthSelect.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/gka/gka_filters.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/gka/dashboard.js' %}"></script>
+  
+  
+  {% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+<div id="datemodal" class="modalDialog">
+  <div class="grey-mist-bg">
+    <a href="#close" title="Close" class="close">X</a>
+    <div class="center-text">
+      <div class="base-spacing-sm"></div>         
+      <form class="form-base">
+        <div class="form-field-wrap">
+            <div class="chart-parent dateform">
+            <div class="chart-half-item align-fromdate">
+              <!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
+              <div class="form-field-wrap" id="startDate">
+                  <label class="label-inline bold">Start Date</label><br/>
+                  <select class="month">
+
+                  </select>
+                  <select class="year">
+
+                  </select>
+               </div>
+            </div>
+            <div class="chart-half-item align-left">
+              <!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
+              <div class="form-field-wrap" id="endDate">
+                  <label class="label-inline bold">End Date</label><br/>
+                  <select class="month">
+
+                  </select>
+                  <select class="year">
+
+                  </select>
+               </div>
+            </div>
+          </div>    
+          <div class="button-orange" id="dateSummary">Apply Date Filter</div>       
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<section class="container" id="school_summary">
+  <div class="base-spacing-mid"></div>
+  <div class="sect-parent">
+    <div class="sect-three-quarter">
+      <div class="educational box sect-parent">
+        <div class="sect-quarter"> 
+          <input type="text" placeholder="District" class="js-example-basic-single input-text full-width" id="select-district">
+        </div>
+        <div class="sect-quarter">
+          <input type="text" placeholder="Block" class="js-example-basic-single input-text full-width" id="select-block">
+        </div>
+        <div class="sect-quarter">
+          <input type="text" placeholder="Cluster" class="js-example-basic-single input-text full-width" id="select-cluster">
+        </div>
+        <div class="sect-quarter">
+          <input type="text" placeholder="School" class="js-example-basic-single input-text full-width" id="select-school">
+        </div>
+      </div>
+    </div>
+    <div class="sect-quarter">
+      <a href="#searchButton"><div class="square sq-tooltip" aria-label="Search" ><span class="white fa fa-search"></span></div></a>
+      <a href="#resetButton"><div class="button-orange square sq-tooltip" aria-label="Reset" ><span class="white fa fa-refresh"></span></div></a>
+      <a href="#datemodal"><div class="button-grey square sq-tooltip" aria-label="Date Filter"><span class="white fa fa-calendar"></span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="clearfix">
+  <div id="ReportContainer">
+
+    <section class="container" id="top">
+      <div id="topSummary" class="js-detail-container"></div>
+      <div class="base-spacing-mid"></div>
+    </section>
+
+    <section class="container" id="sms">
+      <div id="smsSummary" class="js-detail-container"></div>   
+      <div id="smsquestions" class="js-detail-container"></div>
+      <div id="smsgraph" class="js-detail-container"></div>
+      <div class="base-spacing-mid"></div>
+    </section>
+
+    <section class="container" id="footer">          
+      <div class="center-text font-smaller grey-silver">This report is generated for <a href="http://akshara.org.in" target="_blank">Akshara Foundation</a>  by KLP.</div>
+    </section>
+    
+  </div>
+</section>
+{% include 'frontend_templates/gka_dashboard.html' %} 
+{% endblock %}

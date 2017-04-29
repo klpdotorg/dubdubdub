@@ -1,0 +1,237 @@
+{% verbatim %}
+
+  <script type="text/html" id="tpl-topSummary">
+    <h2 class="heading-border grey-steel">GKA DASHBOARD</h2> 
+
+    <!--div class="container js-entity-data">
+          <div class="heading-tiny-uppercase align-left">
+            <span class="brand-blue">{{type}}</span>
+          </div>
+          <h2 class="heading-secondary black align-left">
+            {{name}}
+          </h2>
+    </div-->
+
+    <div class="container">
+      
+    </div>
+
+    <hr/>
+  </script>
+
+  
+  <script type="text/html" id="tpl-smsSummary">
+    <div class="table-responsive-wrap">        
+        <table class="table-base">
+          <thead>
+            <tr class="table-base-heading">
+              <td width=50% class="brand-blue">Details</td>
+              <!--td class="brand-blue">Percentage</td-->
+          
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="font-smaller">
+              <td>SMS Messages</td>
+              <td colspan="2">{{ sms.stories }}</td>
+              <!--td class="brand-green" colspan="2">{{ district.stories}}</td-->
+            </tr>
+            <tr class="font-smaller">
+              <td>Schools with SMS Messages</td>
+              <td colspan="2">{{ sms.schools }}</td>
+              <!--td class="brand-green" colspan="2">{{ district.schools}}</td-->
+            </tr>
+            <tr class="font-smaller">
+              <td>Last SMS</td>
+              <td colspan="2">{{ format_lastsms }}</td>
+              <!--td class="brand-green" colspan="2">{{ district.format_lastsms}}</td-->
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-responseTable">
+    <div class="table-responsive-wrap">        
+    <table class="table-base">
+      <thead>
+        <tr class="table-base-heading">
+          <td class="brand-blue">Question</td>
+          <!--td class="brand-blue">Percentage</td-->
+          <td class="brand-blue">Yes</td>
+          <td class="brand-blue">No</td>
+          {% set check=questions|first %}
+          {% if check.district %}
+            <td class="brand-blue">Yes</td>
+            <td class="brand-blue">No</td>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for each in questions%}
+        <tr class="font-smaller">
+          <td width='50%'>
+            {{each.question}}
+          </td>
+          <!--td>
+            <div class="bar-graph-wrap">
+              {% if each.total != 0 %}
+              <div class="bar-graph">
+                <div class="bar-percent green-leaf">{{ each.percent }}%</div>
+                <div class="bar-custom tooltip" aria-label="{{ each.score }}/{{ each.total }}">
+                  <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+                    <div class="bar-value bar-value-{{ each.percent }} green-leaf-bg" style="width:{{ each.percent }}%;"></div>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <div class="no-data">
+                No respondents
+              </div> 
+              {% endif %}
+            </div>     
+          </td-->
+          <td>{{each.score}}</td>
+          <td>{{each.total-each.score|int}}</td>
+          {% if each.district %}
+            <td class="brand-green" >{{each.district.score}}</td>
+            <td class="brand-green" >{{each.district.total-each.district.score|int}}</td>
+          {% endif %}
+        </tr>
+      </tbody>
+  </script>
+
+  <script type="text/html" id="tpl-percentGraph">
+    <div class="bar-graph-wrap">
+      <div class="bar-label">{{ question }}</div>
+      {% if total != 0 %}
+      <div class="bar-graph">
+        <div class="bar-percent green-leaf">{{ percent }}%</div>
+        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
+          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
+            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
+          </div>
+        </div>
+      </div> <!-- /bar-graph -->
+      {% else %}
+      <div class="no-data">
+        No respondents
+      </div> 
+      {% endif %}
+    </div> <!-- /bar-graph-wrap -->
+  </script>
+
+  <script type="text/html" id="tpl-colorText">
+    <div class="chart-athird-item">
+      <div>
+        {% for i in icon %}
+          <span class="{{ i }}"></span>
+        {% endfor %}
+        &nbsp;{{ facility }}
+      </div>
+      {% if total != 0 %}
+      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
+        {{ percent }}%
+      </div>
+      {% else %}
+      <div class="no-data">
+        No data
+      </div>
+      {% endif %}
+    </div>
+  </script>
+
+  <!-- There's probably a cleaner way of doing the below template without this many for loops-->
+  <script type="text/html" id="tpl-compareTable">
+    <table class="table-base">
+      <thead class="table-base-heading">
+        <tr>
+        <th></th>            
+          {% for n in neighbours %}
+            <th>{{ n.name }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Schools</td>
+          {% for n in neighbours %}
+            <td>{{ n.schools }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>Surveys</td>
+          {% for n in neighbours %}
+            <td>{{ n.stories }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>IVRS Calls</td>
+          {% for n in neighbours %}
+            <td>{{ n.ivrs }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Volunteers say) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_volunteer }}</td>
+          {% endfor %}
+        </tr><tr>
+          <td>(Community says) Schools need</td>
+          {% for n in neighbours %}
+            <td>{{ n.needs_community }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/html" id="tpl-countSummary">           
+    {% for s in summary %}
+      <div class="chart-quarter-item">
+        <div class="heading-tiny-uppercase align-left" >{{ s.label }}</div>
+        <h2 class="heading-secondary black align-left">{{ s.count }}</h2> 
+      </div>
+    {% endfor %}
+  </script>
+
+  <script type="text/html" id="tpl-smsVolume">           
+    <div class="heading-tiny-uppercase">Call volumes during {{ acad_year }}</div>
+  </script>
+
+  <script type="text/html" id="tpl-gka-filters-modal">
+  <div class="modal modal-map-filter">
+    <h3 class="heading-border">Filter by Geography</h3>
+    <div class="filter-school-block">
+ 
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">District</div>
+        <input type="hidden" class="filter-dropdown" id="select-district" />
+        </select>
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Block</div>
+        <input type="hidden" class="filter-dropdown" id="select-block" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">Cluster</div>
+        <input type="hidden" class="filter-dropdown" id="select-cluster" />
+      </div>
+
+      <div class="filter-school-each">
+        <div class="heading-tiny-uppercase">School</div>
+        <input type="hidden" class="filter-dropdown" id="select-school" />
+      </div>
+    </div> <!-- /filter-school-block -->
+
+    <div class="base-spacing"></div>
+      <div class="center-text">
+      <a href="" class="button" id="search">Search</a>
+      </div>
+    </div>
+ 
+
+</script>
+
+
+{% endverbatim %}
+
