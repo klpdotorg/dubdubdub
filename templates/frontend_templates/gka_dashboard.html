@@ -1,58 +1,69 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-topSummary">
-    <h2 class="heading-border grey-steel">GKA DASHBOARD</h2> 
-
+   
     <!--div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
             <span class="brand-blue">{{type}}</span>
           </div>
-          <h2 class="heading-secondary black align-left">
+          <h2 class="font-large black align-left">
             {{name}}
           </h2>
     </div-->
 
     <div class="container">
-      
-    </div>
+      <!--div class="sect-parent">
+        <div class="sect-third">
+          <!--img src="/static/images/gka.png" width="50%">
 
-    <hr/>
+        </div>
+        <div class="sect-two-third"-->
+          <div class="sect-parent">
+            <div class="sect-half">
+              <div class="brand-blue font-large font-light uppercase">Schools</div>
+              <div class=" base-spacing-sm">{{data.total_schools}}</div>
+              <div class="brand-blue font-large font-light uppercase">Children Impacted</div>
+              <div class=" base-spacing-sm">{{data.children_impacted}}</div>
+              <div class="brand-blue font-large font-light uppercase">TLM Kits</div>
+              <div class=" base-spacing-sm">{{data.tlm_kits}}</div>
+            </div>
+            <div class="sect-half">
+              <div class="brand-blue font-large font-light uppercase">Schools Covered</div>
+              <div class=" base-spacing-sm">{{data.gka_schools}}</div>
+              <div class="brand-blue font-large font-light uppercase">Education Volunteers</div>
+              <div class=" base-spacing-sm">{{data.education_volunteers}}</div>
+              <div class="brand-blue font-large font-light uppercase">Teachers Trained</div>
+              <div class=" base-spacing-sm">{{data.teachers_trained}}</div>
+            </div>
+        </div>
+      <!--/div>
+    </div-->
   </script>
 
   
   <script type="text/html" id="tpl-smsSummary">
-    <div class="table-responsive-wrap">        
-        <table class="table-base">
-          <thead>
-            <tr class="table-base-heading">
-              <td width=50% class="brand-blue">Details</td>
-              <!--td class="brand-blue">Percentage</td-->
-          
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="font-smaller">
-              <td>SMS Messages</td>
-              <td colspan="2">{{ sms.stories }}</td>
-              <!--td class="brand-green" colspan="2">{{ district.stories}}</td-->
-            </tr>
-            <tr class="font-smaller">
-              <td>Schools with SMS Messages</td>
-              <td colspan="2">{{ sms.schools }}</td>
-              <!--td class="brand-green" colspan="2">{{ district.schools}}</td-->
-            </tr>
-            <tr class="font-smaller">
-              <td>Last SMS</td>
-              <td colspan="2">{{ format_lastsms }}</td>
-              <!--td class="brand-green" colspan="2">{{ district.format_lastsms}}</td-->
-            </tr>
-          </tbody>
-        </table>
+    <h3 class="heading-border brand-green">SMS SUMMARY</h3> 
+      <div class="sect-parent center-text">
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">SMS Messages Received</div>
+          <div class=" base-spacing-sm">{{ sms.stories }}</div>
+        </div>
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">Schools with SMS Messages</div>
+          <div class=" base-spacing-sm">{{ sms.schools }} (50%)</div>
+        </div>
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">Last SMS</div>
+          <div class=" base-spacing-sm">{{ format_lastsms }}</div>
+        </div>
     </div>
   </script>
 
   <script type="text/html" id="tpl-responseTable">
-    <div class="table-responsive-wrap">        
+    <div class="container table-responsive-wrap"> 
+    <div class="base-spacing-mid"></div>       
+    <h5 class="heading-border brand-green">SMS RESPONSES</h3> 
+    
     <table class="table-base">
       <thead>
         <tr class="table-base-heading">
@@ -61,16 +72,12 @@
           <td class="brand-blue">Yes</td>
           <td class="brand-blue">No</td>
           {% set check=questions|first %}
-          {% if check.district %}
-            <td class="brand-blue">Yes</td>
-            <td class="brand-blue">No</td>
-          {% endif %}
         </tr>
       </thead>
       <tbody>
         {% for each in questions%}
         <tr class="font-smaller">
-          <td width='50%'>
+          <td width='85%'>
             {{each.question}}
           </td>
           <!--td>
@@ -93,53 +100,23 @@
           </td-->
           <td>{{each.score}}</td>
           <td>{{each.total-each.score|int}}</td>
-          {% if each.district %}
-            <td class="brand-green" >{{each.district.score}}</td>
-            <td class="brand-green" >{{each.district.total-each.district.score|int}}</td>
-          {% endif %}
         </tr>
       </tbody>
   </script>
 
-  <script type="text/html" id="tpl-percentGraph">
-    <div class="bar-graph-wrap">
-      <div class="bar-label">{{ question }}</div>
-      {% if total != 0 %}
-      <div class="bar-graph">
-        <div class="bar-percent green-leaf">{{ percent }}%</div>
-        <div class="bar-custom tooltip" aria-label="{{ score }}/{{ total }}">
-          <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-            <div class="bar-value bar-value-{{ percent }} green-leaf-bg" style="width:{{ percent }}%;"></div>
-          </div>
-        </div>
-      </div> <!-- /bar-graph -->
-      {% else %}
-      <div class="no-data">
-        No respondents
-      </div> 
-      {% endif %}
-    </div> <!-- /bar-graph-wrap -->
+
+  <script type="text/html" id="tpl-assmtSummary">
+        <div class="brand-blue font-large font-light uppercase">Assessments</div>
+        <div class=" base-spacing-sm">{{ assmt.count }}</div>
+        <div class="brand-blue font-large font-light uppercase">Schools Covered</div>
+        <div class=" base-spacing-sm">{{ assmt.schools }} ({{ assmt.schools_perc }}%)</div>
+        <div class="brand-blue font-large font-light uppercase">Children Assessed</div>
+        <div class=" base-spacing-sm">{{ assmt.children }} ({{ assmt.children_perc }}%)</div>
+        <div class="brand-blue font-large font-light uppercase">Last Assessment</div>
+        <div class=" base-spacing-sm">{{ assmt.last_assmt }}</div>
   </script>
 
-  <script type="text/html" id="tpl-colorText">
-    <div class="chart-athird-item">
-      <div>
-        {% for i in icon %}
-          <span class="{{ i }}"></span>
-        {% endfor %}
-        &nbsp;{{ facility }}
-      </div>
-      {% if total != 0 %}
-      <div class="bold {% if percent > 50 %} brand-green {% else %} brand-orange {% endif %}">
-        {{ percent }}%
-      </div>
-      {% else %}
-      <div class="no-data">
-        No data
-      </div>
-      {% endif %}
-    </div>
-  </script>
+
 
   <!-- There's probably a cleaner way of doing the below template without this many for loops-->
   <script type="text/html" id="tpl-compareTable">

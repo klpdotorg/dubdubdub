@@ -65,6 +65,8 @@
 
 <section class="container" id="school_summary">
   <div class="base-spacing-mid"></div>
+  <h2 class="heading-border grey-steel">GKA DASHBOARD</h2> 
+  <div class="base-spacing-mid"></div>
   <div class="sect-parent">
     <div class="sect-three-quarter">
       <div class="educational box sect-parent">
@@ -88,21 +90,57 @@
       <a href="#datemodal"><div class="button-grey square sq-tooltip" aria-label="Date Filter"><span class="white fa fa-calendar"></span></div></a>
     </div>
   </div>
+  <hr/>
 </section>
 
 <section class="clearfix">
   <div id="ReportContainer">
 
     <section class="container" id="top">
-      <div id="topSummary" class="js-detail-container"></div>
       <div class="base-spacing-mid"></div>
+      <div id="topSummary" class="js-summary-container"></div>
+      <div class="base-spacing-mid"></div>
+      <hr/>
     </section>
 
     <section class="container" id="sms">
-      <div id="smsSummary" class="js-detail-container"></div>   
-      <div id="smsquestions" class="js-detail-container"></div>
-      <div id="smsgraph" class="js-detail-container"></div>
+      <div id="smsSummary" class="js-detail-container"></div>  
       <div class="base-spacing-mid"></div>
+      <div class="sect-parent"> 
+        <div class="sect-half">
+          <div class="center-text heading-tiny-uppercase">SMS Users</div>
+          <div id="smsSender" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+        </div>
+        <div class="sect-half">
+          <div class="center-text heading-tiny-uppercase">SMS Volumes</div>
+          <div id="smsVolume" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+        </div>
+      </div>
+      <div id="smsQuestions" class="js-detail-container"></div>
+      <div class="base-spacing-mid"></div>
+    </section>
+
+
+    <section class="container" id="assessment">
+       
+      <div class="base-spacing-mid"></div>
+      <h3 class="heading-border brand-orange">ASSESSMENT SUMMARY</h3> 
+     <div class="base-spacing-mid"></div>
+      
+      <div class="container sect-parent"> 
+        <div class="sect-half">
+          <div id="assmtSummary" class="js-detail-container"></div> 
+        </div>
+        <div class="sect-half">
+          <div class="center-text heading-tiny-uppercase">Assessment Volumes</div>
+          <div id="assmtVolume" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+        </div>
+
+      </div>
+      <div class="base-spacing-mid"></div>
+      
+      <div class="center-text heading-tiny-uppercase">Competancy Summary</div>
+      <div id="assmtCompetancy" class="ct-chart ct-major-eleventh js-detail-container chartist-container"></div>
     </section>
 
     <section class="container" id="footer">          
