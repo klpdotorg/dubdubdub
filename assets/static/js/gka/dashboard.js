@@ -90,7 +90,20 @@ var entityDetails = {};
         loadTopSummary(params);
         loadSmsData(params);
         loadAssmtData(params);
-        
+        loadGPContestData(params);
+        loadComparison(params);
+    }
+
+    function loadComparison(params) {
+        var neighbours = [
+            {"name":"neighbour1","schools_perc":99,"children_perc":85,"teachers":100,"sms":200,"assmt":200},
+            {"name":"neighbour2","schools_perc":98,"children_perc":86,"teachers":100,"sms":210,"assmt":240},
+            {"name":"neighbour3","schools_perc":96,"children_perc":87,"teachers":100,"sms":220,"assmt":250},
+            {"name":"neighbour4","schools_perc":95,"children_perc":88,"teachers":100,"sms":230,"assmt":210}
+        ]
+        var tplComparison= swig.compile($('#tpl-compareTable').html());
+        var compareHTML = tplComparison({"neighbours":neighbours});
+        $('#compareTable').html(compareHTML);
     }
 
     function loadSmsData(params) {
@@ -111,8 +124,6 @@ var entityDetails = {};
         });
         renderSMSCharts(params);
     }
-
-
 
     function loadTopSummary(params) {
         var data = {
@@ -141,9 +152,6 @@ var entityDetails = {};
 
 
     function renderSMS(data) {
-        var tplResponses = swig.compile($('#tpl-responseTable').html());
-        //define your data
-        
         var SMSQuestionKeys = [];
         SMSQuestionKeys = [
             "ivrss-gka-trained",
@@ -157,7 +165,11 @@ var entityDetails = {};
             return getQuestion(data, 'sms', key);
         });
         var questions = getQuestionsArray(questionObjects);
-        var html = tplResponses({"questions":questions})
+        var regroup = {}
+        var tplResponses = swig.compile($('#tpl-smsResponses').html());
+        for (var each in questions)
+            regroup[questions[each]["key"]] = questions[each];
+        var html = tplResponses({"questions":regroup})
         $('#smsQuestions').html(html);
     }
 
@@ -217,7 +229,9 @@ var entityDetails = {};
             "schools_perc":10,
             "children": 2000,
             "children_perc":5,
-            "last_assmt":'30 Jan 2017 2:35:42 pm'
+            "last_assmt":'30 Jan 2017 2:35:42 pm',
+            "teachers": 145,
+            "teacher_perc":90
         }
      
         renderAssmtSummary(data);
@@ -232,6 +246,10 @@ var entityDetails = {};
         var tplAssmtSummary = swig.compile($('#tpl-assmtSummary').html());
         var assmtSummaryHTML = tplAssmtSummary({'assmt':data});
         $('#assmtSummary').html(assmtSummaryHTML);
+        var tplAssmtCoverage = swig.compile($('#tpl-assmtCoverage').html());
+        var assmtCoverageHTML = tplAssmtCoverage({'assmt':data});
+        $('#assmtCoverage').html(assmtCoverageHTML);
+           
     }
 
     function renderAssmtCharts(params) {
@@ -253,9 +271,9 @@ var entityDetails = {};
             labels: ["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","Subtraction","Word problems"],
             series: [
                 { 
-                    //className: 'ct-series-b',
+                    className: 'ct-series-i',
                     data: meta_values,
-                    distributed_series:true
+                    //distributed_series:true
                 }
             ],
         }
@@ -282,15 +300,73 @@ var entityDetails = {};
                     data: volume_values,
                 },
                 {
-                    className: 'ct-series-i',
+                    className: 'ct-series-d',
                     data: [60,60,60,60,60,60,60,60,60,60,60]  
                 }
             ]
         }
         renderLineChart('#assmtVolume', assmt_volume);
+        $('#avLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-orange'></span>"+
+                        " Expected Volumes <span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>");   
 
     }
 
+    function loadGPContestData(params){
+        var data = {
+            "summary": { "schools":148,
+                "children": 2000,
+                "last_contest":'30 Dec 2016 2:35:42 pm'},
+            "Class 4": { "boy_perc":40,"girl_perc":50,"overall_perc":45 },
+            "Class 5": { "boy_perc":30,"girl_perc":20,"overall_perc":25 },
+            "Class 6": { "boy_perc":20,"girl_perc":10,"overall_perc":15 }
+        }
+        
+        var tplSummary = swig.compile($('#tpl-gpcSummary').html());
+        var summaryHTML = tplSummary({"data":data["summary"]});
+        $('#gpcSummary').html(summaryHTML);
+
+        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+        summaryHTML = tplSummary({"data":data["Class 4"]});
+        $('#gpcGender_class4').html(summaryHTML);
+
+        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+        summaryHTML = tplSummary({"data":data["Class 5"]});
+        $('#gpcGender_class5').html(summaryHTML);
+
+        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+        summaryHTML = tplSummary({"data":data["Class 6"]});
+        $('#gpcGender_class6').html(summaryHTML);
+        renderGPContestCharts(params);
+    }
+
+
+    function renderGPContestCharts(params) {
+        var meta_values = [
+            {"meta":"Number Concepts","value":50},
+            {"meta":"Addition","value":50},
+            {"meta":"Subtraction","value":40},
+            {"meta":"Multiplication","value":30},
+            {"meta":"Division","value":25},
+            {"meta":"Patterns","value":10},
+            {"meta":"Shapes and Spatial Understanding","value":5},
+            {"meta":"Fractions","value":20},
+            {"meta":"Decimal","value":10},
+            {"meta":"Measurement - weight and time","value":50}
+        ];
+        var competancies = {
+            labels: ["Number Concepts","Addition","Subtraction","Multiplication","Division","Patterns","Shapes","Fractions","Decimal","Measurement"],
+            series: [
+                { 
+                    className: 'ct-series-n',
+                    data: meta_values,
+                    //distributed_series:true
+                }
+            ]
+        }
+        renderBarChart('#gpcGraph_class4', competancies);
+        renderBarChart('#gpcGraph_class5', competancies);
+        renderBarChart('#gpcGraph_class6', competancies);
+    }
 
     function renderBarChart(elementId, data) {
 
@@ -475,6 +551,7 @@ var entityDetails = {};
             //var displayText = qObj.source_prefix + question.question.display_text;
             return {
                 'question': question.question.display_text,
+                'key':question.question.key,
                 'score': score,
                 'total': total,
                 'percent': percent

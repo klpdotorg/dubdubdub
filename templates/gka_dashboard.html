@@ -108,11 +108,11 @@
       <div class="base-spacing-mid"></div>
       <div class="sect-parent"> 
         <div class="sect-half">
-          <div class="center-text heading-tiny-uppercase">SMS Users</div>
+          <div class="brand-blue font-large font-light center-text uppercase">SMS Users</div>
           <div id="smsSender" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
         </div>
         <div class="sect-half">
-          <div class="center-text heading-tiny-uppercase">SMS Volumes</div>
+          <div class="brand-blue font-large font-light center-text uppercase">SMS Volumes</div>
           <div id="smsVolume" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
         </div>
       </div>
@@ -122,27 +122,70 @@
 
 
     <section class="container" id="assessment">
-       
+      <hr/>
+      <div id="assmtSummary" class="js-detail-container"></div>  
       <div class="base-spacing-mid"></div>
-      <h3 class="heading-border brand-orange">ASSESSMENT SUMMARY</h3> 
-     <div class="base-spacing-mid"></div>
-      
       <div class="container sect-parent"> 
         <div class="sect-half">
-          <div id="assmtSummary" class="js-detail-container"></div> 
+          <div id="assmtCoverage"></div>
         </div>
         <div class="sect-half">
-          <div class="center-text heading-tiny-uppercase">Assessment Volumes</div>
-          <div id="assmtVolume" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+          <div class="brand-blue font-large font-light center-text uppercase">Assessment Volumes</div>
+          <div class="base-spacing-sm"></div>
+          <div id="assmtVolume" class="ct-chart ct-major-eleventh js-detail-container chartist-container"></div>
+          <div class="base-spacing-mid"></div>    
+          <div id="avLegend"></div>
+          
         </div>
 
       </div>
       <div class="base-spacing-mid"></div>
-      
-      <div class="center-text heading-tiny-uppercase">Competancy Summary</div>
+      <h5 class="heading-border brand-red uppercase">Competancy Summary</h5> 
+      <div class="base-spacing-mid"></div>
       <div id="assmtCompetancy" class="ct-chart ct-major-eleventh js-detail-container chartist-container"></div>
+      <div class="center-text font-smallest grey-silver">This section of the report draws data from <a href="http://ekstep.org" target="_blank">Ek-Step Foundation</a> for the assessments carried out on the Genie Tablet/Mobile Application.</div>
+      <hr/>
     </section>
 
+
+    <section class="container" id="gpcontest"> 
+      <div id="gpcSummary" class="js-detail-container"></div>  
+      <div class="base-spacing-mid"></div>
+      <div class="container sect-parent"> 
+        <div class="sect-three-quarter">
+          <div class="brand-blue font-large font-light uppercase">Class 4 Summary</div>
+          <div id="gpcGraph_class4" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+        </div>
+        <div class="sect-quarter">
+          <div id="gpcGender_class4"></div>
+        </div>
+        <div class="sect-three-quarter">
+          <div class="brand-blue font-large font-light uppercase">Class 5 Summary</div>
+          <div id="gpcGraph_class5" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+        </div>
+        <div class="sect-quarter">
+          <div id="gpcGender_class5"></div>
+        </div>
+        <div class="sect-three-quarter">
+          <div class="brand-blue font-large font-light uppercase">Class 6 Summary</div>
+          <div id="gpcGraph_class6" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+        </div>
+        <div class="sect-quarter">
+          <div id="gpcGender_class6"></div>
+        </div>
+      </div>
+      <div class="base-spacing-mid"></div>
+      <hr/>
+    </section>
+    <section class="container" id="gpcontest"> 
+      <div id="gpcSummary" class="js-detail-container"></div>  
+      <div class="base-spacing-mid"></div>
+      <div class="container">
+          <div id="compareTable"></div>
+      </div>
+      <div class="base-spacing-mid"></div>
+      <hr/>
+    </section>
     <section class="container" id="footer">          
       <div class="center-text font-smaller grey-silver">This report is generated for <a href="http://akshara.org.in" target="_blank">Akshara Foundation</a>  by KLP.</div>
     </section>
