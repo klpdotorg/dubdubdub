@@ -7,6 +7,7 @@ var entityDetails = {};
     var premodalQueryParams = {};
     
     klp.init = function() {
+        klp.accordion.init();
         klp.gka_filters.init();
         klp.router = new KLPRouter();
         klp.router.init();
@@ -91,19 +92,65 @@ var entityDetails = {};
         loadSmsData(params);
         loadAssmtData(params);
         loadGPContestData(params);
+        loadSurveys(params);
         loadComparison(params);
     }
 
     function loadComparison(params) {
         var neighbours = [
-            {"name":"neighbour1","schools_perc":99,"children_perc":85,"teachers":100,"sms":200,"assmt":200},
-            {"name":"neighbour2","schools_perc":98,"children_perc":86,"teachers":100,"sms":210,"assmt":240},
-            {"name":"neighbour3","schools_perc":96,"children_perc":87,"teachers":100,"sms":220,"assmt":250},
-            {"name":"neighbour4","schools_perc":95,"children_perc":88,"teachers":100,"sms":230,"assmt":210}
+            {"name":"neighbour1","schools":99,"sms":200,"sms_govt":50,"assmt":200,'contests':5,'surveys':30},
+            {"name":"neighbour2","schools":98,"sms":210,"sms_govt":40,"assmt":240,'contests':6,'surveys':40},
+            {"name":"neighbour3","schools":96,"sms":220,"sms_govt":30,"assmt":250,'contests':6,'surveys':20},
+            {"name":"neighbour4","schools":95,"sms":230,"sms_govt":20,"assmt":210,'contests':10,'surveys':50}
         ]
         var tplComparison= swig.compile($('#tpl-compareTable').html());
         var compareHTML = tplComparison({"neighbours":neighbours});
         $('#compareTable').html(compareHTML);
+        renderComparisonCharts(params);
+    }
+
+    function renderComparisonCharts(params){
+        var meta_values = {
+        "n1": [{"meta":"neighbour1","value":10,"skill":"A"},
+            {"meta":"neighbour1","value":60,"skill":"S"},
+            {"meta":"neighbour1","value":60,"skill":"M"},
+            {"meta":"neighbour1","value":40,"skill":"D"}],
+        "n2":[{"meta":"neighbour2","value":20,"skill":"A"},
+            {"meta":"neighbour2","value":40,"skill":"S"},
+            {"meta":"neighbour2","value":50,"skill":"M"},
+            {"meta":"neighbour2","value":60,"skill":"D"}],
+        "n3":[{"meta":"neighbour3","value":40,"skill":"A"},
+            {"meta":"neighbour3","value":30,"skill":"S"},
+            {"meta":"neighbour3","value":40,"skill":"M"},
+            {"meta":"neighbour3","value":50,"skill":"D"}],
+        "n4":[{"meta":"neighbour4","value":20,"skill":"A"},
+            {"meta":"neighbour4","value":40,"skill":"S"},
+            {"meta":"neighbour4","value":20,"skill":"M"},
+            {"meta":"neighbour4","value":50,"skill":"D"}]
+        };
+        var competencies = {
+            labels: ["Addition","Subtraction","Multiplication","Division"],
+            series: [
+                { 
+                    className: 'ct-series-i',
+                    data: meta_values["n1"]
+                },
+                { 
+                    className: 'ct-series-d',
+                    data: meta_values["n2"]
+                },
+                { 
+                    className: 'ct-series-f',
+                    data: meta_values["n3"]
+                },
+                { 
+                    className: 'ct-series-g',
+                    data: meta_values["n4"]
+                }
+            ],
+        }
+        renderBarChart('#compareAssmtGraph', competencies, "Percentage of Children");
+        renderBarChart('#compareGpcGraph',competencies, "Percentage of Children");
     }
 
     function loadSmsData(params) {
@@ -125,13 +172,40 @@ var entityDetails = {};
         renderSMSCharts(params);
     }
 
+    function loadSurveys(params) {
+        var metaURL = "stories/meta/?source=mobile";
+        var $metaXHR = klp.api.do(metaURL, params);
+        startDetailLoading();
+        $metaXHR.done(function(data) 
+        {
+            renderSurveySummary(data);
+        });
+
+        //GETTING SMS DETAILS
+        // var detailURL = "stories/details/?source=sms";
+        // var $detailXHR = klp.api.do(detailURL, params);
+        // $detailXHR.done(function(data) {
+        //     stopDetailLoading();
+        //     renderSMS(data);
+        // });
+        // renderSMSCharts(params);
+    }
+
+
+    function renderSurveySummary(data) {
+        var tplMobSummary = swig.compile($('#tpl-mobSummary').html());
+        var summaryData = data;
+        summaryData["format_lastmobile"] = formatLastStory(summaryData["mobile"]["last_story"]);
+        var mobSummaryHTML = tplMobSummary(summaryData);
+        $('#surveySummary').html(mobSummaryHTML);
+    }
+
+
     function loadTopSummary(params) {
         var data = {
             "total_schools": 15000,
             "gka_schools":14854,
             "children_impacted": 2000000,
-            "tlm_kits":14854,
-            "teachers_trained": 14000,
             "education_volunteers":200
         }
         startSummaryLoading();
@@ -210,10 +284,17 @@ var entityDetails = {};
                 { 
                     className: 'ct-series-b',
                     data: volume_values,
+                },
+                {
+                    className: 'ct-series-h',
+                    data: [60,60,60,60,60,60,60,60,60,60,60]  
                 }
             ]
         }
         renderLineChart('#smsVolume', sms_volume);
+        $('#smsLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
+                        " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>");   
+
 
     }
 
@@ -264,11 +345,12 @@ var entityDetails = {};
             {"meta":"Fractions","value":90},
             {"meta":"Place value","value":80},
             {"meta":"Regrouping with money","value":70},
+            {"meta":"Relationship between 3D shapes","value":30},
             {"meta":"Subtraction","value":60},
             {"meta":"Word problems","value":60}
         ];
-        var competancies = {
-            labels: ["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","Subtraction","Word problems"],
+        var competencies = {
+            labels: ["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
             series: [
                 { 
                     className: 'ct-series-i',
@@ -277,7 +359,7 @@ var entityDetails = {};
                 }
             ],
         }
-        renderBarChart('#assmtCompetancy', competancies);
+        renderBarChart('#assmtCompetancy', competencies, "Percentage of Children");
 
         var volume_values = [
             {"meta":"Jun 2016","value":10},
@@ -314,8 +396,10 @@ var entityDetails = {};
     function loadGPContestData(params){
         var data = {
             "summary": { "schools":148,
-                "children": 2000,
-                "last_contest":'30 Dec 2016 2:35:42 pm'},
+                "gps": 20,
+                "contests":20,
+                "children": 2000
+            },
             "Class 4": { "boy_perc":40,"girl_perc":50,"overall_perc":45 },
             "Class 5": { "boy_perc":30,"girl_perc":20,"overall_perc":25 },
             "Class 6": { "boy_perc":20,"girl_perc":10,"overall_perc":15 }
@@ -353,7 +437,7 @@ var entityDetails = {};
             {"meta":"Decimal","value":10},
             {"meta":"Measurement - weight and time","value":50}
         ];
-        var competancies = {
+        var competencies = {
             labels: ["Number Concepts","Addition","Subtraction","Multiplication","Division","Patterns","Shapes","Fractions","Decimal","Measurement"],
             series: [
                 { 
@@ -363,15 +447,15 @@ var entityDetails = {};
                 }
             ]
         }
-        renderBarChart('#gpcGraph_class4', competancies);
-        renderBarChart('#gpcGraph_class5', competancies);
-        renderBarChart('#gpcGraph_class6', competancies);
+        renderBarChart('#gpcGraph_class4', competencies, "Percentage of Children");
+        renderBarChart('#gpcGraph_class5', competencies, "Percentage of Children");
+        renderBarChart('#gpcGraph_class6', competencies, "Percentage of Children");
     }
 
-    function renderBarChart(elementId, data) {
+    function renderBarChart(elementId, data, yTitle=' ') {
 
         var options = {
-            seriesBarDistance: 10,
+            //seriesBarDistance: 10,
             axisX: {
                 showGrid: true,
             },
@@ -379,7 +463,22 @@ var entityDetails = {};
                 showGrid: true,
             },
             plugins: [
-                Chartist.plugins.tooltip()
+                Chartist.plugins.tooltip(),
+                Chartist.plugins.ctAxisTitle({
+                  axisX: {
+                    //No label
+                  },
+                  axisY: {
+                    axisTitle: yTitle,
+                    axisClass: 'ct-axis-title',
+                    offset: {
+                      x: 0,
+                      y: 0
+                    },
+                    textAnchor: 'middle',
+                    flipTitle: false
+                  }
+                })
             ]
         };
 

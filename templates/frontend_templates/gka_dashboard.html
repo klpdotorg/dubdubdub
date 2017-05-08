@@ -24,16 +24,12 @@
               <div class=" base-spacing-sm">{{data.total_schools}}</div>
               <div class="brand-blue font-large font-light uppercase">Children Impacted</div>
               <div class=" base-spacing-sm">{{data.children_impacted}}</div>
-              <div class="brand-blue font-large font-light uppercase">TLM Kits</div>
-              <div class=" base-spacing-sm">{{data.tlm_kits}}</div>
             </div>
             <div class="sect-half">
               <div class="brand-blue font-large font-light uppercase">Schools Covered</div>
               <div class=" base-spacing-sm">{{data.gka_schools}}</div>
               <div class="brand-blue font-large font-light uppercase">Education Volunteers</div>
               <div class=" base-spacing-sm">{{data.education_volunteers}}</div>
-              <div class="brand-blue font-large font-light uppercase">Teachers Trained</div>
-              <div class=" base-spacing-sm">{{data.teachers_trained}}</div>
             </div>
         </div>
       <!--/div>
@@ -53,8 +49,26 @@
           <div class=" base-spacing-sm">{{ sms.schools }} (50%)</div>
         </div>
         <div class="sect-third">
-          <div class="brand-blue font-large font-light uppercase">Last SMS</div>
+          <div class="brand-blue font-large font-light uppercase">Latest SMS</div>
           <div class=" base-spacing-sm">{{ format_lastsms }}</div>
+        </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="tpl-mobSummary">
+    <h3 class="heading-border brand-purple">SURVEY SUMMARY</h3> 
+      <div class="sect-parent center-text">
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">Surveys Received</div>
+          <div class=" base-spacing-sm">{{ mobile.stories }}</div>
+        </div>
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">Schools with Surveys</div>
+          <div class=" base-spacing-sm">{{ mobile.schools }} (50%)</div>
+        </div>
+        <div class="sect-third">
+          <div class="brand-blue font-large font-light uppercase">Latest Survey</div>
+          <div class=" base-spacing-sm">{{ format_lastmobile }}</div>
         </div>
     </div>
   </script>
@@ -71,7 +85,7 @@
           <div class="bar-graph">
             <div class="bar-percent grey-gravel">{{ questions["ivrss-math-class-happening"].percent}}%</div>
             <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-trained"].score}}/ {{ questions["ivrss-math-class-happening"].total}} responses">
-              <div class="bar-value bar-value-100 grey-mist-bg" style="width:100%;">
+              <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
                 <div class="bar-value bar-value-{{ questions["ivrss-math-class-happening"].total}} green-leaf-bg" style="width:{{questions["ivrss-math-class-happening"].percent}}%;"></div>
               </div>
             </div>
@@ -84,7 +98,7 @@
           <div class="bar-graph">
             <div class="bar-percent grey-gravel">{{ questions["ivrss-gka-trained"].percent}}%</div>
             <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-trained"].score}}/ {{ questions["ivrss-gka-trained"].total}} responses">
-              <div class="bar-value bar-value-100 grey-mist-bg" style="width:100%;">
+              <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
                 <div class="bar-value bar-value-{{ questions["ivrss-gka-trained"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-trained"].percent}}%;"></div>
               </div>
             </div>
@@ -105,7 +119,7 @@
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-gka-tlm-in-use"].percent}}%</div>
                 <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-tlm-in-use"].score}}/ {{ questions["ivrss-gka-tlm-in-use"].total}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-                    <div class="bar-value bar-value-{{ questions["ivrss-gka-tlm-in-use"].total}} brand-green-bg" style="width:{{questions["ivrss-gka-tlm-in-use"].percent}}%;"></div>
+                    <div class="bar-value bar-value-{{ questions["ivrss-gka-tlm-in-use"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-tlm-in-use"].percent}}%;"></div>
                   </div>
                 </div>
               </div>
@@ -121,7 +135,7 @@
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-gka-rep-stage"].percent}}%</div>
                 <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-rep-stage"].score}}/ {{ questions["ivrss-gka-rep-stage"].total}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-                    <div class="bar-value bar-value-{{ questions["ivrss-gka-rep-stage"].total}} brand-green-bg" style="width:{{questions["ivrss-gka-rep-stage"].percent}}%;"></div>
+                    <div class="bar-value bar-value-{{ questions["ivrss-gka-rep-stage"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-rep-stage"].percent}}%;"></div>
                   </div>
                 </div>
               </div>
@@ -137,7 +151,7 @@
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-group-work"].percent}}%</div>
                 <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-group-work"].score}}/ {{ questions["ivrss-group-work"].total}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
-                    <div class="bar-value bar-value-{{ questions["ivrss-group-work"].total}} brand-green-bg" style="width:{{questions["ivrss-group-work"].percent}}%;"></div>
+                    <div class="bar-value bar-value-{{ questions["ivrss-group-work"].total}} green-leaf-bg" style="width:{{questions["ivrss-group-work"].percent}}%;"></div>
                   </div>
                 </div>
               </div>
@@ -193,7 +207,7 @@
           <div class=" base-spacing-sm">{{ assmt.children }}</div>
         </div>
         <div class="sect-quarter">
-          <div class="brand-blue font-large font-light uppercase">Last Assessment</div>
+          <div class="brand-blue font-large font-light uppercase">Latest Assessment</div>
           <div class=" base-spacing-sm">{{ assmt.last_assmt }}</div>
         </div>
     </div>
@@ -206,7 +220,7 @@
         <div class="bar-graph">
           <div class="bar-percent grey-gravel">{{ assmt.schools_perc }}%</div>
           <div class="bar-custom tooltip" aria-label="{{ assmt.schools }}">
-            <div class="bar-value bar-value-100 grey-mist-bg" style="width:100%;">
+            <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
               <div class="bar-value bar-value-{{ assmt.schools_perc }} pink-salmon-bg" style="width:{{ assmt.schools_perc }}%;"></div>
             </div>
           </div>
@@ -219,48 +233,40 @@
         <div class="bar-graph">
           <div class="bar-percent grey-gravel">{{ assmt.children_perc }}%</div>
           <div class="bar-custom tooltip" aria-label="{{ assmt.children }}">
-            <div class="bar-value bar-value-100 grey-mist-bg" style="width:100%;">
+            <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
               <div class="bar-value bar-value-{{ assmt.children_perc }} brand-orange-bg" style="width:{{ assmt.children_perc }}%;"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="base-spacing-sm"></div>
-      <div class="brand-blue font-large font-light uppercase">Teachers - Trained</div>
-      <div class="base-spacing-sm"></div>
-      <div class="bar-graph-wrap">
-        <div class="bar-graph">
-          <div class="bar-percent grey-gravel">{{ assmt.teacher_perc }}%</div>
-          <div class="bar-custom tooltip" aria-label="{{ assmt.teachers_trained }}">
-            <div class="bar-value bar-value-100 grey-mist-bg" style="width:100%;">
-              <div class="bar-value bar-value-{{ assmt.teacher_perc }} brand-red-bg" style="width:{{ assmt.teacher_perc }}%;"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
   </script>
 
   <script type="text/html" id="tpl-gpcSummary">      
     <h3 class="heading-border brand-turquoise">GP CONTEST SUMMARY</h3> 
       <div class="sect-parent center-text">
-        <div class="sect-third">
+        <div class="sect-quarter">
+          <div class="brand-blue font-large font-light uppercase">Gram Panchayat</div>
+          <div class=" base-spacing-sm">{{ data.gps }}</div>
+        </div>
+        <div class="sect-quarter">
           <div class="brand-blue font-large font-light uppercase">Schools Covered</div>
           <div class=" base-spacing-sm">{{ data.schools }}</div>
         </div>
-        <div class="sect-third">
+        <div class="sect-quarter">
           <div class="brand-blue font-large font-light uppercase">Children Assessed</div>
           <div class=" base-spacing-sm">{{ data.children }}</div>
         </div>
-        <div class="sect-third">
-          <div class="brand-blue font-large font-light uppercase">Last Contest</div>
-          <div class=" base-spacing-sm">{{ data.last_contest }}</div>
+        <div class="sect-quarter">
+          <div class="brand-blue font-large font-light uppercase">Contests</div>
+          <div class=" base-spacing-sm">{{ data.contests }}</div>
         </div>
     </div>
   </script>
 
 
   <script type="text/html" id="tpl-genderGpcSummary">      
-    <div class="brand-blue font-large font-light uppercase">Performance</div>
+    <!--div class="brand-blue font-large font-light uppercase">Performance</div-->
     <div class="module-stats-icon module-stats-boygirl">
       <span class="icon-boy-girl"></span>
       <div class="module-stats-info">
@@ -268,7 +274,7 @@
         <p class="module-stats-label">{{data.overall_perc}}%</p>
       </div>
     </div>
-    <br/>
+    <!--br/-->
     <div class="module-stats-icon module-stats-girl">
       <span class="icon-girl"></span>
       <div class="module-stats-info">
@@ -276,7 +282,7 @@
         <p class="module-stats-label">{{data.girl_perc}}%</p>
       </div>
     </div>
-    <br/>
+    <!--br/-->
     <div class="module-stats-icon">
       <span class="icon-boy"></span>
       <div class="module-stats-info">
@@ -288,32 +294,47 @@
 
   <!-- There's probably a cleaner way of doing the below template without this many for loops-->
   <script type="text/html" id="tpl-compareTable">
-   <h3 class="heading-border brand-turquoise">COMPARISON</h3> 
+   <h3 class="heading-border brand-red">COMPARISON</h3> 
+   <div class="table-responsive-wrap">
     <table class="table-base">
       <thead class="table-base-heading">
         <tr>
             <th></th>
-            <th>Schools Covered</th>
-            <th>Children Impacted</th>
-            <th>Teachers Trained</th>
-            <th>SMS Received</th>
-            <th>Assessment Received</th>
+            <th>Schools</th>
+            <th colspan="2">SMS Volumes</th>
+            <th>Assessment Volumes</th>
+            <th>GP Contests</th>
+            <th>Surveys</th>
         </tr>
       </thead>
       <tbody>
         {% for n in neighbours %}
           <tr class="font-small">
             <td>{{ n.name | capitalize}}</td>
-            <td>{{ n.schools_perc }}%</td>
-            <td>{{ n.children_perc }}%</td>
-            <td>{{ n.teachers }}%</td>
+            <td>{{ n.schools }}</td>
             <td>{{ n.sms }}</td>
+            <td>
+              <div class="base-spacing-sm"></div>
+              <div class="bar-graph-wrap">
+                <div class="bar-graph">
+                  <div class="bar-percent grey-gravel">{{ n.sms_govt}}%</div>
+                  <div class="bar-custom tooltip" aria-label="{{n.sms_govt/100*n.sms|round}} are from Officials">
+                    <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
+                      <div class="bar-value bar-value-100 brand-red-bg" style="width:{{n.sms_govt}}%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
             <td>{{ n.assmt }}</td>
+            <td>{{ n.contests }}</td>
+            <td>{{ n.surveys }}</td>
           </tr>
         {% endfor %}
         </tr>
       </tbody>
     </table>
+    </div>
     <div class="font-smaller center-text">If a block, cluster or school is chosen, the comparison should show the values upward to district for that entity.</div>
   </script>
 
