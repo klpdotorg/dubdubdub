@@ -157,9 +157,8 @@
       </li>
       <li><a href='' class='head js-accordion-header brand-turquoise align-right'>
       GP CONTESTS  <span class="fa fa-angle-down"></span></a>
-
         <section class="content container" id="gpcontest"> 
-          <div id="gpcSummary" class="js-detail-container"></div>  
+          <div id="gpcSummary"></div>  
           <div class="base-spacing-mid"></div>
           <div class="brand-blue center-text font-large font-light uppercase">Class 4 Summary</div>
           <div class="base-spacing-mid"></div>
@@ -174,7 +173,6 @@
           <div class="center-text" id="gpcGender_class6"></div>
           <div id="gpcGraph_class6" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
           <div class="base-spacing-mid"></div>
-          
         </section>
         <hr/>
       </li>
@@ -183,11 +181,20 @@
 
         <section class="content container" id="surveys"> 
           <div class="base-spacing-mid"></div>
-          <div class="container">
-              <div id="surveySummary"></div>
+          <div id="surveySummary"></div>
+          <div class="base-spacing-mid"></div>
+          <div class="sect-parent"> 
+            <div class="sect-half">
+              <div class="brand-blue font-large font-light center-text uppercase">Respondents</div>
+              <div id="mobRespondent" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+            </div>
+            <div class="sect-half">
+              <div class="brand-blue font-large font-light center-text uppercase">Survey Volumes</div>
+              <div id="mobVolume" class="ct-chart  ct-minor-seventh js-detail-container chartist-container"></div>
               <div class="base-spacing-mid"></div>
-              <div id="surveyQuestions"></div>
+            </div>
           </div>
+          <div id="surveyQuestions"></div>
           <div class="base-spacing-mid"></div>
         </section>
         <hr/>

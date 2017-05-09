@@ -132,19 +132,19 @@ var entityDetails = {};
             labels: ["Addition","Subtraction","Multiplication","Division"],
             series: [
                 { 
-                    className: 'ct-series-i',
+                    className: 'ct-series-f',
                     data: meta_values["n1"]
                 },
                 { 
-                    className: 'ct-series-d',
+                    className: 'ct-series-a',
                     data: meta_values["n2"]
                 },
                 { 
-                    className: 'ct-series-f',
+                    className: 'ct-series-g',
                     data: meta_values["n3"]
                 },
                 { 
-                    className: 'ct-series-g',
+                    className: 'ct-series-o',
                     data: meta_values["n4"]
                 }
             ],
@@ -179,18 +179,116 @@ var entityDetails = {};
         $metaXHR.done(function(data) 
         {
             renderSurveySummary(data);
+            renderRespondentChart(data);
+        });
+        
+        var volumeURL = "stories/volume/?source=mobile";
+        var $volumeXHR = klp.api.do(volumeURL, params);
+        $volumeXHR.done(function(data) {
+            renderVolumeChart(data);
         });
 
-        //GETTING SMS DETAILS
-        // var detailURL = "stories/details/?source=sms";
-        // var $detailXHR = klp.api.do(detailURL, params);
-        // $detailXHR.done(function(data) {
-        //     stopDetailLoading();
-        //     renderSMS(data);
-        // });
-        // renderSMSCharts(params);
+        var detailURL = "stories/details/?source=mobile";
+        var $detailXHR = klp.api.do(detailURL, params);
+        $detailXHR.done(function(data) {
+            renderSurveyQuestions(data);
+        });
     }
 
+    function renderVolumeChart(data) {
+        var years = _.keys(data.volumes);
+        var latest = Math.max.apply(Math,years);
+        var earliest = latest-1;
+        var prev_months = _.keys(data.volumes[earliest]);
+        var new_months = _.keys(data.volumes[latest]);
+        var month_labels = [];
+        var meta_values = [];
+        for (var i = 5; i < 12; i++)
+        {
+            meta_values.push({'meta':prev_months[i]+" "+earliest,
+                'value':data.volumes[earliest][prev_months[i]]})
+            month_labels.push(prev_months[i]+" "+earliest);
+        }
+        for (var i = 0; i < 5; i++)
+        {
+            meta_values.push({'meta':new_months[i]+" "+latest,
+                'value':data.volumes[latest][new_months[i]]})
+            month_labels.push(new_months[i]+" "+latest);
+        }
+        //console.log(meta_values);
+        var data = {
+            labels: month_labels,
+            series: [
+                { 
+                    className: 'ct-series-a',
+                    data: meta_values,
+                }
+            ]
+        };
+        renderLineChart('#mobVolume', data);
+    }
+
+    function renderRespondentChart(data) {
+        var labelMap = {
+            'SDMC_MEMBER': 'SDMC',
+            'CBO_MEMBER': 'CBO',
+            'PARENTS': 'Parent',
+            'TEACHERS': 'Teacher',
+            'VOLUNTEER': 'Volunteer',
+            'EDUCATED_YOUTH': 'Youth',
+            'LOCAL_LEADER': 'Leader',
+            'AKSHARA_STAFF': 'Akshara',
+            'ELECTED_REPRESENTATIVE': 'Elected' 
+        };
+        var labels = _.map(_.keys(data.respondents), function(label) {
+            if (labelMap.hasOwnProperty(label)) {
+                return labelMap[label];
+            } else {
+                return _.str.titleize(label);
+            }
+        });
+        var values = _.values(data.respondents);
+        var meta_values = [];
+        for( var i=0; i < labels.length; i++) {
+            meta_values.push({'meta': labels[i],'value': values[i]});
+        } /* chartist tooltip transformations */ 
+        var data_respondent = {
+            labels: labels,
+            series: [
+                { 
+                    className: 'ct-series-a',
+                    data: meta_values,
+                }
+            ]
+        };
+        renderBarChart('#mobRespondent', data_respondent);
+
+    }
+
+    function renderSurveyQuestions(data) {
+        var questionKeys = [];
+        questionKeys = [
+            "mob-sdmc-meet",
+            "mob-subtraction",
+            "mob-addition",
+            "mob-read-english",
+            "mob-read-kannada",
+            "mob-teacher-shortage",
+            "mob-mdm-satifactory",
+            "ivrss-functional-toilets-girls"
+        ];
+        
+        var questionObjects = _.map(questionKeys, function(key) {
+            return getQuestion(data, 'mobile', key);
+        });
+        var questions = getQuestionsArray(questionObjects);
+        //var regroup = {}
+        var tplResponses = swig.compile($('#tpl-mobResponses').html());
+        // for (var each in questions)
+        //     regroup[questions[each]["key"]] = questions[each];
+        var html = tplResponses({"questions":questions})
+        $('#surveyQuestions').html(html);
+    }
 
     function renderSurveySummary(data) {
         var tplMobSummary = swig.compile($('#tpl-mobSummary').html());

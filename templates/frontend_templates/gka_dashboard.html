@@ -72,7 +72,34 @@
         </div>
     </div>
   </script>
+  <script type="text/html" id="tpl-mobResponses">
+    <div class="base-spacing-mid"></div>       
+    <h5 class="heading-border purple-amethyst">SURVEY RESPONSES</h5> 
+    <div class="sect-parent">
+      <div class="sect-half">
+      {% set counter=0 %}
+      {% for q in questions %}
+        <div class="font-small">{{q.question}}</div>
+        <div class="bar-graph-wrap">
+          <div class="bar-graph">
+            <div class="bar-percent grey-gravel">{{ q.percent}}%</div>
+            <div class="bar-custom tooltip" aria-label="{{ q.score}}/ {{ q.total}} responses">
+              <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
+                <div class="bar-value bar-value-{{ q.total}} brand-blue-bg" style="width:{{q.percent}}%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if counter == questions.length/2-1 %}
+          </div>
+          <div class="sect-half">
+        {% endif %}
+        {% set counter = counter + 1 %}
+      {% endfor %}
+      </div>
+    </div>
 
+  </script>
   <script type="text/html" id="tpl-smsResponses">
     <div class="base-spacing-mid"></div>       
     <h5 class="heading-border brand-green">SMS RESPONSES</h5> 
