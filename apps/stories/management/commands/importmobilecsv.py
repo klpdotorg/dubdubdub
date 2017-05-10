@@ -16,7 +16,7 @@ from schools.models import (
 from stories.models import (
     Question, Questiongroup, QuestionType, 
     QuestiongroupQuestions, Source, UserType,
-    Story, Answer)
+    Story, Answer, Survey)
 
 FIELD_COORDINATORS = {
     "bellary": "gajendravallar@gmail.com",
@@ -74,9 +74,10 @@ class Command(BaseCommand):
             print "Please specify a filename with the --file argument"
             return
 
+        survey = Survey.objects.get(name="Community")
         source = Source.objects.get(name="csv")
         question_group, created = Questiongroup.objects.get_or_create(
-            version=1, source=source
+            version=1, source=source, survey=survey
         )
 
         parents, created = UserType.objects.get_or_create(name=UserType.PARENTS)
