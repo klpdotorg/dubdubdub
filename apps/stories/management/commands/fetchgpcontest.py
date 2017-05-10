@@ -78,6 +78,7 @@ class Command(BaseCommand):
                 continue
 
             name = row[8]
+            gender = row[10].strip().capitalize()
             school_id = row[5].strip()
             accepted_answers = {'1':'Yes', '0':'No'}
 
@@ -93,13 +94,14 @@ class Command(BaseCommand):
                 missing_ids['schools'].append(school_id)
                 continue
 
+            # 21 is "class visited". and 22 is "gender".
             question_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                                 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+                                 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
 
             # We are not considering the 31st column on the CSV. 31
-            # corresponds to "class visited".
+            # corresponds to "class visited". 32 corresponds to "gender".
             answer_columns = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                              21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                              21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
 
             for answer_column in answer_columns:
                 if row[answer_column] in accepted_answers:
@@ -132,6 +134,12 @@ class Command(BaseCommand):
                             story=story,
                             question=question,
                             text=gp_class,
+                        )
+                    elif answer_column == 32:
+                        answer = Answer.objects.get_or_create(
+                            story=story,
+                            question=question,
+                            text=gender,
                         )
                     elif row[answer_column] in accepted_answers:
                         answer = Answer.objects.get_or_create(

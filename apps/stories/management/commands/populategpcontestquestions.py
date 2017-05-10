@@ -47,6 +47,9 @@ class Command(BaseCommand):
             status=Questiongroup.ACTIVE_STATUS
         )
 
+        question_type_text = QuestionType.objects.get_or_create(
+            name="text"
+        )[0]
         question_type = QuestionType.objects.get(
             name="checkbox"
         )
@@ -202,11 +205,18 @@ class Command(BaseCommand):
             options="{Yes,No}",
         )[0]
         q21 = Question.objects.get(text="Class visited")
+        q22 = Question.objects.get_or_create(
+            text="Gender",
+            data_type=1,
+            question_type=question_type_text,
+            school_type=school_type,
+            options="{Male,Female}",
+        )[0]
 
         questions = [q1, q2, q3, q4, q5, q6, q7,
                      q8, q9, q10, q11, q12, q13,
                      q14, q15, q16, q17, q18, q19,
-                     q20, q21]
+                     q20, q21, q22]
 
 
         for count, question in enumerate(questions):
@@ -272,12 +282,13 @@ class Command(BaseCommand):
         )[0]
         q20 = Question.objects.get(text="Shapes and spatial understanding 1")
         q21 = Question.objects.get(text="Class visited")
+        q22 = Question.objects.get(text="Gender")
 
         questions = [
             q1, q2, q3, q4, q5, q6, q7,
             q8, q9, q10, q11, q12, q13,
             q14, q15, q16, q17, q18, q19,
-            q20, q21
+            q20, q21, q22
         ]
 
         for count, question in enumerate(questions):
@@ -348,12 +359,13 @@ class Command(BaseCommand):
         )[0]
         q20 = Question.objects.get(text="Addition 3")
         q21 = Question.objects.get(text="Class visited")
+        q22 = Question.objects.get(text="Gender")
 
         questions = [
             q1, q2, q3, q4, q5, q6, q7,
             q8, q9, q10, q11, q12, q13,
             q14, q15, q16, q17, q18, q19,
-            q20, q21
+            q20, q21, q22
         ]
 
         for count, question in enumerate(questions):
