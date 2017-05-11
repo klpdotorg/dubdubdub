@@ -35,6 +35,8 @@ from common.views import (
     KLPListAPIView, KLPModelViewSet
 )
 
+from .gp_contest import GPContest
+
 from .models import (
     Question, Story, StoryImage,
     Answer, Questiongroup, UserType,
@@ -539,8 +541,12 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         response_json = {}
 
+
+        if survey == "GP Contest":
+            gp_contest = GPContest()
+            response_json = gp_contest.generate_report(stories)
         # Sources and filters
-        if source:
+        elif source:
             response_json[source] = get_que_and_ans(
                 stories, source, school_type, versions)
         else:
