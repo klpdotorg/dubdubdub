@@ -249,6 +249,8 @@ class StoryInfoView(KLPAPIView):
 class StoryVolumeView(KLPAPIView, CacheMixin):
     """Returns the number of stories per month per year.
 
+    survey -- Survey which the data belongs to 
+              [Ganitha Kalika Andolana/GP Contest]
     source -- Source of data [web/ivrs].
     version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
@@ -260,10 +262,11 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
-    response_type - What volume to calculate [call/gka-class]
+    response_type -- What volume to calculate [call/gka-class]
     """
 
     def get(self, request):
+        survey = self.request.QUERY_PARAMS.get('survey', None)
         source = self.request.QUERY_PARAMS.get('source', None)
         versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
@@ -298,6 +301,10 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
+
+        if survey:
+            stories_qset = stories_qset.filter(
+                group__survey__name=survey)
 
         if source:
             stories_qset = stories_qset.filter(
@@ -438,6 +445,8 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
 
+    survey -- Survey which the data belongs to 
+              [Ganitha Kalika Andolana/GP Contest]p
     source -- Source of data [web/ivrs].
     version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
@@ -452,6 +461,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     """
 
     def get(self, request):
+        survey = self.request.QUERY_PARAMS.get('survey', None)
         source = self.request.QUERY_PARAMS.get('source', None)
         versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
@@ -482,6 +492,9 @@ class StoryDetailView(KLPAPIView, CacheMixin):
 
         stories = Story.objects.all()
 
+        if survey:
+            stories = stories.filter(group__survey__name=survey)
+        
         if source:
             stories = stories.filter(group__source__name=source)
 
@@ -586,7 +599,8 @@ def get_que_and_ans(stories, source, school_type, versions):
 class StoryMetaView(KLPAPIView, CacheMixin):
     """Returns total number of stories and schools with stories
     along with respondent types.
-
+    survey -- Survey which the data belongs to 
+              [Ganitha Kalika Andolana/GP Contest]p
     source -- Source of data [web/ivrs].
     version -- Questiongroup versions. eg: ?version=2&version=3
     admin1 -- ID of the District.
@@ -601,6 +615,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     """
 
     def get(self, request):
+        survey = self.request.QUERY_PARAMS.get('survey', None)
         source = self.request.QUERY_PARAMS.get('source', None)
         versions = self.request.QUERY_PARAMS.getlist('version', None)
         admin1_id = self.request.QUERY_PARAMS.get('admin1', None)
@@ -687,6 +702,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         response_json['total']['stories'] = stories_qset.count()
         response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
 
+        if survey:
+            stories_qset = stories_qset.filter(
+                group__survey__name=survey
+            )
+            
         if source:
             stories_qset = self.source_filter(
                 source,
