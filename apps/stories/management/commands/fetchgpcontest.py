@@ -111,17 +111,20 @@ class Command(BaseCommand):
                 at_least_one_answer = False
 
             if at_least_one_answer:
-                story, created = Story.objects.get_or_create(
-                    school=school,
-                    name=name,
-                    is_verified=True,
-                    group=question_group,
-                    date_of_visit=timezone.make_aware(
-                        date_of_visit, timezone.get_current_timezone()
-                    ),
-                    user_type=user_type,
-                )
-
+                created = False
+                while not created:
+                    story, created = Story.objects.get_or_create(
+                        school=school,
+                        name=name,
+                        is_verified=True,
+                        group=question_group,
+                        date_of_visit=timezone.make_aware(
+                            date_of_visit, timezone.get_current_timezone()
+                        ),
+                        user_type=user_type,
+                    )
+                    date_of_visit = date_of_visit + datetime.timedelta(seconds=60)
+                    
                 print "The Story is: " + str(story) + " and has it been created? " + str(created)
 
                 for sequence_number, answer_column in zip(question_sequence, answer_columns):
