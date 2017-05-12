@@ -22,6 +22,7 @@ from rest_framework.exceptions import (
 
 from django.conf import settings
 from django.db.models import Q, Count
+from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
 
 from users.models import User
@@ -741,11 +742,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                     stories,
                 )
 
-        response_json['respondents'] = self.get_respondents(stories_qset)
+        response_json['respondents'] = self.get_respondents(stories_qset, source)
 
         return Response(response_json)
 
-    def get_respondents(self, stories_qset):
+    def get_respondents(self, stories_qset, source=None):
         usertypes = {
             'PR' : 'PARENTS',
             'TR' : 'TEACHERS',
@@ -759,12 +760,26 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'EO' : 'EDUCATION_OFFICIAL',
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
-        user_counts = UserType.objects.filter(
-            story__in=stories_qset
-        ).annotate(
-            story_count=Count('story')
-        )
-        return {usertypes[user.name]: user.story_count for user in user_counts}
+        
+        if source == "sms":
+            crp_users = Group.objects.get(name="CRP").user_set.all()
+            bfc_users = Group.objects.get(name="BFC").user_set.all()
+
+            crp_users_sms = stories_qset.filter(user__in=crp_users).count()
+            bfc_users_sms = stories_qset.filter(user__in=bfc_users).count()
+
+            return {
+                'CRP':crp_users_sms,
+                'BFC':bfc_users_sms,
+            }
+
+        else:
+            user_counts = UserType.objects.filter(
+                story__in=stories_qset
+            ).annotate(
+                story_count=Count('story')
+            )
+            return {usertypes[user.name]: user.story_count for user in user_counts}
 
     def source_filter(self, source, stories_qset):
         stories_qset = stories_qset.filter(
