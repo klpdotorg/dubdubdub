@@ -119,6 +119,7 @@ class QuestionType(models.Model):
 
 class UserType(models.Model):
     PARENTS = "PR"
+    CHILDREN = "CH"
     TEACHERS = "TR"
     VOLUNTEER = "VR"
     CBO_MEMBER = "CM"
@@ -132,6 +133,7 @@ class UserType(models.Model):
 
     USER_TYPE_CHOICES = (
         (PARENTS, 'Parents'),
+        (CHILDREN, 'Children'),
         (TEACHERS, 'Teachers'),
         (VOLUNTEER, 'Volunteer'),
         (CBO_MEMBER, 'CBO_Member'),
