@@ -1,16 +1,21 @@
 from __future__ import unicode_literals
-from common.models import BaseModel, GeoBaseModel
+
+import json
+
 from common.utils import cached_property
-from .partners import DiseInfo
 from stories.models import StoryImage, Question
-from .choices import CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,\
-    SEX_CHOICES, ALLOWED_GENDER_CHOICES, STATUS_CHOICES
-from .partners import LibLevelAgg
+from common.models import BaseModel, GeoBaseModel
+
+from django.conf import settings
 from django.contrib.gis.db import models
 from django.db.models import Sum, Count, Q
-from django.conf import settings
 from django.core.urlresolvers import reverse
-import json
+
+from .partners import DiseInfo
+from .partners import LibLevelAgg
+from .choices import (
+    CAT_CHOICES, MGMT_CHOICES, MT_CHOICES,
+    SEX_CHOICES, ALLOWED_GENDER_CHOICES, STATUS_CHOICES)
 
 
 class StatusManager(models.Manager):
@@ -89,8 +94,8 @@ class Boundary(BaseModel):
     dise_slug = models.SlugField(max_length=300)
     hierarchy = models.ForeignKey('BoundaryHierarchy', db_column='hid')
     type = models.ForeignKey('BoundaryType', db_column='type')
-
     status = models.IntegerField(choices=STATUS_CHOICES)
+    users = models.ManyToManyField('users.User', through='BoundaryUsers')
 
     objects = StatusManager()
 
@@ -139,6 +144,14 @@ class Boundary(BaseModel):
         managed = False
         db_table = 'tb_boundary'
         verbose_name_plural = 'Boundaries'
+
+
+class BoundaryUsers(BaseModel):
+    user = models.ForeignKey('users.User')
+    boundary = models.ForeignKey(Boundary)
+
+    class Meta:
+        unique_together = ('user', 'boundary')
 
 
 class BoundaryType(BaseModel):
