@@ -320,8 +320,8 @@ class AssessmentListSerializer(KLPSerializer):
     assid = serializers.IntegerField(source='assessment.id')
     studentgroup = serializers.CharField(source='studentgroup')
     assessmentname = serializers.CharField(source='assessment.name')
-    academicyear_name = serializers.CharField(source='assessment.programme.\
-                        academic_year.name')
+    academicyear_name = serializers.CharField(
+        source='assessment.programme.academic_year.name')
 
     class Meta:
         model = InstitutionAssessmentCohorts
