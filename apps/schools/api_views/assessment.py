@@ -1,6 +1,6 @@
 import sys
 from schools.models import (
-    Assessment, InstitutionAssessmentCohorts,
+    Assessment, AssessmentsV2, InstitutionAssessmentCohorts,
     InstitutionAssessmentSinglescore, InstitutionAssessmentSinglescoreGender,
     InstitutionAssessmentSinglescoreMt, BoundaryAssessmentSinglescore,
     InstitutionAssessmentPercentile, BoundaryAssessmentPercentile,
@@ -14,6 +14,7 @@ from schools.serializers import (
     BoundaryProgrammeInfoSerializer, ProgrammePercentileSerializer,
     BoundaryProgrammePercentileSerializer, PartnerSerializer
 )
+from rest_framework.response import Response
 from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 
@@ -54,6 +55,24 @@ class AssessmentsList(KLPListAPIView, CacheMixin):
         else:
             raise ParseError("Invalid parameter passed. Provide either school, admin_1, admin_2 or admin_3")
         return assessments
+
+    def list(self, request, *args, **kwargs):
+        gka_aggregate = request.GET.get('gka_aggregate', None)
+        if gka_aggregate:
+            response = {}
+            pass
+
+        else: # Normal REST Framework implementation of def list()
+            self.object_list = self.filter_queryset(self.get_queryset())
+
+            # Switch between paginated or standard style responses
+            page = self.paginate_queryset(self.object_list)
+            if page is not None:
+                serializer = self.get_pagination_serializer(page)
+            else:
+                serializer = self.get_serializer(self.object_list, many=True)
+
+            return Response(serializer.data)
 
 
 class AssessmentInfo(KLPListAPIView):
