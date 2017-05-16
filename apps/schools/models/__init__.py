@@ -3,7 +3,9 @@ from .education import (AcademicYear, Address, BoundaryHierarchy, Boundary,
     Teacher, TeacherStudentGroup, TeacherQualification, BoundaryPrimarySchool,
     SchoolDetails, MeetingReport, SchoolExtra,SchoolAggregation)
 
-from .assessments import (Assessment, InstitutionAgg, InstitutionAssessmentCohorts,
+from .assessments import (
+    Assessment, AssessmentsV2, InstitutionAgg,
+    InstitutionAssessmentCohorts,
     InstitutionAssessmentSinglescore, InstitutionAssessmentSinglescoreGender,
     InstitutionAssessmentSinglescoreMt, InstitutionAssessmentPercentile,
     BoundaryAssessmentSinglescore, BoundaryAssessmentPercentile,

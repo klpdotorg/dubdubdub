@@ -1,6 +1,6 @@
 import sys
 from schools.models import (
-    Assessment, AssessmentsV2, InstitutionAssessmentCohorts,
+    Assessment, InstitutionAssessmentCohorts,
     InstitutionAssessmentSinglescore, InstitutionAssessmentSinglescoreGender,
     InstitutionAssessmentSinglescoreMt, BoundaryAssessmentSinglescore,
     InstitutionAssessmentPercentile, BoundaryAssessmentPercentile,
@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 
+from .ekstep_gka import EkStepGKA
 
 class PartnerList(KLPListAPIView, CacheMixin):
     """
@@ -57,10 +58,10 @@ class AssessmentsList(KLPListAPIView, CacheMixin):
         return assessments
 
     def list(self, request, *args, **kwargs):
-        gka_aggregate = request.GET.get('gka_aggregate', None)
-        if gka_aggregate:
-            response = {}
-            pass
+        ekstep_gka = request.GET.get('ekstep_gka', None)
+        if ekstep_gka:
+            ekstep_gka = EkStepGKA()
+            return Response(ekstep_gka.generate())
 
         else: # Normal REST Framework implementation of def list()
             self.object_list = self.filter_queryset(self.get_queryset())
