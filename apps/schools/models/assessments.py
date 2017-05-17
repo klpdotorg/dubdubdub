@@ -3,17 +3,21 @@ from common.models import BaseModel
 from .choices import MT_CHOICES, SEX_CHOICES
 from django.contrib.gis.db import models
 
+from .education import StudentsV2
+
 
 class AssessmentsV2(models.Model):
     assess_uid = models.CharField(primary_key=True, max_length=128)
-    student_uid = models.CharField(blank=True, max_length=256)
+    student_uid = models.ForeignKey(
+        StudentsV2, db_column='student_uid', related_name='v2_assessments')
     device_id = models.CharField(max_length=256, blank=True)
     session_id = models.CharField(max_length=256, blank=True)
     question_id = models.CharField(max_length=128, blank=True)
     ekstep_tag = models.CharField(max_length=20, blank=True)
     question_idx = models.IntegerField(blank=True, null=True)
     pass_field = models.CharField(db_column='pass', max_length=16, blank=True)
-    score = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    score = models.DecimalField(
+        max_digits=65535, decimal_places=65535, blank=True, null=True)
     result = models.TextField(blank=True)
     time_taken = models.IntegerField(blank=True, null=True)
     ex_time_taken = models.IntegerField(blank=True, null=True)

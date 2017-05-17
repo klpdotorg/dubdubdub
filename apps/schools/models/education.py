@@ -469,6 +469,27 @@ class Student(BaseModel):
         db_table = 'tb_student'
 
 
+class StudentsV2(models.Model):
+    uid = models.CharField(max_length=256, primary_key=True)
+    student_id = models.BigIntegerField(blank=True, null=True)
+    school_code = models.IntegerField(blank=True, null=True)
+    school_name = models.CharField(max_length=256, blank=True)
+    class_num = models.SmallIntegerField(blank=True, null=True)
+    cluster = models.CharField(max_length=256, blank=True)
+    block = models.CharField(max_length=256, blank=True)
+    district = models.CharField(max_length=256, blank=True)
+    child_name = models.CharField(max_length=256, blank=True)
+    dob = models.DateField(blank=True, null=True)
+    sex = models.CharField(max_length=16, blank=True)
+    father_name = models.CharField(max_length=256, blank=True)
+    mother_name = models.CharField(max_length=256, blank=True)
+    entry_ts = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'students_v2'
+
+
 class StudentStudentGroup(BaseModel):
     student = models.ForeignKey('Student', db_column='stuid', primary_key=True)
     student_group = models.ForeignKey('StudentGroup', db_column='clid')
