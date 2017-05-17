@@ -15,8 +15,8 @@ class Migration(migrations.Migration):
             name='SchoolProgrammes',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('programme', models.ForeignKey(related_name='schools', to='schools.Programme')),
-                ('school', models.ForeignKey(related_name='programmes', to='schools.School')),
+                ('programme', models.ForeignKey(related_name='programmes', to='schools.Programme')),
+                ('school', models.ForeignKey(related_name='schools', to='schools.School')),
             ],
             options={
                 'abstract': False,

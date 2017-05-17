@@ -257,6 +257,9 @@ class Programme(BaseModel):
                                       blank=True, null=True, on_delete=models.SET_NULL)
     partner = models.ForeignKey('Partner', db_column='partnerid',
                                 blank=True, null=True, on_delete=models.SET_NULL)
+    schools = models.ManyToManyField('School',
+                                     through='SchoolProgrammes',
+                                     related_name='programmes')
 
     def __unicode__(self):
         return "%s: %s" % (self.academic_year, self.name,)
@@ -267,8 +270,8 @@ class Programme(BaseModel):
 
 
 class SchoolProgrammes(BaseModel):
-    programme = models.ForeignKey('Programme', related_name='schools')
-    school = models.ForeignKey('School', related_name='programmes')
+    programme = models.ForeignKey('Programme',related_name='programmes')
+    school = models.ForeignKey('School', related_name='schools')
 
 
 class Question(BaseModel):
