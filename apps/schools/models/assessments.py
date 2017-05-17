@@ -266,6 +266,11 @@ class Programme(BaseModel):
         db_table = 'tb_programme'
 
 
+class SchoolProgrammes(BaseModel):
+    programme = models.ForeignKey('Programme', related_name='schools')
+    school = models.ForeignKey('School', related_name='programmes')
+
+
 class Question(BaseModel):
     id = models.IntegerField(primary_key=True)
     assessment = models.ForeignKey('Assessment', db_column='assid',
