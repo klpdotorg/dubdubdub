@@ -19,8 +19,11 @@ class Migration(migrations.Migration):
                 ('school', models.ForeignKey(related_name='schools', to='schools.School')),
             ],
             options={
-                'abstract': False,
             },
             bases=(models.Model,),
+        ),
+        migrations.AlterUniqueTogether(
+            name='schoolprogrammes',
+            unique_together=set([('programme', 'school')]),
         ),
     ]

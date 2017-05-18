@@ -36,4 +36,4 @@ class Command(BaseCommand):
         schools = School.objects.filter(admin3__parent__parent__name__in=district_names)     
 
         for school in schools:
-            SchoolProgrammes.objects.create(programme=programme, school=school)
+            SchoolProgrammes.objects.get_or_create(programme=programme, school=school)

@@ -273,6 +273,9 @@ class SchoolProgrammes(BaseModel):
     programme = models.ForeignKey('Programme',related_name='programmes')
     school = models.ForeignKey('School', related_name='schools')
 
+    class Meta:
+        unique_together = ("programme", "school")
+
 
 class Question(BaseModel):
     id = models.IntegerField(primary_key=True)
