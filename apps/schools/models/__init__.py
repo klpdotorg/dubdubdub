@@ -10,7 +10,7 @@ from .assessments import (
     InstitutionAssessmentSinglescoreMt, InstitutionAssessmentPercentile,
     BoundaryAssessmentSinglescore, BoundaryAssessmentPercentile,
     BoundaryAssessmentSinglescoreMt,BoundaryAssessmentSinglescoreGender,
-    Partner, Programme, Question, SchoolAgg,
+    Partner, Programme, SchoolProgrammes, Question, SchoolAgg,
     StudentEval, SchoolEval,
     AngInfraAgg, AngDisplayMaster)
 
