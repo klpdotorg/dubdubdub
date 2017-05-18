@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth.models import Group
 
 from schools.models import (
@@ -62,51 +63,71 @@ class GKA(object):
             self.assessments = self.stories.filter(
                 assessed_ts__lte=end_date,
             )
+
+    def generate_boundary_summary(self, boundary, chosen_boundary):
+        government_crps = Group.objects.get(name="CRP").user_set.all()
         
+        summary = {}
+
+        if boundary == chosen_boundary:
+            summary['chosen'] = True
+        else:
+            summary['chosen'] = False
+
+        summary['boundary_name'] = boundary.name
+        summary['boundary_type'] = boundary.hierarchy.name
+        summary['schools'] = boundary.schools().count()
+        summary['sms'] = self.stories.filter(
+            group__source__name='sms',
+            school__admin3__parent__parent=boundary,
+        ).count()
+        summary['sms_govt'] = self.stories.filter(
+            group__source__name='sms',
+            school__admin3__parent__parent=boundary,
+            user__in=government_crps
+        ).count()
+        summary['assessments'] = self.assessments.filter(
+            Q(student_uid__district=boundary.name) |
+            Q(student_uid__block=boundary.name) |
+            Q(student_uid__cluster=boundary.name)
+        ).count()
+        summary['contests'] = 1 # Modify after we decide how to identify contests.
+        
+        question_groups = Survey.objects.get(
+            name="Community"
+        ).questiongroup_set.filter(
+            source__name__in=["mobile","csv"]
+        )
+        summary['surveys'] = self.stories.filter(
+            group__in=question_groups,
+            school__admin3__parent__parent=boundary,
+        ).count()
+
+        return summary
+
     def get_hierarchy_summary(self, chosen_school=None, chosen_boundary=None):
+        hierarchy_summaries = []
         if chosen_school:
-            pass
+            chosen_boundary = chosen_school.admin3
+
+        boundary = chosen_boundary
+        boundaries = [boundary,]
+        while(boundary.hierarchy.name != "district"):
+            boundaries.append(boundary.parent)
+            boundary = boundary.parent
+
+        for boundary in boundaries:
+            summary = self.generate_boundary_summary(boundary, chosen_boundary)
+            hierarchy_summaries.append(summary)
+
+        return hierarchy_summaries
 
     def get_neighbour_summary(self, chosen_boundary):
         neighbour_summaries = []
-        government_crps = Group.objects.get(name="CRP").user_set.all()
         neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
-        print "+++++++++++++++++++++++++++++"
-        print neighbour_ids
-        print "++++++++++++++++++++++++++++++"
         neighbours = Boundary.objects.filter(id__in=neighbour_ids)
         for neighbour in neighbours:
-            summary = {}
-            if neighbour == chosen_boundary:
-                summary['chosen'] = True
-            else:
-                summary['chosen'] = False
-            summary['name'] = neighbour.name
-            summary['schools'] = neighbour.schools().count()
-            summary['sms'] = self.stories.filter(
-                group__source__name='sms',
-                school__admin3__parent__parent=neighbour,
-            ).count()
-            summary['sms_govt'] = self.stories.filter(
-                group__source__name='sms',
-                school__admin3__parent__parent=neighbour,
-                user__in=government_crps
-            ).count()
-            summary['assessments'] = self.assessments.filter(
-                student_uid__district=neighbour.name
-            ).count()
-            summary['contests'] = 1 # Modify after we decide how to identify contests.
-
-            question_groups = Survey.objects.get(
-                name="Community"
-            ).questiongroup_set.filter(
-                source__name__in=["mobile","csv"]
-            )
-            summary['surveys'] = self.stories.filter(
-                group__in=question_groups,
-                school__admin3__parent__parent=neighbour,
-            ).count()
-
+            summary = self.generate_boundary_summary(neighbour, chosen_boundary)
             neighbour_summaries.append(summary)
 
         return neighbour_summaries
