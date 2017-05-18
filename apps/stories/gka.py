@@ -249,7 +249,10 @@ class GKA(object):
         response = {}
         response['summary_comparison'] = {}
         response['competency_comparison'] = {}
-        if not chosen_boundary:
+        
+        if chosen_school:
+            chosen_boundary = chosen_school.admin3
+        elif not chosen_boundary:
             return response
 
         response['summary_comparison'] = self.get_summary_comparison(
