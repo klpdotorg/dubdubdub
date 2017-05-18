@@ -27,7 +27,9 @@ from django.core.files.base import ContentFile
 
 from users.models import User
 
-from schools.models import School, SchoolDetails
+from schools.models import (
+    Boundary, School, SchoolDetails
+)
 
 from common.utils import Date
 from common.mixins import CacheMixin
@@ -36,6 +38,7 @@ from common.views import (
     KLPListAPIView, KLPModelViewSet
 )
 
+from .gka import GKA
 from .gp_contest import GPContest
 
 from .models import (
@@ -448,6 +451,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 class StoryDetailView(KLPAPIView, CacheMixin):
     """Returns questions and their corresponding answers.
 
+    gka_comparison -- Generates a GKA comparison.
     survey -- Survey which the data belongs to 
               [Ganitha Kalika Andolana/GP Contest]p
     source -- Source of data [web/ivrs].
@@ -464,6 +468,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
     """
 
     def get(self, request):
+        gka_comparison = self.request.QUERY_PARAMS.get('gka_comparison', None)
         survey = self.request.QUERY_PARAMS.get('survey', None)
         source = self.request.QUERY_PARAMS.get('source', None)
         versions = self.request.QUERY_PARAMS.getlist('version', None)
@@ -493,6 +498,9 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             else:
                 end_date = date.get_datetime(end_date)
 
+        chosen_boundary = None
+        chosen_school = None
+
         stories = Story.objects.all()
 
         if survey:
@@ -512,19 +520,27 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(
                 school__schooldetails__admin1__id=admin1_id
             )
+            boundary = Boundary.objects.get(id=admin1_id)
+            chosen_boundary = boundary
 
         if admin2_id:
             stories = stories.filter(
                 school__schooldetails__admin2__id=admin2_id
             )
+            boundary = Boundary.objects.get(id=admin2_id)
+            chosen_boundary = boundary
 
         if admin3_id:
             stories = stories.filter(
                 school__schooldetails__admin3__id=admin3_id
             )
+            boundary = Boundary.objects.get(id=admin3_id)
+            chosen_boundary = boundary
 
         if school_id:
             stories = stories.filter(school__id=school_id)
+            school = School.objects.get(id=school_id)
+            chosen_school = school
 
         if mp_id:
             stories = stories.filter(
@@ -541,9 +557,12 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(date_of_visit__lte=end_date)
 
         response_json = {}
-
-
-        if survey == "GP Contest":
+        
+        if gka_comparison:
+            gka = GKA(start_date, end_date)
+            response_json = gka.generate_report(
+                chosen_boundary, chosen_school)
+        elif survey == "GP Contest":
             gp_contest = GPContest()
             response_json = gp_contest.generate_report(stories)
         # Sources and filters
