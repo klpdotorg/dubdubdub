@@ -1,5 +1,8 @@
 from django.db.models import Q
+from django.db.models import Count
 from django.contrib.auth.models import Group
+
+from schools.api_views.ekstep_gka import EkStepGKA
 
 from schools.models import (
     AssessmentsV2,
@@ -147,8 +150,100 @@ class GKA(object):
 
         return summary
 
+    def generate_boundary_competency(self, boundary, chosen_boundary):
+        gp_contest = {}
+        ekstep = {}
+        
+        if boundary == chosen_boundary:
+            gp_contest['chosen'] = True
+            ekstep['chosen'] = True
+        else:
+            gp_contest['chosen'] = False
+            ekstep['chosen'] = False
+
+        gp_contest['boundary_name'] = boundary.name
+        gp_contest['boundary_type'] = boundary.hierarchy.name
+        gp_contest['type'] = 'gp_contest'
+
+        ekstep['boundary_name'] = boundary.name
+        ekstep['boundary_type'] = boundary.hierarchy.name
+        ekstep['type'] = 'ekstep'
+
+        # GP Contest
+        survey = Survey.objects.get(name="GP Contest")
+        questiongroups = survey.questiongroup_set.all()
+        stories = self.stories.filter(
+            group__in=questiongroups,
+            school__in=boundary.schools()
+        )
+        questions = []
+        for qg in questiongroups:
+            questions += list(qg.questions.all(
+            ).order_by('questiongroupquestions__sequence')[:20])
+
+        competencies = {}
+        for question in questions:
+            list_of_answers = question.answer_set.filter(
+                story__in=stories
+            ).values('text').annotate(answer_count=Count('text'))
+            
+            competencies[question.text] = {
+                answer['text']:answer['answer_count'] for answer in list_of_answers
+            }
+        gp_contest['competencies'] = competencies
+
+        #EkStep
+        assessments = self.assessments.filter(
+            Q(student_uid__district=boundary.name) |
+            Q(student_uid__block=boundary.name) |
+            Q(student_uid__cluster=boundary.name)
+        )
+        ekstep_class = EkStepGKA()
+        ekstep['competencies'] = ekstep_class.get_scores(assessments)
+
+        return gp_contest, ekstep
+
+    def get_hierarchy_competency(self, chosen_school=None, chosen_boundary=None):
+        hierarchy_competencies = []
+        if chosen_school:
+            chosen_boundary = chosen_school.admin3
+
+        boundary = chosen_boundary
+        boundaries = [boundary,]
+        while(boundary.hierarchy.name != "district"):
+            boundaries.append(boundary.parent)
+            boundary = boundary.parent
+
+        for boundary in boundaries:
+            competency = self.generate_boundary_competency(boundary, chosen_boundary)
+            hierarchy_competencies.append(competency)
+
+        return hierarchy_competencies
+
+    def get_neighbour_competency(self, chosen_boundary):
+        neighbour_competencies = []
+        neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
+        neighbours = Boundary.objects.filter(id__in=neighbour_ids)
+        for neighbour in neighbours:
+            competency = self.generate_boundary_competency(neighbour, chosen_boundary)
+            neighbour_competencies.append(competency)
+
+        return neighbour_competencies
+
     def get_competency_comparison(self, chosen_boundary, chosen_school):
-        pass
+        summary = {}
+        districts = BoundaryHierarchy.objects.filter(name='district')
+        block = BoundaryHierarchy.objects.get(name='block')
+        cluster = BoundaryHierarchy.objects.get(name='cluster')
+
+        if chosen_school:
+            summary = self.get_hierarchy_competency(chosen_school=chosen_school)
+        elif chosen_boundary.hierarchy in districts:
+            summary = self.get_neighbour_competency(chosen_boundary=chosen_boundary)
+        else:
+            summary = self.get_hierarchy_competency(chosen_boundary=chosen_boundary)
+
+        return summary
 
     def generate_report(self, chosen_boundary, chosen_school):
         response = {}

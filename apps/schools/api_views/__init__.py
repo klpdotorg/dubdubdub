@@ -18,7 +18,7 @@ from .geo import (
     Admin1OfSchool, Admin2OfSchool, Admin3OfSchool,
     PincodeOfSchool, AssemblyOfSchool, ParliamentOfSchool
 )
-
+from ekstep_gka import EkStepGKA
 from common.views import KLPAPIView
 import dubdubdub.api_urls
 from schools.serializers import (
