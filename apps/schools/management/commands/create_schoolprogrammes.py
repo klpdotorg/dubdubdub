@@ -24,14 +24,14 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        if not Programme.objects.filter(name="Ganika Kanika Andolana").exists():
+        if not Programme.objects.filter(name="Ganitha Kanika Andolana").exists():
             id = Programme.objects.latest('id').id + 1
             btype = BoundaryType.objects.get(name='Primary School')
             programme, created = Programme.objects.get_or_create(
-                id=id, name="Ganika Kanika Andolana", boundary_type=btype
+                id=id, name="Ganitha Kanika Andolana", boundary_type=btype
             )
         else:
-            programme = Programme.objects.get(name="Ganika Kanika Andolana")
+            programme = Programme.objects.get(name="Ganitha Kanika Andolana")
 
         schools = School.objects.filter(admin3__parent__parent__name__in=district_names)     
 
