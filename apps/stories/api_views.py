@@ -363,6 +363,15 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         else:
             response_json = {}
 
+        response_json['user_groups'] = {}
+        
+        # User Groups
+        groups = Group.objects.all()
+        for group in groups:
+            response_json['user_groups'][group.name] = stories_qset.filter(
+                user__in=group.user_set.all()
+            ).count()
+
         return Response(response_json)
 
     def get_gka_class_volume(self, stories, months):
