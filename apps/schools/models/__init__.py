@@ -1,7 +1,8 @@
 from .education import (AcademicYear, Address, BoundaryHierarchy, Boundary,
-    BoundaryType, Child, StudentGroup, School, Student, StudentStudentGroup,
-    Teacher, TeacherStudentGroup, TeacherQualification, BoundaryPrimarySchool,
-    SchoolDetails, MeetingReport, SchoolExtra,SchoolAggregation)
+    BoundaryType, BoundaryUsers, Child, StudentGroup, School, Student,
+    StudentStudentGroup, Teacher, TeacherStudentGroup, TeacherQualification,
+    BoundaryPrimarySchool, SchoolDetails, MeetingReport,
+    SchoolExtra, SchoolAggregation)
 
 from .assessments import (
     Assessment, AssessmentsV2, InstitutionAgg,
