@@ -28,7 +28,8 @@ from django.core.files.base import ContentFile
 from users.models import User
 
 from schools.models import (
-    Boundary, School, SchoolDetails
+    Boundary, School, SchoolDetails, StudentGroup,
+    BoundaryUsers
 )
 
 from common.utils import Date
@@ -771,8 +772,22 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                 )
 
         response_json['respondents'] = self.get_respondents(stories_qset, source)
+        response_json['top_summary'] = self.get_total_summary()
 
         return Response(response_json)
+
+    def get_total_summary(self):
+        gka_schools = School.objects.filter(programmes__name='Ganitha Kanika Andolana')
+        edu_vol_group = Group.objects.get(name="Educational Volunteer")
+        return {
+            'total_schools': School.objects.count(),
+            'gka_schools': gka_schools.count(),
+            'children_impacted': StudentGroup.objects.\
+                    filter(school__in=gka_schools).\
+                    aggregate(Count('students'))['students__count'],
+            'education_volunteers': BoundaryUsers.objects.\
+                    filter(user__groups=edu_vol_group).count()
+        }
 
     def get_respondents(self, stories_qset, source=None):
         usertypes = {
