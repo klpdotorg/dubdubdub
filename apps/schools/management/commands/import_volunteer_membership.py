@@ -42,9 +42,9 @@ class Command(BaseCommand):
             mobile_no = row[10]
             email = row[11]
 
-            # Skip if email not available
+            # if email not available.
             if not '@' in email:
-                continue
+                email = first_name + last_name + '@klp.org.in'
 
             if User.objects.filter(email=email).exists():
                 user = User.objects.get(email=email)
