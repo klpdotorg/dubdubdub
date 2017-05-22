@@ -665,6 +665,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
         date = Date()
+
         if start_date:
             sane = date.check_date_sanity(start_date)
             if not sane:
@@ -677,8 +678,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             if not sane:
                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
-                end_date = date.get_datetime(end_date)
-
+                end_date = date.get_datetime(end_date) 
         school_qset = School.objects.filter(
             admin3__type__name=school_type, status=2)
         stories_qset = Story.objects.filter(
@@ -772,21 +772,34 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                 )
 
         response_json['respondents'] = self.get_respondents(stories_qset, source)
-        response_json['top_summary'] = self.get_total_summary()
+        response_json['top_summary'] = self.get_total_summary(school_qset, admin1_id)
 
         return Response(response_json)
 
-    def get_total_summary(self):
-        gka_schools = School.objects.filter(programmes__name='Ganitha Kanika Andolana')
+    def get_total_summary(self, school_qset, admin1_id=None, admin2_id=None, admin3_id=None):
         edu_vol_group = Group.objects.get(name="Educational Volunteer")
+
+        gka_school_q = school_qset.filter(programmes__name='Ganitha Kanika Andolana')
+
+        admin1 = None
+        if admin1_id:
+            admin1 = Boundary.objects.get(hierarchy__name='district', id=admin1_id)
+        elif admin2_id:
+            admin1 = Boundary.objects.get(hierarchy__name='block', id=admin2_id).parent
+        elif admin3_id:
+            admin1 = Boundary.objects.get(hierarchy__name='cluster', id=admin3_id).parent.parent
+
+        edu_volunteers = BoundaryUsers.objects.filter(user__groups=edu_vol_group)
+        if admin1:
+            edu_volunteers = edu_volunteers.filter(boundary=admin1)
+
         return {
-            'total_schools': School.objects.count(),
-            'gka_schools': gka_schools.count(),
+            'total_schools': school_qset.count(),
+            'gka_schools': gka_school_q.count(),
             'children_impacted': StudentGroup.objects.\
-                    filter(school__in=gka_schools).\
+                    filter(school__in=gka_school_q).\
                     aggregate(Count('students'))['students__count'],
-            'education_volunteers': BoundaryUsers.objects.\
-                    filter(user__groups=edu_vol_group).count()
+            'education_volunteers': edu_volunteers.count()
         }
 
     def get_respondents(self, stories_qset, source=None):
