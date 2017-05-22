@@ -60,6 +60,6 @@ class Command(BaseCommand):
                     mobile_no=mobile_no
                 )
             
-            boundary = Boundary.objects.get(name='raichur', hierarchy__name='district')
+            boundary = Boundary.objects.get(name=boundary_name, hierarchy__name='district')
             ev_group.user_set.add(user)
             bu, created = BoundaryUsers.objects.get_or_create(user=user, boundary=boundary)
