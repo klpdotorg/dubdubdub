@@ -10,7 +10,7 @@ district_names = [
     "gulbarga",
     "yadgiri",
     "raichur",
-    "koppala",
+    "koppal",
     "bellary",
     "bidar"
 ]
@@ -40,4 +40,5 @@ class Command(BaseCommand):
         schools = School.objects.filter(admin3__parent__parent=boundary)     
 
         for school in schools:
+            print school
             SchoolProgrammes.objects.get_or_create(programme=programme, school=school)
