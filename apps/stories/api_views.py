@@ -29,7 +29,7 @@ from users.models import User
 
 from schools.models import (
     Boundary, School, SchoolDetails, StudentGroup,
-    BoundaryUsers
+    BoundaryUsers, Student
 )
 
 from common.utils import Date
@@ -780,6 +780,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         edu_vol_group = Group.objects.get(name="Educational Volunteer")
 
         gka_school_q = school_qset.filter(programmes__name='Ganitha Kanika Andolana')
+        gka_student_group_q = StudentGroup.objects.filter(school__in=gka_school_q).distinct('id')
 
         admin1 = None
         if admin1_id:
@@ -796,9 +797,9 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         return {
             'total_schools': school_qset.count(),
             'gka_schools': gka_school_q.count(),
-            'children_impacted': StudentGroup.objects.\
-                    filter(school__in=gka_school_q).\
-                    aggregate(Count('students'))['students__count'],
+            'children_impacted': Student.objects.filter(
+                studentstudentgroup__student_group__in=gka_student_group_q
+            ).distinct('id').count(),
             'education_volunteers': edu_volunteers.count()
         }
 
