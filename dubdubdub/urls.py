@@ -44,8 +44,8 @@ urlpatterns = patterns(
 
     # gka ivrs
     url(r'^gka/$', StaticPageView.as_view(
-        template_name='gka_ivrs.html'
-        ), name='gka_ivrs'),
+        template_name='gka_dashboard.html'
+        ), name='gka_dashboard'),
 
     # styleguide page
     url(r'^styleguide/$', StaticPageView.as_view(
