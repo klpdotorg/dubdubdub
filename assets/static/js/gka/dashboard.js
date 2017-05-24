@@ -300,16 +300,19 @@ var entityDetails = {};
 
 
     function loadTopSummary(params) {
-        var data = {
-            "total_schools": 15000,
-            "gka_schools":14854,
-            "children_impacted": 2000000,
-            "education_volunteers":200
-        }
+        var metaURL = "stories/meta/";
+        var $metaXHR = klp.api.do(metaURL, params);
         startSummaryLoading();
-        
+        $metaXHR.done(function(data) 
+        {
+            renderTopSummary(data);
+        });
+    }
+
+    function renderTopSummary(data) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var topSummaryHTML = tplTopSummary({"data":data});
+        var topSummaryData = data.top_summary
+        var topSummaryHTML = tplTopSummary({"data": topSummaryData});
         stopSummaryLoading(); 
         $('#topSummary').html(topSummaryHTML);
     }
