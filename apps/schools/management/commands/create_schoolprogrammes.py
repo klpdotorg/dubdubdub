@@ -8,7 +8,7 @@ from schools.models import (
 
 district_names = [
     "gulbarga",
-    "yadgiri",
+    "yadagiri",
     "raichur",
     "koppal",
     "bellary",
