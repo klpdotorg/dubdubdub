@@ -3,6 +3,9 @@
 var districts = {"meta":[],'details':[]};
 var entity = {"meta":[],'details':[]};
 var entityDetails = {};
+var topSummaryData = {};
+var volumes = {};
+
 (function() {
     var premodalQueryParams = {};
     
@@ -305,14 +308,15 @@ var entityDetails = {};
         startSummaryLoading();
         $metaXHR.done(function(data) 
         {
-            renderTopSummary(data);
+            var topSummary = data.top_summary
+            window.topSummaryData = topSummary
+            renderTopSummary(topSummary);
         });
     }
 
-    function renderTopSummary(data) {
+    function renderTopSummary(topSummary) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
-        var topSummaryData = data.top_summary
-        var topSummaryHTML = tplTopSummary({"data": topSummaryData});
+        var topSummaryHTML = tplTopSummary({"data": topSummary});
         stopSummaryLoading(); 
         $('#topSummary').html(topSummaryHTML);
     }
@@ -400,27 +404,29 @@ var entityDetails = {};
     }
 
     function loadAssmtData(params) {
-        //var metaURL = "stories/meta/?source=sms";
-        //var $metaXHR = klp.api.do(metaURL, params);
-        // startDetailLoading();
-        // $metaXHR.done(function(data) 
-        // {
-        var data = {
-            "count": 2000,
-            "schools":148,
-            "schools_perc":10,
-            "children": 2000,
-            "children_perc":5,
-            "last_assmt":'30 Jan 2017 2:35:42 pm',
-            "teachers": 145,
-            "teacher_perc":90
-        }
-     
-        renderAssmtSummary(data);
-
-        //});
-
-        renderAssmtCharts(params);
+        var metaURL = "assessment/?ekstep_gka=true";
+        var $metaXHR = klp.api.do(metaURL, params);
+        startDetailLoading();
+        $metaXHR.done(function(data) {
+            var topSummary = window.topSummaryData
+            var tot_schools = topSummary.total_schools
+            var gka_schools = topSummary.gka_schools
+            var schools_perc = parseInt((gka_schools/tot_schools) * 100)
+            var children = data.summary.children
+            var children_impacted = topSummary.children_impacted
+            var children_perc = parseInt((children/children_impacted) * 100)
+            var last_assmt = new Date(data.summary.last_assmt)
+            var dataSummary = {
+                "count": data.summary.count,
+                "schools": gka_schools,
+                "schools_perc": schools_perc,
+                "children": children,
+                "children_perc": children_perc,
+                "last_assmt": last_assmt.toDateString(),
+            }
+            renderAssmtSummary(dataSummary);
+            renderAssmtCharts(data);
+        });
     }
 
     
