@@ -440,21 +440,22 @@ var volumes = {};
            
     }
 
-    function renderAssmtCharts(params) {
+    function renderAssmtCharts(data) {
+        var scores = data.scores
         var meta_values = [
-            {"meta":"Addition","value":10},
-            {"meta":"Area of shape","value":20},
-            {"meta":"Carryover","value":50},
-            {"meta":"Decimals","value":10},
-            {"meta":"Division","value":40},
-            {"meta":"Division fact","value":60},
-            {"meta":"Double digit","value":50},
-            {"meta":"Fractions","value":90},
-            {"meta":"Place value","value":80},
-            {"meta":"Regrouping with money","value":70},
-            {"meta":"Relationship between 3D shapes","value":30},
-            {"meta":"Subtraction","value":60},
-            {"meta":"Word problems","value":60}
+            {"meta":"Addition","value":parseInt((scores.Addition.score/scores.Addition.total) * 100)},
+            {"meta":"Area of shape","value":parseInt((scores['Area of shape'].score/scores['Area of shape'].total) * 100)},
+            {"meta":"Carryover","value":parseInt((scores.Carryover.score/scores.Carryover.total) * 100)},
+            {"meta":"Decimals","value":parseInt((scores.Decimals.score/scores.Decimals.total) * 100)},
+            {"meta":"Division","value":parseInt((scores.Division.score/scores.Division.total) * 100)},
+            {"meta":"Division fact","value":parseInt((scores['Division fact'].score/scores['Division fact'].total) * 100)},
+            {"meta":"Double digit","value":parseInt((scores['Double digit'].score/scores['Double digit'].total) * 100)},
+            {"meta":"Fractions","value":parseInt((scores.Fractions.score/scores.Fractions.total) * 100)},
+            {"meta":"Place value","value":parseInt((scores['Place value'].score/scores['Place value'].total) * 100)},
+            {"meta":"Regrouping with money","value":parseInt((scores['Regrouping with money'].score/scores['Regrouping with money'].total) * 100)},
+            {"meta":"Relationship between 3D shapes","value":parseInt((scores["Relationship between 3D shapes"].score/scores["Relationship between 3D shapes"].total) * 100)},
+            {"meta":"Subtraction","value":parseInt((scores.Subtraction.score/scores.Subtraction.total) * 100)},
+            {"meta":"Word problems","value":parseInt((scores['Word problems'].score/scores['Word problems'].total) * 100)}
         ];
         var competencies = {
             labels: ["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
