@@ -188,6 +188,7 @@ var volumes = {};
         var volumeURL = "stories/volume/?source=mobile";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
+            window.volumes = data.volumes
             renderVolumeChart(data);
         });
 
@@ -469,17 +470,18 @@ var volumes = {};
         }
         renderBarChart('#assmtCompetancy', competencies, "Percentage of Children");
 
+        var volumes = window.volumes
         var volume_values = [
-            {"meta":"Jun 2016","value":10},
-            {"meta":"Jul 2016","value":20},
-            {"meta":"Aug 2016","value":30},
-            {"meta":"Sep 2016","value":10},
-            {"meta":"Oct 2016","value":40},
-            {"meta":"Nov 2016","value":50},
-            {"meta":"Dec 2016","value":20},
-            {"meta":"Jan 2017","value":30},
-            {"meta":"Feb 2017","value":20},
-            {"meta":"Mar 2017","value":10}
+            {"meta":"Jun 2016","value": volumes['2016'].Jun},
+            {"meta":"Jul 2016","value": volumes['2016'].Jul},
+            {"meta":"Aug 2016","value": volumes['2016'].Aug},
+            {"meta":"Sep 2016","value": volumes['2016'].Sep},
+            {"meta":"Oct 2016","value": volumes['2016'].Oct},
+            {"meta":"Nov 2016","value": volumes['2016'].Nov},
+            {"meta":"Dec 2016","value": volumes['2016'].Dec},
+            {"meta":"Jan 2017","value": volumes['2016'].Jan},
+            {"meta":"Feb 2017","value": volumes['2016'].Feb},
+            {"meta":"Mar 2017","value": volumes['2016'].Mar}
         ];
 
         var assmt_volume = {
