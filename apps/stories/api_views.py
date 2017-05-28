@@ -306,9 +306,11 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
                 end_date = date.get_datetime(end_date)
 
         response_json = {}
+        response_json['user_groups'] = {}
 
         stories_qset = Story.objects.filter(
             school__admin3__type__name=school_type)
+        assessments_qset = AssessmentsV2.objects.all()
 
         if survey:
             stories_qset = stories_qset.filter(
@@ -326,18 +328,33 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if admin1_id:
             stories_qset = stories_qset.filter(
                 school__schooldetails__admin1__id=admin1_id)
+            boundary = Boundary.objects.get(id=admin1_id)
+            assessments_qset = assessments_qset.filter(
+                student_uid__district=boundary.name
+            )
 
         if admin2_id:
             stories_qset = stories_qset.filter(
                 school__schooldetails__admin2__id=admin2_id)
+            boundary = Boundary.objects.get(id=admin2_id)
+            assessments_qset = assessments_qset.filter(
+                student_uid__block=boundary.name
+            )
 
         if admin3_id:
             stories_qset = stories_qset.filter(
                 school__schooldetails__admin3__id=admin3_id)
+            boundary = Boundary.objects.get(id=admin3_id)
+            assessments_qset = assessments_qset.filter(
+                student_uid__cluster=boundary.name
+            )
 
         if school_id:
             stories_qset = stories_qset.filter(
                 school=school_id)
+            assessments_qset = assessments_qset.filter(
+                student_uid__school_code=school_id
+            )
 
         if mp_id:
             stories_qset = stories_qset.filter(
@@ -350,33 +367,36 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         if start_date:
             stories_qset = stories_qset.filter(
                 date_of_visit__gte=start_date)
+            assessments_qset = assessments_qset.filter(
+                assessed_ts__gte=start_date,
+            )
 
         if end_date:
             stories_qset = stories_qset.filter(
                 date_of_visit__lte=end_date)
-
-        story_dates = stories_qset.values_list('date_of_visit', flat=True)
-        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+            assessments_qset = assessments_qset.filter(
+                assessed_ts__lte=end_date,
+            )
 
         if response_type == 'call_volume':
-            response_json['volumes'] = self.get_call_volume(story_dates, months)
+            dates = stories_qset.values_list('date_of_visit', flat=True)
+            groups = Group.objects.all()
+            for group in groups:
+                response_json['user_groups'][group.name] = stories_qset.filter(
+                    user__in=group.user_set.all()
+                ).count()
         else:
-            response_json = {}
+            dates = assessments_qset.values_list('assessed_ts', flat=True)
+            response_json['user_groups'] = {}
 
-        response_json['user_groups'] = {}
-        
-        # User Groups
-        groups = Group.objects.all()
-        for group in groups:
-            response_json['user_groups'][group.name] = stories_qset.filter(
-                user__in=group.user_set.all()
-            ).count()
+        response_json['volumes'] = self.get_call_volume(dates)
 
         return Response(response_json)
 
-    def get_call_volume(self, story_dates, months):
+    def get_call_volume(self, dates):
+        months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
         json = {}
-        for date in story_dates:
+        for date in dates:
             if date.year in json:
                 json[date.year].append(date.month)
             else:
