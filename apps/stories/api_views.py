@@ -28,8 +28,9 @@ from django.core.files.base import ContentFile
 from users.models import User
 
 from schools.models import (
-    Boundary, School, SchoolDetails, StudentGroup,
-    BoundaryUsers, Student
+    AssessmentsV2, Boundary, BoundaryUsers,
+    School, SchoolDetails, StudentGroup,
+    Student
 )
 
 from common.utils import Date
@@ -269,7 +270,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
     from -- YYYY-MM-DD from when the data should be filtered.
     to -- YYYY-MM-DD till when the data should be filtered.
     school_type -- Type of School [Primary School/PreSchool].
-    response_type -- What volume to calculate [call/gka-class]
+    response_type - What volume to calculate [call_volume/gka]
     """
 
     def get(self, request):
@@ -359,8 +360,6 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
 
         if response_type == 'call_volume':
             response_json['volumes'] = self.get_call_volume(story_dates, months)
-        elif response_type == 'gka-class':
-            response_json['volumes'] = self.get_gka_class_volume(stories_qset, months)
         else:
             response_json = {}
 
@@ -374,65 +373,6 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             ).count()
 
         return Response(response_json)
-
-    def get_gka_class_volume(self, stories, months):
-        json = {}
-        boolean_mapper = {
-            'Yes':True,
-            'No':False
-        }
-        for story in stories:
-            year = story.date_of_visit.year
-            story_month = calendar.month_name[story.date_of_visit.month][:3]
-            if year not in json:
-                json[year] = OrderedDict()
-                for month in months:
-                    json[year][month] = {}
-
-            try:
-                school_was_open = boolean_mapper[
-                    story.answer_set.get(question__text="Was the school open?").text
-                ]
-            except:
-                continue
-
-            if school_was_open:
-                try:
-                    math_class_was_happening = boolean_mapper[
-                        story.answer_set.get(
-                            question__text="Was Math class happening on the day of your visit?").text
-                    ]
-                except:
-                    continue
-
-                if math_class_was_happening:
-                    try:
-                        tlm_was_being_used = boolean_mapper[
-                            story.answer_set.get(
-                                question__text="Did you see children using the Ganitha Kalika Andolana TLM?").text
-                        ]
-                    except:
-                        continue
-
-                    if tlm_was_being_used:
-                        class_visited = int(
-                            story.answer_set.get(question__text="Class visited").text
-                        )
-                        try:
-                            tlm_code = int(
-                                story.answer_set.get(
-                                    question__text="Which Ganitha Kalika Andolana TLM was being used by teacher?"
-                                ).text
-                            )
-                        except:
-                            continue
-
-                        if class_visited in json[year][story_month]:
-                            json[year][story_month][class_visited].add(tlm_code)
-                        else:
-                            json[year][story_month][class_visited] = set()
-                            json[year][story_month][class_visited].add(tlm_code)
-        return json
 
     def get_call_volume(self, story_dates, months):
         json = {}
