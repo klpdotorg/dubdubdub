@@ -56,14 +56,14 @@ class GKA(object):
             self.stories = self.stories.filter(
                 date_of_visit__gte=start_date,
             )
-            self.assessments = self.stories.filter(
+            self.assessments = self.assessments.filter(
                 assessed_ts__gte=start_date,
             )
         if end_date:
             self.stories = self.stories.filter(
                 date_of_visit__lte=end_date,
             )
-            self.assessments = self.stories.filter(
+            self.assessments = self.assessments.filter(
                 assessed_ts__lte=end_date,
             )
 
