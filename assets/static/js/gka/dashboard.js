@@ -426,8 +426,14 @@ var topSummaryData = {};
             renderAssmtSummary(dataSummary);
             renderAssmtCharts(data);
         });
-    }
 
+        var metaURL = "stories/volume/?response_type=gka";
+        var $metaXHR = klp.api.do(metaURL, params);
+        startDetailLoading();
+        $metaXHR.done(function(data) {
+            renderAssmtVolumeChart(data)
+        });
+    }
     
     function renderAssmtSummary(data) {
         var tplAssmtSummary = swig.compile($('#tpl-assmtSummary').html());
@@ -467,18 +473,21 @@ var topSummaryData = {};
             ],
         }
         renderBarChart('#assmtCompetancy', competencies, "Percentage of Children");
+    }
 
+    function renderAssmtVolumeChart(data) {
+        var volumes = data.volumes
         var volume_values = [
-            {"meta":"Jun 2016","value":10},
-            {"meta":"Jul 2016","value":20},
-            {"meta":"Aug 2016","value":30},
-            {"meta":"Sep 2016","value":10},
-            {"meta":"Oct 2016","value":40},
-            {"meta":"Nov 2016","value":50},
-            {"meta":"Dec 2016","value":20},
-            {"meta":"Jan 2017","value":30},
-            {"meta":"Feb 2017","value":20},
-            {"meta":"Mar 2017","value":10}
+            {"meta":"Jun 2016","value":volumes['2016'].Jun},
+            {"meta":"Jul 2016","value":volumes['2016'].Jul},
+            {"meta":"Aug 2016","value":volumes['2016'].Aug},
+            {"meta":"Sep 2016","value":volumes['2016'].Sep},
+            {"meta":"Oct 2016","value":volumes['2016'].Oct},
+            {"meta":"Nov 2016","value":volumes['2016'].Nov},
+            {"meta":"Dec 2016","value":volumes['2016'].Dec},
+            {"meta":"Jan 2017","value":volumes['2017'].Jan},
+            {"meta":"Feb 2017","value":volumes['2017'].Feb},
+            {"meta":"Mar 2017","value":volumes['2017'].Mar}
         ];
 
         var assmt_volume = {
