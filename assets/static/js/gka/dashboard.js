@@ -790,6 +790,7 @@ var topSummaryData = {};
     }
 
     function getTotal(answers) {
+        if (!answers) { return 0; }
         return _.reduce(_.keys(answers.options), function(memo, answerKey) {
             return memo + answers.options[answerKey];
         }, 0);
@@ -819,9 +820,10 @@ var topSummaryData = {};
             var percent = getPercent(score, total);
             //var qObj = featuredQuestions[seq];
             //var displayText = qObj.source_prefix + question.question.display_text;
+            var questionObj = question.question;
             return {
-                'question': question.question.display_text,
-                'key':question.question.key,
+                'question': questionObj? questionObj.display_text: '',
+                'key': questionObj? questionObj.key: '',
                 'score': score,
                 'total': total,
                 'percent': percent
