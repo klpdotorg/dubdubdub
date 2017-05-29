@@ -510,48 +510,106 @@ var topSummaryData = {};
     }
 
     function loadGPContestData(params){
-        var data = {
-            "summary": { "schools":148,
-                "gps": 20,
-                "contests":20,
-                "children": 2000
-            },
-            "Class 4": { "boy_perc":40,"girl_perc":50,"overall_perc":45 },
-            "Class 5": { "boy_perc":30,"girl_perc":20,"overall_perc":25 },
-            "Class 6": { "boy_perc":20,"girl_perc":10,"overall_perc":15 }
-        }
-        
-        var tplSummary = swig.compile($('#tpl-gpcSummary').html());
-        var summaryHTML = tplSummary({"data":data["summary"]});
-        $('#gpcSummary').html(summaryHTML);
+        var metaURL = "stories/details/?survey=GP%20Contest";
+        var $metaXHR = klp.api.do(metaURL, params);
+        $metaXHR.done(function(data) {
+            var class4BoyPerc = (parseFloat(data['4'].males_score/data['4'].males) * 100)
+            var class4GirlPerc = (parseFloat((data['4'].females_score/data['4'].females) * 100))
+            var class5BoyPerc = (parseFloat((data['5'].males_score/data['5'].males) * 100))
+            var class5GirlPerc = (parseFloat((data['5'].females_score/data['5'].females) * 100))
+            var class6BoyPerc = (parseFloat((data['6'].males_score/data['6'].males) * 100))
+            var class6GirlPerc = (parseFloat((data['6'].females_score/data['6'].females) * 100))
+            var dataSummary = {
+                "summary": { "schools":data.summary.schools,
+                    "gps": 20,
+                    "contests":20,
+                    "children": data.summary.students
+                },
+                "Class 4": {
+                    "boy_perc":class4BoyPerc.toFixed(2),
+                    "girl_perc":class4GirlPerc.toFixed(2),
+                    "overall_perc":parseFloat((class4BoyPerc+class4GirlPerc)/2).toFixed(2)
+                },
+                "Class 5": {
+                    "boy_perc":class5BoyPerc.toFixed(2),
+                    "girl_perc":class5GirlPerc.toFixed(2),
+                    "overall_perc":parseFloat((class5BoyPerc+class5GirlPerc)/2).toFixed(2)
+                },
+                "Class 6": {
+                    "boy_perc":class6BoyPerc.toFixed(2),
+                    "girl_perc":class6GirlPerc.toFixed(2),
+                    "overall_perc":parseFloat((class6BoyPerc+class6GirlPerc)/2).toFixed(2)
+                }
+            }
+            
+            var tplSummary = swig.compile($('#tpl-gpcSummary').html());
+            var summaryHTML = tplSummary({"data":dataSummary["summary"]});
+            $('#gpcSummary').html(summaryHTML);
 
-        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
-        summaryHTML = tplSummary({"data":data["Class 4"]});
-        $('#gpcGender_class4').html(summaryHTML);
+            tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+            summaryHTML = tplSummary({"data":dataSummary["Class 4"]});
+            $('#gpcGender_class4').html(summaryHTML);
 
-        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
-        summaryHTML = tplSummary({"data":data["Class 5"]});
-        $('#gpcGender_class5').html(summaryHTML);
+            tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+            summaryHTML = tplSummary({"data":dataSummary["Class 5"]});
+            $('#gpcGender_class5').html(summaryHTML);
 
-        tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
-        summaryHTML = tplSummary({"data":data["Class 6"]});
-        $('#gpcGender_class6').html(summaryHTML);
-        renderGPContestCharts(params);
+            tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
+            summaryHTML = tplSummary({"data":dataSummary["Class 6"]});
+            $('#gpcGender_class6').html(summaryHTML);
+
+            renderGPContestCharts(data);
+        })
     }
 
 
-    function renderGPContestCharts(params) {
+    function renderGPContestCharts(data) {
+        function aggCompetancies(competancies) {
+            var topics = ["Number concept","Addition","Subtraction","Multiplication","Division","Patterns","Shapes","Fractions","Decimal","Measurement"]
+            var competanciesKeys = Object.keys(competancies)
+            var result = {}
+            for (var topic of topics) {
+                result[topic] = {'Yes': 0, 'No': 0}
+
+                for (var key of competanciesKeys) {
+                    if (key.indexOf(topic) !== -1) {
+                        result[topic]['Yes'] += competancies[key]['Yes']
+                        result[topic]['No'] += competancies[key]['No']
+                    }
+                }
+            }
+            console.log(result)
+            return result
+        }
+
+        var class4competancies = genCompetancyChartObj(aggCompetancies(data['4'].competancies));
+        var class5competancies = genCompetancyChartObj(aggCompetancies(data['5'].competancies));
+        var class6competancies = genCompetancyChartObj(aggCompetancies(data['6'].competancies));
+        renderBarChart('#gpcGraph_class4', class4competancies, "Percentage of Children");
+        renderBarChart('#gpcGraph_class5', class5competancies, "Percentage of Children");
+        renderBarChart('#gpcGraph_class6', class6competancies, "Percentage of Children");
+    }
+
+    function genCompetancyChartObj(aggCompetancies) {
+        function getTopicPerc(competancy){
+            var yesVal = competancy['Yes'], noVal = competancy['No']
+            if (yesVal == 0) {
+                return 0
+            } else {
+                return parseFloat(yesVal/(noVal)*100).toFixed(2)
+            }
+        }
         var meta_values = [
-            {"meta":"Number Concepts","value":50},
-            {"meta":"Addition","value":50},
-            {"meta":"Subtraction","value":40},
-            {"meta":"Multiplication","value":30},
-            {"meta":"Division","value":25},
-            {"meta":"Patterns","value":10},
-            {"meta":"Shapes and Spatial Understanding","value":5},
-            {"meta":"Fractions","value":20},
-            {"meta":"Decimal","value":10},
-            {"meta":"Measurement - weight and time","value":50}
+            {"meta":"Number Concepts", "value": getTopicPerc(aggCompetancies['Number concept'])},
+            {"meta":"Addition","value": getTopicPerc(aggCompetancies['Addition'])},
+            {"meta":"Subtraction","value": getTopicPerc(aggCompetancies['Subtraction'])},
+            {"meta":"Multiplication","value": getTopicPerc(aggCompetancies['Multiplication'])},
+            {"meta":"Division","value": getTopicPerc(aggCompetancies['Division'])},
+            {"meta":"Patterns","value": getTopicPerc(aggCompetancies['Patterns'])},
+            {"meta":"Shapes and Spatial Understanding","value":getTopicPerc(aggCompetancies['Shapes'])},
+            {"meta":"Fractions","value": getTopicPerc(aggCompetancies['Fractions'])},
+            {"meta":"Decimal","value": getTopicPerc(aggCompetancies['Decimal'])},
+            {"meta":"Measurement - weight and time","value":getTopicPerc(aggCompetancies['Measurement'])}
         ];
         var competencies = {
             labels: ["Number Concepts","Addition","Subtraction","Multiplication","Division","Patterns","Shapes","Fractions","Decimal","Measurement"],
@@ -563,9 +621,7 @@ var topSummaryData = {};
                 }
             ]
         }
-        renderBarChart('#gpcGraph_class4', competencies, "Percentage of Children");
-        renderBarChart('#gpcGraph_class5', competencies, "Percentage of Children");
-        renderBarChart('#gpcGraph_class6', competencies, "Percentage of Children");
+        return competencies
     }
 
     function renderBarChart(elementId, data, yTitle=' ') {
