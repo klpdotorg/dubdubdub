@@ -99,19 +99,31 @@ var topSummaryData = {};
     }
 
     function loadComparison(params) {
-        var neighbours = [
-            {"name":"neighbour1","schools":99,"sms":200,"sms_govt":50,"assmt":200,'contests':5,'surveys':30},
-            {"name":"neighbour2","schools":98,"sms":210,"sms_govt":40,"assmt":240,'contests':6,'surveys':40},
-            {"name":"neighbour3","schools":96,"sms":220,"sms_govt":30,"assmt":250,'contests':6,'surveys':20},
-            {"name":"neighbour4","schools":95,"sms":230,"sms_govt":20,"assmt":210,'contests':10,'surveys':50}
-        ]
-        var tplComparison= swig.compile($('#tpl-compareTable').html());
-        var compareHTML = tplComparison({"neighbours":neighbours});
-        $('#compareTable').html(compareHTML);
-        renderComparisonCharts(params);
+        var url = "stories/details/?admin1=445&gka_comparison=true";
+        var $metaXHR = klp.api.do(url, params);
+        startDetailLoading();
+        $metaXHR.done(function(data) 
+        {
+            var neighbours = _.map(data.summary_comparison, function(summary){
+                return {
+                    name: summary.boundary_name,
+                    schools: summary.schools,
+                    sms: summary.sms,
+                    sms_govt: summary.sms_govt,
+                    assmt: summary.assessments,
+                    contests: summary.contests,
+                    surveys: summary.surveys
+                }
+            });
+            var tplComparison= swig.compile($('#tpl-compareTable').html());
+            var compareHTML = tplComparison({"neighbours":neighbours});
+            $('#compareTable').html(compareHTML);
+            renderComparisonCharts(params, data);
+            stopDetailLoading();
+        });
     }
 
-    function renderComparisonCharts(params){
+    function renderComparisonCharts(params, data){
         var meta_values = {
         "n1": [{"meta":"neighbour1","value":10,"skill":"A"},
             {"meta":"neighbour1","value":60,"skill":"S"},
