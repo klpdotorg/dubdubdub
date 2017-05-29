@@ -578,7 +578,6 @@ var topSummaryData = {};
                     }
                 }
             }
-            console.log(result)
             return result
         }
 
