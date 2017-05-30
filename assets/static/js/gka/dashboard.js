@@ -124,47 +124,117 @@ var topSummaryData = {};
     }
 
     function renderComparisonCharts(params, data){
-        var meta_values = {
-        "n1": [{"meta":"neighbour1","value":10,"skill":"A"},
-            {"meta":"neighbour1","value":60,"skill":"S"},
-            {"meta":"neighbour1","value":60,"skill":"M"},
-            {"meta":"neighbour1","value":40,"skill":"D"}],
-        "n2":[{"meta":"neighbour2","value":20,"skill":"A"},
-            {"meta":"neighbour2","value":40,"skill":"S"},
-            {"meta":"neighbour2","value":50,"skill":"M"},
-            {"meta":"neighbour2","value":60,"skill":"D"}],
-        "n3":[{"meta":"neighbour3","value":40,"skill":"A"},
-            {"meta":"neighbour3","value":30,"skill":"S"},
-            {"meta":"neighbour3","value":40,"skill":"M"},
-            {"meta":"neighbour3","value":50,"skill":"D"}],
-        "n4":[{"meta":"neighbour4","value":20,"skill":"A"},
-            {"meta":"neighbour4","value":40,"skill":"S"},
-            {"meta":"neighbour4","value":20,"skill":"M"},
-            {"meta":"neighbour4","value":50,"skill":"D"}]
+
+        function getSkillValue(skills, skillType, dataType) {
+            var value;
+
+            if (dataType === 'ekstep') {
+                if(skills.competencies[skillType]) {
+                    var total = skills.competencies[skillType].total,
+                        score = skills.competencies[skillType].score;
+                    value = score / total * 100;
+                } else {
+                    value = 0;
+                }
+            } else {
+                for(var s in skills.competencies) {
+                    var yes = 0, no = 0;
+                    for(var i = 1; i <= 5; i++) {
+                        if(skills.competencies[skillType + ' ' + i]) {
+                            if(skills.competencies[skillType + ' ' + i].Yes && skills.competencies[skillType + ' ' + i].No) {
+                                    yes += skills.competencies[skillType + ' ' + i].Yes;
+                                    no += skills.competencies[skillType + ' ' + i].No;
+                            }
+                        }
+                    }
+                }
+                value = yes / (yes + no) * 100;
+            }
+
+            if(value) { return value.toFixed(2); } else { return 0; }
+        }
+        
+        function getNValues(section, dataType) {
+            var addition = getSkillValue(section, 'Addition'),
+                subtraction = getSkillValue(section, 'Subtraction'),
+                multiplication = getSkillValue(section, 'Multiplication'),
+                division = getSkillValue(section, 'Division');
+            return [{
+                meta: section.boundary_name,
+                skill: 'Addition',
+                value: getSkillValue(section, 'Addition', dataType)
+            },{
+                meta: section.boundary_name,
+                skill: 'Subtraction',
+                value: getSkillValue(section, 'Subtraction', dataType)
+            },{
+                meta: section.boundary_name,
+                skill: 'Multiplication',
+                value: getSkillValue(section, 'Multiplication', dataType)
+            },{
+                meta: section.boundary_name,
+                skill: 'Division',
+                value: getSkillValue(section, 'Division', dataType)
+            }];
         };
-        var competencies = {
+
+        function getMetaValues(dataType) {
+            var metaValues = {};
+            for(var i = 1; i <= 4; i++) {
+                var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
+                metaValues['n' + i] = getNValues(ekstepData, dataType);
+            }
+            return metaValues;
+        }
+
+        var ekstepValues = getMetaValues('ekstep'),
+            gpContestValues = getMetaValues('gp_contest');
+
+        var ekstepCompetencies = {
             labels: ["Addition","Subtraction","Multiplication","Division"],
             series: [
                 { 
                     className: 'ct-series-f',
-                    data: meta_values["n1"]
+                    data: ekstepValues["n1"]
                 },
                 { 
                     className: 'ct-series-a',
-                    data: meta_values["n2"]
+                    data: ekstepValues["n2"]
                 },
                 { 
                     className: 'ct-series-g',
-                    data: meta_values["n3"]
+                    data: ekstepValues["n3"]
                 },
                 { 
                     className: 'ct-series-o',
-                    data: meta_values["n4"]
+                    data: ekstepValues["n4"]
                 }
             ],
         }
-        renderBarChart('#compareAssmtGraph', competencies, "Percentage of Children");
-        renderBarChart('#compareGpcGraph',competencies, "Percentage of Children");
+
+        var gpContestCompetencies = {
+            labels: ["Addition","Subtraction","Multiplication","Division"],
+            series: [
+                { 
+                    className: 'ct-series-f',
+                    data: gpContestValues["n1"]
+                },
+                { 
+                    className: 'ct-series-a',
+                    data: gpContestValues["n2"]
+                },
+                { 
+                    className: 'ct-series-g',
+                    data: gpContestValues["n3"]
+                },
+                { 
+                    className: 'ct-series-o',
+                    data: gpContestValues["n4"]
+                }
+            ],
+        }
+        renderBarChart('#compareAssmtGraph', ekstepCompetencies, "Percentage of Children");
+        renderBarChart('#compareGpcGraph', gpContestCompetencies, "Percentage of Children");
     }
 
     function loadSmsData(params) {
