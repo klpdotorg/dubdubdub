@@ -679,7 +679,7 @@ var topSummaryData = {};
             if (yesVal == 0) {
                 return 0
             } else {
-                return parseFloat(yesVal/(noVal)*100).toFixed(2)
+                return parseFloat(yesVal/(yesVal+noVal)*100).toFixed(2)
             }
         }
         var meta_values = [
