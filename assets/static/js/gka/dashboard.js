@@ -257,7 +257,7 @@ var topSummaryData = {};
     }
 
     function loadSurveys(params) {
-        var metaURL = "stories/meta/?source=mobile";
+        var metaURL = "stories/meta/?survey=Community&course=csv";
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
         $metaXHR.done(function(data) 
@@ -266,13 +266,13 @@ var topSummaryData = {};
             renderRespondentChart(data);
         });
         
-        var volumeURL = "stories/volume/?source=mobile";
+        var volumeURL = "stories/volume/?survey=Community&course=csv";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             renderVolumeChart(data);
         });
 
-        var detailURL = "stories/details/?source=mobile";
+        var detailURL = "stories/details/?survey=Community&course=csv";
         var $detailXHR = klp.api.do(detailURL, params);
         $detailXHR.done(function(data) {
             renderSurveyQuestions(data);
@@ -346,7 +346,6 @@ var topSummaryData = {};
             ]
         };
         renderBarChart('#mobRespondent', data_respondent);
-
     }
 
     function renderSurveyQuestions(data) {
