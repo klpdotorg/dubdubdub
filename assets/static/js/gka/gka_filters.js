@@ -60,7 +60,7 @@
         var $select_block = $("#select-block");
         var $select_cluster = $("#select-cluster");
         var $select_school = $("#select-school");
-        var $search_button = $("#searchButton");
+        var $search_button = $("#search_button");
         
         $select_district.select2("val","");
         $select_block.select2("val","");
@@ -103,7 +103,7 @@
                 for (var each in data.features) {
                     tx_data["features"].push(data.features[each].properties)
                 }
-                console.log(tx_data)
+                // console.log(tx_data)
                 populateSelect($select_school, tx_data);
             });
         });
