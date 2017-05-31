@@ -357,7 +357,7 @@ var topSummaryData = {};
             "mob-read-english",
             "mob-read-kannada",
             "mob-teacher-shortage",
-            "mob-mdm-satifactory",
+            "mob-mdm-satisfactory",
             "ivrss-functional-toilets-girls"
         ];
         
