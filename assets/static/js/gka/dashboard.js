@@ -440,6 +440,17 @@ var topSummaryData = {};
     }
 
     function renderSMSCharts(data, params) {
+        function prepareVolumes(year) {
+            var values = [];
+            for(var v in data.volumes[year]) {
+                values.push({
+                    meta: v + ' ' + year,
+                    value: data.volumes[year][v]
+                });
+            }
+            return values;
+        }
+
         var meta_values = [
             {"meta":"CRP","value":data.user_groups.CRP},
             {"meta":"BFC","value":data.user_groups.BFC}
@@ -455,13 +466,8 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = [];
-        for(var v in data.volumes['2016']) {
-            volume_values.push({
-                meta: v + ' 2016',
-                value: data.volumes[2016][v]
-            });
-        }
+        var volume_values = prepareVolumes('2016');
+        volume_values = volume_values.concat(prepareVolumes('2017'));
 
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
@@ -472,7 +478,7 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-h',
-                    data: [60,60,60,60,60,60,60,60,60,60,60, 60]  
+                    data: _.map(volume_values, function(v){ return 13680; })  
                 }
             ]
         }
