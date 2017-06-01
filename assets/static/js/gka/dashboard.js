@@ -264,7 +264,7 @@ var topSummaryData = {};
     }
 
     function loadSurveys(params) {
-        var metaURL = "stories/meta/?survey=Community&course=csv";
+        var metaURL = "stories/meta/?survey=Community&source=csv";
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
         $metaXHR.done(function(data) 
@@ -273,13 +273,13 @@ var topSummaryData = {};
             renderRespondentChart(data);
         });
         
-        var volumeURL = "stories/volume/?survey=Community&course=csv";
+        var volumeURL = "stories/volume/?survey=Community&source=csv";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
             renderVolumeChart(data);
         });
 
-        var detailURL = "stories/details/?survey=Community&course=csv";
+        var detailURL = "stories/details/?survey=Community&source=csv";
         var $detailXHR = klp.api.do(detailURL, params);
         $detailXHR.done(function(data) {
             renderSurveyQuestions(data);
@@ -369,7 +369,7 @@ var topSummaryData = {};
         ];
         
         var questionObjects = _.map(questionKeys, function(key) {
-            return getQuestion(data, 'mobile', key);
+            return getQuestion(data, 'csv', key);
         });
         var questions = getQuestionsArray(questionObjects);
         //var regroup = {}
@@ -381,11 +381,11 @@ var topSummaryData = {};
     }
 
     function renderSurveySummary(data) {
-        var tplMobSummary = swig.compile($('#tpl-mobSummary').html());
+        var tplCsvSummary = swig.compile($('#tpl-csvSummary').html());
         var summaryData = data;
-        summaryData["format_lastmobile"] = formatLastStory(summaryData["mobile"]["last_story"]);
-        var mobSummaryHTML = tplMobSummary(summaryData);
-        $('#surveySummary').html(mobSummaryHTML);
+        summaryData["format_lastmobile"] = formatLastStory(summaryData["csv"]["last_story"]);
+        var csvSummaryHTML = tplCsvSummary(summaryData);
+        $('#surveySummary').html(csvSummaryHTML);
     }
 
 
