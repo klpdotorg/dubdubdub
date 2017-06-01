@@ -253,7 +253,14 @@ var topSummaryData = {};
             stopDetailLoading();
             renderSMS(data);
         });
-        renderSMSCharts(params);
+
+        // SMS Volume
+        var volumeURL = "stories/volume/?source=sms";
+        var $volumeXHR = klp.api.do(volumeURL, params);
+        $volumeXHR.done(function(data) {
+            stopDetailLoading();
+            renderSMSCharts(data, params);
+        });
     }
 
     function loadSurveys(params) {
@@ -432,15 +439,13 @@ var topSummaryData = {};
         $('#smsQuestions').html(html);
     }
 
-    function renderSMSCharts(params) {
+    function renderSMSCharts(data, params) {
         var meta_values = [
-            {"meta":"CRP","value":130},
-            {"meta":"Field Staff","value": 100},
-            {"meta":"BEO","value":20},
-            {"meta":"Volunteer","value":35}
+            {"meta":"CRP","value":data.user_groups.CRP},
+            {"meta":"BFC","value":data.user_groups.BFC}
         ];
         var sms_sender = {
-            labels: ["CRP","Field Staff","BEO","Volunteer"],
+            labels: ["CRP", "BFC"],
             series: [
                 { 
                     className: 'ct-series-b',
@@ -450,21 +455,18 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = [
-            {"meta":"Jun 2016","value":10},
-            {"meta":"Jul 2016","value":20},
-            {"meta":"Aug 2016","value":30},
-            {"meta":"Sep 2016","value":10},
-            {"meta":"Oct 2016","value":40},
-            {"meta":"Nov 2016","value":50},
-            {"meta":"Dec 2016","value":20},
-            {"meta":"Jan 2017","value":30},
-            {"meta":"Feb 2017","value":20},
-            {"meta":"Mar 2017","value":10}
-        ];
+        var volume_values = [];
+        for(var v in data.volumes['2016']) {
+            volume_values.push({
+                meta: v + ' 2016',
+                value: data.volumes[2016][v]
+            });
+        }
+
+        console.log(volume_values)
 
         var sms_volume = {
-            labels: ["Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017"],
+            labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
                 { 
                     className: 'ct-series-b',
@@ -472,7 +474,7 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-h',
-                    data: [60,60,60,60,60,60,60,60,60,60,60]  
+                    data: [60,60,60,60,60,60,60,60,60,60,60, 60]  
                 }
             ]
         }
