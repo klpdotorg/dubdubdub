@@ -11,6 +11,9 @@ from schools.models import (
 )
 from .models import Story, Survey
 
+GKA_DISTRICTS = [445, 416, 424, 417, 419, 418]
+
+
 class GKA(object):
 
     neighbourIds = {
@@ -46,7 +49,7 @@ class GKA(object):
         445: [415, 416, 418],
         8878: [434, 435, 437, 439],
         9540: [431, 433, 444, 9541],
-        9541: [431, 433, 444, 9540]
+        9541: [431, 433, 444, 9540],
     }
     
     def __init__(self, start_date, end_date):
@@ -127,7 +130,11 @@ class GKA(object):
 
     def get_neighbour_summary(self, chosen_boundary):
         neighbour_summaries = []
-        neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
+        if chosen_boundary == 'GKA':
+            neighbour_ids = GKA_DISTRICTS
+            chosen_boundary = Boundary.objects.get(id=GKA_DISTRICTS[0])
+        else:
+            neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
         neighbours = Boundary.objects.filter(id__in=neighbour_ids)
         for neighbour in neighbours:
             summary = self.generate_boundary_summary(neighbour, chosen_boundary)
@@ -143,7 +150,7 @@ class GKA(object):
 
         if chosen_school:
             summary = self.get_hierarchy_summary(chosen_school=chosen_school)
-        elif chosen_boundary.hierarchy in districts:
+        elif chosen_boundary == 'GKA' or chosen_boundary.hierarchy in districts:
             summary = self.get_neighbour_summary(chosen_boundary=chosen_boundary)
         else:
             summary = self.get_hierarchy_summary(chosen_boundary=chosen_boundary)
@@ -222,7 +229,11 @@ class GKA(object):
 
     def get_neighbour_competency(self, chosen_boundary):
         neighbour_competencies = []
-        neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
+        if chosen_boundary == 'GKA':
+            neighbour_ids = GKA_DISTRICTS
+            chosen_boundary = Boundary.objects.get(id=GKA_DISTRICTS[0])
+        else:
+            neighbour_ids = self.neighbourIds[chosen_boundary.id] + [chosen_boundary.id]
         neighbours = Boundary.objects.filter(id__in=neighbour_ids)
         for neighbour in neighbours:
             competency = self.generate_boundary_competency(neighbour, chosen_boundary)
@@ -238,7 +249,7 @@ class GKA(object):
 
         if chosen_school:
             summary = self.get_hierarchy_competency(chosen_school=chosen_school)
-        elif chosen_boundary.hierarchy in districts:
+        elif chosen_boundary == 'GKA' or chosen_boundary.hierarchy in districts:
             summary = self.get_neighbour_competency(chosen_boundary=chosen_boundary)
         else:
             summary = self.get_hierarchy_competency(chosen_boundary=chosen_boundary)
@@ -253,7 +264,7 @@ class GKA(object):
         if chosen_school:
             chosen_boundary = chosen_school.admin3
         elif not chosen_boundary:
-            return response
+            chosen_boundary = 'GKA'
 
         response['summary_comparison'] = self.get_summary_comparison(
             chosen_boundary, chosen_school)
