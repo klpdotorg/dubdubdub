@@ -331,18 +331,15 @@ var topSummaryData = {};
             'AKSHARA_STAFF': 'Akshara',
             'ELECTED_REPRESENTATIVE': 'Elected' 
         };
-        var labels = _.map(_.keys(data.respondents), function(label) {
-            if (labelMap.hasOwnProperty(label)) {
-                return labelMap[label];
-            } else {
-                return _.str.titleize(label);
-            }
-        });
-        var values = _.values(data.respondents);
+
+        var labels = _.values(labelMap);
+        
+        var respondents = data.respondents;
         var meta_values = [];
-        for( var i=0; i < labels.length; i++) {
-            meta_values.push({'meta': labels[i],'value': values[i]});
-        } /* chartist tooltip transformations */ 
+        for ( var label in labelMap) {
+            meta_values.push({'meta': labelMap[label], 'value': respondents[label] || 0})
+        }
+
         var data_respondent = {
             labels: labels,
             series: [
