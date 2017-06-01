@@ -607,7 +607,8 @@ var topSummaryData = {};
             var class6BoyPerc = (parseFloat((data['6'].males_score/data['6'].males) * 100))
             var class6GirlPerc = (parseFloat((data['6'].females_score/data['6'].females) * 100))
             var dataSummary = {
-                "summary": { "schools":data.summary.schools,
+                "summary": {
+                    "schools":data.summary.schools,
                     "gps": 20,
                     "contests":20,
                     "children": data.summary.students
@@ -615,22 +616,22 @@ var topSummaryData = {};
                 "Class 4": {
                     "boy_perc":class4BoyPerc.toFixed(2),
                     "girl_perc":class4GirlPerc.toFixed(2),
-                    "overall_perc":parseFloat((class4BoyPerc+class4GirlPerc)/2).toFixed(2)
+                    "total_studs": data['4'].males_score + data['4'].females_score
                 },
                 "Class 5": {
                     "boy_perc":class5BoyPerc.toFixed(2),
                     "girl_perc":class5GirlPerc.toFixed(2),
-                    "overall_perc":parseFloat((class5BoyPerc+class5GirlPerc)/2).toFixed(2)
+                    "total_studs": data['5'].males_score + data['5'].females_score
                 },
                 "Class 6": {
                     "boy_perc":class6BoyPerc.toFixed(2),
                     "girl_perc":class6GirlPerc.toFixed(2),
-                    "overall_perc":parseFloat((class6BoyPerc+class6GirlPerc)/2).toFixed(2)
+                    "total_studs": data['6'].males_score + data['6'].females_score
                 }
             }
             
             var tplSummary = swig.compile($('#tpl-gpcSummary').html());
-            var summaryHTML = tplSummary({"data":dataSummary["summary"]});
+            var summaryHTML = tplSummary({"data": dataSummary["summary"]});
             $('#gpcSummary').html(summaryHTML);
 
             tplSummary = swig.compile($('#tpl-genderGpcSummary').html());
