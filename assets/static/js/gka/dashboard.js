@@ -379,9 +379,9 @@ var topSummaryData = {};
 
     function renderSurveySummary(data) {
         var tplCsvSummary = swig.compile($('#tpl-csvSummary').html());
-        var summaryData = data;
-        summaryData["format_lastmobile"] = formatLastStory(summaryData["csv"]["last_story"]);
-        var csvSummaryHTML = tplCsvSummary(summaryData);
+        data["format_lastcsv"] = formatLastStory(data["csv"]["last_story"]);
+        data['schoolPerc'] = (parseFloat(data.csv.schools/window.topSummaryData.gka_schools) * 100).toFixed(1);
+        var csvSummaryHTML = tplCsvSummary(data);
         $('#surveySummary').html(csvSummaryHTML);
     }
 
