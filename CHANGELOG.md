@@ -9,6 +9,14 @@ Use required commands
 
 Changelog
 ---
+Release 1.2: 5e2ffb75fb608af7610612fbdbb4d73de98f5018 - 2017-06-01
+  - Implements the unified GKA dashboard.
+  - Fixes the GP Contest data parsing script.
+  - Generates the EkStep assessment and student models.
+  - Maps all schools to corresponding programmes.
+  - Implements script to add all the educational volunteers and map them to boundaries.
+  - 'yadagiri' everywhere.
+
 Release 1.1.8: f108738de5ae744d4480cbdd5aac48ba2ca9c527 - 2017-04-27
   - Implements GP contest data parsing script.
 
