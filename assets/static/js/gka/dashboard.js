@@ -463,8 +463,6 @@ var topSummaryData = {};
             });
         }
 
-        console.log(volume_values)
-
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
@@ -585,7 +583,7 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-d',
-                    data: [60,60,60,60,60,60,60,60,60,60,60]  
+                    data: [6800,6800,6800,6800,6800,6800,6800,6800,6800,6800,6800]  
                 }
             ]
         }
