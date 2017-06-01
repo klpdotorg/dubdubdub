@@ -99,7 +99,7 @@ var topSummaryData = {};
     }
 
     function loadComparison(params) {
-        var url = "stories/details/?admin1=445&gka_comparison=true";
+        var url = "stories/details/?gka_comparison=true";
         var $metaXHR = klp.api.do(url, params);
         startDetailLoading();
         $metaXHR.done(function(data) 
