@@ -28,9 +28,9 @@ from django.core.files.base import ContentFile
 from users.models import User
 
 from schools.models import (
-    AssessmentsV2, Boundary, BoundaryUsers,
-    School, SchoolDetails, StudentGroup,
-    Student
+    AssessmentsV2, Boundary, BoundaryType,
+    BoundaryUsers, School, SchoolDetails,
+    StudentGroup, Student
 )
 
 from common.utils import Date
@@ -308,8 +308,12 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         response_json = {}
         response_json['user_groups'] = {}
 
-        stories_qset = Story.objects.filter(
-            school__admin3__type__name=school_type)
+        school_type = BoundaryType.objects.get(name=school_type)
+        stories_qset = Story.objects.select_related(
+            'school', 'user'
+        ).filter(
+            school__admin3__type=school_type
+        )
         assessments_qset = AssessmentsV2.objects.all()
 
         if survey:
@@ -379,7 +383,7 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
             )
 
         if response_type == 'call_volume':
-            dates = stories_qset.values_list('date_of_visit', flat=True)
+            dates = stories_qset.values_list('date_of_visit', flat=True).order_by()
             groups = Group.objects.all()
             for group in groups:
                 response_json['user_groups'][group.name] = stories_qset.filter(
