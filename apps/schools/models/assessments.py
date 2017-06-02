@@ -12,7 +12,7 @@ class AssessmentsV2(models.Model):
         StudentsV2, db_column='student_uid', related_name='v2_assessments')
     device_id = models.CharField(max_length=256, blank=True)
     session_id = models.CharField(max_length=256, blank=True)
-    question_id = models.CharField(max_length=128, blank=True)
+    question_id = models.CharField(db_index=True, max_length=128, blank=True)
     ekstep_tag = models.CharField(max_length=20, blank=True)
     question_idx = models.IntegerField(blank=True, null=True)
     pass_field = models.CharField(db_column='pass', max_length=16, blank=True)
