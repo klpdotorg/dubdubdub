@@ -64,11 +64,11 @@
         </div>
         <div class="sect-third">
           <div class="brand-blue font-large font-light uppercase">Schools with Surveys</div>
-          <div class=" base-spacing-sm">{{ csv.schools }} (50%)</div>
+          <div class=" base-spacing-sm">{{ csv.schools }} ({{ schoolPerc }}%)</div>
         </div>
         <div class="sect-third">
           <div class="brand-blue font-large font-light uppercase">Latest Survey</div>
-          <div class=" base-spacing-sm">{{ format_lastmobile }}</div>
+          <div class=" base-spacing-sm">{{ format_lastcsv }}</div>
         </div>
     </div>
   </script>
@@ -297,8 +297,8 @@
     <div class="module-stats-icon module-stats-boygirl">
       <span class="icon-boy-girl"></span>
       <div class="module-stats-info">
-        <div class="uppercase">Total</div>
-        <p class="module-stats-label">{{data.overall_perc}}%</p>
+        <div class="uppercase">Total Students</div>
+        <p class="module-stats-label">{{data.total_studs}}</p>
       </div>
     </div>
     <!--br/-->
