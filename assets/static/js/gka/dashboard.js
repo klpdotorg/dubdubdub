@@ -451,12 +451,18 @@ var topSummaryData = {};
             return values;
         }
 
-        var meta_values = [
-            {"meta":"CRP","value":data.user_groups.CRP},
-            {"meta":"BFC","value":data.user_groups.BFC}
-        ];
+        var meta_values = [];
+        for (var m in data.user_groups) {
+            if(m) {
+                meta_values.push({
+                    meta: m,
+                    value: data.user_groups[m]
+                });
+            }
+        }        
+
         var sms_sender = {
-            labels: ["CRP", "BFC"],
+            labels: _.map(meta_values, function(m){ return m.meta; }),
             series: [
                 { 
                     className: 'ct-series-b',
