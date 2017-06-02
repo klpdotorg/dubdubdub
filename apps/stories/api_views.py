@@ -773,27 +773,15 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         return users
     
     def get_respondents(self, stories_qset):
-        respondent_types = {
-            'PR' : 'PARENTS',
-            'TR' : 'TEACHERS',
-            'CH' : 'CHILDREN',
-            'VR' : 'VOLUNTEER',
-            'CM' : 'CBO_MEMBER',
-            'HM' : 'HEADMASTER',
-            'SM' : 'SDMC_MEMBER',
-            'LL' : 'LOCAL_LEADER',
-            'AS' : 'AKSHARA_STAFF',
-            'EY' : 'EDUCATED_YOUTH',
-            'EO' : 'EDUCATION_OFFICIAL',
-            'ER' : 'ELECTED_REPRESENTATIVE',
-        }
+        respondents = {}
+
+        respondent_types = UserType.objects.all()
         
-        respondent_counts = UserType.objects.filter(
-            story__in=stories_qset
-        ).annotate(
-            story_count=Count('story')
-        )
-        return {respondent_types[respondent.name]: respondent.story_count for respondent in respondent_counts}
+        for respondent in respondent_types:
+            respondents[respondent.get_name_display()] = stories_qset.filter(
+                user_type=respondent).count()
+
+        return respondents
 
     def source_filter(self, source, stories_qset):
         stories_qset = stories_qset.filter(
