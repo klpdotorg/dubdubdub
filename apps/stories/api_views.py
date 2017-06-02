@@ -471,7 +471,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         chosen_boundary = None
         chosen_school = None
 
-        stories = Story.objects.all()
+        stories = Story.objects.select_related('school').all()
 
         if survey:
             stories = stories.filter(group__survey__name=survey)
@@ -731,7 +731,8 @@ class StoryMetaView(KLPAPIView, CacheMixin):
                     stories,
                 )
 
-        response_json['respondents'] = self.get_respondents(stories_qset, source)
+        response_json['respondents'] = self.get_respondents(stories_qset)
+        response_json['users'] = self.get_users(stories_qset)
         response_json['top_summary'] = self.get_total_summary(school_qset, admin1_id)
 
         return Response(response_json)
@@ -762,10 +763,20 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'education_volunteers': edu_volunteers.count()
         }
 
-    def get_respondents(self, stories_qset, source=None):
-        usertypes = {
+    def get_users(self, stories_qset):
+        users = {}
+        groups = Group.objects.all()
+        for group in groups:
+            group_users = group.user_set.all()
+            users[group.name] = stories_qset.filter(user__in=group_users).count()
+
+        return users
+    
+    def get_respondents(self, stories_qset):
+        respondent_types = {
             'PR' : 'PARENTS',
             'TR' : 'TEACHERS',
+            'CH' : 'CHILDREN',
             'VR' : 'VOLUNTEER',
             'CM' : 'CBO_MEMBER',
             'HM' : 'HEADMASTER',
@@ -777,25 +788,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'ER' : 'ELECTED_REPRESENTATIVE',
         }
         
-        if source == "sms":
-            crp_users = Group.objects.get(name="CRP").user_set.all()
-            bfc_users = Group.objects.get(name="BFC").user_set.all()
-
-            crp_users_sms = stories_qset.filter(user__in=crp_users).count()
-            bfc_users_sms = stories_qset.filter(user__in=bfc_users).count()
-
-            return {
-                'CRP':crp_users_sms,
-                'BFC':bfc_users_sms,
-            }
-
-        else:
-            user_counts = UserType.objects.filter(
-                story__in=stories_qset
-            ).annotate(
-                story_count=Count('story')
-            )
-            return {usertypes[user.name]: user.story_count for user in user_counts}
+        respondent_counts = UserType.objects.filter(
+            story__in=stories_qset
+        ).annotate(
+            story_count=Count('story')
+        )
+        return {respondent_types[respondent.name]: respondent.story_count for respondent in respondent_counts}
 
     def source_filter(self, source, stories_qset):
         stories_qset = stories_qset.filter(
