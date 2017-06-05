@@ -380,7 +380,7 @@ var topSummaryData = {};
     function renderSurveySummary(data) {
         var tplCsvSummary = swig.compile($('#tpl-csvSummary').html());
         data["format_lastcsv"] = formatLastStory(data["csv"]["last_story"]);
-        data['schoolPerc'] = (parseFloat(data.csv.schools/window.topSummaryData.gka_schools) * 100).toFixed(1);
+        data['schoolPerc'] = getPercent(data.csv.schools, window.topSummayData.gka_schools);
         var csvSummaryHTML = tplCsvSummary(data);
         $('#surveySummary').html(csvSummaryHTML);
     }
@@ -500,10 +500,10 @@ var topSummaryData = {};
             var topSummary = window.topSummaryData
             var tot_schools = topSummary.total_schools
             var gka_schools = topSummary.gka_schools
-            var schools_perc = parseInt((gka_schools/tot_schools) * 100)
+            var schools_perc = getPercent(gka_schools, tot_schools)
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
-            var children_perc = parseInt((children/children_impacted) * 100)
+            var children_perc = getPercent(children, children_impacted)
             var last_assmt = new Date(data.summary.last_assmt)
             var dataSummary = {
                 "count": data.summary.count,
@@ -537,7 +537,7 @@ var topSummaryData = {};
 
     function renderAssmtCharts(data) {
         function getAssmtPerc(scores, topic) {
-            return parseInt((scores[topic].score/scores[topic].total) * 100).toFixed(2)
+            return getPercent(scores[topic].score, scores[topic].total)
         }
         var scores = data.scores
         var meta_values = [
@@ -606,12 +606,6 @@ var topSummaryData = {};
         var metaURL = "stories/details/?survey=GP%20Contest";
         var $metaXHR = klp.api.do(metaURL, params);
         $metaXHR.done(function(data) {
-            var class4BoyPerc = (parseFloat(data['4'].males_score/data['4'].males) * 100)
-            var class4GirlPerc = (parseFloat((data['4'].females_score/data['4'].females) * 100))
-            var class5BoyPerc = (parseFloat((data['5'].males_score/data['5'].males) * 100))
-            var class5GirlPerc = (parseFloat((data['5'].females_score/data['5'].females) * 100))
-            var class6BoyPerc = (parseFloat((data['6'].males_score/data['6'].males) * 100))
-            var class6GirlPerc = (parseFloat((data['6'].females_score/data['6'].females) * 100))
             var dataSummary = {
                 "summary": {
                     "schools":data.summary.schools,
@@ -620,19 +614,28 @@ var topSummaryData = {};
                     "children": data.summary.students
                 },
                 "Class 4": {
-                    "boy_perc":class4BoyPerc.toFixed(2),
-                    "girl_perc":class4GirlPerc.toFixed(2),
-                    "total_studs": data['4'].males_score + data['4'].females_score
+                    "boy_perc": getPercent(data['4'].males_score, data['4'].males),
+                    "girl_perc": getPercent(data['4'].females_score, data['4'].females),
+                    "total_studs": getPercent(
+                        data['4'].males_score + data['4'].females_score,
+                        data['4'].males+data['4'].females
+                    )
                 },
                 "Class 5": {
-                    "boy_perc":class5BoyPerc.toFixed(2),
-                    "girl_perc":class5GirlPerc.toFixed(2),
-                    "total_studs": data['5'].males_score + data['5'].females_score
+                    "boy_perc": getPercent(data['5'].males_score, data['5'].males),
+                    "girl_perc": getPercent(data['5'].females_score, data['5'].females),
+                    "total_studs": getPercent(
+                        data['5'].males_score + data['5'].females_score,
+                        data['5'].males + data['5'].females
+                    )
                 },
                 "Class 6": {
-                    "boy_perc":class6BoyPerc.toFixed(2),
-                    "girl_perc":class6GirlPerc.toFixed(2),
-                    "total_studs": data['6'].males_score + data['6'].females_score
+                    "boy_perc": getPercent(data['6'].males_score, data['6'].males),
+                    "girl_perc": getPercent(data['6'].females_score, data['6'].females),
+                    "total_studs": getPercent(
+                        data['6'].males_score + data['6'].females_score,
+                        data['6'].males + data['6'].females
+                    )
                 }
             }
             
@@ -686,11 +689,7 @@ var topSummaryData = {};
     function genCompetancyChartObj(aggCompetancies) {
         function getTopicPerc(competancy){
             var yesVal = competancy['Yes'], noVal = competancy['No']
-            if (yesVal == 0) {
-                return 0
-            } else {
-                return parseFloat(yesVal/(yesVal+noVal)*100).toFixed(2)
-            }
+            return getPercent(yesVal, yesVal+noVal)
         }
         var meta_values = [
             {"meta":"Number Concepts", "value": getTopicPerc(aggCompetancies['Number concept'])},
@@ -891,10 +890,10 @@ var topSummaryData = {};
     }
 
     function getPercent(score, total) {
-        if (total == 0) {
+        if (total == 0 || score == 0) {
             return 0;
         }
-        return Math.round((score / total) * 100);
+        return parseFloat((score / total) * 100).toFixed(2);
     }
 
     function getQuestion(data, source, key) {
