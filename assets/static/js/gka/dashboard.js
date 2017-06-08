@@ -472,6 +472,9 @@ var topSummaryData = {};
         var volume_values = prepareVolumes('2016');
         volume_values = volume_values.concat(prepareVolumes('2017'));
 
+        volume_values.splice(0, 6);
+        volume_values.splice(-6);
+
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
