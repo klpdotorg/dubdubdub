@@ -37,6 +37,7 @@ class Command(BaseCommand):
             if state.is_invalid:
                 continue
 
+            user = state.user
             school = School.objects.get(id=state.school_id)
             telephone = state.telephone
             date = state.date_of_visit
@@ -45,6 +46,7 @@ class Command(BaseCommand):
             )[0]
             question_group = qg_type.questiongroup
             story = Story.objects.create(
+                user=user,
                 school=school,
                 is_verified=True,
                 group=question_group,
