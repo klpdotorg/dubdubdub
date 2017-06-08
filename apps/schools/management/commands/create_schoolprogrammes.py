@@ -12,7 +12,13 @@ district_names = [
     "raichur",
     "koppal",
     "bellary",
-    "bidar"
+    "bidar",
+    "chikkaballapura",
+    "gadag",
+    "dharwad",
+    "chitradurga",
+    "chamarajanagara",
+    "bangalore rural"
 ]
 
 class Command(BaseCommand):
