@@ -348,6 +348,7 @@ var topSummaryData = {};
                 }
             ]
         };
+
         renderBarChart('#mobRespondent', data_respondent);
     }
 
@@ -379,7 +380,7 @@ var topSummaryData = {};
     function renderSurveySummary(data) {
         var tplCsvSummary = swig.compile($('#tpl-csvSummary').html());
         data["format_lastcsv"] = formatLastStory(data["csv"]["last_story"]);
-        data['schoolPerc'] = getPercent(data.csv.schools, window.topSummayData.gka_schools);
+        data['schoolPerc'] = getPercent(data.csv.schools, window.topSummaryData.gka_schools);
         var csvSummaryHTML = tplCsvSummary(data);
         $('#surveySummary').html(csvSummaryHTML);
     }
