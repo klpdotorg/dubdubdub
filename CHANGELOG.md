@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.1: 5c200fdae4ee627cd7eac42262cab225f033197b - 2017-06-09
+  - Fixes for the GKA dashboard
+
 Release 1.2: e28bf168deefb6cd4bc7b1cc9146497e15d4da83 - 2017-06-06
   - Implements the unified GKA dashboard.
   - Fixes the GP Contest data parsing script.
