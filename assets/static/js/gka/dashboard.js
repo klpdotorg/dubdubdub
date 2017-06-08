@@ -241,8 +241,7 @@ var topSummaryData = {};
         var metaURL = "stories/meta/?source=sms";
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
-        $metaXHR.done(function(data) 
-        {
+        $metaXHR.done(function(data) {
             renderSmsSummary(data);
         });
 
@@ -421,7 +420,7 @@ var topSummaryData = {};
             "ivrss-math-class-happening",
             "ivrss-gka-tlm-in-use",
             "ivrss-gka-rep-stage",
-            "ivrss-group-work"
+            "ivrwork"
         ];
         
         var questionObjects = _.map(SMSQuestionKeys, function(key) {
@@ -436,7 +435,9 @@ var topSummaryData = {};
         $('#smsQuestions').html(html);
     }
 
-    function renderSMSCharts(data, params) {
+    function renderSMSCharts(data, params)  {
+        var meta_values = [];
+
         function prepareVolumes(year) {
             var values = [];
             for(var v in data.volumes[year]) {
@@ -448,7 +449,6 @@ var topSummaryData = {};
             return values;
         }
 
-        var meta_values = [];
         for (var m in data.user_groups) {
             if(m) {
                 meta_values.push({
