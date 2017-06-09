@@ -61,6 +61,7 @@ class Command(BaseCommand):
                     school.save()
                     count += 1
                 except Exception, e:
-                    log('Could not find school: ' + str(school.id))
+                    log('Could not find school: ' + str(ems_school['id']))
+                    print e
 
         print 'Updated', count, 'schools'
