@@ -42,7 +42,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         bfc_group, created = Group.objects.get_or_create(name="BFC")
         crp_group, created = Group.objects.get_or_create(name="CRP")
-        afs_group, created = Group.objects.get_or_create(name="AFS")
         brc_group, created = Group.objects.get_or_create(name="BRC")
         brp_group, created = Group.objects.get_or_create(name="BRP")
         ddpi_group, created = Group.objects.get_or_create(name="DDPI")
