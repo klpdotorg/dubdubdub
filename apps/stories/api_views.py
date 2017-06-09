@@ -771,11 +771,6 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     def get_total_summary(self, total_schools, school_qset, admin1_id=None, admin2_id=None, admin3_id=None):
         programme = Programme.objects.get(name='Ganitha Kanika Andolana')
         gka_school_q = school_qset.filter(programmes=programme)
-        gka_student_group_q = StudentGroup.objects.prefetch_related(
-            'student'
-        ).filter(
-            school__in=gka_school_q
-        )
 
         admin1 = None
         if admin1_id:
@@ -793,9 +788,9 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         return {
             'total_schools': total_schools,
             'gka_schools': gka_school_q.count(),
-            'children_impacted': StudentStudentGroup.objects.filter(
-                student_group__in=gka_student_group_q
-            ).aggregate(Count('student', distinct=True))['student__count'],
+            'children_impacted': gka_school_q.aggregate(
+                student_count=Count('studentgroup__students', distinct=True)
+            )['student_count'],
             'education_volunteers': edu_volunteers.count()
         }
 
