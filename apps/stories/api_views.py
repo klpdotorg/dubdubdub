@@ -30,7 +30,8 @@ from users.models import User
 from schools.models import (
     AssessmentsV2, Boundary, BoundaryType,
     BoundaryUsers, School, SchoolDetails,
-    StudentGroup, Student, StudentStudentGroup
+    StudentGroup, Student, StudentStudentGroup,
+    Programme,
 )
 
 from common.utils import Date
@@ -628,6 +629,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+        top_summary = self.request.QUERY_PARAMS.get('top_summary', None)
         date = Date()
 
         if start_date:
@@ -702,6 +704,10 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         response_json['total']['stories'] = stories_qset.count()
         response_json['total']['schools_with_stories'] = stories_qset.distinct('school').count()
 
+        if top_summary:
+            response_json['top_summary'] = self.get_total_summary(total_schools, school_qset, admin1_id)
+            return Response(response_json)
+
         if survey:
             stories_qset = stories_qset.filter(
                 group__survey__name=survey
@@ -759,12 +765,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         response_json['respondents'] = self.get_respondents(stories_qset)
         response_json['users'] = self.get_users(stories_qset)
-        response_json['top_summary'] = self.get_total_summary(total_schools, school_qset, admin1_id)
 
         return Response(response_json)
 
     def get_total_summary(self, total_schools, school_qset, admin1_id=None, admin2_id=None, admin3_id=None):
-        gka_school_q = school_qset.filter(programmes__name='Ganitha Kanika Andolana')
+        programme = Programme.objects.get(name='Ganitha Kanika Andolana')
+        gka_school_q = school_qset.filter(programmes=programme)
         gka_student_group_q = StudentGroup.objects.prefetch_related(
             'student'
         ).filter(
@@ -779,7 +785,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         elif admin3_id:
             admin1 = Boundary.objects.get(hierarchy__name='cluster', id=admin3_id).parent.parent
 
-        edu_vol_group = Group.objects.get(name="Educational Volunteer")
+        edu_vol_group = Group.objects.get(name="EV")
         edu_volunteers = BoundaryUsers.objects.filter(user__groups=edu_vol_group)
         if admin1:
             edu_volunteers = edu_volunteers.filter(boundary=admin1)
