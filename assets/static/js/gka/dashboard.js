@@ -322,7 +322,7 @@ var topSummaryData = {};
         var labelMap = {
             'SDMC_MEMBER': 'SDMC',
             'CBO_MEMBER': 'CBO',
-            'PARENTS': 'Parent',
+            'Parents': 'Parent',
             'TEACHERS': 'Teacher',
             'VOLUNTEER': 'Volunteer',
             'EDUCATED_YOUTH': 'Youth',
