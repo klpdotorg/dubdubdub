@@ -587,9 +587,10 @@ def get_que_and_ans(stories, source, school_type, versions):
             else:
                 question = Question.objects.get(id=entry['question'])
                 question_dict[question.id] = {}
-                question_dict[question.id]['key'] = question.key
-                question_dict[question.id]['text'] = question.text
-                question_dict[question.id]['display_text'] = question.display_text
+                question_dict[question.id]['question'] = {}
+                question_dict[question.id]['question']['key'] = question.key
+                question_dict[question.id]['question']['text'] = question.text
+                question_dict[question.id]['question']['display_text'] = question.display_text
                 question_dict[question.id]['answers'] = {}
                 question_dict[question.id]['answers']['question_type'] = question.question_type.name
                 question_dict[question.id]['answers']['options'] = {}
@@ -604,11 +605,11 @@ def get_que_and_ans(stories, source, school_type, versions):
             j['question']['key'] = question.key
             j['question']['text'] = question.text
             j['question']['display_text'] = question.display_text
-            j['question']['answers'] = {}
-            j['question']['answers']['question_type'] = question.question_type.name
-            j['question']['answers']['options'] = {}
+            j['answers'] = {}
+            j['answers']['question_type'] = question.question_type.name
+            j['answers']['options'] = {}
         else:
-            j['question'] = question_dict[question.id]
+            j = question_dict[question.id]
         response_list.append(j)
 
     return response_list
