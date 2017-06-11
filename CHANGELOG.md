@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.2: 5113c393e0a864ec990c700ebdc76236d8301b93 - 2017-06-12
+  - Further fixes for the GKA dashboard
+
 Release 1.2.1: 5c200fdae4ee627cd7eac42262cab225f033197b - 2017-06-09
   - Fixes for the GKA dashboard
 
