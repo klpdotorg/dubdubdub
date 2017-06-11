@@ -613,8 +613,8 @@ var topSummaryData = {};
             var dataSummary = {
                 "summary": {
                     "schools":data.summary.schools,
-                    "gps": 20,
-                    "contests":20,
+                    "gps": data.summary.gps,
+                    "contests":data.summary.contests,
                     "children": data.summary.students
                 },
                 "Class 4": {

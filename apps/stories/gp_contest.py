@@ -23,12 +23,17 @@ class GPContest(object):
         return response
 
     def get_meta_summary(self, stories):
-        schools_count = stories.values_list('school', flat=True).distinct('school').count()
-        students_count = stories.values_list('name', flat=True).distinct('name').count()
+        counts = stories.aggregate(
+            school_count=Count('school', distinct=True),
+            students_count=Count('name', distinct=True),
+            gp_count=Count('school__electedrep__gram_panchayat', distinct=True)
+        )
 
         return {
-            'schools':schools_count,
-            'students':students_count
+            'schools':counts['school_count'],
+            'students':counts['students_count'],
+            'gps':counts['gp_count'],
+            'contests':counts['gp_count']
         }
 
     def get_classwise_summary(self, class_std, stories):

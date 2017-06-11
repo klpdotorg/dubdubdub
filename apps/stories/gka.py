@@ -97,8 +97,12 @@ class GKA(object):
             Q(student_uid__block=boundary.name) |
             Q(student_uid__cluster=boundary.name)
         ).count()
-        summary['contests'] = 1 # Modify after we decide how to identify contests.
-        
+        summary['contests'] = boundary.schools().aggregate(
+            gp_count=Count(
+                'electedrep__gram_panchayat',
+                distinct=True
+            )
+        )['gp_count']
         question_groups = Survey.objects.get(
             name="Community"
         ).questiongroup_set.filter(
