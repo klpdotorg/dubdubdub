@@ -421,7 +421,7 @@ var topSummaryData = {};
             "ivrss-math-class-happening",
             "ivrss-gka-tlm-in-use",
             "ivrss-gka-rep-stage",
-            "ivrwork"
+            "ivrss-group-work"
         ];
         
         var questionObjects = _.map(SMSQuestionKeys, function(key) {
