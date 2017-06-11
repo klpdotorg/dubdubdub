@@ -27,7 +27,7 @@ class Command(BaseCommand):
             print "Please specify a filename with the --file argument"
             return
 
-        ev_group, created = Group.objects.get_or_create(name="Educational Volunteer")
+        ev_group, created = Group.objects.get_or_create(name="EV")
 
         f = open(file_name, 'r')
         csv_f = csv.reader(f)

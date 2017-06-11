@@ -66,6 +66,9 @@ class SchoolElectedrep(BaseModel):
     hierarchy = models.ForeignKey('BoundaryType', db_column='heirarchy',
                                   blank=True, null=True)
 
+    gram_panchayat = models.TextField(db_column='gram_panchayat',
+                                      blank=True, null=True)
+
     def __unicode__(self):
         return "%s: %s" % (self.school, self.ward_id,)
 

@@ -9,7 +9,7 @@ from schools.models import (
     Boundary,
     BoundaryHierarchy
 )
-from .models import Story, Survey
+from .models import Story, Survey, Answer, Question
 
 GKA_DISTRICTS = [445, 416, 424, 417, 419, 418]
 
@@ -53,8 +53,9 @@ class GKA(object):
     }
     
     def __init__(self, start_date, end_date):
-        self.stories = Story.objects.all()
-        self.assessments = AssessmentsV2.objects.all()
+        self.stories = Story.objects.select_related(
+            'school').all().order_by().values('id')
+        self.assessments = AssessmentsV2.objects.all().order_by()
         if start_date:
             self.stories = self.stories.filter(
                 date_of_visit__gte=start_date,
@@ -97,8 +98,12 @@ class GKA(object):
             Q(student_uid__block=boundary.name) |
             Q(student_uid__cluster=boundary.name)
         ).count()
-        summary['contests'] = 1 # Modify after we decide how to identify contests.
-        
+        summary['contests'] = boundary.schools().aggregate(
+            gp_count=Count(
+                'electedrep__gram_panchayat',
+                distinct=True
+            )
+        )['gp_count']
         question_groups = Survey.objects.get(
             name="Community"
         ).questiongroup_set.filter(
@@ -183,20 +188,21 @@ class GKA(object):
             group__in=questiongroups,
             school__in=boundary.schools()
         )
-        questions = []
-        for qg in questiongroups:
-            questions += list(qg.questions.all(
-            ).order_by('questiongroupquestions__sequence')[:20])
+
+        answers = Answer.objects.filter(story__in=stories)
+        answer_counts = answers.values('question', 'text').annotate(Count('text'))
 
         competencies = {}
-        for question in questions:
-            list_of_answers = question.answer_set.filter(
-                story__in=stories
-            ).values('text').annotate(answer_count=Count('text'))
-            
-            competencies[question.text] = {
-                answer['text']:answer['answer_count'] for answer in list_of_answers
-            }
+
+        for entry in answer_counts:
+            question = Question.objects.get(id=entry['question'])
+            question_text = question.text
+            answer_text = entry['text']
+            answer_count = entry['text__count']
+            if question_text not in competencies:
+                competencies[question_text] = {}
+            competencies[question_text][answer_text] = answer_count
+
         gp_contest['competencies'] = competencies
 
         #EkStep

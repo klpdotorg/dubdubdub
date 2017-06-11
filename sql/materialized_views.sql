@@ -36,8 +36,9 @@ SELECT t8.sid,
     t8.ward_id,
     t8.mla_const_id,
     t8.mp_const_id,
-    t8.heirarchy
-   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select sid, ward_id, mla_const_id, mp_const_id, heirarchy from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer);
+    t8.heirarchy,
+    t8.gram_panchayat
+   FROM dblink('host=localhost dbname=electrep_new user=klp'::text, 'select sid, ward_id, mla_const_id, mp_const_id, heirarchy, gram_panchayat from tb_school_electedrep'::text) t8(sid integer, ward_id integer, mla_const_id integer, mp_const_id integer, heirarchy integer, gram_panchayat text);
 
 -- View for Assembly table.
 DROP MATERIALIZED VIEW IF EXISTS mvw_assembly CASCADE;

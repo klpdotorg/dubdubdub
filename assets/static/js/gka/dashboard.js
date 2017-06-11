@@ -110,6 +110,7 @@ var topSummaryData = {};
                     schools: summary.schools,
                     sms: summary.sms,
                     sms_govt: summary.sms_govt,
+		    sms_govt_percent: getPercent(summary.sms_govt, summary.sms),
                     assmt: summary.assessments,
                     contests: summary.contests,
                     surveys: summary.surveys
@@ -322,7 +323,7 @@ var topSummaryData = {};
         var labelMap = {
             'SDMC_MEMBER': 'SDMC',
             'CBO_MEMBER': 'CBO',
-            'PARENTS': 'Parent',
+            'Parents': 'Parent',
             'TEACHERS': 'Teacher',
             'VOLUNTEER': 'Volunteer',
             'EDUCATED_YOUTH': 'Youth',
@@ -387,7 +388,7 @@ var topSummaryData = {};
 
 
     function loadTopSummary(params) {
-        var metaURL = "stories/meta/";
+        var metaURL = "stories/meta/?top_summary=true";
         var $metaXHR = klp.api.do(metaURL, params);
         startSummaryLoading();
         $metaXHR.done(function(data) 
@@ -421,7 +422,7 @@ var topSummaryData = {};
             "ivrss-math-class-happening",
             "ivrss-gka-tlm-in-use",
             "ivrss-gka-rep-stage",
-            "ivrwork"
+            "ivrss-group-work"
         ];
         
         var questionObjects = _.map(SMSQuestionKeys, function(key) {
@@ -613,8 +614,8 @@ var topSummaryData = {};
             var dataSummary = {
                 "summary": {
                     "schools":data.summary.schools,
-                    "gps": 20,
-                    "contests":20,
+                    "gps": data.summary.gps,
+                    "contests":data.summary.contests,
                     "children": data.summary.students
                 },
                 "Class 4": {
