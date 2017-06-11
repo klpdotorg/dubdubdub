@@ -21,17 +21,17 @@ from rest_framework.exceptions import (
 )
 
 from django.conf import settings
-from django.db.models import Q, Count, Max
 from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
+from django.db.models import Q, Count, Max, Sum
 
 from users.models import User
 
 from schools.models import (
-    AssessmentsV2, Boundary, BoundaryType,
-    BoundaryUsers, School, SchoolDetails,
-    StudentGroup, Student, StudentStudentGroup,
-    Programme,
+    AcademicYear, AssessmentsV2, Boundary,
+    BoundaryType, BoundaryUsers, School,
+    SchoolDetails, SchoolExtra, StudentGroup,
+    Student, StudentStudentGroup, Programme, 
 )
 
 from common.utils import Date
@@ -803,12 +803,20 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         if admin1:
             edu_volunteers = edu_volunteers.filter(boundary=admin1)
 
+        academic_year = AcademicYear.objects.latest('id')
+        num_boys = SchoolExtra.objects.filter(
+            academic_year=academic_year,
+            school__in=gka_school_q
+        ).aggregate(Sum('num_boys'))['num_boys__sum']
+        num_girls = SchoolExtra.objects.filter(
+            academic_year=academic_year,
+            school__in=gka_school_q
+        ).aggregate(Sum('num_girls'))['num_girls__sum']
+
         return {
             'total_schools': total_schools,
             'gka_schools': gka_school_q.count(),
-            'children_impacted': gka_school_q.aggregate(
-                student_count=Count('studentgroup__students', distinct=True)
-            )['student_count'],
+            'children_impacted': num_boys + num_girls,
             'education_volunteers': edu_volunteers.count()
         }
 
