@@ -30,22 +30,6 @@ def dictfetchall(cursor):
 class Command(BaseCommand):
     help = 'Imports EMS data extracted as CSVS'
     EMS_DATA_IMPORT_DIR = os.path.join(settings.DATA_IMPORT_DIR, 'ems')
-    EMS_DATA_QUERIES = {
-        'tb_boundary.csv': 'select id, parent as parent_id, name, hid as boundary_category_id, type as boundary_type_id from tb_boundary',
-        'tb_school.csv': 'select id, boundary_id::integer as bid, inst_address_id::integer as aid, dise_code, inst_name as name, inst_category as cat, institution_gender as sex, COALESCE(moi, \'kannada\') as moi, management as mgmt, active as status from ems_tb_school',
-        'tb_address.csv': 'select tb_address.id as id, address, area, pincode, landmark, instidentification, instidentification2, bus as route_information from tb_address, tb_school where tb_school.aid=tb_address.id and tb_school.status=2',
-        'tb_child.csv': 'select id, name, dob, sex as gender, mt from tb_child',
-        'tb_class.csv': '',
-        'tb_student.csv': '',
-        'tb_student_class.csv': '',
-        'tb_teacher.csv': '',
-        'tb_teacher_class.csv': '',
-        'tb_teacher_qual.csv': '',
-        'tb_programme.csv': '',
-        'tb_assessment.csv': '',
-        'tb_question.csv': '',
-        'tb_student_eval.csv': ''
-    }
 
     def check_data_files(self):
         if not os.path.isdir(self.EMS_DATA_IMPORT_DIR):
@@ -53,13 +37,6 @@ class Command(BaseCommand):
                 'EMS data directory does not exist. '
                 'Should be at "%s". ' % self.EMS_DATA_IMPORT_DIR
             )
-
-        for f in self.EMS_DATA_QUERIES.keys():
-            file_path = os.path.join(self.EMS_DATA_IMPORT_DIR, f)
-            if not os.path.isfile(file_path):
-                raise Exception(
-                    'Data file missing: %s' % file_path
-                )
 
     def need_update(self, objone, objtwo, keys):
         """
@@ -76,6 +53,8 @@ class Command(BaseCommand):
         return False
 
     def handle_tb_school(self):
+        # these are the keys that are used to find if a www school has changeed in EMS
+        # so if any of these properties changed in EMS, it'll be updated in WWW
         keys = ['status', 'name', 'admin3_id', 'cat', 'dise_info_id', 'mgmt', 'sex']
 
         # all schools in ems table
