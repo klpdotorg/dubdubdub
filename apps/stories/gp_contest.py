@@ -1,6 +1,6 @@
 from django.db.models import Count
 
-from .models import Survey, Questiongroup
+from .models import Survey, Questiongroup, Answer, Question
 
 class GPContest(object):
 
@@ -37,11 +37,6 @@ class GPContest(object):
         }
 
     def get_classwise_summary(self, class_std, stories):
-        questiongroup = self.questiongroups.get(
-            version=self.class_questiongroup_version_mapping[class_std],
-        )
-        questions = questiongroup.questions.all(
-        ).order_by('questiongroupquestions__sequence')[:20]
         class_stories = stories.filter(answer__text=class_std)
         
         male_stories = class_stories.filter(answer__text="Male")
@@ -60,15 +55,19 @@ class GPContest(object):
             answer__text="Yes"
         ).annotate(yes_count=Count('answer')).filter(yes_count=20).count()
 
+        answers = Answer.objects.filter(story__in=class_stories)
+        answer_counts = answers.values('question', 'text').annotate(Count('text'))
+
         competencies = {}
-        for question in questions:
-            list_of_answers = question.answer_set.filter(
-                story__in=class_stories
-            ).values('text').annotate(answer_count=Count('text'))
-            
-            competencies[question.text] = {
-                answer['text']:answer['answer_count'] for answer in list_of_answers
-            }
+
+        for entry in answer_counts:
+            question = Question.objects.get(id=entry['question'])
+            question_text = question.text
+            answer_text = entry['text']
+            answer_count = entry['text__count']
+            if question_text not in competencies:
+                competencies[question_text] = {}
+            competencies[question_text][answer_text] = answer_count
 
         return {
             'males':number_of_males,

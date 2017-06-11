@@ -476,7 +476,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         chosen_boundary = None
         chosen_school = None
 
-        stories = Story.objects.select_related('school').all()
+        stories = Story.objects.select_related('school').order_by().all().values('id')
 
         if survey:
             stories = stories.filter(group__survey__name=survey)
@@ -573,25 +573,42 @@ def get_que_and_ans(stories, source, school_type, versions):
         questions = questions.filter(
             school_type__name=school_type)
 
+    answers = Answer.objects.filter(story__in=stories)
+    answer_counts = answers.values('question', 'text').annotate(Count('text'))
+
+    question_dict = {}
+    question_ids = questions.values_list('id', flat=True).order_by().distinct('id')
+    for entry in answer_counts:
+        if entry['question'] in question_ids:
+            if entry['question'] in question_dict:
+                question_dict[
+                    entry['question']
+                ]['answers']['options'][entry['text']] = entry['text__count']
+            else:
+                question = Question.objects.get(id=entry['question'])
+                question_dict[question.id] = {}
+                question_dict[question.id]['key'] = question.key
+                question_dict[question.id]['text'] = question.text
+                question_dict[question.id]['display_text'] = question.display_text
+                question_dict[question.id]['answers'] = {}
+                question_dict[question.id]['answers']['question_type'] = question.question_type.name
+                question_dict[question.id]['answers']['options'] = {}
+                question_dict[question.id]['answers']['options'][entry['text']] = entry['text__count']
+        else:
+            continue
 
     for question in questions.distinct('id'):
         j = {}
-        j['question'] = {}
-        j['question']['key'] = question.key
-        j['question']['text'] = question.text
-        j['question']['display_text'] = question.display_text
-        j['answers'] = {}
-        j['answers']['question_type'] = question.question_type.name
-
-        answer_counts = question.answer_set.filter(
-            story__in=stories
-        ).values('text').annotate(answer_count=Count('text'))
-
-        options = {}
-        for count in answer_counts:
-            options[count['text']] = count['answer_count']
-        j['answers']['options'] = options
-
+        if question.id not in question_dict:
+            j['question'] = {}
+            j['question']['key'] = question.key
+            j['question']['text'] = question.text
+            j['question']['display_text'] = question.display_text
+            j['question']['answers'] = {}
+            j['question']['answers']['question_type'] = question.question_type.name
+            j['question']['answers']['options'] = {}
+        else:
+            j['question'] = question_dict[question.id]
         response_list.append(j)
 
     return response_list
