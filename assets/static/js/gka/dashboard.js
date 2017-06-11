@@ -110,6 +110,7 @@ var topSummaryData = {};
                     schools: summary.schools,
                     sms: summary.sms,
                     sms_govt: summary.sms_govt,
+		    sms_govt_percent: getPercent(summary.sms_govt, summary.sms),
                     assmt: summary.assessments,
                     contests: summary.contests,
                     surveys: summary.surveys
