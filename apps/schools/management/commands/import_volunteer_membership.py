@@ -62,6 +62,8 @@ class Command(BaseCommand):
             
             if boundary_name == 'yadgiri':
                 boundary_name = 'yadagiri'
+            if boundary_name == 'ballari':
+                boundary_name = 'bellary'
 
             boundary = Boundary.objects.get(name=boundary_name, hierarchy__name='district')
             ev_group.user_set.add(user)
