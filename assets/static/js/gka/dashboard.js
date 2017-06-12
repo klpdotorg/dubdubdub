@@ -321,15 +321,16 @@ var topSummaryData = {};
 
     function renderRespondentChart(data) {
         var labelMap = {
-            'SDMC_MEMBER': 'SDMC',
-            'CBO_MEMBER': 'CBO',
+            'SDMC_Member': 'SDMC',
+            'CBO_Member': 'CBO',
             'Parents': 'Parent',
-            'TEACHERS': 'Teacher',
-            'VOLUNTEER': 'Volunteer',
-            'EDUCATED_YOUTH': 'Youth',
-            'LOCAL_LEADER': 'Leader',
-            'AKSHARA_STAFF': 'Akshara',
-            'ELECTED_REPRESENTATIVE': 'Elected' 
+            'Teachers': 'Teacher',
+            'Volunteer': 'Volunteer',
+            'Educated_Youth': 'Youth',
+            'Local Leader': 'Leader',
+            'Akshara_Staff': 'Akshara',
+            'Elected_Representative': 'Elected' ,
+            'Children': 'Children'
         };
 
         var labels = _.values(labelMap);
