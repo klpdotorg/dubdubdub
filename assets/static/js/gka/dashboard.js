@@ -92,7 +92,6 @@ var topSummaryData = {};
     function loadData(params) {
         loadTopSummary(params);
         loadSmsData(params);
-        loadAssmtData(params);
         loadGPContestData(params);
         loadSurveys(params);
         loadComparison(params);
@@ -397,6 +396,7 @@ var topSummaryData = {};
             var topSummary = data.top_summary
             window.topSummaryData = topSummary
             renderTopSummary(topSummary);
+            loadAssmtData(params);
         });
     }
 
