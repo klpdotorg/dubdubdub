@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.3: 6bb95f9d4df1ec8d2c91dd972bdfc8a08beed32c - 2017-06-12
+  - Further fixes for the GKA dashboard and education volunteer parsing script.
+
 Release 1.2.2: 5113c393e0a864ec990c700ebdc76236d8301b93 - 2017-06-12
   - Further fixes for the GKA dashboard
 
