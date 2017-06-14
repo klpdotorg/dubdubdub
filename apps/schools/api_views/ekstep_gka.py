@@ -1,5 +1,7 @@
 from decimal import Decimal
 
+from django.db.models import Count, Max
+
 from schools.models import AssessmentsV2
 
 # NOTE: For all the weird ['akshara.gka.'+str(number) for number in range(67, 88)]
@@ -7,14 +9,16 @@ from schools.models import AssessmentsV2
 
 class EkStepGKA(object):
     def get_summary(self, assessments):
-        number_of_assessments = assessments.distinct('assess_uid').count()
-        number_of_children = assessments.distinct('student_uid').count()
-        last_assessment_date = assessments.latest('assessed_ts').assessed_ts
+        assessment_aggregates = assessments.aggregate(
+            assessment_count=Count('assess_uid'),
+            children_count=Count('student_uid', distinct=True),
+            last_assessment=Max('assessed_ts')
+        )
 
         return {
-            'count':number_of_assessments,
-            'children':number_of_children,
-            'last_assmt':last_assessment_date,
+            'count':assessment_aggregates['assessment_count'],
+            'children':assessment_aggregates['children_count'],
+            'last_assmt':assessment_aggregates['last_assessment'],
         }
 
     def get_score(self, assessments, question_range):
@@ -57,7 +61,7 @@ class EkStepGKA(object):
     def generate(self):
         response = {}
 
-        assessments = AssessmentsV2.objects.all()
+        assessments = AssessmentsV2.objects.all().values('assess_uid')
 
         response['summary'] = self.get_summary(assessments)
         response['scores'] = self.get_scores(assessments)
