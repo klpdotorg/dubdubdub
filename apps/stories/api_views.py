@@ -812,6 +812,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             academic_year=academic_year,
             school__in=gka_school_q
         ).aggregate(Sum('num_girls'))['num_girls__sum']
+        
+        if not num_boys:
+            num_boys = 0
+
+        if not num_girls:
+            num_girls = 0
 
         return {
             'total_schools': total_schools,
