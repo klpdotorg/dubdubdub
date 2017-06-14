@@ -575,18 +575,18 @@ var topSummaryData = {};
     }
 
     function renderAssmtVolumeChart(data) {
-        var volumes = data.volumes
+        var volumes = data.volumes;
         var volume_values = [
-            {"meta":"Jun 2016","value":volumes['2016'].Jun},
-            {"meta":"Jul 2016","value":volumes['2016'].Jul},
-            {"meta":"Aug 2016","value":volumes['2016'].Aug},
-            {"meta":"Sep 2016","value":volumes['2016'].Sep},
-            {"meta":"Oct 2016","value":volumes['2016'].Oct},
-            {"meta":"Nov 2016","value":volumes['2016'].Nov},
-            {"meta":"Dec 2016","value":volumes['2016'].Dec},
-            {"meta":"Jan 2017","value":volumes['2017'].Jan},
-            {"meta":"Feb 2017","value":volumes['2017'].Feb},
-            {"meta":"Mar 2017","value":volumes['2017'].Mar}
+            {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
+            {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
+            {"meta":"Aug 2016","value":volumes['2016'] ? volumes['2016'].Aug : 0 },
+            {"meta":"Sep 2016","value":volumes['2016'] ? volumes['2016'].Sep : 0 },
+            {"meta":"Oct 2016","value":volumes['2016'] ? volumes['2016'].Oct : 0 },
+            {"meta":"Nov 2016","value":volumes['2016'] ? volumes['2016'].Nov : 0 },
+            {"meta":"Dec 2016","value":volumes['2016'] ? volumes['2016'].Dec : 0 },
+            {"meta":"Jan 2017","value":volumes['2017'] ? volumes['2017'].Jan : 0 },
+            {"meta":"Feb 2017","value":volumes['2017'] ? volumes['2017'].Feb : 0 },
+            {"meta":"Mar 2017","value":volumes['2017'] ? volumes['2017'].Mar : 0 }
         ];
 
         var assmt_volume = {
