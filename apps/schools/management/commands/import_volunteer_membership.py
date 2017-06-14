@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 from django.db import transaction
 
 from users.models import User
-from schools.models import Boundary, BoundaryUsers
+from schools.models import Boundary, BoundaryUsers, BoundaryType
 
 
 class Command(BaseCommand):
@@ -28,6 +28,7 @@ class Command(BaseCommand):
             return
 
         ev_group, created = Group.objects.get_or_create(name="EV")
+        primary_school = BoundaryType.objects.get(name='Primary School')
 
         f = open(file_name, 'r')
         csv_f = csv.reader(f)
@@ -62,9 +63,10 @@ class Command(BaseCommand):
             
             if boundary_name == 'yadgiri':
                 boundary_name = 'yadagiri'
-            if boundary_name == 'ballari':
-                boundary_name = 'bellary'
+            if boundary_name == 'bangalore rural':
+                boundary_name = 'bengaluru rural'
 
-            boundary = Boundary.objects.get(name=boundary_name, hierarchy__name='district')
+            boundary = Boundary.objects.get(name=boundary_name, hierarchy__name='district', type=primary_school)
             ev_group.user_set.add(user)
+            print user, email, first_name, last_name, mobile_no
             bu, created = BoundaryUsers.objects.get_or_create(user=user, boundary=boundary)
