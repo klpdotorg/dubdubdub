@@ -245,14 +245,32 @@ class Command(BaseCommand):
         lines.extend([heading, "\n"])
 
         columns = ("District,"
-                   "Total SMS received,"
-                   "No. SMS from BFC,"
-                   "No. SMS from CRP,"
-                   "Invalid SMS Count,"
-                   "BFC invalid SMS count,"
-                   "CRP invalid SMS count,"
-                   "No. of unique schools with invalid SMS"
-                   )
+                   "Total SMS received, "
+                   "Invalid SMS Count, "
+                   "No. of unique schools with invalid SMS, "
+
+                   "No. SMS from BEO, "
+                   "No. SMS from BFC, "
+                   "No. SMS from BRC, "
+                   "No. SMS from BRP, "
+                   "No. SMS from CRP, "
+                   "No. SMS from DDPI, "
+                   "No. SMS from DIET, "
+                   "No. SMS from EO, "
+                   "No. SMS from EV, "
+                   "No. SMS from HM, "
+
+                   "No. invalid SMS from BEO, "
+                   "No. invalid SMS from BFC, "
+                   "No. invalid SMS from BRC, "
+                   "No. invalid SMS from BRP, "
+                   "No. invalid SMS from CRP, "
+                   "No. invalid SMS from DDPI, "
+                   "No. invalid SMS from DIET, "
+                   "No. invalid SMS from EO, "
+                   "No. invalid SMS from EV, "
+                   "No. invalid SMS from HM "
+        )
         lines.extend([columns])
 
         school_ids = State.objects.all().values_list('school_id', flat=True)
@@ -279,23 +297,23 @@ class Command(BaseCommand):
             school_ids = district.schools().values_list('id', flat=True)
             smses = states.filter(school_id__in=school_ids)
             smses_received = smses.count()
-            smses_from_bfc = smses.filter(user__in=bfc_users).count()
-            smses_from_crp = smses.filter(user__in=crp_users).count()
             invalid_smses = smses.filter(is_invalid=True).count()
-            invalid_smses_from_bfc = smses.filter(is_invalid=True, user__in=bfc_users).count()
-            invalid_smses_from_crp = smses.filter(is_invalid=True, user__in=crp_users).count()
             schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
+            sms_counts = [
+                str(smses.filter(user__in=group.user_set.all()).count()) for group in groups
+            ]
+            invalid_sms_counts = [
+                str(smses.filter(is_invalid=True, user__in=group.user_set.all()).count()) for group in groups
+            ]
 
             values = [
                 str(district.name),
                 str(smses_received),
-                str(smses_from_bfc),
-                str(smses_from_crp),
                 str(invalid_smses),
-                str(invalid_smses_from_bfc),
-                str(invalid_smses_from_crp),
                 str(schools_with_invalid_smses),
             ]
+            values.extend(sms_counts)
+            values.extend(invalid_sms_counts)
 
             values = ",".join(values)
             lines.extend([values])
