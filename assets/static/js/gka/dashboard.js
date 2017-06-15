@@ -245,6 +245,7 @@ var topSummaryData = {};
             renderSmsSummary(data);
         });
 
+
         //GETTING SMS DETAILS
         var detailURL = "stories/details/?source=sms";
         var $detailXHR = klp.api.do(detailURL, params);
@@ -475,8 +476,12 @@ var topSummaryData = {};
         var volume_values = prepareVolumes('2016');
         volume_values = volume_values.concat(prepareVolumes('2017'));
 
-        volume_values.splice(0, 6);
-        volume_values.splice(-6);
+        console.log(volume_values.length)
+        if (volume_values.length > 12) {
+            volume_values.splice(0, 6);
+            volume_values.splice(-6);
+        }
+
 
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
