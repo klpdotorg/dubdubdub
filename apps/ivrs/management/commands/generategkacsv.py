@@ -16,6 +16,28 @@ from schools.models import School, Boundary
 from common.utils import send_attachment, Date
 from stories.models import Story, UserType, Questiongroup, Answer
 
+OVERALL_COLUMNS = (
+    "Total SMS received, "
+    "No. of invalid SMS, "
+    "% of invalid SMS, "
+    "No. of schools with unique valid SMS, "
+    "No. valid SMS received from BEO, "
+    "No. valid SMS received from BFC, "
+    "No. valid SMS received from BRC, "
+    "No. valid SMS received from BRP, "
+    "No. valid SMS received from CRP, "
+    "No. valid SMS received from DDPI, "
+    "No. valid SMS received from DIET, "
+    "No. valid SMS received from EO, "
+    "No. valid SMS received from EV, "
+    "No. valid SMS received from HM "
+)
+
+INVALID_COLUMNS = (
+    "Error type, "
+    "Count"
+)
+
 EXCLUDED_DISTRICTS = [
     'bangalore',
     'bangalore u south',
@@ -82,14 +104,15 @@ class Command(BaseCommand):
                     help='Whether to generate BFC and CRP reports'),
     )
 
-    @transaction.atomic
-    def handle(self, *args, **options):
-        duration = options.get('duration', None)
-        start_date = options.get('from', None)
-        end_date = options.get('to', None)
-        emails = options.get('emails', None)
-        fc_report = options.get('fc_report', None)
+    def get_emails(self, emails):
+        if not emails:
+            raise Exception(
+                "Please specify --emails as a list of comma separated emails"
+            )
+        emails = emails.split(",")
+        return emails
 
+    def get_dates(self, duration, start_date, end_date):
         today = datetime.now().date()
         if duration:
             if duration == 'weekly':
@@ -127,56 +150,9 @@ class Command(BaseCommand):
                 "Please specify --duration as 'monthly' or 'weekly' OR --from and --to"
             )
 
-        if not emails:
-            raise Exception(
-                "Please specify --emails as a list of comma separated emails"
-            )
-        emails = emails.split(",")
-        
-        report_dir = settings.PROJECT_ROOT + "/gka-reports/"
+        return (start_date, end_date)
 
-        groups = Group.objects.all().order_by('name')
-
-        ### Deprecate
-        bfc = Group.objects.get(name="BFC")
-        crp = Group.objects.get(name="CRP")
-        bfc_users = bfc.user_set.all()
-        crp_users = crp.user_set.all()
-        ###
-        
-        states = State.objects.filter(
-            date_of_visit__gte=start_date,
-            date_of_visit__lte=end_date
-        )
-        valid_states = states.filter(is_invalid=False)
-
-        date = datetime.now().date().strftime("%d_%b_%Y")
-        csv_file = report_dir + date + '.csv'
-        csv = open(csv_file, "w")
-
-        lines = []
-
-        # Overall count
-        heading = "OVERALL COUNT"
-        lines.extend([heading, "\n"])
-
-        columns = ("Total SMS received, "
-                   "No. of invalid SMS, "
-                   "% of invalid SMS, "
-                   "No. of schools with unique valid SMS, "
-                   "No. valid SMS received from BEO, "
-                   "No. valid SMS received from BFC, "
-                   "No. valid SMS received from BRC, "
-                   "No. valid SMS received from BRP, "
-                   "No. valid SMS received from CRP, "
-                   "No. valid SMS received from DDPI, "
-                   "No. valid SMS received from DIET, "
-                   "No. valid SMS received from EO, "
-                   "No. valid SMS received from EV, "
-                   "No. valid SMS received from HM "
-        )
-        lines.extend([columns])
-
+    def get_overall_count(self, states, valid_states, groups):
         total_sms_received = states.count()
         number_of_invalid_sms = states.filter(is_invalid=True).count()
         percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
@@ -193,16 +169,9 @@ class Command(BaseCommand):
             str(number_of_schools_with_unique_valid_sms)
         ]
         values.extend(valid_sms_counts)
-        values = ",".join(values)
-        lines.extend([values, "\n"])
+        return values
 
-        # Invalid SMS error classification
-        heading = "INVALID SMS ERROR CLASSIFICATION"
-        lines.extend([heading, "\n"])
-
-        columns = "Error type, Count"
-        lines.extend([columns])
-
+    def get_error_count(self, states):
         errors = states.filter(is_invalid=True).values_list('comments', flat=True)
         errors_dict = {}
         for error in errors:
@@ -230,6 +199,51 @@ class Command(BaseCommand):
             else:
                 errors_dict[error] = 1
 
+        return errors_dict
+
+    @transaction.atomic
+    def handle(self, *args, **options):
+        duration = options.get('duration', None)
+        start_date = options.get('from', None)
+        end_date = options.get('to', None)
+        emails = options.get('emails', None)
+        fc_report = options.get('fc_report', None)
+
+        start_date, end_date = self.get_dates(duration, start_date, end_date)
+        emails = self.get_emails(emails)
+        
+        report_dir = settings.PROJECT_ROOT + "/gka-reports/"
+
+        groups = Group.objects.all().order_by('name')
+
+        ### Deprecate
+        bfc = Group.objects.get(name="BFC")
+        crp = Group.objects.get(name="CRP")
+        bfc_users = bfc.user_set.all()
+        crp_users = crp.user_set.all()
+        ###
+        
+        states = State.objects.filter(
+            date_of_visit__gte=start_date,
+            date_of_visit__lte=end_date
+        )
+        valid_states = states.filter(is_invalid=False)
+        lines = []
+
+        # Overall count
+        heading = "OVERALL COUNT"
+        lines.extend([heading, "\n"])
+        lines.extend([OVERALL_COLUMNS])
+        values = self.get_overall_count(states, valid_states, groups)
+        values = ",".join(values)
+        lines.extend([values, "\n"])
+        #--------------
+
+        # Invalid SMS error classification
+        heading = "INVALID SMS ERROR CLASSIFICATION"
+        lines.extend([heading, "\n"])
+        lines.extend([INVALID_COLUMNS])
+        errors_dict = self.get_error_count(states)
         for error, count in errors_dict.iteritems():
             values = [
                 str(error),
@@ -238,7 +252,7 @@ class Command(BaseCommand):
             values = ",".join(values)
             lines.extend([values])
         lines.extend(["\n"])
-
+        #--------------
 
         # District Level performance
         heading = "DISTRICT LEVEL PERFORMANCE"
@@ -706,6 +720,10 @@ class Command(BaseCommand):
                 lines.extend([values])
 
             lines.extend(["\n"])
+
+        today = datetime.now().date()
+        csv_file = report_dir + today.strftime("%d_%b_%Y") + '.csv'
+        csv = open(csv_file, "w")
 
         for line in lines:
             csv.write(line+"\n")
