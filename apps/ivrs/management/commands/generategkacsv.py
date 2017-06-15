@@ -67,6 +67,36 @@ DISTRICT_COLUMNS = (
     "No. invalid SMS from HM "
 )
 
+BLOCK_COLUMNS = (
+    "Block,"
+    "District,"
+    "Total SMS received,"
+    "Invalid SMS Count,"
+    "No. of unique schools with invalid SMS"
+
+    "No. SMS from BEO, "
+    "No. SMS from BFC, "
+    "No. SMS from BRC, "
+    "No. SMS from BRP, "
+    "No. SMS from CRP, "
+    "No. SMS from DDPI, "
+    "No. SMS from DIET, "
+    "No. SMS from EO, "
+    "No. SMS from EV, "
+    "No. SMS from HM, "
+
+    "No. invalid SMS from BEO, "
+    "No. invalid SMS from BFC, "
+    "No. invalid SMS from BRC, "
+    "No. invalid SMS from BRP, "
+    "No. invalid SMS from CRP, "
+    "No. invalid SMS from DDPI, "
+    "No. invalid SMS from DIET, "
+    "No. invalid SMS from EO, "
+    "No. invalid SMS from EV, "
+    "No. invalid SMS from HM "
+)
+
 EXCLUDED_DISTRICTS = [
     'bangalore',
     'bangalore u south',
@@ -230,9 +260,46 @@ class Command(BaseCommand):
 
         return errors_dict
 
-    def get_district_count(self, states, groups):
+    def get_list_of_boundary_values(self, states, groups, boundary_dict_list, boundary_type=None):
         list_of_values = []
-        
+        for boundary_id, smses_count in boundary_dict_list:
+            boundary = Boundary.objects.get(id=boundary_id)
+            school_ids = boundary.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            invalid_smses = smses.filter(is_invalid=True).count()
+            schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
+            sms_counts = [
+                str(smses.filter(user__in=group.user_set.all()).count()) for group in groups
+            ]
+            invalid_sms_counts = [
+                str(smses.filter(is_invalid=True, user__in=group.user_set.all()).count()) for group in groups
+            ]
+
+            if boundary_type == "district":
+                values = [
+                    str(boundary.name),
+                    str(smses_received),
+                    str(invalid_smses),
+                    str(schools_with_invalid_smses),
+                ]
+            else:
+                values = [
+                    str(boundary.name),
+                    str(boundary.parent.name),
+                    str(smses_received),
+                    str(invalid_smses),
+                    str(schools_with_invalid_smses),
+                ]
+
+            values.extend(sms_counts)
+            values.extend(invalid_sms_counts)
+
+            values = ",".join(values)
+            list_of_values.append([values])
+        return list_of_values
+
+    def get_district_count(self, states, groups):
         school_ids = State.objects.all().values_list('school_id', flat=True)
         district_ids = School.objects.filter(
             id__in=school_ids
@@ -252,33 +319,29 @@ class Command(BaseCommand):
             district_dict[district.id] = smses_received
         district_dict_list = sorted(district_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-        for district_id, smses_count in district_dict_list:
-            district = Boundary.objects.get(id=district_id)
-            school_ids = district.schools().values_list('id', flat=True)
+        return self.get_list_of_boundary_values(states, groups, district_dict_list, boundary_type="district")
+
+    def get_block_count(self, states, groups):
+        school_ids = State.objects.all().values_list('school_id', flat=True)
+        block_ids = School.objects.filter(
+            id__in=school_ids
+        ).values_list(
+            'admin3__parent', flat=True
+        ).order_by(
+        ).distinct(
+            'admin3__parent'
+        )
+        blocks = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
+
+        block_dict = {}
+        for block in blocks:
+            school_ids = block.schools().values_list('id', flat=True)
             smses = states.filter(school_id__in=school_ids)
             smses_received = smses.count()
-            invalid_smses = smses.filter(is_invalid=True).count()
-            schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
-            sms_counts = [
-                str(smses.filter(user__in=group.user_set.all()).count()) for group in groups
-            ]
-            invalid_sms_counts = [
-                str(smses.filter(is_invalid=True, user__in=group.user_set.all()).count()) for group in groups
-            ]
-
-            values = [
-                str(district.name),
-                str(smses_received),
-                str(invalid_smses),
-                str(schools_with_invalid_smses),
-            ]
-            values.extend(sms_counts)
-            values.extend(invalid_sms_counts)
-
-            values = ",".join(values)
-            list_of_values.append([values])
-
-        return list_of_values
+            block_dict[block.id] = smses_received
+        block_dict_list = sorted(block_dict.items(), key=operator.itemgetter(1), reverse=True)
+    
+        return self.get_list_of_boundary_values(states, groups, block_dict_list, boundary_type="block")
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -346,66 +409,12 @@ class Command(BaseCommand):
         # Block Level performance
         heading = "BLOCK LEVEL PERFORMANCE"
         lines.extend([heading, "\n"])
-
-        columns = ("Block,"
-                   "District,"
-                   "Total SMS received,"
-                   "No. SMS from BFC,"
-                   "No. SMS from CRP,"
-                   "Invalid SMS Count,"
-                   "BFC invalid SMS count,"
-                   "CRP invalid SMS count,"
-                   "No. of unique schools with invalid SMS"
-                   )
-        lines.extend([columns])
-
-        school_ids = State.objects.all().values_list('school_id', flat=True)
-        block_ids = School.objects.filter(
-            id__in=school_ids
-        ).values_list(
-            'admin3__parent', flat=True
-        ).order_by(
-        ).distinct(
-            'admin3__parent'
-        )
-        blocks = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
-
-        block_dict = {}
-        for block in blocks:
-            school_ids = block.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            block_dict[block.id] = smses_received
-        block_dict_list = sorted(block_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-        for block_id, smses_count in block_dict_list:
-            block = Boundary.objects.get(id=block_id)
-            school_ids = block.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            smses_from_bfc = smses.filter(user__in=bfc_users).count()
-            smses_from_crp = smses.filter(user__in=crp_users).count()
-            invalid_smses = smses.filter(is_invalid=True).count()
-            invalid_smses_from_bfc = smses.filter(is_invalid=True, user__in=bfc_users).count()
-            invalid_smses_from_crp = smses.filter(is_invalid=True, user__in=crp_users).count()
-            schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
-
-            values = [
-                str(block.name),
-                str(block.parent.name),
-                str(smses_received),
-                str(smses_from_bfc),
-                str(smses_from_crp),
-                str(invalid_smses),
-                str(invalid_smses_from_bfc),
-                str(invalid_smses_from_crp),
-                str(schools_with_invalid_smses),
-            ]
-
-            values = ",".join(values)
-            lines.extend([values])
-
+        lines.extend([BLOCK_COLUMNS])
+        list_of_values = self.get_block_count(states, groups)
+        for values in list_of_values:
+            lines.extend(values)
         lines.extend(["\n"])
+        #--------------
 
         # Top 5 valid SMS contributors:
         heading = "TOP 5 VALID SMS CONTRIBUTORS"
