@@ -21,7 +21,6 @@ OVERALL_COLUMNS = (
     "No. of invalid SMS, "
     "% of invalid SMS, "
     "No. of schools with unique valid SMS, "
-    "No. valid SMS received from BEO, "
     "No. valid SMS received from BFC, "
     "No. valid SMS received from BRC, "
     "No. valid SMS received from BRP, "
@@ -44,7 +43,6 @@ DISTRICT_COLUMNS = (
     "Invalid SMS Count, "
     "No. of unique schools with invalid SMS, "
     
-    "No. SMS from BEO, "
     "No. SMS from BFC, "
     "No. SMS from BRC, "
     "No. SMS from BRP, "
@@ -55,7 +53,6 @@ DISTRICT_COLUMNS = (
     "No. SMS from EV, "
     "No. SMS from HM, "
     
-    "No. invalid SMS from BEO, "
     "No. invalid SMS from BFC, "
     "No. invalid SMS from BRC, "
     "No. invalid SMS from BRP, "
@@ -74,7 +71,6 @@ BLOCK_COLUMNS = (
     "Invalid SMS Count,"
     "No. of unique schools with invalid SMS"
 
-    "No. SMS from BEO, "
     "No. SMS from BFC, "
     "No. SMS from BRC, "
     "No. SMS from BRP, "
@@ -85,7 +81,6 @@ BLOCK_COLUMNS = (
     "No. SMS from EV, "
     "No. SMS from HM, "
 
-    "No. invalid SMS from BEO, "
     "No. invalid SMS from BFC, "
     "No. invalid SMS from BRC, "
     "No. invalid SMS from BRP, "
