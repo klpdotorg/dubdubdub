@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.4: a6736c7e51f91a3a537c6fd32532bc1f1fae872b - 2017-06-15
+  - Fixes the SMS report generation script and education volunteer parsing script.
+
 Release 1.2.3: 6bb95f9d4df1ec8d2c91dd972bdfc8a08beed32c - 2017-06-12
   - Further fixes for the GKA dashboard and education volunteer parsing script.
 
