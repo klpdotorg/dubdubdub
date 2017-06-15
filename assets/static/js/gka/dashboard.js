@@ -444,6 +444,7 @@ var topSummaryData = {};
 
         function prepareVolumes(year) {
             var values = [];
+
             for(var v in data.volumes[year]) {
                 values.push({
                     meta: v + ' ' + year,
@@ -460,7 +461,7 @@ var topSummaryData = {};
                     value: data.user_groups[m]
                 });
             }
-        }        
+        }   
 
         var sms_sender = {
             labels: _.map(meta_values, function(m){ return m.meta; }),
@@ -476,7 +477,10 @@ var topSummaryData = {};
         var volume_values = prepareVolumes('2016');
         volume_values = volume_values.concat(prepareVolumes('2017'));
 
-        console.log(volume_values.length)
+        if(!volume_values.length) {
+            return;
+        }
+
         if (volume_values.length > 12) {
             volume_values.splice(0, 6);
             volume_values.splice(-6);
