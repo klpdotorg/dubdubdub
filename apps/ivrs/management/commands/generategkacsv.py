@@ -38,6 +38,35 @@ INVALID_COLUMNS = (
     "Count"
 )
 
+DISTRICT_COLUMNS = (
+    "District,"
+    "Total SMS received, "
+    "Invalid SMS Count, "
+    "No. of unique schools with invalid SMS, "
+    
+    "No. SMS from BEO, "
+    "No. SMS from BFC, "
+    "No. SMS from BRC, "
+    "No. SMS from BRP, "
+    "No. SMS from CRP, "
+    "No. SMS from DDPI, "
+    "No. SMS from DIET, "
+    "No. SMS from EO, "
+    "No. SMS from EV, "
+    "No. SMS from HM, "
+    
+    "No. invalid SMS from BEO, "
+    "No. invalid SMS from BFC, "
+    "No. invalid SMS from BRC, "
+    "No. invalid SMS from BRP, "
+    "No. invalid SMS from CRP, "
+    "No. invalid SMS from DDPI, "
+    "No. invalid SMS from DIET, "
+    "No. invalid SMS from EO, "
+    "No. invalid SMS from EV, "
+    "No. invalid SMS from HM "
+)
+
 EXCLUDED_DISTRICTS = [
     'bangalore',
     'bangalore u south',
@@ -201,6 +230,56 @@ class Command(BaseCommand):
 
         return errors_dict
 
+    def get_district_count(self, states, groups):
+        list_of_values = []
+        
+        school_ids = State.objects.all().values_list('school_id', flat=True)
+        district_ids = School.objects.filter(
+            id__in=school_ids
+        ).values_list(
+            'admin3__parent__parent', flat=True
+        ).order_by(
+        ).distinct(
+            'admin3__parent__parent'
+        )
+        districts = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
+
+        district_dict = {}
+        for district in districts:
+            school_ids = district.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            district_dict[district.id] = smses_received
+        district_dict_list = sorted(district_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+        for district_id, smses_count in district_dict_list:
+            district = Boundary.objects.get(id=district_id)
+            school_ids = district.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            invalid_smses = smses.filter(is_invalid=True).count()
+            schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
+            sms_counts = [
+                str(smses.filter(user__in=group.user_set.all()).count()) for group in groups
+            ]
+            invalid_sms_counts = [
+                str(smses.filter(is_invalid=True, user__in=group.user_set.all()).count()) for group in groups
+            ]
+
+            values = [
+                str(district.name),
+                str(smses_received),
+                str(invalid_smses),
+                str(schools_with_invalid_smses),
+            ]
+            values.extend(sms_counts)
+            values.extend(invalid_sms_counts)
+
+            values = ",".join(values)
+            list_of_values.append([values])
+
+        return list_of_values
+
     @transaction.atomic
     def handle(self, *args, **options):
         duration = options.get('duration', None)
@@ -257,83 +336,13 @@ class Command(BaseCommand):
         # District Level performance
         heading = "DISTRICT LEVEL PERFORMANCE"
         lines.extend([heading, "\n"])
-
-        columns = ("District,"
-                   "Total SMS received, "
-                   "Invalid SMS Count, "
-                   "No. of unique schools with invalid SMS, "
-
-                   "No. SMS from BEO, "
-                   "No. SMS from BFC, "
-                   "No. SMS from BRC, "
-                   "No. SMS from BRP, "
-                   "No. SMS from CRP, "
-                   "No. SMS from DDPI, "
-                   "No. SMS from DIET, "
-                   "No. SMS from EO, "
-                   "No. SMS from EV, "
-                   "No. SMS from HM, "
-
-                   "No. invalid SMS from BEO, "
-                   "No. invalid SMS from BFC, "
-                   "No. invalid SMS from BRC, "
-                   "No. invalid SMS from BRP, "
-                   "No. invalid SMS from CRP, "
-                   "No. invalid SMS from DDPI, "
-                   "No. invalid SMS from DIET, "
-                   "No. invalid SMS from EO, "
-                   "No. invalid SMS from EV, "
-                   "No. invalid SMS from HM "
-        )
-        lines.extend([columns])
-
-        school_ids = State.objects.all().values_list('school_id', flat=True)
-        district_ids = School.objects.filter(
-            id__in=school_ids
-        ).values_list(
-            'admin3__parent__parent', flat=True
-        ).order_by(
-        ).distinct(
-            'admin3__parent__parent'
-        )
-        districts = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
-
-        district_dict = {}
-        for district in districts:
-            school_ids = district.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            district_dict[district.id] = smses_received
-        district_dict_list = sorted(district_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-        for district_id, smses_count in district_dict_list:
-            district = Boundary.objects.get(id=district_id)
-            school_ids = district.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            invalid_smses = smses.filter(is_invalid=True).count()
-            schools_with_invalid_smses = smses.filter(is_invalid=True).order_by().distinct('school_id').count()
-            sms_counts = [
-                str(smses.filter(user__in=group.user_set.all()).count()) for group in groups
-            ]
-            invalid_sms_counts = [
-                str(smses.filter(is_invalid=True, user__in=group.user_set.all()).count()) for group in groups
-            ]
-
-            values = [
-                str(district.name),
-                str(smses_received),
-                str(invalid_smses),
-                str(schools_with_invalid_smses),
-            ]
-            values.extend(sms_counts)
-            values.extend(invalid_sms_counts)
-
-            values = ",".join(values)
-            lines.extend([values])
-
-
+        lines.extend([DISTRICT_COLUMNS])
+        list_of_values = self.get_district_count(states, groups)
+        for values in list_of_values:
+            lines.extend(values)
         lines.extend(["\n"])
+        #--------------
+        
         # Block Level performance
         heading = "BLOCK LEVEL PERFORMANCE"
         lines.extend([heading, "\n"])
