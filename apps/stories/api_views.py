@@ -291,6 +291,9 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         response_type = self.request.QUERY_PARAMS.get(
             'response_type', 'call_volume')
 
+        if 'Primary' in school_type:
+            school_type = 'Primary School'
+
         date = Date()
         if start_date:
             sane = date.check_date_sanity(start_date)
@@ -457,6 +460,9 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         end_date = self.request.QUERY_PARAMS.get('to', None)
         school_type = self.request.QUERY_PARAMS.get(
             'school_type', 'Primary School')
+
+        if 'Primary' in school_type:
+            school_type = 'Primary School'
 
         date = Date()
         if start_date:
@@ -649,6 +655,9 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             'school_type', 'Primary School')
         top_summary = self.request.QUERY_PARAMS.get('top_summary', None)
         date = Date()
+
+        if 'Primary' in school_type:
+            school_type = 'Primary School'
 
         if start_date:
             sane = date.check_date_sanity(start_date)
