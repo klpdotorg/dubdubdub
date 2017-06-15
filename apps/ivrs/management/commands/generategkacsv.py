@@ -108,6 +108,26 @@ TOP_5_VALID_SMS_CONTRIB_COLUMNS = (
     "SMS count"
 )
 
+TOP_5_VALID_SMS_BLOCKS_COLUMNS = (
+    "Block Name,"
+    "District Name,"
+    "Number of Valid SMS,"
+)
+
+GROUP_ERROR_REPORT_COLUMNS = (
+    "Group,"
+    "Name,"
+    "Telephone,"
+    "District,"
+    "Block,"
+    "Cluster,"
+    "SMSes sent,"
+    "Number of Invalid SMS,"
+    "Top 3 error classification with counts,"
+    "Number of schools with SMS,"
+    "No. of unique schools with SMS"
+)
+
 EXCLUDED_DISTRICTS = [
     'bangalore',
     'bangalore u south',
@@ -411,6 +431,128 @@ class Command(BaseCommand):
 
         return list_of_values
 
+    def get_top_5_blocks(self, valid_states):
+        list_of_values = []
+
+        school_ids = valid_states.values_list('school_id', flat=True)
+        block_ids = School.objects.filter(
+            id__in=school_ids
+        ).values_list(
+            'admin3__parent', flat=True
+        ).order_by(
+        ).distinct(
+            'admin3__parent'
+        )
+        blocks = Boundary.objects.filter(id__in=block_ids)
+        block_sms_dict = {}
+        for block in blocks:
+            school_ids = block.schools().values_list('id', flat=True)
+            smses = valid_states.filter(school_id__in=school_ids).count()
+            block_sms_dict[block.id] = smses
+
+        block_sms_list = sorted(block_sms_dict.items(), key=operator.itemgetter(1))
+        for i in list(reversed(block_sms_list))[:5]:
+            block = Boundary.objects.get(id=i[0])
+            values = [
+                str(block.name),
+                str(block.parent.name),
+                str(i[1]),
+            ]
+
+            values = ",".join(values)
+            list_of_values.append([values])
+
+        return list_of_values
+
+    def get_group_error_report(self, group, states, valid_states):
+        list_of_values = []
+
+        user_dict = {}
+        for user in group.user_set.all():
+            user_smses_count = user.state_set.filter(id__in=states).count()
+            user_dict[user.id] = user_smses_count
+        user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
+
+        for user_id, user_smses_count in user_dict_list:
+            group_name = group.name
+            user = User.objects.get(id=user_id)
+            user_smses = user.state_set.filter(id__in=states)
+            name = user.get_full_name()
+            telephone = user.mobile_no
+            school_ids = user_smses.values_list('school_id',flat=True)
+            clusters = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__name'
+            )
+            blocks = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__parent__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__parent__name'
+            )
+            districts = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__parent__parent__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__parent__parent__name'
+            )
+            smses_sent = user_smses.count()
+            invalid_smses_count = user_smses.filter(is_invalid=True).count()
+            errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
+            errors_dict = {}
+            for error in errors:
+                if error:
+                    if 'Expected' in error:
+                        error = 'Formatting error'
+                    if 'registered' in error:
+                        error = 'Not registered'
+                    if 'que.no' in error:
+                        error = 'Entry error for a specific question'
+                    if 'School' in error:
+                        error = 'School ID error'
+                    if 'Logical' in error:
+                        error = 'Logical error'
+                    if 'accepted' in error:
+                        # We have to do this because all State are by default
+                        # invalid when created. Since we only process SMSes at
+                        # 8.30PM in the night, the SMSes that came in that day
+                        # morning will show as invalid.
+                        continue
+                    if error in errors_dict:
+                        errors_dict[error] += 1
+                    else:
+                        errors_dict[error] = 1
+            errors_dict = sorted(errors_dict.items(), key=operator.itemgetter(1))
+            top_3_errors = list((reversed(errors_dict)))[:3]
+            schools_with_sms = user_smses.values_list('school_id',flat=True).count()
+            unique_schools_with_sms = user_smses.values_list('school_id',flat=True).order_by().distinct('school_id').count()
+            values = [
+                str(group_name),
+                str(name),
+                str(telephone),
+                str("-".join(districts)),
+                str("-".join(blocks)),
+                str("-".join(clusters)),
+                str(smses_sent),
+                str(invalid_smses_count),
+                str(top_3_errors).replace(',', '-'),
+                str(schools_with_sms),
+                str(unique_schools_with_sms)
+            ]
+            
+            values = ",".join(values)
+            list_of_values.append([values])
+
+        return list_of_values
+
     @transaction.atomic
     def handle(self, *args, **options):
         duration = options.get('duration', None)
@@ -424,20 +566,13 @@ class Command(BaseCommand):
         
         report_dir = settings.PROJECT_ROOT + "/gka-reports/"
 
-        groups = Group.objects.all().order_by('name')
-
-        ### Deprecate
-        bfc = Group.objects.get(name="BFC")
-        crp = Group.objects.get(name="CRP")
-        bfc_users = bfc.user_set.all()
-        crp_users = crp.user_set.all()
-        ###
-        
+        groups = Group.objects.all().order_by('name')        
         states = State.objects.filter(
             date_of_visit__gte=start_date,
             date_of_visit__lte=end_date
         )
         valid_states = states.filter(is_invalid=False)
+
         lines = []
 
         # Overall count
@@ -497,253 +632,24 @@ class Command(BaseCommand):
         # Top 5 blocks with valid SMS
         heading = "TOP 5 BLOCKS WITH VALID SMS"
         lines.extend([heading, "\n"])
-
-        columns = ("Block Name,"
-                   "District Name,"
-                   "Number of Valid SMS,"
-        )
-        lines.extend([columns])
-
-        school_ids = valid_states.values_list('school_id', flat=True)
-        block_ids = School.objects.filter(
-            id__in=school_ids
-        ).values_list(
-            'admin3__parent', flat=True
-        ).order_by(
-        ).distinct(
-            'admin3__parent'
-        )
-        blocks = Boundary.objects.filter(id__in=block_ids)
-        block_sms_dict = {}
-        for block in blocks:
-            school_ids = block.schools().values_list('id', flat=True)
-            smses = valid_states.filter(school_id__in=school_ids).count()
-            block_sms_dict[block.id] = smses
-
-        block_sms_list = sorted(block_sms_dict.items(), key=operator.itemgetter(1))
-        for i in list(reversed(block_sms_list))[:5]:
-            block = Boundary.objects.get(id=i[0])
-            values = [
-                str(block.name),
-                str(block.parent.name),
-                str(i[1]),
-            ]
-
-            values = ",".join(values)
-            lines.extend([values])
-
+        lines.extend([TOP_5_VALID_SMS_BLOCKS_COLUMNS])
+        list_of_values = self.get_top_5_blocks(valid_states)
+        for values in list_of_values:
+            lines.extend(values)
         lines.extend(["\n"])
+        #--------------
 
+        # ERROR REPORTS FOR EACH GROUP
         if fc_report == 'True':
-
-            # Weekly BFC error report
-            heading = "BFC ERROR REPORT"
-            lines.extend([heading, "\n"])
-
-            columns = ("Group,"
-                       "Name,"
-                       "Telephone,"
-                       "District,"
-                       "Block,"
-                       "Cluster,"
-                       "SMSes sent,"
-                       "Number of Invalid SMS,"
-                       "Top 3 error classification with counts,"
-                       "Number of schools with SMS,"
-                       "No. of unique schools with SMS"
-            )
-            lines.extend([columns])
-
-            user_dict = {}
-            for user in bfc_users:
-                user_smses_count = user.state_set.filter(id__in=states).count()
-                user_dict[user.id] = user_smses_count
-            user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-            for user_id, user_smses_count in user_dict_list:
-                group = "BFC"
-                user = User.objects.get(id=user_id)
-                user_smses = user.state_set.filter(id__in=states)
-                name = user.get_full_name()
-                telephone = user.mobile_no
-                school_ids = user_smses.values_list('school_id',flat=True)
-                clusters = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__name'
-                )
-                blocks = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__parent__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__parent__name'
-                )
-                districts = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__parent__parent__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__parent__parent__name'
-                )
-                smses_sent = user_smses.count()
-                invalid_smses_count = user_smses.filter(is_invalid=True).count()
-                errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
-                errors_dict = {}
-                for error in errors:
-                    if error:
-                        if 'Expected' in error:
-                            error = 'Formatting error'
-                        if 'registered' in error:
-                            error = 'Not registered'
-                        if 'que.no' in error:
-                            error = 'Entry error for a specific question'
-                        if 'School' in error:
-                            error = 'School ID error'
-                        if 'Logical' in error:
-                            error = 'Logical error'
-                        if 'accepted' in error:
-                            # We have to do this because all State are by default
-                            # invalid when created. Since we only process SMSes at
-                            # 8.30PM in the night, the SMSes that came in that day
-                            # morning will show as invalid.
-                            continue
-                    if error in errors_dict:
-                        errors_dict[error] += 1
-                    else:
-                        errors_dict[error] = 1
-                errors_dict = sorted(errors_dict.items(), key=operator.itemgetter(1))
-                top_3_errors = list((reversed(errors_dict)))[:3]
-                schools_with_sms = user_smses.values_list('school_id',flat=True).count()
-                unique_schools_with_sms = user_smses.values_list('school_id',flat=True).order_by().distinct('school_id').count()
-                values = [
-                    str(group),
-                    str(name),
-                    str(telephone),
-                    str("-".join(districts)),
-                    str("-".join(blocks)),
-                    str("-".join(clusters)),
-                    str(smses_sent),
-                    str(invalid_smses_count),
-                    str(top_3_errors).replace(',', '-'),
-                    str(schools_with_sms),
-                    str(unique_schools_with_sms)
-                ]
-            
-                values = ",".join(values)
-                lines.extend([values])
-
-            lines.extend(["\n"])
-
-            # Weekly CRP error report
-            heading = "CRP ERROR REPORT"
-            lines.extend([heading, "\n"])
-
-            columns = ("Group,"
-                       "Name,"
-                       "Telephone,"
-                       "District,"
-                       "Block,"
-                       "Cluster,"
-                       "SMSes sent,"
-                       "Number of Invalid SMS,"
-                       "Top 3 error classification with counts,"
-                       "Number of schools with SMS,"
-                       "No. of unique schools with SMS"
-            )
-            lines.extend([columns])
-
-            user_dict = {}
-            for user in crp_users:
-                user_smses_count = user.state_set.filter(id__in=states).count()
-                user_dict[user.id] = user_smses_count
-            user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-            for user_id, user_smses_count in user_dict_list:
-                group = "CRP"
-                user = User.objects.get(id=user_id)
-                user_smses = user.state_set.filter(id__in=states)
-                name = user.get_full_name()
-                telephone = user.mobile_no
-                school_ids = user_smses.values_list('school_id',flat=True)
-                clusters = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__name'
-                )
-                blocks = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__parent__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__parent__name'
-                )
-                districts = School.objects.filter(
-                    id__in=school_ids
-                ).values_list(
-                    'admin3__parent__parent__name', flat=True
-                ).order_by(
-                ).distinct(
-                    'admin3__parent__parent__name'
-                )
-                smses_sent = user_smses.count()
-                invalid_smses_count = user_smses.filter(is_invalid=True).count()
-                errors = user_smses.filter(is_invalid=True).values_list('comments', flat=True)
-                errors_dict = {}
-                for error in errors:
-                    if error:
-                        if 'Expected' in error:
-                            error = 'Formatting error'
-                        if 'registered' in error:
-                            error = 'Not registered'
-                        if 'que.no' in error:
-                            error = 'Entry error for a specific question'
-                        if 'School' in error:
-                            error = 'School ID error'
-                        if 'Logical' in error:
-                            error = 'Logical error'
-                        if 'accepted' in error:
-                            # We have to do this because all State are by default
-                            # invalid when created. Since we only process SMSes at
-                            # 8.30PM in the night, the SMSes that came in that day
-                            # morning will show as invalid.
-                            continue
-
-                    if error in errors_dict:
-                        errors_dict[error] += 1
-                    else:
-                        errors_dict[error] = 1
-                errors_dict = sorted(errors_dict.items(), key=operator.itemgetter(1))
-                top_3_errors = list((reversed(errors_dict)))[:3]
-                schools_with_sms = user_smses.values_list('school_id',flat=True).count()
-                unique_schools_with_sms = user_smses.values_list('school_id',flat=True).order_by().distinct('school_id').count()
-                values = [
-                    str(group),
-                    str(name),
-                    str(telephone),
-                    str("-".join(districts)),
-                    str("-".join(blocks)),
-                    str("-".join(clusters)),
-                    str(smses_sent),
-                    str(invalid_smses_count),
-                    str(top_3_errors).replace(',', '-'),
-                    str(schools_with_sms),
-                    str(unique_schools_with_sms)
-                ]
-            
-                values = ",".join(values)
-                lines.extend([values])
-
-            lines.extend(["\n"])
+            for group in groups:
+                heading = group.name + " ERROR REPORT"
+                lines.extend([heading, "\n"])
+                lines.extend([GROUP_ERROR_REPORT_COLUMNS])
+                list_of_values = self.get_group_error_report(group, states, valid_states)
+                for values in list_of_values:
+                    lines.extend(values)
+                lines.extend(["\n"])
+        #-------------
 
         today = datetime.now().date()
         csv_file = report_dir + today.strftime("%d_%b_%Y") + '.csv'
