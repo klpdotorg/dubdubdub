@@ -97,6 +97,17 @@ BLOCK_COLUMNS = (
     "No. invalid SMS from HM "
 )
 
+TOP_5_VALID_SMS_CONTRIB_COLUMNS = (
+    "Name,"
+    "Mobile number,"
+    "Districts,"
+    "Blocks,"
+    "Clusters,"
+    "Group,"
+    "Valid SMS count,"
+    "SMS count"
+)
+
 EXCLUDED_DISTRICTS = [
     'bangalore',
     'bangalore u south',
@@ -260,8 +271,17 @@ class Command(BaseCommand):
 
         return errors_dict
 
-    def get_list_of_boundary_values(self, states, groups, boundary_dict_list, boundary_type=None):
+    def get_list_of_boundary_values(self, boundaries, states, groups, boundary_type=None):
         list_of_values = []
+
+        boundary_dict = {}
+        for boundary in boundaries:
+            school_ids = boundary.schools().values_list('id', flat=True)
+            smses = states.filter(school_id__in=school_ids)
+            smses_received = smses.count()
+            boundary_dict[boundary.id] = smses_received
+        boundary_dict_list = sorted(boundary_dict.items(), key=operator.itemgetter(1), reverse=True)
+
         for boundary_id, smses_count in boundary_dict_list:
             boundary = Boundary.objects.get(id=boundary_id)
             school_ids = boundary.schools().values_list('id', flat=True)
@@ -309,17 +329,11 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent__parent'
         )
-        districts = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
+        boundaries = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
 
-        district_dict = {}
-        for district in districts:
-            school_ids = district.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            district_dict[district.id] = smses_received
-        district_dict_list = sorted(district_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-        return self.get_list_of_boundary_values(states, groups, district_dict_list, boundary_type="district")
+        return self.get_list_of_boundary_values(
+            boundaries, states, groups, boundary_type="district"
+        )
 
     def get_block_count(self, states, groups):
         school_ids = State.objects.all().values_list('school_id', flat=True)
@@ -331,17 +345,71 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent'
         )
-        blocks = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
-
-        block_dict = {}
-        for block in blocks:
-            school_ids = block.schools().values_list('id', flat=True)
-            smses = states.filter(school_id__in=school_ids)
-            smses_received = smses.count()
-            block_dict[block.id] = smses_received
-        block_dict_list = sorted(block_dict.items(), key=operator.itemgetter(1), reverse=True)
+        boundaries = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
     
-        return self.get_list_of_boundary_values(states, groups, block_dict_list, boundary_type="block")
+        return self.get_list_of_boundary_values(
+            boundaries, states, groups, boundary_type="block"
+        )
+
+    def get_top_5_users(self, states, valid_states):
+        list_of_values = []
+        
+        users = User.objects.filter(
+            state__in=valid_states
+        ).annotate(sms_count=Count('state')).order_by('-sms_count')[:5]
+
+        for user in users:
+            name = user.get_full_name()
+            mobile_number = user.mobile_no
+            school_ids = user.state_set.filter(id__in=valid_states).values_list('school_id',flat=True)
+            clusters = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__name'
+            )
+            blocks = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__parent__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__parent__name'
+            )
+            districts = School.objects.filter(
+                id__in=school_ids
+            ).values_list(
+                'admin3__parent__parent__name', flat=True
+            ).order_by(
+            ).distinct(
+                'admin3__parent__parent__name'
+            )
+
+            try:
+                group = user.groups.get().name
+            except:
+                group = ''
+
+            valid_smses = states.filter(user=user, is_invalid=False).count()
+            total_smses = states.filter(user=user).count()
+
+            values = [
+                str(name),
+                str(mobile_number),
+                str("-".join(districts)),
+                str("-".join(blocks)),
+                str("-".join(clusters)),
+                str(group),
+                str(valid_smses),
+                str(total_smses)
+            ]
+
+            values = ",".join(values)
+            list_of_values.append([values])
+
+        return list_of_values
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -419,74 +487,12 @@ class Command(BaseCommand):
         # Top 5 valid SMS contributors:
         heading = "TOP 5 VALID SMS CONTRIBUTORS"
         lines.extend([heading, "\n"])
-
-        columns = ("Name,"
-                   "Mobile number,"
-                   "Districts,"
-                   "Blocks,"
-                   "Clusters,"
-                   "Group,"
-                   "Valid SMS count,"
-                   "SMS count"
-        )
-        lines.extend([columns])
-
-        users = User.objects.filter(
-            state__in=valid_states
-        ).annotate(sms_count=Count('state')).order_by('-sms_count')[:5]
-
-        for user in users:
-            name = user.get_full_name()
-            mobile_number = user.mobile_no
-            school_ids = user.state_set.filter(id__in=valid_states).values_list('school_id',flat=True)
-            clusters = School.objects.filter(
-                id__in=school_ids
-            ).values_list(
-                'admin3__name', flat=True
-            ).order_by(
-            ).distinct(
-                'admin3__name'
-            )
-            blocks = School.objects.filter(
-                id__in=school_ids
-            ).values_list(
-                'admin3__parent__name', flat=True
-            ).order_by(
-            ).distinct(
-                'admin3__parent__name'
-            )
-            districts = School.objects.filter(
-                id__in=school_ids
-            ).values_list(
-                'admin3__parent__parent__name', flat=True
-            ).order_by(
-            ).distinct(
-                'admin3__parent__parent__name'
-            )
-
-            try:
-                group = user.groups.get().name
-            except:
-                group = ''
-
-            valid_smses = states.filter(user=user, is_invalid=False).count()
-            total_smses = states.filter(user=user).count()
-
-            values = [
-                str(name),
-                str(mobile_number),
-                str("-".join(districts)),
-                str("-".join(blocks)),
-                str("-".join(clusters)),
-                str(group),
-                str(valid_smses),
-                str(total_smses)
-            ]
-
-            values = ",".join(values)
-            lines.extend([values])
-
+        lines.extend([TOP_5_VALID_SMS_CONTRIB_COLUMNS])
+        list_of_values = self.get_top_5_users(states, valid_states)
+        for values in list_of_values:
+            lines.extend(values)
         lines.extend(["\n"])
+        #--------------
 
         # Top 5 blocks with valid SMS
         heading = "TOP 5 BLOCKS WITH VALID SMS"
