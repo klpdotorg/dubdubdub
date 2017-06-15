@@ -135,10 +135,14 @@ class Command(BaseCommand):
         
         report_dir = settings.PROJECT_ROOT + "/gka-reports/"
 
+        groups = Group.objects.all().order_by('name')
+
+        ### Deprecate
         bfc = Group.objects.get(name="BFC")
         crp = Group.objects.get(name="CRP")
         bfc_users = bfc.user_set.all()
         crp_users = crp.user_set.all()
+        ###
         
         states = State.objects.filter(
             date_of_visit__gte=start_date,
@@ -156,26 +160,39 @@ class Command(BaseCommand):
         heading = "OVERALL COUNT"
         lines.extend([heading, "\n"])
 
-        columns = "Total SMS received, No. of invalid SMS, % of invalid SMS, No. valid SMS received from BFC, No. valid SMS received from CRP, No. of schools with unique valid SMS"
+        columns = ("Total SMS received, "
+                   "No. of invalid SMS, "
+                   "% of invalid SMS, "
+                   "No. of schools with unique valid SMS, "
+                   "No. valid SMS received from BEO, "
+                   "No. valid SMS received from BFC, "
+                   "No. valid SMS received from BRC, "
+                   "No. valid SMS received from BRP, "
+                   "No. valid SMS received from CRP, "
+                   "No. valid SMS received from DDPI, "
+                   "No. valid SMS received from DIET, "
+                   "No. valid SMS received from EO, "
+                   "No. valid SMS received from EV, "
+                   "No. valid SMS received from HM "
+        )
         lines.extend([columns])
 
         total_sms_received = states.count()
         number_of_invalid_sms = states.filter(is_invalid=True).count()
         percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
-        number_of_valid_smses_from_bfc = valid_states.filter(user__in=bfc_users).count()
-        number_of_valid_smses_from_crp = valid_states.filter(user__in=crp_users).count()
         number_of_schools_with_unique_valid_sms = states.filter(
             is_invalid=False).order_by().distinct('school_id').count()
+        valid_sms_counts = [
+            str(valid_states.filter(user__in=group.user_set.all()).count()) for group in groups
+        ]
 
         values = [
             str(total_sms_received),
             str(number_of_invalid_sms),
             str(percentage_of_invalid_sms),
-            str(number_of_valid_smses_from_bfc),
-            str(number_of_valid_smses_from_crp),
             str(number_of_schools_with_unique_valid_sms)
         ]
-
+        values.extend(valid_sms_counts)
         values = ",".join(values)
         lines.extend([values, "\n"])
 
