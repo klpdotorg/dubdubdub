@@ -519,14 +519,14 @@ var topSummaryData = {};
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
             var children_perc = getPercent(children, children_impacted)
-            var last_assmt = new Date(data.summary.last_assmt)
+            var last_assmt = data.summary.last_assmt
             var dataSummary = {
                 "count": data.summary.count,
                 "schools": gka_schools,
                 "schools_perc": schools_perc,
                 "children": children,
                 "children_perc": children_perc,
-                "last_assmt": last_assmt.toDateString(),
+                "last_assmt": formatLastStory(last_assmt)
             }
             renderAssmtSummary(dataSummary);
             renderAssmtCharts(data);
