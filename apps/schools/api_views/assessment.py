@@ -61,7 +61,7 @@ class AssessmentsList(KLPListAPIView, CacheMixin):
         ekstep_gka = request.GET.get('ekstep_gka', None)
         if ekstep_gka:
             ekstep_gka = EkStepGKA()
-            return Response(ekstep_gka.generate())
+            return Response(ekstep_gka.generate(request))
 
         else: # Normal REST Framework implementation of def list()
             self.object_list = self.filter_queryset(self.get_queryset())
