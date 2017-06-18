@@ -1,20 +1,27 @@
 from decimal import Decimal
 
-from schools.models import AssessmentsV2
+from django.db.models import Count, Max
+
+from rest_framework.exceptions import APIException
+
+from common.utils import Date
+from schools.models import AssessmentsV2, Boundary
 
 # NOTE: For all the weird ['akshara.gka.'+str(number) for number in range(67, 88)]
 # bits, ask / refer "the" CSV sheets.
 
 class EkStepGKA(object):
     def get_summary(self, assessments):
-        number_of_assessments = assessments.distinct('assess_uid').count()
-        number_of_children = assessments.distinct('student_uid').count()
-        last_assessment_date = assessments.latest('assessed_ts').assessed_ts
+        assessment_aggregates = assessments.aggregate(
+            assessment_count=Count('assess_uid'),
+            children_count=Count('student_uid', distinct=True),
+            last_assessment=Max('assessed_ts')
+        )
 
         return {
-            'count':number_of_assessments,
-            'children':number_of_children,
-            'last_assmt':last_assessment_date,
+            'count':assessment_aggregates['assessment_count'],
+            'children':assessment_aggregates['children_count'],
+            'last_assmt':assessment_aggregates['last_assessment'],
         }
 
     def get_score(self, assessments, question_range):
@@ -54,10 +61,67 @@ class EkStepGKA(object):
 
         return scores
     
-    def generate(self):
+    def generate(self, request):
         response = {}
 
-        assessments = AssessmentsV2.objects.all()
+        admin1_id = request.QUERY_PARAMS.get('admin1', None)
+        admin2_id = request.QUERY_PARAMS.get('admin2', None)
+        admin3_id = request.QUERY_PARAMS.get('admin3', None)
+        school_id = request.QUERY_PARAMS.get('school_id', None)
+        start_date = request.QUERY_PARAMS.get('from', None)
+        end_date = request.QUERY_PARAMS.get('to', None)
+
+        date = Date()
+        if start_date:
+            sane = date.check_date_sanity(start_date)
+            if not sane:
+                raise APIException("Please enter `from` in the format YYYY-MM-DD")
+            else:
+                start_date = date.get_datetime(start_date)
+
+        if end_date:
+            sane = date.check_date_sanity(end_date)
+            if not sane:
+                raise APIException("Please enter `to` in the format YYYY-MM-DD")
+            else:
+                end_date = date.get_datetime(end_date)
+
+        assessments = AssessmentsV2.objects.exclude(
+            question_id__icontains="do_"
+        ).values('assess_uid')
+
+        if admin1_id:
+            boundary = Boundary.objects.get(id=admin1_id)
+            assessments = assessments.filter(
+                student_uid__district=boundary.name
+            )
+
+        if admin2_id:
+            boundary = Boundary.objects.get(id=admin2_id)
+            assessments = assessments.filter(
+                student_uid__block=boundary.name
+            )
+
+        if admin3_id:
+            boundary = Boundary.objects.get(id=admin3_id)
+            assessments = assessments.filter(
+                student_uid__cluster=boundary.name
+            )
+
+        if school_id:
+            assessments = assessments.filter(
+                student_uid__school_code=school_id
+            )
+
+        if start_date:
+            assessments = assessments.filter(
+                assessed_ts__gte=start_date,
+            )
+
+        if end_date:
+            assessments = assessments.filter(
+                assessed_ts__lte=end_date,
+            )
 
         response['summary'] = self.get_summary(assessments)
         response['scores'] = self.get_scores(assessments)

@@ -245,6 +245,7 @@ var topSummaryData = {};
             renderSmsSummary(data);
         });
 
+
         //GETTING SMS DETAILS
         var detailURL = "stories/details/?source=sms";
         var $detailXHR = klp.api.do(detailURL, params);
@@ -443,6 +444,7 @@ var topSummaryData = {};
 
         function prepareVolumes(year) {
             var values = [];
+
             for(var v in data.volumes[year]) {
                 values.push({
                     meta: v + ' ' + year,
@@ -459,7 +461,7 @@ var topSummaryData = {};
                     value: data.user_groups[m]
                 });
             }
-        }        
+        }   
 
         var sms_sender = {
             labels: _.map(meta_values, function(m){ return m.meta; }),
@@ -475,8 +477,15 @@ var topSummaryData = {};
         var volume_values = prepareVolumes('2016');
         volume_values = volume_values.concat(prepareVolumes('2017'));
 
-        volume_values.splice(0, 6);
-        volume_values.splice(-6);
+        if(!volume_values.length) {
+            return;
+        }
+
+        if (volume_values.length > 12) {
+            volume_values.splice(0, 6);
+            volume_values.splice(-6);
+        }
+
 
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
@@ -510,14 +519,14 @@ var topSummaryData = {};
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
             var children_perc = getPercent(children, children_impacted)
-            var last_assmt = new Date(data.summary.last_assmt)
+            var last_assmt = data.summary.last_assmt
             var dataSummary = {
                 "count": data.summary.count,
                 "schools": gka_schools,
                 "schools_perc": schools_perc,
                 "children": children,
                 "children_perc": children_perc,
-                "last_assmt": last_assmt.toDateString(),
+                "last_assmt": formatLastStory(last_assmt)
             }
             renderAssmtSummary(dataSummary);
             renderAssmtCharts(data);
@@ -575,18 +584,18 @@ var topSummaryData = {};
     }
 
     function renderAssmtVolumeChart(data) {
-        var volumes = data.volumes
+        var volumes = data.volumes;
         var volume_values = [
-            {"meta":"Jun 2016","value":volumes['2016'].Jun},
-            {"meta":"Jul 2016","value":volumes['2016'].Jul},
-            {"meta":"Aug 2016","value":volumes['2016'].Aug},
-            {"meta":"Sep 2016","value":volumes['2016'].Sep},
-            {"meta":"Oct 2016","value":volumes['2016'].Oct},
-            {"meta":"Nov 2016","value":volumes['2016'].Nov},
-            {"meta":"Dec 2016","value":volumes['2016'].Dec},
-            {"meta":"Jan 2017","value":volumes['2017'].Jan},
-            {"meta":"Feb 2017","value":volumes['2017'].Feb},
-            {"meta":"Mar 2017","value":volumes['2017'].Mar}
+            {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
+            {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
+            {"meta":"Aug 2016","value":volumes['2016'] ? volumes['2016'].Aug : 0 },
+            {"meta":"Sep 2016","value":volumes['2016'] ? volumes['2016'].Sep : 0 },
+            {"meta":"Oct 2016","value":volumes['2016'] ? volumes['2016'].Oct : 0 },
+            {"meta":"Nov 2016","value":volumes['2016'] ? volumes['2016'].Nov : 0 },
+            {"meta":"Dec 2016","value":volumes['2016'] ? volumes['2016'].Dec : 0 },
+            {"meta":"Jan 2017","value":volumes['2017'] ? volumes['2017'].Jan : 0 },
+            {"meta":"Feb 2017","value":volumes['2017'] ? volumes['2017'].Feb : 0 },
+            {"meta":"Mar 2017","value":volumes['2017'] ? volumes['2017'].Mar : 0 }
         ];
 
         var assmt_volume = {
