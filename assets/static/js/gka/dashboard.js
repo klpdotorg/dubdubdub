@@ -287,6 +287,8 @@ var topSummaryData = {};
     }
 
     function renderVolumeChart(data) {
+        var $noDataAlert = $('#survey-volume-chart-no-render-alert');
+        var $mobVolume = $('#mobVolume');
         var years = _.keys(data.volumes);
         var latest = Math.max.apply(Math,years);
         var earliest = latest-1;
@@ -294,19 +296,37 @@ var topSummaryData = {};
         var new_months = _.keys(data.volumes[latest]);
         var month_labels = [];
         var meta_values = [];
+
+        $noDataAlert.hide();
+        $mobVolume.show();
+
         for (var i = 5; i < 12; i++)
         {
-            meta_values.push({'meta':prev_months[i]+" "+earliest,
-                'value':data.volumes[earliest][prev_months[i]]})
-            month_labels.push(prev_months[i]+" "+earliest);
+            if(data.volumes[earliest]) {
+                meta_values.push({
+                    'meta': prev_months[i] + " " + earliest,
+                    'value': data.volumes[earliest][prev_months[i]]
+                });
+                month_labels.push(prev_months[i] + " " + earliest);
+            }
         }
         for (var i = 0; i < 5; i++)
         {
-            meta_values.push({'meta':new_months[i]+" "+latest,
-                'value':data.volumes[latest][new_months[i]]})
-            month_labels.push(new_months[i]+" "+latest);
+            if(data.volumes[latest]) {
+                meta_values.push({
+                    'meta': new_months[i] + " " + latest,
+                    'value': data.volumes[latest][new_months[i]]
+                });
+                month_labels.push(new_months[i] + " " + latest);
+            }
         }
-        //console.log(meta_values);
+
+        if(!meta_values.length) {
+            $noDataAlert.show();
+            $mobVolume.hide();
+            return;
+        }
+
         var data = {
             labels: month_labels,
             series: [
