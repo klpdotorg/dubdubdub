@@ -181,8 +181,12 @@ var topSummaryData = {};
         function getMetaValues(dataType) {
             var metaValues = {};
             for(var i = 1; i <= 4; i++) {
-                var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
-                metaValues['n' + i] = getNValues(ekstepData, dataType);
+                if(!data.competency_comparison[i-1]) {
+                    metaValues['n' + i] = [];
+                } else {
+                    var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
+                    metaValues['n' + i] = getNValues(ekstepData, dataType);
+                }
             }
             return metaValues;
         }
@@ -233,6 +237,7 @@ var topSummaryData = {};
                 }
             ],
         }
+
         renderBarChart('#compareAssmtGraph', ekstepCompetencies, "Percentage of Children");
         renderBarChart('#compareGpcGraph', gpContestCompetencies, "Percentage of Children");
     }
