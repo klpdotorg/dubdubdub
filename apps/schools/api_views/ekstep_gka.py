@@ -62,12 +62,14 @@ class EkStepGKA(object):
     def get_summary(self, assessments):
         assessment_aggregates = assessments.aggregate(
             assessment_count=Count('assess_uid'),
+            schools_covered=Count('student_uid__school_code', distinct=True),
             children_count=Count('student_uid', distinct=True),
             last_assessment=Max('assessed_ts')
         )
 
         return {
             'count':assessment_aggregates['assessment_count'],
+            'schools':assessment_aggregates['schools_covered'],
             'children':assessment_aggregates['children_count'],
             'last_assmt':assessment_aggregates['last_assessment'],
         }
@@ -133,8 +135,8 @@ class EkStepGKA(object):
                 raise APIException("Please enter `to` in the format YYYY-MM-DD")
             else:
                 end_date = date.get_datetime(end_date)
-
-        assessments = AssessmentsV2.objects.values('assess_uid')
+        
+        assessments = AssessmentsV2.objects.values('assess_uid', 'student_uid__school_code')
 
         if admin1_id:
             boundary = Boundary.objects.get(id=admin1_id)

@@ -92,6 +92,7 @@ var topSummaryData = {};
     function loadData(params) {
         loadTopSummary(params);
         loadSmsData(params);
+        loadAssmtData(params);
         loadGPContestData(params);
         loadSurveys(params);
         loadComparison(params);
@@ -422,7 +423,6 @@ var topSummaryData = {};
             var topSummary = data.top_summary
             window.topSummaryData = topSummary
             renderTopSummary(topSummary);
-            loadAssmtData(params);
         });
     }
 
@@ -539,7 +539,7 @@ var topSummaryData = {};
         $metaXHR.done(function(data) {
             var topSummary = window.topSummaryData
             var tot_schools = topSummary.total_schools
-            var gka_schools = topSummary.gka_schools
+            var gka_schools = data.summary.schools
             var schools_perc = getPercent(gka_schools, tot_schools)
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
