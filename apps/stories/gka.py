@@ -71,6 +71,14 @@ class GKA(object):
                 assessed_ts__lte=end_date,
             )
 
+        survey = Survey.objects.get(name="GP Contest")
+        questiongroups = survey.questiongroup_set.all()
+        self.gp_contest_stories = self.stories.filter(
+            group__in=questiongroups,
+        )
+        self.gp_contest_schools = self.gp_contest_stories.values_list(
+            'school', flat=True).distinct('school')
+
     def generate_boundary_summary(self, boundary, chosen_boundary):
         government_crps = Group.objects.get(name="CRP").user_set.all()
         
@@ -98,12 +106,16 @@ class GKA(object):
             Q(student_uid__block=boundary.name) |
             Q(student_uid__cluster=boundary.name)
         ).count()
-        summary['contests'] = boundary.schools().aggregate(
+
+        summary['contests'] = boundary.schools().filter(
+            id__in=self.gp_contest_schools
+        ).aggregate(
             gp_count=Count(
                 'electedrep__gram_panchayat',
                 distinct=True
             )
         )['gp_count']
+
         question_groups = Survey.objects.get(
             name="Community"
         ).questiongroup_set.filter(
