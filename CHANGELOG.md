@@ -9,8 +9,12 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.6: 5aa544b9ee6126ea32a0b49ed5d97a57ba827c73 - 2017-06-21
+  - Further fixes for the GKA dashboard.
+  - Data migration for ekstep assessment question ids.
+
 Release 1.2.5: 9b30197ead9ebd9861ab5a01d9cc17f0fac6db90 - 2017-06-18
-  - Event further fixes for the GKA dashboard
+  - Even further fixes for the GKA dashboard
 
 Release 1.2.4: a6736c7e51f91a3a537c6fd32532bc1f1fae872b - 2017-06-15
   - Fixes the SMS report generation script and education volunteer parsing script.
