@@ -538,16 +538,16 @@ var topSummaryData = {};
         startDetailLoading();
         $metaXHR.done(function(data) {
             var topSummary = window.topSummaryData
-            var tot_schools = topSummary.total_schools
-            var gka_schools = data.summary.schools
-            var schools_perc = getPercent(gka_schools, tot_schools)
+            var tot_gka_schools = topSummary.gka_schools
+            var schools_assessed = data.summary.schools
+            var schools_perc = getPercent(schools_assessed, tot_gka_schools)
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
             var children_perc = getPercent(children, children_impacted)
             var last_assmt = data.summary.last_assmt
             var dataSummary = {
                 "count": data.summary.count,
-                "schools": gka_schools,
+                "schools": schools_assessed,
                 "schools_perc": schools_perc,
                 "children": children,
                 "children_perc": children_perc,
