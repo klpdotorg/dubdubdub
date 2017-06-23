@@ -89,16 +89,18 @@ class GKA(object):
         else:
             summary['chosen'] = False
 
+        boundary_schools = boundary.schools()
+            
         summary['boundary_name'] = boundary.name
         summary['boundary_type'] = boundary.hierarchy.name
-        summary['schools'] = boundary.schools().count()
+        summary['schools'] = boundary_schools.count()
         summary['sms'] = self.stories.filter(
             group__source__name='sms',
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
         ).count()
         summary['sms_govt'] = self.stories.filter(
             group__source__name='sms',
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
             user__in=government_crps
         ).count()
         summary['assessments'] = self.assessments.filter(
@@ -107,7 +109,7 @@ class GKA(object):
             Q(student_uid__cluster=boundary.name)
         ).count()
 
-        summary['contests'] = boundary.schools().filter(
+        summary['contests'] = boundary_schools.filter(
             id__in=self.gp_contest_schools
         ).aggregate(
             gp_count=Count(
@@ -119,11 +121,12 @@ class GKA(object):
         question_groups = Survey.objects.get(
             name="Community"
         ).questiongroup_set.filter(
-            source__name__in=["mobile","csv"]
+            source__name="csv"
         )
+        
         summary['surveys'] = self.stories.filter(
             group__in=question_groups,
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
         ).count()
 
         return summary
