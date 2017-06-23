@@ -55,7 +55,7 @@ class GKA(object):
     def __init__(self, start_date, end_date):
         self.stories = Story.objects.select_related(
             'school').all().order_by().values('id')
-        self.assessments = AssessmentsV2.objects.all().order_by()
+        self.assessments = AssessmentsV2.objects.all().order_by().values('assess_uid')
         if start_date:
             self.stories = self.stories.filter(
                 date_of_visit__gte=start_date,
@@ -104,9 +104,7 @@ class GKA(object):
             user__in=government_crps
         ).count()
         summary['assessments'] = self.assessments.filter(
-            Q(student_uid__district=boundary.name) |
-            Q(student_uid__block=boundary.name) |
-            Q(student_uid__cluster=boundary.name)
+            student_uid__school_code__in=boundary_schools
         ).count()
 
         summary['contests'] = boundary_schools.filter(
@@ -188,6 +186,8 @@ class GKA(object):
             gp_contest['chosen'] = False
             ekstep['chosen'] = False
 
+        boundary_schools = boundary.schools().values_list('id', flat=True)
+
         gp_contest['boundary_name'] = boundary.name
         gp_contest['boundary_type'] = boundary.hierarchy.name
         gp_contest['type'] = 'gp_contest'
@@ -201,7 +201,7 @@ class GKA(object):
         questiongroups = survey.questiongroup_set.all()
         stories = self.stories.filter(
             group__in=questiongroups,
-            school__in=boundary.schools()
+            school__in=boundary_schools
         )
 
         answers = Answer.objects.filter(story__in=stories)
@@ -209,9 +209,14 @@ class GKA(object):
 
         competencies = {}
 
+        temp_list = []
         for entry in answer_counts:
-            question = Question.objects.get(id=entry['question'])
-            question_text = question.text
+            question_id = entry['question']
+            if question_id in temp_list:
+                continue
+            else:
+                temp_list.append(question_id)
+            question_text = Question.objects.only('text').get(id=question_id).text
             answer_text = entry['text']
             answer_count = entry['text__count']
             if question_text not in competencies:
@@ -222,9 +227,7 @@ class GKA(object):
 
         #EkStep
         assessments = self.assessments.filter(
-            Q(student_uid__district=boundary.name) |
-            Q(student_uid__block=boundary.name) |
-            Q(student_uid__cluster=boundary.name)
+            student_uid__school_code__in=boundary_schools
         )
         ekstep_class = EkStepGKA()
         ekstep['competencies'] = ekstep_class.get_scores(assessments)
