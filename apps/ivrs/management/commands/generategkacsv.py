@@ -463,7 +463,7 @@ class Command(BaseCommand):
         list_of_values = []
 
         user_dict = {}
-        for user in group.user_set.all():
+        for user in User.objects.filter(state__in=states):
             user_smses_count = user.state_set.filter(id__in=states).count()
             user_dict[user.id] = user_smses_count
         user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
