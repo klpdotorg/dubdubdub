@@ -34,7 +34,8 @@ OVERALL_COLUMNS = (
 
 INVALID_COLUMNS = (
     "Error type, "
-    "Count"
+    "Count, "
+    "Numbers "
 )
 
 DISTRICT_COLUMNS = (
@@ -257,9 +258,10 @@ class Command(BaseCommand):
         return values
 
     def get_error_count(self, states):
-        errors = states.filter(is_invalid=True).values_list('comments', flat=True)
+        error_states = states.filter(is_invalid=True)
         errors_dict = {}
-        for error in errors:
+        for error_state in error_states:
+            error = error_state.comments
             # Let's make certain errors more concise. Refer to 'get_message'
             # in utils.py for all possible messages.
             if error:
@@ -280,9 +282,12 @@ class Command(BaseCommand):
                     # morning will show as invalid.
                     continue
             if error in errors_dict:
-                errors_dict[error] += 1
+                errors_dict[error]['count'] += 1
+                errors_dict[error]['numbers'].append(error_state.telephone)
             else:
-                errors_dict[error] = 1
+                errors_dict[error] = {}
+                errors_dict[error]['count'] = 1
+                errors_dict[error]['numbers'] = [error_state.telephone]
 
         return errors_dict
 
@@ -584,10 +589,11 @@ class Command(BaseCommand):
         lines.extend([heading, "\n"])
         lines.extend([INVALID_COLUMNS])
         errors_dict = self.get_error_count(states)
-        for error, count in errors_dict.iteritems():
+        for error in errors_dict:
             values = [
                 str(error),
-                str(count)
+                str(errors_dict[error]['count']),
+                str("-".join(set(errors_dict[error]['numbers'])))
             ]
             values = ",".join(values)
             lines.extend([values])
