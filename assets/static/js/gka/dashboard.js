@@ -467,6 +467,13 @@ var topSummaryData = {};
     function renderSMSCharts(data, params)  {
         var meta_values = [];
 
+        var expectedValue = 0;
+        if(_.isEmpty(params)) {
+            expectedValue = 13680;
+        } else if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 2280;
+        }
+
         function prepareVolumes(year) {
             var values = [];
 
@@ -521,10 +528,15 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-h',
-                    data: _.map(volume_values, function(v){ return 13680; })  
+                    data: _.map(volume_values, function(v){ return expectedValue; })  
                 }
             ]
         }
+
+        if(!expectedValue) {
+            sms_volume.series = [sms_volume.series[0]];
+        }
+
         renderLineChart('#smsVolume', sms_volume);
         $('#smsLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
                         " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>");   
