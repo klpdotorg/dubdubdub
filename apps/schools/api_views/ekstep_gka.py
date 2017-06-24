@@ -145,19 +145,19 @@ class EkStepGKA(object):
         if admin1_id:
             boundary = Boundary.objects.get(id=admin1_id)
             assessments = assessments.filter(
-                student_uid__school_code__in=boundary.schools()
+                student_uid__district=boundary.name
             )
 
         if admin2_id:
             boundary = Boundary.objects.get(id=admin2_id)
             assessments = assessments.filter(
-                student_uid__school_code__in=boundary.schools()
+                student_uid__block=boundary.name
             )
 
         if admin3_id:
             boundary = Boundary.objects.get(id=admin3_id)
             assessments = assessments.filter(
-                student_uid__school_code__in=boundary.schools()
+                student_uid__cluster=boundary.name
             )
 
         if school_id:

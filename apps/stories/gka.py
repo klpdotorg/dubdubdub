@@ -104,7 +104,9 @@ class GKA(object):
             user__in=government_crps
         ).count()
         summary['assessments'] = self.assessments.filter(
-            student_uid__school_code__in=boundary_schools
+            Q(student_uid__district=boundary.name) |
+            Q(student_uid__block=boundary.name) |
+            Q(student_uid__cluster=boundary.name)
         ).count()
 
         summary['contests'] = boundary_schools.filter(
@@ -209,13 +211,8 @@ class GKA(object):
 
         competencies = {}
 
-        temp_list = []
         for entry in answer_counts:
             question_id = entry['question']
-            if question_id in temp_list:
-                continue
-            else:
-                temp_list.append(question_id)
             question_text = Question.objects.only('text').get(id=question_id).text
             answer_text = entry['text']
             answer_count = entry['text__count']
@@ -227,7 +224,9 @@ class GKA(object):
 
         #EkStep
         assessments = self.assessments.filter(
-            student_uid__school_code__in=boundary_schools
+            Q(student_uid__district=boundary.name) |
+            Q(student_uid__block=boundary.name) |
+            Q(student_uid__cluster=boundary.name)
         )
         ekstep_class = EkStepGKA()
         ekstep['competencies'] = ekstep_class.get_scores(assessments)
