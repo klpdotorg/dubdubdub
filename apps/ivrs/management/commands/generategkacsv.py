@@ -175,7 +175,7 @@ class Command(BaseCommand):
     args = ""
     help = """Creates csv files for calls happened each day
 
-    ./manage.py generategkacsv [--duration=monthly/weekly] [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] [--fc_report=True/False] --emails=a@b.com,c@d.com"""
+    ./manage.py generategkacsv [--duration=monthly/weekly/daily] [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] [--fc_report=True/False] --emails=a@b.com,c@d.com"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
@@ -205,6 +205,8 @@ class Command(BaseCommand):
                 days = 7
             elif duration == 'monthly':
                 days = 30
+            else: #daily
+                days = 1
             start_date = today - timedelta(days=int(days))
             end_date = today
 
