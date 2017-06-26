@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.7: 2462e831899d117133287cd8b525a4c762b2c492 - 2017-06-26
+  - Further fixes for the GKA dashboard.
+  - Improvements the SMS report generation.
+
 Release 1.2.6: 5aa544b9ee6126ea32a0b49ed5d97a57ba827c73 - 2017-06-21
   - Further fixes for the GKA dashboard.
   - Data migration for ekstep assessment question ids.
