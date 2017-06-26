@@ -76,17 +76,21 @@ class EkStepGKA(object):
 
     def get_score(self, assessments, question_key):
         question_ids = self.sub_qids[question_key]
-        assessments = assessments.filter(question_id__in=question_ids)
-
         if question_key == 'Division':
             correct_score = Decimal('2.0')
         else:
             correct_score = Decimal('1.0')
 
-        total_assessments = assessments.count()
+        assessments = assessments.filter(question_id__in=question_ids)
+
+        total_assessments = assessments.aggregate(
+            assessment_count=Count('assess_uid'))['assessment_count']
+
         total_correct_assessments = assessments.filter(
             score=correct_score
-        ).count()
+        ).aggregate(
+            correct_count=Count('assess_uid')
+        )['correct_count']
 
         return {
             'total':total_assessments,

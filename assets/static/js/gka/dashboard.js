@@ -467,6 +467,13 @@ var topSummaryData = {};
     function renderSMSCharts(data, params)  {
         var meta_values = [];
 
+        var expectedValue = 0;
+        if(_.isEmpty(params)) {
+            expectedValue = 13680;
+        } else if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 2280;
+        }
+
         function prepareVolumes(year) {
             var values = [];
 
@@ -521,13 +528,23 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-h',
-                    data: _.map(volume_values, function(v){ return 13680; })  
+                    data: _.map(volume_values, function(v){ return expectedValue; })  
                 }
             ]
         }
+
+        var chartLabel = '';
+        if(!expectedValue) {
+            sms_volume.series = [sms_volume.series[0]];
+            chartLabel = "<div class='center-text font-small uppercase'>" +
+                        "<span class='fa fa-circle brand-green'></span> Actual Volumes</div>"
+        } else {
+            chartLabel = "<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
+                        " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>"
+        }
+
         renderLineChart('#smsVolume', sms_volume);
-        $('#smsLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
-                        " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>");   
+        $('#smsLegend').html(chartLabel);   
 
 
     }
@@ -538,16 +555,16 @@ var topSummaryData = {};
         startDetailLoading();
         $metaXHR.done(function(data) {
             var topSummary = window.topSummaryData
-            var tot_schools = topSummary.total_schools
-            var gka_schools = data.summary.schools
-            var schools_perc = getPercent(gka_schools, tot_schools)
+            var tot_gka_schools = topSummary.gka_schools
+            var schools_assessed = data.summary.schools
+            var schools_perc = getPercent(schools_assessed, tot_gka_schools)
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
             var children_perc = getPercent(children, children_impacted)
             var last_assmt = data.summary.last_assmt
             var dataSummary = {
                 "count": data.summary.count,
-                "schools": gka_schools,
+                "schools": schools_assessed,
                 "schools_perc": schools_perc,
                 "children": children,
                 "children_perc": children_perc,
@@ -561,7 +578,7 @@ var topSummaryData = {};
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
         $metaXHR.done(function(data) {
-            renderAssmtVolumeChart(data)
+            renderAssmtVolumeChart(data, params);
         });
     }
     
@@ -608,8 +625,16 @@ var topSummaryData = {};
         renderBarChart('#assmtCompetancy', competencies, "Percentage of Children");
     }
 
-    function renderAssmtVolumeChart(data) {
+    function renderAssmtVolumeChart(data, params) {
         var volumes = data.volumes;
+        var expectedValue = 0;
+
+        if(_.isEmpty(params)) {
+            expectedValue = 6800;
+        } else if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 1100;
+        }
+
         var volume_values = [
             {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
             {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
@@ -632,13 +657,23 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-d',
-                    data: [6800,6800,6800,6800,6800,6800,6800,6800,6800,6800,6800]  
+                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue]  
                 }
             ]
         }
+    
+        var chartLabel = '';
+        if(!expectedValue) {
+            assmt_volume.series = [assmt_volume.series[0]];
+            chartLabel = "<div class='center-text font-small uppercase'>"+
+                        "<span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>"
+        } else {
+            chartLabel = "<div class='center-text font-small uppercase'><span class='fa fa-circle brand-orange'></span>"+
+                        " Expected Volumes <span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>"
+        }
+
         renderLineChart('#assmtVolume', assmt_volume);
-        $('#avLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-orange'></span>"+
-                        " Expected Volumes <span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>");   
+        $('#avLegend').html(chartLabel);   
 
     }
 

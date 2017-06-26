@@ -55,7 +55,7 @@ class GKA(object):
     def __init__(self, start_date, end_date):
         self.stories = Story.objects.select_related(
             'school').all().order_by().values('id')
-        self.assessments = AssessmentsV2.objects.all().order_by()
+        self.assessments = AssessmentsV2.objects.all().order_by().values('assess_uid')
         if start_date:
             self.stories = self.stories.filter(
                 date_of_visit__gte=start_date,
@@ -71,6 +71,14 @@ class GKA(object):
                 assessed_ts__lte=end_date,
             )
 
+        survey = Survey.objects.get(name="GP Contest")
+        questiongroups = survey.questiongroup_set.all()
+        self.gp_contest_stories = self.stories.filter(
+            group__in=questiongroups,
+        )
+        self.gp_contest_schools = self.gp_contest_stories.values_list(
+            'school', flat=True).distinct('school')
+
     def generate_boundary_summary(self, boundary, chosen_boundary):
         government_crps = Group.objects.get(name="CRP").user_set.all()
         
@@ -81,16 +89,18 @@ class GKA(object):
         else:
             summary['chosen'] = False
 
+        boundary_schools = boundary.schools()
+            
         summary['boundary_name'] = boundary.name
         summary['boundary_type'] = boundary.hierarchy.name
-        summary['schools'] = boundary.schools().count()
+        summary['schools'] = boundary_schools.count()
         summary['sms'] = self.stories.filter(
             group__source__name='sms',
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
         ).count()
         summary['sms_govt'] = self.stories.filter(
             group__source__name='sms',
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
             user__in=government_crps
         ).count()
         summary['assessments'] = self.assessments.filter(
@@ -98,20 +108,25 @@ class GKA(object):
             Q(student_uid__block=boundary.name) |
             Q(student_uid__cluster=boundary.name)
         ).count()
-        summary['contests'] = boundary.schools().aggregate(
+
+        summary['contests'] = boundary_schools.filter(
+            id__in=self.gp_contest_schools
+        ).aggregate(
             gp_count=Count(
                 'electedrep__gram_panchayat',
                 distinct=True
             )
         )['gp_count']
+
         question_groups = Survey.objects.get(
             name="Community"
         ).questiongroup_set.filter(
-            source__name__in=["mobile","csv"]
+            source__name="csv"
         )
+        
         summary['surveys'] = self.stories.filter(
             group__in=question_groups,
-            school__admin3__parent__parent=boundary,
+            school__in=boundary_schools,
         ).count()
 
         return summary
@@ -173,6 +188,8 @@ class GKA(object):
             gp_contest['chosen'] = False
             ekstep['chosen'] = False
 
+        boundary_schools = boundary.schools().values_list('id', flat=True)
+
         gp_contest['boundary_name'] = boundary.name
         gp_contest['boundary_type'] = boundary.hierarchy.name
         gp_contest['type'] = 'gp_contest'
@@ -186,7 +203,7 @@ class GKA(object):
         questiongroups = survey.questiongroup_set.all()
         stories = self.stories.filter(
             group__in=questiongroups,
-            school__in=boundary.schools()
+            school__in=boundary_schools
         )
 
         answers = Answer.objects.filter(story__in=stories)
@@ -195,8 +212,8 @@ class GKA(object):
         competencies = {}
 
         for entry in answer_counts:
-            question = Question.objects.get(id=entry['question'])
-            question_text = question.text
+            question_id = entry['question']
+            question_text = Question.objects.only('text').get(id=question_id).text
             answer_text = entry['text']
             answer_count = entry['text__count']
             if question_text not in competencies:

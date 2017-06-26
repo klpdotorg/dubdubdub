@@ -199,7 +199,8 @@ class Command(BaseCommand):
                 date_of_visit = datetime.datetime.strptime(
                     date, '%d/%m/%Y'
                 )
-                return date_of_visit
+                if not (date_of_visit > datetime.datetime.today()):
+                    return date_of_visit
 
         return previous_date
             
