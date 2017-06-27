@@ -841,14 +841,14 @@ var topSummaryData = {};
           }]
         ];
 
-        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
-            if (data.type === 'bar') {
-                data.element.attr({
+        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(chartData) {
+            if (chartData.type === 'bar') {
+                chartData.element.attr({
                     style: 'stroke-width: 15px;'
                 });
             }
-            if (data.type === 'label' && data.axis === 'x') {
-                data.element.attr({
+            if (chartData.type === 'label' && chartData.axis === 'x') {
+                chartData.element.attr({
                     width: 200
                 })
             }
