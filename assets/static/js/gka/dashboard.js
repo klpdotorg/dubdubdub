@@ -437,6 +437,14 @@ var topSummaryData = {};
         var tplSmsSummary = swig.compile($('#tpl-smsSummary').html());
         var summaryData = data;
         summaryData["format_lastsms"] = formatLastStory(summaryData["sms"]["last_story"]);
+        
+        // Percentage
+        if (summaryData.sms.schools && summaryData.sms.stories) {
+            summaryData['smsPercentage'] = (summaryData.sms.schools / summaryData.sms.stories * 100).toFixed(2);
+        } else {
+            summaryData['smsPercentage'] = 0;
+        }
+
         var smsSummaryHTML = tplSmsSummary(summaryData);
         $('#smsSummary').html(smsSummaryHTML);
     }
@@ -467,11 +475,11 @@ var topSummaryData = {};
     function renderSMSCharts(data, params)  {
         var meta_values = [];
 
-        var expectedValue = 0;
-        if(_.isEmpty(params)) {
-            expectedValue = 13680;
-        } else if(typeof(params.admin1) !== 'undefined') {
+        var expectedValue = 13680;
+        if(typeof(params.admin1) !== 'undefined') {
             expectedValue = 2280;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
         }
 
         function prepareVolumes(year) {
@@ -534,6 +542,7 @@ var topSummaryData = {};
         }
 
         var chartLabel = '';
+
         if(!expectedValue) {
             sms_volume.series = [sms_volume.series[0]];
             chartLabel = "<div class='center-text font-small uppercase'>" +
@@ -627,12 +636,12 @@ var topSummaryData = {};
 
     function renderAssmtVolumeChart(data, params) {
         var volumes = data.volumes;
-        var expectedValue = 0;
 
-        if(_.isEmpty(params)) {
-            expectedValue = 6800;
-        } else if(typeof(params.admin1) !== 'undefined') {
+       var expectedValue = 6800;
+        if(typeof(params.admin1) !== 'undefined') {
             expectedValue = 1100;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
         }
 
         var volume_values = [
@@ -832,14 +841,14 @@ var topSummaryData = {};
           }]
         ];
 
-        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
-            if (data.type === 'bar') {
-                data.element.attr({
+        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(chartData) {
+            if (chartData.type === 'bar') {
+                chartData.element.attr({
                     style: 'stroke-width: 15px;'
                 });
             }
-            if (data.type === 'label' && data.axis === 'x') {
-                data.element.attr({
+            if (chartData.type === 'label' && chartData.axis === 'x') {
+                chartData.element.attr({
                     width: 200
                 })
             }
