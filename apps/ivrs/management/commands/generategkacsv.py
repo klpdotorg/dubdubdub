@@ -243,7 +243,10 @@ class Command(BaseCommand):
     def get_overall_count(self, states, valid_states, groups):
         total_sms_received = states.count()
         number_of_invalid_sms = states.filter(is_invalid=True).count()
-        percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
+        if total_sms_received:
+            percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
+        else:
+            percentage_of_invalid_sms = 0
         number_of_schools_with_unique_valid_sms = states.filter(
             is_invalid=False).order_by().distinct('school_id').count()
         valid_sms_counts = [
