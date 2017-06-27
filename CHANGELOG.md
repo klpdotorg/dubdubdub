@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.8: 4d2d356428470c0320e8345903ce013d64cda6a3 - 2017-06-27
+  - Fixes for GKA dashboard and SMS report generation.
+
 Release 1.2.7: 2462e831899d117133287cd8b525a4c762b2c492 - 2017-06-26
   - Further fixes for the GKA dashboard.
   - Improvements the SMS report generation.
