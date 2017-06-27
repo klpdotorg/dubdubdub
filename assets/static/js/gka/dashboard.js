@@ -475,11 +475,11 @@ var topSummaryData = {};
     function renderSMSCharts(data, params)  {
         var meta_values = [];
 
-        var expectedValue = 0;
-        if(_.isEmpty(params)) {
-            expectedValue = 13680;
-        } else if(typeof(params.admin1) !== 'undefined') {
+        var expectedValue = 13680;
+        if(typeof(params.admin1) !== 'undefined') {
             expectedValue = 2280;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
         }
 
         function prepareVolumes(year) {
@@ -542,6 +542,7 @@ var topSummaryData = {};
         }
 
         var chartLabel = '';
+
         if(!expectedValue) {
             sms_volume.series = [sms_volume.series[0]];
             chartLabel = "<div class='center-text font-small uppercase'>" +
@@ -635,12 +636,12 @@ var topSummaryData = {};
 
     function renderAssmtVolumeChart(data, params) {
         var volumes = data.volumes;
-        var expectedValue = 0;
 
-        if(_.isEmpty(params)) {
-            expectedValue = 6800;
-        } else if(typeof(params.admin1) !== 'undefined') {
+       var expectedValue = 6800;
+        if(typeof(params.admin1) !== 'undefined') {
             expectedValue = 1100;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
         }
 
         var volume_values = [
