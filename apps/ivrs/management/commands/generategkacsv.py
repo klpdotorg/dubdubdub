@@ -199,7 +199,7 @@ class Command(BaseCommand):
         return emails
 
     def get_dates(self, duration, start_date, end_date):
-        today = datetime.now().date()
+        today = datetime.now()
         if duration:
             if duration == 'weekly':
                 days = 7
@@ -473,7 +473,7 @@ class Command(BaseCommand):
         list_of_values = []
 
         user_dict = {}
-        for user in User.objects.filter(state__in=states):
+        for user in group.user_set.filter(state__in=states):
             user_smses_count = user.state_set.filter(id__in=states).count()
             user_dict[user.id] = user_smses_count
         user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
