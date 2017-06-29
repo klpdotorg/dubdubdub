@@ -664,6 +664,9 @@ class Command(BaseCommand):
         for line in lines:
             csv.write(line+"\n")
 
+        csv.flush()
+        csv.close()
+
         date_range = start_date.strftime("%d/%m/%Y") + " to " + today.strftime("%d/%m/%Y")
         subject = 'GKA SMS Report for '+ date_range
         from_email = settings.EMAIL_DEFAULT_FROM
