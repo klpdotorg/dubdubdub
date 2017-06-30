@@ -144,15 +144,25 @@ class Command(BaseCommand):
             school_name = row[10].strip()
 
             management = row[19].strip()
+            if management == '':
+                management = '8' # Corresponds to 'ur'
             management = MANAGEMENT_MAPPER[management]
 
             category = row[20].strip()
+            if category == '':
+                category = '1' # Corresponds to 'Lower Primary'. Wild guess. Bad data.
             category = CATEGORY_MAPPER[category]
 
             gender = row[24].strip()
+            if gender == '':
+                gender = '3' # Corresponds to 'co-ed'. Wild guess. Bad data.
             gender = SCHOOL_GENDER_MAPPER[gender]
 
             moi = row[57].strip()
+            if len(moi) == 1:
+                moi = '0'+moi
+            if moi in ['', '31', '32', '33', '35', '39', '98']:
+                moi = '99'
             moi = MOI_MAPPER[moi]
 
             pincode = row[29].strip()
