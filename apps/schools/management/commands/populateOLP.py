@@ -21,6 +21,72 @@ from schools.models import (
     School
 )
 
+CATEGORY_MAPPER = {
+    '1':'Lower Primary',
+    '2':'Upper Primary',
+    '3':'Secondary',
+    '4':'Upper Primary',
+    '5':'Secondary',
+    '6':'Secondary',
+    '7':'Secondary',
+    '8':'Secondary',
+    '9':'Secondary',
+    '10':'Secondary',
+    '11':'Secondary'
+}
+
+SCHOOL_GENDER_MAPPER = {
+    '1':'boys',
+    '2':'girls',
+    '3':'co-ed',
+}
+
+MOI_MAPPER = {
+    '01':'assamese',
+    '02':'bengali',
+    '03':'gujarathi',
+    '04':'hindi',
+    '05':'kannada',
+    '06':'kashmiri',
+    '07':'konkani',
+    '08':'malayalam',
+    '09':'manipuri',
+    '10':'marathi',
+    '11':'nepali',
+    '12':'oriya',
+    '13':'punjabi',
+    '14':'sanskrit',
+    '15':'sindhi',
+    '16':'tamil',
+    '17':'telugu',
+    '18':'urdu',
+    '19':'english',
+    '20':'bodo',
+    '21':'mising',
+    '22':'dogri',
+    '23':'khasi',
+    '24':'garo',
+    '25':'mizo',
+    '26':'bhutia',
+    '27':'lepcha',
+    '28':'limboo',
+    '29':'french',
+    '99':'other',
+}
+
+MANAGEMENT_MAPPER = {
+    '1':'ed',
+    '2':'wd',
+    '3':'local',
+    '4':'p-a',
+    '5':'p-ua',
+    '6':'other',
+    '7':'cg',
+    '8':'ur',
+    '97':'m-r',
+    '98':'m-ur',
+}
+
 class Command(BaseCommand):
     args = "<path to file>"
     help = """Parses and populates the OLP School
@@ -76,10 +142,19 @@ class Command(BaseCommand):
             area_name = row[8].strip().lower()
             school_id = row[9].strip()
             school_name = row[10].strip()
-            category = 'Upper Primary'
-            gender = 'co-ed'
-            moi = 'english'
-            management = 'ed'
+
+            management = row[19].strip()
+            management = MANAGEMENT_MAPPER[management]
+
+            category = row[20].strip()
+            category = CATEGORY_MAPPER[category]
+
+            gender = row[24].strip()
+            gender = SCHOOL_GENDER_MAPPER[gender]
+
+            moi = row[57].strip()
+            moi = MOI_MAPPER[moi]
+
             pincode = row[29].strip()
             longitude, latitude = row[171].strip(), row[172].strip()
 
