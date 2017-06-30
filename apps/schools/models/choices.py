@@ -24,11 +24,11 @@ MGMT_CHOICES = (
     ('p-ua', 'Private Unaided'),
     ('swd', 'Tribal/Social Welfare Department'),
     ('local', 'Local Body'),
-    ('other', 'Other'),
-    ('cg', 'Central Government'),
+    ('others', 'Others'),
+    ('central-g', 'Central Government'),
     ('ur', 'Unrecognized'),
-    ('m-r', 'Madrasa Recognized'),
-    ('m-ur', 'Madrasa Unrecognized'),
+    ('madrasa-r', 'Madrasa Recognized'),
+    ('madrasa-ur', 'Madrasa Unrecognized'),
 )
 
 MT_CHOICES = (

@@ -76,15 +76,15 @@ MOI_MAPPER = {
 
 MANAGEMENT_MAPPER = {
     '1':'ed',
-    '2':'wd',
+    '2':'swd',
     '3':'local',
     '4':'p-a',
     '5':'p-ua',
-    '6':'other',
-    '7':'cg',
+    '6':'others',
+    '7':'central-g',
     '8':'ur',
-    '97':'m-r',
-    '98':'m-ur',
+    '97':'madrasa-r',
+    '98':'madrasa-ur',
 }
 
 class Command(BaseCommand):
