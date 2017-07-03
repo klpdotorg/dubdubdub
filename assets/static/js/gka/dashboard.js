@@ -437,10 +437,10 @@ var topSummaryData = {};
         var tplSmsSummary = swig.compile($('#tpl-smsSummary').html());
         var summaryData = data;
         summaryData["format_lastsms"] = formatLastStory(summaryData["sms"]["last_story"]);
-        
+
         // Percentage
-        if (summaryData.sms.schools && summaryData.sms.stories) {
-            summaryData['smsPercentage'] = (summaryData.sms.schools / summaryData.sms.stories * 100).toFixed(2);
+        if (summaryData.sms && summaryData.sms.schools && window.topSummaryData && window.topSummaryData.gka_schools) {
+            summaryData['smsPercentage'] = (summaryData.sms.schools / topSummaryData.gka_schools * 100).toFixed(2);
         } else {
             summaryData['smsPercentage'] = 0;
         }
