@@ -140,7 +140,13 @@ class Command(BaseCommand):
             block_name = row[4].strip().lower()
             cluster_name = row[6].strip().lower()
             area_name = row[8].strip().lower()
+
             school_id = row[9].strip()
+            try:
+                dise_info = DiseInfo.objects.get(dise_code=school_id)
+            except:
+                dise_info = None
+
             school_name = row[10].strip()
 
             management = row[19].strip()
@@ -220,7 +226,7 @@ class Command(BaseCommand):
                 school, created = School.objects.get_or_create(
                     id=latest_school_id,
                     admin3=cluster,
-                    # dise_info=int(school_id),
+                    dise_info=dise_info,
                     name=school_name,
                     cat=category,
                     sex=gender,
@@ -250,4 +256,3 @@ class Command(BaseCommand):
             print "Successfully imported data"
 
         output_sql.close()
-        print "Unsuccessful"
