@@ -805,12 +805,12 @@
 
     function load_map() {
 
-        var southWest = L.latLng(11.57, 73.87),
-            northEast = L.latLng(18.45, 78.57),
+        var southWest = L.latLng(18.22, 81.56),
+            northEast = L.latLng(21.56, 86.46),
             bounds = L.latLngBounds(southWest, northEast);
 
         marker_overlay_html = $("#tpl_marker_overlay").html();
-        t.map = map = L.map('js-map-canvas', {maxBounds: bounds}).setView([12.9793998, 77.5903608], 14);
+        t.map = map = L.map('js-map-canvas', {maxBounds: null}).setView([20.9517, 85.0985], 14);
         L.tileLayer(klp.settings.tilesURL, {
             maxZoom: 16,
             //attribution: 'OpenStreetMap, OSM-Bright'
