@@ -5,7 +5,7 @@ from schools.serializers import (
     BoundarySerializer, BoundaryWithParentSerializer, AssemblySerializer,
     ParliamentSerializer, PincodeSerializer)
 from django.db.models import Q
-
+from django.conf import settings
 
 class AdminDetails(KLPDetailAPIView, CacheMixin):
     """Returns details for a particular admin level
@@ -118,7 +118,7 @@ class Admin1s(KLPListAPIView, CacheMixin):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         meetingreport = self.request.GET.get('meetingreport', None)
-        qset = Boundary.objects.all_active().filter(id__gte=11042)\
+        qset = Boundary.objects.all_active().filter(id__gte=settings.STATE_STARTING_BOUNDARY_ID)\
             .select_related('boundarycoord__coord', 'hierarchy__name')\
             .prefetch_related('hierarchy')
 
@@ -198,7 +198,7 @@ class Admin2s(KLPListAPIView, CacheMixin):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         meetingreport = self.request.GET.get('meetingreport', None)
-        qset = Boundary.objects.all_active().filter(id__gte=11042)\
+        qset = Boundary.objects.all_active().filter(id__gte=settings.STATE_STARTING_BOUNDARY_ID)\
             .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 
@@ -251,7 +251,7 @@ class Admin3s(KLPListAPIView, CacheMixin):
     def get_queryset(self):
         btype = self.request.GET.get('school_type', 'all')
         meetingreport = self.request.GET.get('meetingreport', None)
-        qset = Boundary.objects.all_active().filter(id__gte=11042)\
+        qset = Boundary.objects.all_active().filter(id__gte=settings.STATE_STARTING_BOUNDARY_ID)\
             .select_related('boundarycoord__coord', 'parent__hierarchy', 'hierarchy__name')\
             .prefetch_related('parent', 'hierarchy')
 

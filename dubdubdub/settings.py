@@ -298,6 +298,10 @@ SWAGGER_SETTINGS = {
     'enabled_methods': ['get', ]
 }
 
+# Temporary hardcoded IDS for the OLP and GLP bits.
+STATE_STARTING_SCHOOL_ID = 63929
+STATE_STARTING_BOUNDARY_ID = 11042
+
 try:
     from local_settings import *
 except ImportError:

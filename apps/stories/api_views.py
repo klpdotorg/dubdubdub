@@ -675,7 +675,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         school_type = BoundaryType.objects.get(name=school_type)
         school_qset = School.objects.filter(
-            admin3__type=school_type, status=2).order_by().values('id')
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID).order_by().values('id')
         stories_qset = Story.objects.select_related('school').filter(
             school__in=school_qset).order_by().values('id')
 
@@ -905,12 +905,23 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             old_id_key = 'school__admin3__parent__parent__id'
             old_name_key = 'school__admin3__parent__parent__name'
 
+            # json['gka_districts'] = [
+            #     {
+            #         'id': item[old_id_key],
+            #         'name': item[old_name_key]
+            #     }
+            #     for item in gka_districts_queryset
+            # ]
+
             json['gka_districts'] = [
                 {
-                    'id': item[old_id_key],
-                    'name': item[old_name_key]
+                    'id':15819,
+                    'name':'rayagada'
+                },
+                {
+                    'id':11844,
+                    'name':'bolangir'
                 }
-                for item in gka_districts_queryset
             ]
 
         return json
