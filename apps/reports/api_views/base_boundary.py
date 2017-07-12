@@ -210,7 +210,7 @@ class BaseBoundaryReport(BaseReport):
     ]
     }
 
-    neighbordIds = {
+    neighbourIds = {
     15108: [
         14358,
         15700,
