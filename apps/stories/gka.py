@@ -11,7 +11,9 @@ from schools.models import (
 )
 from .models import Story, Survey, Answer, Question
 
-GKA_DISTRICTS = [445, 416, 424, 417, 419, 418]
+GKA_DISTRICTS = [15819, 11844] # Odisha: Rayagada & Bolangir
+
+# KARNATAKA DISTRICTS: [445, 416, 424, 417, 419, 418]
 
 
 class GKA(object):

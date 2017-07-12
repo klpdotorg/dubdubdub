@@ -313,12 +313,18 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         response_json['user_groups'] = {}
 
         school_type = BoundaryType.objects.get(name=school_type)
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
         stories_qset = Story.objects.select_related(
             'school', 'user'
         ).filter(
-            school__admin3__type=school_type
+            school__in=school_qset
         )
-        assessments_qset = AssessmentsV2.objects.all()
+        assessments_qset = AssessmentsV2.objects.filter(
+            student_uid__school_code__gte=settings.STATE_STARTING_SCHOOL_ID
+        )
 
         if survey:
             stories_qset = stories_qset.filter(
@@ -482,7 +488,12 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         chosen_boundary = None
         chosen_school = None
 
-        stories = Story.objects.select_related('school').order_by().all().values('id')
+        school_type = BoundaryType.objects.get(name=school_type)
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        stories = Story.objects.filter(school__in=school_qset).select_related('school').order_by().all().values('id')
 
         if survey:
             stories = stories.filter(group__survey__name=survey)
@@ -495,7 +506,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(group__version__in=versions)
 
         if school_type:
-            stories = stories.filter(school__admin3__type__name=school_type)
+            stories = stories.filter(school__admin3__type=school_type)
 
         if admin1_id:
             stories = stories.filter(
