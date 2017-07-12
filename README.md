@@ -82,7 +82,7 @@ The DB to use should be updated in the test_settings file.
 ### Populating local db with production dump
 
 1. Copy the latest backup from the production server onto your machine.
- - `rsync -azP -e "ssh -p 2020" <your_username>@klp.org.in:/home/vamsee/backups/db/dubdubdub/<backup_file_name>.gz .`
+ - `rsync -azP -e "ssh -p 2020" <your_username>@olp.ind.in:/home/vamsee/backups/db/dubdubdub/<backup_file_name>.gz .`
  - On the production server, you can find the backup files at `/home/vamsee/backups/db/dubdubdub/`.
 
 2. Uncompress the downloaded file.

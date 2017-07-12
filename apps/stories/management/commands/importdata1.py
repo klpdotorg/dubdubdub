@@ -22,7 +22,7 @@ class Command(BaseCommand):
         filename, self.image_location = args
         file = open(filename, 'r')
         self.data = csv.DictReader(file)
-        dev_user = User.objects.get(email='dev@klp.org.in')
+        dev_user = User.objects.get(email='dev@olp.ind.in')
 
         for d in self.data:
             # ,Unnamed: 0_x,S No_x,Date,Block,Cluster,School Name_spotways,
@@ -90,7 +90,7 @@ class Command(BaseCommand):
             story = {
                 'date': d['Date'],
                 'user': dev_user,
-                'email': 'dev@klp.org.in',
+                'email': 'dev@olp.ind.in',
                 'name': 'Team KLP',
                 'school': school
             }

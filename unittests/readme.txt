@@ -10,7 +10,7 @@ This script creates a test database -- a clone of the dev database -- and then r
 CONTINOUS INTEGRATION FOR DUBDUBDUB:
 ===================================
 
-A continous integration server -- Jenkins -- has been set up @ ci.klp.org.in. If you need access to this server, please contact Subha or Sanjay. Jenkins will monitor the GitHub develop branch for any commits. When a new commit is recorded, Jenkins will re-deploy the latest code from 'develop' onto dev.klp.org.in. Then, unit tests will be run against this latest codebase. If the tests fail, e-mails will be sent out to the development group and the last person who committed code will have to fix the breakage.
+A continous integration server -- Jenkins -- has been set up @ ci.olp.ind.in. If you need access to this server, please contact Subha or Sanjay. Jenkins will monitor the GitHub develop branch for any commits. When a new commit is recorded, Jenkins will re-deploy the latest code from 'develop' onto dev.olp.ind.in. Then, unit tests will be run against this latest codebase. If the tests fail, e-mails will be sent out to the development group and the last person who committed code will have to fix the breakage.
 
 For continous integration to work, we need to keep tests in sync with new development code.
 

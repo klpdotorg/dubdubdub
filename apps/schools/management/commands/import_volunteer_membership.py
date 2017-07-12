@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
             # if email not available.
             if not '@' in email:
-                email = first_name + last_name + '@klp.org.in'
+                email = first_name + last_name + '@olp.ind.in'
 
             if User.objects.filter(email=email).exists():
                 user = User.objects.get(email=email)

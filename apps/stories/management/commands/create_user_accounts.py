@@ -93,7 +93,7 @@ class Command(BaseCommand):
             if '@' in row[6].strip():
                 email = row[6].strip()
             else:
-                email = name.lower().replace(" ","")[:63] + "@klp.org.in"
+                email = name.lower().replace(" ","")[:63] + "@olp.ind.in"
 
             mobile_number = row[5].strip()
 

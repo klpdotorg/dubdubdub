@@ -1,7 +1,7 @@
 (function() {
     klp.init = function() {
         //handle getting blog feeds
-        //var feedURL = "http://blog.klp.org.in/feeds/posts/default?alt=json-in-script&callback=?";
+        //var feedURL = "http://blog.olp.ind.in/feeds/posts/default?alt=json-in-script&callback=?";
         var feedURL = '/blog-feed';
         $.getJSON(feedURL, null, function(data) {
             processRequest(data.feed);
