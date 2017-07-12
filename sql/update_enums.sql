@@ -1,0 +1,18 @@
+ALTER TYPE school_management ADD VALUE 'ur';
+UPDATE pg_enum SET enumlabel = 'central-g' WHERE enumtypid = 'school_management'::regtype AND enumlabel = 'central govt';
+ALTER TYPE school_management ADD VALUE 'madrasa-r';
+ALTER TYPE school_management ADD VALUE 'madrasa-ur';
+ALTER TYPE school_moi ADD VALUE 'bhutia';
+ALTER TYPE school_moi ADD VALUE 'assamese';
+ALTER TYPE school_moi ADD VALUE 'kashmiri';
+ALTER TYPE school_moi ADD VALUE 'manipuri';
+ALTER TYPE school_moi ADD VALUE 'limboo';
+ALTER TYPE school_moi ADD VALUE 'french';
+ALTER TYPE school_moi ADD VALUE 'garo';
+ALTER TYPE school_moi ADD VALUE 'mizo';
+ALTER TYPE school_moi ADD VALUE 'lepcha';
+ALTER TYPE school_moi ADD VALUE 'bodo';
+ALTER TYPE school_moi ADD VALUE 'mising';
+ALTER TYPE school_moi ADD VALUE 'punjabi';
+ALTER TYPE school_moi ADD VALUE 'dogri';
+ALTER TYPE school_moi ADD VALUE 'khasi';        
