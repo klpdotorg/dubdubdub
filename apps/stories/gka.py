@@ -18,7 +18,7 @@ GKA_DISTRICTS = [15819, 11844] # Odisha: Rayagada & Bolangir
 
 class GKA(object):
 
-    neighbordIds = {
+    neighbourIds = {
     15108: [
         14358,
         15700,
