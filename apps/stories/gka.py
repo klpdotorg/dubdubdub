@@ -11,7 +11,7 @@ from schools.models import (
 )
 from .models import Story, Survey, Answer, Question
 
-GKA_DISTRICTS = [15819, 11844] # Odisha: Rayagada & Bolangir
+GKA_DISTRICTS = [15700, 11725] # Odisha: Rayagada & Bolangir
 
 # KARNATAKA DISTRICTS: [445, 416, 424, 417, 419, 418]
 
