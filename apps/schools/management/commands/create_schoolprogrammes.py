@@ -7,6 +7,7 @@ from schools.models import (
 
 
 district_names = [
+    # Karnataka
     "gulbarga",
     "yadagiri",
     "raichur",
@@ -18,7 +19,11 @@ district_names = [
     "dharwad",
     "chitradurga",
     "chamarajanagara",
-    "bangalore rural"
+    "bangalore rural",
+
+    # Odisha
+    "rayagada",
+    "bolangir",
 ]
 
 class Command(BaseCommand):
