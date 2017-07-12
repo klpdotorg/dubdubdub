@@ -1,11 +1,11 @@
 Hello {{ user.first_name }},
 
-Thank you for signing up for an account and welcome to the Karnataka Learning Partnership platform.
+Thank you for signing up for an account and welcome to the Odisha Learning Partnership platform.
 
 Please click http://{{ site_url }}{{ url }} to verify your email ID and account.
 
 You can look around the KLP site http://{{ site_url }}/map, find open volunteering opportunities at http://{{ site_url }}/volunteer
 
-We’re thrilled that you are a part of our mission to improve schools and learning in Karnataka!
+We’re thrilled that you are a part of our mission to improve schools and learning in Odisha!
 
 ~ Team KLP

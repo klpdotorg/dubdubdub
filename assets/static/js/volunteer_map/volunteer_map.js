@@ -19,7 +19,7 @@
 
         function search(query) {
             var apiKey = "AIzaSyB19tHGJ8R3eX3JhR655zzo72dyB4628vc";
-            query = query+", Karnataka";
+            query = query+", Odisha";
             var url = "https://maps.googleapis.com/maps/api/geocode/json?address="+query+"&region=in&key="+apiKey;
             $.ajax({
                 url: url

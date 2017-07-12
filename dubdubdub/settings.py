@@ -27,7 +27,7 @@ IVRS_VOICE_FILES_DIR = os.environ.get('IVRS_VOICE_FILES_DIR', None)
 
 DEFAULT_ACADEMIC_YEAR = '2014-2015'
 
-EMAIL_DEFAULT_FROM = 'Karnataka Learning Partnership <dev@klp.org.in>'
+EMAIL_DEFAULT_FROM = 'Odisha Learning Partnership <dev@klp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 # TEST_RUNNER='django.test.runner.DiscoverRunner'
