@@ -34,7 +34,8 @@ OVERALL_COLUMNS = (
 
 INVALID_COLUMNS = (
     "Error type, "
-    "Count"
+    "Count, "
+    "Numbers "
 )
 
 DISTRICT_COLUMNS = (
@@ -174,7 +175,7 @@ class Command(BaseCommand):
     args = ""
     help = """Creates csv files for calls happened each day
 
-    ./manage.py generategkacsv [--duration=monthly/weekly] [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] [--fc_report=True/False] --emails=a@b.com,c@d.com"""
+    ./manage.py generategkacsv [--duration=monthly/weekly/daily] [--from=YYYY-MM-DD] [--to=YYYY-MM-DD] [--fc_report=True/False] --emails=a@b.com,c@d.com"""
 
     option_list = BaseCommand.option_list + (
         make_option('--from',
@@ -198,12 +199,14 @@ class Command(BaseCommand):
         return emails
 
     def get_dates(self, duration, start_date, end_date):
-        today = datetime.now().date()
+        today = datetime.now()
         if duration:
             if duration == 'weekly':
                 days = 7
             elif duration == 'monthly':
                 days = 30
+            else: #daily
+                days = 1
             start_date = today - timedelta(days=int(days))
             end_date = today
 
@@ -240,7 +243,10 @@ class Command(BaseCommand):
     def get_overall_count(self, states, valid_states, groups):
         total_sms_received = states.count()
         number_of_invalid_sms = states.filter(is_invalid=True).count()
-        percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
+        if total_sms_received:
+            percentage_of_invalid_sms = (float(number_of_invalid_sms) / float(total_sms_received)) * 100.0
+        else:
+            percentage_of_invalid_sms = 0
         number_of_schools_with_unique_valid_sms = states.filter(
             is_invalid=False).order_by().distinct('school_id').count()
         valid_sms_counts = [
@@ -257,9 +263,10 @@ class Command(BaseCommand):
         return values
 
     def get_error_count(self, states):
-        errors = states.filter(is_invalid=True).values_list('comments', flat=True)
+        error_states = states.filter(is_invalid=True)
         errors_dict = {}
-        for error in errors:
+        for error_state in error_states:
+            error = error_state.comments
             # Let's make certain errors more concise. Refer to 'get_message'
             # in utils.py for all possible messages.
             if error:
@@ -280,9 +287,12 @@ class Command(BaseCommand):
                     # morning will show as invalid.
                     continue
             if error in errors_dict:
-                errors_dict[error] += 1
+                errors_dict[error]['count'] += 1
+                errors_dict[error]['numbers'].append(error_state.telephone)
             else:
-                errors_dict[error] = 1
+                errors_dict[error] = {}
+                errors_dict[error]['count'] = 1
+                errors_dict[error]['numbers'] = [error_state.telephone]
 
         return errors_dict
 
@@ -463,7 +473,7 @@ class Command(BaseCommand):
         list_of_values = []
 
         user_dict = {}
-        for user in group.user_set.all():
+        for user in group.user_set.filter(state__in=states):
             user_smses_count = user.state_set.filter(id__in=states).count()
             user_dict[user.id] = user_smses_count
         user_dict_list = sorted(user_dict.items(), key=operator.itemgetter(1), reverse=True)
@@ -584,10 +594,11 @@ class Command(BaseCommand):
         lines.extend([heading, "\n"])
         lines.extend([INVALID_COLUMNS])
         errors_dict = self.get_error_count(states)
-        for error, count in errors_dict.iteritems():
+        for error in errors_dict:
             values = [
                 str(error),
-                str(count)
+                str(errors_dict[error]['count']),
+                str("-".join(set(errors_dict[error]['numbers'])))
             ]
             values = ",".join(values)
             lines.extend([values])
@@ -652,6 +663,9 @@ class Command(BaseCommand):
 
         for line in lines:
             csv.write(line+"\n")
+
+        csv.flush()
+        csv.close()
 
         date_range = start_date.strftime("%d/%m/%Y") + " to " + today.strftime("%d/%m/%Y")
         subject = 'GKA SMS Report for '+ date_range

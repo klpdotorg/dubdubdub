@@ -25,7 +25,7 @@ class GPContest(object):
     def get_meta_summary(self, stories):
         counts = stories.aggregate(
             school_count=Count('school', distinct=True),
-            students_count=Count('name', distinct=True),
+            students_count=Count('name'),
             gp_count=Count('school__electedrep__gram_panchayat', distinct=True)
         )
 

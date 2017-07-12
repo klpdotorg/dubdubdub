@@ -76,6 +76,13 @@
           }
           tooltipText += value;
 
+          // Not the best way to show incorrect/inconsistent 
+          // meta + value tooltip.
+          // But does the job for time being
+          if(tooltipText === 'undefined') {
+            return;
+          }
+
           $toolTip.html(tooltipText).show();
         });
 

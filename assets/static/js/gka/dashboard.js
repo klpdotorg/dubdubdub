@@ -92,6 +92,7 @@ var topSummaryData = {};
     function loadData(params) {
         loadTopSummary(params);
         loadSmsData(params);
+        loadAssmtData(params);
         loadGPContestData(params);
         loadSurveys(params);
         loadComparison(params);
@@ -181,8 +182,12 @@ var topSummaryData = {};
         function getMetaValues(dataType) {
             var metaValues = {};
             for(var i = 1; i <= 4; i++) {
-                var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
-                metaValues['n' + i] = getNValues(ekstepData, dataType);
+                if(!data.competency_comparison[i-1]) {
+                    metaValues['n' + i] = [];
+                } else {
+                    var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
+                    metaValues['n' + i] = getNValues(ekstepData, dataType);
+                }
             }
             return metaValues;
         }
@@ -233,6 +238,7 @@ var topSummaryData = {};
                 }
             ],
         }
+
         renderBarChart('#compareAssmtGraph', ekstepCompetencies, "Percentage of Children");
         renderBarChart('#compareGpcGraph', gpContestCompetencies, "Percentage of Children");
     }
@@ -287,6 +293,8 @@ var topSummaryData = {};
     }
 
     function renderVolumeChart(data) {
+        var $noDataAlert = $('#survey-volume-chart-no-render-alert');
+        var $mobVolume = $('#mobVolume');
         var years = _.keys(data.volumes);
         var latest = Math.max.apply(Math,years);
         var earliest = latest-1;
@@ -294,19 +302,37 @@ var topSummaryData = {};
         var new_months = _.keys(data.volumes[latest]);
         var month_labels = [];
         var meta_values = [];
+
+        $noDataAlert.hide();
+        $mobVolume.show();
+
         for (var i = 5; i < 12; i++)
         {
-            meta_values.push({'meta':prev_months[i]+" "+earliest,
-                'value':data.volumes[earliest][prev_months[i]]})
-            month_labels.push(prev_months[i]+" "+earliest);
+            if(data.volumes[earliest]) {
+                meta_values.push({
+                    'meta': prev_months[i] + " " + earliest,
+                    'value': data.volumes[earliest][prev_months[i]]
+                });
+                month_labels.push(prev_months[i] + " " + earliest);
+            }
         }
         for (var i = 0; i < 5; i++)
         {
-            meta_values.push({'meta':new_months[i]+" "+latest,
-                'value':data.volumes[latest][new_months[i]]})
-            month_labels.push(new_months[i]+" "+latest);
+            if(data.volumes[latest]) {
+                meta_values.push({
+                    'meta': new_months[i] + " " + latest,
+                    'value': data.volumes[latest][new_months[i]]
+                });
+                month_labels.push(new_months[i] + " " + latest);
+            }
         }
-        //console.log(meta_values);
+
+        if(!meta_values.length) {
+            $noDataAlert.show();
+            $mobVolume.hide();
+            return;
+        }
+
         var data = {
             labels: month_labels,
             series: [
@@ -397,7 +423,6 @@ var topSummaryData = {};
             var topSummary = data.top_summary
             window.topSummaryData = topSummary
             renderTopSummary(topSummary);
-            loadAssmtData(params);
         });
     }
 
@@ -412,6 +437,14 @@ var topSummaryData = {};
         var tplSmsSummary = swig.compile($('#tpl-smsSummary').html());
         var summaryData = data;
         summaryData["format_lastsms"] = formatLastStory(summaryData["sms"]["last_story"]);
+
+        // Percentage
+        if (summaryData.sms && summaryData.sms.schools && window.topSummaryData && window.topSummaryData.gka_schools) {
+            summaryData['smsPercentage'] = (summaryData.sms.schools / topSummaryData.gka_schools * 100).toFixed(2);
+        } else {
+            summaryData['smsPercentage'] = 0;
+        }
+
         var smsSummaryHTML = tplSmsSummary(summaryData);
         $('#smsSummary').html(smsSummaryHTML);
     }
@@ -441,6 +474,13 @@ var topSummaryData = {};
 
     function renderSMSCharts(data, params)  {
         var meta_values = [];
+
+        var expectedValue = 13680;
+        if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 2280;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
+        }
 
         function prepareVolumes(year) {
             var values = [];
@@ -496,13 +536,24 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-h',
-                    data: _.map(volume_values, function(v){ return 13680; })  
+                    data: _.map(volume_values, function(v){ return expectedValue; })  
                 }
             ]
         }
+
+        var chartLabel = '';
+
+        if(!expectedValue) {
+            sms_volume.series = [sms_volume.series[0]];
+            chartLabel = "<div class='center-text font-small uppercase'>" +
+                        "<span class='fa fa-circle brand-green'></span> Actual Volumes</div>"
+        } else {
+            chartLabel = "<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
+                        " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>"
+        }
+
         renderLineChart('#smsVolume', sms_volume);
-        $('#smsLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-turquoise'></span>"+
-                        " Expected Volumes <span class='fa fa-circle brand-green'></span> Actual Volumes</div>");   
+        $('#smsLegend').html(chartLabel);   
 
 
     }
@@ -513,16 +564,16 @@ var topSummaryData = {};
         startDetailLoading();
         $metaXHR.done(function(data) {
             var topSummary = window.topSummaryData
-            var tot_schools = topSummary.total_schools
-            var gka_schools = topSummary.gka_schools
-            var schools_perc = getPercent(gka_schools, tot_schools)
+            var tot_gka_schools = topSummary.gka_schools
+            var schools_assessed = data.summary.schools
+            var schools_perc = getPercent(schools_assessed, tot_gka_schools)
             var children = data.summary.children
             var children_impacted = topSummary.children_impacted
             var children_perc = getPercent(children, children_impacted)
             var last_assmt = data.summary.last_assmt
             var dataSummary = {
                 "count": data.summary.count,
-                "schools": gka_schools,
+                "schools": schools_assessed,
                 "schools_perc": schools_perc,
                 "children": children,
                 "children_perc": children_perc,
@@ -536,7 +587,7 @@ var topSummaryData = {};
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
         $metaXHR.done(function(data) {
-            renderAssmtVolumeChart(data)
+            renderAssmtVolumeChart(data, params);
         });
     }
     
@@ -583,8 +634,16 @@ var topSummaryData = {};
         renderBarChart('#assmtCompetancy', competencies, "Percentage of Children");
     }
 
-    function renderAssmtVolumeChart(data) {
+    function renderAssmtVolumeChart(data, params) {
         var volumes = data.volumes;
+
+       var expectedValue = 6800;
+        if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 1100;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
+        }
+
         var volume_values = [
             {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
             {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
@@ -607,13 +666,23 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-d',
-                    data: [6800,6800,6800,6800,6800,6800,6800,6800,6800,6800,6800]  
+                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue]  
                 }
             ]
         }
+    
+        var chartLabel = '';
+        if(!expectedValue) {
+            assmt_volume.series = [assmt_volume.series[0]];
+            chartLabel = "<div class='center-text font-small uppercase'>"+
+                        "<span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>"
+        } else {
+            chartLabel = "<div class='center-text font-small uppercase'><span class='fa fa-circle brand-orange'></span>"+
+                        " Expected Volumes <span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>"
+        }
+
         renderLineChart('#assmtVolume', assmt_volume);
-        $('#avLegend').html("<div class='center-text font-small uppercase'><span class='fa fa-circle brand-orange'></span>"+
-                        " Expected Volumes <span class='fa fa-circle pink-salmon'></span> Actual Volumes</div>");   
+        $('#avLegend').html(chartLabel);   
 
     }
 
@@ -772,14 +841,14 @@ var topSummaryData = {};
           }]
         ];
 
-        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(data) {
-            if (data.type === 'bar') {
-                data.element.attr({
+        var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(chartData) {
+            if (chartData.type === 'bar') {
+                chartData.element.attr({
                     style: 'stroke-width: 15px;'
                 });
             }
-            if (data.type === 'label' && data.axis === 'x') {
-                data.element.attr({
+            if (chartData.type === 'label' && chartData.axis === 'x') {
+                chartData.element.attr({
                     width: 200
                 })
             }
