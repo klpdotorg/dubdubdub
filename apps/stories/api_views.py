@@ -247,11 +247,24 @@ class StoriesSyncView(KLPAPIView):
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
+        school_type = BoundaryType.objects.get(name='Primary School')
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        stories_qset = Story.objects.select_related(
+            'school', 'user'
+        ).filter(
+            school__in=school_qset
+        )
+
         return Response({
-            'total_stories': Story.objects.all().count(),
-            'total_verified_stories': Story.objects.filter(
+            'total_stories': stories_qset.count(),
+            'total_verified_stories': stories_qset.filter(
                 is_verified=True).count(),
-            'total_images': StoryImage.objects.all().count()
+            'total_images': StoryImage.objects.filter(
+                story__in=stories_qset
+            ).count()
         })
 
 
@@ -983,7 +996,17 @@ class StoriesView(KLPListAPIView):
             raise ParseError("answers param must be either 'yes' or 'no'.")
 
     def get_queryset(self):
-        qset = Story.objects.filter()
+        school_type = BoundaryType.objects.get(name='Primary School')
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        qset = Story.objects.select_related(
+            'school', 'user'
+        ).filter(
+            school__in=school_qset
+        )
+ 
         school_id = self.request.GET.get('school_id', '')
         if school_id:
             qset = qset.filter(school__id=school_id)
