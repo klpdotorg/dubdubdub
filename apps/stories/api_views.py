@@ -948,11 +948,11 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
             json['gka_districts'] = [
                 {
-                    'id':15819,
+                    'id':15700,
                     'name':'rayagada'
                 },
                 {
-                    'id':11844,
+                    'id':11725,
                     'name':'bolangir'
                 }
             ]
