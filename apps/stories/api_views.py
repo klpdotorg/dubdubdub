@@ -798,6 +798,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     def get_total_summary(self, total_schools, school_qset, admin1_id=None, admin2_id=None, admin3_id=None):
         programme = Programme.objects.get(name='Ganitha Kanika Andolana')
         gka_school_q = school_qset.filter(programmes=programme)
+        gka_districts = gka_school_q.values_list(
+            'admin3__parent__parent',
+            flat=True
+        ).distinct(
+            'admin3__parent__parent'
+        )
 
         admin1 = None
         if admin1_id:
@@ -808,7 +814,10 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             admin1 = Boundary.objects.get(hierarchy__name='cluster', id=admin3_id).parent.parent
 
         edu_vol_group = Group.objects.get(name="EV")
-        edu_volunteers = BoundaryUsers.objects.filter(user__groups=edu_vol_group)
+        edu_volunteers = BoundaryUsers.objects.filter(
+            boundary__in=gka_districts,
+            user__groups=edu_vol_group
+        )
         if admin1:
             edu_volunteers = edu_volunteers.filter(boundary=admin1)
 
