@@ -20,7 +20,7 @@ All unit tests and associated automation scripts are grouped under the "unittest
 
 Here are some general tips and guidelines in writing unit tests for dubdubdub:
 
-1. Tests should be written alongside new development code to keep up. The KLP Jenkins server will be running all the unit tests whenever new code gets committed to develop. If anything breaks, e-mails will be sent to the dev team and it will be upto the dev who made the last commit to fix breakages. 
+1. Tests should be written alongside new development code to keep up. The OLP Jenkins server will be running all the unit tests whenever new code gets committed to develop. If anything breaks, e-mails will be sent to the dev team and it will be upto the dev who made the last commit to fix breakages. 
 2. Each major endpoint has to be tested. Eg. schools, users, stories, volunteer activities etc..
 3. Group tests for each endpoint in one test file. 
 4. Convention followed for naming test files so far has been test_xxxx.py

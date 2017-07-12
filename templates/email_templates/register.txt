@@ -4,8 +4,8 @@ Thank you for signing up for an account and welcome to the Odisha Learning Partn
 
 Please click http://{{ site_url }}{{ url }} to verify your email ID and account.
 
-You can look around the KLP site http://{{ site_url }}/map, find open volunteering opportunities at http://{{ site_url }}/volunteer
+You can look around the OLP site http://{{ site_url }}/map, find open volunteering opportunities at http://{{ site_url }}/volunteer
 
 We’re thrilled that you are a part of our mission to improve schools and learning in Odisha!
 
-~ Team KLP
+~ Team OLP
