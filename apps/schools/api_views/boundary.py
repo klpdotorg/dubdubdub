@@ -26,7 +26,7 @@ class AssemblyList(KLPListAPIView):
     bbox_filter_field = 'coord'
 
     def get_queryset(self):
-        qset = Assembly.objects.all()
+        qset = Assembly.objects.none()
 
         query = self.request.GET.get('query', '')
         if query:
@@ -41,7 +41,7 @@ class ParliamentList(KLPListAPIView):
     bbox_filter_field = 'coord'
 
     def get_queryset(self):
-        qset = Parliament.objects.all()
+        qset = Parliament.objects.none()
 
         query = self.request.GET.get('query', '')
         if query:
