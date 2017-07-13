@@ -9,14 +9,14 @@ def test():
 
 
 def dev():
-    env.hosts = ['dev.olp.ind.in']
+    env.hosts = ['dev.odisha.ilp.org.in']
     env.project_path = '/var/www/dubdubdub/'
     env.venv_path = '/home/dubdubdub/dubdubdub/'
     env.git_branch = 'develop'
 
 
 def production():
-    env.hosts = ['olp.ind.in']
+    env.hosts = ['odisha.ilp.org.in']
     env.project_path = '/var/www/dubdubdub/'
     env.venv_path = '/home/dubdubdub/dubdubdub/'
     env.git_branch = 'master'

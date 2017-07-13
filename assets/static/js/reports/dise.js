@@ -43,9 +43,9 @@
     };
 
     var fillAdmin = function(acyear, adminlevel) {
-      var url_base = 'https://olp.ind.in/public/adhoc-dise-reports',
+      var url_base = 'http://odisha.ilp.org.in/public/adhoc-dise-reports',
           url = url_base + '/reports_dise_' + acyear.replace('-', ''),
-          dise_base = 'http://dise.olp.ind.in/api/';
+          dise_base = 'http://dise.odisha.ilp.org.in/api/';
 
       $reports_table.find('tbody').html('');
 

@@ -7,7 +7,7 @@ PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Dev Team', 'dev@olp.ind.in'),
+    ('Dev Team', 'dev@odisha.ilp.org.in'),
 )
 
 DATABASES = {
@@ -27,13 +27,13 @@ IVRS_VOICE_FILES_DIR = os.environ.get('IVRS_VOICE_FILES_DIR', None)
 
 DEFAULT_ACADEMIC_YEAR = '2014-2015'
 
-EMAIL_DEFAULT_FROM = 'Odisha Learning Partnership <dev@olp.ind.in>'
+EMAIL_DEFAULT_FROM = 'Odisha Learning Partnership <dev@odisha.ilp.org.in>'
 
 TEST_RUNNER = 'common.testrunner.NoDbTestRunner'
 # TEST_RUNNER='django.test.runner.DiscoverRunner'
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.olp.ind.in']
+ALLOWED_HOSTS = ['.odisha.ilp.org.in']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -288,7 +288,7 @@ TESTS_SCHOOLS_INPUT = {
     'SCHOOL_INFRA_ID': '33141',
 }
 
-BLOG_FEED_URL = 'http://blog.olp.ind.in/feeds/posts/default?alt=json'
+BLOG_FEED_URL = 'http://blog.odisha.ilp.org.in/feeds/posts/default?alt=json'
 
 SUIT_CONFIG = {
     'ADMIN_NAME': 'KLP Admin',

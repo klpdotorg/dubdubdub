@@ -39,7 +39,7 @@ def get_message(parameters, **kwargs):
     elif not kwargs.get('is_user_registered', True):
         telephone = str(parameters['telephone'])
         message = "Your number " + telephone + \
-                  " is not registered. Please visit https://olp.ind.in/" + \
+                  " is not registered. Please visit https://odisha.ilp.org.in/" + \
                   " and register yourself."
 
     elif not kwargs.get('is_school_id_valid', True):

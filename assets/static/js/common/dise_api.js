@@ -1,5 +1,5 @@
 (function() {
-    var base = 'http://dise.olp.ind.in/api/';
+    var base = 'http://dise.odisha.ilp.org.in/api/';
     var DEFAULT_ACADEMIC_YEAR = '15-16';
     klp.dise_api = {
         'fetchSchoolInfra': function(diseCode, academicYear) {
