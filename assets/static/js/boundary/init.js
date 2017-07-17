@@ -20,13 +20,13 @@
 
   function setAcadYear() {
     if (!window.location.hash) {
-      window.location.hash = '2014-2015'      
+      window.location.hash = '2015-2016'      
     } 
     selectedYear = window.location.hash.split('#').join('')
   }
 
   function render(boundaryID, academicYear) {
-    var acadYear = academicYear || '2014-2015';
+    var acadYear = academicYear || '2015-2016';
 
 
     /*------------------- WISH WASH FOR MAP-------------*/
