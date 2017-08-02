@@ -26,8 +26,11 @@ def get_message(parameters, **kwargs):
         message = "Response accepted. Your message was: " + data + \
                   " received at: " + date
 
-    elif not kwargs.get('is_logically_correct', True):
-        message = "Logical error."
+    elif not kwargs.get('is_telephone_present', True):
+        message = "The telephone is blank."
+
+    elif not kwargs.get('is_school_primary', True):
+        message = "Please enter Primary School ID."
 
     elif not kwargs.get('is_data_valid', True):
         data = str(parameters['raw_data'])
@@ -35,6 +38,9 @@ def get_message(parameters, **kwargs):
 
         message = "Error. Your response: " + data + \
                   ". Expected response: " + expected_response
+
+    elif not kwargs.get('is_logically_correct', True):
+        message = "Logical error."
 
     elif not kwargs.get('is_user_registered', True):
         telephone = str(parameters['telephone'])
@@ -86,7 +92,10 @@ def is_logically_correct(data):
     return is_logically_correct
 
 def is_school_exists(school_id):
-    return School.objects.filter(id=school_id).exists()
+    school_valid = False
+    if school_id.isdigit():
+    	school_valid =  School.objects.filter(id=school_id).exists()
+    return school_valid
 
 def is_school_primary(school_id):
     school_type = School.objects.filter(
