@@ -644,21 +644,35 @@ var topSummaryData = {};
             expectedValue = 0;
         }
 
-        var volume_values = [
-            {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
-            {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
-            {"meta":"Aug 2016","value":volumes['2016'] ? volumes['2016'].Aug : 0 },
-            {"meta":"Sep 2016","value":volumes['2016'] ? volumes['2016'].Sep : 0 },
-            {"meta":"Oct 2016","value":volumes['2016'] ? volumes['2016'].Oct : 0 },
-            {"meta":"Nov 2016","value":volumes['2016'] ? volumes['2016'].Nov : 0 },
-            {"meta":"Dec 2016","value":volumes['2016'] ? volumes['2016'].Dec : 0 },
-            {"meta":"Jan 2017","value":volumes['2017'] ? volumes['2017'].Jan : 0 },
-            {"meta":"Feb 2017","value":volumes['2017'] ? volumes['2017'].Feb : 0 },
-            {"meta":"Mar 2017","value":volumes['2017'] ? volumes['2017'].Mar : 0 }
-        ];
+        var months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var fromDate = '2017-01-01';
+        if(params.from) {
+            fromDate = params.from;
+        }
+        var monthIndex = parseInt(fromDate.split('-')[1], 10),
+            yearIndex = parseInt(fromDate.split('-')[0], 10),
+            volumeValues = [];
+
+        for(var i=1; i<=12; i+=1) {
+            volumeValues.push(months[monthIndex] + ' ' + yearIndex);
+            monthIndex += 1;
+            if(monthIndex > 12) {
+                monthIndex = 1;
+                yearIndex += 1;
+            }
+        }
+
+        var volume_values = _.map(volumeValues, function(v){
+            var month = v.split(' ')[0],
+                year = v.split(' ')[1];
+            return {
+                'meta': v,
+                'value': volumes[year] ? volumes[year][month] : 0
+            };
+        });
 
         var assmt_volume = {
-            labels: ["Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017"],
+            labels: _.map(volume_values, function(v){return v.meta}),
             series: [
                 { 
                     className: 'ct-series-g',
@@ -666,7 +680,7 @@ var topSummaryData = {};
                 },
                 {
                     className: 'ct-series-d',
-                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue]  
+                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue, expectedValue]  
                 }
             ]
         }
