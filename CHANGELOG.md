@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.2.9: 5630bcb0c67d491d23c6a900c801d9135a6b4638 - 2017-08-03
+  - Fixes for GKA dashboard date filters.
+
 Release 1.2.8: 4d2d356428470c0320e8345903ce013d64cda6a3 - 2017-06-27
   - Fixes for GKA dashboard and SMS report generation.
 
