@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.2.10: 6ef53edc3d4a10c3a5fd26ae8c81e8c364a88618 - 2017-08-08
+  - Fixes the children count for assessments bit.
+
 Release 1.2.9: 5630bcb0c67d491d23c6a900c801d9135a6b4638 - 2017-08-03
   - Fixes for GKA dashboard date filters.
 
