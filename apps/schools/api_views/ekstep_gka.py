@@ -63,7 +63,7 @@ class EkStepGKA(object):
         assessment_aggregates = assessments.aggregate(
             assessment_count=Count('assess_uid'),
             schools_covered=Count('student_uid__school_code', distinct=True),
-            children_count=Count('student_uid', distinct=True),
+            children_count=Count('student_uid__student_id', distinct=True),
             last_assessment=Max('assessed_ts')
         )
 
