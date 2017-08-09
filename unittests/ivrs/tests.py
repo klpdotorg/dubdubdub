@@ -82,12 +82,45 @@ class SMSViewTests(TestCase):
         print "Testing for invalid school_id"
         view = SMSView.as_view()
         factory = APIRequestFactory()
+        #body = 'ID 20,1,1,1,2,2'
+        bodies = [
+            '0,1,1,1,2,2',
+            u'ID 20,1,1,1,2,2',
+           
+        ]
+        for body in bodies:
+            print "Testing input: " + body
+            request = factory.get(
+                '/api/v1/sms/',
+                {
+                    u'SmsSid':u'2',
+                    u'From':u'01234567890',
+                    u'To':u'08039514048',
+                    u'Date':u"'2016-07-12 15:16:48'",
+                    u'Body':body,
+                },
+                content_type='text/plain',
+            )
+            response = view(request)
+            self.assertEqual(
+                response.data,
+                'School ID ' + body.split(',').pop(0) + ' not found.'
+            )
+
+    def test_reply_for_blank_telephone(self):
+        """
+        SMSView should return a certain reply to be sent when it receives
+        a blank telephone
+        """
+        print "Testing for blank telephone"
+        view = SMSView.as_view()
+        factory = APIRequestFactory()
         body = '0,1,1,1,2,2'
         request = factory.get(
             '/api/v1/sms/',
             {
                 'SmsSid':'2',
-                'From':'01234567890',
+                'From':'',
                 'To':'08039514048',
                 'Date':'2016-07-12 15:16:48',
                 'Body':body,
@@ -97,7 +130,7 @@ class SMSViewTests(TestCase):
         response = view(request)
         self.assertEqual(
             response.data,
-            'School ID ' + body.split(',').pop(0) + ' not found.'
+            'The telephone is blank.'
         )
 
     def test_reply_for_invalid_answer_to_specific_question_number(self):

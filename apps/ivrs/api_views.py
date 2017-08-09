@@ -39,7 +39,8 @@ class SMSView(KLPAPIView):
         parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
         parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
-        parameters['telephone'] = parameters['telephone'][1:] # Strip 0
+        if parameters['telephone']:
+                parameters['telephone'] = parameters['telephone'][1:] # Strip 0
 
         processed_data = process_data(parameters['raw_data'])
         incoming_number = IncomingNumber.objects.get(number=parameters['ivrs_type'])
@@ -49,15 +50,18 @@ class SMSView(KLPAPIView):
 
         is_invalid = True
 
-        if not is_user_registered(parameters['telephone']):
-            message = get_message(parameters, is_user_registered=False)
+	if not parameters['telephone']:
+            message = get_message(parameters, is_telephone_present=False)
 
+        elif not is_user_registered(parameters['telephone']):
+            message = get_message(parameters, is_user_registered=False)
+	
         elif not is_data_valid(processed_data):
             message = get_message(parameters, is_data_valid=False)
 
         elif not is_logically_correct(processed_data):
             message = get_message(parameters, is_logically_correct=False)
-
+      
         elif not is_school_exists(school_id):
             message = get_message(parameters, is_school_id_valid=False)
 
