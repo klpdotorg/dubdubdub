@@ -132,4 +132,4 @@ class Command(BaseCommand):
             if boundary:
                 BoundaryUsers.objects.get_or_create(user=user, boundary=boundary )
 
-    print str(count) + " lines processed."
+        print str(count) + " lines processed."
