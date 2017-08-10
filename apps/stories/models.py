@@ -196,6 +196,8 @@ class Story(TimestampedBaseModel):
     comments = models.CharField(max_length=2000, blank=True)
     sysid = models.IntegerField(blank=True, null=True)
 
+    location = models.PointField(max_length=50, blank=True, null=True)
+
     class Meta:
         db_table = 'stories_story'
         verbose_name_plural = 'Stories'

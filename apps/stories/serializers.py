@@ -216,7 +216,7 @@ class StorySerializer(KLPSerializer):
         fields = (
             'id', 'name', 'group', 'date', 'date_of_visit', 'school',
             'school_name', 'school_url', 'comments', 'is_verified',
-            'images', 'created_at')
+            'images', 'location', 'created_at')
 
 
 class StoryWithAnswersSerializer(KLPSerializer):
@@ -230,7 +230,7 @@ class StoryWithAnswersSerializer(KLPSerializer):
         fields = (
             'id', 'name', 'date', 'date_of_visit', 'school', 'comments',
             'group', 'is_verified', 'images', 'answers', 'created_at',
-            'user_type', 'user')
+            'user_type', 'user', 'location')
 
     def get_answers(self, obj):
         return obj.answer_set.all()
@@ -244,7 +244,7 @@ class StorySyncSerializer(KLPSerializer):
         model = Story
         fields = (
             'id', 'date_of_visit', 'school', 'group',
-            'answers', 'user_type', 'user')
+            'answers', 'user_type', 'user', 'location')
 
     def get_answers(self, obj):
         answers = dict()
