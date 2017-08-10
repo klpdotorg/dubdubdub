@@ -296,8 +296,9 @@ var topSummaryData = {};
         var $noDataAlert = $('#survey-volume-chart-no-render-alert');
         var $mobVolume = $('#mobVolume');
         var years = _.keys(data.volumes);
-        var latest = Math.max.apply(Math,years);
-        var earliest = latest-1;
+        // var latest = Math.max.apply(Math,years);
+        var latest = 2018;
+        var earliest = latest - 1;
         var prev_months = _.keys(data.volumes[earliest]);
         var new_months = _.keys(data.volumes[latest]);
         var month_labels = [];
@@ -342,6 +343,7 @@ var topSummaryData = {};
                 }
             ]
         };
+        console.log(data)
         renderLineChart('#mobVolume', data);
     }
 
@@ -514,12 +516,21 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = prepareVolumes('2016');
-        volume_values = volume_values.concat(prepareVolumes('2017'));
+        var volume_values = prepareVolumes('2017');
+        volume_values = volume_values.concat(prepareVolumes('2018'));
 
         if(!volume_values.length) {
             return;
         }
+
+        volume_values = _.filter(volume_values, function(v){
+            var excluded = ['Jan 2017', 'Feb 2017', 'Mar 2017', 'Apr 2017', 'May 2017'];
+            if(excluded.indexOf(v.meta) !== -1) {
+                return false;
+            } else {
+                return true;
+            }
+        });
 
         if (volume_values.length > 12) {
             volume_values.splice(0, 6);
@@ -645,20 +656,20 @@ var topSummaryData = {};
         }
 
         var volume_values = [
-            {"meta":"Jun 2016","value":volumes['2016'] ? volumes['2016'].Jun : 0 },
-            {"meta":"Jul 2016","value":volumes['2016'] ? volumes['2016'].Jul : 0 },
-            {"meta":"Aug 2016","value":volumes['2016'] ? volumes['2016'].Aug : 0 },
-            {"meta":"Sep 2016","value":volumes['2016'] ? volumes['2016'].Sep : 0 },
-            {"meta":"Oct 2016","value":volumes['2016'] ? volumes['2016'].Oct : 0 },
-            {"meta":"Nov 2016","value":volumes['2016'] ? volumes['2016'].Nov : 0 },
-            {"meta":"Dec 2016","value":volumes['2016'] ? volumes['2016'].Dec : 0 },
-            {"meta":"Jan 2017","value":volumes['2017'] ? volumes['2017'].Jan : 0 },
-            {"meta":"Feb 2017","value":volumes['2017'] ? volumes['2017'].Feb : 0 },
-            {"meta":"Mar 2017","value":volumes['2017'] ? volumes['2017'].Mar : 0 }
+            {"meta":"Jun 2017","value":volumes['2017'] ? volumes['2017'].Jun : 0 },
+            {"meta":"Jul 2017","value":volumes['2017'] ? volumes['2017'].Jul : 0 },
+            {"meta":"Aug 2017","value":volumes['2017'] ? volumes['2017'].Aug : 0 },
+            {"meta":"Sep 2017","value":volumes['2017'] ? volumes['2017'].Sep : 0 },
+            {"meta":"Oct 2017","value":volumes['2017'] ? volumes['2017'].Oct : 0 },
+            {"meta":"Nov 2017","value":volumes['2017'] ? volumes['2017'].Nov : 0 },
+            {"meta":"Dec 2017","value":volumes['2017'] ? volumes['2017'].Dec : 0 },
+            {"meta":"Jan 2018","value":volumes['2018'] ? volumes['2018'].Jan : 0 },
+            {"meta":"Feb 2018","value":volumes['2018'] ? volumes['2018'].Feb : 0 },
+            {"meta":"Mar 2018","value":volumes['2018'] ? volumes['2018'].Mar : 0 }
         ];
 
         var assmt_volume = {
-            labels: ["Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017"],
+            labels: ["Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018"],
             series: [
                 { 
                     className: 'ct-series-g',
