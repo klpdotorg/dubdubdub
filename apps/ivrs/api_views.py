@@ -15,10 +15,10 @@ from .utils import (
     is_logically_correct,
     is_school_exists,
     is_school_primary,
-    is_user_registered,
     populate_state,
     populate_answers_list,
     process_data,
+    validate_telephone_number
 )
 
 from schools.models import School
@@ -33,14 +33,22 @@ class SMSView(KLPAPIView):
         # status.HTTP_200_OK has been hardcoded in the response.
         content_type = "text/plain"
 
+        telephone = validate_telephone_number(
+            request.QUERY_PARAMS.get('From', None)
+        )
+        if not telephone:
+            return Response(
+                "Invalid",
+                status=status.HTTP_200_OK,
+                content_type=content_type
+            )
+
         parameters = {}
+        parameters['telephone'] = telephone
         parameters['date'] = request.QUERY_PARAMS.get('Date', None)
         parameters['ivrs_type'] = request.QUERY_PARAMS.get('To', None)
         parameters['raw_data'] = request.QUERY_PARAMS.get('Body', None)
-        parameters['telephone'] = request.QUERY_PARAMS.get('From', None)
         parameters['session_id'] = request.QUERY_PARAMS.get('SmsSid', None)
-        if parameters['telephone']:
-                parameters['telephone'] = parameters['telephone'][1:] # Strip 0
 
         processed_data = process_data(parameters['raw_data'])
         incoming_number = IncomingNumber.objects.get(number=parameters['ivrs_type'])
@@ -49,14 +57,8 @@ class SMSView(KLPAPIView):
         parameters['school_id'] = school_id
 
         is_invalid = True
-
-	if not parameters['telephone']:
-            message = get_message(parameters, is_telephone_present=False)
-
-        elif not is_user_registered(parameters['telephone']):
-            message = get_message(parameters, is_user_registered=False)
 	
-        elif not is_data_valid(processed_data):
+        if not is_data_valid(processed_data):
             message = get_message(parameters, is_data_valid=False)
 
         elif not is_logically_correct(processed_data):
