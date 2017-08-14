@@ -62,6 +62,7 @@
     };
 
     function init(options) {
+
         var monthSelect = this.find("select.month");
         _(MONTHS).each(function(month, index) {
             var $option = $('<option />')
@@ -69,8 +70,10 @@
                               .prop("value", index);
             monthSelect.append($option);
         });
-        var yearSelect = this.find("select.year");
-        _(VALID_YEARS).each(function(year, index) {
+
+        var yearSelect = this.find("select.year"),
+            validYears = (options && options.validYears) ? options.validYears : VALID_YEARS;
+        _(validYears).each(function(year, index) {
             var $option = $('<option />')
                               .text(year)
                               .prop("value", year);
