@@ -30,6 +30,7 @@ def make_mobile_numbers_unique(users):
 class Command(BaseCommand):
     args = "<path to file>"
     help = """Create user accounts from CSV
+
     ./manage.py create_user_accounts --file=path/to/file"""
 
     option_list = BaseCommand.option_list + (
@@ -47,6 +48,7 @@ class Command(BaseCommand):
         diet_group, created = Group.objects.get_or_create(name="DIET")
         eo_group, created = Group.objects.get_or_create(name="EO")
         hm_group, created = Group.objects.get_or_create(name="HM")
+        ev_group, created = Group.objects.get_or_create(name="EV")
 
         file_name = options.get('file', None)
         if not file_name:
@@ -68,21 +70,20 @@ class Command(BaseCommand):
             block = row[1].strip().lower()
             cluster = row[2].strip().lower()
             group_name = row[3].strip()
-         
-            
+
             if district == 'yadgir':
-               district = 'yadagiri'
+                district = 'yadagiri'
 
             try:
                 boundary = Boundary.objects.get(
                     name=cluster,
-                    hierarchy__name="district",
+                    hierarchy__name="cluster",
                     type__name="Primary School"
                 )
             except Exception as ex:
-                boundary = None
-                print cluster +  " is not found." #should we continue to process this record or go to next one?
-               
+                print "Cluster name: " + cluster + " not found."
+                raise Exception("Unkown cluster!")
+
             name = row[4].strip()
             if ' ' in name:
                 first_name, last_name = name.split(" ", 1)
@@ -95,33 +96,29 @@ class Command(BaseCommand):
                 email = row[6].strip()
             else:
                 email = name.lower().replace(" ","")[:63] + "@klp.org.in"
-	    
+
             mobile_number = row[5].strip()
+
             if mobile_number:
                 if len(mobile_number) != 10:
-		    print "Incorrect mobile number: " + mobile_number
                     continue
                 elif User.objects.filter(email=email).exists():
-                    cnt = 1
+                    dummy_count = 0
                     while User.objects.filter(email=email).exists():
-                        user = User.objects.get(email=email)
-                        if (user.mobile_no != mobile_number): #the email already exists for another mobile
-                            email = name.lower().replace(" ","")[:63]+ str(cnt) + "@klp.org.in"
-                            cnt += 1
-                        else:
-                            break           
-                   
-                if User.objects.filter(mobile_no=mobile_number).exists():
+                        dummy_count += 1
+                        email_username = email.split('@')[0]
+                        email = "dummy_" + str(dummy_count) + "_" + email_username + "@klp.org.in"
+                elif User.objects.filter(mobile_no__contains=mobile_number).exists():
                     user = User.objects.get(mobile_no=mobile_number)
-                    user.email = email
-		    user.save()
-                
+                    email = user.email
                 else:
-                    user, created = User.objects.get_or_create(
+                    user, created = User.objects.update_or_create(
                         email=email,
-                        first_name=first_name,
-                        last_name=last_name,
-                        mobile_no=mobile_number
+                        mobile_no=mobile_number,
+                        defaults={
+                            'first_name':first_name,
+                            'last_name':last_name,
+                        }
                     )
                     print "User: " + str(user) + " created: " + str(created)
                 group = Group.objects.get(name=group_name)
@@ -130,6 +127,6 @@ class Command(BaseCommand):
                 continue
 
             if boundary:
-                BoundaryUsers.objects.get_or_create(user=user, boundary=boundary )
+                BoundaryUsers.objects.get_or_create(user=user, boundary=boundary)
 
         print str(count) + " lines processed."
