@@ -248,6 +248,7 @@ var topSummaryData = {};
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
         $metaXHR.done(function(data) {
+            window.smsSummary = data;
             renderSmsSummary(data);
         });
 
@@ -343,7 +344,6 @@ var topSummaryData = {};
                 }
             ]
         };
-        console.log(data)
         renderLineChart('#mobVolume', data);
     }
 
