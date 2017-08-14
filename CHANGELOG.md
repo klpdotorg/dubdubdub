@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.2.12: 08213e18c31c1a8ac09a5a97e636c86cded300cc - 2017-08-14
+  - More GKA dashboard fixes
+
 Release 1.2.11: dad0573a5a8e4160726eebfb654eb183f3f3ac5b - 2017-08-14
   - Fixes for GKA dashboard (date filter, denominator changes etc)
   - SMS fixes
