@@ -83,7 +83,7 @@
         <div class="bar-graph-wrap">
           <div class="bar-graph">
             <div class="bar-percent grey-gravel">{{ q.percent}}%</div>
-            <div class="bar-custom tooltip" aria-label="{{ q.score}}/ {{ q.total}} responses">
+            <div class="bar-custom tooltip" aria-label="{{ q.score}}/ {{ window.surveySummaryData.csv.stories}} responses">
               <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
                 <div class="bar-value bar-value-{{ q.total}} brand-blue-bg" style="width:{{q.percent}}%;"></div>
               </div>

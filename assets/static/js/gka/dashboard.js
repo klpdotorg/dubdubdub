@@ -276,6 +276,7 @@ var topSummaryData = {};
         startDetailLoading();
         $metaXHR.done(function(data) 
         {
+            window.surveySummaryData = data;
             renderSurveySummary(data);
             renderRespondentChart(data);
         });
