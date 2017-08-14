@@ -459,7 +459,6 @@ var topSummaryData = {};
 
 
     function renderSMS(data) {
-        console.log(data)
         var SMSQuestionKeys = [];
         SMSQuestionKeys = [
             "ivrss-gka-trained",

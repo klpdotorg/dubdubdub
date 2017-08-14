@@ -113,7 +113,7 @@
             <div class="bar-percent grey-gravel">{{ (questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2) }}%</div>
             <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-trained"].score}}/{{ window.smsSummary.sms.stories }} responses">
               <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
-                <div class="bar-value bar-value-{{ questions["ivrss-math-class-happening"].total}} green-leaf-bg" style="width:{{questions["ivrss-math-class-happening"].percent}}%;"></div>
+                <div class="bar-value bar-value-{{ questions["ivrss-math-class-happening"].total}} green-leaf-bg" style="width:{{ (questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2) }}%;"></div>
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@
             <div class="bar-percent grey-gravel">{{(questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2)}}%</div>
             <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-trained"].score}}/{{ window.smsSummary.sms.stories}} responses">
               <div class="bar-value bar-value-100 grey-silver-bg" style="width:100%;">
-                <div class="bar-value bar-value-{{ questions["ivrss-gka-trained"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-trained"].percent}}%;"></div>
+                <div class="bar-value bar-value-{{ questions["ivrss-gka-trained"].total}} green-leaf-bg" style="width:{{ (questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2) }}%;"></div>
               </div>
             </div>
           </div>
