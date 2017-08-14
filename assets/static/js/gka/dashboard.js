@@ -18,8 +18,8 @@ var topSummaryData = {};
         });
         klp.router.start();
 
-        $('#startDate').yearMonthSelect("init");
-        $('#endDate').yearMonthSelect("init");
+        $('#startDate').yearMonthSelect("init", {validYears: ['2015', '2016', '2017']});
+        $('#endDate').yearMonthSelect("init", {validYears: ['2015', '2016', '2017']});
 
         //this is a bit of a hack to save query state when
         //triggering a modal, since modals over-ride the url
@@ -110,7 +110,7 @@ var topSummaryData = {};
                     schools: summary.schools,
                     sms: summary.sms,
                     sms_govt: summary.sms_govt,
-		    sms_govt_percent: getPercent(summary.sms_govt, summary.sms),
+            sms_govt_percent: getPercent(summary.sms_govt, summary.sms),
                     assmt: summary.assessments,
                     contests: summary.contests,
                     surveys: summary.surveys
@@ -296,8 +296,9 @@ var topSummaryData = {};
         var $noDataAlert = $('#survey-volume-chart-no-render-alert');
         var $mobVolume = $('#mobVolume');
         var years = _.keys(data.volumes);
-        var latest = Math.max.apply(Math,years);
-        var earliest = latest-1;
+        // var latest = Math.max.apply(Math,years);
+        var latest = 2018;
+        var earliest = latest - 1;
         var prev_months = _.keys(data.volumes[earliest]);
         var new_months = _.keys(data.volumes[latest]);
         var month_labels = [];
@@ -342,6 +343,7 @@ var topSummaryData = {};
                 }
             ]
         };
+        console.log(data)
         renderLineChart('#mobVolume', data);
     }
 
@@ -514,12 +516,21 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = prepareVolumes('2016');
-        volume_values = volume_values.concat(prepareVolumes('2017'));
+        var volume_values = prepareVolumes('2017');
+        volume_values = volume_values.concat(prepareVolumes('2018'));
 
         if(!volume_values.length) {
             return;
         }
+
+        volume_values = _.filter(volume_values, function(v){
+            var excluded = ['Jan 2017', 'Feb 2017', 'Mar 2017', 'Apr 2017', 'May 2017'];
+            if(excluded.indexOf(v.meta) !== -1) {
+                return false;
+            } else {
+                return true;
+            }
+        });
 
         if (volume_values.length > 12) {
             volume_values.splice(0, 6);
