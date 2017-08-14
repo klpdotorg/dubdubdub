@@ -10,6 +10,10 @@ Use required commands
 Changelog
 ---
 
+Release 1.2.11: dad0573a5a8e4160726eebfb654eb183f3f3ac5b - 2017-08-14
+  - Fixes for GKA dashboard (date filter, denominator changes etc)
+  - SMS fixes
+
 Release 1.2.10: 6ef53edc3d4a10c3a5fd26ae8c81e8c364a88618 - 2017-08-08
   - Fixes the children count for assessments bit.
 
