@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.2.13: b56c04b54cc6394b04d4ee5cf975d1705c6b795e - 2017-08-14
+  - More GKA dashboard fixes
+
 Release 1.2.12: 08213e18c31c1a8ac09a5a97e636c86cded300cc - 2017-08-14
   - More GKA dashboard fixes
 
