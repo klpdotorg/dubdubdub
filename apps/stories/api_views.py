@@ -24,6 +24,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.files.base import ContentFile
 from django.db.models import Q, Count, Max, Sum
+from django.contrib.gis.geos import Point
 
 from users.models import User
 
@@ -228,6 +229,11 @@ class StoriesSyncView(KLPAPIView):
                         new_story.telephone = request.user.mobile_no
                         new_story.name = request.user.get_full_name()
                         new_story.email = request.user.email
+
+                        # Save location info
+                        if story.get('lat', None) is not None and story.get('lng', None) is not None:
+                            new_story.location = Point(story.get('lat'), story.get('lng'))
+
                         new_story.save()
 
                     for answer in story.get('answers', []):
