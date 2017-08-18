@@ -144,7 +144,7 @@
             <div class="bar-graph-wrap">
               <div class="bar-graph">
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-gka-tlm-in-use"].percent}}%</div>
-                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-tlm-in-use"].score}}/ {{ window.smsSummary.sms.stories}} responses">
+                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-tlm-in-use"].score}}/ {{ questions["ivrss-gka-trained"].score}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
                     <div class="bar-value bar-value-{{ questions["ivrss-gka-tlm-in-use"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-tlm-in-use"].percent}}%;"></div>
                   </div>
@@ -160,7 +160,7 @@
             <div class="bar-graph-wrap">
               <div class="bar-graph">
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-gka-rep-stage"].percent}}%</div>
-                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-rep-stage"].score}}/ {{ window.smsSummary.sms.stories}} responses">
+                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-gka-rep-stage"].score}}/ {{ questions["ivrss-gka-trained"].score}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
                     <div class="bar-value bar-value-{{ questions["ivrss-gka-rep-stage"].total}} green-leaf-bg" style="width:{{questions["ivrss-gka-rep-stage"].percent}}%;"></div>
                   </div>
@@ -176,7 +176,7 @@
             <div class="bar-graph-wrap">
               <div class="bar-graph">
                 <div class="bar-percent grey-gravel">{{ questions["ivrss-group-work"].percent}}%</div>
-                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-group-work"].score}}/ {{ window.smsSummary.sms.stories }} responses">
+                <div class="bar-custom tooltip" aria-label="{{ questions["ivrss-group-work"].score}}/ {{ questions["ivrss-gka-trained"].score}} responses">
                   <div class="bar-value bar-value-100 orange-mild-bg" style="width:100%;">
                     <div class="bar-value bar-value-{{ questions["ivrss-group-work"].total}} green-leaf-bg" style="width:{{questions["ivrss-group-work"].percent}}%;"></div>
                   </div>
