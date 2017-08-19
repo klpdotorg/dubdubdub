@@ -51,22 +51,29 @@ class UsersView(generics.ListCreateAPIView):
     permission_classes = (UserListPermission,)
 
     def create(self, *args, **kwargs):
-        #FIXME: move validation into serializer validate methods
+        # FIXME: move validation into serializer validate methods
         email = self.request.POST.get('email', None)
         mobile_no = self.request.POST.get('mobile_no', None)
         first_name = self.request.POST.get('first_name', None)
         last_name = self.request.POST.get('last_name', None)
+        password = self.request.POST.get('password', None)
+        source = self.request.POST.get('source', None)
 
-        if not email or not mobile_no or not first_name or not last_name:
-            raise ParseError("""Insufficient data: required fields are email,
-                mobile_no, first_name and last_name""")
+        # Signups coming from mobile number do not need an email id
+        # Since emails are needed in our auth system, we will create
+        # a dummy email like mobile_no.konnectdummy@klp.org.in
+        if source == 'konnect' and mobile_no:
+            email = '%s.konnectdummy@klp.org.in' % mobile_no
+            self.request.POST['email'] = email
+
+        if not email or not mobile_no or not first_name or \
+                not last_name or not password:
+            raise ParseError("Insufficient data: required fields are email, mobile_no, first_name, last_name and password")
 
         if User.objects.filter(email=email).count() > 0:
             raise APIException("duplicate email")
 
-        password = self.request.POST.get('password', '')
-        if password == '':
-            raise ParseError("No password supplied")
+        print email
 
         return super(UsersView, self).create(*args, **kwargs)
 
