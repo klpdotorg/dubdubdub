@@ -10,7 +10,10 @@ Use required commands
 Changelog
 ---
 
-Release 1.3.0: f97db1d5d66521f587a43f77723c693306d14ed9 - 2017-08-14
+Release 1.3.1: 3a0359c8bc9f944ab0875a900da6c004277f464f - 2017-08-20
+  - Login API endpoint returns user_type in the json response
+
+Release 1.3.0: f97db1d5d66521f587a43f77723c693306d14ed9 - 2017-08-19
   - Signup now checks for source
   - Signups from Konnect mobile app do not need a valid email id
   - New field user_type for User model
