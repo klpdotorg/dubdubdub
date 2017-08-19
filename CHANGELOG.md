@@ -10,6 +10,11 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.0: f97db1d5d66521f587a43f77723c693306d14ed9 - 2017-08-14
+  - Signup now checks for source
+  - Signups from Konnect mobile app do not need a valid email id
+  - New field user_type for User model
+
 Release 1.2.13: b56c04b54cc6394b04d4ee5cf975d1705c6b795e - 2017-08-14
   - More GKA dashboard fixes
 
