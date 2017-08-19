@@ -29,6 +29,21 @@ STATUS_CHOICES = (
     (2, 'Completed')
 )
 
+RESPONDENT_CHOICES = (
+    ('parents', 'Parents'),
+    ('teachers', 'Teachers'),
+    ('volunteers', 'Volunteers'),
+    ('cbo-member', 'CBO Member'),
+    ('headmaster', 'Headmaster'),
+    ('sdmc-member', 'SDMC Member'),
+    ('local-leaders', 'Local Leaders'),
+    ('akshara-staff', 'Akshara Staff'),
+    ('educated-staff', 'Educated Staff'),
+    ('educated-youth', 'Educated Youth'),
+    ('education-official', 'Education Official'),
+    ('elected-representative', 'Elected Representative'),
+)
+
 
 class UserManager(BaseUserManager):
 
@@ -62,7 +77,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     sms_verification_pin = models.IntegerField(max_length=16)
     is_email_verified = models.BooleanField(default=False)
     is_mobile_verified = models.BooleanField(default=False)
-    #type = models.IntegerField(choices=USER_TYPE_CHOICES, default=0)
+    user_type = models.CharField(max_length=50,
+        choices=RESPONDENT_CHOICES, null=True, blank=True)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
     is_active = models.BooleanField('active', default=True,
