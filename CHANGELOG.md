@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.2: 16e2506ec7d57e6def28015334999922265302e3 - 2017-08-20
+  - API bug fixes
+
 Release 1.3.1: 3a0359c8bc9f944ab0875a900da6c004277f464f - 2017-08-20
   - Login API endpoint returns user_type in the json response
 
