@@ -10,7 +10,10 @@ Use required commands
 Changelog
 ---
 
-Release 1.3.2: 16e2506ec7d57e6def28015334999922265302e3 - 2017-08-20
+Release 1.3.3: 0361755e74a39ba72d504fe5d4edb1a2df401b1d - 2017-08-22
+  - GKA dashboard improvements and bug fixes
+
+Release 1.3.2: 16e2506ec7d57e6def28015334999922265302e3 - 2017-08-22
   - API bug fixes
 
 Release 1.3.1: 3a0359c8bc9f944ab0875a900da6c004277f464f - 2017-08-20
