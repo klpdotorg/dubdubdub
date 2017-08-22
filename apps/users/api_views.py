@@ -64,7 +64,12 @@ class UsersView(generics.ListCreateAPIView):
         # a dummy email like mobile_no.konnectdummy@klp.org.in
         if source == 'konnect' and mobile_no:
             email = '%s.konnectdummy@klp.org.in' % mobile_no
+
+            # TODO: IMPROVE: Is there a better way to add email to the
+            # POST data?
+            self.request.POST._mutable = True
             self.request.POST['email'] = email
+            self.request.POST._mutable = False
 
         if not email or not mobile_no or not first_name or \
                 not last_name or not password:
