@@ -1,0 +1,25 @@
+@media only screen and (max-width: 749px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .font-large, .alert, .volunteer-story-heading {
+    font-size: 90%;
+  }
+  .line-chart {
+    height: 200px;
+  }
+  .bar-chart {
+    height: 200px;
+  },
+  .ct-chart {
+    margin-bottom: 10px;
+  }
+  .ct-chart .ct-label.ct-horizontal.ct-end {
+    width: 70px !important;
+    height: 100px !important;
+  }
+  h3, .h3, .about-map {
+    font-size: 115%;
+  }
+}
