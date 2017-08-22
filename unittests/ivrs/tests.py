@@ -10,7 +10,7 @@ class SMSViewTests(TestCase):
 
     def setUp(self):
         user, created = User.objects.get_or_create(
-            email="testing@klp.org.in",
+            email="testing@odisha.ilp.org.in",
             mobile_no="1234567890",
         )
         group = Group.objects.get(name="BFC")
@@ -217,6 +217,6 @@ class SMSViewTests(TestCase):
         response = view(request)
         self.assertEqual(
             response.data,
-            "Your number 1234567 is not registered. Please visit https://klp.org.in/ and register yourself."
+            "Your number 1234567 is not registered. Please visit https://odisha.ilp.org.in/ and register yourself."
         )
 

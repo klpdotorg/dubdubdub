@@ -13,6 +13,6 @@ The contact person at {{ org.name }} for further details on this volunteering ac
 
 Please do take some pictures of your volunteering activity and look around when you visit the school.
 
-We’re thrilled that you are a part of our mission to improve schools and learning in Karnataka!
+We’re thrilled that you are a part of our mission to improve schools and learning in Odisha!
 
-~ {{ org.name }} & Team KLP
+~ {{ org.name }} & Team OLP

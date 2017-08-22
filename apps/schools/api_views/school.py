@@ -44,7 +44,7 @@ class SchoolsList(KLPListAPIView, CacheMixin):
     search_fields = ('name', 'id', 'dise_info__dise_code',)
 
     def get_queryset(self):
-        qset = School.objects.filter(status=2).distinct('id')
+        qset = School.objects.filter(id__gte=settings.STATE_STARTING_SCHOOL_ID, status=2).distinct('id')
         get_geom = self.request.GET.get('geometry', 'no')
         if get_geom == 'yes':
             qset = qset.select_related('instcoord')
@@ -117,12 +117,12 @@ class SchoolsInfo(SchoolsList, CacheMixin):
     def get_queryset(self):
         # inherit all the filtering from SchoolsList
         qset = super(SchoolsInfo, self).get_queryset()
-
+       
         qset = qset.select_related(
             'address', 'schooldetails__admin3',
             'schooldetails__admin2', 'schooldetails__admin1',
-            'schooldetails__type', 'schooldetails__assembly',
-            'schooldetails__parliament', 'electedrep__ward',
+            'schooldetails__type', #'schooldetails__assembly',
+            # 'schooldetails__parliament', 'electedrep__ward',
             'schooldetails__admin1__hierarchy',
             'schooldetails__admin2__hierarchy',
             'schooldetails__admin3__hierarchy',
@@ -130,6 +130,7 @@ class SchoolsInfo(SchoolsList, CacheMixin):
             'dise_info__disefacilityagg_set',
             'story_set'
         )
+
         return qset
 
 

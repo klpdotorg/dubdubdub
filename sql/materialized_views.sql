@@ -212,8 +212,8 @@ ANALYZE mvw_mdm_agg;
 DROP MATERIALIZED VIEW IF EXISTS mvw_dise_info_olap CASCADE;
 CREATE MATERIALIZED VIEW mvw_dise_info_olap AS
 SELECT t1.school_code as dise_code,
-    t2.id as assembly_id,
-    t3.id as parliament_id,
+    -- t2.id as assembly_id,
+    -- t3.id as parliament_id,
     t1.tot_clrooms as classroom_count,
     t1.teacher_count,
     t1.total_boys AS boys_count,
@@ -232,11 +232,9 @@ FROM dblink(
     'host=localhost dbname=klpdise_olap user=klp'::text,
     'SELECT
         school_code,
-        assembly_name,
-        parliament_name,
         lowest_class,
         highest_class,
-        (SELECT ''2013-14'') AS acyear,
+        (SELECT ''2015-16'') AS acyear,
         school_dev_grant_recd,
         school_dev_grant_expnd,
         tlm_grant_recd,
@@ -248,11 +246,11 @@ FROM dblink(
         (male_tch + female_tch) AS teacher_count,
         total_boys,
         total_girls
-    FROM dise_1314_basic_data'
+    FROM dise_1516_basic_data'
 ) t1(
     school_code character varying(32),
-    assembly_name character varying(35),
-    parliament_name character varying(35),
+    -- assembly_name character varying(35),
+    -- parliament_name character varying(35),
     lowest_class integer,
     highest_class integer,
     acyear character varying(10),
@@ -267,8 +265,8 @@ FROM dblink(
     teacher_count integer,
     total_boys integer,
     total_girls integer
-), mvw_assembly t2, mvw_parliament t3
-where t2.ac_name=t1.assembly_name and t3.pc_name=t1.parliament_name;
+);--,  mvw_assembly t2, mvw_parliament t3
+-- where t2.ac_name=t1.assembly_name and t3.pc_name=t1.parliament_name;
 
 DROP MATERIALIZED VIEW IF EXISTS mvw_ang_infra_agg CASCADE;
 CREATE MATERIALIZED VIEW mvw_ang_infra_agg AS

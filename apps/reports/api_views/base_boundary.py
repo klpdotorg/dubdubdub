@@ -8,39 +8,408 @@ class BaseBoundaryReport(BaseReport):
     '''
         Has basic function for getting and checking data
     '''
-    neighbourIds = {413: [414,  415,  420, 421, 422],
-                    414: [413, 415, 418, 419, 420],
-                    415: [413, 414, 416, 418, 445],
-                    416: [415, 417, 445],
-                    417: [416],
-                    418: [414, 415, 419, 424, 445],
-                    419: [414.418, 420, 424],
-                    420: [414, 419, 421, 423, 424],
-                    421: [413, 420, 422, 423],
-                    422: [413, 421, 423, 427, 428],
-                    423: [420, 421, 422, 424, 426, 427],
-                    424: [418, 419, 420, 423, 426, 425],
-                    425: [424, 426, 429, 430],
-                    426: [423, 424, 425, 427, 429],
-                    427: [422, 423, 426, 428, 429],
-                    428: [422, 427, 429, 436],
-                    429: [425, 426, 427, 428, 430, 435, 436],
-                    430: [425, 429, 433, 434, 435, 441, 444],
-                    431: [433, 441, 9540, 9541],
-                    433: [430, 431, 444, 9540, 9541],
-                    434: [430, 435, 439, 444, 8878],
-                    435: [429, 430, 434, 436, 437, 8878],
-                    436: [428, 429, 435, 437],
-                    437: [435, 436, 8878],
-                    439: [434, 444, 8878],
-                    441: [430, 431, 433],
-                    442: [414, 415, 420, 421, 422],
-                    443: [425, 429, 433, 434, 435, 441, 444],
-                    444: [430, 433, 434, 439, 9540, 9541],
-                    445: [415, 416, 418],
-                    8878: [434, 435, 437, 439],
-                    9540: [431, 433, 444, 9541],
-                    9541: [431, 433, 444, 9540]}
+
+    OLP_neighbor_names = {
+    "keonjhar": [
+        "sundergarh",
+        "angul",
+        "dhenkanal",
+        "jajpur",
+        "bhadrak",
+        "balasore",
+        "mayurbhanj"
+    ],
+    "bolangir": [
+        "kalahandi",
+        "nuapada",
+        "kandhamal",
+        "boudh",
+        "sonepur",
+        "bargarh"
+    ],
+    "nayagarh": [
+        "angul",
+        "boudh",
+        "kandhamal",
+        "ganjam",
+        "khordha",
+        "cuttack"
+    ],
+    "bargarh": [
+        "bolangir",
+        "nuapada",
+        "sonepur",
+        "sambalpur",
+        "jharsuguda"
+    ],
+    "jharsuguda": [
+        "sundergarh",
+        "bargarh",
+        "sambalpur"
+    ],
+    "kalahandi": [
+        "nuapada",
+        "balasore",
+        "boudh",
+        "kandhamal",
+        "rayagada",
+        "koraput",
+        "nabarangpur"
+    ],
+    "jagatsinghpur": [
+        "puri",
+        "cuttack",
+        "kendrapara"
+    ],
+    "sambalpur": [
+        "sonepur",
+        "boudh",
+        "angul",
+        "deogarh",
+        "sundergarh",
+        "jharsuguda",
+        "bargarh"
+    ],
+    "koraput": [
+        "malkangiri",
+        "nabarangpur",
+        "kalahandi",
+        "rayagada"
+    ],
+    "kandhamal": [
+        "rayagada",
+        "gajapati",
+        "ganjam",
+        "nayagarh",
+        "boudh",
+        "kalahandi"
+    ],
+    "khordha": [
+        "gajapati",
+        "nayagarh",
+        "cuttack",
+        "puri"
+    ],
+    "deogarh": [
+        "sundergarh",
+        "sambalpur",
+        "angul"
+    ],
+    "bhadrak": [
+        "keonjhar",
+        "balasore",
+        "jajpur",
+        "kendrapara"
+    ],
+    "nuapada": [
+        "kalahandi",
+        "bargarh",
+        "bolangir"
+    ],
+    "sonepur": [
+        "boudh",
+        "angul",
+        "sambalpur",
+        "bargarh",
+        "bolangir"
+    ],
+    "ganjam": [
+        "gajapati",
+        "kandhamal",
+        "nayagarh",
+        "khordha"
+    ],
+    "puri": [
+        "khordha",
+        "cuttack",
+        "jagatsinghpur"
+    ],
+    "dhenkanal": [
+        "angul",
+        "cuttack",
+        "jajpur",
+        "kendrapara"
+    ],
+    "gajapati": [
+        "rayagada",
+        "kandhamal",
+        "ganjam"
+    ],
+    "kendrapara": [
+        "bhadrak",
+        "jajpur",
+        "cuttack",
+        "jagatsinghpur"
+    ],
+    "sundergarh": [
+        "jharsuguda",
+        "sambalpur",
+        "deogarh",
+        "kendrapara",
+        "angul"
+    ],
+    "rayagada": [
+        "gajapati",
+        "kandhamal",
+        "koraput",
+        "kalahandi"
+    ],
+    "mayurbhanj": [
+        "balasore",
+        "kendrapara"
+    ],
+    "malkangiri": [
+        "koraput"
+    ],
+    "boudh": [
+        "bolangir",
+        "kalahandi",
+        "kandhamal",
+        "nayagarh",
+        "angul",
+        "sonepur",
+        "sambalpur"
+    ],
+    "jajpur": [
+        "keonjhar",
+        "cuttack",
+        "dhenkanal",
+        "kendrapara",
+        "bhadrak"
+    ],
+    "cuttack": [
+        "nayagarh",
+        "khordha",
+        "puri",
+        "jagatsinghpur",
+        "kendrapara",
+        "jajpur",
+        "dhenkanal",
+        "angul"
+    ],
+    "balasore": [
+        "keonjhar",
+        "bhadrak",
+        "mayurbhanj"
+    ],
+    "angul": [
+        "sonepur",
+        "boudh",
+        "nayagarh",
+        "cuttack",
+        "dhenkanal",
+        "keonjhar",
+        "sundergarh",
+        "deogarh",
+        "sambalpur"
+    ],
+    "nabarangpur": [
+        "koraput",
+        "rayagada",
+        "kalahandi"
+    ]
+    }
+
+    neighbourIds = {
+    15108: [
+        14358,
+        15700,
+        13369
+    ],
+    15495: [
+        14152,
+        12013,
+        12993
+    ],
+    12303: [
+        9140,
+        12013,
+        13135,
+        13779
+    ],
+    11193: [
+        13943,
+        11591,
+        14677
+    ],
+    14358: [
+        14557,
+        15108,
+        13369,
+        15700
+    ],
+    11417: [
+        11725,
+        15400,
+        16068,
+        15903,
+        13300
+    ],
+    13597: [
+        15700,
+        12452,
+        12610,
+        15287,
+        11948,
+        13369
+    ],
+    15903: [
+        16068,
+        11948,
+        9140,
+        12247,
+        16171,
+        13300,
+        11417
+    ],
+    12452: [
+        15700,
+        13597,
+        12610
+    ],
+    15400: [
+        13369,
+        11417,
+        11725
+    ],
+    16171: [
+        13300,
+        15903,
+        12247,
+        13779,
+        9140
+    ],
+    11948: [
+        11725,
+        13369,
+        13597,
+        15287,
+        9140,
+        16068,
+        15903
+    ],
+    9140: [
+        16068,
+        11948,
+        15287,
+        12013,
+        12303,
+        13943,
+        16171,
+        12247,
+        15903
+    ],
+    15287: [
+        9140,
+        11948,
+        13597,
+        12610,
+        14152,
+        12013
+    ],
+    13369: [
+        15400,
+        11193,
+        11948,
+        13597,
+        15700,
+        14358,
+        15108
+    ],
+    12993: [
+        15495,
+        12013,
+        13779
+    ],
+    12610: [
+        12452,
+        13597,
+        15287,
+        14152
+    ],
+    16068: [
+        11948,
+        9140,
+        15903,
+        11417,
+        11725
+    ],
+    11591: [
+        13943,
+        11193,
+        13135,
+        13779
+    ],
+    14152: [
+        12452,
+        15287,
+        12013,
+        15495
+    ],
+    11725: [
+        13369,
+        15400,
+        13597,
+        11948,
+        16068,
+        11417
+    ],
+    13135: [
+        13943,
+        12013,
+        12303,
+        13779,
+        11591
+    ],
+    13779: [
+        11591,
+        13135,
+        12013,
+        12993
+    ],
+    15700: [
+        12452,
+        13597,
+        14358,
+        13369
+    ],
+    14677: [
+        11193,
+        13779
+    ],
+    12247: [
+        16171,
+        15903,
+        9140
+    ],
+    14557: [
+        14358
+    ],
+    12013: [
+        15287,
+        14152,
+        15495,
+        12993,
+        13779,
+        13135,
+        12303,
+        9140
+    ],
+    13300: [
+        16171,
+        11417,
+        15903
+    ],
+    13943: [
+        16171,
+        9140,
+        12303,
+        13135,
+        11591,
+        11193,
+        14677
+    ]
+    }
 
     # Get dise information for the boundary
     def get_dise_school_info(self, active_schools, academic_year):

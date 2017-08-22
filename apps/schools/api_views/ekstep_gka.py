@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.db.models import Count, Max
 
 from rest_framework.exceptions import APIException
@@ -140,7 +141,9 @@ class EkStepGKA(object):
             else:
                 end_date = date.get_datetime(end_date)
         
-        assessments = AssessmentsV2.objects.values('assess_uid', 'student_uid__school_code')
+        assessments = AssessmentsV2.objects.filter(
+            student_uid__school_code__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).values('assess_uid', 'student_uid__school_code')
 
         if admin1_id:
             boundary = Boundary.objects.get(id=admin1_id)

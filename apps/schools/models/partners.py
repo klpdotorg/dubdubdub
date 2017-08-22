@@ -90,11 +90,11 @@ class DiseInfo(BaseModel):
     This is a view of enrollment, finances, teacher & classroom count, etc
     from dise_all that help compare demographics in klp with dise and
     is the basis for everything on the Finance tab of the school page -
-    http://www.klp.org.in/schoolpage/school/33166?tab=finances
+    http://www.odisha.ilp.org.in/schoolpage/school/33166?tab=finances
     '''
     dise_code = models.CharField(max_length=32, primary_key=True)
-    assembly = models.ForeignKey('Assembly')
-    parliament = models.ForeignKey('Parliament')
+    # assembly = models.ForeignKey('Assembly')
+    # parliament = models.ForeignKey('Parliament')
     classroom_count = models.IntegerField(blank=True, null=True)
     teacher_count = models.IntegerField(blank=True, null=True)
     boys_count = models.IntegerField(blank=True, null=True)

@@ -1,11 +1,11 @@
 (function() {
     klp.init = function() {
         //handle getting blog feeds
-        //var feedURL = "http://blog.klp.org.in/feeds/posts/default?alt=json-in-script&callback=?";
+        //var feedURL = "http://blog.odisha.ilp.org.in/feeds/posts/default?alt=json-in-script&callback=?";
         var feedURL = '/blog-feed';
-        $.getJSON(feedURL, null, function(data) {
-            processRequest(data.feed);
-        });
+        // $.getJSON(feedURL, null, function(data) {
+        //     processRequest(data.feed);
+        // });
 
         //get and show SYS info
         var url = "stories/info/";

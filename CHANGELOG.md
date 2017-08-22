@@ -159,7 +159,7 @@ Release 1.0.0: d3fcfc1cf8964124238e19478b380b1a7fd4606c	- 2016-07-12
   - PhantomJS trial code.
   - Boundary pages.
   - Advanced search enhancements.
-  - KLP DISE matching script.
+  - OLP DISE matching script.
   - Implements basic version of translations.
 
 Release 0.5.3: 90b86785af0339678ed1f7d7bd0fd5f40cfe426a - 2016-03-15

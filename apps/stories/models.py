@@ -221,7 +221,7 @@ def story_updated(sender, instance=None, created=False, **kwargs):
 
     send_templated_mail(
         from_email=settings.EMAIL_DEFAULT_FROM,
-        to_emails=[instance.email, 'team@klp.org.in'],
+        to_emails=[instance.email, 'team@odisha.ilp.org.in'],
         subject='Thank you for Sharing Your Story at {}'.format(instance.school.name),
         template_name='post_sys',
         context={

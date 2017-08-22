@@ -253,11 +253,24 @@ class StoriesSyncView(KLPAPIView):
 
 class StoryInfoView(KLPAPIView):
     def get(self, request):
+        school_type = BoundaryType.objects.get(name='Primary School')
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        stories_qset = Story.objects.select_related(
+            'school', 'user'
+        ).filter(
+            school__in=school_qset
+        )
+
         return Response({
-            'total_stories': Story.objects.all().count(),
-            'total_verified_stories': Story.objects.filter(
+            'total_stories': stories_qset.count(),
+            'total_verified_stories': stories_qset.filter(
                 is_verified=True).count(),
-            'total_images': StoryImage.objects.all().count()
+            'total_images': StoryImage.objects.filter(
+                story__in=stories_qset
+            ).count()
         })
 
 
@@ -319,12 +332,18 @@ class StoryVolumeView(KLPAPIView, CacheMixin):
         response_json['user_groups'] = {}
 
         school_type = BoundaryType.objects.get(name=school_type)
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
         stories_qset = Story.objects.select_related(
             'school', 'user'
         ).filter(
-            school__admin3__type=school_type
+            school__in=school_qset
         )
-        assessments_qset = AssessmentsV2.objects.all()
+        assessments_qset = AssessmentsV2.objects.filter(
+            student_uid__school_code__gte=settings.STATE_STARTING_SCHOOL_ID
+        )
 
         if survey:
             stories_qset = stories_qset.filter(
@@ -488,7 +507,12 @@ class StoryDetailView(KLPAPIView, CacheMixin):
         chosen_boundary = None
         chosen_school = None
 
-        stories = Story.objects.select_related('school').order_by().all().values('id')
+        school_type = BoundaryType.objects.get(name=school_type)
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        stories = Story.objects.filter(school__in=school_qset).select_related('school').order_by().all().values('id')
 
         if survey:
             stories = stories.filter(group__survey__name=survey)
@@ -501,7 +525,7 @@ class StoryDetailView(KLPAPIView, CacheMixin):
             stories = stories.filter(group__version__in=versions)
 
         if school_type:
-            stories = stories.filter(school__admin3__type__name=school_type)
+            stories = stories.filter(school__admin3__type=school_type)
 
         if admin1_id:
             stories = stories.filter(
@@ -681,7 +705,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
 
         school_type = BoundaryType.objects.get(name=school_type)
         school_qset = School.objects.filter(
-            admin3__type=school_type, status=2).order_by().values('id')
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID).order_by().values('id')
         stories_qset = Story.objects.select_related('school').filter(
             school__in=school_qset).order_by().values('id')
 
@@ -804,6 +828,12 @@ class StoryMetaView(KLPAPIView, CacheMixin):
     def get_total_summary(self, total_schools, school_qset, admin1_id=None, admin2_id=None, admin3_id=None):
         programme = Programme.objects.get(name='Ganitha Kanika Andolana')
         gka_school_q = school_qset.filter(programmes=programme)
+        gka_districts = gka_school_q.values_list(
+            'admin3__parent__parent',
+            flat=True
+        ).distinct(
+            'admin3__parent__parent'
+        )
 
         admin1 = None
         if admin1_id:
@@ -814,7 +844,10 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             admin1 = Boundary.objects.get(hierarchy__name='cluster', id=admin3_id).parent.parent
 
         edu_vol_group = Group.objects.get(name="EV")
-        edu_volunteers = BoundaryUsers.objects.filter(user__groups=edu_vol_group)
+        edu_volunteers = BoundaryUsers.objects.filter(
+            boundary__in=gka_districts,
+            user__groups=edu_vol_group
+        )
         if admin1:
             edu_volunteers = edu_volunteers.filter(boundary=admin1)
 
@@ -911,12 +944,23 @@ class StoryMetaView(KLPAPIView, CacheMixin):
             old_id_key = 'school__admin3__parent__parent__id'
             old_name_key = 'school__admin3__parent__parent__name'
 
+            # json['gka_districts'] = [
+            #     {
+            #         'id': item[old_id_key],
+            #         'name': item[old_name_key]
+            #     }
+            #     for item in gka_districts_queryset
+            # ]
+
             json['gka_districts'] = [
                 {
-                    'id': item[old_id_key],
-                    'name': item[old_name_key]
+                    'id':15700,
+                    'name':'rayagada'
+                },
+                {
+                    'id':11725,
+                    'name':'bolangir'
                 }
-                for item in gka_districts_queryset
             ]
 
         return json
@@ -958,7 +1002,17 @@ class StoriesView(KLPListAPIView):
             raise ParseError("answers param must be either 'yes' or 'no'.")
 
     def get_queryset(self):
-        qset = Story.objects.filter()
+        school_type = BoundaryType.objects.get(name='Primary School')
+        school_qset = School.objects.filter(
+            admin3__type=school_type, status=2, id__gte=settings.STATE_STARTING_SCHOOL_ID
+        ).order_by().values('id')
+       
+        qset = Story.objects.select_related(
+            'school', 'user'
+        ).filter(
+            school__in=school_qset
+        )
+ 
         school_id = self.request.GET.get('school_id', '')
         if school_id:
             qset = qset.filter(school__id=school_id)
