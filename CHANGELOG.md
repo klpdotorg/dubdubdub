@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.4: fd3385d606a39332958cb9b50a6dded5e8995609 - 2017-08-24
+  - Konnect story sync endpoint gets image upload support
+
 Release 1.3.3: 0361755e74a39ba72d504fe5d4edb1a2df401b1d - 2017-08-22
   - GKA dashboard improvements and bug fixes
 
