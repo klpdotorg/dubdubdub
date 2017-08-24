@@ -239,12 +239,13 @@ class StoryWithAnswersSerializer(KLPSerializer):
 class StorySyncSerializer(KLPSerializer):
     answers = serializers.SerializerMethodField('get_answers')
     user_type = serializers.CharField(source='user_type.name')
+    images = StoryImageSerializer(many=True, source='storyimage_set')
 
     class Meta:
         model = Story
         fields = (
             'id', 'date_of_visit', 'school', 'group',
-            'answers', 'user_type', 'user', 'location')
+            'answers', 'user_type', 'user', 'location', 'images')
 
     def get_answers(self, obj):
         answers = dict()

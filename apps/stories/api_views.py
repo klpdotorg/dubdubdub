@@ -229,19 +229,40 @@ class StoriesSyncView(KLPAPIView):
                         new_story.telephone = request.user.mobile_no
                         new_story.name = request.user.get_full_name()
                         new_story.email = request.user.email
-
-                        # Save location info
-                        if story.get('lat', None) is not None and story.get('lng', None) is not None:
-                            new_story.location = Point(story.get('lat'), story.get('lng'))
-
                         new_story.save()
 
+                    # Save location info
+                    if story.get('lat', None) is not None and \
+                            story.get('lng', None) is not None:
+                        new_story.location = Point(
+                            story.get('lat'), story.get('lng'))
+                        new_story.save()
+
+                    # Save the answers
                     for answer in story.get('answers', []):
                         new_answer, created = Answer.objects.get_or_create(
                             text=answer.get('text'),
                             story=new_story,
-                            question=Question.objects.get(pk=answer.get('question_id'))
+                            question=Question.objects.get(
+                                pk=answer.get('question_id')
+                            )
                         )
+
+                    # Save the image
+                    image = story.get('image', None)
+                    if image:
+                        image_type, data = image.split(',')
+                        image_data = b64decode(data)
+                        file_name = '{}_{}.png'.format(
+                            new_story.school.id, random.randint(0, 9999))
+
+                        saved_image = StoryImage(
+                            story=new_story,
+                            filename=file_name,
+                            image=ContentFile(image_data, file_name)
+                        )
+                        saved_image.save()
+
                     response['success'][story.get('_id')] = new_story.id
                 except Exception as e:
                     print "Error saving stories and answers:", e
@@ -731,7 +752,7 @@ class StoryMetaView(KLPAPIView, CacheMixin):
         response_json = {}
 
         total_schools = school_qset.count()
-        
+
         response_json['total'] = {}
         response_json['total']['schools'] = total_schools
         response_json['total']['stories'] = stories_qset.count()
