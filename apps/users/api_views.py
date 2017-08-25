@@ -2,6 +2,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 import datetime
 from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
 from .models import User, Organization, UserOrganization, VolunteerActivity,\
     VolunteerActivityType, UserVolunteerActivity, DonationRequirement,\
     DonationItemCategory, UserDonationItem, DonationItem
@@ -30,6 +31,7 @@ from rest_framework.exceptions import APIException, PermissionDenied,\
     ParseError, MethodNotAllowed, AuthenticationFailed
 from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 
 class TestAuthenticatedView(APIView):
@@ -177,6 +179,37 @@ class PasswordChangeView(APIView):
             })
         else:
             raise APIException(','.join(form.errors))
+
+
+@api_view(['POST'])
+@csrf_exempt
+def konnect_api_password_change(request):
+    """
+    Password reset view for Konnect users
+    Accepts mobile, dob & password.
+    """
+    mobile_no = request.POST.get('mobile', '')
+    dob = request.POST.get('dob', '')
+    password = request.POST.get('password', '')
+
+    if not mobile_no or not dob or not password:
+        return Response({
+            'error': 'mobile_no, dob & password are required.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(mobile_no=mobile_no, dob=dob, source='konnect')
+    except ValidationError:
+        return Response(
+            {'error': 'dob must be in YYYY-MM-DD format'},
+            status=status.HTTP_400_BAD_REQUEST)
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        user.set_password(password)
+        user.save()
+        return Response({'success': 'Password changed'})
 
 
 class OrganizationsView(generics.ListCreateAPIView):
