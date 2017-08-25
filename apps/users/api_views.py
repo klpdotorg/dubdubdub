@@ -57,28 +57,32 @@ class UsersView(generics.ListCreateAPIView):
         first_name = self.request.POST.get('first_name', None)
         last_name = self.request.POST.get('last_name', None)
         password = self.request.POST.get('password', None)
+        dob = self.request.POST.get('dob', None)
         source = self.request.POST.get('source', None)
 
         # Signups coming from mobile number do not need an email id
         # Since emails are needed in our auth system, we will create
         # a dummy email like mobile_no.konnectdummy@klp.org.in
-        if source == 'konnect' and mobile_no:
-            email = '%s.konnectdummy@klp.org.in' % mobile_no
+        if source == 'konnect':
+            if not mobile_no or not first_name or not last_name or \
+                    not password or not dob:
+                raise ParseError("Insufficient data: required fields are mobile_no, first_name, last_name, password, dob & source")
 
-            # TODO: IMPROVE: Is there a better way to add email to the
-            # POST data?
-            self.request.POST._mutable = True
-            self.request.POST['email'] = email
-            self.request.POST._mutable = False
+            if not email:
+                email = '%s.konnectdummy@klp.org.in' % mobile_no
 
-        if not email or not mobile_no or not first_name or \
-                not last_name or not password:
-            raise ParseError("Insufficient data: required fields are email, mobile_no, first_name, last_name and password")
+                # TODO: IMPROVE: Is there a better way to add email to the
+                # POST data?
+                self.request.POST._mutable = True
+                self.request.POST['email'] = email
+                self.request.POST._mutable = False
+        else:
+            if not mobile_no or not first_name or not last_name or \
+                    not password or not email:
+                raise ParseError("Insufficient data: required fields are mobile_no, first_name, last_name, password, & email")
 
         if User.objects.filter(email=email).count() > 0:
             raise APIException("duplicate email")
-
-        print email
 
         return super(UsersView, self).create(*args, **kwargs)
 
