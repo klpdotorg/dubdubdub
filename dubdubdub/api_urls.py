@@ -137,6 +137,9 @@ urlpatterns = patterns(
         name="api_password_reset_request"),
     url(r'^password-change/$', PasswordChangeView.as_view(),
         name="api_password_change"),
+    url(r'^konnect-password-change/$',
+        'users.api_views.konnect_api_password_change',
+        name="konnect_api_password_change"),
 
     # Mobile app related urls
     url(r'^sync$', csrf_exempt(StoriesSyncView.as_view()), name='api_stories_sync'),

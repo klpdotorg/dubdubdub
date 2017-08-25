@@ -174,9 +174,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'mobile_no', 'first_name',
-                  'last_name', 'password', 'user_type', 'opted_email', 'token', 'volunteer_activities',
-                  'image', 'organizations', 'about', 'twitter_handle', 'fb_url', 
-                  'website', 'photos_url', 'youtube_url',)
+                  'last_name', 'password', 'user_type', 'opted_email',
+                  'token', 'volunteer_activities', 'image', 'organizations',
+                  'about', 'twitter_handle', 'fb_url',
+                  'website', 'photos_url', 'youtube_url', 'dob', 'source')
         write_only_fields = ('password',)
 
 
