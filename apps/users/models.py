@@ -77,14 +77,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     sms_verification_pin = models.IntegerField(max_length=16)
     is_email_verified = models.BooleanField(default=False)
     is_mobile_verified = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=50,
-        choices=RESPONDENT_CHOICES, null=True, blank=True)
+    user_type = models.CharField(
+        max_length=50, choices=RESPONDENT_CHOICES, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    source = models.CharField(max_length=50, null=True, blank=True)
     changed = models.DateTimeField(null=True, editable=False)
     created = models.DateTimeField(null=True, editable=False)
-    is_active = models.BooleanField('active', default=True,
+    is_active = models.BooleanField(
+        'active', default=True,
         help_text='Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.')
-    opted_email = models.BooleanField(default=False, help_text="Opted in to receive emails")
+    opted_email = models.BooleanField(
+        default=False, help_text="Opted in to receive emails")
     image = models.ImageField(upload_to='profile_pics', blank=True)
     about = models.TextField(blank=True, help_text="Short blurb / about text")
     twitter_handle = models.CharField(max_length=255, blank=True)
