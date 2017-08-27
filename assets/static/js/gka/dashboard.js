@@ -289,7 +289,7 @@ var topSummaryData = {};
         var volumeURL = "stories/volume/?survey=Community&source=csv";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
-            renderVolumeChart(data);
+            renderVolumeChart(data, params);
         });
 
         var detailURL = "stories/details/?survey=Community&source=csv";
@@ -299,57 +299,70 @@ var topSummaryData = {};
         });
     }
 
-    function renderVolumeChart(data) {
+    function renderVolumeChart(data, params) {
+        var volumes = data.volumes;
+
+        var expectedValue = 13680;
+        if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 2280;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
+        }
+
         var $noDataAlert = $('#survey-volume-chart-no-render-alert');
         var $mobVolume = $('#mobVolume');
-        var years = _.keys(data.volumes);
-        // var latest = Math.max.apply(Math,years);
-        var latest = 2018;
-        var earliest = latest - 1;
-        var prev_months = _.keys(data.volumes[earliest]);
-        var new_months = _.keys(data.volumes[latest]);
-        var month_labels = [];
-        var meta_values = [];
 
         $noDataAlert.hide();
-        $mobVolume.show();
+        $mobVolume.show()
 
-        for (var i = 5; i < 12; i++)
-        {
-            if(data.volumes[earliest]) {
-                meta_values.push({
-                    'meta': prev_months[i] + " " + earliest,
-                    'value': data.volumes[earliest][prev_months[i]]
-                });
-                month_labels.push(prev_months[i] + " " + earliest);
-            }
-        }
-        for (var i = 0; i < 5; i++)
-        {
-            if(data.volumes[latest]) {
-                meta_values.push({
-                    'meta': new_months[i] + " " + latest,
-                    'value': data.volumes[latest][new_months[i]]
-                });
-                month_labels.push(new_months[i] + " " + latest);
-            }
-        }
-
-        if(!meta_values.length) {
+        if(_.isEmpty(volumes)) {
             $noDataAlert.show();
             $mobVolume.hide();
             return;
         }
 
+        var months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var fromDate = '2017-01-01';
+        if(params.from) {
+            fromDate = params.from;
+        }
+
+        var monthIndex = parseInt(fromDate.split('-')[1], 10),
+            yearIndex = parseInt(fromDate.split('-')[0], 10),
+            volumeValues = [];
+
+        for(var i=1; i<=12; i+=1) {
+            volumeValues.push(months[monthIndex] + ' ' + yearIndex);
+            monthIndex += 1;
+            if(monthIndex > 12) {
+                monthIndex = 1;
+                yearIndex += 1;
+            }
+        }
+
+        var volume_values = _.map(volumeValues, function(v){
+            var month = v.split(' ')[0],
+                year = v.split(' ')[1];
+            return {
+                'meta': v,
+                'value': volumes[year] ? volumes[year][month] : 0
+            };
+        });
+
         var data = {
-            labels: month_labels,
+            labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
                 {
-                    className: 'ct-series-a',
-                    data: meta_values,
+                    className: 'ct-series-b',
+                    data: volume_values,
+                },
+                {
+                    className: 'ct-series-h',
+                    data: _.map(volume_values, function(v){ return expectedValue; })
                 }
             ]
-        };
+        }
+
         renderLineChart('#mobVolume', data);
     }
 
@@ -482,6 +495,7 @@ var topSummaryData = {};
 
     function renderSMSCharts(data, params)  {
         var meta_values = [];
+        var volumes = data.volumes;
 
         var expectedValue = 13680;
         if(typeof(params.admin1) !== 'undefined') {
@@ -522,27 +536,33 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = prepareVolumes('2017');
-        volume_values = volume_values.concat(prepareVolumes('2018'));
-
-        if(!volume_values.length) {
-            return;
+        var months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var fromDate = '2017-01-01';
+        if(params.from) {
+            fromDate = params.from;
         }
 
-        volume_values = _.filter(volume_values, function(v){
-            var excluded = ['Jan 2017', 'Feb 2017', 'Mar 2017', 'Apr 2017', 'May 2017'];
-            if(excluded.indexOf(v.meta) !== -1) {
-                return false;
-            } else {
-                return true;
+        var monthIndex = parseInt(fromDate.split('-')[1], 10),
+            yearIndex = parseInt(fromDate.split('-')[0], 10),
+            volumeValues = [];
+
+        for(var i=1; i<=12; i+=1) {
+            volumeValues.push(months[monthIndex] + ' ' + yearIndex);
+            monthIndex += 1;
+            if(monthIndex > 12) {
+                monthIndex = 1;
+                yearIndex += 1;
             }
-        });
-
-        if (volume_values.length > 12) {
-            volume_values.splice(0, 6);
-            volume_values.splice(-6);
         }
 
+        var volume_values = _.map(volumeValues, function(v){
+            var month = v.split(' ')[0],
+                year = v.split(' ')[1];
+            return {
+                'meta': v,
+                'value': volumes[year] ? volumes[year][month] : 0
+            };
+        });
 
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
