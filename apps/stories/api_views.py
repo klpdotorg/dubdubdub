@@ -1135,3 +1135,63 @@ class ShareYourStoryView(KLPAPIView):
         return Response({
             'success': 'Story has been saved'
         })
+
+
+class KonnectSummaryView(KLPAPIView):
+    """
+    Returns story summary view as a list of questions and their answers
+    count.
+    """
+
+    def get_answer_count(self, request, qid, answer):
+        admin1 = request.GET.get('admin1', '')
+        admin2 = request.GET.get('admin2', '')
+        admin3 = request.GET.get('admin3', '')
+        school_id = request.GET.get('school_id', '')
+        qs = Answer.objects.filter(question_id=qid, text=answer)
+
+        if admin1:
+            qs = qs.filter(story__school__admin3__parent__parent__id=admin1)
+
+        if admin2:
+            qs = qs.filter(story__school__admin3__parent__id=admin2)
+
+        if admin3:
+            qs = qs.filter(story__school__admin3__id=admin3)
+
+        if school_id:
+            qs = qs.filter(story__school__id=school_id)
+
+        return qs.count()
+
+    def get(self, request):
+        response = {}
+        response['questions'] = []
+
+        group = request.GET.get('group', 0)
+        questions = Question.objects.filter(questiongroup__id=group)
+
+        for q in questions:
+            response['questions'].append({
+                'id': q.id,
+                'text': q.text,
+                'Yes': self.get_answer_count(request, q.id, 'Yes'),
+                'No': self.get_answer_count(request, q.id, 'No'),
+                'Don\'t Know': self.get_answer_count(
+                    request, q.id, 'Don\'t Know')
+            })
+
+        return Response(response)
+
+
+class StoryImagesView(KLPAPIView):
+    """
+        Returns all images synced for a school
+    """
+
+    def get(self, request):
+        school_id = request.GET.get('school_id', 0)
+        images = StoryImage.objects.filter(
+            story__school__id=school_id).values_list('image', flat=True)
+        images = ['/media/' + i for i in images]
+        return Response({'images': images})
