@@ -10,9 +10,10 @@ Use required commands
 Changelog
 ---
 
-Release 1.3.5: 0e0bb4f10d4785027de259178c6c4977aa028177 - 2017-08-25
-  - Signup endpoint now accepts dob if request is coming from Konnect app
-  - Password reset endpoint for Konnect APP
+Release 1.3.5: 0d87d242104089da923ac46348ef5694b93891c6 - 2017-08-27
+  - New end poits for Konnect app
+  -- Konnect summary API
+  -- Konnect image API
 
 Release 1.3.4: fd3385d606a39332958cb9b50a6dded5e8995609 - 2017-08-24
   - Konnect story sync endpoint gets image upload support
