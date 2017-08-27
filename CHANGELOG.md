@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.6: 1866aaa46d497fa87da70dd4031a5211242db115 - 2017-08-27
+  - GKA dashboard improvements & bug fixes
+
 Release 1.3.5: 0d87d242104089da923ac46348ef5694b93891c6 - 2017-08-27
   - New end poits for Konnect app
   -- Konnect summary API
