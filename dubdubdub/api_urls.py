@@ -34,7 +34,8 @@ from users.api_views import (
 from stories.api_views import (
     StoryQuestionsView, StoriesView, StoryInfoView, SourceListView,
     ShareYourStoryView, StoryMetaView, StoryDetailView, StoryVolumeView,
-    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet, StoriesSyncView
+    SurveysViewSet, QuestiongroupsViewSet, QuestionsViewSet, StoriesSyncView,
+    KonnectSummaryView, StoryImagesView
 )
 
 from django.views.decorators.csrf import csrf_exempt
@@ -159,6 +160,10 @@ urlpatterns = patterns(
         name="api_stories_detail"),
     url(r'^stories/volume/$', StoryVolumeView.as_view(),
         name="api_stories_volume"),
+    url(r'^stories/konnect_summary/$', KonnectSummaryView.as_view(),
+        name="api_stories_konnect_summary"),
+    url(r'^stories/images/$', StoryImagesView.as_view(),
+        name="api_stories_images"),
 
     url(r'^questiongroups/$',
         QuestiongroupsViewSet.as_view({'get' : 'list'}),
