@@ -1,7 +1,7 @@
 {% verbatim %}
 
   <script type="text/html" id="tpl-topSummary">
-   
+
     <!--div class="container js-entity-data">
           <div class="heading-tiny-uppercase align-left">
             <span class="brand-blue">{{type}}</span>
@@ -36,9 +36,9 @@
     </div-->
   </script>
 
-  
+
   <script type="text/html" id="tpl-smsSummary">
-    <h3 class="heading-border brand-green">SMS SUMMARY</h3> 
+    <h3 class="heading-border brand-green">SMS SUMMARY</h3>
       <div class="sect-parent center-text">
         <div class="sect-third">
           <div class="brand-blue font-large font-light uppercase">SMS Messages Received</div>
@@ -56,7 +56,7 @@
   </script>
 
   <script type="text/html" id="tpl-csvSummary">
-    <h3 class="heading-border brand-purple">SURVEY SUMMARY</h3> 
+    <h3 class="heading-border brand-purple">SURVEY SUMMARY</h3>
       <div class="sect-parent center-text">
         <div class="sect-third">
           <div class="brand-blue font-large font-light uppercase">Surveys Received</div>
@@ -73,8 +73,8 @@
     </div>
   </script>
   <script type="text/html" id="tpl-mobResponses">
-    <div class="base-spacing-mid"></div>       
-    <h5 class="heading-border purple-amethyst">SURVEY RESPONSES</h5> 
+    <div class="base-spacing-mid"></div>
+    <h5 class="heading-border purple-amethyst">SURVEY RESPONSES</h5>
     <div class="sect-parent">
       <div class="sect-half">
       {% set counter=0 %}
@@ -101,13 +101,13 @@
 
   </script>
   <script type="text/html" id="tpl-smsResponses">
-    <div class="base-spacing-mid"></div>       
-    <h5 class="heading-border brand-green">SMS RESPONSES</h5> 
+    <div class="base-spacing-mid"></div>
+    <h5 class="heading-border brand-green">SMS RESPONSES</h5>
     <div class="sect-parent">
       <div class="sect-third">
         <div class="brand-blue font-large font-light center-text uppercase">SCHOOL VISITS WITH</div>
         <div class="font-light">Ongoing class 4 and 5 Math sessions</div>
-          
+
         <div class="bar-graph-wrap">
           <div class="bar-graph">
             <div class="bar-percent grey-gravel">{{ (questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2) }}%</div>
@@ -120,7 +120,7 @@
         </div>
 
         <div class="font-light">Teachers trained in GKA methodology</div>
-         
+
         <div class="bar-graph-wrap">
           <div class="bar-graph">
             <div class="bar-percent grey-gravel">{{(questions["ivrss-gka-trained"].score / window.smsSummary.sms.stories * 100).toFixed(2)}}%</div>
@@ -187,14 +187,14 @@
 
         </div>
       </div>
-    </div>  
+    </div>
   </script>
 
   <!--script type="text/html" id="tpl-responseTable">
-    <div class="container table-responsive-wrap"> 
-    <div class="base-spacing-mid"></div>       
-    <h5 class="heading-border brand-green">SMS RESPONSES</h5> 
-    
+    <div class="container table-responsive-wrap">
+    <div class="base-spacing-mid"></div>
+    <h5 class="heading-border brand-green">SMS RESPONSES</h5>
+
     <table class="table-base">
       <thead>
         <tr class="table-base-heading">
@@ -219,10 +219,10 @@
 
 
   <script type="text/html" id="tpl-assmtSummary">
-    <h3 class="heading-border brand-orange">ASSESSMENT SUMMARY</h3> 
+    <h3 class="heading-border brand-orange">ASSESSMENT SUMMARY</h3>
       <div class="sect-parent center-text">
         <div class="sect-quarter">
-          <div class="brand-blue font-large font-light uppercase">Assessments</div>
+          <div class="brand-blue font-large font-light uppercase">Assessment Records</div>
           <div class=" base-spacing-sm">{{ assmt.count }}</div>
         </div>
         <div class="sect-quarter">
@@ -266,11 +266,11 @@
           </div>
         </div>
       </div>
-      
+
   </script>
 
-  <script type="text/html" id="tpl-gpcSummary">      
-    <h3 class="heading-border brand-turquoise">GP CONTEST SUMMARY</h3> 
+  <script type="text/html" id="tpl-gpcSummary">
+    <h3 class="heading-border brand-turquoise">GP CONTEST SUMMARY</h3>
       <div class="sect-parent center-text">
         <div class="sect-quarter">
           <div class="brand-blue font-large font-light uppercase">Gram Panchayat</div>
@@ -292,7 +292,7 @@
   </script>
 
 
-  <script type="text/html" id="tpl-genderGpcSummary">      
+  <script type="text/html" id="tpl-genderGpcSummary">
     <br/>
     <div class="brand-blue font-large font-light">Children with full score</div>
     <div class="module-stats-icon module-stats-boygirl">
@@ -322,7 +322,7 @@
 
   <!-- There's probably a cleaner way of doing the below template without this many for loops-->
   <script type="text/html" id="tpl-compareTable">
-   <h3 class="heading-border brand-red">COMPARISON</h3> 
+   <h3 class="heading-border brand-red">COMPARISON</h3>
    <div class="table-responsive-wrap">
     <table class="table-base">
       <thead class="table-base-heading">
@@ -368,4 +368,3 @@
   </script>
 
 {% endverbatim %}
-
