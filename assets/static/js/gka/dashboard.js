@@ -649,7 +649,7 @@ var topSummaryData = {};
 
         var scores = data.scores
 
-        const labels = ['Number Sence', 'Addition', 'Subtraction', 'Multiplication', 'Division', 'Fractions', 'Decimals', 'Shapes', 'Area', 'Money', 'Word Problem'];
+        const labels = ['Number Sense', 'Addition', 'Subtraction', 'Multiplication', 'Division', 'Fractions', 'Decimals', 'Shapes', 'Area', 'Money', 'Word Problem'];
         var meta_values = _.map(labels, (label) => {
           return {
             meta: label,
