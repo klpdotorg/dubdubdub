@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.3.9: 60827d16ea97d120dd8cf2d4716d1f8d67a61158 - 2017-08-29
+  - Kannada translations for GKA monitoring survey
+
 Release 1.3.8: dafa30899ee7d017bd6f102f268490ade2d9cbc1 - 2017-08-29
   - GKA dashboard - remove old concepts and map it to new ones
   
