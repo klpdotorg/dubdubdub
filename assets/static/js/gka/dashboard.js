@@ -639,34 +639,26 @@ var topSummaryData = {};
     }
 
     function renderAssmtCharts(data) {
-        function getAssmtPerc(score, topic) {
-            return getPercent(score.score, score.total)
+        function getAssmtPerc(scores, topic) {
+            if (scores[topic]) {
+              return getPercent(scores[topic].score, scores[topic].total)
+            } else {
+              return getPercent(0, 0)
+            }
         }
 
         var scores = data.scores
-        var meta_values = _.map(scores, (score, key) => {
+
+        const labels = ['Number Sence', 'Addition', 'Subtraction', 'Multiplication', 'Division', 'Fractions', 'Decimals', 'Shapes', 'Area', 'Money', 'Word Problem'];
+        var meta_values = _.map(labels, (label) => {
           return {
-            meta: key,
-            value: getAssmtPerc(score, key)
+            meta: label,
+            value: getAssmtPerc(scores, label)
           }
         })
-        // var meta_values = [
-        //     {"meta":"Addition","value": getAssmtPerc(scores, 'Addition')},
-        //     {"meta":"Area of shape","value": getAssmtPerc(scores, 'Area of shape')},
-        //     {"meta":"Carryover","value": getAssmtPerc(scores, 'Carryover')},
-        //     {"meta":"Decimals","value": getAssmtPerc(scores, 'Decimals')},
-        //     {"meta":"Division","value": getAssmtPerc(scores, 'Division')},
-        //     {"meta":"Division fact","value": getAssmtPerc(scores, 'Division fact')},
-        //     {"meta":"Double digit","value": getAssmtPerc(scores, 'Double digit')},
-        //     {"meta":"Fractions","value": getAssmtPerc(scores, 'Fractions')},
-        //     {"meta":"Place value","value": getAssmtPerc(scores, 'Place value')},
-        //     {"meta":"Regrouping with money","value": getAssmtPerc(scores, 'Regrouping with money')},
-        //     {"meta":"Relationship between 3D shapes", "value": getAssmtPerc(scores, 'Relationship between 3D shapes')},
-        //     {"meta":"Subtraction","value": getAssmtPerc(scores, 'Subtraction')},
-        //     {"meta":"Word problems","value":getAssmtPerc(scores, 'Word problems')}
-        // ];
+
         var competencies = {
-            labels: Object.keys(scores), //["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
+            labels: labels, //["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
             series: [
                 {
                     className: 'ct-series-i',
