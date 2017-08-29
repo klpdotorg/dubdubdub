@@ -58,22 +58,17 @@ class EkStepGKA(object):
 
     def get_scores(self, assessments):
         scores = {}
-        scores['Subtraction'] = self.get_score(assessments, 'Subtraction')
-        scores['Division'] = self.get_score(assessments, 'Division')
-        scores['Double digit'] = self.get_score(assessments, 'Double digit')
-        scores['Place value'] = self.get_score(assessments, 'Place value')
-        scores['Division fact'] = self.get_score(assessments, 'Division fact')
-        scores['Money'] = self.get_score(assessments, 'Money')
-        scores['Carryover'] = self.get_score(assessments, 'Carryover')
-        scores['Addition'] = self.get_score(assessments, 'Addition')
-        scores['Decimals'] = self.get_score(assessments, 'Decimals')
-        scores['Fractions'] = self.get_score(assessments, 'Fractions')
-        scores['Word problems'] = self.get_score(assessments, 'Word problems')
-        scores['Shapes'] = self.get_score(assessments, 'Shapes')
-        scores['Area'] = self.get_score(assessments, 'Area')
 	scores['Number Sense'] = self.get_score(assessments, 'Number Sense')
+	scores['Addition'] = self.get_score(assessments, 'Addition')
+        scores['Subtraction'] = self.get_score(assessments, 'Subtraction')
 	scores['Multiplication'] = self.get_score(assessments, 'Multiplication')
-
+        scores['Division'] = self.get_score(assessments, 'Division')
+	scores['Fractions'] = self.get_score(assessments, 'Fractions')
+        scores['Decimals'] = self.get_score(assessments, 'Decimals')
+	scores['Shapes'] = self.get_score(assessments, 'Shapes')
+	scores['Area'] = self.get_score(assessments, 'Area')
+        scores['Money'] = self.get_score(assessments, 'Money')
+        scores['Word Problem'] = self.get_score(assessments, 'Word Problem')
         return scores
     
     def generate(self, request):
