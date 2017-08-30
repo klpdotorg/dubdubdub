@@ -141,7 +141,6 @@ class Command(BaseCommand):
 
         for mobile_number in mobile_numbers:
             if User.objects.filter(mobile_no__contains=mobile_number).exists():
-                print "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + str(mobile_numbers)
                 user = User.objects.get(mobile_no__contains=mobile_number)
                 user.mobile_no=",".join(mobile_numbers)
                 user.save()
@@ -226,6 +225,5 @@ class Command(BaseCommand):
                 # Map the user to the given boundary
                 BoundaryUsers.objects.get_or_create(
                     user=user, boundary=boundary)
-            print count
 
         print str(count) + " lines processed."
