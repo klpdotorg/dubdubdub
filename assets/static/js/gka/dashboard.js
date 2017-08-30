@@ -7,7 +7,7 @@ var topSummaryData = {};
 
 (function() {
     var premodalQueryParams = {};
-    
+
     klp.init = function() {
         klp.accordion.init();
         klp.gka_filters.init();
@@ -66,11 +66,11 @@ var topSummaryData = {};
 
     function hashChanged(params) {
         var queryParams = params.queryParams;
-        //This is for the default URL localhost:8001/gka 
+        //This is for the default URL localhost:8001/gka
         //No Query Params
         if(window.location.hash)
         {
-            //This is a reload of localhost:8001/gka 
+            //This is a reload of localhost:8001/gka
             //No Query Params
             if(window.location.hash == '#resetButton') {
                 window.location.href = '/gka';
@@ -81,7 +81,7 @@ var topSummaryData = {};
             else if(window.location.hash != '#datemodal' && window.location.hash !='#close' && window.location.hash != '#searchmodal')
             {
                 loadData(queryParams)
-            } 
+            }
             //This is the do nothing case switch for localhost:8001/gka#datemodal
             else {//do nothing;
             }
@@ -107,7 +107,7 @@ var topSummaryData = {};
         var url = "stories/details/?gka_comparison=true";
         var $metaXHR = klp.api.do(url, params);
         startDetailLoading();
-        $metaXHR.done(function(data) 
+        $metaXHR.done(function(data)
         {
             var neighbours = _.map(data.summary_comparison, function(summary){
                 return {
@@ -159,7 +159,7 @@ var topSummaryData = {};
 
             if(value) { return value.toFixed(2); } else { return 0; }
         }
-        
+
         function getNValues(section, dataType) {
             var addition = getSkillValue(section, 'Addition'),
                 subtraction = getSkillValue(section, 'Subtraction'),
@@ -190,7 +190,7 @@ var topSummaryData = {};
                 if(!data.competency_comparison[i-1]) {
                     metaValues['n' + i] = [];
                 } else {
-                    var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1]; 
+                    var ekstepData = data.competency_comparison[i-1][0].type === dataType ? data.competency_comparison[i-1][0] : data.competency_comparison[i-1][1];
                     metaValues['n' + i] = getNValues(ekstepData, dataType);
                 }
             }
@@ -203,19 +203,19 @@ var topSummaryData = {};
         var ekstepCompetencies = {
             labels: ["Addition","Subtraction","Multiplication","Division"],
             series: [
-                { 
+                {
                     className: 'ct-series-f',
                     data: ekstepValues["n1"]
                 },
-                { 
+                {
                     className: 'ct-series-a',
                     data: ekstepValues["n2"]
                 },
-                { 
+                {
                     className: 'ct-series-g',
                     data: ekstepValues["n3"]
                 },
-                { 
+                {
                     className: 'ct-series-o',
                     data: ekstepValues["n4"]
                 }
@@ -225,19 +225,19 @@ var topSummaryData = {};
         var gpContestCompetencies = {
             labels: ["Addition","Subtraction","Multiplication","Division"],
             series: [
-                { 
+                {
                     className: 'ct-series-f',
                     data: gpContestValues["n1"]
                 },
-                { 
+                {
                     className: 'ct-series-a',
                     data: gpContestValues["n2"]
                 },
-                { 
+                {
                     className: 'ct-series-g',
                     data: gpContestValues["n3"]
                 },
-                { 
+                {
                     className: 'ct-series-o',
                     data: gpContestValues["n4"]
                 }
@@ -279,17 +279,17 @@ var topSummaryData = {};
         var metaURL = "stories/meta/?survey=Community&source=csv";
         var $metaXHR = klp.api.do(metaURL, params);
         startDetailLoading();
-        $metaXHR.done(function(data) 
+        $metaXHR.done(function(data)
         {
             window.surveySummaryData = data;
             renderSurveySummary(data);
             renderRespondentChart(data);
         });
-        
+
         var volumeURL = "stories/volume/?survey=Community&source=csv";
         var $volumeXHR = klp.api.do(volumeURL, params);
         $volumeXHR.done(function(data) {
-            renderVolumeChart(data);
+            renderVolumeChart(data, params);
         });
 
         var detailURL = "stories/details/?survey=Community&source=csv";
@@ -299,57 +299,70 @@ var topSummaryData = {};
         });
     }
 
-    function renderVolumeChart(data) {
+    function renderVolumeChart(data, params) {
+        var volumes = data.volumes;
+
+        var expectedValue = 13680;
+        if(typeof(params.admin1) !== 'undefined') {
+            expectedValue = 2280;
+        } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
+            expectedValue = 0;
+        }
+
         var $noDataAlert = $('#survey-volume-chart-no-render-alert');
         var $mobVolume = $('#mobVolume');
-        var years = _.keys(data.volumes);
-        // var latest = Math.max.apply(Math,years);
-        var latest = 2018;
-        var earliest = latest - 1;
-        var prev_months = _.keys(data.volumes[earliest]);
-        var new_months = _.keys(data.volumes[latest]);
-        var month_labels = [];
-        var meta_values = [];
 
         $noDataAlert.hide();
-        $mobVolume.show();
+        $mobVolume.show()
 
-        for (var i = 5; i < 12; i++)
-        {
-            if(data.volumes[earliest]) {
-                meta_values.push({
-                    'meta': prev_months[i] + " " + earliest,
-                    'value': data.volumes[earliest][prev_months[i]]
-                });
-                month_labels.push(prev_months[i] + " " + earliest);
-            }
-        }
-        for (var i = 0; i < 5; i++)
-        {
-            if(data.volumes[latest]) {
-                meta_values.push({
-                    'meta': new_months[i] + " " + latest,
-                    'value': data.volumes[latest][new_months[i]]
-                });
-                month_labels.push(new_months[i] + " " + latest);
-            }
-        }
-
-        if(!meta_values.length) {
+        if(_.isEmpty(volumes)) {
             $noDataAlert.show();
             $mobVolume.hide();
             return;
         }
 
+        var months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var fromDate = '2017-01-01';
+        if(params.from) {
+            fromDate = params.from;
+        }
+
+        var monthIndex = parseInt(fromDate.split('-')[1], 10),
+            yearIndex = parseInt(fromDate.split('-')[0], 10),
+            volumeValues = [];
+
+        for(var i=1; i<=12; i+=1) {
+            volumeValues.push(months[monthIndex] + ' ' + yearIndex);
+            monthIndex += 1;
+            if(monthIndex > 12) {
+                monthIndex = 1;
+                yearIndex += 1;
+            }
+        }
+
+        var volume_values = _.map(volumeValues, function(v){
+            var month = v.split(' ')[0],
+                year = v.split(' ')[1];
+            return {
+                'meta': v,
+                'value': volumes[year] ? volumes[year][month] : 0
+            };
+        });
+
         var data = {
-            labels: month_labels,
+            labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
-                { 
-                    className: 'ct-series-a',
-                    data: meta_values,
+                {
+                    className: 'ct-series-b',
+                    data: volume_values,
+                },
+                {
+                    className: 'ct-series-h',
+                    data: _.map(volume_values, function(v){ return expectedValue; })
                 }
             ]
-        };
+        }
+
         renderLineChart('#mobVolume', data);
     }
 
@@ -368,7 +381,7 @@ var topSummaryData = {};
         };
 
         var labels = _.values(labelMap);
-        
+
         var respondents = data.respondents;
         var meta_values = [];
         for ( var label in labelMap) {
@@ -378,7 +391,7 @@ var topSummaryData = {};
         var data_respondent = {
             labels: labels,
             series: [
-                { 
+                {
                     className: 'ct-series-a',
                     data: meta_values,
                 }
@@ -400,7 +413,7 @@ var topSummaryData = {};
             "mob-mdm-satisfactory",
             "ivrss-functional-toilets-girls"
         ];
-        
+
         var questionObjects = _.map(questionKeys, function(key) {
             return getQuestion(data, 'csv', key);
         });
@@ -426,7 +439,7 @@ var topSummaryData = {};
         var metaURL = "stories/meta/?top_summary=true";
         var $metaXHR = klp.api.do(metaURL, params);
         startSummaryLoading();
-        $metaXHR.done(function(data) 
+        $metaXHR.done(function(data)
         {
             var topSummary = data.top_summary
             window.topSummaryData = topSummary
@@ -437,7 +450,7 @@ var topSummaryData = {};
     function renderTopSummary(topSummary) {
         var tplTopSummary = swig.compile($('#tpl-topSummary').html());
         var topSummaryHTML = tplTopSummary({"data": topSummary});
-        stopSummaryLoading(); 
+        stopSummaryLoading();
         $('#topSummary').html(topSummaryHTML);
     }
 
@@ -467,7 +480,7 @@ var topSummaryData = {};
             "ivrss-gka-rep-stage",
             "ivrss-group-work"
         ];
-        
+
         var questionObjects = _.map(SMSQuestionKeys, function(key) {
             return getQuestion(data, 'sms', key);
         });
@@ -482,6 +495,7 @@ var topSummaryData = {};
 
     function renderSMSCharts(data, params)  {
         var meta_values = [];
+        var volumes = data.volumes;
 
         var expectedValue = 13680;
         if(typeof(params.admin1) !== 'undefined') {
@@ -509,12 +523,12 @@ var topSummaryData = {};
                     value: data.user_groups[m]
                 });
             }
-        }   
+        }
 
         var sms_sender = {
             labels: _.map(meta_values, function(m){ return m.meta; }),
             series: [
-                { 
+                {
                     className: 'ct-series-b',
                     data: meta_values,
                 }
@@ -522,38 +536,44 @@ var topSummaryData = {};
         }
         renderBarChart('#smsSender', sms_sender);
 
-        var volume_values = prepareVolumes('2017');
-        volume_values = volume_values.concat(prepareVolumes('2018'));
-
-        if(!volume_values.length) {
-            return;
+        var months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var fromDate = '2017-01-01';
+        if(params.from) {
+            fromDate = params.from;
         }
 
-        volume_values = _.filter(volume_values, function(v){
-            var excluded = ['Jan 2017', 'Feb 2017', 'Mar 2017', 'Apr 2017', 'May 2017'];
-            if(excluded.indexOf(v.meta) !== -1) {
-                return false;
-            } else {
-                return true;
+        var monthIndex = parseInt(fromDate.split('-')[1], 10),
+            yearIndex = parseInt(fromDate.split('-')[0], 10),
+            volumeValues = [];
+
+        for(var i=1; i<=12; i+=1) {
+            volumeValues.push(months[monthIndex] + ' ' + yearIndex);
+            monthIndex += 1;
+            if(monthIndex > 12) {
+                monthIndex = 1;
+                yearIndex += 1;
             }
-        });
-
-        if (volume_values.length > 12) {
-            volume_values.splice(0, 6);
-            volume_values.splice(-6);
         }
 
+        var volume_values = _.map(volumeValues, function(v){
+            var month = v.split(' ')[0],
+                year = v.split(' ')[1];
+            return {
+                'meta': v,
+                'value': volumes[year] ? volumes[year][month] : 0
+            };
+        });
 
         var sms_volume = {
             labels: _.map(volume_values, function(v){ return v.meta }),
             series: [
-                { 
+                {
                     className: 'ct-series-b',
                     data: volume_values,
                 },
                 {
                     className: 'ct-series-h',
-                    data: _.map(volume_values, function(v){ return expectedValue; })  
+                    data: _.map(volume_values, function(v){ return expectedValue; })
                 }
             ]
         }
@@ -570,7 +590,7 @@ var topSummaryData = {};
         }
 
         renderLineChart('#smsVolume', sms_volume);
-        $('#smsLegend').html(chartLabel);   
+        $('#smsLegend').html(chartLabel);
 
 
     }
@@ -607,7 +627,7 @@ var topSummaryData = {};
             renderAssmtVolumeChart(data, params);
         });
     }
-    
+
     function renderAssmtSummary(data) {
         var tplAssmtSummary = swig.compile($('#tpl-assmtSummary').html());
         var assmtSummaryHTML = tplAssmtSummary({'assmt':data});
@@ -615,33 +635,32 @@ var topSummaryData = {};
         var tplAssmtCoverage = swig.compile($('#tpl-assmtCoverage').html());
         var assmtCoverageHTML = tplAssmtCoverage({'assmt':data});
         $('#assmtCoverage').html(assmtCoverageHTML);
-           
+
     }
 
     function renderAssmtCharts(data) {
         function getAssmtPerc(scores, topic) {
-            return getPercent(scores[topic].score, scores[topic].total)
+            if (scores[topic]) {
+              return getPercent(scores[topic].score, scores[topic].total)
+            } else {
+              return getPercent(0, 0)
+            }
         }
+
         var scores = data.scores
-        var meta_values = [
-            {"meta":"Addition","value": getAssmtPerc(scores, 'Addition')},
-            {"meta":"Area of shape","value": getAssmtPerc(scores, 'Area of shape')},
-            {"meta":"Carryover","value": getAssmtPerc(scores, 'Carryover')},
-            {"meta":"Decimals","value": getAssmtPerc(scores, 'Decimals')},
-            {"meta":"Division","value": getAssmtPerc(scores, 'Division')},
-            {"meta":"Division fact","value": getAssmtPerc(scores, 'Division fact')},
-            {"meta":"Double digit","value": getAssmtPerc(scores, 'Double digit')},
-            {"meta":"Fractions","value": getAssmtPerc(scores, 'Fractions')},
-            {"meta":"Place value","value": getAssmtPerc(scores, 'Place value')},
-            {"meta":"Regrouping with money","value": getAssmtPerc(scores, 'Regrouping with money')},
-            {"meta":"Relationship between 3D shapes", "value": getAssmtPerc(scores, 'Relationship between 3D shapes')},
-            {"meta":"Subtraction","value": getAssmtPerc(scores, 'Subtraction')},
-            {"meta":"Word problems","value":getAssmtPerc(scores, 'Word problems')}
-        ];
+
+        const labels = ['Number Sense', 'Addition', 'Subtraction', 'Multiplication', 'Division', 'Fractions', 'Decimals', 'Shapes', 'Area', 'Money', 'Word Problem'];
+        var meta_values = _.map(labels, (label) => {
+          return {
+            meta: label,
+            value: getAssmtPerc(scores, label)
+          }
+        })
+
         var competencies = {
-            labels: ["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
+            labels: labels, //["Addition","Area of shape","Carryover","Decimals","Division","Division fact","Double digit","Fractions","Place value","Regrouping with money","3D Shapes","Subtraction","Word problems"],
             series: [
-                { 
+                {
                     className: 'ct-series-i',
                     data: meta_values,
                     //distributed_series:true
@@ -654,9 +673,9 @@ var topSummaryData = {};
     function renderAssmtVolumeChart(data, params) {
         var volumes = data.volumes;
 
-       var expectedValue = 6800;
+       var expectedValue = 68000;
         if(typeof(params.admin1) !== 'undefined') {
-            expectedValue = 1100;
+            expectedValue = 11000;
         } else if(typeof(params.school_id) !== 'undefined' || typeof(params.admin2) !== 'undefined' || typeof(params.admin3) !== 'undefined') {
             expectedValue = 0;
         }
@@ -691,17 +710,17 @@ var topSummaryData = {};
         var assmt_volume = {
             labels: _.map(volume_values, function(v){return v.meta}),
             series: [
-                { 
+                {
                     className: 'ct-series-g',
                     data: volume_values,
                 },
                 {
                     className: 'ct-series-d',
-                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue, expectedValue]  
+                    data: [expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue,expectedValue, expectedValue]
                 }
             ]
         }
-    
+
         var chartLabel = '';
         if(!expectedValue) {
             assmt_volume.series = [assmt_volume.series[0]];
@@ -713,7 +732,7 @@ var topSummaryData = {};
         }
 
         renderLineChart('#assmtVolume', assmt_volume);
-        $('#avLegend').html(chartLabel);   
+        $('#avLegend').html(chartLabel);
 
     }
 
@@ -753,7 +772,7 @@ var topSummaryData = {};
                     )
                 }
             }
-            
+
             var tplSummary = swig.compile($('#tpl-gpcSummary').html());
             var summaryHTML = tplSummary({"data": dataSummary["summary"]});
             $('#gpcSummary').html(summaryHTML);
@@ -821,7 +840,7 @@ var topSummaryData = {};
         var competencies = {
             labels: ["Number Concepts","Addition","Subtraction","Multiplication","Division","Patterns","Shapes","Fractions","Decimal","Measurement"],
             series: [
-                { 
+                {
                     className: 'ct-series-n',
                     data: meta_values,
                     //distributed_series:true
@@ -862,14 +881,20 @@ var topSummaryData = {};
         };
 
         var responsiveOptions = [
-            ['screen and (max-width: 640px)', {
+            ['screen and (max-width: 749px)', {
                 seriesBarDistance: 5,
+                height: '200px',
                 axisX: {
-                    labelInterpolationFnc: function (value) {
+                  labelInterpolationFnc: function (value) {
+                    if (value.length > 9) {
+                      return value.slice(0, 9) + '...'
+                    }
+
                     return value;
+                  },
+                  offset: 80
                 }
-            }
-          }]
+            }]
         ];
 
         var $chart_element = Chartist.Bar(elementId, data, options, responsiveOptions).on('draw', function(chartData) {
@@ -902,14 +927,20 @@ var topSummaryData = {};
         };
 
         var responsiveOptions = [
-            ['screen and (max-width: 640px)', {
+            ['screen and (max-width: 749px)', {
                 seriesBarDistance: 5,
+                height: '200px',
                 axisX: {
-                    labelInterpolationFnc: function (value) {
+                  labelInterpolationFnc: function (value) {
+                    if (value.length > 9) {
+                      return value.slice(0, 9) + '...'
+                    }
+
                     return value;
+                  },
+                  offset: 80,
                 }
-            }
-          }]
+            }]
         ];
 
         var $chart_element = Chartist.Line(elementId, data, options, responsiveOptions).on('draw', function(data) {
@@ -939,7 +970,7 @@ var topSummaryData = {};
 
     function startDetailLoading() {
         var $container = $('#ReportContainer');
-        $container.find('.js-detail-container').startLoading();        
+        $container.find('.js-detail-container').startLoading();
     }
 
     function stopSummaryLoading(schoolType) {
@@ -949,7 +980,7 @@ var topSummaryData = {};
 
     function stopDetailLoading(schoolType) {
         var $container = $('#ReportContainer');
-        $container.find('.js-detail-container').stopLoading();  
+        $container.find('.js-detail-container').stopLoading();
     }
 
     function getYear(dateString) {
@@ -979,7 +1010,7 @@ var topSummaryData = {};
                 date = moment(last_story, "YYYY-MM-DD").format("DD MMM YYYY");
             }
         }
-        return date + time;        
+        return date + time;
     }
 
     function getScore(answers, option) {

@@ -10,6 +10,46 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.11: cbef0e424b3c8d631b6077ea522bf1b8a9fb8869 - 2017-08-29
+ - GKA dashboard fixes
+
+Release 1.3.10: 60884a4bd9784c9092a2521b6d8ba4cd8c71cbe5 - 2017-08-29
+ - GKA dashboard fixes
+
+Release 1.3.9: 60827d16ea97d120dd8cf2d4716d1f8d67a61158 - 2017-08-29
+  - Kannada translations for GKA monitoring survey
+
+Release 1.3.8: dafa30899ee7d017bd6f102f268490ade2d9cbc1 - 2017-08-29
+  - GKA dashboard - remove old concepts and map it to new ones
+  
+Release 1.3.7: bbe91ef230519edf50fd916d7b24d742e2af1707 - 2017-08-28
+  - GKA dashboard improvements & bug fixes
+
+Release 1.3.6: 1866aaa46d497fa87da70dd4031a5211242db115 - 2017-08-27
+  - GKA dashboard improvements & bug fixes
+
+Release 1.3.5: 0d87d242104089da923ac46348ef5694b93891c6 - 2017-08-27
+  - New end poits for Konnect app
+  -- Konnect summary API
+  -- Konnect image API
+
+Release 1.3.4: fd3385d606a39332958cb9b50a6dded5e8995609 - 2017-08-24
+  - Konnect story sync endpoint gets image upload support
+
+Release 1.3.3: 0361755e74a39ba72d504fe5d4edb1a2df401b1d - 2017-08-22
+  - GKA dashboard improvements and bug fixes
+
+Release 1.3.2: 16e2506ec7d57e6def28015334999922265302e3 - 2017-08-22
+  - API bug fixes
+
+Release 1.3.1: 3a0359c8bc9f944ab0875a900da6c004277f464f - 2017-08-20
+  - Login API endpoint returns user_type in the json response
+
+Release 1.3.0: f97db1d5d66521f587a43f77723c693306d14ed9 - 2017-08-19
+  - Signup now checks for source
+  - Signups from Konnect mobile app do not need a valid email id
+  - New field user_type for User model
+
 Release 1.2.13: b56c04b54cc6394b04d4ee5cf975d1705c6b795e - 2017-08-14
   - More GKA dashboard fixes
 

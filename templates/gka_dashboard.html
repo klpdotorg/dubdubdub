@@ -4,13 +4,13 @@
 {% block page_title %}GKA Dashboard{% endblock %}
 
 {% block css_extra %}
-
+  <link rel="stylesheet" type="text/css" href="/static/css/gka-dashboard.css" />
 {% endblock %}
 
 {% block endbody %}
-  {% compress js %}  
+  {% compress js %}
   <!--script type="text/javascript" src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script-->
-  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/lib/chartist/chartist.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-tooltip.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/chartist/chartist-plugin-axistitle.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/lib/moment.js' %}"></script>
@@ -18,8 +18,8 @@
   <script type="text/javascript" src="{% static 'js/gka/gka_filters.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/gka/dashboard.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/common/accordion.js' %}"></script>
-  
-  
+
+
   {% endcompress %}
 {% endblock %}
 
@@ -29,12 +29,12 @@
   <div class="grey-mist-bg">
     <a href="#close" title="Close" class="close">X</a>
     <div class="center-text">
-      <div class="base-spacing-sm"></div>         
+      <div class="base-spacing-sm"></div>
       <form class="form-base">
         <div class="form-field-wrap">
             <div class="chart-parent dateform">
             <div class="chart-half-item align-fromdate">
-              <!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"--> 
+              <!--input name="from" id="fromdate" type="date" class="js-input-date input-text calendar-icon" placeholder="Start Date"-->
               <div class="form-field-wrap" id="startDate">
                   <label class="label-inline bold">Start Date</label><br/>
                   <select class="month">
@@ -46,7 +46,7 @@
                </div>
             </div>
             <div class="chart-half-item align-left">
-              <!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"--> 
+              <!--input name="to" id="todate" type="date" class="js-input-date input-text calendar-icon" placeholder="End Date"-->
               <div class="form-field-wrap" id="endDate">
                   <label class="label-inline bold">End Date</label><br/>
                   <select class="month">
@@ -57,8 +57,8 @@
                   </select>
                </div>
             </div>
-          </div>    
-          <div class="button-orange" id="dateSummary">Apply Date Filter</div>       
+          </div>
+          <div class="button-orange" id="dateSummary">Apply Date Filter</div>
         </div>
       </form>
     </div>
@@ -67,12 +67,12 @@
 
 <section class="container" id="school_summary">
   <div class="base-spacing-mid"></div>
-  <h2 class="heading-border grey-steel">GKA DASHBOARD</h2> 
+  <h2 class="heading-border grey-steel">GKA DASHBOARD</h2>
   <div class="base-spacing-mid"></div>
   <div class="sect-parent">
     <div class="sect-three-quarter">
       <div class="educational box sect-parent">
-        <div class="sect-quarter"> 
+        <div class="sect-quarter">
           <input type="text" placeholder="District" class="js-example-basic-single input-text full-width" id="select-district">
         </div>
         <div class="sect-quarter">
@@ -107,20 +107,20 @@
     <ul id='improved' class="js-accordion-container">
       <li><a href='' class='head js-accordion-header brand-green align-right'>
       SMS<span class="fa fa-angle-down"></span></a>
-        
+
         <section class="content container" id="sms">
-          <div id="smsSummary" class="js-detail-container"></div>  
+          <div id="smsSummary" class="js-detail-container"></div>
           <div class="base-spacing-mid"></div>
-          <div class="sect-parent"> 
+          <div class="sect-parent">
             <div class="sect-half">
               <div class="brand-blue font-large font-light center-text uppercase">SMS Users</div>
-              <div id="smsSender" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+              <div id="smsSender" class="ct-chart ct-minor-seventh js-detail-container chartist-container line-chart"></div>
             </div>
             <div class="sect-half">
               <div class="brand-blue font-large font-light center-text uppercase">SMS Volumes</div>
-              <div id="smsVolume" class="ct-chart  ct-major-eleventh js-detail-container chartist-container"></div>
-              <div class="base-spacing-mid"></div>    
-              <div id="smsLegend"></div>  
+              <div id="smsVolume" class="ct-chart ct-major-eleventh js-detail-container chartist-container bar-chart"></div>
+              <div class="base-spacing-mid"></div>
+              <div id="smsLegend"></div>
             </div>
           </div>
           <div id="smsQuestions" class="js-detail-container"></div>
@@ -132,46 +132,46 @@
       ASSESSMENTS  <span class="fa fa-angle-down"></span></a>
 
         <section class="content container" id="assessment">
-          <div id="assmtSummary" class="js-detail-container"></div>  
+          <div id="assmtSummary" class="js-detail-container"></div>
           <div class="base-spacing-mid"></div>
-          <div class="container sect-parent"> 
+          <div class="container sect-parent">
             <div class="sect-half">
               <div id="assmtCoverage"></div>
             </div>
             <div class="sect-half">
               <div class="brand-blue font-large font-light center-text uppercase">Assessment Volumes</div>
               <div class="base-spacing-sm"></div>
-              <div id="assmtVolume" class="ct-chart ct-major-eleventh js-detail-container chartist-container"></div>
-              <div class="base-spacing-mid"></div>    
-              <div id="avLegend"></div>          
+              <div id="assmtVolume" class="ct-chart ct-major-eleventh js-detail-container chartist-container line-chart"></div>
+              <div class="base-spacing-mid"></div>
+              <div id="avLegend"></div>
             </div>
           </div>
           <div class="base-spacing-mid"></div>
-          <h5 class="heading-border brand-red uppercase">Competency Summary</h5> 
+          <h5 class="heading-border brand-red uppercase">Competency Summary</h5>
           <div class="base-spacing-mid"></div>
-          <div id="assmtCompetancy" class="ct-chart ct-major-eleventh js-detail-container chartist-container"></div>
+          <div id="assmtCompetancy" class="ct-chart ct-major-eleventh js-detail-container chartist-container line-chart"></div>
           <div class="center-text font-smallest grey-silver">This section of the report draws data from <a href="http://ekstep.org" target="_blank">Ek-Step Foundation</a> for the assessments carried out on the Genie Tablet/Mobile Application.</div>
-          
+
         </section>
         <hr/>
       </li>
       <li><a href='' class='head js-accordion-header brand-turquoise align-right'>
       GP CONTESTS  <span class="fa fa-angle-down"></span></a>
-        <section class="content container" id="gpcontest"> 
-          <div id="gpcSummary"></div>  
+        <section class="content container" id="gpcontest">
+          <div id="gpcSummary"></div>
           <div class="base-spacing-mid"></div>
           <div class="brand-blue center-text font-large font-light uppercase">Class 4 Summary</div>
           <div class="base-spacing-mid"></div>
           <div class="center-text" id="gpcGender_class4"></div>
-          <div id="gpcGraph_class4" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+          <div id="gpcGraph_class4" class="ct-chart ct-double-octave js-detail-container chartist-container line-chart"></div>
           <div class="brand-blue center-text font-large font-light uppercase">Class 5 Summary</div>
           <div class="base-spacing-mid"></div>
           <div class="center-text" id="gpcGender_class5"></div>
-          <div id="gpcGraph_class5" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+          <div id="gpcGraph_class5" class="ct-chart ct-double-octave js-detail-container chartist-container line-chart"></div>
           <div class="brand-blue center-text font-large font-light uppercase">Class 6 Summary</div>
           <div class="base-spacing-mid"></div>
           <div class="center-text" id="gpcGender_class6"></div>
-          <div id="gpcGraph_class6" class="ct-chart ct-double-octave js-detail-container chartist-container"></div>
+          <div id="gpcGraph_class6" class="ct-chart ct-double-octave js-detail-container chartist-container line-chart"></div>
           <div class="base-spacing-mid"></div>
         </section>
         <hr/>
@@ -179,14 +179,14 @@
       <li><a href='#' class='head js-accordion-header brand-purple align-right'>
       SURVEYS  <span class="fa fa-angle-down"></span></a>
 
-        <section class="content container" id="surveys"> 
+        <section class="content container" id="surveys">
           <div class="base-spacing-mid"></div>
           <div id="surveySummary"></div>
           <div class="base-spacing-mid"></div>
-          <div class="sect-parent"> 
+          <div class="sect-parent">
             <div class="sect-half">
               <div class="brand-blue font-large font-light center-text uppercase">Respondents</div>
-              <div id="mobRespondent" class="ct-chart ct-minor-seventh js-detail-container chartist-container"></div>
+              <div id="mobRespondent" class="ct-chart ct-minor-seventh js-detail-container chartist-container line-chart"></div>
             </div>
             <div class="sect-half">
               <div class="brand-blue font-large font-light center-text uppercase">Survey Volumes</div>
@@ -203,7 +203,7 @@
       <li><a href='#' class='head js-accordion-header brand-red align-right'>
       COMPARISON  <span class="fa fa-angle-down"></span></a>
 
-        <section class="content container" id="comparison"> 
+        <section class="content container" id="comparison">
           <div class="base-spacing-mid"></div>
           <div class="container">
               <div id="compareTable"></div>
@@ -211,12 +211,12 @@
               <div class="sect-parent">
                 <div class="sect-half">
                   <div class="brand-blue center-text font-large font-light uppercase">ASSESSMENT COMPARISON</div>
-                  <div id="compareAssmtGraph" class="ct-chart ct-major-seventh js-detail-container chartist-container"></div>
+                  <div id="compareAssmtGraph" class="ct-chart ct-major-seventh js-detail-container chartist-container line-chart"></div>
                 </div>
                 <div class="sect-half">
                   <div class="brand-blue center-text font-large font-light uppercase">GP CONTEST COMPARISON</div>
-                  <div id="compareGpcGraph" class="ct-chart ct-major-seventh 
-                  js-detail-container chartist-container"></div>
+                  <div id="compareGpcGraph" class="ct-chart ct-major-seventh
+                  js-detail-container chartist-container line-chart"></div>
                 </div>
               </div>
           </div>
@@ -225,11 +225,11 @@
         <hr/>
       </li>
     </ul>
-    <section class="container" id="footer">          
+    <section class="container" id="footer">
       <div class="center-text font-smaller grey-silver">This report is generated for <a href="http://akshara.org.in" target="_blank">Akshara Foundation</a>  by KLP.</div>
     </section>
-    
+
   </div>
 </section>
-{% include 'frontend_templates/gka_dashboard.html' %} 
+{% include 'frontend_templates/gka_dashboard.html' %}
 {% endblock %}

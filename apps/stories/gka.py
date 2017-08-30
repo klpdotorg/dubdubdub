@@ -11,7 +11,9 @@ from schools.models import (
 )
 from .models import Story, Survey, Answer, Question
 
-GKA_DISTRICTS = [445, 416, 424, 417, 419, 418]
+GKA_DISTRICTS = [433, 439, 441, 425, 421, 420]
+# bangalore rural, chamarajanagar, chikkaballapura,
+# chitradurga, dharwad, gadag
 
 
 class GKA(object):
