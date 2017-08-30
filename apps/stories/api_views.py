@@ -1143,12 +1143,76 @@ class KonnectSummaryView(KLPAPIView):
     count.
     """
 
-    def get_answer_count(self, request, qid, answer):
+    def get_school_counts(self, request):
+        group = request.GET.get('group', 0)
         admin1 = request.GET.get('admin1', '')
         admin2 = request.GET.get('admin2', '')
         admin3 = request.GET.get('admin3', '')
         school_id = request.GET.get('school_id', '')
-        qs = Answer.objects.filter(question_id=qid, text=answer)
+        counts = {}
+
+        # Default values
+        counts['no_of_schools'] = School.objects.count()
+        counts['no_of_schools_with_responses'] = Story.objects.filter(
+            group__id=group
+        ).order_by(
+            'school_id'
+        ).distinct('school_id').count()
+        counts['no_of_responses'] = Story.objects.filter(
+            group__id=group
+        ).count()
+
+        # Filtering
+        if admin1:
+            counts['no_of_schools'] = School.objects.filter(
+                admin3__parent__parent__id=admin1).count()
+            stories = Story.objects.filter(
+                group__id=group, school__admin3__parent__parent__id=admin1
+            )
+            counts['no_of_responses'] = stories.count()
+            counts['no_of_schools_with_responses'] = stories.order_by(
+                'school_id'
+            ).distinct('school_id').count()
+        if admin2:
+            counts['no_of_schools'] = School.objects.filter(
+                admin3__parent__id=admin2).count()
+            stories = Story.objects.filter(
+                group__id=group, school__admin3__parent__id=admin2
+            )
+            counts['no_of_responses'] = stories.count()
+            counts['no_of_schools_with_responses'] = stories.order_by(
+                'school_id'
+            ).distinct('school_id').count()
+        if admin3:
+            counts['no_of_schools'] = School.objects.filter(
+                admin3__id=admin3).count()
+            stories = Story.objects.filter(
+                group__id=group, school__admin3__id=admin3
+            )
+            counts['no_of_responses'] = stories.count()
+            counts['no_of_schools_with_responses'] = stories.order_by(
+                'school_id'
+            ).distinct('school_id').count()
+        if school_id:
+            counts['no_of_schools'] = 1
+            stories = Story.objects.filter(
+                group__id=group, school__id=school_id
+            )
+            counts['no_of_responses'] = stories.count()
+            counts['no_of_schools_with_responses'] = stories.order_by(
+                'school_id'
+            ).distinct('school_id').count()
+
+        return counts
+
+    def get_answer_count(self, request, qid, answer):
+        group = request.GET.get('group', 0)
+        admin1 = request.GET.get('admin1', '')
+        admin2 = request.GET.get('admin2', '')
+        admin3 = request.GET.get('admin3', '')
+        school_id = request.GET.get('school_id', '')
+        qs = Answer.objects.filter(
+            question_id=qid, text=answer, story__group__id=group)
 
         if admin1:
             qs = qs.filter(story__school__admin3__parent__parent__id=admin1)
@@ -1180,6 +1244,8 @@ class KonnectSummaryView(KLPAPIView):
                 'Don\'t Know': self.get_answer_count(
                     request, q.id, 'Don\'t Know')
             })
+
+        response.update(self.get_school_counts(request))
 
         return Response(response)
 
