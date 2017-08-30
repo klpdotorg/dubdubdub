@@ -3,6 +3,7 @@ import datetime
 from rest_framework import status
 
 from django.utils import timezone
+from django.contrib.auth.models import Group
 
 from .models import State, QuestionGroupType, IncomingNumber
 
@@ -78,8 +79,33 @@ def is_data_valid(data):
 
     return is_valid
 
-def is_user_registered(telephone):
-    return User.objects.filter(mobile_no=telephone).exists()
+def create_user_account(telephone):
+    first_name = "Isabelle"
+    last_name = "Ringing"
+    email = "dummy_" + telephone + "@klp.org.in"
+    mobile_number = telephone
+
+    user, created = User.objects.get_or_create(
+        email=email,
+        first_name=first_name,
+        last_name=last_name,
+        mobile_no=mobile_number
+    )
+
+    ev_group = Group.objects.get(name="EV")
+    ev_group.user_set.add(user)
+
+    return
+
+def validate_telephone_number(telephone):
+    if not telephone.isdigit():
+        return None
+
+    telephone = telephone[1:] # Strip 0
+    if not User.objects.filter(mobile_no__contains=telephone).exists():
+        create_user_account(telephone)
+
+    return telephone
 
 def is_logically_correct(data):
     is_logically_correct = True

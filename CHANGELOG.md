@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.14: 61149f31ebee501be3d1ddd8a85c204ba326beff - 2017-08-30
+- SMS Fixes
+
 Release 1.3.13: 743819fe74095e7ea0f47ca720e5b92a84c8878a - 2017-08-30
 - Additional data for Konnect summary endpoint
 
