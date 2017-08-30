@@ -130,7 +130,7 @@ class SMSViewTests(TestCase):
         response = view(request)
         self.assertEqual(
             response.data,
-            'The telephone is blank.'
+            'Invalid phone number.'
         )
 
     def test_reply_for_invalid_answer_to_specific_question_number(self):
@@ -195,19 +195,19 @@ class SMSViewTests(TestCase):
 
     def test_reply_for_unregistered_number(self):
         """
-        SMSView should return a certain reply to be sent when it receives
+        SMSView should accept the SMS when it receives
         data from a number that is not registered.
         """
         print "Testing for unregistered number"
         view = SMSView.as_view()
         factory = APIRequestFactory()
-        body = '24657,1,3,1,2,1'
+        body = '24657,1,1,1,2,2'
         print "Testing input: " + body
         request = factory.get(
             '/api/v1/sms/',
             {
                 'SmsSid':'2',
-                'From':'01234567',
+                'From':'0111111',
                 'To':'08039514048',
                 'Date':'2016-07-12 15:16:48',
                 'Body':body,
@@ -215,8 +215,13 @@ class SMSViewTests(TestCase):
             content_type='text/plain',
         )
         response = view(request)
+
+        user = User.objects.get(mobile_no="111111")
+        self.assertEqual(user.mobile_no, "111111")
+        self.assertEqual(user.groups.get().name, "EV")
+
         self.assertEqual(
             response.data,
-            "Your number 1234567 is not registered. Please visit https://klp.org.in/ and register yourself."
+            'Response accepted. Your message was: 24657,1,1,1,2,2 received at: 2016-07-12 15:16:48'
         )
 
