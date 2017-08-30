@@ -9,8 +9,13 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.3.13: 743819fe74095e7ea0f47ca720e5b92a84c8878a - 2017-08-30
+- Additional data for Konnect summary endpoint
+
 Release 1.3.12: ea1faf1aa7ea0843c6d406409757ee7859c5cde6 - 2017-08-30
 - GKA dashboard fixes - select correct answers based on 'pass'
+
 Release 1.3.11: cbef0e424b3c8d631b6077ea522bf1b8a9fb8869 - 2017-08-29
  - GKA dashboard fixes
 
