@@ -94,8 +94,8 @@ class Command(BaseCommand):
         return (name, first_name, last_name)
 
     def get_email(self, name, row):
-        if '@' in row[6].strip():
-            email = row[6].strip()
+        if '@' in row[8].strip():
+            email = row[8].strip()
         else:
             # Create an email and keep it to max_length
             email = name.lower().replace(" ","")[:63] + "@klp.org.in"
@@ -116,48 +116,48 @@ class Command(BaseCommand):
             (mobile_number_3 != '' and len(mobile_number_3) >= 10)
         ) else None 
 
-        mobile_numbers = [mobile_number_1, mobile_number_2, mobile_number_3]
+        mobile_numbers = []
+        if mobile_number_1:
+            mobile_numbers.append(mobile_number_1)
+        if mobile_number_2:
+            mobile_numbers.append(mobile_number_2)
+        if mobile_number_3:
+            mobile_numbers.append(mobile_number_3)
         return mobile_numbers
 
-    def create_fake_email(self, email, number):
+    def create_fake_email(self, email):
+        dummy_count = 0
         username = email.split('@')[0]
-        email = "dummy_" + str(number) + "_" + username + "@klp.org.in"
+        while User.objects.filter(email=email).exists():
+            dummy_count += 1
+            email = "dummy_" + str(dummy_count) + "_" + username + "@klp.org.in"
+
         return email
 
-    def register_and_classify_users(
-            self,
-            mobile_numbers,
-            email,
-            first_name,
-            last_name,
-            group
-    ):
+    def register_and_classify_user(self, mobile_numbers, email, first_name, last_name, group):
         user = None
+        if not mobile_numbers:
+            return user
+
         for mobile_number in mobile_numbers:
-            if mobile_number:
-                if User.objects.filter(mobile_no__contains=mobile_number).exists():
-                    user = User.objects.get(mobile_no__contains=mobile_number)
-                    user.mobile_no=",".join(mobile_numbers)
-                    user.save()
-                    break
-                elif User.objects.filter(email=email).exists():
-                    dummy_count = 0
-                    while User.objects.filter(email=email).exists():
-                        dummy_count += 1
-                        email = self.create_fake_email(email, dummy_count)
-
-                user, created = User.objects.get_or_create(
-                    email=email,
-                    first_name=first_name,
-                    last_name=last_name,
-                    mobile_no=",".join(mobile_numbers)
-                )
-
-                print "User: " + str(user) + " created: " + str(created)
-                group.user_set.add(user)
+            if User.objects.filter(mobile_no__contains=mobile_number).exists():
+                print "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + str(mobile_numbers)
+                user = User.objects.get(mobile_no__contains=mobile_number)
+                user.mobile_no=",".join(mobile_numbers)
+                user.save()
                 break
-            else:
-                continue
+        else:
+            if User.objects.filter(email=email).exists():
+                email = self.create_fake_email(email)
+
+            user, created = User.objects.get_or_create(
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                mobile_no=",".join(mobile_numbers)
+            )
+            print "User: " + str(user) + " created: " + str(created)
+            group.user_set.add(user)
 
         return user
 
@@ -181,7 +181,7 @@ class Command(BaseCommand):
         hm_group, created = Group.objects.get_or_create(name="HM")
         ev_group, created = Group.objects.get_or_create(name="EV")
 
-    def get_csv_file(options):
+    def get_csv_file(self, options):
         file_name = options.get('file', None)
         if not file_name:
             print "Please specify a filename with the --file argument"
@@ -200,7 +200,7 @@ class Command(BaseCommand):
 
         count = 0
 
-        for row in csv_f:
+        for row in csv_file:
             # Skip the first line
             if count == 0:
                 count += 1
@@ -226,5 +226,6 @@ class Command(BaseCommand):
                 # Map the user to the given boundary
                 BoundaryUsers.objects.get_or_create(
                     user=user, boundary=boundary)
+            print count
 
         print str(count) + " lines processed."
