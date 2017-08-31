@@ -219,6 +219,7 @@ class SMSViewTests(TestCase):
         user = User.objects.get(mobile_no="111111")
         self.assertEqual(user.mobile_no, "111111")
         self.assertEqual(user.groups.get().name, "EV")
+        self.assertEqual(user.email, "dummy_111111@klp.org.in")
 
         self.assertEqual(
             response.data,
