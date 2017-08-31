@@ -17,6 +17,9 @@ from common.utils import send_templated_mail
 from django.contrib.sites.models import Site
 from django.utils.text import slugify
 
+from stories.models import UserType
+
+
 USER_TYPE_CHOICES = (
     (0, 'Volunteer'),
     (1, 'Developer'),
@@ -29,20 +32,7 @@ STATUS_CHOICES = (
     (2, 'Completed')
 )
 
-RESPONDENT_CHOICES = (
-    ('parents', 'Parents'),
-    ('teachers', 'Teachers'),
-    ('volunteers', 'Volunteers'),
-    ('cbo-member', 'CBO Member'),
-    ('headmaster', 'Headmaster'),
-    ('sdmc-member', 'SDMC Member'),
-    ('local-leaders', 'Local Leaders'),
-    ('akshara-staff', 'Akshara Staff'),
-    ('educated-staff', 'Educated Staff'),
-    ('educated-youth', 'Educated Youth'),
-    ('education-official', 'Education Official'),
-    ('elected-representative', 'Elected Representative'),
-)
+RESPONDENT_CHOICES = UserType.USER_TYPE_CHOICES
 
 
 class UserManager(BaseUserManager):

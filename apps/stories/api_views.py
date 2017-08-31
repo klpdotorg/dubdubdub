@@ -1149,57 +1149,61 @@ class KonnectSummaryView(KLPAPIView):
         admin2 = request.GET.get('admin2', '')
         admin3 = request.GET.get('admin3', '')
         school_id = request.GET.get('school_id', '')
+        from_date = request.GET.get('from', '')
+        to_date = request.GET.get('to', '')
+        stories = Story.objects.filter(group__id=group)
         counts = {}
+
+        # Date filtering
+        if from_date and to_date:
+            try:
+                stories = stories.filter(
+                    date_of_visit__range=[from_date, to_date])
+            except Exception as e:
+                print e
 
         # Default values
         counts['no_of_schools'] = School.objects.count()
-        counts['no_of_schools_with_responses'] = Story.objects.filter(
-            group__id=group
-        ).order_by(
-            'school_id'
-        ).distinct('school_id').count()
-        counts['no_of_responses'] = Story.objects.filter(
-            group__id=group
-        ).count()
+        counts['no_of_schools_with_responses'] = stories.order_by('school_id')\
+            .distinct('school_id').count()
+        counts['no_of_responses'] = stories.count()
 
         # Filtering
         if admin1:
             counts['no_of_schools'] = School.objects.filter(
                 admin3__parent__parent__id=admin1).count()
-            stories = Story.objects.filter(
-                group__id=group, school__admin3__parent__parent__id=admin1
-            )
-            counts['no_of_responses'] = stories.count()
-            counts['no_of_schools_with_responses'] = stories.order_by(
-                'school_id'
-            ).distinct('school_id').count()
+            admin1_stories = stories.filter(
+                school__admin3__parent__parent__id=admin1)
+            counts['no_of_responses'] = admin1_stories.count()
+            counts['no_of_schools_with_responses'] = admin1_stories\
+                .order_by('school_id').distinct('school_id').count()
         if admin2:
             counts['no_of_schools'] = School.objects.filter(
                 admin3__parent__id=admin2).count()
-            stories = Story.objects.filter(
+            admin2_stories = stories.filter(
                 group__id=group, school__admin3__parent__id=admin2
             )
-            counts['no_of_responses'] = stories.count()
-            counts['no_of_schools_with_responses'] = stories.order_by(
+            counts['no_of_responses'] = admin2_stories.count()
+            counts['no_of_schools_with_responses'] = admin2_stories.order_by(
                 'school_id'
             ).distinct('school_id').count()
         if admin3:
             counts['no_of_schools'] = School.objects.filter(
                 admin3__id=admin3).count()
-            stories = Story.objects.filter(
+            admin3_stories = stories.filter(
                 group__id=group, school__admin3__id=admin3
             )
-            counts['no_of_responses'] = stories.count()
-            counts['no_of_schools_with_responses'] = stories.order_by(
+            counts['no_of_responses'] = admin3_stories.count()
+            counts['no_of_schools_with_responses'] = admin3_stories.order_by(
                 'school_id'
             ).distinct('school_id').count()
         if school_id:
             counts['no_of_schools'] = 1
-            stories = Story.objects.filter(
+            school_stories = stories.filter(
                 group__id=group, school__id=school_id
             )
-            counts['no_of_responses'] = stories.count()
-            counts['no_of_schools_with_responses'] = stories.order_by(
+            counts['no_of_responses'] = school_stories.count()
+            counts['no_of_schools_with_responses'] = school_stories.order_by(
                 'school_id'
             ).distinct('school_id').count()
 
@@ -1211,8 +1215,17 @@ class KonnectSummaryView(KLPAPIView):
         admin2 = request.GET.get('admin2', '')
         admin3 = request.GET.get('admin3', '')
         school_id = request.GET.get('school_id', '')
+        from_date = request.GET.get('from', '')
+        to_date = request.GET.get('to', '')
         qs = Answer.objects.filter(
             question_id=qid, text=answer, story__group__id=group)
+
+        if from_date and to_date:
+            try:
+                qs = qs.filter(
+                    story__date_of_visit__range=[from_date, to_date])
+            except Exception as e:
+                print e
 
         if admin1:
             qs = qs.filter(story__school__admin3__parent__parent__id=admin1)
