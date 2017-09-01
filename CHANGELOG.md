@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.16: 6ba650cb0e9dc4e9393754a52ab12b4a2c29fb81 - 2017-09-01
+ - More Kannada translations
+
 Release 1.3.15: 8b187eb5db06869ffeed5a4337005263c41b95bf - 2017-08-31
  - Konnect summary API endpoint now accepts date filters
  - Updated respondent type list in surveys
