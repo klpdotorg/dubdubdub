@@ -57,3 +57,16 @@ msgstr "ನೀವು ವೀಕ್ಷಿಸಿದ ತರಗತಿಯಲ್ಲಿ 
 #: Story questions
 msgid "Was group work happening during Math classes in class 4 and 5 at the time of your visit?"
 msgstr "ನೀವು ಭೀಟಿ ನೀಡಿದ ದಿನ ಶಾಲೆಯ 4 ಮತ್ತು 5ನೇ ತರಗತಿಯಲ್ಲಿ ಮಕ್ಕಳು ಗುಂಪು ಚಟುವಟಿಕೆಯಲ್ಲಿ  ನಿರತರಾಗಿದ್ದರೆ ?"
+
+#: Story questions
+msgid "Did you see representational stage being practiced during Math classes in class 4 and 5 at the time of your visit?"
+msgstr "ನೀವು ವೀಕ್ಷಿಸಿದ ತರಗತಿಯಲ್ಲಿ ಮಕ್ಕಳು ಪ್ರಾತಿನಿಧ್ಯಾತ್ಮಕ ಹಂತವನ್ನು  ಅನುಸರಿಸುತ್ತಿರುವುದು ಕಂಡು ಬಂತೆ? (ಚೌಕಳಿ ಪುಸ್ತಕ ಬಳಕೆ)"
+
+#: Story questions
+msgid "Did you see the Ganitha Kalika Andolana TLM being used in class 4 or 5 at the time of your visit?"
+msgstr "ನೀವು ವೀಕ್ಷಿಸಿದ ಗಣಿತ ತರಗತಿಯಲ್ಲಿ ಗಣಿತ ಕಲಿಕಾ ಆಂದೋಲನದ ಕಲಿಕೋಪಕಾರಣಳನ್ನು ಬಳಸುತ್ತಿದ್ದರೆ?(ಕಲಿಕೋಪಕಾರಣಳನ್ನು ಶಿಕ್ಷರು ಅಥವಾ ಮಕ್ಕಳು ಇವರಲ್ಲಿ ಒಬ್ಬರು ಉಪಯೋಗಿಸುವುದು ಕಂಡು ಬಂದಲ್ಲಿ ಈ ಪ್ರಶ್ನೆಗೆ ಹೌದು ಎಂದು ಉತ್ತರಿಸಬಹುದು)"
+
+#: Story questions
+msgid "Did you observe the math class happening in class 4 or 5 at the time of your visit?"
+msgstr "ನೀವು ವೀಕ್ಷಿಸಿದ ತರಗತಿಯಲ್ಲಿ ಗಣಿತ ಪಾಠ ನಡೆಯುತ್ತಿತ್ತೆ? (ಶಿಕ್ಷಕರಿಂದ ಪಡೆದ ಮಾಹಿತಿಯ ಆಧಾರದ ಮೇಲೆ ಈ ಪ್ರಶ್ನೆಯನ್ನು ಉತ್ತರಿಸಬಾರದು)"
+
