@@ -124,52 +124,52 @@ GROUP_ERROR_REPORT_COLUMNS = (
     "No. of unique schools with SMS"
 )
 
-EXCLUDED_DISTRICTS = [
-    'bangalore',
-    'bangalore u south',
-    'koppal',
-    'mysore',
-    'kolar',
-    'chamrajnagar',
-    'belgaum',
-    'bangalore u north',
-    'ramnagara',
-    'dharwad',
-]
+# EXCLUDED_DISTRICTS = [
+#     'bangalore',
+#     'bangalore u south',
+#     'koppal',
+#     'mysore',
+#     'kolar',
+#     'chamrajnagar',
+#     'belgaum',
+#     'bangalore u north',
+#     'ramnagara',
+#     'dharwad',
+# ]
 
-EXCLUDED_DISTRICT_IDS = [431, 8877, 8878, 444, 413, 421, 419, 439, 9540, 9541]
+# EXCLUDED_DISTRICT_IDS = [431, 8877, 8878, 444, 413, 421, 419, 439, 9540, 9541]
 
-EXCLUDED_BLOCKS = [
-    'hunagund',
-    'magadi',
-    'ramanagara',
-    'kanakapura',
-    'kudligi',
-    'kollegal',
-    'south-1',
-    'south-3',
-    'north-1',
-    'north-2',
-    'north-4',
-    'north-3',
-    'mysore south',
-    'koppal',
-    'bangarapete',
-    'bangalore south(banashankari)',
-    'sumangali seva ashrama',
-    'bangalore north (yelahanka)',
-    'belgaum city',
-    'badami',
-    'bagalkot',
-    'bilagi',
-    'jamakhandi',
-    'mudhol',
-    'yelandur',
-    'dharwad',
-    'kundagol'
-]
+# EXCLUDED_BLOCKS = [
+#     'hunagund',
+#     'magadi',
+#     'ramanagara',
+#     'kanakapura',
+#     'kudligi',
+#     'kollegal',
+#     'south-1',
+#     'south-3',
+#     'north-1',
+#     'north-2',
+#     'north-4',
+#     'north-3',
+#     'mysore south',
+#     'koppal',
+#     'bangarapete',
+#     'bangalore south(banashankari)',
+#     'sumangali seva ashrama',
+#     'bangalore north (yelahanka)',
+#     'belgaum city',
+#     'badami',
+#     'bagalkot',
+#     'bilagi',
+#     'jamakhandi',
+#     'mudhol',
+#     'yelandur',
+#     'dharwad',
+#     'kundagol'
+# ]
 
-EXCLUDED_BLOCK_IDS = [8882, 8886, 573, 464, 502, 465, 466, 493, 530, 505, 650, 467, 8889, 651, 626, 5999, 653, 462, 457, 463, 625, 8883, 8884, 8879, 8881, 8776, 8774, 8779]
+# EXCLUDED_BLOCK_IDS = [8882, 8886, 573, 464, 502, 465, 466, 493, 530, 505, 650, 467, 8889, 651, 626, 5999, 653, 462, 457, 463, 625, 8883, 8884, 8879, 8881, 8776, 8774, 8779]
 
 class Command(BaseCommand):
     args = ""
@@ -354,7 +354,7 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent__parent'
         )
-        boundaries = Boundary.objects.filter(id__in=district_ids).exclude(id__in=EXCLUDED_DISTRICT_IDS)
+        boundaries = Boundary.objects.filter(id__in=district_ids)#.exclude(id__in=EXCLUDED_DISTRICT_IDS)
 
         return self.get_list_of_boundary_values(
             boundaries, states, groups, boundary_type="district"
@@ -370,7 +370,7 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent'
         )
-        boundaries = Boundary.objects.filter(id__in=block_ids).exclude(id__in=EXCLUDED_BLOCK_IDS)
+        boundaries = Boundary.objects.filter(id__in=block_ids)#.exclude(id__in=EXCLUDED_BLOCK_IDS)
     
         return self.get_list_of_boundary_values(
             boundaries, states, groups, boundary_type="block"
