@@ -65,6 +65,7 @@ class SurveysViewSet(KLPModelViewSet):
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
     filter_class = SurveyFilter
+    http_method_names = ['get', 'head']
 
 
 class QuestiongroupsViewSet(KLPModelViewSet):
