@@ -1269,8 +1269,22 @@ class StoryImagesView(KLPAPIView):
     """
 
     def get(self, request):
-        school_id = request.GET.get('school_id', 0)
+        # school_id = request.GET.get('school_id', 0)
+        from_date = request.GET.get('from', '')
+        to_date = request.GET.get('to', '')
+
         images = StoryImage.objects.filter(
-            story__school__id=school_id).values_list('image', flat=True)
-        images = ['/media/' + i for i in images]
+            # story__school__id=school_id
+        )
+        if from_date and to_date:
+            try:
+                images = images.filter(
+                    story__date_of_visit__range=[from_date, to_date])
+            except Exception as e:
+                print '\n\n\n\n', e, '\n\n\n\n'
+
+        images = [
+            {'url': '/media/' + str(i.image),
+                'date': i.story.date} for i in images
+        ]
         return Response({'images': images})
