@@ -10,7 +10,10 @@ Use required commands
 Changelog
 ---
 
-Release 1.3.17: 6ba650cb0e9dc4e9393754a52ab12b4a2c29fb81 - 2017-09-20
+Release 1.3.18: 138731da3a92e517860b9409906f137848185e07 - 2017-09-20
+ - Dise API JS - Change default years to 2015-16
+
+Release 1.3.17: 4c4956d1dba5ebb6d4168691a3d94804e4c7e7e5 - 2017-09-20
  - Filters for Image story view
  - Strict permissions for story view
 
