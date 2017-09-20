@@ -10,6 +10,10 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.17: 6ba650cb0e9dc4e9393754a52ab12b4a2c29fb81 - 2017-09-20
+ - Filters for Image story view
+ - Strict permissions for story view
+
 Release 1.3.16: 6ba650cb0e9dc4e9393754a52ab12b4a2c29fb81 - 2017-09-01
  - More Kannada translations
 
