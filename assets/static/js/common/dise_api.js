@@ -1,6 +1,6 @@
 (function() {
     var base = 'https://dise.klp.org.in/api/';
-    var DEFAULT_ACADEMIC_YEAR = '13-14';
+    var DEFAULT_ACADEMIC_YEAR = '15-16';
     klp.dise_api = {
         'fetchSchoolInfra': function(diseCode, academicYear) {
             if (typeof(academicYear) === 'undefined') {
