@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.19: 3036a2734d57b8d91bfea4d2c1e5ff91808b0140 - 2017-09-21
+ - Include school_id in response of image search
+
 Release 1.3.18: 138731da3a92e517860b9409906f137848185e07 - 2017-09-20
  - Dise API JS - Change default years to 2015-16
 
