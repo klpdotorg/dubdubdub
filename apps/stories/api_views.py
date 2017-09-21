@@ -1270,12 +1270,12 @@ class StoryImagesView(KLPAPIView):
     """
 
     def get(self, request):
-        # school_id = request.GET.get('school_id', 0)
+        school_id = request.GET.get('school_id', 0)
         from_date = request.GET.get('from', '')
         to_date = request.GET.get('to', '')
 
         images = StoryImage.objects.filter(
-            # story__school__id=school_id
+            story__school__id=school_id
         )
         if from_date and to_date:
             try:
@@ -1286,6 +1286,7 @@ class StoryImagesView(KLPAPIView):
 
         images = [
             {'url': '/media/' + str(i.image),
-                'date': i.story.date} for i in images
+                'date': i.story.date,
+                'school_id': school_id} for i in images
         ]
         return Response({'images': images})
