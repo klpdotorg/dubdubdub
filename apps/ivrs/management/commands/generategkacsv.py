@@ -124,20 +124,22 @@ GROUP_ERROR_REPORT_COLUMNS = (
     "No. of unique schools with SMS"
 )
 
-# EXCLUDED_DISTRICTS = [
-#     'bangalore',
-#     'bangalore u south',
-#     'koppal',
-#     'mysore',
-#     'kolar',
-#     'chamrajnagar',
-#     'belgaum',
-#     'bangalore u north',
-#     'ramnagara',
-#     'dharwad',
-# ]
+EXCLUDED_DISTRICTS = [
+     'bangalore',
+     'bangalore u south',
+     'bengaluru u south',
+     'mysore',
+     'mysuru',
+     'kolar',
+     'belgaum',
+     'bangalore u north',
+     'bengaluru u north',
+     'ramnagara',
+     'ramanagara',
+]
 
 # EXCLUDED_DISTRICT_IDS = [431, 8877, 8878, 444, 413, 421, 419, 439, 9540, 9541]
+# The code is modified to get IDs from the database based on the district names (rather than hardcoding ids here).
 
 # EXCLUDED_BLOCKS = [
 #     'hunagund',
@@ -354,7 +356,9 @@ class Command(BaseCommand):
         ).distinct(
             'admin3__parent__parent'
         )
-        boundaries = Boundary.objects.filter(id__in=district_ids)#.exclude(id__in=EXCLUDED_DISTRICT_IDS)
+        #Get ids of excluded districts and exclude from the queryset
+        excluded_district_ids = Boundary.objects.filter(name__in=EXCLUDED_DISTRICTS).values_list('id', flat=True)
+        boundaries = Boundary.objects.filter(id__in=district_ids).exclude(id__in=excluded_district_ids)
 
         return self.get_list_of_boundary_values(
             boundaries, states, groups, boundary_type="district"
