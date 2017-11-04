@@ -131,6 +131,7 @@ class UserType(models.Model):
     EDUCATION_OFFICIAL = "EO"
     ELECTED_REPRESENTATIVE = "ER"
     GOVT_OFFICIAL = "GO"
+    CRP = "CRP"
 
     USER_TYPE_CHOICES = (
         (PARENTS, 'Parents'),
@@ -146,6 +147,7 @@ class UserType(models.Model):
         (EDUCATION_OFFICIAL, 'Education_Official'),
         (ELECTED_REPRESENTATIVE, 'Elected_Representative'),
         (GOVT_OFFICIAL, 'Government Official'),
+        (CRP, 'CRP'),
     )
 
     name = models.CharField(
