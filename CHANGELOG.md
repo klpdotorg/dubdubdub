@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.21 36049ea389b87eda30d520ddb0ebf22bd92e5be0 - 2017-11-06
+ - Stories' UserType model changes
+
 Release 1.3.20: 0d814c62dcbce5c3eb3f874f5c0d38770df0a100 - 2017-11-04
  - New survey for Konnect GKA
 
