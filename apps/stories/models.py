@@ -151,9 +151,10 @@ class UserType(models.Model):
     )
 
     name = models.CharField(
-        max_length=2,
+        max_length=3,
         choices=USER_TYPE_CHOICES,
         default=VOLUNTEER,
+        unique=True
     )
 
     def __unicode__(self):
