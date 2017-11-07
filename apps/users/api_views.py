@@ -212,6 +212,26 @@ def konnect_api_password_change(request):
         return Response({'success': 'Password changed'})
 
 
+@api_view(['GET'])
+def konnect_mobile_status(request):
+    """
+    Returns information about a mobile number - whether its a new,
+    existing with/without password  dob etc
+    """
+    mobile_no = request.GET.get('mobile')
+    try:
+        user = User.objects.get(mobile_no=mobile_no)
+    except User.DoesNotExist:
+        return Response({'action': 'signup'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        if user.password and user.dob:
+            return Response({'action': 'login'}, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {'action': 'update'}, status=status.HTTP_206_PARTIAL_CONTENT
+            )
+
+
 class OrganizationsView(generics.ListCreateAPIView):
     """List organisations in the system
     """

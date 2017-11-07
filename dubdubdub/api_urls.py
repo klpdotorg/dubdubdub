@@ -141,6 +141,9 @@ urlpatterns = patterns(
     url(r'^konnect-password-change/$',
         'users.api_views.konnect_api_password_change',
         name="konnect_api_password_change"),
+    url(r'^konnect-mobile-status/$',
+        'users.api_views.konnect_mobile_status',
+        name="konnect_mobile_status"),
 
     # Mobile app related urls
     url(r'^sync$', csrf_exempt(StoriesSyncView.as_view()), name='api_stories_sync'),
