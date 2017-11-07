@@ -144,9 +144,13 @@ urlpatterns = patterns(
     url(r'^konnect-mobile-status/$',
         'users.api_views.konnect_mobile_status',
         name="konnect_mobile_status"),
+    url(r'^konnect-user-update-with-mobile/$',
+        'users.api_views.konnect_user_update_with_mobile',
+        name="konnect_user_update_with_mobile"),
 
     # Mobile app related urls
-    url(r'^sync$', csrf_exempt(StoriesSyncView.as_view()), name='api_stories_sync'),
+    url(r'^sync$',
+        csrf_exempt(StoriesSyncView.as_view()), name='api_stories_sync'),
 
     # SYS urls
     url(r'^stories/(?P<pk>[0-9]+)$', ShareYourStoryView.as_view(),

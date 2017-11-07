@@ -194,7 +194,7 @@ def konnect_api_password_change(request):
 
     if not mobile_no or not dob or not password:
         return Response({
-            'error': 'mobile_no, dob & password are required.'
+            'error': 'mobile, dob & password are required.'
         }, status=status.HTTP_400_BAD_REQUEST)
 
     try:
@@ -210,6 +210,52 @@ def konnect_api_password_change(request):
         user.set_password(password)
         user.save()
         return Response({'success': 'Password changed'})
+
+
+@api_view(['POST'])
+@csrf_exempt
+def konnect_user_update_with_mobile(request):
+    """
+    Updates user account with only mobile number.
+    Only password, dob and source fields are updated.
+    """
+    mobile_no = request.POST.get('mobile', '')
+    dob = request.POST.get('dob', '')
+    password = request.POST.get('password', '')
+    source = request.POST.get('source', '')
+
+    if not mobile_no or not dob or not password or not source:
+        return Response({
+            'error': 'mobile, dob, password and source are required.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    if source != 'konnect':
+        return Response({
+            'error': 'invalid source'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(mobile_no=mobile_no)
+    except User.DoesNotExist:
+        return Response(
+            {'error': 'user not found'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        if user.password and user.dob:
+            return Response({
+                'error': 'user already has set his/her password & dob. please goto login'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(password)
+        user.dob = dob
+        user.source = 'konnect'
+        try:
+            user.save()
+        except ValidationError:
+            return Response(
+                {'error': 'dob must be in YYYY-MM-DD format'},
+                status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'success': 'user updated'})
 
 
 @api_view(['GET'])
