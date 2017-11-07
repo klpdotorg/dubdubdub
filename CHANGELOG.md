@@ -10,10 +10,13 @@ Use required commands
 Changelog
 ---
 
-Release 1.3.22 af631e5501ed6f5fb1581884a06173e2544bbe47 - 2017-11-07
+Release 1.3.23: 0a654bc24c26ec415b4dd8c0e8b2ad663080b858 - 2017-11-07
+ - New Konnect API endpoint
+
+Release 1.3.22: af631e5501ed6f5fb1581884a06173e2544bbe47 - 2017-11-07
  - Mobile status view for Konnect app
 
-Release 1.3.21 36049ea389b87eda30d520ddb0ebf22bd92e5be0 - 2017-11-06
+Release 1.3.21: 36049ea389b87eda30d520ddb0ebf22bd92e5be0 - 2017-11-06
  - Stories' UserType model changes
 
 Release 1.3.20: 0d814c62dcbce5c3eb3f874f5c0d38770df0a100 - 2017-11-04
