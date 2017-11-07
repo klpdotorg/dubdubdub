@@ -238,7 +238,12 @@ def konnect_user_update_with_mobile(request):
             'error': 'invalid source'
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    if not email:
+    if email:
+        if User.objects.filter(email=email).count() != 0:
+            return Response({
+                'error': 'email is already registered.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+    else:
         email = '%s.konnectdummy@klp.org.in' % mobile_no
 
     try:
