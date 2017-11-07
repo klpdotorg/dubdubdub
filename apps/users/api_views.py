@@ -223,6 +223,10 @@ def konnect_user_update_with_mobile(request):
     dob = request.POST.get('dob', '')
     password = request.POST.get('password', '')
     source = request.POST.get('source', '')
+    email = request.POST.get('email', '')
+    first_name = request.POST.get('first_name', '')
+    last_name = request.POST.get('last_name', '')
+    user_type = request.POST.get('user_type', '')
 
     if not mobile_no or not dob or not password or not source:
         return Response({
@@ -233,6 +237,9 @@ def konnect_user_update_with_mobile(request):
         return Response({
             'error': 'invalid source'
         }, status=status.HTTP_400_BAD_REQUEST)
+
+    if not email:
+        email = '%s.konnectdummy@klp.org.in' % mobile_no
 
     try:
         user = User.objects.get(mobile_no=mobile_no)
@@ -245,9 +252,13 @@ def konnect_user_update_with_mobile(request):
                 'error': 'user already has set his/her password & dob. please goto login'
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        user.set_password(password)
-        user.dob = dob
         user.source = 'konnect'
+        user.dob = dob
+        user.set_password(password)
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.user_type = user_type
         try:
             user.save()
         except ValidationError:
