@@ -198,7 +198,7 @@ def konnect_api_password_change(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        user = User.objects.get(mobile_no=mobile_no, dob=dob, source='konnect')
+        user = User.objects.get(mobile_no=mobile_no, dob=dob)
     except ValidationError:
         return Response(
             {'error': 'dob must be in YYYY-MM-DD format'},
