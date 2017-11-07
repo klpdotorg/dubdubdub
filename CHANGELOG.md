@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.22 af631e5501ed6f5fb1581884a06173e2544bbe47 - 2017-11-07
+ - Mobile status view for Konnect app
+
 Release 1.3.21 36049ea389b87eda30d520ddb0ebf22bd92e5be0 - 2017-11-06
  - Stories' UserType model changes
 
