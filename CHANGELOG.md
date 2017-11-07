@@ -10,6 +10,9 @@ Use required commands
 Changelog
 ---
 
+Release 1.3.25: ded3454a8c8f0646a7c7d6cb540bbee6992bacaa - 2017-11-07
+ - Konnect API end point updates
+
 Release 1.3.24: c1f48f731c4242b557b5feac57c2d22706474fce - 2017-11-07
  - Konnect API end point updates
 
