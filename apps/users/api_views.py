@@ -239,7 +239,8 @@ def konnect_user_update_with_mobile(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     if email:
-        if User.objects.filter(email=email).count() != 0:
+        if User.objects.filter(
+                email=email).exclude(mobile_no=mobile_no).count() != 0:
             return Response({
                 'error': 'email is already registered.'
             }, status=status.HTTP_400_BAD_REQUEST)
