@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.26: 87fd15266aa8e4275ec1e33f7e588b3d1360bbc8 - 2017-11-10
+ - Changes Boundary model ordering
 
 Release 1.3.26: fd92a0df5ee5d640db474f905b0addd7a0cded67 - 2017-11-08
  - Konnect API end point updates
