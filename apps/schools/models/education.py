@@ -144,6 +144,7 @@ class Boundary(BaseModel):
         managed = False
         db_table = 'tb_boundary'
         verbose_name_plural = 'Boundaries'
+        ordering = ['id']
 
 
 class BoundaryUsers(BaseModel):
