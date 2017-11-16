@@ -9,8 +9,13 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.3.29: 86b3a64b31fcd4b7e83ff59140165ac1ba4af2a8 - 2017-11-16
+- Removed Nuepa from partners list
+
 Release 1.3.28: 0d993ffca69ae9903b9fc36518cf0492544834e0 - 2017-11-14
 - adding new gka question ids to concepts (impact of new gka content ids)
+
 Release 1.3.27: 87fd15266aa8e4275ec1e33f7e588b3d1360bbc8 - 2017-11-10
  - Changes Boundary model ordering
 
