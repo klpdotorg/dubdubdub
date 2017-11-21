@@ -203,6 +203,8 @@ def populate_state(parameters, message, answers, is_invalid=False):
 
     if school_id and school_id.isdigit():
         state.school_id = school_id
+    else:
+        is_invalid=True
 
     state.comments = message
     state.is_invalid = is_invalid
