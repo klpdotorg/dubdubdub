@@ -30,7 +30,6 @@ from schools.models import Boundary, BoundaryUsers
 class Command(BaseCommand):
     args = "<path to file>"
     help = """Create user accounts from CSV
-
     ./manage.py create_user_accounts --file=path/to/file"""
 
     option_list = BaseCommand.option_list + (
@@ -89,7 +88,7 @@ class Command(BaseCommand):
             first_name, last_name = name.split(" ", 1)
         else:
             first_name, last_name = (name, '')
-            
+
         first_name, last_name = first_name[:64], last_name[:64]
         return (name, first_name, last_name)
 
@@ -101,29 +100,12 @@ class Command(BaseCommand):
             email = name.lower().replace(" ","")[:63] + "@klp.org.in"
         return email
 
-    def get_mobile_numbers(self, row):
+    def get_mobile_numbers(self, row): # made changes to allow only one phone number
         mobile_number_1 = row[5].strip()
-        mobile_number_2 = row[6].strip()
-        mobile_number_3 = row[7].strip()
-        
         mobile_number_1 = mobile_number_1[-10:] if (
             (mobile_number_1 != '' and len(mobile_number_1) >= 10)
-        ) else None 
-        mobile_number_2 = mobile_number_2[-10:] if (
-            (mobile_number_2 != '' and len(mobile_number_2) >= 10)
-        ) else None 
-        mobile_number_3 = mobile_number_3[-10:] if (
-            (mobile_number_3 != '' and len(mobile_number_3) >= 10)
-        ) else None 
-
-        mobile_numbers = []
-        if mobile_number_1:
-            mobile_numbers.append(mobile_number_1)
-        if mobile_number_2:
-            mobile_numbers.append(mobile_number_2)
-        if mobile_number_3:
-            mobile_numbers.append(mobile_number_3)
-        return mobile_numbers
+        ) else None
+        return mobile_number_1
 
     def create_fake_email(self, email):
         dummy_count = 0
@@ -134,17 +116,13 @@ class Command(BaseCommand):
 
         return email
 
-    def register_and_classify_user(self, mobile_numbers, email, first_name, last_name, group):
+    def register_and_classify_user(self, mobile_number, email, first_name, last_name, group):
         user = None
-        if not mobile_numbers:
+        if not mobile_number:
             return user
 
-        for mobile_number in mobile_numbers:
-            if User.objects.filter(mobile_no__contains=mobile_number).exists():
-                user = User.objects.get(mobile_no__contains=mobile_number)
-                user.mobile_no=",".join(mobile_numbers)
-                user.save()
-                break
+        if User.objects.filter(mobile_no__contains=mobile_number).exists():
+            return user
         else:
             if User.objects.filter(email=email).exists():
                 email = self.create_fake_email(email)
@@ -153,7 +131,7 @@ class Command(BaseCommand):
                 email=email,
                 first_name=first_name,
                 last_name=last_name,
-                mobile_no=",".join(mobile_numbers)
+                mobile_no=mobile_number
             )
             print "User: " + str(user) + " created: " + str(created)
             group.user_set.add(user)
@@ -207,12 +185,12 @@ class Command(BaseCommand):
             count += 1
 
             name, first_name, last_name = self.get_first_and_last_name(row)
-            mobile_numbers = self.get_mobile_numbers(row)
+            mobile_number = self.get_mobile_numbers(row)
             boundary = self.get_boundary(row)
             email = self.get_email(name, row)
             group = self.get_group(row) # Raises exception on error
             user = self.register_and_classify_user(
-                mobile_numbers,
+                mobile_number,
                 email,
                 first_name,
                 last_name,
