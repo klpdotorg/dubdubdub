@@ -12,6 +12,7 @@ Changelog
 Release 1.3.30: 07a9ec0413337bd57e0eee7680d78e739e9effb1 - 2017-11-21
 - allow only one phone per user (no more concatenated phones)
 - handle blank school id in the sms (mark it invalid)
+
 Release 1.3.29: 86b3a64b31fcd4b7e83ff59140165ac1ba4af2a8 - 2017-11-16
 - Removed Nuepa from partners list
 
