@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.31: a9dd597199235590c0764921f8daed3f597deb3f - 2017-11-24
+- Slack alerts for ILP Konnect (new program)
+
 Release 1.3.30: 07a9ec0413337bd57e0eee7680d78e739e9effb1 - 2017-11-21
 - allow only one phone per user (no more concatenated phones)
 - handle blank school id in the sms (mark it invalid)
