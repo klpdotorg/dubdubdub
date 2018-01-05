@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.32: 27dc0fd304e57a2480930f16bbe7c318a40ad937 - 2018-01-05
+- Ekstep feed changes for v3 feeds
+
 Release 1.3.31: a9dd597199235590c0764921f8daed3f597deb3f - 2017-11-24
 - Slack alerts for ILP Konnect (new program)
 
