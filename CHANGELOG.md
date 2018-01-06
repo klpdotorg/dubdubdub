@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.33: 11fecf96ac8e2df73ace816f8c688172639c1c6d - 2018-01-06
+- modify home page to fetch only konnectsms and mobile stories
+
 Release 1.3.32: 27dc0fd304e57a2480930f16bbe7c318a40ad937 - 2018-01-05
 - Ekstep feed changes for v3 feeds
 
