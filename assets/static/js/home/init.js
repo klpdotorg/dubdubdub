@@ -17,12 +17,8 @@
         });
 
         //get and show recent stories
-        var url = "stories/";
-        var params = {
-            per_page: 6,
-            verified: 'yes'
-        };
-        var sysXHR = klp.api.do(url, params);
+        var url = "stories/?per_page=6&verified=yes&source=konnectsms&source=mobile";
+        var sysXHR = klp.api.do(url);
         var tplSys = swig.compile($('#tpl-sysInfo').html());
         sysXHR.done(function(data) {
             var context = {
