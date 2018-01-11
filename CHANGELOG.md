@@ -9,6 +9,10 @@ Use required commands
 
 Changelog
 ---
+
+Release 1.3.35: 8fe21d18b00ab78243c1eb6e95b534e78033c297 - 2018-1-11
+- Changed default "to" year of GKA dashboard to 2018
+
 Release 1.3.34: 41d0f0b809f51f445ac650c9f0aed3c3b885611f - 2018-01-11
 - add new bfc email ids
 
