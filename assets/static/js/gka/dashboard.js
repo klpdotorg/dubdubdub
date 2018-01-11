@@ -93,7 +93,7 @@ var topSummaryData = {};
         // As of August 1st, 2017, data from June 2017 is shown as default
         if(!params.from && !params.to) {
             params.from = '2017-06-01';
-            params.to = '2017-12-31';
+            params.to = '2018-12-31';
         }
         loadTopSummary(params);
         loadSmsData(params);
