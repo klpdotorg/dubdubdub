@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.33: 41d0f0b809f51f445ac650c9f0aed3c3b885611f - 2018-01-11
+- add new bfc email ids
+
 Release 1.3.33: 11fecf96ac8e2df73ace816f8c688172639c1c6d - 2018-01-06
 - modify home page to fetch only konnectsms and mobile stories
 
