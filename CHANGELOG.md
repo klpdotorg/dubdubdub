@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.36: 4576211001657994e0bb5c2f794bcf23171fc3ac - 2018-1-12
+- Fixed relative paths in ekstep feeds processing
 
 Release 1.3.35: 8fe21d18b00ab78243c1eb6e95b534e78033c297 - 2018-1-11
 - Changed default "to" year of GKA dashboard to 2018
