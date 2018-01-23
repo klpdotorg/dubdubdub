@@ -338,7 +338,8 @@
                     var params = {
                         'school_id': SCHOOL_ID,
                         'answers': 'yes',
-                        'verified': 'yes'
+                        'verified': 'yes',
+                        'source': 'web'
                     };
                     return klp.api.do(url, params);
                 },
