@@ -4,6 +4,7 @@ import time
 import sys
 
 DeviceList = sys.argv[1] #this takes device list as argument
+TagList = sys.argv[2] #this takes Tag list as argument
 
 dir = os.path.dirname(__file__)
 json_file = os.path.join(dir, '../datapull/ekstepv3data/data/ME_SESSION_SUMMARY.json')
@@ -12,15 +13,24 @@ assess_file = open(output_file, 'w',encoding='utf-8')
 
 with open (os.path.join(dir, '../datapull/'+DeviceList)) as f:
     device_list = [line.rstrip() for line in f]
+with open (os.path.join(dir, '../datapull/'+TagList)) as e:
+    tag_list = [line.rstrip() for line in e]
 
 for line in open(json_file, 'r', encoding='utf8'):
+    valid_data = False 
     data = json.loads(line)
     mid = data["mid"]
     uid = data["uid"]
     did = data["dimensions"]["did"]
     syncts = data["syncts"]
     gdataid = data["dimensions"]["gdata"]["id"]
-    if str(did) in device_list: #Devices in ESL
+    if 'app' in data["etags"]:
+        if str(data["etags"]["app"][0]) in tag_list:
+            valid_data = True
+    if not valid_data:
+       if (str(did) in device_list):
+           valid_data = True
+    if valid_data:
             if len(data["edata"]["eks"]["itemResponses"]) > 0:
                 for i in range(len(data["edata"]["eks"]["itemResponses"])):
                     assess_file.write(mid)
