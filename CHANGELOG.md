@@ -9,6 +9,8 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.38: 76d100982c942fe8f46cf1efe25ddaece5beedf7 - 2018-1-30
+- Process tags in ekstep feed (for FA)
 
 Release 1.3.37: 29e558e867ba35bb55b9c55e4b046cd38e141cdc - 2018-1-23
 - Updated school page to show stories from source=web
