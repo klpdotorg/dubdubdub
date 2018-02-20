@@ -205,7 +205,7 @@ AUTHENTICATION_BACKENDS = ['users.backends.EmailMobileUsernameBackend']
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
