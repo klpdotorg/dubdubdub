@@ -21,7 +21,7 @@ import signal
 from django.core.wsgi import get_wsgi_application
 
 PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
-sys.path.append(PROJECT_ROOT)
+sys.path.append(os.path.join(os.getcwd(), 'apps'))
 
 try:
     import newrelic.agent
