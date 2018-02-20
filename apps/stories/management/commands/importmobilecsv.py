@@ -51,7 +51,7 @@ FIELD_COORDINATORS = {
     "shahapur": "ayannapalled@gmail.com",
     "yelburga": "g.s.vandali@gmail.com",
     "gulbarga south": "jyothi@akshara.org.in",
-    "jewargi": "shiremath8005.sh@gmail.com"
+    "jewargi": "shiremath8005.sh@gmail.com",
     "doddaballapura": "gowrishankaras1@gmail.com",
     "nelamangala": "vasanthak.clk@gmail.com", 
     "chikkaballapura": "rajdharmanju@gmail.com",
@@ -61,7 +61,20 @@ FIELD_COORDINATORS = {
     "chitradurga":"ravimvk123@gmail.com",
     "molakalmur":"nskmuni99@gmail.com",
     "hiriyur":"massnaveenk@gmail.com",
-    "bhalki":"santoshkumar.machkure@gmail.com"
+    "bhalki":"santhoshkumar.machkure@gmail.com",
+    "devanahalli":"srinivas@akshara.org.in",
+    "kundagol":"sbmanju.55@gmail.com",
+    "navalgund":"sbmanju.55@gmail.com",
+    "hubli city":"vinayak.chippadi@gmail.com",
+    "hubli rural":"vinayak.chippadi@gmail.com",
+    "dharwad city":"girimallayya@klp.org.in",
+    "dharwad rural":"girimallayya@klp.org.in",
+    "kalaghatagi":"dayanandmalali@gmail.com",
+    "naragund":"angelina@akshara.org.in",
+    "gadag city":"mallapurmaruti@gmail.com",
+    "gadag rural":"mallapurmaruti@gmail.com",
+    "rona":"santosh.v738@gmail.com",
+    "shirahatti":"hanamanthm83@gmail.com"
 }
 
 class Command(BaseCommand):
