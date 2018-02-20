@@ -20,8 +20,9 @@ for line in open(json_file, 'r'):
     valid_data = False
     data = json.loads(line)
     if 'app' in data["etags"]:
-        if str(data["etags"]["app"][0]) in tag_list:
-            valid_data = True
+        if len(data["etags"]["app"]) > 0:
+            if str(data["etags"]["app"][0]) in tag_list:
+                valid_data = True
     if not valid_data:
        if (str(data["dimensions"]["did"]) in device_list):
            valid_data = True
