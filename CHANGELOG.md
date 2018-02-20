@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.38: c5c25d6ff2f339da8921fe89274764bc4e9063b4 - 2018-2-20
+- handle 0 tags in the ekstep feed
+
 Release 1.3.38: 76d100982c942fe8f46cf1efe25ddaece5beedf7 - 2018-1-30
 - Process tags in ekstep feed (for FA)
 
