@@ -89,13 +89,14 @@ def create_user_account(telephone):
         email=email,
         first_name=first_name,
         last_name=last_name,
-        mobile_no=mobile_number
+        mobile_no=mobile_number,
+        user_type='UK'
     )
 
     ev_group = Group.objects.get(name="EV")
     ev_group.user_set.add(user)
 
-    return
+    return user
 
 def validate_telephone_number(telephone):
     if not telephone.isdigit():
