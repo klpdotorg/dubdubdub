@@ -9,6 +9,9 @@ Use required commands
 
 Changelog
 ---
+Release 1.3.39: a68c9df415c10099116c2571d609bb60915e4425 - 2018-3-19
+- Set UK as user_type for sms script users
+
 Release 1.3.38: c5c25d6ff2f339da8921fe89274764bc4e9063b4 - 2018-2-20
 - handle 0 tags in the ekstep feed
 
