@@ -20,6 +20,7 @@ from stories.models import (
 
 FIELD_COORDINATORS = {
     "bellary": "gajendravallar@gmail.com",
+    "ballary west":"pandithkhm9009@gmail.com",
     "lingasugur": "kumargaded@gmail.com",
     "hagaribommanahalli": "natab146@gmail.com",
     "chincholi": "sudhakarpatil108@gmail.com",
@@ -32,7 +33,7 @@ FIELD_COORDINATORS = {
     "gangavathi": "manjunathmeti40@gmail.com",
     "raichur": "ranganath@akshara.org.in",
     "humnabad": "sharanuprabhu@gmail.com",
-    "siruguppa": "pandithkhm9009@gmail.com",
+    "siruguppa": "adiveshappa@gmail.com",
     "aland": "ajbelam@gmail.com",
     "kustagi": "umesh@akshara.org.in",
     "sindhanur": "adiveshappa@gmail.com",
@@ -43,7 +44,7 @@ FIELD_COORDINATORS = {
     "devadurga": "svhonnalli794@gmail.com",
     "basavakalyan": "vbpatil2684@gmail.com",
     "koppal": "g.s.vandali@gmail.com",
-    "hosakote": "srinivasapy@gmail.com",
+    "hosakote": "srinivas@akshara.org.in",
     "chittapur": "sanjeevkumark321@gmail.com",
     "hadagali": "natab146@gmail.com",
     "sandur": "hanumantharaya@akshara.org.in",
@@ -53,16 +54,16 @@ FIELD_COORDINATORS = {
     "gulbarga south": "jyothi@akshara.org.in",
     "jewargi": "shiremath8005.sh@gmail.com",
     "doddaballapura": "gowrishankaras1@gmail.com",
-    "nelamangala": "vasanthak.clk@gmail.com", 
+    "nelamangala": "vasanthak.clk@gmail.com",
     "chikkaballapura": "rajdharmanju@gmail.com",
     "sidlaghatta": "rajdharmanju@gmail.com",
-    "chintamani": "rajdharmanju@gmail.com",
+    "chintamani": "kirangs@klp.org.in",
     "holalkere":"ravimvk123@gmail.com",
     "chitradurga":"ravimvk123@gmail.com",
     "molakalmur":"nskmuni99@gmail.com",
     "hiriyur":"massnaveenk@gmail.com",
+    "devanahalli":"lakshminarayan052017@gmail.com",
     "bhalki":"santhoshkumar.machkure@gmail.com",
-    "devanahalli":"srinivas@akshara.org.in",
     "kundagol":"sbmanju.55@gmail.com",
     "navalgund":"sbmanju.55@gmail.com",
     "hubli city":"vinayak.chippadi@gmail.com",
@@ -74,7 +75,16 @@ FIELD_COORDINATORS = {
     "gadag city":"mallapurmaruti@gmail.com",
     "gadag rural":"mallapurmaruti@gmail.com",
     "rona":"santosh.v738@gmail.com",
-    "shirahatti":"hanamanthm83@gmail.com"
+    "shirahatti":"hanamanthm83@gmail.com",
+    "gundlupet":"maheshahs1990@gmail.com",
+    "kollegala":"kiran004raj@gmail.com",
+    "yelanduru":"kiran004raj@gmail.com",
+    "hanur":"raghugmsc@gmail.com",
+    "chamarajanagara":"prasannakp21@gmail.com",
+    "gowribidanur":"kirangs@klp.org.in",
+    "gowribidanur":"sidram@akshara.org.in",
+    "bagepally":"pattar.p6@gmail.com",
+    "hosadurga":"nskmuni99@gmail.com"
 }
 
 class Command(BaseCommand):
